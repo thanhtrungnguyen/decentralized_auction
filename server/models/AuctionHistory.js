@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
 const AuctionHistorySchema = new Schema({
@@ -18,4 +18,4 @@ const AuctionHistorySchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('auctionHistory', AuctionHistorySchema)
+export default mongoose.model('auctionHistory', AuctionHistorySchema)

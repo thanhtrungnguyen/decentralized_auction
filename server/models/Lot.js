@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
 const LotSchema = new Schema({
@@ -7,5 +7,4 @@ const LotSchema = new Schema({
         ref: 'properties'       
     },
 })
-
-module.exports = mongoose.model('lots', LotSchema)
+export default mongoose.model('lots', LotSchema)

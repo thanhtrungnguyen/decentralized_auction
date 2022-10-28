@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
 const BiddingRequestSchema = new Schema({
@@ -39,4 +39,4 @@ const BiddingRequestSchema = new Schema({
     
 })
 
-module.exports = mongoose.model('biddingRequests', BiddingRequestSchema)
+export default mongoose.model('biddingRequests', BiddingRequestSchema)

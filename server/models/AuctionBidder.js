@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
 const AuctionBidderSchema = new Schema({
@@ -10,5 +10,4 @@ const AuctionBidderSchema = new Schema({
         type: String        
     }
 })
-
-module.exports = mongoose.model('auctionBidders', AuctionBidderSchema)
+export default mongoose.model('auctionBidders', AuctionBidderSchema)
