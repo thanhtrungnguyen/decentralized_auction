@@ -1,0 +1,62 @@
+.group3 {
+  position: absolute;
+  top: 35%;
+  left: 35%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 544px;
+  height: 474px;
+  background: #ffffff;
+  box-shadow: 0px 0px 25px 10px #f8f8fb;
+}
+
+.group2 {
+  position: absolute;
+  width: 433px;
+  height: 374px;
+  margin: 50px;
+}
+
+.textField {
+  box-sizing: border-box;
+  width: 432px;
+  height: 52px;
+  border: 1px solid #c2c5e1;
+  border-radius: 2px;
+  margin-top: 10px;
+}
+
+.text {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 20px;
+  text-align: center;
+  color: #9096b2;
+}
+
+.btnSignIn {
+  width: 432px;
+  height: 47px;
+  background: #4c34c2;
+  border-radius: 3px;
+  text-align: center;
+  color: #ffffff;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 20px;
+}
+
+.txtLogin {
+  font-family: "Josefin Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 32px;
+  /* identical to box height */
+  text-align: center;
+  color: #000000;
+}
