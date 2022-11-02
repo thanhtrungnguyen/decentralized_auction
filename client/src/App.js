@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/homepage/Homepage";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import RegisterForO from "./pages/register/RegisterForOrganization";
 import NoPage from "./pages/noPage/NoPage";
 import { useState } from "react";
 
@@ -13,6 +14,7 @@ function App() {
         <Route index element={<Homepage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="registerForO" element={<RegisterForO />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>

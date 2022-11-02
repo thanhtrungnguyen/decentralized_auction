@@ -16,6 +16,9 @@ const Home = () => {
             <li>
               <Link to="/register">Register</Link>
             </li>
+            <li>
+              <Link to="/registerForO">Register for organization</Link>
+            </li>
           </ul>
         </nav>
 
