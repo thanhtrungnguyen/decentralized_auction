@@ -1,14 +1,24 @@
 import styles from "../../styleCss/login.module.css";
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    alert(`The email you entered was: ${email}
-    The password you entered was: ${password}`);
+    axios
+      .post("http://localhost:8800/api/auth/login", { username, password })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        alert(res.data.message);
+        navigate("/");
+      });
   };
 
   return (
@@ -23,15 +33,17 @@ const Login = () => {
             type="text"
             className={styles.textField}
             placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
+            required
           ></input>
           <input
-            type="text"
+            type="password"
             className={styles.textField}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           ></input>
           <p className={styles.text}>Forgot your password?</p>
           <input className={styles.btnSignIn} type="submit" value="Sign in" />

@@ -1,9 +1,10 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Homepage from "./components/homepage/Homepage";
-import Login from "./components/login/Login";
-import Register from "./components/register/Register";
-import NoPage from "./components/noPage/NoPage";
+import Homepage from "./pages/homepage/Homepage";
+import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
+import NoPage from "./pages/noPage/NoPage";
+import { useState } from "react";
 
 function App() {
   return (
