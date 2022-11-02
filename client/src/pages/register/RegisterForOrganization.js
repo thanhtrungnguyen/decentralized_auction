@@ -116,8 +116,15 @@ const Register = () => {
     let wardId = selectedWard.value;
     let cardfront = cardFront.name;
     let cardback = cardBack.name;
+    let certificateCompany = companyCertifcate.name;
     axios
       .post("http://localhost:8800/api/auth/registerForO", {
+        organizationName,
+        taxCode,
+        taxCodeGrantedDate,
+        taxCodeGrantedPlace,
+        specificAddressOrganization,
+        certificateCompany,
         firstName,
         lastName,
         gender,
