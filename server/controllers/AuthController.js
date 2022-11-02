@@ -4,42 +4,80 @@ import User from "../models/User.js";
 import Role from "../models/Role.js";
 import RoleRight from "../models/RoleRight.js";
 import { createError } from "../utils/error.js"
+import Contact from "../models/Contact.js";
 
 //define role
 const BIDDER = "BIDDER";
 const SELLER = "SELLER";
 const ADMIN = "ADMIN";
-
+const CONTACT = "CONTACT";
+const ACCOUNT = "ACCOUNT";
 
 //register new User
 export const register = async (req, res, next) => {
 
-
+    
     try {
+        if(req.body.usertype === CONTACT){
 
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(req.body.password, salt);
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(req.body.password, salt);
+    
+            const newUser = new User({
+                UserName: req.body.username,
+                PassWord: hash,
+            });
+            await newUser.save();
 
-        const newUser = new User({
-            UserName: req.body.username,
-            PassWord: hash,
-        });
-        await newUser.save();
+            
+            
 
-        const user = await User.findOne({
-            UserName: req.body.username,
-        });
+    
+            const user = await User.findOne({
+                UserName: req.body.username,
+            });
 
 
-        const role = await Role.findOne({
-            RoleName: req.body.role,
-        });
+            let date_ob = new Date(req.body.dateOfBirth);
+            let date = date_ob.getDate();
+            let month = date_ob.getMonth() ;
+            let year = date_ob.getFullYear();
+            let dategrantedcard = new Date( req.body.dateRangeCard);
+            const contact = new Contact({
+                FirstName: req.body.firstName,
+                LastName: req.body.lastName,
+                Gender: req.body.gender,
+                Email: req.body.email,
+                DayOfBirth: date,
+                MonthOfBirth: month,
+                YearOfBirth: year,
+                Wards: req.body.wardId,
+                City: req.body.cityId,
+                District: req.body.districtId,
+                Address: req.body.sepecificAddress,
+                CardNumber: req.body.cardNumber,
+                CardGrantedDate: dategrantedcard,
+                CardGrantedPlace: req.body.cardGrantedPlace,
+                FontSideImage: req.body.cardfront,
+                BackSideImage: req.body.cardback,
+                UserId: user._id
+            });
 
-        const roleright = new RoleRight({
-            UserId: user._id,
-            RoleId: role._id,
-        });
-        await roleright.save();
+            await contact.save();
+    
+    
+            const role = await Role.findOne({
+                RoleName: req.body.role,
+            });
+    
+            const roleright = new RoleRight({
+                UserId: user._id,
+                RoleId: role._id,
+            });
+            await roleright.save();
+        }
+
+        
 
 
 
@@ -91,6 +129,7 @@ export const login = async (req, res, next) => {
         res.cookie("access_token", token, {
             httpOnly: true
         }).status(200).json({ ...ortherDetails, role: role.RoleName });
+
     } catch (error) {
         next(error);
     }

@@ -5,9 +5,6 @@ const ContactSchema = new Schema({
     FirstName:{
         type: String
     },
-    MiddleName:{
-        type: String
-    },
     LastName:{
         type: String
     },
@@ -15,7 +12,7 @@ const ContactSchema = new Schema({
         type: String
     },
     Email:{
-        type: Number
+        type: String
     },
     DayOfBirth:{
         type: Number
@@ -30,22 +27,22 @@ const ContactSchema = new Schema({
         type: String
     },
     Wards:{
-        type: String
+        type: Number
     },
     Address:{
         type: String
     },
     City:{
-        type: String
+        type: Number
     },
     District:{
-        type: String
+        type: Number
     },
     CardNumber:{
         type: String
     },
     CardGrantedDate:{
-        type: Date
+        type: String
     },
     CardGrantedPlace:{
         type: String
@@ -55,13 +52,6 @@ const ContactSchema = new Schema({
     },
     BackSideImage:{
         type: String
-    },
-    Title:{
-        type: String
-    },
-    AccountId:{
-        type: Schema.Types.ObjectId,
-        ref: 'accounts'  
     },
     UserId:{
         type: Schema.Types.ObjectId,
