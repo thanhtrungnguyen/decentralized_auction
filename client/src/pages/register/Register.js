@@ -33,10 +33,11 @@ const Register = () => {
   const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
   const [cardFront, setCardFront] = useState(null);
   const [cardBack, setCardBack] = useState(null);
-  const [userName, setUsername] = useState(null);
+  const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [rePassword, setRePassword] = useState(null);
   const [role, setRole] = useState("BIDDER");
+  const [usertype, setUsertype] = useState("CONTACT");
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -109,9 +110,10 @@ const Register = () => {
         cardGrantedPlace,
         cardfront,
         cardback,
-        userName,
+        username,
         password,
         role,
+        usertype,
       })
       .then((res) => {
         console.log(res);
@@ -152,7 +154,7 @@ const Register = () => {
         " " +
         cardFront.name +
         " " +
-        userName +
+        username +
         " " +
         password +
         " " +
@@ -324,7 +326,7 @@ const Register = () => {
         <input
           className={styles.inputEP}
           type="text"
-          value={userName}
+          value={username}
           onChange={(e) => handleInputChange(e)}
           id="userName"
           placeholder="Username"

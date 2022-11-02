@@ -8,6 +8,10 @@ const AuctionBidderSchema = new Schema({
     },
     CustomerKey:{
         type: String        
+    },
+    UserId:{
+        type: Schema.Types.ObjectId,
+        ref: 'users'       
     }
 })
 export default mongoose.model('auctionBidders', AuctionBidderSchema)

@@ -5,6 +5,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoute from "./routers/auth.js";
 import userRoute from "./routers/users.js";
+import auctionRoute from "./routers/auctions.js";
+import propertyRoute from "./routers/properties.js";
 
 // config app
 const app = express();
@@ -41,6 +43,11 @@ mongoose.connection.on("connected", () => {
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 
+//middleware auction manager
+app.use("/api/auction", auctionRoute);
+
+app.use("/api/property", propertyRoute);
+
 //middleware catch fault
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
@@ -55,5 +62,14 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   connectDB();
-  console.log(`server started on port ${PORT}`);
+  let ts = Date.now();
+
+  let date_ob = new Date("2022-10-31");
+  let date = date_ob.getDate();
+  let month = date_ob.getMonth() + 1;
+  let year = date_ob.getFullYear();
+
+  // prints date & time in YYYY-MM-DD format
+  console.log(year + "-" + month + "-" + date);
+  console.log(`server started on port + ${PORT}`);
 });

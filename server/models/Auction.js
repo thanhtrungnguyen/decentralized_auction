@@ -9,16 +9,16 @@ const AuctionSchema = new Schema({
         type: Date       
     },
     RegistrationFee:{
-        type: Double       
+        type: Number       
     },
     MinimumPiceStep:{
-        type: Double       
+        type: Number       
     },
     MaximumStep:{
-        type: Double       
+        type: Number       
     },
     Deposit:{
-        type: Double       
+        type: Number       
     },
     AuctionType:{
         type: String
@@ -35,6 +35,10 @@ const AuctionSchema = new Schema({
     TimeFinish:{
         type: Date
     },
+    UserId:{
+        type: Schema.Types.ObjectId,
+        ref: 'users'       
+    }
 })
 
 export default mongoose.model('auctions', AuctionSchema)

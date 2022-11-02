@@ -22,7 +22,7 @@ export const verifyToken = (req,res,next)=>{
 //check author Seller 
 export const verifySeller = (req,res,next) =>{
     verifyToken(req,res,()=>{
-        if(req.user.id === req.params.id && req.user.role == SELLER ){
+        if( req.user.role === SELLER ){
             next()
         }else{
            return next(createError(403,"you are not authorized!"))
@@ -33,7 +33,7 @@ export const verifySeller = (req,res,next) =>{
 //check author Admin
 export const verifyAdmin = (req,res,next) =>{
     verifyToken(req,res,()=>{
-        if(req.user.id === req.params.id && req.user.role == ADMIN){
+        if( req.user.role == ADMIN){
             next()
         }else{
            return next(createError(403,"you are not authorized!"))

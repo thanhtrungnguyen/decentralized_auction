@@ -10,7 +10,7 @@ const UserWalletLotSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'       
     },
-    ContractAddress:{
+    WalletAddress:{
         type: String
     }
 })
