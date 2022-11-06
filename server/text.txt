@@ -1,0 +1,56 @@
+const AuctionHistorySchema = new Schema({
+  CustomerKey: {
+    type: String,
+  },
+  AuctionLotId: {
+    type: Schema.Types.ObjectId,
+    ref: "auctionLots",
+  },
+  Paid: {
+    type: Double,
+  },
+  TimePaid: {
+    type: Date,
+    default: Date.now,
+  },
+  TxnHash: {
+    type: String,
+  },
+});
+
+
+const PropertySchema = new Schema({
+    PropertyName:{
+        type: String
+    },
+    PropertyInformation:{
+        type: String       
+    },
+    MediaURL:{
+        type: Array(String)       
+    },
+    UserId:{
+        type: Schema.Types.ObjectId,
+        ref: 'users'       
+    },
+    CategoryId:{
+        type: Schema.Types.ObjectId,
+        ref: 'categories'       
+    },
+})
+
+const AuctionSchema = new Schema({
+    StartBid:{
+        type: Number
+    },
+    TimeStart:{
+        type: Date
+    },
+    TimeFinish:{
+        type: Date
+    },
+    UserId:{
+        type: Schema.Types.ObjectId,
+        ref: 'users'       
+    }
+})

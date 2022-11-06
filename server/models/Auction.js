@@ -3,9 +3,7 @@ const Schema = mongoose.Schema
 
 const AuctionSchema = new Schema({
     
-    RegistrationFee:{
-        type: Number       
-    },
+
     StartBid:{
         type: Number
     },
