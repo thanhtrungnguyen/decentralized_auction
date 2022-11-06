@@ -49,11 +49,11 @@ packages/react-devtools-timeline/dist# See https://help.github.com/articles/igno
 /build
 
 # misc
-# .DS_Store
-# .env.local
-# .env.development.local
-# .env.test.local
-# .env.production.local
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 npm-debug.log*
 yarn-debug.log*
