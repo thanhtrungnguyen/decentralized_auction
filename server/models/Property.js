@@ -2,17 +2,14 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
 const PropertySchema = new Schema({
+    PropertyName:{
+        type: String
+    },
     PropertyInformation:{
         type: String       
     },
-    RelatedDocument:{
-        type: String       
-    },
-    ImgURL:{
+    MediaURL:{
         type: Array(String)       
-    },
-    VideoURL:{
-        type: String       
     },
     UserId:{
         type: Schema.Types.ObjectId,
