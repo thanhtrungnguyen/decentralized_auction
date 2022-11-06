@@ -5,7 +5,9 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import RegisterForO from "./pages/register/RegisterForOrganization";
 import NoPage from "./pages/noPage/NoPage";
+import AuctionDetail from "./pages/auctionDetails/AuctionDetail";
 import { useState } from "react";
+import PlaceABid from "./components/popups/PlaceABid";
 
 function App() {
   return (
@@ -15,7 +17,9 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="registerForO" element={<RegisterForO />} />
+        <Route path="auctionDetail/:id" element={<AuctionDetail />} />
         <Route path="*" element={<NoPage />} />
+        <Route path="placeABid" element={<PlaceABid />} />
       </Routes>
     </BrowserRouter>
   );

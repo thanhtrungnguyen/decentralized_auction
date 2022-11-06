@@ -6,6 +6,12 @@ import Select from "react-select";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
+
+import ReactDOM from "react-dom/client";
 
 const Register = () => {
   const { state, onCitySelect, onDistrictSelect, onWardSelect } =
@@ -164,199 +170,206 @@ const Register = () => {
     );
     event.preventDefault();
   };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <>
+      <Header />
+      <NavBar />
       <div className={styles.container}>
-        <p className={styles.textCreate}>Create your DAP account</p>
-        <p className={styles.textAd}>Already have an account? Login</p>
-        <div className={styles.divImg}>
-          <div className={styles.divI}></div>
-          <p className={styles.textFor}>For personal</p>
-        </div>
-        <div className={styles.divImg2}>
-          <div className={styles.divI}></div>
-          <p className={styles.textFor}>For organization</p>
-        </div>
-        <p className={styles.textBlue}>Personal Infomation</p>
-        <p className={styles.textRed}>Basic information</p>
-        <input
-          className={styles.inputT}
-          type="text"
-          placeholder="First name"
-          value={firstName}
-          onChange={(e) => handleInputChange(e)}
-          id="firstName"
-          required
-        ></input>
-        <p className={styles.txtBlack}>Message</p>
-        <input
-          className={styles.inputT}
-          type="text"
-          placeholder="Last name"
-          value={lastName}
-          onChange={(e) => handleInputChange(e)}
-          id="lastName"
-          required
-        ></input>
-        <p className={styles.txtBlack}>Message</p>
-        <select
-          id="gender"
-          className={styles.dropdown}
-          onChange={(e) => handleInputChange(e)}
-          placeholder="Gender"
-        >
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-        <p className={styles.txtBlack}>Date of birth</p>
-        <input
-          type="date"
-          className={styles.ipdate}
-          value={dateOfBirth}
-          onChange={(e) => handleInputChange(e)}
-          id="dateOfBirth"
-        ></input>
-        <input
-          className={styles.inputEP}
-          type="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-          placeholder="Email address"
-          value={email}
-          onChange={(e) => handleInputChange(e)}
-          id="email"
-          required
-        ></input>
-        <input
-          className={styles.inputEP}
-          type="number"
-          // pattern="/(8|0)\d{9}/"
-          placeholder="Phone number"
-          value={phone}
-          onChange={(e) => handleInputChange(e)}
-          id="phone"
-          required
-        ></input>
-        <p className={styles.textRed}>Address</p>
-        <Select
-          className={styles.select}
-          name="cityId"
-          key={`cityId_${selectedCity?.value}`}
-          isDisabled={cityOptions.length === 0}
-          options={cityOptions}
-          onChange={(option) => onCitySelect(option)}
-          placeholder="Tỉnh/Thành"
-          defaultValue={selectedCity}
-        />
-        <Select
-          className={styles.select}
-          name="districtId"
-          key={`districtId_${selectedDistrict?.value}`}
-          isDisabled={districtOptions.length === 0}
-          options={districtOptions}
-          onChange={(option) => onDistrictSelect(option)}
-          placeholder="Quận/Huyện"
-          defaultValue={selectedDistrict}
-        />
-        <Select
-          className={styles.select}
-          name="wardId"
-          key={`wardId_${selectedWard?.value}`}
-          isDisabled={wardOptions.length === 0}
-          options={wardOptions}
-          placeholder="Phường/Xã"
-          onChange={(option) => onWardSelect(option)}
-          defaultValue={selectedWard}
-        />
-        <input
-          className={styles.ipadd}
-          type="text"
-          placeholder="Specific address"
-          value={sepecificAddress}
-          onChange={(e) => handleInputChange(e)}
-          id="sepecificAddress"
-          required
-        ></input>{" "}
-        <p className={styles.textRed}>Identity/Citizen card</p>
-        <input
-          type="text"
-          placeholder="Card number"
-          className={styles.ip3}
-          value={cardNumber}
-          onChange={(e) => handleInputChange(e)}
-          id="cardNumber"
-          required
-        ></input>
-        <input
-          type="date"
-          className={styles.ip3}
-          value={dateRangeCard}
-          onChange={(e) => handleInputChange(e)}
-          id="dateRangeCard"
-        ></input>
-        <input
-          type="text"
-          placeholder="Card granted place"
-          className={styles.ip3}
-          value={cardGrantedPlace}
-          onChange={(e) => handleInputChange(e)}
-          id="cardGrantedPlace"
-          required
-        ></input>
-        <input
-          className={styles.imgCard}
-          id="cardFront"
-          type="file"
-          // onChange={(e) => {
-          //   console.log(e.target.files[0]);
-          // }}
-          onChange={(e) => handleInputChange(e)}
-          required
-        />
-        <input
-          id="cardBack"
-          type="file"
-          // onChange={(e) => {
-          //   console.log(e.target.files[0]);
-          // }}
-          onChange={(e) => handleInputChange(e)}
-          required
-        />
-        <p className={styles.textBlue}>Account Infomation</p>
-        <input
-          className={styles.inputEP}
-          type="text"
-          value={username}
-          onChange={(e) => handleInputChange(e)}
-          id="userName"
-          placeholder="Username"
-          required
-        ></input>
-        <input
-          className={styles.inputEP}
-          type="text"
-          value={password}
-          onChange={(e) => handleInputChange(e)}
-          id="password"
-          placeholder="Password"
-          required
-        ></input>
-        <input
-          className={styles.inputEP}
-          type="text"
-          value={rePassword}
-          onChange={(e) => handleInputChange(e)}
-          id="rePassword"
-          placeholder="Re-eneter the password"
-          required
-        ></input>
-        <input
-          type="submit"
-          className={styles.ipsubmit}
-          value="SIGN IN"
-        ></input>
+        <form onSubmit={handleSubmit}>
+          <p className={styles.textCreate}>Create your DAP account</p>
+          <p className={styles.textAd}>Already have an account? Login</p>
+          <br />
+          <div className={styles.divImg}>
+            <BsFillPersonFill className={styles.icon} />
+            <p className={styles.textFor}>For personal</p>
+          </div>
+          <div className={styles.divImg2}>
+            <BsBank2 className={styles.icon} />
+            <p className={styles.textFor}>For organization</p>
+          </div>
+          <p className={styles.textBlue}>Personal Infomation</p>
+          <p className={styles.textRed}>Basic information</p>
+          <input
+            className={styles.inputT}
+            type="text"
+            placeholder="First name"
+            value={firstName}
+            onChange={(e) => handleInputChange(e)}
+            id="firstName"
+            required
+          ></input>
+          <p className={styles.txtBlack}>Message</p>
+          <input
+            className={styles.inputT}
+            type="text"
+            placeholder="Last name"
+            value={lastName}
+            onChange={(e) => handleInputChange(e)}
+            id="lastName"
+            required
+          ></input>
+          <p className={styles.txtBlack}>Message</p>
+          <select
+            id="gender"
+            className={styles.dropdown}
+            onChange={(e) => handleInputChange(e)}
+            placeholder="Gender"
+          >
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <p className={styles.txtBlack}>Date of birth</p>
+          <input
+            type="date"
+            className={styles.ipdate}
+            value={dateOfBirth}
+            onChange={(e) => handleInputChange(e)}
+            id="dateOfBirth"
+          ></input>
+          <input
+            className={styles.inputEP}
+            type="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => handleInputChange(e)}
+            id="email"
+            required
+          ></input>
+          <input
+            className={styles.inputEP}
+            type="number"
+            // pattern="/(8|0)\d{9}/"
+            placeholder="Phone number"
+            value={phone}
+            onChange={(e) => handleInputChange(e)}
+            id="phone"
+            required
+          ></input>
+          <p className={styles.textRed}>Address</p>
+          <Select
+            className={styles.select}
+            name="cityId"
+            key={`cityId_${selectedCity?.value}`}
+            isDisabled={cityOptions.length === 0}
+            options={cityOptions}
+            onChange={(option) => onCitySelect(option)}
+            placeholder="Tỉnh/Thành"
+            defaultValue={selectedCity}
+          />
+          <Select
+            className={styles.select}
+            name="districtId"
+            key={`districtId_${selectedDistrict?.value}`}
+            isDisabled={districtOptions.length === 0}
+            options={districtOptions}
+            onChange={(option) => onDistrictSelect(option)}
+            placeholder="Quận/Huyện"
+            defaultValue={selectedDistrict}
+          />
+          <Select
+            className={styles.select}
+            name="wardId"
+            key={`wardId_${selectedWard?.value}`}
+            isDisabled={wardOptions.length === 0}
+            options={wardOptions}
+            placeholder="Phường/Xã"
+            onChange={(option) => onWardSelect(option)}
+            defaultValue={selectedWard}
+          />
+          <input
+            className={styles.ipadd}
+            type="text"
+            placeholder="Specific address"
+            value={sepecificAddress}
+            onChange={(e) => handleInputChange(e)}
+            id="sepecificAddress"
+            required
+          ></input>{" "}
+          <p className={styles.textRed}>Identity/Citizen card</p>
+          <input
+            type="text"
+            placeholder="Card number"
+            className={styles.ip3}
+            value={cardNumber}
+            onChange={(e) => handleInputChange(e)}
+            id="cardNumber"
+            required
+          ></input>
+          <input
+            type="date"
+            className={styles.ip3}
+            value={dateRangeCard}
+            onChange={(e) => handleInputChange(e)}
+            id="dateRangeCard"
+          ></input>
+          <input
+            type="text"
+            placeholder="Card granted place"
+            className={styles.ip3}
+            value={cardGrantedPlace}
+            onChange={(e) => handleInputChange(e)}
+            id="cardGrantedPlace"
+            required
+          ></input>
+          <input
+            className={styles.imgCard}
+            id="cardFront"
+            type="file"
+            // onChange={(e) => {
+            //   console.log(e.target.files[0]);
+            // }}
+            onChange={(e) => handleInputChange(e)}
+            required
+          />
+          <input
+            id="cardBack"
+            type="file"
+            // onChange={(e) => {
+            //   console.log(e.target.files[0]);
+            // }}
+            onChange={(e) => handleInputChange(e)}
+            required
+          />
+          <p className={styles.textBlue}>Account Infomation</p>
+          <input
+            className={styles.inputEP}
+            type="text"
+            value={username}
+            onChange={(e) => handleInputChange(e)}
+            id="userName"
+            placeholder="Username"
+            required
+          ></input>
+          <input
+            className={styles.inputEP}
+            type="text"
+            value={password}
+            onChange={(e) => handleInputChange(e)}
+            id="password"
+            placeholder="Password"
+            required
+          ></input>
+          <input
+            className={styles.inputEP}
+            type="text"
+            value={rePassword}
+            onChange={(e) => handleInputChange(e)}
+            id="rePassword"
+            placeholder="Re-eneter the password"
+            required
+          ></input>
+          <input
+            type="submit"
+            className={styles.ipsubmit}
+            value="SIGN IN"
+          ></input>
+        </form>
       </div>
-    </form>
+      <Footer />
+    </>
   );
 };
 
