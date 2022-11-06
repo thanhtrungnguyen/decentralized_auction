@@ -3,6 +3,10 @@ const Schema = mongoose.Schema
 
 const AuctionSchema = new Schema({
     
+    PropertyId: {
+        type: Schema.Types.ObjectId,
+        ref: 'properties'       
+    },
 
     StartBid:{
         type: Number

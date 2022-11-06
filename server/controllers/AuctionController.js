@@ -1,7 +1,7 @@
 import Auction from "../models/Auction.js";
 import AuctionBidder from "../models/AuctionBidder.js";
-import AuctionLot from "../models/AuctionLot.js";
-import Lot from "../models/Lot.js";
+import Property from "../models/Property.js";
+
 
 export const createAuction = async (req, res, next) => {
     const newAuction = new Auction(req.body);
@@ -54,12 +54,31 @@ export const getAllAuction = async (req, res, next) => {
 
     try {
         const auctions = await Auction.find();
+
         res.status(200).json(auctions);
 
     } catch (error) {
         next(error);
     }
 }
+
+export const getAuctionDetailByID = async (req, res, next) => {
+    
+
+    try {
+        const auction = await Auction.findById(req.params.id);
+        const properties = await Property.findById(auction.PropertyId);
+
+        res.status(200).json({
+            auction: auction,
+            property:properties
+        });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 
 //add BidderAuction
