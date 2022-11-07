@@ -1,0 +1,110 @@
+.container {
+  position: fixed;
+  width: 850px;
+  height: 480px;
+  left: 50%;
+  top: 50%;
+  margin-top: -240px;
+  margin-left: -425px;
+  background: #ffffff;
+  box-shadow: 0px 0px 25px #f6f4fd;
+}
+.col1 {
+  width: 40%;
+  height: 70%;
+  float: left;
+}
+.col2 {
+  float: right;
+  width: 60%;
+  height: 70%;
+}
+.txt {
+  font-family: "B612";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 29px;
+  /* identical to box height, or 153% */
+
+  color: #000000;
+  margin-left: 40px;
+}
+.txtBold {
+  font-family: "B612";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 29px;
+  /* identical to box height, or 97% */
+
+  margin-left: 30px;
+
+  color: #000000;
+}
+.txtNormal {
+  font-family: "B612";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 29px;
+  /* identical to box height, or 207% */
+  margin-left: 40px;
+
+  color: #000000;
+}
+.txtNormalB {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+  margin-left: 40px;
+  margin-top: 70px;
+  color: #000000;
+}
+.txtNormalB2 {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+  margin-left: 40px;
+  color: #000000;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-left: 40px;
+  margin-top: 20px;
+}
+.iconNormal {
+  width: 24px;
+  height: 24px;
+  margin-right: 20px;
+}
+.btn {
+  width: 750px;
+  height: 36px;
+  left: 50%;
+  /* margin-left: 357px; */
+  margin-left: 50px;
+  /* Primary/Main
+
+4C34C2
+*/
+  background: #4c34c2;
+  border-radius: 4px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  /* Gray_02/100 */
+
+  color: #ffffff;
+}

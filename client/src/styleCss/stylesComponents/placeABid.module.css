@@ -1,6 +1,3 @@
-body {
-  /* background: #e5e5e5; */
-}
 .container {
   position: fixed;
   width: 1000px;
@@ -190,7 +187,7 @@ body {
   float: right;
   margin-right: 50px;
   margin-top: 20px;
-  display: none;
+  /* display: none; */
 }
 .left {
   float: left;

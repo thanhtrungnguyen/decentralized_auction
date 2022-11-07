@@ -127,47 +127,47 @@ const Register = () => {
         alert(res.data.message);
         navigate("/login");
       });
-    alert(
-      "infomation: " +
-        firstName +
-        " " +
-        lastName +
-        " " +
-        gender +
-        " " +
-        dateOfBirth +
-        " " +
-        email +
-        " " +
-        phone +
-        " " +
-        cityId +
-        " " +
-        districtId +
-        " " +
-        " " +
-        wardId +
-        " " +
-        sepecificAddress +
-        " " +
-        cardNumber +
-        " " +
-        dateRangeCard +
-        " " +
-        cardGrantedPlace +
-        " " +
-        cardBack.name +
-        " " +
-        cardFront.name +
-        " " +
-        username +
-        " " +
-        password +
-        " " +
-        rePassword +
-        " " +
-        role
-    );
+    // alert(
+    //   "infomation: " +
+    //     firstName +
+    //     " " +
+    //     lastName +
+    //     " " +
+    //     gender +
+    //     " " +
+    //     dateOfBirth +
+    //     " " +
+    //     email +
+    //     " " +
+    //     phone +
+    //     " " +
+    //     cityId +
+    //     " " +
+    //     districtId +
+    //     " " +
+    //     " " +
+    //     wardId +
+    //     " " +
+    //     sepecificAddress +
+    //     " " +
+    //     cardNumber +
+    //     " " +
+    //     dateRangeCard +
+    //     " " +
+    //     cardGrantedPlace +
+    //     " " +
+    //     cardBack.name +
+    //     " " +
+    //     cardFront.name +
+    //     " " +
+    //     username +
+    //     " " +
+    //     password +
+    //     " " +
+    //     rePassword +
+    //     " " +
+    //     role
+    // );
     event.preventDefault();
   };
 

@@ -1,16 +1,18 @@
 import React from "react";
 import styles from "../../styleCss/stylesComponents/placeABid.module.css";
+import ConfirmPayment from "../../pages/confirmPayment/confirmPayment";
+import { Outlet, Link } from "react-router-dom";
 
 const PlaceABid = () => {
-  const myFunction = () => {
-    let x = document.getElementById("trans");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-      console.log("none");
-    } else {
-      x.style.display = "none";
-    }
-  };
+  // const myFunction = () => {
+  //   let x = document.getElementById("trans");
+  //   if (x.style.display === "none") {
+  //     x.style.display = "block";
+  //     console.log("none");
+  //   } else {
+  //     x.style.display = "none";
+  //   }
+  // };
   return (
     <>
       <div className={styles.container}>
@@ -48,8 +50,10 @@ const PlaceABid = () => {
                 type="submit"
                 value="Place bid"
               ></input> */}
-            <button className={styles.btn} onClick={myFunction}>
-              Place bid
+            <button className={styles.btn}>
+              <Link className={styles.btn} to="/confirmPayment">
+                Place bid
+              </Link>
             </button>
             {/* </form> */}
           </div>

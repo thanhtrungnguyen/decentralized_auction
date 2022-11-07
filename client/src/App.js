@@ -8,6 +8,7 @@ import NoPage from "./pages/noPage/NoPage";
 import AuctionDetail from "./pages/auctionDetails/AuctionDetail";
 import { useState } from "react";
 import PlaceABid from "./components/popups/PlaceABid";
+import ConfirmPayment from "./pages/confirmPayment/confirmPayment";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="auctionDetail/:id" element={<AuctionDetail />} />
         <Route path="*" element={<NoPage />} />
         <Route path="placeABid" element={<PlaceABid />} />
+        <Route path="confirmPayment" element={<ConfirmPayment />} />
       </Routes>
     </BrowserRouter>
   );
