@@ -51,28 +51,38 @@ export const createLot = async (req, res, next) => {
 
 export const getAllAuction = async (req, res, next) => {
     
-
+   
     try {
         const auctions = await Auction.find();
+        
+        
 
-        res.status(200).json(auctions);
+
+        const promises =  auctions.map( async (auction)  => {
+            const property =  await Property.findById(auction.PropertyId);
+            
+            return { auction, property };
+        });
+        const auctionlist = await Promise.all(promises);
+         
+        res.status(200).json(auctionlist);
 
     } catch (error) {
         next(error);
     }
 }
 
+
+
 export const getAuctionDetailByID = async (req, res, next) => {
     
 
     try {
-        const auction = await Auction.findById(req.params.id);
-        const properties = await Property.findById(auction.PropertyId);
-
-        res.status(200).json({
-            auction: auction,
-            property:properties
-        });
+        const auctiondetail = await Auction.findById(req.params.id);
+        const property = await Property.findById(auctiondetail.PropertyId);
+        var auction = { ...auctiondetail._doc, ...property._doc };
+ 
+        res.status(200).json(auction);
 
     } catch (error) {
         next(error);

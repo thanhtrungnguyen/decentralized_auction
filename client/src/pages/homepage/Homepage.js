@@ -30,6 +30,9 @@ const Home = () => {
           <li>
             <Link to="/placeABid">place A Bid</Link>
           </li>
+          <li>
+          <Link to="/auctionList">Auction List</Link>
+          </li>
         </ul>
       </nav>
 

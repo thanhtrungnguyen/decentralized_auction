@@ -1,0 +1,152 @@
+.body {
+    color: grey;
+    margin-top: 5%;
+
+}
+
+#sidebar {
+    width: 20%;
+    padding: 5px;
+    margin-bottom: 10px;
+    float: left
+
+}
+
+#products {
+    width: 75%;
+    padding: 5px;
+    padding-top: 40px;
+    margin-left: 5%;
+    float: right
+}
+
+#sidebar h6 {
+    border-bottom: 1px solid #000000;
+    font-family: 'Josefin Sans';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 30px;
+    
+
+}
+
+ul {
+    list-style: none;
+    padding: 5px
+}
+
+li a {
+    color: darkgray;
+    text-decoration: none
+}
+
+li a:hover {
+    text-decoration: none;
+    color: darksalmon
+}
+
+.fa-circle {
+    font-size: 20px
+}
+
+#red {
+    color: #e94545d7
+}
+
+#teal {
+    color: rgb(69, 129, 129)
+}
+
+.card {
+    width: 250px;
+    display: inline-block;
+    height: 300px
+}
+
+.filter {
+    display: none;
+    padding: 0;
+    margin: 0
+}
+
+
+.paginationgr {
+    margin-left: 55%;
+}
+
+#mynav {
+    margin-right: 5%;
+}
+
+.input-group {
+    margin-left: 5%;
+   
+ 
+}
+
+
+
+.nav-item {
+    display: inline-block;
+}
+
+#products .row{
+    margin-top: 5px;
+}
+
+
+
+.nut_dropdown {
+    background-color: rgba(192, 192, 192, 1);
+    ;
+    color: white;
+    padding: 6px;
+
+    border: none;
+}
+
+
+.dropdown {
+    position: relative;
+    margin-left: 60%;
+    display: inline-block;
+}
+
+
+.noidung_dropdown {
+
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+
+.noidung_dropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.noidung_dropdown a:hover {
+    background-color: #ddd;
+}
+
+
+.dropdown:hover .noidung_dropdown {
+    display: block;
+}
+
+
+.dropdown:hover .nut_dropdown {
+    background-color: #00bfff;
+}
+
+.hienThi {
+    display: block;
+}
