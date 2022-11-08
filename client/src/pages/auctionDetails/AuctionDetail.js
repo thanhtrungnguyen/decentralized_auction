@@ -13,40 +13,53 @@ const AuctionDetail = () => {
   // const [auction, setAuction] = useState(null);
   const { id } = useParams();
   const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}`;
-  const{data, loading, error} = useFetch(baseURL);
+  const { data, loading, error } = useFetch(baseURL);
 
-  
-
-  return (
-    loading ?   ("loading please wait"): (
+  console.log(data);
+  console.log(loading);
+  return loading ? (
+    "loading please wait"
+  ) : (
     <>
       <Header />
       <NavBar />
       <div className={styles.container}>
         <div className={styles.col1}>
           <div className={styles.row}>
-            <img
+            {/* <img
               className={styles.img}
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
-            />
-            {/* <img className={styles.img} src={`${auction.url}`} alt="images" /> */}
+            /> */}
+            {/* <img
+              className={styles.img}
+              src={`${data.MediaURL[0]}`}
+              alt="images"
+            /> */}
           </div>
           <div className={styles.row}>
-            <img
+            {/* <img
               className={styles.img}
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
-            />
-            {/* <img className={styles.img} src={`${auction.url}`} alt="images" /> */}
+            /> */}
+            {/* <img
+              className={styles.img}
+              src={`${data.MediaURL[1]}`}
+              alt="images"
+            /> */}
           </div>
           <div className={styles.row}>
-            <img
+            {/* <img
               className={styles.img}
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
-            />
-            {/* <img className={styles.img} src={`${auction.url}`} alt="images" /> */}
+            /> */}
+            {/* <img
+              className={styles.img}
+              src={`${data.MediaURL[2]}`}
+              alt="images"
+            /> */}
           </div>
         </div>
         <div className={styles.col2}>
@@ -149,7 +162,7 @@ const AuctionDetail = () => {
       </div>
       <Footer />
     </>
-  ));
+  );
 };
 
 export default AuctionDetail;

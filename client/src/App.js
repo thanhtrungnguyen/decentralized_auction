@@ -4,7 +4,7 @@ import Homepage from "./pages/homepage/Homepage";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import RegisterForO from "./pages/register/RegisterForOrganization";
-import NoPage from "./pages/noPage/NoPage";
+import ErrorPage from "./pages/errorPage/ErrorPage";
 import AuctionDetail from "./pages/auctionDetails/AuctionDetail";
 import { useState } from "react";
 import PlaceABid from "./components/popups/PlaceABid";
@@ -21,7 +21,7 @@ function App() {
         <Route path="registerForO" element={<RegisterForO />} />
         <Route path="auctionDetail/:id" element={<AuctionDetail />} />
         <Route path="auctionList" element={<AuctionList />} />
-        <Route path="*" element={<NoPage />} />
+        <Route path="*" element={<ErrorPage />} />
         <Route path="placeABid" element={<PlaceABid />} />
         <Route path="confirmPayment" element={<ConfirmPayment />} />
       </Routes>
