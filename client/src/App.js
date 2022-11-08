@@ -9,6 +9,7 @@ import AuctionDetail from "./pages/auctionDetails/AuctionDetail";
 import { useState } from "react";
 import PlaceABid from "./components/popups/PlaceABid";
 import ConfirmPayment from "./pages/confirmPayment/confirmPayment";
+import AuctionList from "./pages/auctionList/AuctionList";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="registerForO" element={<RegisterForO />} />
         <Route path="auctionDetail/:id" element={<AuctionDetail />} />
+        <Route path="auctionList" element={<AuctionList />} />
         <Route path="*" element={<NoPage />} />
         <Route path="placeABid" element={<PlaceABid />} />
         <Route path="confirmPayment" element={<ConfirmPayment />} />

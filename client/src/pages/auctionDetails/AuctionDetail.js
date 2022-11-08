@@ -7,19 +7,18 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Popup from "reactjs-popup";
 import PlaceABid from "../../components/popups/PlaceABid";
+import useFetch from "../../hook/useFetch";
 
 const AuctionDetail = () => {
-  const [auction, setAuction] = React.useState(null);
+  // const [auction, setAuction] = useState(null);
   const { id } = useParams();
-  const baseURL = `http://localhost:8800/api/auth/auctionDetail/${id}`;
-  useEffect(() => {
-    axios.get(baseURL).then((resp) => {
-      console.log(resp.data);
-      console.log("axios get");
-      setAuction(resp.data);
-    });
-  });
+  const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}`;
+  const{data, loading, error} = useFetch(baseURL);
+
+  
+
   return (
+    loading ?   ("loading please wait"): (
     <>
       <Header />
       <NavBar />
@@ -63,8 +62,8 @@ const AuctionDetail = () => {
         <div className={styles.col3}>
           {/* <div className={styles.conI}> */}
           <p className={styles.title}>Playwood arm chair</p>
-          <p className={styles.txtBold}>Starting price : $300</p>
-          {/* <p className={styles.txtBold}>Starting price : ${auction.startPrice}</p> */}
+          {/* <p className={styles.txtBold}>Starting price : $300</p> */}
+          <p className={styles.txtBold}>Starting price : ${data.StartBid}</p>
           <p className={styles.txtBold}>Asset Code : AAAAA1</p>
           {/* <p className={styles.txtBold}>Asset Code : ${auction.assetCode}</p> */}
 
@@ -76,10 +75,10 @@ const AuctionDetail = () => {
           {/* <p className={styles.txtBold}>Auction Registration Fee : ${auction.registrationFee}</p> */}
           <p className={styles.txtBold}>Down payment : $320</p>
           {/* <p className={styles.txtBold}>Down payment : ${auction.dowPayment}</p> */}
-          <p className={styles.txt}>Auction Start Time : 31/12/2022 9:00AM</p>
-          {/* <p className={styles.txt}>Auction Start Time : ${auction.startTime}</p> */}
-          <p className={styles.txt}>Auction End Time : 31/12/2022 11:00AM</p>
-          {/* <p className={styles.txt}>Auction End Time : ${auction.endTime}</p> */}
+          {/* <p className={styles.txt}>Auction Start Time : 31/12/2022 9:00AM</p> */}
+          {/* <p className={styles.txt}>Auction Start Time : ${auction.TimeStart}</p> */}
+          {/* <p className={styles.txt}>Auction End Time : 31/12/2022 11:00AM</p> */}
+          {/* <p className={styles.txt}>Auction End Time : ${auction.TimeFinish}</p> */}
           {/* </div> */}
           <Popup
             trigger={<button className={styles.btn}>Register</button>}
@@ -150,7 +149,7 @@ const AuctionDetail = () => {
       </div>
       <Footer />
     </>
-  );
+  ));
 };
 
 export default AuctionDetail;

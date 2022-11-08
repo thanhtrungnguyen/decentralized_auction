@@ -31,6 +31,9 @@ const Home = () => {
             <Link to="/placeABid">place A Bid</Link>
           </li>
           <li>
+            <Link to="/auctionList">Auction List</Link>
+          </li>
+          <li>
             <Link to="/confirmPayment">confirm Payment</Link>
           </li>
         </ul>
