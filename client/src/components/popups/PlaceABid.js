@@ -3,7 +3,7 @@ import styles from "../../styleCss/stylesComponents/placeABid.module.css";
 import ConfirmPayment from "../../pages/confirmPayment/confirmPayment";
 import { Outlet, Link } from "react-router-dom";
 
-const PlaceABid = () => {
+const PlaceABid = ({ sendAuction }) => {
   // const myFunction = () => {
   //   let x = document.getElementById("trans");
   //   if (x.style.display === "none") {
@@ -13,6 +13,7 @@ const PlaceABid = () => {
   //     x.style.display = "none";
   //   }
   // };
+
   return (
     <>
       <div className={styles.container}>
@@ -20,20 +21,26 @@ const PlaceABid = () => {
         <p className={styles.txt}>You have selected:</p>
         <div>
           <div className={styles.info}>
-            <img
+            {/* <img
               className={styles.img}
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
+            /> */}
+            <img
+              className={styles.img}
+              src={sendAuction.MediaURL[0]}
+              alt="images"
             />
-            <p className={styles.title}>Name</p>
+            <p className={styles.title}>{sendAuction.PropertyName}</p>
             <br />
             <br />
             <br />
             <br />
             <p className={styles.txtM}>Starting bid:</p>
-            <p className={styles.txtNormal}>999 ETH</p>
+            <p className={styles.txtNormal}>{sendAuction.StartBid}</p>
             <p className={styles.txtM}>Current bid:</p>
             <p className={styles.txtNormal}>6969 ETH</p>
+            {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
             <p className={styles.txtM}>Auction ends in:</p>
             <p className={styles.txtNormal}>5d 5h 5m 55s </p>
           </div>
@@ -41,6 +48,7 @@ const PlaceABid = () => {
             {/* <form> */}
             <p className={styles.title}>Place bid details:</p>
             <p className={styles.txtT}>Your bid must be at least 6969 ETH</p>
+            {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
             <input className={styles.input} type="text"></input>
             <label className={styles.mess}>message</label>
             <br />

@@ -25,98 +25,82 @@ const AuctionDetail = () => {
       <NavBar />
       <div className={styles.container}>
         <div className={styles.col1}>
-          <div className={styles.row}>
-            {/* <img
+          {/* <div className={styles.col1}> */}
+          <div className={styles.col3}>
+            <div className={styles.row}>
+              {/* <img
               className={styles.img}
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-            {/* <img
-              className={styles.img}
-              src={`${data.MediaURL[0]}`}
-              alt="images"
-            /> */}
-          </div>
-          <div className={styles.row}>
-            {/* <img
-              className={styles.img}
-              src="https://www.w3schools.com/html/pic_trulli.jpg"
-              alt="images"
-            /> */}
-            {/* <img
-              className={styles.img}
-              src={`${data.MediaURL[1]}`}
-              alt="images"
-            /> */}
-          </div>
-          <div className={styles.row}>
-            {/* <img
+              <img
+                className={styles.img}
+                src={`${data.MediaURL[0]}`}
+                alt="images"
+              />
+            </div>
+            <div className={styles.row}>
+              {/* <img
               className={styles.img}
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-            {/* <img
+              <img
+                className={styles.img}
+                src={`${data.MediaURL[1]}`}
+                alt="images"
+              />
+            </div>
+            <div className={styles.row}>
+              {/* <img
               className={styles.img}
-              src={`${data.MediaURL[2]}`}
+              src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
+              <img
+                className={styles.img}
+                src={`${data.MediaURL[2]}`}
+                alt="images"
+              />
+            </div>
           </div>
-        </div>
-        <div className={styles.col2}>
+          {/* </div> */}
+          {/* <div className={styles.col2}> */}
           {/* <div className={styles.conI}> */}
-          <img
+          {/* <img
             className={styles.img}
             src="https://www.w3schools.com/html/pic_trulli.jpg"
             alt="images"
-          />
-          {/* <img className={styles.img} src={`${auction.url}`} alt="images" /> */}
+          /> */}
+          <div className={styles.col4}>
+            <img
+              className={styles.img}
+              src={`${data.MediaURL[2]}`}
+              alt="images"
+            />
+          </div>
+          {/* </div> */}
           {/* </div> */}
         </div>
-        <div className={styles.col3}>
-          {/* <div className={styles.conI}> */}
-          <p className={styles.title}>Playwood arm chair</p>
-          {/* <p className={styles.txtBold}>Starting price : $300</p> */}
-          <p className={styles.txtBold}>Starting price : ${data.StartBid}</p>
-          <p className={styles.txtBold}>Asset Code : AAAAA1</p>
-          {/* <p className={styles.txtBold}>Asset Code : ${auction.assetCode}</p> */}
+        <div className={styles.col2}>
+          <p className={styles.title}>{data.PropertyName}</p>
+          <p className={styles.txtBold}>Start Bid : ${data.StartBid}</p>
 
-          {/* <p className={styles.txt}>Registration Time : 31/11/2022 9:00AM</p>
-          <p className={styles.txt}>
-            Registration End Time : 03/12/2022 9:00AM
-          </p> */}
-          {/* <p className={styles.txtBold}>Auction Registration Fee : $100</p> */}
-          {/* <p className={styles.txtBold}>Auction Registration Fee : ${auction.registrationFee}</p> */}
-          <p className={styles.txtBold}>Down payment : $320</p>
-          {/* <p className={styles.txtBold}>Down payment : ${auction.dowPayment}</p> */}
-          {/* <p className={styles.txt}>Auction Start Time : 31/12/2022 9:00AM</p> */}
-          {/* <p className={styles.txt}>Auction Start Time : ${auction.TimeStart}</p> */}
-          {/* <p className={styles.txt}>Auction End Time : 31/12/2022 11:00AM</p> */}
-          {/* <p className={styles.txt}>Auction End Time : ${auction.TimeFinish}</p> */}
+          <p className={styles.txt}>Auction Start Time : ${data.TimeStart}</p>
+          <p className={styles.txt}>Auction End Time : ${data.TimeFinish}</p>
           {/* </div> */}
           <Popup
-            trigger={<button className={styles.btn}>Register</button>}
+            trigger={<button className={styles.btn}>Place Bid</button>}
             position="right center"
           >
-            <PlaceABid />
+            <PlaceABid sendAuction={data} />
           </Popup>
         </div>
       </div>
       <div className={styles.des}>
         <div className={styles.cont}>
-          <div className={styles.colcont1}>
-            <p className={styles.txtDesBold}>Description</p>
-            <br />
-            <p className={styles.txtDes}>Owner: Nguyen Van A</p>
-            <p className={styles.txtDes}>Material, substance :</p>
-            <p className={styles.txtDes}>Size : </p>
-            <p className={styles.txtDes}>Year of creation : </p>
-            <br />
-            <p className={styles.txtDesBold}>Detailed Description</p>
-            <textarea className={styles.area} placeholder="Describe"></textarea>
-          </div>
-          <div className={styles.colcont2}>
-            <p className={styles.txtDesBold}>Pictures and videos</p>
-          </div>
+          <p className={styles.txtDesBold}>Description</p>
+          <label className={styles.area}>{data.PropertyInformation}</label>
         </div>
       </div>
       <div className={styles.RelatedAuctions}>

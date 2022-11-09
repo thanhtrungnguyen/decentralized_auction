@@ -10,7 +10,7 @@ import { useState } from "react";
 import PlaceABid from "./components/popups/PlaceABid";
 import ConfirmPayment from "./pages/confirmPayment/confirmPayment";
 import AuctionList from "./pages/auctionList/AuctionList";
-
+import PaymentResult from "./pages/paymentResult/PaymemtResult";
 function App() {
   return (
     <BrowserRouter>
@@ -24,6 +24,7 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route path="placeABid" element={<PlaceABid />} />
         <Route path="confirmPayment" element={<ConfirmPayment />} />
+        <Route path="paymentResult" element={<PaymentResult />} />
       </Routes>
     </BrowserRouter>
   );

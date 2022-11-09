@@ -36,6 +36,9 @@ const Home = () => {
           <li>
             <Link to="/confirmPayment">confirm Payment</Link>
           </li>
+          <li>
+            <Link to="/paymentResult">payment Result</Link>
+          </li>
         </ul>
       </nav>
 
