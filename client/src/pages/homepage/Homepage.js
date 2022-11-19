@@ -39,6 +39,9 @@ const Home = () => {
           <li>
             <Link to="/paymentResult">payment Result</Link>
           </li>
+          <li>
+            <Link to="/news">News</Link>
+          </li>
         </ul>
       </nav>
 

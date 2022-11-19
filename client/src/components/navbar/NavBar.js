@@ -22,7 +22,10 @@ const NavBar = () => {
           <Link className={styles.link} to="/">
             About us
           </Link>
-          <BsSearch className={styles.icon} />
+          <div className={styles.flright}>
+            <input className={styles.ip} type="text"></input>
+            <BsSearch className={styles.icon} />
+          </div>
         </div>
       </div>
     </>

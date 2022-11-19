@@ -46,14 +46,19 @@
   color: #0d0e43;
   margin-left: 30px;
 }
-
+.ip {
+  width: 200px;
+  height: 25px;
+}
 .icon {
-  float: right;
   width: 25px;
   height: 25px;
-  margin-top: 5px;
   padding: 5px;
+  margin-top: -5px;
   color: white;
   background: #111c85;
-  border-radius: 5px;
+}
+.flright {
+  float: right;
+  margin-top: 5px;
 }
