@@ -3,12 +3,13 @@ import Header from "../../components/header/HeaderUser";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import PlaceABid from "../../components/popups/PlaceABid";
-
+import SidebarSeller from "../../components/sidebar_seller/SidebarSeller";
 const Home = () => {
   return (
     <>
       <Header />
       <NavBar />
+      <SidebarSeller />
       <h1>Home</h1>
       <nav>
         <ul>
@@ -41,6 +42,9 @@ const Home = () => {
           </li>
           <li>
             <Link to="/news">News</Link>
+          </li>
+          <li>
+            <Link to="/sellerCenter">Seller Center</Link>
           </li>
         </ul>
       </nav>

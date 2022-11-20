@@ -1,0 +1,29 @@
+.container {
+  width: 264px;
+  height: 100%;
+  background: #ffffff;
+  float: left;
+}
+
+.title {
+  font-family: "Josefin Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  /* identical to box height */
+  color: #5a5c7e;
+  margin-left: 20px;
+}
+
+.txt {
+  font-family: "Josefin Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  /* identical to box height */
+  text-decoration: none;
+  color: #000000;
+  margin-left: 20px;
+}

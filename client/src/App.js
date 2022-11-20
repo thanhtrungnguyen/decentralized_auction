@@ -12,6 +12,8 @@ import ConfirmPayment from "./pages/confirmPayment/confirmPayment";
 import AuctionList from "./pages/auctionList/AuctionList";
 import PaymentResult from "./pages/paymentResult/PaymemtResult";
 import News from "./pages/news/News";
+import SellerCenter from "./pages/ForSeller/SellerCenter";
+import MyProperty from "./pages/ForSeller/MyProperty";
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +29,8 @@ function App() {
         <Route path="confirmPayment" element={<ConfirmPayment />} />
         <Route path="paymentResult" element={<PaymentResult />} />
         <Route path="news" element={<News />} />
+        <Route path="sellerCenter" element={<SellerCenter />} />
+        <Route path="myProperty" element={<MyProperty />} />
       </Routes>
     </BrowserRouter>
   );
