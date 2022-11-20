@@ -17,6 +17,7 @@
   background: #2f1ac4;
   margin-left: 67%;
   margin-top: 9px;
+  position: relative;
 }
 
 .link {
@@ -30,6 +31,7 @@
   color: #f1f1f1;
   text-decoration: none;
   margin-left: 30px;
+  position: relative;
 }
 
 .txt {
@@ -44,6 +46,7 @@
   margin-left: 80px;
   margin-right: 10px;
   margin-top: 9px;
+  position: relative;
 }
 
 .icon {
@@ -54,4 +57,15 @@
   margin-top: 6px;
 
   color: #ffffff;
+  position: absolute;
+}
+.icon2 {
+  width: 30px;
+  height: 30px;
+  /* background: #ffffff; */
+  margin-left: 70px;
+  margin-top: 6px;
+
+  color: #ffffff;
+  position: absolute;
 }

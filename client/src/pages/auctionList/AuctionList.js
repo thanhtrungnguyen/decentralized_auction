@@ -7,6 +7,7 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import Popup from "reactjs-popup";
 import PlaceABid from "../../components/popups/PlaceABid";
+import Pagination from "@mui/material/Pagination";
 
 const AuctionList = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -23,7 +24,10 @@ const AuctionList = () => {
       setData(resp.data);
     });
   }, [baseURL]);
-
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   //   useEffect(()=>{
   //     const fetchData = async ()=>{
   //         setLoading(true);
@@ -44,76 +48,91 @@ const AuctionList = () => {
       <NavBar />
 
       <div className={styles.nav}>
-        <p>Artwork & Upcoming Auction</p>
-        <div id="navbarColor">
-          <div>
-            <span>Sort by:</span>
-            <button>Best match</button>
-            <div>
-              <a href="#">Đường Dẫn 1</a>
-              <a href="#">Đường Dẫn 2</a>
-              <a href="#">Đường Dẫn 3</a>
-            </div>
-          </div>
-          <div>
-            <div>
-              <input type="search" placeholder="Search" />
-              <button>search</button>
-            </div>
-          </div>
+        <label className={styles.txtTitle}>Artwork & Upcoming Auction</label>
+        <div className={styles.floatRight}>
+          <label className={styles.txtBlue}>Sort by:</label>
+          <select id="language" className={styles.select}>
+            <option value="english">Best match</option>
+            <option value="vietnamese">Best match 1</option>
+            <option value="vietnamese">Best match 2</option>
+            <option value="vietnamese">Best match 3</option>
+          </select>
+          <label className={styles.txtBlue}>Search:</label>
+
+          <input type="text" placeholder="Search" className={styles.ip} />
+          <button className={styles.btnSearch}>Search</button>
         </div>
       </div>
       <section id="sidebar">
-        <div>
-          <p>Filter By Asset</p>
+        <div className={styles.sidebar}>
+          <p className={styles.txtBlueBold}>Filter By Asset</p>
+          <hr className={styles.hr} />
           <form>
             <div>
               <input type="checkbox" name="type" id="realestate" />
-              <label for="realestate">Real estate</label>{" "}
+              <label for="realestate" className={styles.txtNormal}>
+                Real estate
+              </label>
             </div>
             <div>
               <input type="checkbox" name="type" id="liquidation" />
-              <label for="liquidation">Liquidation Assets</label>
+              <label for="liquidation" className={styles.txtNormal}>
+                Liquidation Assets
+              </label>
             </div>
             <div>
               <input type="checkbox" name="type" id="artwork" />
-              <label for="artwork">Artwork</label>
+              <label for="artwork" className={styles.txtNormal}>
+                Artwork
+              </label>
             </div>
           </form>
-          <p>Filter By Statuses</p>
+          <p className={styles.txtBlueBold}>Filter By Statuses</p>
+          <hr className={styles.hr} />
           <form>
             <div>
               <input type="checkbox" name="type" id="upcoming" />
-              <label for="upcoming">Upconming</label>{" "}
+              <label for="upcoming" className={styles.txtNormal}>
+                Upconming
+              </label>
             </div>
             <div>
               <input type="checkbox" name="type" id="current" />
-              <label for="current">Current auction</label>
+              <label for="current" className={styles.txtNormal}>
+                Current auction
+              </label>
             </div>
             <div>
               <input type="checkbox" name="type" id="past" />
-              <label for="past">Past auction</label>
+              <label for="past" className={styles.txtNormal}>
+                Past auction
+              </label>
             </div>
           </form>
-          <p>Filter By Starting Price</p>
+          <p className={styles.txtBlueBold}>Filter By Starting Price</p>
+          <hr className={styles.hr} />
           <form>
             <div>
               <input type="checkbox" name="type" id="1price" />
-              <label for="1price">0 ETH - 10 ETH</label>
+              <label for="1price" className={styles.txtNormal}>
+                0 ETH - 10 ETH
+              </label>
             </div>
             <div>
               <input type="checkbox" name="type" id="2price" />
-              <label for="2price" class="pl-1 pt-sm-0 pt-1">
+              <label for="2price" className={styles.txtNormal}>
                 10 ETH - 50 ETH
               </label>
             </div>
             <div>
               <input type="checkbox" name="type" id="3price" />
-              <label for="3price">50 ETH - 100 ETH</label>
+              <label for="3price" className={styles.txtNormal}>
+                50 ETH - 100 ETH
+              </label>
             </div>
             <div>
               <input type="checkbox" name="type" id="4price" />
-              <label for="4price" class="pl-1 pt-sm-0 pt-1">
+              <label for="4price" className={styles.txtNormal}>
                 100 ETH+
               </label>
             </div>
@@ -121,69 +140,47 @@ const AuctionList = () => {
         </div>
       </section>
       <section id="products">
-        <div>
+        <div className={styles.products}>
           {data.map((auction) => (
-            <div>
+            <div className={styles.product}>
               <div>
+                <img
+                  className={styles.img}
+                  src="https://image.thanhnien.vn/w1024/Uploaded/2022/ywfsm/2019_09_07/10_xfvb.jpg"
+                />
+              </div>
+              <div>
+                <p className={styles.txtBlueB}>
+                  {auction.property.PropertyName}
+                </p>
+
+                <p className={styles.txtDes}>
+                  {auction.property.PropertyInformation}
+                </p>
+
                 <div>
+                  <p className={styles.txtBlueB}>Current auction</p>
                   <div>
-                    <img src="https://image.thanhnien.vn/w1024/Uploaded/2022/ywfsm/2019_09_07/10_xfvb.jpg" />
+                    <label className={styles.txtBlueB}>Price:</label>
+                    <label className={styles.txtBlueB}>
+                      {auction.auction.StartBid}
+                    </label>
                   </div>
+                  <br />
                   <div>
-                    <p>{auction.property.PropertyName}</p>
-
-                    <p>{auction.property.PropertyInformation}</p>
-                  </div>
-                  <div>
-                    <p>Current auction</p>
-                    <div>
-                      <p>Price:</p>
-                      <p> {auction.auction.StartBid}</p>
-                    </div>
-
-                    <div>
-                      <Link
-                        to={`/auctiondetail/${auction.auction._id}`}
-                        type="button"
-                      >
-                        Details
-                      </Link>
-                    </div>
+                    <Link
+                      className={styles.link}
+                      to={`/auctiondetail/${auction.auction._id}`}
+                    >
+                      Details
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           ))}
           <div>
-            <div>
-              <nav aria-label="Page navigation example">
-                <ul>
-                  <li>
-                    <a href="#" aria-label="Previous">
-                      <span aria-hidden="true">&lt;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">1</a>
-                  </li>
-                  <li>
-                    <a href="#">..</a>
-                  </li>
-                  <li>
-                    <a href="#">24</a>
-                  </li>
-                  <li>
-                    <a href="#" aria-label="Next">
-                      <span aria-hidden="true" class="font-weight-bold">
-                        &gt;
-                      </span>
-                      <span class="sr-only">Next</span>{" "}
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+            <Pagination count={10} page={page} onChange={handleChange} />
           </div>
         </div>
       </section>

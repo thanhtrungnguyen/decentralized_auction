@@ -74,7 +74,7 @@ const AuctionDetail = () => {
           /> */}
           <div className={styles.col4}>
             <img
-              className={styles.img}
+              className={styles.img2}
               src={`${data.MediaURL[2]}`}
               alt="images"
             />
@@ -97,6 +97,7 @@ const AuctionDetail = () => {
           </Popup>
         </div>
       </div>
+      <br />
       <div className={styles.des}>
         <div className={styles.cont}>
           <p className={styles.txtDesBold}>Description</p>

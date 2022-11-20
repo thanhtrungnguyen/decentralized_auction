@@ -16,6 +16,16 @@
   height: 36px;
   background: #4c34c2;
   border-radius: 4px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  /* Gray_02/100 */
+
+  color: #ffffff;
 }
 .col1 {
   position: absolute;
@@ -64,11 +74,12 @@
   height: 649px;
   background: #f9f8fe;
   padding-top: 100px;
+  position: relative;
 }
 .cont {
   position: relative;
   width: 1100px;
-  height: 500px;
+  height: 100%;
   left: 50%;
   margin-left: -550px;
   display: table;
@@ -141,13 +152,18 @@
   height: 100%;
 }
 .img2 {
-  width: 80%;
-  height: 80%;
-  margin-left: 10%;
+  width: 85%;
+  height: 95%;
+  margin-left: 5%;
 }
 .img:hover {
   transform: scale(
-    1.5
+    1.2
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+.img2:hover {
+  transform: scale(
+    1.2
   ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .title {
@@ -162,8 +178,8 @@
   position: relative;
   width: 700px;
   height: 400px;
-  left: 50%;
-  margin-left: -350px;
+  /* left: 50%;
+  margin-left: -350px; */
   font-family: "Josefin Sans";
   font-style: normal;
   font-weight: 400;

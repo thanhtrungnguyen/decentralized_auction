@@ -12,7 +12,7 @@ const Header = () => {
         </select>
         <label className={styles.txt}>Username</label>
         <BiMessageDetail className={styles.icon} />
-        <BiBell className={styles.icon} />
+        <BiBell className={styles.icon2} />
       </div>
     </>
   );
