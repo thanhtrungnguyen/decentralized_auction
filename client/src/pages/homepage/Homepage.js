@@ -46,6 +46,9 @@ const Home = () => {
           <li>
             <Link to="/sellerCenter">Seller Center</Link>
           </li>
+          <li>
+            <Link to="/addProperty">add Property</Link>
+          </li>
         </ul>
       </nav>
 

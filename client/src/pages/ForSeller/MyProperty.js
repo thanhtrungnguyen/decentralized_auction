@@ -49,13 +49,13 @@ const MyProperty = () => {
             <br />
             <br />
             <hr className={styles.hr} />
-            <Link className={styles.bold} to="/login">
+            <Link className={styles.bold} to="/myProperty">
               All
             </Link>
-            <Link className={styles.link} to="/login">
+            <Link className={styles.link} to="/">
               Biding
             </Link>
-            <Link className={styles.link} to="/login">
+            <Link className={styles.link} to="/">
               Sold out
             </Link>
             <hr />

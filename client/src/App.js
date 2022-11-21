@@ -14,6 +14,7 @@ import PaymentResult from "./pages/paymentResult/PaymemtResult";
 import News from "./pages/news/News";
 import SellerCenter from "./pages/ForSeller/SellerCenter";
 import MyProperty from "./pages/ForSeller/MyProperty";
+import AddProperty from "./pages/ForSeller/AddProperty";
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +32,7 @@ function App() {
         <Route path="news" element={<News />} />
         <Route path="sellerCenter" element={<SellerCenter />} />
         <Route path="myProperty" element={<MyProperty />} />
+        <Route path="addProperty" element={<AddProperty />} />
       </Routes>
     </BrowserRouter>
   );
