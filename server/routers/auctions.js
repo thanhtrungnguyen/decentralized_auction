@@ -10,7 +10,7 @@ router.post("/", verifySeller ,createAuction);
 
 router.put("/:id", verifySeller ,updateAuction);
 
-router.get("/",  getAllAuction);
+router.get("/auction",  getAllAuction);
 
 router.get("/auctiondetail/:id",  getAuctionDetailByID);
 

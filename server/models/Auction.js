@@ -7,7 +7,7 @@ const AuctionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'properties'       
     },
-
+    
     StartBid:{
         type: Number
     },

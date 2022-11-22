@@ -3,10 +3,9 @@ import { getAllAccount } from "../controllers/AccountController.js";
 import { addRole, changethepassword, login, logout, register } from "../controllers/AuthController.js";
 
 
-
 const router = express.Router();
 
-router.get("/account",getAllAccount)
+router.get("/account",getAllAccount);
 
 router.post("/register",register);
 
