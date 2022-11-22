@@ -1,12 +1,6 @@
 import express from "express";
-import {
-  addRole,
-  changethepassword,
-  login,
-  logout,
-  register,
-} from "../controllers/AuthController.js";
-
+import { addRole, changethepassword, login, logout, register } from "../controllers/AuthController.js";
+import { getAllAccount } from "../controllers/AccountController.js";
 import multer from "multer";
 
 const upload = multer({ dest: "uploads/" });
@@ -31,6 +25,8 @@ router.post(
 router.post("/login", login);
 
 router.post("/role", addRole);
+
+router.get("/account",getAllAccount);
 
 router.post("/logout", logout);
 
