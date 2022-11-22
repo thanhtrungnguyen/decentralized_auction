@@ -10,6 +10,7 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
+import { Outlet, Link } from "react-router-dom";
 
 import ReactDOM from "react-dom/client";
 
@@ -42,7 +43,7 @@ const Register = () => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [rePassword, setRePassword] = useState(null);
-  const [role, setRole] = useState("BIDDER");
+  const [role, setRole] = useState(null);
   const [usertype, setUsertype] = useState("CONTACT");
 
   const handleInputChange = (e) => {
@@ -91,6 +92,9 @@ const Register = () => {
     }
     if (id === "rePassword") {
       setRePassword(value);
+    }
+    if (id === "role") {
+      setRole(value);
     }
   };
   const handleSubmit = (event) => {
@@ -188,8 +192,10 @@ const Register = () => {
             <p className={styles.textFor}>For personal</p>
           </div>
           <div className={styles.divImg2}>
-            <BsBank2 className={styles.icon} />
-            <p className={styles.textFor}>For organization</p>
+            <Link to="/registerForO">
+              <BsBank2 className={styles.icon} />
+              <p className={styles.textFor}>For organization</p>
+            </Link>
           </div>
           <p className={styles.textBlue}>Personal Infomation</p>
           <p className={styles.textRed}>Basic information</p>
@@ -366,6 +372,16 @@ const Register = () => {
             placeholder="Re-eneter the password"
             required
           ></input>
+          <p className={styles.txtBlack}>Role</p>
+          <select
+            id="role"
+            className={styles.dropdown}
+            onChange={(e) => handleInputChange(e)}
+            placeholder="Role"
+          >
+            <option value="BIDDER">BIDDER</option>
+            <option value="SELLER">SELLER</option>
+          </select>
           <input
             type="submit"
             className={styles.ipsubmit}

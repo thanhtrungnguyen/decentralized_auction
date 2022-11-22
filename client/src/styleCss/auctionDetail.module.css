@@ -156,6 +156,12 @@
   height: 95%;
   margin-left: 5%;
 }
+.video {
+  position: absolute;
+  width: 85%;
+  height: 95%;
+  margin-left: 5%;
+}
 .img:hover {
   transform: scale(
     1.2

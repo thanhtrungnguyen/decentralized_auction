@@ -16,8 +16,8 @@ const NavBar = () => {
           <Link className={styles.link} to="/">
             Auctions
           </Link>
-          <Link className={styles.link} to="/">
-            Blog
+          <Link className={styles.link} to="/news">
+            News
           </Link>
           <Link className={styles.link} to="/">
             About us

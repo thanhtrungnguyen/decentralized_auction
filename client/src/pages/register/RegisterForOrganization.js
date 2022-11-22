@@ -3,7 +3,7 @@ import "react-dropdown/style.css";
 import useLocationForm from "./useLocationForm";
 import Select from "react-select";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
@@ -45,8 +45,8 @@ const Register = () => {
   const [userName, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [rePassword, setRePassword] = useState(null);
-  const [role, setRole] = useState("BIDDER");
-  const [usertype, setUsertype] = useState("CONTACT");
+  const [role, setRole] = useState(null);
+  const [usertype, setUsertype] = useState("ACCOUNT");
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -112,6 +112,9 @@ const Register = () => {
     }
     if (id === "rePassword") {
       setRePassword(value);
+    }
+    if (id === "role") {
+      setRole(value);
     }
   };
   const handleSubmit = (event) => {
@@ -208,8 +211,10 @@ const Register = () => {
           <p className={styles.textAd}>Already have an account? Login</p>
           <br />
           <div className={styles.divImg}>
-            <BsFillPersonFill className={styles.icon} />
-            <p className={styles.textFor}>For personal</p>
+            <Link to="/register">
+              <BsFillPersonFill className={styles.icon} />
+              <p className={styles.textFor}>For personal</p>
+            </Link>
           </div>
           <div className={styles.divImg2}>
             <BsBank2 className={styles.icon} />
@@ -449,6 +454,15 @@ const Register = () => {
             placeholder="Re-eneter the password"
             required
           ></input>
+          <select
+            id="role"
+            className={styles.dropdown}
+            onChange={(e) => handleInputChange(e)}
+            placeholder="Role"
+          >
+            <option value="BIDDER">BIDDER</option>
+            <option value="SELLER">SELLER</option>
+          </select>
           <input
             type="submit"
             className={styles.ipsubmit}

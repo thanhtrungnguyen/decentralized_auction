@@ -8,6 +8,8 @@ import { useParams } from "react-router-dom";
 import Popup from "reactjs-popup";
 import PlaceABid from "../../components/popups/PlaceABid";
 import useFetch from "../../hook/useFetch";
+import ReactPlayer from "react-player";
+import { Player } from "video-react";
 
 const AuctionDetail = () => {
   // const [auction, setAuction] = useState(null);
@@ -73,11 +75,37 @@ const AuctionDetail = () => {
             alt="images"
           /> */}
           <div className={styles.col4}>
-            <img
+            {/* <img
               className={styles.img2}
               src={`${data.MediaURL[2]}`}
               alt="images"
+            /> */}
+            {/* <ReactPlayer
+              className={styles.video}
+              url="youtube.com/watch?v=LuQ2YQ87ucw"
+              width="85%"
+              height="90%"
+            /> */}
+            <ReactPlayer
+              className={styles.video}
+              url="https://www.youtube.com/watch?v=CYH-Ac3XiUg"
+              playing={true}
+              controls={true}
+              loop={true}
+              muted={true}
+              playsinline={true}
+              onReady={true}
+              width="85%"
+              height="90%"
             />
+            {/* <Player
+              playsInline
+              className={styles.video}
+              poster={`${data.MediaURL[1]}`}
+              ="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+              width="85%"
+              height="90%"
+            /> */}
           </div>
           {/* </div> */}
           {/* </div> */}
