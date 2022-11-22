@@ -5,6 +5,7 @@ import Role from "../models/Role.js";
 import RoleRight from "../models/RoleRight.js";
 import { createError } from "../utils/error.js";
 import Contact from "../models/Contact.js";
+import { uploadFile } from "../s3.js";
 
 //define role
 const BIDDER = "BIDDER";
@@ -29,7 +30,14 @@ export const register = async (req, res, next) => {
       const user = await User.findOne({
         UserName: req.body.username,
       });
+      const files = req.files;
+      console.log(files);
 
+      const result = await uploadFile(files.cardFront[0]);
+      console.log(result);
+
+      const result1 = await uploadFile(files.cardBack[0]);
+      console.log(result1);
       let date_ob = new Date(req.body.dateOfBirth);
       let date = date_ob.getDate();
       let month = date_ob.getMonth();

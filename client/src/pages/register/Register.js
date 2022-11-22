@@ -97,29 +97,32 @@ const Register = () => {
     let cityId = selectedCity.value;
     let districtId = selectedDistrict.value;
     let wardId = selectedWard.value;
-    let cardfront = cardFront.name;
-    let cardback = cardBack.name;
+    let cardFront1 = cardFront;
+
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("gender", gender);
+    formData.append("dateOfBirth", dateOfBirth);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("cityId", cityId);
+    formData.append("districtId", districtId);
+    formData.append("wardId", wardId);
+    formData.append("sepecificAddress", sepecificAddress);
+    formData.append("cardNumber", cardNumber);
+    formData.append("dateRangeCard", dateRangeCard);
+    formData.append("cardGrantedPlace", cardGrantedPlace);
+    formData.append("cardFront", cardFront);
+    formData.append("cardBack", cardBack);
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("role", role);
+    formData.append("usertype", usertype);
+
     axios
-      .post("http://localhost:8800/api/auth/register", {
-        firstName,
-        lastName,
-        gender,
-        dateOfBirth,
-        email,
-        phone,
-        cityId,
-        districtId,
-        wardId,
-        sepecificAddress,
-        cardNumber,
-        dateRangeCard,
-        cardGrantedPlace,
-        cardfront,
-        cardback,
-        username,
-        password,
-        role,
-        usertype,
+      .post("http://localhost:8800/api/auth/register", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
         console.log(res);
@@ -156,9 +159,9 @@ const Register = () => {
         " " +
         cardGrantedPlace +
         " " +
-        cardBack.value +
+        cardBack +
         " " +
-        cardFront.name +
+        cardFront +
         " " +
         username +
         " " +
@@ -318,6 +321,7 @@ const Register = () => {
             className={styles.imgCard}
             id="cardFront"
             type="file"
+            accept="image/*"
             // onChange={(e) => {
             //   console.log(e.target.files[0]);
             // }}
@@ -327,6 +331,7 @@ const Register = () => {
           <input
             id="cardBack"
             type="file"
+            accept="image/*"
             // onChange={(e) => {
             //   console.log(e.target.files[0]);
             // }}
@@ -364,7 +369,7 @@ const Register = () => {
           <input
             type="submit"
             className={styles.ipsubmit}
-            value="SIGN IN"
+            value="SIGN UP"
           ></input>
         </form>
       </div>

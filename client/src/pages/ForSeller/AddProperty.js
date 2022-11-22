@@ -31,7 +31,7 @@ const AddProperty = () => {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     if (id === "propertyImage") {
-      setPropertyImage(e.target.files[0]);
+      setPropertyImage(e.target.files);
     }
     if (id === "propertyVideo") {
       setPropertyVideo(e.target.files[0]);
@@ -54,39 +54,44 @@ const AddProperty = () => {
   };
 
   const handleSubmit = (event) => {
-    alert(
-      "infomation: " +
-        propertyImage.name +
-        " " +
-        propertyVideo.name +
-        " " +
-        propertyName +
-        " " +
-        cagetory +
-        " " +
-        propertyDescription +
-        " " +
-        startBid +
-        " " +
-        biddingPreiod
-    );
+    const formData = new FormData();
+    for (let i = 0; i < propertyImage.length; i++) {
+      formData.append(`propertyImage[${i}]`, propertyImage[i]);
+    }
+    formData.append("propertyVideo", propertyVideo);
+    formData.append("propertyName", propertyName);
+    formData.append("cagetory", cagetory);
+    formData.append("propertyDescription", propertyDescription);
+    formData.append("startBid", startBid);
+    formData.append("biddingPreiod", biddingPreiod);
     axios
-      .post("http://localhost:8800/api/auth/addProperty", {
-        propertyImage,
-        propertyVideo,
-        propertyName,
-        cagetory,
-        propertyDescription,
-        startBid,
-        biddingPreiod,
-      })
+      .post("http://localhost:8800/api/auth/addProperty", formData)
       .then((res) => {
         console.log(res);
         console.log(res.data);
         alert(res.data.message);
         navigate("/myProperty");
       });
+    for (const [key, value] of formData) {
+      alert(key + ": " + value);
+    }
+    // alert(
+    //   "infomation: " + formData
 
+    // propertyImage.name +
+    // " " +
+    // propertyVideo.name +
+    // " " +
+    // propertyName +
+    // " " +
+    // cagetory +
+    // " " +
+    // propertyDescription +
+    // " " +
+    // startBid +
+    // " " +
+    // biddingPreiod
+    // );
     event.preventDefault();
   };
   return (
@@ -113,6 +118,7 @@ const AddProperty = () => {
                   id="propertyImage"
                   onChange={(e) => handleInputChange(e)}
                   type="file"
+                  multiple
                   required
                 ></input>
                 <br />

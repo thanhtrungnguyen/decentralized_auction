@@ -7,6 +7,7 @@ import authRoute from "./routers/auth.js";
 import userRoute from "./routers/users.js";
 import auctionRoute from "./routers/auctions.js";
 import propertyRoute from "./routers/properties.js";
+import multer from "multer";
 
 // config app
 const app = express();
@@ -17,6 +18,7 @@ dotenv.config();
 app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
+const upload = multer({ dest: "uploads/" });
 
 //connect DB
 const connectDB = async () => {
