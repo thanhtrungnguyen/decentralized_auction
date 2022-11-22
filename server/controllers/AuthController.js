@@ -36,9 +36,19 @@ export const register = async (req, res, next) => {
         console.log("Created record id : " + ret.id);
       })
       var user = null;
-      await User.findOne({
-        UserName: req.body.username,
-      });
+      // await User.findOne({
+      //   UserName: req.body.username,
+      // });
+      await conn.sobject("User__c").findOne({
+        Name: req.body.username,
+      }, (err, ret) => {
+        if (err) { return console.error(err, ret); }
+        else{
+          user = ret.Id
+          console.log("User Name : " + ret.Id);
+        }
+      })
+      console.log(user)
       const files = req.files;
       console.log(files);
 
@@ -101,7 +111,7 @@ export const register = async (req, res, next) => {
 
       //   const roleright = new RoleRight({
       //     UserId: user._id,
-      //     RoleId: role._id,
+      //     RoleId: role._id, 
       //   });
       //   await roleright.save();
        }
@@ -115,7 +125,7 @@ export const register = async (req, res, next) => {
   };
 
   //roles: tạo hàm để tiện insert role mặc dù ko dùng
-
+  //1-Bidder, 2- seller, 3- admin
   export const addRole = async (req, res, next) => {
     try {
       const role = new Role({
