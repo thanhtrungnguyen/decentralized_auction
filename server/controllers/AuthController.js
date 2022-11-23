@@ -19,7 +19,8 @@ const ACCOUNT = "ACCOUNT";
 export const register = async (req, res, next) => {
 
   try {
-
+    var user = null;
+    var role = null;
     if (req.body.usertype === CONTACT) {
       var salt = bcrypt.genSaltSync(10);
       var hash = bcrypt.hashSync(req.body.password, salt);
@@ -35,7 +36,7 @@ export const register = async (req, res, next) => {
         if (err || !ret.success) { return console.error(err, ret); }
         console.log("Created record id : " + ret.id);
       })
-      var user = null;
+      
       // await User.findOne({
       //   UserName: req.body.username,
       // });
@@ -50,7 +51,7 @@ export const register = async (req, res, next) => {
       })
       console.log(user)
       const files = req.files;
-      console.log(files);
+      // console.log("files: " + files);
 
       const result = await uploadFile(files.cardFront[0]);
       console.log(result);
@@ -96,14 +97,33 @@ export const register = async (req, res, next) => {
         Card_Number__c: req.body.cardNumber,
         Card_Granted_Date__c: req.body.dateRangeCard,
         Card_Granted_Place__c: req.body.cardGrantedPlace,
-        Font_Side_Image__c: req.body.cardfront,
-        Back_Side_Image__c: req.body.cardback,
+        Font_Side_Image__c: result.key,
+        Back_Side_Image__c: result.key,
         User_Id__c: user,
       }, (err, ret) => {
         if (err || !ret.success) { return console.error(err, ret); }
         console.log("Created contact : " + ret);
       })
+
+      
       //   await contact.save();
+
+      await conn.sobject("Role__c").findOne({
+        Name: req.body.role,
+      }, (err, ret) => {
+        if (err) { return console.error(err, ret); }
+        else{
+          role = ret.Id
+          console.log("Role Id : " + ret.Id);
+        }
+      })
+      await conn.sobject("Role_Right__c").create({
+        Role_Id__c: role,
+        User_DAP__c: user
+      },(err, ret) => {
+        if (err || !ret.success) { return console.error(err, ret); }
+        console.log("Created role right : " + ret);
+      })
 
       //   const role = await Role.findOne({
       //     RoleName: req.body.role,
@@ -126,52 +146,64 @@ export const register = async (req, res, next) => {
 
   //roles: tạo hàm để tiện insert role mặc dù ko dùng
   //1-Bidder, 2- seller, 3- admin
-  export const addRole = async (req, res, next) => {
-    try {
-      const role = new Role({
-        RoleName: req.body.RoleName,
-      });
-      await role.save();
-      res.status(200).send("Role has been created.");
-    } catch (error) {
-      next(error);
-    }
-  };
+  // export const addRole = async (req, res, next) => {
+  //   try {
+  //     const role = new Role({
+  //       RoleName: req.body.RoleName,
+  //     });
+  //     await role.save();
+  //     res.status(200).send("Role has been created.");
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 
   //login
 
   export const login = async (req, res, next) => {
     try {
-      const user = await User.findOne({ UserName: req.body.username });
+      var user = null;
+      var roleRight = null;
+      var role = null;
+      await conn.sobject('User__c').findOne({ Name: req.body.userName },(err,ret)=>{
+        if(err) console.error(err)
+        user = ret
+      });
 
       if (!user) return next(createError(404, "User not found!"));
 
       const isPasswordCorrect = await bcrypt.compare(
         req.body.password,
-        user.PassWord
+        user.Password__c
       );
 
       if (!isPasswordCorrect)
         return next(createError(400, "Wrong password or username!!"));
 
-      const roleright = await RoleRight.findOne({
-        UserId: user._id,
+      await conn.sobject("Role_Right__c").findOne({
+        User_DAP__c: user.Id,
+      },(err,ret)=>{
+        if(err) console.error(err)
+        roleRight = ret.Role_Id__c;
       });
-      const role = await Role.findById(roleright.RoleId);
+      await conn.sobject("Role__c").findOne({
+        Id: roleRight
+      }, (err,ret)=>{
+        if(err) console.error(err)
+        role = ret.Name //BIDDER
+      });
 
       const token = jwt.sign(
-        { id: user._id, role: role.RoleName },
+        { id: user.Id, role: role },
         process.env.JWT
       );
-
-      const { PassWord, ...ortherDetails } = user._doc;
 
       res
         .cookie("access_token", token, {
           httpOnly: true,
         })
         .status(200)
-        .json({ ...ortherDetails, role: role.RoleName });
+        .json({userId:user.Id, userName: user.Name, role: role,});
     } catch (error) {
       next(error);
     }
@@ -179,26 +211,48 @@ export const register = async (req, res, next) => {
 
   //change the password
 
-  export const changethepassword = async (req, res, next) => {
+  export const changePassword = async (req, res, next) => {
     try {
-      const user = await User.findOne({ UserName: req.body.username });
+      var user = null;
+      // const user = await User.findOne({ UserName: req.body.username });
+      // const isOldPasswordCorrect = await bcrypt.compare(
+      //   req.body.oldpassword,
+      //   user.PassWord
+      // );
+      // if (!isOldPasswordCorrect)
+      //   return next(createError(400, "Wrong old password !!"));
+      await conn.sobject('User__c').findOne({ Name: req.body.userName },(err,ret)=>{
+        if(err) console.error(err)
+        user = ret
+      });
+
+      if (!user) return next(createError(404, "User not found!"));
+
       const isOldPasswordCorrect = await bcrypt.compare(
-        req.body.oldpassword,
-        user.PassWord
+        req.body.oldPassword,
+        user.Password__c
       );
+
       if (!isOldPasswordCorrect)
-        return next(createError(400, "Wrong old password !!"));
+        return next(createError(400, "Wrong password or username!!"));
 
       var salt = bcrypt.genSaltSync(10);
-      var hash = bcrypt.hashSync(req.body.newpassword, salt);
+      var hash = bcrypt.hashSync(req.body.newPassword, salt);
 
-      await User.updateOne(
-        { _id: user._id },
-        { $set: { PassWord: hash } },
-        { new: true }
-      );
+      await conn.sobject("User__c").update({
+        Id:user.Id,
+        Password__c: hash
+      },(err,result)=>{
+        if(err) return console.error(err)
+        res.status(200).json(result);
+      })
+      // await User.updateOne(
+      //   { _id: user._id },
+      //   { $set: { PassWord: hash } },
+      //   { new: true }
+      // );
 
-      res.status(200).json(updatedUser);
+      
     } catch (error) {
       next(error);
     }

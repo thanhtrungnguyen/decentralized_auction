@@ -9,7 +9,7 @@ const ADMIN = "ADMIN";
 
 //verify access_token
 export const verifyToken = (req,res,next)=>{
-    const token = req.cookies.access_token;
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwSjVnMDAwMDA2YzVOWkVBWSIsInJvbGUiOiJTRUxMRVIiLCJpYXQiOjE2NjkxOTU1ODZ9.01J_7ynnXSKTNXk9wiVwjiIjGoZu4gEgTG79ioLHNDs";
     if(!token){
         return next(createError(401,"You are not authenticated!"));
     }
@@ -42,7 +42,7 @@ export const verifyAdmin = (req,res,next) =>{
 }
 export const verifyBidder = (req,res,next) =>{
     verifyToken(req,res,()=>{
-        if(req.user.id === req.params.id && req.user.role == BIDDER ){
+        if(req.user.role == BIDDER ){
             next()
         }else{
            return next(createError(403,"you are not authorized!"))

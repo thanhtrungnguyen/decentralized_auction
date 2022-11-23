@@ -9,13 +9,13 @@ import Footer from "../../components/footer/Footer";
 const Login = () => {
   const navigate = useNavigate();
 
-  const [username, setUserName] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:8800/api/auth/login", { username, password })
+      .post("http://localhost:8800/api/auth/login", { userName, password })
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -40,7 +40,7 @@ const Login = () => {
                 type="text"
                 className={styles.textField}
                 placeholder="Email Address"
-                value={username}
+                value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 required
               ></input>
