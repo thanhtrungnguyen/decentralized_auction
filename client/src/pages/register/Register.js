@@ -225,6 +225,7 @@ const Register = () => {
             onChange={(e) => handleInputChange(e)}
             placeholder="Gender"
           >
+            
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>

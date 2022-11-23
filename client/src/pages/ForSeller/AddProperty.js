@@ -56,7 +56,7 @@ const AddProperty = () => {
   const handleSubmit = (event) => {
     const formData = new FormData();
     for (let i = 0; i < propertyImage.length; i++) {
-      formData.append(`propertyImage[${i}]`, propertyImage[i]);
+      formData.append(`propertyImage${i}`, propertyImage[i]);
     }
     formData.append("propertyVideo", propertyVideo);
     formData.append("propertyName", propertyName);
@@ -65,16 +65,16 @@ const AddProperty = () => {
     formData.append("startBid", startBid);
     formData.append("biddingPreiod", biddingPreiod);
     axios
-      .post("http://localhost:8800/api/auth/addProperty", formData)
+      .post("http://localhost:8800/api/property", formData)
       .then((res) => {
         console.log(res);
         console.log(res.data);
         alert(res.data.message);
         navigate("/myProperty");
       });
-    for (const [key, value] of formData) {
-      alert(key + ": " + value);
-    }
+    // for (const [key, value] of formData) {
+    //   alert(key + ": " + value);
+    // }
     // alert(
     //   "infomation: " + formData
 
@@ -210,7 +210,7 @@ const AddProperty = () => {
             ></input>
           </div>
 
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </form>
     </>
