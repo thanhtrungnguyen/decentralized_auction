@@ -5,6 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoute from "./routers/auth.js";
 import userRoute from "./routers/users.js";
+import accountRoute from "./routers/accounts.js"
 import auctionRoute from "./routers/auctions.js";
 import propertyRoute from "./routers/properties.js";
 import jsforce from "jsforce"
@@ -100,6 +101,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/property",propertyRoute);
+app.use("/api/account",accountRoute)
 // app.get('/Account/getAllAccount', (req, res) => {
 //   conn.query("Select Id, Name, Phone, NumberOfEmployees from Account", (err, result) => {
 //     if (err) {

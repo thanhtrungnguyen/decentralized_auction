@@ -49,7 +49,7 @@ export const register = async (req, res, next) => {
           console.log("User Name : " + ret.Id);
         }
       })
-      console.log(user)
+      //console.log(user)
       const files = req.files;
       // console.log("files: " + files);
 

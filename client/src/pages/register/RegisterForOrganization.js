@@ -36,7 +36,7 @@ const Register = () => {
   const [dateOfBirth, setdateOfBirth] = useState(null);
   const [email, setEmail] = useState(null);
   const [phone, setPhone] = useState(null);
-  const [sepecificAddress, setSepecificAddress] = useState(null);
+  const [specificAddress, setSepecificAddress] = useState(null);
   const [cardNumber, setcardNumber] = useState(null);
   const [dateRangeCard, setdateRangeCard] = useState(null);
   const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
@@ -86,7 +86,7 @@ const Register = () => {
     if (id === "phone") {
       setPhone(value);
     }
-    if (id === "sepecificAddress") {
+    if (id === "specificAddress") {
       setSepecificAddress(value);
     }
     if (id === "cardNumber") {
@@ -147,7 +147,7 @@ const Register = () => {
         district,
         wardId,
         ward,
-        sepecificAddress,
+        specificAddress,
         cardNumber,
         dateRangeCard,
         cardGrantedPlace,
@@ -185,7 +185,7 @@ const Register = () => {
         " " +
         wardId +
         " " +
-        sepecificAddress +
+        specificAddress +
         " " +
         cardNumber +
         " " +
@@ -382,9 +382,9 @@ const Register = () => {
             className={styles.ipadd}
             type="text"
             placeholder="Specific address"
-            value={sepecificAddress}
+            value={specificAddress}
             onChange={(e) => handleInputChange(e)}
-            id="sepecificAddress"
+            id="specificAddress"
             required
           ></input>{" "}
           <p className={styles.textRed}>Identity/Citizen card</p>
