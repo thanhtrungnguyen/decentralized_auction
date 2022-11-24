@@ -15,7 +15,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:8800/api/auth/login", { userName, password })
+      .post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true })
       .then((res) => {
         console.log(res);
         console.log(res.data);

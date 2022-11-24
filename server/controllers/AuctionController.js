@@ -1,6 +1,7 @@
 import Auction from "../models/Auction.js";
 import AuctionBidder from "../models/AuctionBidder.js";
 import Property from "../models/Property.js";
+import { conn } from "../server.js";
 
 
 export const createAuction = async (req, res, next) => {
@@ -53,17 +54,13 @@ export const getAllAuction = async (req, res, next) => {
     
    
     try {
-        const auctions = await Auction.find();
-        
-        
-
-
-        const promises =  auctions.map( async (auction)  => {
-            const property =  await Property.findById(auction.PropertyId);
-            
-            return { auction, property };
-        });
-        const auctionlist = await Promise.all(promises);
+        var auctionlist = null;
+        await conn.query("Select au.Name, au.Start_Bid__c , Property_DAP_Id__r.Name,Property_DAP_Id__r.Id  From Auction__c au", function(err, result) {
+            if (err) { return console.error(err); }
+            console.log("total : " + result.totalSize);
+            console.log("fetched : " + result.records.length);
+            auctionlist = result.records;
+          });
          
         res.status(200).json(auctionlist);
 

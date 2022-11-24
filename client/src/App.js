@@ -16,8 +16,8 @@ import SellerCenter from "./pages/ForSeller/SellerCenter";
 import MyProperty from "./pages/ForSeller/MyProperty";
 import AddProperty from "./pages/ForSeller/AddProperty";
 import AuctionDetailForSeller from "./pages/ForSeller/AuctionDetailForSeller";
-import axios from "axios";
-axios.defaults.withCredentials = true;
+// import axios from "axios";
+// axios.defaults.withCredentials = true;
 function App() {
   return (
     <BrowserRouter>
