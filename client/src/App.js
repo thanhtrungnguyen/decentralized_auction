@@ -15,6 +15,7 @@ import News from "./pages/news/News";
 import SellerCenter from "./pages/ForSeller/SellerCenter";
 import MyProperty from "./pages/ForSeller/MyProperty";
 import AddProperty from "./pages/ForSeller/AddProperty";
+import AuctionDetailForSeller from "./pages/ForSeller/AuctionDetailForSeller";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 function App() {
@@ -35,6 +36,10 @@ function App() {
         <Route path="sellerCenter" element={<SellerCenter />} />
         <Route path="myProperty" element={<MyProperty />} />
         <Route path="addProperty" element={<AddProperty />} />
+        <Route
+          path="autitoDetailForSeller/:id"
+          element={<AuctionDetailForSeller />}
+        />
       </Routes>
     </BrowserRouter>
   );

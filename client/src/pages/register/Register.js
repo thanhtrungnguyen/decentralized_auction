@@ -30,7 +30,7 @@ const Register = () => {
 
   const [firstName, setFirstName] = useState(null);
   const [lastName, setlastName] = useState(null);
-  const [gender, setgender] = useState(null);
+  const [gender, setgender] = useState("Male");
   const [dateOfBirth, setdateOfBirth] = useState(null);
   const [email, setEmail] = useState(null);
   const [phone, setPhone] = useState(null);
@@ -43,7 +43,7 @@ const Register = () => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [rePassword, setRePassword] = useState(null);
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState("BIDDER");
   const [usertype, setUsertype] = useState("CONTACT");
 
   const handleInputChange = (e) => {
@@ -101,7 +101,6 @@ const Register = () => {
     let cityId = selectedCity.value;
     let districtId = selectedDistrict.value;
     let wardId = selectedWard.value;
-    let cardFront1 = cardFront;
 
     const formData = new FormData();
     formData.append("firstName", firstName);
@@ -111,8 +110,11 @@ const Register = () => {
     formData.append("email", email);
     formData.append("phone", phone);
     formData.append("cityId", cityId);
+    formData.append("city", selectedCity.label);
     formData.append("districtId", districtId);
+    formData.append("distric", selectedDistrict.label);
     formData.append("wardId", wardId);
+    formData.append("ward", selectedWard.label);
     formData.append("sepecificAddress", sepecificAddress);
     formData.append("cardNumber", cardNumber);
     formData.append("dateRangeCard", dateRangeCard);
@@ -134,6 +136,7 @@ const Register = () => {
         alert(res.data.message);
         navigate("/login");
       });
+    console.log(formData);
     alert(
       "infomation: " +
         firstName +
@@ -149,6 +152,8 @@ const Register = () => {
         phone +
         " " +
         cityId +
+        " " +
+        selectedCity.label +
         " " +
         districtId +
         " " +
@@ -175,6 +180,7 @@ const Register = () => {
         " " +
         role
     );
+
     event.preventDefault();
   };
 
@@ -224,6 +230,8 @@ const Register = () => {
             className={styles.dropdown}
             onChange={(e) => handleInputChange(e)}
             placeholder="Gender"
+            value={gender}
+            defaultValue="Male"
           >
             
             <option value="Male">Male</option>
@@ -379,6 +387,7 @@ const Register = () => {
             className={styles.dropdown}
             onChange={(e) => handleInputChange(e)}
             placeholder="Role"
+            defaultValue="BIDDER"
           >
             <option value="BIDDER">BIDDER</option>
             <option value="SELLER">SELLER</option>

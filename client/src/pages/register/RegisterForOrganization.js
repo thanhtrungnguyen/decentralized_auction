@@ -32,7 +32,7 @@ const Register = () => {
   const [companyCertifcate, setCompanyCertifcate] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setlastName] = useState(null);
-  const [gender, setgender] = useState(null);
+  const [gender, setgender] = useState("Male");
   const [dateOfBirth, setdateOfBirth] = useState(null);
   const [email, setEmail] = useState(null);
   const [phone, setPhone] = useState(null);
@@ -45,7 +45,7 @@ const Register = () => {
   const [userName, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [rePassword, setRePassword] = useState(null);
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState("BIDDER");
   const [usertype, setUsertype] = useState("ACCOUNT");
 
   const handleInputChange = (e) => {
@@ -119,8 +119,11 @@ const Register = () => {
   };
   const handleSubmit = (event) => {
     let cityId = selectedCity.value;
+    let city = selectedCity.label;
     let districtId = selectedDistrict.value;
+    let district = selectedDistrict.label;
     let wardId = selectedWard.value;
+    let ward = selectedWard.label;
     let cardfront = cardFront.name;
     let cardback = cardBack.name;
     let certificateCompany = companyCertifcate.name;
@@ -139,14 +142,17 @@ const Register = () => {
         email,
         phone,
         cityId,
+        city,
         districtId,
+        district,
         wardId,
+        ward,
         sepecificAddress,
         cardNumber,
         dateRangeCard,
         cardGrantedPlace,
-        cardfront,
-        cardback,
+        cardFront,
+        cardBack,
         userName,
         password,
         role,
