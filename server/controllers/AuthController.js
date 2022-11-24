@@ -203,7 +203,9 @@ export const register = async (req, res, next) => {
           httpOnly: true,
         })
         .status(200)
-        .json({userId:user.Id, userName: user.Name, role: role,});
+        .json({userId:user.Id, userName: user.Name, role: role, token:token}).send();
+        
+        // return res.redirect("/");
     } catch (error) {
       next(error);
     }

@@ -5,20 +5,21 @@ import { conn } from "../server.js";
 
 //create property
 export const createProperty = async (req, res, next) => {
-    var category,property,propertyId = null;
+    const token = req.cookies.access_token;
+    var category, property, propertyId = null;
     var files = req.files;
-    const result = await uploadFile(files.propertyImage0);
+    const result = await uploadFile(files.propertyImage0[0]);
     console.log(result);
-    const result1 = await uploadFile(files.propertyImage1);
+    const result1 = await uploadFile(files.propertyImage1[0]);
     console.log(result1);
-    const result2 = await uploadFile(files.propertyImage2);
+    const result2 = await uploadFile(files.propertyImage2[0]);
     console.log(result2);
-    const result3 = await uploadFile(files.propertyImage3);
+    const result3 = await uploadFile(files.propertyImage3[0]);
     console.log(result3);
-    const result4 = await uploadFile(files.propertyVideo);
+    const result4 = await uploadFile(files.propertyVideo[0]);
     console.log(result4);
     // const newPro = new Property(req.body);
-    
+
 
     try {
         // const savedProperty = await newPro.save();
@@ -27,8 +28,8 @@ export const createProperty = async (req, res, next) => {
         // find category 
         await conn.sobject("Category__c").findOne({
             Name: req.body.category
-        },(err,result)=>{
-            if(err) return console.error(err)
+        }, (err, result) => {
+            if (err) return console.error(err)
             category = result.Id
         });
 
@@ -36,25 +37,38 @@ export const createProperty = async (req, res, next) => {
             Name: req.body.propertyName,
             Category_Id__c: category,
             Property_Information__c: req.body.propertyDescription,
-            User_Id__c: req.body.userId
-        },(err,result)=>{
-            if(err) console.error(err)
+            //User_Id__c: req.body.userId
+            User_Id__c: "a0J5g000006cAn7EAE"
+        }, (err, result) => {
+            if (err) console.error(err)
             property = result.Id
         })
         await conn.sobject("Property_DAP__c").findOne({
             Property_Id__c: property
-        },(err,result)=>{
-            if(err) console.error(err)
+        }, (err, result) => {
+            if (err) console.error(err)
             propertyId = result.Id
         })
-        var mediaUrl = [{Name:result.key,Property_Id__c:propertyId},{Name:result1.key,Property_Id__c:propertyId},
-            {Name:result2.key,Property_Id__c:propertyId},{Name:result3.key,Property_Id__c:propertyId},{Name:result4.key,Property_Id__c:propertyId}]
-        await conn.sobject("Property_Media__c").insertBulk(mediaUrl,(err,result)=>{
-            if(err) console.error(err)
-            result.map(item=>{
-                console.log(item)
-            })
-        })
+        var mediaUrl = [{ Name: result.key, Property_Id__c: propertyId }, { Name: result1.key, Property_Id__c: propertyId },
+        { Name: result2.key, Property_Id__c: propertyId }, { Name: result3.key, Property_Id__c: propertyId }, { Name: result4.Key, Property_Id__c: propertyId }]
+        
+        await conn.bulk.load("Property_Media__c", "insert", mediaUrl, function (err, rets) {
+            if (err) { return console.error(err); }
+            for (var i = 0; i < rets.length; i++) {
+                if (rets[i].success) {
+                    console.log("#" + (i + 1) + " loaded successfully, id = " + rets[i].id);
+                } else {
+                    console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
+                }
+            }
+            // ...
+        });
+        // await conn.sobject("Property_Media__c").insertBulk(mediaUrl, (err, result) => {
+        //     if (err) console.error(err)
+        //     result.map(item => {
+        //         console.log(item)
+        //     })
+        // })
 
 
     } catch (error) {
@@ -62,11 +76,11 @@ export const createProperty = async (req, res, next) => {
     }
 
 }
-    
+
 
 //update property
 export const updateProperty = async (req, res, next) => {
-    
+
 
     try {
         const updateProperty = await Property.findByIdAndUpdate(req.params.id,
@@ -80,7 +94,7 @@ export const updateProperty = async (req, res, next) => {
 }
 //find property by id
 export const findPropertyByID = async (req, res, next) => {
-    
+
 
     try {
         const updateProperty = await Property.findById(req.params.id);
@@ -108,7 +122,7 @@ export const createCate = async (req, res, next) => {
 
 // get all category
 export const getAllCate = async (req, res, next) => {
-    
+
 
     try {
         const categories = await Category.find();

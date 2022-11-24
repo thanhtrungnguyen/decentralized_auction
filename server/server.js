@@ -10,6 +10,7 @@ import propertyRoute from "./routers/properties.js";
 import jsforce from "jsforce"
 import multer from "multer";
 
+
 // config app
 const app = express();
 
@@ -17,8 +18,14 @@ const app = express();
 const PORT = 8800;
 dotenv.config();
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin:["http://localhost:3000"],
+  credentials:true,
+}));
 app.use(express.json());
+// app.use(express.urlencoded({
+//   extended:true
+// }))
 const upload = multer({ dest: "uploads/" });
 
 // //connect DB

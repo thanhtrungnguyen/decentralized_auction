@@ -9,7 +9,7 @@ const ADMIN = "ADMIN";
 
 //verify access_token
 export const verifyToken = (req,res,next)=>{
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwSjVnMDAwMDA2YzVOWkVBWSIsInJvbGUiOiJTRUxMRVIiLCJpYXQiOjE2NjkxOTU1ODZ9.01J_7ynnXSKTNXk9wiVwjiIjGoZu4gEgTG79ioLHNDs";
+    const token = req.cookies.access_token;
     if(!token){
         return next(createError(401,"You are not authenticated!"));
     }

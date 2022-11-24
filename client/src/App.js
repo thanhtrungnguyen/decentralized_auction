@@ -15,6 +15,8 @@ import News from "./pages/news/News";
 import SellerCenter from "./pages/ForSeller/SellerCenter";
 import MyProperty from "./pages/ForSeller/MyProperty";
 import AddProperty from "./pages/ForSeller/AddProperty";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 function App() {
   return (
     <BrowserRouter>
