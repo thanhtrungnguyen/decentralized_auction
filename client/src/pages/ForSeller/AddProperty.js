@@ -19,7 +19,7 @@ const AddProperty = () => {
   const [propertyImage, setPropertyImage] = useState(null);
   const [propertyVideo, setPropertyVideo] = useState(null);
   const [propertyName, setPropertyName] = useState(null);
-  const [cagetory, setCategory] = useState(null);
+  const [cagetory, setCategory] = useState("Car");
   const [propertyDescription, setPropertyDescription] = useState(null);
   const [startBid, setStartBid] = useState(null);
   const [biddingPreiod, setBiddingPreiod] = useState([
@@ -64,34 +64,33 @@ const AddProperty = () => {
     formData.append("propertyDescription", propertyDescription);
     formData.append("startBid", startBid);
     formData.append("biddingPreiod", biddingPreiod);
-    axios
-      .post("http://localhost:8800/api/property", formData)
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        alert(res.data.message);
-        navigate("/myProperty");
-      });
-    // for (const [key, value] of formData) {
-    //   alert(key + ": " + value);
-    // }
-    // alert(
-    //   "infomation: " + formData
-
-    // propertyImage.name +
-    // " " +
-    // propertyVideo.name +
-    // " " +
-    // propertyName +
-    // " " +
-    // cagetory +
-    // " " +
-    // propertyDescription +
-    // " " +
-    // startBid +
-    // " " +
-    // biddingPreiod
-    // );
+    axios.post("http://localhost:8800/api/property", formData).then((res) => {
+      console.log(res);
+      console.log(res.data);
+      alert(res.data.message);
+      navigate("/myProperty");
+    });
+    console.log(formData);
+    for (const [key, value] of formData) {
+      alert(key + ": " + value);
+    }
+    alert(
+      "infomation: " +
+        formData +
+        propertyImage +
+        " " +
+        propertyVideo.name +
+        " " +
+        propertyName +
+        " " +
+        cagetory +
+        " " +
+        propertyDescription +
+        " " +
+        startBid +
+        " " +
+        biddingPreiod
+    );
     event.preventDefault();
   };
   return (
@@ -147,10 +146,9 @@ const AddProperty = () => {
                 placeholder="Category"
                 defaultValue="volvo"
               >
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                <option value="Car">Car</option>
+                <option value="Table">Table</option>
+                <option value="Chair">Chair</option>
               </select>
               <textarea
                 id="propertyDescription"

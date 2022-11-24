@@ -5,28 +5,27 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
-import { Outlet, Link } from "react-router-dom";
-
-const Login = () => {
+const EnterEmail = () => {
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (event) => {
+    navigate(`/confirmCode/${email}`);
+
     event.preventDefault();
-    axios
-      .post(
-        "http://localhost:8800/api/auth/login",
-        { userName, password },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        // alert(res.data.message);
-        navigate("/");
-      });
+    // axios
+    //   .post(
+    //     "http://localhost:8800/api/auth/login",
+    //     { email },
+    //     { withCredentials: true }
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //     console.log(res.data);
+    //     // alert(res.data.message);
+    //     navigate(`/confirmCode/${email}`);
+    //   });
   };
 
   return (
@@ -37,36 +36,25 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className={styles.group3}>
             <div className={styles.group2}>
-              <p className={styles.txtLogin}>Login</p>
+              <p className={styles.txtLogin}>Forgot Password</p>
               <p className={styles.text}>
-                Please login using account detail bellow.
+                Please enter your email to reset password{" "}
               </p>
               <input
                 type="text"
                 className={styles.textField}
                 placeholder="Email Address"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               ></input>
-              <input
-                type="password"
-                className={styles.textField}
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              ></input>
-              <p className={styles.text}>
-                <Link to="/enterEmail" className={styles.text}>
-                  Forgot your password?
-                </Link>
-              </p>
-
+              <br />
+              <br />
+              <br />
               <input
                 className={styles.btnSignIn}
                 type="submit"
-                value="Sign in"
+                value="Continue"
               />
               <p className={styles.text}>
                 Don’t have an Account?Create account{" "}
@@ -80,4 +68,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default EnterEmail;

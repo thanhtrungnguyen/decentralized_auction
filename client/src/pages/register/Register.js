@@ -13,7 +13,7 @@ import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
 import { Outlet, Link } from "react-router-dom";
 
 import ReactDOM from "react-dom/client";
-
+// axios.defaults.withCredentials = true;
 const Register = () => {
   const { state, onCitySelect, onDistrictSelect, onWardSelect } =
     useLocationForm(true);
@@ -233,7 +233,6 @@ const Register = () => {
             value={gender}
             defaultValue="Male"
           >
-            
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>

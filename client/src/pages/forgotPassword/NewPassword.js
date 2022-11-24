@@ -5,28 +5,32 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
-import { Outlet, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const Login = () => {
+const NewPassword = () => {
+  const { email } = useParams();
+
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
 
   const handleSubmit = async (event) => {
+    navigate(`/login`);
+
     event.preventDefault();
-    axios
-      .post(
-        "http://localhost:8800/api/auth/login",
-        { userName, password },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        // alert(res.data.message);
-        navigate("/");
-      });
+    // axios
+    //   .post(
+    //     "http://localhost:8800/api/auth/login",
+    //     { password },
+    //     { withCredentials: true }
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //     console.log(res.data);
+    //     // alert(res.data.message);
+    //     navigate(`/newPassword/${email}`);
+    //   });
   };
 
   return (
@@ -37,36 +41,33 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className={styles.group3}>
             <div className={styles.group2}>
-              <p className={styles.txtLogin}>Login</p>
+              <p className={styles.txtLogin}>Forgot Password</p>
               <p className={styles.text}>
-                Please login using account detail bellow.
+                Please enter code chagne password we send your email{" "}
               </p>
               <input
                 type="text"
                 className={styles.textField}
-                placeholder="Email Address"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                required
-              ></input>
-              <input
-                type="password"
-                className={styles.textField}
-                placeholder="Password"
+                placeholder="Enter New Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               ></input>
-              <p className={styles.text}>
-                <Link to="/enterEmail" className={styles.text}>
-                  Forgot your password?
-                </Link>
-              </p>
-
+              <input
+                type="text"
+                className={styles.textField}
+                placeholder="Re-Enter New Password"
+                value={rePassword}
+                onChange={(e) => setRePassword(e.target.value)}
+                required
+              ></input>
+              <br />
+              <br />
+              <br />
               <input
                 className={styles.btnSignIn}
                 type="submit"
-                value="Sign in"
+                value="Continue"
               />
               <p className={styles.text}>
                 Don’t have an Account?Create account{" "}
@@ -80,4 +81,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default NewPassword;
