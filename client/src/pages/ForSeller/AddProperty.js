@@ -65,7 +65,7 @@ const AddProperty = () => {
     formData.append("startBid", startBid);
     formData.append("biddingPreiod", biddingPreiod);
     axios
-      .post("http://localhost:8800/api/property", formData)
+      .post("http://localhost:8800/api/property", formData, { withCredentials: true })
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -116,6 +116,7 @@ const AddProperty = () => {
                 <input
                   className={styles.inputImg}
                   id="propertyImage"
+                  
                   onChange={(e) => handleInputChange(e)}
                   type="file"
                   multiple

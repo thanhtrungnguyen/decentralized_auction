@@ -55,12 +55,24 @@ export const getAllAuction = async (req, res, next) => {
    
     try {
         var auctionlist = null;
-        await conn.query("Select au.Name, au.Start_Bid__c , Property_DAP_Id__r.Name,Property_DAP_Id__r.Id  From Auction__c au", function(err, result) {
+        await conn.query("Select au.Id, au.Name, au.Start_Bid__c , au.Time_End__c, au.Time_Start__c,Property_DAP_Id__r.Id ,"+
+        " Property_DAP_Id__r.Name, Property_DAP_Id__r.Property_Information__c From Auction__c au", function(err, result) {
             if (err) { return console.error(err); }
             console.log("total : " + result.totalSize);
             console.log("fetched : " + result.records.length);
             auctionlist = result.records;
           });
+
+          
+            await Promise.all(auctionlist.map(async (item) => {
+                await conn.query("", function(err, result) {
+                    if (err) { return console.error(err); }
+                    console.log("total : " + result.totalSize);
+                    console.log("fetched : " + result.records.length);
+                    auctionlist = result.records;
+                  });
+            }));
+          
          
         res.status(200).json(auctionlist);
 

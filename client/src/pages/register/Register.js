@@ -356,7 +356,8 @@ const Register = () => {
           <p className={styles.textBlue}>Account Infomation</p>
           <input
             className={styles.inputEP}
-            type="text"
+            type="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             value={username}
             onChange={(e) => handleInputChange(e)}
             id="userName"

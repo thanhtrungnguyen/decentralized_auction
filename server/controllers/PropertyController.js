@@ -2,11 +2,12 @@ import Category from "../models/Category.js";
 import Property from "../models/Property.js";
 import { uploadFile } from "../s3.js";
 import { conn } from "../server.js";
-
+import jwt from "jsonwebtoken";
 //create property
 export const createProperty = async (req, res, next) => {
     const token = req.cookies.access_token;
-    var category, property, propertyId = null;
+    var category, property, propertyId, userId = null;
+
     var files = req.files;
     const result = await uploadFile(files.propertyImage0[0]);
     console.log(result);
@@ -14,12 +15,15 @@ export const createProperty = async (req, res, next) => {
     console.log(result1);
     const result2 = await uploadFile(files.propertyImage2[0]);
     console.log(result2);
-    const result3 = await uploadFile(files.propertyImage3[0]);
+    const result3 = await uploadFile(files.propertyVideo[0]);
     console.log(result3);
-    const result4 = await uploadFile(files.propertyVideo[0]);
-    console.log(result4);
     // const newPro = new Property(req.body);
-
+    
+    jwt.verify(token,process.env.JWT,(err,user)=>{
+        if(err) return next(createError(403,"Token is not valid!"));
+        userId = user.id;
+        next()
+    })
 
     try {
         // const savedProperty = await newPro.save();
@@ -38,7 +42,7 @@ export const createProperty = async (req, res, next) => {
             Category_Id__c: category,
             Property_Information__c: req.body.propertyDescription,
             //User_Id__c: req.body.userId
-            User_Id__c: "a0J5g000006cAn7EAE"
+            User_Id__c: userId
         }, (err, result) => {
             if (err) console.error(err)
             property = result.Id
@@ -50,7 +54,7 @@ export const createProperty = async (req, res, next) => {
             propertyId = result.Id
         })
         var mediaUrl = [{ Name: result.key, Property_Id__c: propertyId }, { Name: result1.key, Property_Id__c: propertyId },
-        { Name: result2.key, Property_Id__c: propertyId }, { Name: result3.key, Property_Id__c: propertyId }, { Name: result4.Key, Property_Id__c: propertyId }]
+        { Name: result2.key, Property_Id__c: propertyId }, { Name: result3.Key, Property_Id__c: propertyId }]
         
         await conn.bulk.load("Property_Media__c", "insert", mediaUrl, function (err, rets) {
             if (err) { return console.error(err); }
