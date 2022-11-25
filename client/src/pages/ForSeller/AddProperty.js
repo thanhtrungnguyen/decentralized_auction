@@ -64,33 +64,36 @@ const AddProperty = () => {
     formData.append("propertyDescription", propertyDescription);
     formData.append("startBid", startBid);
     formData.append("biddingPreiod", biddingPreiod);
-    axios.post("http://localhost:8800/api/property", formData).then((res) => {
-      console.log(res);
-      console.log(res.data);
-      alert(res.data.message);
-      navigate("/myProperty");
-    });
-    console.log(formData);
-    for (const [key, value] of formData) {
-      alert(key + ": " + value);
-    }
-    alert(
-      "infomation: " +
-        formData +
-        propertyImage +
-        " " +
-        propertyVideo.name +
-        " " +
-        propertyName +
-        " " +
-        cagetory +
-        " " +
-        propertyDescription +
-        " " +
-        startBid +
-        " " +
-        biddingPreiod
-    );
+    axios
+      .post("http://localhost:8800/api/property", formData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        alert(res.data.message);
+        navigate("/myProperty");
+      });
+    // for (const [key, value] of formData) {
+    //   alert(key + ": " + value);
+    // }
+    // alert(
+    //   "infomation: " + formData
+
+    // propertyImage.name +
+    // " " +
+    // propertyVideo.name +
+    // " " +
+    // propertyName +
+    // " " +
+    // cagetory +
+    // " " +
+    // propertyDescription +
+    // " " +
+    // startBid +
+    // " " +
+    // biddingPreiod
+    // );
     event.preventDefault();
   };
   return (
