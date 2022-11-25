@@ -83,10 +83,10 @@ const MyAuctions = () => {
                 <td className={styles.td}>6969</td>
                 <td className={styles.td}>Tag</td>
                 <td className={styles.td}>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/editAuction">
                     Edit
                   </Link>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/autitoDetailForSeller">
                     Detail
                   </Link>
                 </td>
@@ -100,10 +100,10 @@ const MyAuctions = () => {
                 <td className={styles.td}>6969</td>
                 <td className={styles.td}>Tag</td>
                 <td className={styles.td}>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/editAuction">
                     Edit
                   </Link>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/autitoDetailForSeller">
                     Detail
                   </Link>
                 </td>
@@ -117,10 +117,10 @@ const MyAuctions = () => {
                 <td className={styles.td}>6969</td>
                 <td className={styles.td}>Tag</td>
                 <td className={styles.td}>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/editAuction">
                     Edit
                   </Link>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/autitoDetailForSeller">
                     Detail
                   </Link>
                 </td>
@@ -134,10 +134,10 @@ const MyAuctions = () => {
                 <td className={styles.td}>6969</td>
                 <td className={styles.td}>Tag</td>
                 <td className={styles.td}>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/editAuction">
                     Edit
                   </Link>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/autitoDetailForSeller">
                     Detail
                   </Link>
                 </td>
@@ -151,10 +151,10 @@ const MyAuctions = () => {
                 <td className={styles.td}>6969</td>
                 <td className={styles.td}>Tag</td>
                 <td className={styles.td}>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/editAuction">
                     Edit
                   </Link>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/autitoDetailForSeller">
                     Detail
                   </Link>
                 </td>
@@ -168,10 +168,10 @@ const MyAuctions = () => {
                 <td className={styles.td}>6969</td>
                 <td className={styles.td}>Tag</td>
                 <td className={styles.td}>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/editAuction">
                     Edit
                   </Link>
-                  <Link className={styles.linkBlue} to="/">
+                  <Link className={styles.linkBlue} to="/autitoDetailForSeller">
                     Detail
                   </Link>
                 </td>

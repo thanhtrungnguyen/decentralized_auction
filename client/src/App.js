@@ -20,6 +20,7 @@ import EnterEmail from "./pages/forgotPassword/EnterEmail";
 import ConfirmCode from "./pages/forgotPassword/ConfirmCode";
 import NewPassword from "./pages/forgotPassword/NewPassword";
 import MyAuctions from "./pages/ForSeller/MyAuctions";
+import EditAuction from "./pages/ForSeller/EditAuction";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -44,8 +45,14 @@ function App() {
         <Route path="confirmCode/:email" element={<ConfirmCode />} />
         <Route path="newPassword/:email" element={<NewPassword />} />
         <Route path="myAuctions" element={<MyAuctions />} />
+        <Route path="editAuction/:id" element={<EditAuction />} />
+        <Route path="editAuction" element={<EditAuction />} />
         <Route
           path="autitoDetailForSeller/:id"
+          element={<AuctionDetailForSeller />}
+        />
+        <Route
+          path="autitoDetailForSeller"
           element={<AuctionDetailForSeller />}
         />
       </Routes>

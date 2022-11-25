@@ -11,7 +11,7 @@ import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const AddProperty = () => {
+const EditAuction = () => {
   // const [date, setDate] = useState([
   //   new DateObject().setDay(15),
   //   new DateObject().add(1, "month").setDay(15),
@@ -64,11 +64,11 @@ const AddProperty = () => {
     formData.append("propertyDescription", propertyDescription);
     formData.append("startBid", startBid);
     formData.append("biddingPreiod", biddingPreiod);
-    axios.post("http://localhost:8800/api/property", formData).then((res) => {
+    axios.put("http://localhost:8800/api/EditAuction", formData).then((res) => {
       console.log(res);
       console.log(res.data);
       alert(res.data.message);
-      navigate("/myProperty");
+      navigate("/myAuctions");
     });
     console.log(formData);
     for (const [key, value] of formData) {
@@ -208,10 +208,10 @@ const AddProperty = () => {
             ></input>
           </div>
 
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </form>
     </>
   );
 };
-export default AddProperty;
+export default EditAuction;
