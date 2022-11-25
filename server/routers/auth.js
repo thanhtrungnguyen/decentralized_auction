@@ -1,6 +1,6 @@
 import express from "express";
 
-import {changePassword, login, logout, register } from "../controllers/AuthController.js";
+import {changePassword, forgotPassword, login, logout, register, resetPassword } from "../controllers/AuthController.js";
 import { getAllAccount } from "../controllers/AccountController.js";
 import multer from "multer";
 
@@ -32,5 +32,9 @@ router.get("/account",getAllAccount);
 router.post("/logout", logout);
 
 router.put("/changePassword", changePassword);
+
+router.post("/forgotPassword",forgotPassword);
+
+router.post("/reset-password/:id/:token",resetPassword);
 
 export default router;
