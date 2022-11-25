@@ -16,7 +16,7 @@ const SidebarSeller = () => {
         </Link>{" "}
         <br />
         <p className={styles.title}>Auction</p>
-        <Link to="/" className={styles.txt}>
+        <Link to="/myAuctions" className={styles.txt}>
           Auction List
         </Link>{" "}
         <br />
