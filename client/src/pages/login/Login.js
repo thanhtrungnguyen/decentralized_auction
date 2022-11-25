@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
+import { Outlet, Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,7 +16,11 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:8800/api/auth/login", { userName, password })
+      .post(
+        "http://localhost:8800/api/auth/login",
+        { userName, password },
+        { withCredentials: true }
+      )
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -52,7 +57,12 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               ></input>
-              <p className={styles.text}>Forgot your password?</p>
+              <p className={styles.text}>
+                <Link to="/enterEmail" className={styles.text}>
+                  Forgot your password?
+                </Link>
+              </p>
+
               <input
                 className={styles.btnSignIn}
                 type="submit"

@@ -18,10 +18,11 @@ const AuctionDetailForSeller = () => {
     "loading please wait"
   ) : (
     <>
-      <div>
-        <Header />
-        <NavBar />
-        <SideBarSeller />
+      <Header />
+      <NavBar />
+      <div className={styles.container}>
+        <SideBarSeller className={styles.rlt} />
+        <div className={styles.detail}></div>
         <Footer />
       </div>
     </>

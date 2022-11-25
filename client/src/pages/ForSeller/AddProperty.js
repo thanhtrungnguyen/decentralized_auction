@@ -19,7 +19,7 @@ const AddProperty = () => {
   const [propertyImage, setPropertyImage] = useState(null);
   const [propertyVideo, setPropertyVideo] = useState(null);
   const [propertyName, setPropertyName] = useState(null);
-  const [cagetory, setCategory] = useState(null);
+  const [cagetory, setCategory] = useState("Car");
   const [propertyDescription, setPropertyDescription] = useState(null);
   const [startBid, setStartBid] = useState(null);
   const [biddingPreiod, setBiddingPreiod] = useState([
@@ -65,7 +65,9 @@ const AddProperty = () => {
     formData.append("startBid", startBid);
     formData.append("biddingPreiod", biddingPreiod);
     axios
-      .post("http://localhost:8800/api/property", formData)
+      .post("http://localhost:8800/api/property", formData, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -147,10 +149,9 @@ const AddProperty = () => {
                 placeholder="Category"
                 defaultValue="volvo"
               >
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                <option value="Car">Car</option>
+                <option value="Table">Table</option>
+                <option value="Chair">Chair</option>
               </select>
               <textarea
                 id="propertyDescription"
@@ -210,7 +211,7 @@ const AddProperty = () => {
             ></input>
           </div>
 
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </form>
     </>
