@@ -1,6 +1,6 @@
 import express from "express";
-import { createCate, createProperty, findPropertyByID, getAllCate, updateProperty } from "../controllers/PropertyController.js";
-import { verifyAdmin, verifySeller } from "../utils/verifyToken.js";
+import { createCate, createProperty, findPropertyByID, getAllCate, getAllPropertyByUser, updateProperty } from "../controllers/PropertyController.js";
+import { verifyAdmin, verifySeller, verifyToken } from "../utils/verifyToken.js";
 import multer from "multer";
 
 const upload = multer({ dest: "uploads/" });
@@ -35,6 +35,8 @@ router.post("/", verifySeller, upload.fields([
 router.put("/:id", verifySeller ,updateProperty);
 
 router.get("/:id",findPropertyByID);
+
+router.get("/",verifySeller,getAllPropertyByUser)
 
 router.post("/category/", verifyAdmin ,createCate);
 
