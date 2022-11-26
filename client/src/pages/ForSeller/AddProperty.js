@@ -147,7 +147,7 @@ const AddProperty = () => {
                 onChange={(e) => handleInputChange(e)}
                 id="cagetory"
                 placeholder="Category"
-                defaultValue="volvo"
+                defaultValue="Car"
               >
                 <option value="Car">Car</option>
                 <option value="Table">Table</option>
