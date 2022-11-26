@@ -37,7 +37,7 @@ const AuctionDetail = () => {
             /> */}
               <img
                 className={styles.img}
-                src={`${data.MediaURL[0]}`}
+                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`}
                 alt="images"
               />
             </div>
@@ -49,7 +49,7 @@ const AuctionDetail = () => {
             /> */}
               <img
                 className={styles.img}
-                src={`${data.MediaURL[1]}`}
+                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`}
                 alt="images"
               />
             </div>
@@ -61,7 +61,7 @@ const AuctionDetail = () => {
             /> */}
               <img
                 className={styles.img}
-                src={`${data.MediaURL[2]}`}
+                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[2].Name}`}
                 alt="images"
               />
             </div>
@@ -88,7 +88,7 @@ const AuctionDetail = () => {
             /> */}
             <ReactPlayer
               className={styles.video}
-              url="https://www.youtube.com/watch?v=CYH-Ac3XiUg"
+              url="https://www.youtube.com/watch?v=6ltIt-NtQjQ"
               playing={true}
               controls={true}
               loop={true}
@@ -111,11 +111,11 @@ const AuctionDetail = () => {
           {/* </div> */}
         </div>
         <div className={styles.col2}>
-          <p className={styles.title}>{data.PropertyName}</p>
-          <p className={styles.txtBold}>Start Bid : ${data.StartBid}</p>
+          <p className={styles.title}>{data[0].Name}</p>
+          <p className={styles.txtBold}>Start Bid : ${data[0].Auctions1__r.records[0].Start_Bid__c}</p>
 
-          <p className={styles.txt}>Auction Start Time : ${data.TimeStart}</p>
-          <p className={styles.txt}>Auction End Time : ${data.TimeFinish}</p>
+          <p className={styles.txt}>Auction Start Time : ${data[0].Auctions1__r.records[0].Time_Start__c}</p>
+          <p className={styles.txt}>Auction End Time : ${data[0].Auctions1__r.records[0].Time_End__c}</p>
           {/* </div> */}
           <Popup
             trigger={<button className={styles.btn}>Place Bid</button>}
@@ -129,7 +129,7 @@ const AuctionDetail = () => {
       <div className={styles.des}>
         <div className={styles.cont}>
           <p className={styles.txtDesBold}>Description</p>
-          <label className={styles.area}>{data.PropertyInformation}</label>
+          <label className={styles.area}>{data[0].Property_Information__c}</label>
         </div>
       </div>
       <div className={styles.RelatedAuctions}>
