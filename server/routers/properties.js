@@ -42,11 +42,4 @@ router.post("/category/", verifyAdmin ,createCate);
 
 router.get("/category/",  getAllCate);
 
-
-
-
-
-
-
-
 export default router

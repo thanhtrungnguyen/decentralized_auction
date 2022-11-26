@@ -8,6 +8,7 @@ import userRoute from "./routers/users.js";
 import accountRoute from "./routers/accounts.js"
 import auctionRoute from "./routers/auctions.js";
 import propertyRoute from "./routers/properties.js";
+import categoryRoute from"./routers/categories.js"
 import jsforce from "jsforce"
 import multer from "multer";
 
@@ -102,7 +103,8 @@ app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/property",propertyRoute);
 app.use("/api/auction", auctionRoute);
-app.use("/api/account",accountRoute)
+app.use("/api/account",accountRoute);
+app.use("/api/category",categoryRoute);
 
 // app.get('/Account/getAllAccount', (req, res) => {
 //   conn.query("Select Id, Name, Phone, NumberOfEmployees from Account", (err, result) => {

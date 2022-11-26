@@ -132,13 +132,16 @@ export const updateProperty = async (req, res, next) => {
 }
 //find property by id
 export const findPropertyByID = async (req, res, next) => {
-
-
     try {
-        const updateProperty = await Property.findById(req.params.id);
-        res.status(200).json(updateProperty);
-
-    } catch (error) {
+        var property;
+        // const updateProperty = await Property.findById(req.params.id);
+        // res.status(200).json(updateProperty);
+        await conn.sobject("Property_DAP__c").find({Id:req.params.id},(err,ret)=>{
+            if(err) console.error(err)
+            property =ret
+        })
+        res.status(200).json(property);
+        } catch (error) {
         next(error);
     }
 }
@@ -147,12 +150,16 @@ export const findPropertyByID = async (req, res, next) => {
 
 // create category
 export const createCate = async (req, res, next) => {
-    const newCate = new Category(req.body);
-
+    var category;
+    
     try {
-        const savedCate = await newCate.save();
-        res.status(200).json(savedCate);
-
+        await conn.sobject("Category__c").create({
+            Name: req.body.name
+        },(err,ret)=>{
+            if(err) console.error(err)
+            category =ret
+        })
+        res.status(200).json(category);
     } catch (error) {
         next(error);
     }
@@ -160,10 +167,13 @@ export const createCate = async (req, res, next) => {
 
 // get all category
 export const getAllCate = async (req, res, next) => {
+    var category;
     try {
-        const categories = await Category.find();
-        res.status(200).json(categories);
-
+        await conn.sobject("Category__c").find({},(err,ret)=>{
+            if(err) console.error(err)
+            category =ret
+        })
+        res.status(200).json(category);
     } catch (error) {
         next(error);
     }
