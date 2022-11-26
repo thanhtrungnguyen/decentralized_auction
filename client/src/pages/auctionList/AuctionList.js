@@ -151,26 +151,26 @@ const AuctionList = () => {
               </div>
               <div>
                 <p className={styles.txtBlueB}>
-                  {auction.property.PropertyName}
+                  {auction.Auctions1__r.records[0].Name}
                 </p>
 
                 <p className={styles.txtDes}>
-                  {auction.property.PropertyInformation}
+                  {auction.Property_Information__c}
                 </p>
 
                 <div>
                   <p className={styles.txtBlueB}>Current auction</p>
                   <div>
-                    <label className={styles.txtBlueB}>Price:</label>
+                    <label className={styles.txtBlueB}>Start Bid:</label>
                     <label className={styles.txtBlueB}>
-                      {auction.auction.StartBid}
+                      {auction.Auctions1__r.records[0].Start_Bid__c}
                     </label>
                   </div>
                   <br />
                   <div>
                     <Link
                       className={styles.link}
-                      to={`/auctiondetail/${auction.auction._id}`}
+                      to={`/auctiondetail/${auction.Auctions1__r.records[0].Id}`}
                     >
                       Details
                     </Link>

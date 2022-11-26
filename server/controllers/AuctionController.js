@@ -1,6 +1,7 @@
 import Auction from "../models/Auction.js";
 import AuctionBidder from "../models/AuctionBidder.js";
 import Property from "../models/Property.js";
+import { getFileStream } from "../s3.js";
 import { conn } from "../server.js";
 
 
@@ -55,23 +56,17 @@ export const getAllAuction = async (req, res, next) => {
    
     try {
         var auctionlist = null;
-        await conn.query("Select au.Id, au.Name, au.Start_Bid__c , au.Time_End__c, au.Time_Start__c,Property_DAP_Id__r.Id ,"+
-        " Property_DAP_Id__r.Name, Property_DAP_Id__r.Property_Information__c From Auction__c au", function(err, result) {
+        await conn.query("Select Name,Property_Information__c ,(Select Name From Properties_Media__r),(Select Id, Name, Start_Bid__c, Time_End__c, Time_Start__c From Auctions1__r) From Property_DAP__c", function(err, result) {
             if (err) { return console.error(err); }
             console.log("total : " + result.totalSize);
             console.log("fetched : " + result.records.length);
             auctionlist = result.records;
           });
-
           
-            await Promise.all(auctionlist.map(async (item) => {
-                await conn.query("", function(err, result) {
-                    if (err) { return console.error(err); }
-                    console.log("total : " + result.totalSize);
-                    console.log("fetched : " + result.records.length);
-                    auctionlist = result.records;
-                  });
-            }));
+          auctionlist.map(auction =>{
+            console.log(auction.Name)
+          })
+       
           
          
         res.status(200).json(auctionlist);
@@ -87,15 +82,31 @@ export const getAuctionDetailByID = async (req, res, next) => {
     
 
     try {
-        const auctiondetail = await Auction.findById(req.params.id);
-        const property = await Property.findById(auctiondetail.PropertyId);
-        var auction = { ...auctiondetail._doc, ...property._doc };
- 
-        res.status(200).json(auction);
+        var auctionlist = null;
+        await conn.query("Select Name,Property_Information__c ,(Select Name From Properties_Media__r),(Select Id, Name, Start_Bid__c, Time_End__c, Time_Start__c From Auctions1__r Where Id = '"+    req.params.id+"' ) From Property_DAP__c", function(err, result) {
+            if (err) { return console.error(err); }
+            console.log("total : " + result.totalSize);
+            console.log("fetched : " + result.records.length);
+            auctionlist = result.records;
+          });
+          
+          auctionlist.map(auction =>{
+            console.log(auction.Name)
+          })
+        
+        res.status(200).json(auctionlist);
 
     } catch (error) {
         next(error);
     }
+}
+
+export const uploadImage = async (req, res, next) => {
+    console.log(req.params)
+    const key = req.params.key
+    const readStream = getFileStream(key)
+  
+     await readStream.pipe(res)
 }
 
 

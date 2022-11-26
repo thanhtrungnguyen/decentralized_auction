@@ -1,5 +1,5 @@
 import express from "express";
-import { createAuction, createLot, getAllAuction, getAuctionDetailByID, updateAuction } from "../controllers/AuctionController.js";
+import { createAuction, createLot, getAllAuction, getAuctionDetailByID, updateAuction, uploadImage } from "../controllers/AuctionController.js";
 import { verifySeller } from "../utils/verifyToken.js";
 
 const router = express.Router();
@@ -14,7 +14,7 @@ router.get("/",  getAllAuction);
 
 router.get("/auctiondetail/:id",  getAuctionDetailByID);
 
-
+router.get('/images/:key', uploadImage)
 
 router.post("/lot/",  createLot);
 
