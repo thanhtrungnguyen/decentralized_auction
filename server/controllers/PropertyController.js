@@ -8,7 +8,8 @@ import jwt from "jsonwebtoken";
 //create property
 export const createProperty = async (req, res, next) => {
     const token = req.cookies.access_token;
-    var category, property, propertyId, userId = null;
+    var category, propertyId, userId = null;
+    var property;
 
     var files = req.files;
     const result = await uploadFile(files.propertyImage0[0]);
@@ -47,16 +48,16 @@ export const createProperty = async (req, res, next) => {
             User_Id__c: userId
         }, (err, result) => {
             if (err) console.error(err)
-            property = result.Id
+            property = result.id
         })
         await conn.sobject("Property_DAP__c").findOne({
-            Property_Id__c: property
+            Id: property
         }, (err, result) => {
             if (err) console.error(err)
             propertyId = result.Id
         })
-        var mediaUrl = [{ Name: result.key, Property_Id__c: propertyId }, { Name: result1.key, Property_Id__c: propertyId },
-        { Name: result2.key, Property_Id__c: propertyId }, { Name: result3.Key, Property_Id__c: propertyId }]
+        var mediaUrl = [{ Name: result.key, Property_DAP_Id__c: propertyId }, { Name: result1.key, Property_DAP_Id__c: propertyId },
+        { Name: result2.key, Property_DAP_Id__c: propertyId }, { Name: result3.Key, Property_DAP_Id__c: propertyId }]
         
         await conn.bulk.load("Property_Media__c", "insert", mediaUrl, function (err, rets) {
             if (err) { return console.error(err); }
