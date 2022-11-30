@@ -180,82 +180,84 @@ const AddProperty = () => {
                   //   defaultValue={data.property.propertyName}
                   required
                 ></input>
-              </div>
 
-              <select
-                className={styles.drop}
-                onChange={(e) => handleInputChange(e)}
-                id="cagetory"
-                placeholder="Category"
-                // defaultValue={data.property.cagetory}
-              >
-                {data.map((property) => (
-                  <option value={property.category}>{property.category}</option>
-                ))}
-              </select>
-              <input
-                id="startBid"
-                type="number"
-                placeholder="Enter Start Bid"
-                className={styles.inputText}
-                value={startBid}
-                onChange={(e) => handleInputChange(e)}
-                // defaultValue={data.property.startBid}
-                required
-              ></input>
-              <input
-                id="deposit"
-                type="text"
-                placeholder="Enter Deposit"
-                className={styles.inputText}
-                value={deposit}
-                onChange={(e) => handleInputChange(e)}
-                // defaultValue={data.property.deposit}
-                required
-              ></input>
-              <input
-                id="priceStep"
-                type="number"
-                placeholder="Enter Price Step"
-                className={styles.inputText}
-                value={priceStep}
-                onChange={(e) => handleInputChange(e)}
-                // defaultValue={data.property.priceStep}
-                required
-              ></input>
-              <input
-                id="placeViewProperty"
-                type="text"
-                placeholder="Enter Place View Property"
-                className={styles.inputText}
-                value={placeViewProperty}
-                onChange={(e) => handleInputChange(e)}
-                // defaultValue={data.property.placeViewProperty}
-                required
-              ></input>
-              <div className={styles.date}>
-                <DatePicker
+                <select
+                  className={styles.drop}
+                  onChange={(e) => handleInputChange(e)}
+                  id="cagetory"
+                  placeholder="Category"
+                  // defaultValue={data.property.cagetory}
+                >
+                  {data.map((property) => (
+                    <option value={property.category}>
+                      {property.category}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  id="startBid"
+                  type="number"
+                  placeholder="Enter Start Bid"
+                  className={styles.inputText}
+                  value={startBid}
+                  onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.startBid}
+                  required
+                ></input>
+                <input
+                  id="deposit"
+                  type="text"
+                  placeholder="Enter Deposit"
+                  className={styles.inputText}
+                  value={deposit}
+                  onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.deposit}
+                  required
+                ></input>
+                <input
+                  id="priceStep"
+                  type="number"
+                  placeholder="Enter Price Step"
+                  className={styles.inputText}
+                  value={priceStep}
+                  onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.priceStep}
+                  required
+                ></input>
+                <input
                   id="placeViewProperty"
-                  // onChange={(e) => handleInputChange(e)}
-                  onChange={setViewPropertyTime}
-                  ClassName={styles.datePicker}
-                  value={viewPropertyTime}
-                  // onChange={setValue}
-                  range
-                  numberOfMonths={2}
-                  format="MM/DD/YYYY HH:mm:ss"
-                  plugins={[<TimePicker />]}
-                  //   defaultValue={data.property.placeViewProperty}
-                />
+                  type="text"
+                  placeholder="Enter Place View Property"
+                  className={styles.inputText}
+                  value={placeViewProperty}
+                  onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.placeViewProperty}
+                  required
+                ></input>
+                <div className={styles.date}>
+                  <DatePicker
+                    id="placeViewProperty"
+                    // onChange={(e) => handleInputChange(e)}
+                    onChange={setViewPropertyTime}
+                    ClassName={styles.datePicker}
+                    value={viewPropertyTime}
+                    // onChange={setValue}
+                    range
+                    numberOfMonths={2}
+                    format="MM/DD/YYYY HH:mm:ss"
+                    plugins={[<TimePicker />]}
+                    //   defaultValue={data.property.placeViewProperty}
+                  />
+                </div>
+                <textarea
+                  id="propertyDescription"
+                  value={propertyDescription}
+                  className={styles.textarea}
+                  onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.propertyDescription}
+                  required
+                ></textarea>
               </div>
-              <textarea
-                id="propertyDescription"
-                value={propertyDescription}
-                className={styles.textarea}
-                onChange={(e) => handleInputChange(e)}
-                // defaultValue={data.property.propertyDescription}
-                required
-              ></textarea>
             </div>
           </div>
           {/* <div className={styles.auction}>
@@ -292,7 +294,7 @@ const AddProperty = () => {
             <input
               className={styles.btnSave}
               type="submit"
-              value="Save"
+              value="Save "
             ></input>
             {/* 
             <input

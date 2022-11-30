@@ -21,7 +21,8 @@ import ConfirmCode from "./pages/forgotPassword/ConfirmCode";
 import NewPassword from "./pages/forgotPassword/NewPassword";
 import MyAuctions from "./pages/ForSeller/MyAuctions";
 import EditAuction from "./pages/ForSeller/EditAuction";
-import EditProperty from "./pages/ForSeller/editProperty";
+import EditProperty from "./pages/ForSeller/EditProperty";
+import PropertyDetail from "./pages/ForSeller/PropertyDetail";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -44,6 +45,8 @@ function App() {
         <Route path="addProperty" element={<AddProperty />} />
         <Route path="editProperty/:id" element={<EditProperty />} />
         <Route path="editProperty" element={<EditProperty />} />
+        <Route path="propertyDetail" element={<PropertyDetail />} />
+        <Route path="propertyDetail:id" element={<PropertyDetail />} />
         <Route path="enterEmail" element={<EnterEmail />} />
         <Route path="confirmCode/:email" element={<ConfirmCode />} />
         <Route path="newPassword/:email" element={<NewPassword />} />

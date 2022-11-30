@@ -163,6 +163,9 @@ const MyProperty = () => {
                   <td className={styles.td}>6969</td>
                   <td className={styles.td}>Tag</td>
                   <td className={styles.td}>
+                    <Link className={styles.linkBlue} to="/propertyDetail">
+                      View
+                    </Link>
                     <Link className={styles.linkBlue} to="/editProperty">
                       Edit
                     </Link>
