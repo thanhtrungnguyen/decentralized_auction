@@ -23,14 +23,10 @@ export const register = async (req, res, next) => {
     var user,contact,account = null;
     var role = null;
     if(conn){
-      if (req.body.usertype === CONTACT) {
+      if (req.body.userType === CONTACT) {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(req.body.password, salt);
-  
-        // const newUser = new User({
-        //   UserName: req.body.username,
-        //   PassWord: hash,
-        // });
+        // add new user
         await conn.sobject("User__c").create({
           Name: req.body.username,
           Password__c: hash,
@@ -38,19 +34,8 @@ export const register = async (req, res, next) => {
           if (err || !ret.success) { return console.error(err, ret); }
           console.log("Created record id : " + ret.id);
         })
-  
-        // await User.findOne({
-        //   UserName: req.body.username,
-        // });
-        await conn.sobject("User__c").findOne({
-          Name: req.body.username,
-        }, (err, ret) => {
-          if (err) { return console.error(err, ret); }
-          else {
-            user = ret.Id
-            console.log("User Name : " + ret.Id);
-          }
-        })
+
+
         //console.log(user)
         // const files = req.files;
         // // console.log("files: " + files);
@@ -60,31 +45,8 @@ export const register = async (req, res, next) => {
   
         // const result1 = await uploadFile(files.cardBack[0]);
         // console.log(result1);
-        // let date_ob = new Date(req.body.dateOfBirth);
-        // let date = date_ob.getDate();
-        // let month = date_ob.getMonth();
-        // let year = date_ob.getFullYear();
-        // let dategrantedcard = new Date(req.body.dateRangeCard);
-        // const contact = new Contact({
-        //   FirstName: req.body.firstName,
-        //   LastName: req.body.lastName,
-        //   Gender: req.body.gender,
-        //   Email: req.body.email,
-        //   DayOfBirth: date,
-        //   MonthOfBirth: month,
-        //   YearOfBirth: year,
-        //   Wards: req.body.wardId,
-        //   City: req.body.cityId,
-        //   District: req.body.districtId,
-        //   Address: req.body.sepecificAddress,
-        //   CardNumber: req.body.cardNumber,
-        //   CardGrantedDate: dategrantedcard,
-        //   CardGrantedPlace: req.body.cardGrantedPlace,
-        //   FontSideImage: req.body.cardfront,
-        //   BackSideImage: req.body.cardback,
-        //   UserId: user._id,
-        // });
-  
+        
+        //add contact
         await conn.sobject("Contact__c").create({
           Name: req.body.firstName +" "+ req.body.lastName,
           First_Name__c: req.body.firstName,
@@ -96,7 +58,7 @@ export const register = async (req, res, next) => {
           Wards__c: req.body.wardId,
           City__c: req.body.cityId,
           District__c: req.body.districtId,
-          Address__c: req.body.sepecificAddress,
+          Address__c: req.body.Address,
           Card_Number__c: req.body.cardNumber,
           Card_Granted_Date__c: req.body.dateRangeCard,
           Card_Granted_Place__c: req.body.cardGrantedPlace,
@@ -107,10 +69,7 @@ export const register = async (req, res, next) => {
           if (err || !ret.success) { return console.error(err, ret); }
           console.log("Created contact : " + ret);
         })
-  
-  
-        //   await contact.save();
-  
+        
         await conn.sobject("Role__c").findOne({
           Name: req.body.role,
         }, (err, ret) => {
@@ -127,21 +86,14 @@ export const register = async (req, res, next) => {
           if (err || !ret.success) { return console.error(err, ret); }
           console.log("Created role right : " + ret);
         })
-  
-        //   const role = await Role.findOne({
-        //     RoleName: req.body.role,
-        //   });
-  
-        //   const roleright = new RoleRight({
-        //     UserId: user._id,
-        //     RoleId: role._id, 
-        //   });
-        //   await roleright.save();
       }
-      if (req.body.usertype === ACCOUNT){
+
+
+      //add new account
+      if (req.body.userType === ACCOUNT){
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(req.body.password, salt);
-        // create user
+      // create user
       await conn.sobject("User__c").create({
         Name: req.body.username,
         Password__c: hash,
@@ -150,6 +102,7 @@ export const register = async (req, res, next) => {
         user = result.id
         console.log("Created record id : " + result.id);
       })
+
       // const files = req.files;
       //   // console.log("files: " + files);
   
@@ -158,6 +111,7 @@ export const register = async (req, res, next) => {
   
       //   const result1 = await uploadFile(files.cardBack[0]);
       //   console.log(result1);
+
       // create information contact
       await conn.sobject("Contact__c").create({
         Name: req.body.firstName +" "+ req.body.lastName,
@@ -170,7 +124,7 @@ export const register = async (req, res, next) => {
         Wards__c: req.body.wardId,
         City__c: req.body.cityId,
         District__c: req.body.districtId,
-        Address__c: req.body.specificAddress,
+        Address__c: req.body.Address,
         Card_Number__c: req.body.cardNumber,
         Card_Granted_Date__c: req.body.dateRangeCard,
         Card_Granted_Place__c: req.body.cardGrantedPlace,
@@ -181,7 +135,6 @@ export const register = async (req, res, next) => {
         if (err) { return console.error(err, ret); }
         contact = ret.id
         console.log("Created contact : " + ret);
-        
       })
       
       // create information account
@@ -236,7 +189,6 @@ export const register = async (req, res, next) => {
     }
     res.status(200).send("User has been created.");
 
-
   } catch (error) {
     next(error);
   }
@@ -257,7 +209,6 @@ export const register = async (req, res, next) => {
 // };
 
 //login
-
 export const login = async (req, res, next) => {
   try {
     var user = null;
@@ -310,7 +261,6 @@ export const login = async (req, res, next) => {
 };
 
 //change the password
-
 export const changePassword = async (req, res, next) => {
   try {
     var user = null;
