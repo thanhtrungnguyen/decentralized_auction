@@ -20,7 +20,7 @@ const ACCOUNT = "ACCOUNT";
 export const register = async (req, res, next) => {
 
   try {
-    var user,contact = null;
+    var user,contact,account = null;
     var role = null;
     if(conn){
       if (req.body.usertype === CONTACT) {
@@ -86,6 +86,7 @@ export const register = async (req, res, next) => {
         // });
   
         await conn.sobject("Contact__c").create({
+          Name: req.body.firstName +" "+ req.body.lastName,
           First_Name__c: req.body.firstName,
           Last_Name__c: req.body.lastName,
           Gender__c: req.body.gender,
@@ -159,6 +160,7 @@ export const register = async (req, res, next) => {
       //   console.log(result1);
       // create information contact
       await conn.sobject("Contact__c").create({
+        Name: req.body.firstName +" "+ req.body.lastName,
         First_Name__c: req.body.firstName,
         Last_Name__c: req.body.lastName,
         Gender__c: req.body.gender,
@@ -197,10 +199,19 @@ export const register = async (req, res, next) => {
         Contact_DAP__c: contact
       }, (err, result) => {
         if (err) return console.error(err)
-
+        account=result.id
         console.log("Created account id : " + result.id);
       })
 
+      await conn.sobject("Representative_Account_DAP__c").create({
+        Account_DAP__c: account,
+        Contact_DAP__c: contact,
+        Position__c: req.body.position
+      }, (err, result) => {
+        if (err || !result.success) { return console.error(err, result); }
+        console.log("Created Representative Account DAP : " + result);
+      })
+      
 
       // add role
       await conn.sobject("Role__c").findOne({
