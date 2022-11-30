@@ -382,7 +382,7 @@ const Register = () => {
             required
           ></input>
           <p className={styles.txtBlack}>Role</p>
-          <select
+          {/* <select
             id="role"
             className={styles.dropdown}
             onChange={(e) => handleInputChange(e)}
@@ -391,7 +391,7 @@ const Register = () => {
           >
             <option value="BIDDER">BIDDER</option>
             <option value="SELLER">SELLER</option>
-          </select>
+          </select> */}
           <input
             type="submit"
             className={styles.ipsubmit}
