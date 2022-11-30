@@ -98,7 +98,7 @@ const AddProperty = () => {
     // formData.append("startBid", startBid);
     // formData.append("biddingPreiod", biddingPreiod);
     axios
-      .post("http://localhost:8800/api/property", formData, {
+      .put("http://localhost:8800/api/editProperty", formData, {
         withCredentials: true,
       })
       .then((res) => {
@@ -168,6 +168,7 @@ const AddProperty = () => {
                   id="propertyVideo"
                   onChange={(e) => handleInputChange(e)}
                   required
+                  //   defaultValue={data.property.propertyVideo}
                 ></input>
                 <input
                   id="propertyName"
@@ -176,6 +177,7 @@ const AddProperty = () => {
                   className={styles.inputText}
                   value={propertyName}
                   onChange={(e) => handleInputChange(e)}
+                  //   defaultValue={data.property.propertyName}
                   required
                 ></input>
               </div>
@@ -185,7 +187,7 @@ const AddProperty = () => {
                 onChange={(e) => handleInputChange(e)}
                 id="cagetory"
                 placeholder="Category"
-                defaultValue="Car"
+                // defaultValue={data.property.cagetory}
               >
                 {data.map((property) => (
                   <option value={property.category}>{property.category}</option>
@@ -198,6 +200,7 @@ const AddProperty = () => {
                 className={styles.inputText}
                 value={startBid}
                 onChange={(e) => handleInputChange(e)}
+                // defaultValue={data.property.startBid}
                 required
               ></input>
               <input
@@ -207,6 +210,7 @@ const AddProperty = () => {
                 className={styles.inputText}
                 value={deposit}
                 onChange={(e) => handleInputChange(e)}
+                // defaultValue={data.property.deposit}
                 required
               ></input>
               <input
@@ -216,6 +220,7 @@ const AddProperty = () => {
                 className={styles.inputText}
                 value={priceStep}
                 onChange={(e) => handleInputChange(e)}
+                // defaultValue={data.property.priceStep}
                 required
               ></input>
               <input
@@ -225,6 +230,7 @@ const AddProperty = () => {
                 className={styles.inputText}
                 value={placeViewProperty}
                 onChange={(e) => handleInputChange(e)}
+                // defaultValue={data.property.placeViewProperty}
                 required
               ></input>
               <div className={styles.date}>
@@ -239,6 +245,7 @@ const AddProperty = () => {
                   numberOfMonths={2}
                   format="MM/DD/YYYY HH:mm:ss"
                   plugins={[<TimePicker />]}
+                  //   defaultValue={data.property.placeViewProperty}
                 />
               </div>
               <textarea
@@ -246,6 +253,7 @@ const AddProperty = () => {
                 value={propertyDescription}
                 className={styles.textarea}
                 onChange={(e) => handleInputChange(e)}
+                // defaultValue={data.property.propertyDescription}
                 required
               ></textarea>
             </div>
