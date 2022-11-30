@@ -87,9 +87,9 @@ const MyProperty = () => {
                 placeholder="Category"
                 defaultValue="Car"
               >
-                <option value="Car">Car</option>
-                <option value="Table">Table</option>
-                <option value="Chair">Chair</option>
+                {data.map((property) => (
+                  <option value={property.category}>{property.category}</option>
+                ))}
               </select>
               <br />
               <br />
@@ -127,6 +127,7 @@ const MyProperty = () => {
                     <BsFillCheckSquareFill className={styles.icon} />
                   </th>
                   <th className={styles.th}>Property Name</th>
+                  <th className={styles.th}>Category</th>
                   <th className={styles.th}>Start bid</th>
                   <th className={styles.th}>Status</th>
                   <th className={styles.th}>Action</th>
@@ -137,6 +138,7 @@ const MyProperty = () => {
                       <input type="checkbox"></input>
                     </td>
                     <td className={styles.td}>{property.propertyName}</td>
+                    <td className={styles.td}>{property.category}</td>
                     <td className={styles.td}>{property.StartBid}</td>
                     <td className={styles.td}>{property.Status}</td>
                     <td className={styles.td}>
@@ -157,6 +159,7 @@ const MyProperty = () => {
                     <input type="checkbox"></input>
                   </td>
                   <td className={styles.td}>Dianne Russell</td>
+                  <td className={styles.td}>Real estate</td>
                   <td className={styles.td}>6969</td>
                   <td className={styles.td}>Tag</td>
                   <td className={styles.td}>

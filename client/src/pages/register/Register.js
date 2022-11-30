@@ -93,9 +93,9 @@ const Register = () => {
     if (id === "rePassword") {
       setRePassword(value);
     }
-    if (id === "role") {
-      setRole(value);
-    }
+    // if (id === "role") {
+    //   setRole(value);
+    // }
   };
   const handleSubmit = (event) => {
     let cityId = selectedCity.value;

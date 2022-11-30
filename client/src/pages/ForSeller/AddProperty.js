@@ -22,11 +22,27 @@ const AddProperty = () => {
   const [cagetory, setCategory] = useState("Car");
   const [propertyDescription, setPropertyDescription] = useState(null);
   const [startBid, setStartBid] = useState(null);
-  const [biddingPreiod, setBiddingPreiod] = useState([
+  const [deposit, setDeposit] = useState(null);
+  const [priceStep, setPriceStep] = useState(null);
+  const [placeViewProperty, setPlaceViewProperty] = useState(null);
+  // const [startBid, setStartBid] = useState(null);
+  const [viewPropertyTime, setViewPropertyTime] = useState([
     new DateObject().setDay(15),
     new DateObject().add(1, "month").setDay(15),
   ]);
+
+  const [data, setData] = useState([]);
+
   const navigate = useNavigate();
+  const baseURL = "http://localhost:8800/api/property/";
+
+  useEffect(() => {
+    axios.get(baseURL).then((resp) => {
+      console.log(resp.data);
+      console.log("axios get");
+      setData(resp.data);
+    });
+  }, [baseURL]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -48,8 +64,20 @@ const AddProperty = () => {
     if (id === "startBid") {
       setStartBid(value);
     }
-    if (id === "biddingPreiod") {
-      setBiddingPreiod(value);
+    if (id === "deposit") {
+      setDeposit(value);
+    }
+    if (id === "priceStep") {
+      setPriceStep(value);
+    }
+    if (id === "placeViewProperty") {
+      setPlaceViewProperty(value);
+    }
+    // if (id === "startBid") {
+    //   setStartBid(value);
+    // }
+    if (id === "viewPropertyTime") {
+      setViewPropertyTime(value);
     }
   };
 
@@ -62,8 +90,13 @@ const AddProperty = () => {
     formData.append("propertyName", propertyName);
     formData.append("cagetory", cagetory);
     formData.append("propertyDescription", propertyDescription);
+    formData.append("viewPropertyTime", viewPropertyTime);
     formData.append("startBid", startBid);
-    formData.append("biddingPreiod", biddingPreiod);
+    formData.append("deposit", deposit);
+    formData.append("priceStep", priceStep);
+    formData.append("placeViewProperty", placeViewProperty);
+    // formData.append("startBid", startBid);
+    // formData.append("biddingPreiod", biddingPreiod);
     axios
       .post("http://localhost:8800/api/property", formData, {
         withCredentials: true,
@@ -112,6 +145,11 @@ const AddProperty = () => {
                 <p className={styles.lable}>Property Video</p>
                 <p className={styles.lable}>Property Name</p>
                 <p className={styles.lable}>Category</p>
+                <p className={styles.lable}>Start Bid</p>
+                <p className={styles.lable}>Deposit</p>
+                <p className={styles.lable}>Price Step</p>
+                <p className={styles.lable}>Place View Property</p>
+                <p className={styles.lable}>View Property Time</p>
                 <p className={styles.lable}>Property Description</p>
               </div>
               <div className={styles.col2}>
@@ -149,10 +187,60 @@ const AddProperty = () => {
                 placeholder="Category"
                 defaultValue="Car"
               >
-                <option value="Car">Car</option>
-                <option value="Table">Table</option>
-                <option value="Chair">Chair</option>
+                {data.map((property) => (
+                  <option value={property.category}>{property.category}</option>
+                ))}
               </select>
+              <input
+                id="startBid"
+                type="number"
+                placeholder="Enter Start Bid"
+                className={styles.inputText}
+                value={propertyName}
+                onChange={(e) => handleInputChange(e)}
+                required
+              ></input>
+              <input
+                id="deposit"
+                type="text"
+                placeholder="Enter Deposit"
+                className={styles.inputText}
+                value={propertyName}
+                onChange={(e) => handleInputChange(e)}
+                required
+              ></input>
+              <input
+                id="priceStep"
+                type="number"
+                placeholder="Enter Price Step"
+                className={styles.inputText}
+                value={propertyName}
+                onChange={(e) => handleInputChange(e)}
+                required
+              ></input>
+              <input
+                id="propertyName"
+                type="text"
+                placeholder="Enter Place View Property"
+                className={styles.inputText}
+                value={propertyName}
+                onChange={(e) => handleInputChange(e)}
+                required
+              ></input>
+              <div className={styles.date}>
+                <DatePicker
+                  id="placeViewProperty"
+                  // onChange={(e) => handleInputChange(e)}
+                  onChange={setViewPropertyTime}
+                  ClassName={styles.datePicker}
+                  value={viewPropertyTime}
+                  // onChange={setValue}
+                  range
+                  numberOfMonths={2}
+                  format="MM/DD/YYYY HH:mm:ss"
+                  plugins={[<TimePicker />]}
+                />
+              </div>
               <textarea
                 id="propertyDescription"
                 value={propertyDescription}
@@ -162,7 +250,7 @@ const AddProperty = () => {
               ></textarea>
             </div>
           </div>
-          <div className={styles.auction}>
+          {/* <div className={styles.auction}>
             <p className={styles.title}>Auction</p>
             <div className={styles.col1}>
               <p className={styles.lable}>Start bid</p>
@@ -191,19 +279,19 @@ const AddProperty = () => {
                 plugins={[<TimePicker />]}
               />
             </div>
-          </div>
+          </div> */}
           <div className={styles.btn}>
             <input
               className={styles.btnSave}
               type="submit"
-              value="Save and Pulish"
+              value="Save"
             ></input>
-
+            {/* 
             <input
               className={styles.btnDraft}
               type="button"
               value="Save as Draft"
-            ></input>
+            ></input> */}
             <input
               className={styles.btnCancel}
               type="button"

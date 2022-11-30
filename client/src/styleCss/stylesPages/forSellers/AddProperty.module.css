@@ -9,7 +9,7 @@
 
 .info {
   width: 1174px;
-  height: 670px;
+  height: 1100;
   background: #ffffff;
   left: 50%;
   margin-left: -500px;
@@ -31,13 +31,15 @@
   /* float: left; */
 }
 .lable {
+  width: 100%;
+  text-align: right;
   float: right;
   margin-left: 80px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 34px;
   /* or 150% */
 
   /* Gray/800 */
@@ -46,6 +48,8 @@
 }
 .inputImg {
   /* float: left; */
+  height: 32px;
+
   margin: 16px 0px 16px 0px;
   margin-left: 20px;
 }
@@ -112,6 +116,19 @@
   margin: 16px 0px 16px 0px;
   margin-left: 20px;
 }
+.date {
+  width: 748px;
+  /* background: #ffffff;
+
+  border: 1px solid #8a8fb9;
+
+  box-shadow: 0px 0px 0px 3.2px rgba(32, 162, 232, 0.25);
+  border-radius: 4px; */
+  margin: 16px 0px 16px 0px;
+  margin-left: -230px;
+  text-align: center;
+  /* float: right; */
+}
 
 .btn {
   width: 1174px;
@@ -153,7 +170,7 @@
   color: #3918d9;
 }
 .btnSave {
-  width: 138px;
+  width: 79px;
   height: 36px;
 
   background: #3918d9;
