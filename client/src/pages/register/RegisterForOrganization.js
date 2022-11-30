@@ -45,6 +45,7 @@ const Register = () => {
   const [userName, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [rePassword, setRePassword] = useState(null);
+  const [position, setPosition] = useState(null);
   const [role, setRole] = useState("BIDDER");
   const [usertype, setUsertype] = useState("ACCOUNT");
 
@@ -52,6 +53,9 @@ const Register = () => {
     const { id, value } = e.target;
     if (id === "organizationName") {
       setOrganizationName(value);
+    }
+    if (id === "position") {
+      setPosition(value);
     }
     if (id === "taxCode") {
       setTaxCode(value);
@@ -157,6 +161,7 @@ const Register = () => {
         password,
         role,
         usertype,
+        position,
       })
       .then((res) => {
         console.log(res);
@@ -347,6 +352,15 @@ const Register = () => {
             id="phone"
             required
           ></input>
+          <input
+            className={styles.inputT}
+            type="text"
+            placeholder="Position"
+            value={specificAddressOrganization}
+            onChange={(e) => handleInputChange(e)}
+            id="position"
+            required
+          ></input>
           <p className={styles.textRed}>Address</p>
           <Select
             className={styles.select}
@@ -461,7 +475,7 @@ const Register = () => {
             placeholder="Re-eneter the password"
             required
           ></input>
-          <select
+          {/* <select
             id="role"
             className={styles.dropdown}
             onChange={(e) => handleInputChange(e)}
@@ -469,7 +483,7 @@ const Register = () => {
           >
             <option value="BIDDER">BIDDER</option>
             <option value="SELLER">SELLER</option>
-          </select>
+          </select> */}
           <input
             type="submit"
             className={styles.ipsubmit}
