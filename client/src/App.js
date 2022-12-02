@@ -23,6 +23,8 @@ import MyAuctions from "./pages/ForSeller/MyAuctions";
 import EditAuction from "./pages/ForSeller/EditAuction";
 import EditProperty from "./pages/ForSeller/EditProperty";
 import PropertyDetail from "./pages/ForSeller/PropertyDetail";
+import AuctionsListForManager from "./pages/forManager/AuctionsListForManager";
+import ApproveAuction from "./pages/forManager/ApproveAuction";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -61,6 +63,12 @@ function App() {
           path="autitoDetailForSeller"
           element={<AuctionDetailForSeller />}
         />
+        <Route
+          path="autionsListForManager"
+          element={<AuctionsListForManager />}
+        />
+        <Route path="approveAuction/:id" element={<ApproveAuction />} />
+        <Route path="approveAuction" element={<ApproveAuction />} />
       </Routes>
     </BrowserRouter>
   );

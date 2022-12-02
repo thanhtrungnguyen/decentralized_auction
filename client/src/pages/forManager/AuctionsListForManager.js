@@ -2,7 +2,7 @@ import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css"
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
-import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
+import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
 import { Outlet, Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const MyAuctions = () => {
+const AuctionsListForManager = () => {
   const [page, setPage] = React.useState(1);
   const [cagetory, setCategory] = useState("Car");
   const [propertyName, setPropertyName] = useState(null);
@@ -50,7 +50,7 @@ const MyAuctions = () => {
         alert(res.data.message);
         setData(res.data);
 
-        navigate("/myProperty");
+        navigate("/autionsListForManager");
       });
     event.preventDefault();
   };
@@ -154,9 +154,15 @@ const MyAuctions = () => {
                     <td className={styles.td}>
                       <Link
                         className={styles.linkBlue}
-                        to={`/autitoDetailForSeller/${auction._id}`}
+                        to={`/autitoDetailForManager/${auction._id}`}
                       >
                         View
+                      </Link>
+                      <Link
+                        className={styles.linkBlue}
+                        to={`/approveAuction/${auction._id}`}
+                      >
+                        Approve
                       </Link>
                     </td>
                   </tr>
@@ -173,9 +179,12 @@ const MyAuctions = () => {
                   <td className={styles.td}>
                     <Link
                       className={styles.linkBlue}
-                      to="/autitoDetailForSeller"
+                      to="/autitoDetailForManager"
                     >
                       View
+                    </Link>
+                    <Link className={styles.linkBlue} to="/approveAuction">
+                      Approve
                     </Link>
                   </td>
                 </tr>
@@ -196,4 +205,4 @@ const MyAuctions = () => {
     </>
   );
 };
-export default MyAuctions;
+export default AuctionsListForManager;
