@@ -20,125 +20,174 @@ const ACCOUNT = "ACCOUNT";
 export const register = async (req, res, next) => {
 
   try {
-    var user = null;
+    var user,contact,account = null;
     var role = null;
-    if (req.body.usertype === CONTACT) {
-      var salt = bcrypt.genSaltSync(10);
-      var hash = bcrypt.hashSync(req.body.password, salt);
+    if(conn){
+      if (req.body.userType === CONTACT) {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(req.body.password, salt);
+        // add new user
+        await conn.sobject("User__c").create({
+          Name: req.body.username,
+          Password__c: hash,
+        }, (err, ret) => {
+          if (err || !ret.success) { return console.error(err, ret); }
+          console.log("Created record id : " + ret.id);
+        })
 
-      // const newUser = new User({
-      //   UserName: req.body.username,
-      //   PassWord: hash,
-      // });
+
+        //console.log(user)
+        // const files = req.files;
+        // // console.log("files: " + files);
+  
+        // const result = await uploadFile(files.cardFront[0]);
+        // console.log(result);
+  
+        // const result1 = await uploadFile(files.cardBack[0]);
+        // console.log(result1);
+        
+        //add contact
+        await conn.sobject("Contact__c").create({
+          Name: req.body.firstName +" "+ req.body.lastName,
+          First_Name__c: req.body.firstName,
+          Last_Name__c: req.body.lastName,
+          Gender__c: req.body.gender,
+          Email__c: req.body.email,
+          Date_Of_Birth__c: req.body.dateOfBirth,
+          Phone__c: req.body.phone,
+          Wards__c: req.body.wardId,
+          City__c: req.body.cityId,
+          District__c: req.body.districtId,
+          Address__c: req.body.Address,
+          Card_Number__c: req.body.cardNumber,
+          Card_Granted_Date__c: req.body.dateRangeCard,
+          Card_Granted_Place__c: req.body.cardGrantedPlace,
+          // Font_Side_Image__c: result.key,
+          // Back_Side_Image__c: result1.key,
+          User_Id__c: user,
+        }, (err, ret) => {
+          if (err || !ret.success) { return console.error(err, ret); }
+          console.log("Created contact : " + ret);
+        })
+        
+        await conn.sobject("Role__c").findOne({
+          Name: req.body.role,
+        }, (err, ret) => {
+          if (err) { return console.error(err, ret); }
+          else {
+            role = ret.Id
+            console.log("Role Id : " + ret.Id);
+          }
+        })
+        await conn.sobject("Role_Right__c").create({
+          Role_Id__c: role,
+          User_DAP__c: user
+        }, (err, ret) => {
+          if (err || !ret.success) { return console.error(err, ret); }
+          console.log("Created role right : " + ret);
+        })
+      }
+
+
+      //add new account
+      if (req.body.userType === ACCOUNT){
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(req.body.password, salt);
+      // create user
       await conn.sobject("User__c").create({
         Name: req.body.username,
         Password__c: hash,
-      }, (err, ret) => {
-        if (err || !ret.success) { return console.error(err, ret); }
-        console.log("Created record id : " + ret.id);
+      }, (err, result) => {
+        if (err) { return console.error(err, result); }
+        user = result.id
+        console.log("Created record id : " + result.id);
       })
 
-      // await User.findOne({
-      //   UserName: req.body.username,
-      // });
-      await conn.sobject("User__c").findOne({
-        Name: req.body.username,
-      }, (err, ret) => {
-        if (err) { return console.error(err, ret); }
-        else {
-          user = ret.Id
-          console.log("User Name : " + ret.Id);
-        }
-      })
-      //console.log(user)
-      const files = req.files;
-      // console.log("files: " + files);
+      // const files = req.files;
+      //   // console.log("files: " + files);
+  
+      //   const result = await uploadFile(files.cardFront[0]);
+      //   console.log(result);
+  
+      //   const result1 = await uploadFile(files.cardBack[0]);
+      //   console.log(result1);
 
-      const result = await uploadFile(files.cardFront[0]);
-      console.log(result);
-
-      const result1 = await uploadFile(files.cardBack[0]);
-      console.log(result1);
-      // let date_ob = new Date(req.body.dateOfBirth);
-      // let date = date_ob.getDate();
-      // let month = date_ob.getMonth();
-      // let year = date_ob.getFullYear();
-      // let dategrantedcard = new Date(req.body.dateRangeCard);
-      // const contact = new Contact({
-      //   FirstName: req.body.firstName,
-      //   LastName: req.body.lastName,
-      //   Gender: req.body.gender,
-      //   Email: req.body.email,
-      //   DayOfBirth: date,
-      //   MonthOfBirth: month,
-      //   YearOfBirth: year,
-      //   Wards: req.body.wardId,
-      //   City: req.body.cityId,
-      //   District: req.body.districtId,
-      //   Address: req.body.sepecificAddress,
-      //   CardNumber: req.body.cardNumber,
-      //   CardGrantedDate: dategrantedcard,
-      //   CardGrantedPlace: req.body.cardGrantedPlace,
-      //   FontSideImage: req.body.cardfront,
-      //   BackSideImage: req.body.cardback,
-      //   UserId: user._id,
-      // });
-
+      // create information contact
       await conn.sobject("Contact__c").create({
+        Name: req.body.firstName +" "+ req.body.lastName,
         First_Name__c: req.body.firstName,
         Last_Name__c: req.body.lastName,
         Gender__c: req.body.gender,
         Email__c: req.body.email,
-        BirthDate__c: req.body.dateOfBirth,
+        Date_Of_Birth__c: req.body.dateOfBirth,
         Phone__c: req.body.phone,
         Wards__c: req.body.wardId,
         City__c: req.body.cityId,
         District__c: req.body.districtId,
-        Address__c: req.body.sepecificAddress,
+        Address__c: req.body.Address,
         Card_Number__c: req.body.cardNumber,
         Card_Granted_Date__c: req.body.dateRangeCard,
         Card_Granted_Place__c: req.body.cardGrantedPlace,
-        Font_Side_Image__c: result.key,
-        Back_Side_Image__c: result.key,
+        // Font_Side_Image__c: result.key,
+        // Back_Side_Image__c: result1.key,
         User_Id__c: user,
       }, (err, ret) => {
-        if (err || !ret.success) { return console.error(err, ret); }
+        if (err) { return console.error(err, ret); }
+        contact = ret.id
         console.log("Created contact : " + ret);
       })
+      
+      // create information account
+      await conn.sobject('Account__c').create({
+        Name: req.body.accountName,
+        //Company_Certificate__c: req.body.certificateCompany,
+        //Employees__c:
+        //Phone__c: 
+        Specific_Address__c: req.body.specificAddress,
+        Tax_Code__c: req.body.taxCode,
+        Tax_Code_Granted_Date__c: req.body.taxCodeGrantedDate,
+        Tax_Code_Granted_Place__c: req.body.taxCodeGrantedPlace,
+        //Website__c:
+        User_Id__c: user,
+        Contact_DAP__c: contact
+      }, (err, result) => {
+        if (err) return console.error(err)
+        account=result.id
+        console.log("Created account id : " + result.id);
+      })
 
+      await conn.sobject("Representative_Account_DAP__c").create({
+        Account_DAP__c: account,
+        Contact_DAP__c: contact,
+        Position__c: req.body.position
+      }, (err, result) => {
+        if (err || !result.success) { return console.error(err, result); }
+        console.log("Created Representative Account DAP : " + result);
+      })
+      
 
-      //   await contact.save();
-
+      // add role
       await conn.sobject("Role__c").findOne({
         Name: req.body.role,
-      }, (err, ret) => {
-        if (err) { return console.error(err, ret); }
+      }, (err, result) => {
+        if (err) { return console.error(err, result); }
         else {
-          role = ret.Id
-          console.log("Role Id : " + ret.Id);
+          role = result.Id
+          console.log("Role Id : " + result.Id);
         }
       })
       await conn.sobject("Role_Right__c").create({
         Role_Id__c: role,
         User_DAP__c: user
-      }, (err, ret) => {
-        if (err || !ret.success) { return console.error(err, ret); }
-        console.log("Created role right : " + ret);
+      }, (err, result) => {
+        if (err || !result.success) { return console.error(err, result); }
+        console.log("Created role right : " + result);
       })
-
-      //   const role = await Role.findOne({
-      //     RoleName: req.body.role,
-      //   });
-
-      //   const roleright = new RoleRight({
-      //     UserId: user._id,
-      //     RoleId: role._id, 
-      //   });
-      //   await roleright.save();
+      }
+    }else {
+      console.log("Connection failed with salesforce");
     }
-
     res.status(200).send("User has been created.");
-
 
   } catch (error) {
     next(error);
@@ -160,7 +209,6 @@ export const register = async (req, res, next) => {
 // };
 
 //login
-
 export const login = async (req, res, next) => {
   try {
     var user = null;
@@ -213,7 +261,6 @@ export const login = async (req, res, next) => {
 };
 
 //change the password
-
 export const changePassword = async (req, res, next) => {
   try {
     var user = null;
