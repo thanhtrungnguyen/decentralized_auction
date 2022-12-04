@@ -28,6 +28,9 @@ const NavBar = () => {
           <Link className={styles.link} to="/autionsListForManager">
             Manager Center
           </Link>
+          <Link className={styles.link} to="/listManagers">
+            Admin Center
+          </Link>
           <div className={styles.flright}>
             <input className={styles.ip} type="text"></input>
             <BsSearch className={styles.icon} />

@@ -12,7 +12,7 @@ const SidebarSeller = () => {
         </Link>
         <br />
         <p className={styles.title}>Manager Categories</p>
-        <Link to="/categoryListForManager" className={styles.txt}>
+        <Link to="/managerCategorys" className={styles.txt}>
           Category
         </Link>{" "}
         <br />

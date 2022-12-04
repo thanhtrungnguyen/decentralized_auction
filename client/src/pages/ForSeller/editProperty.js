@@ -10,6 +10,7 @@ import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const AddProperty = () => {
   // const [date, setDate] = useState([
@@ -32,9 +33,10 @@ const AddProperty = () => {
   ]);
 
   const [data, setData] = useState([]);
+  const { id } = useParams();
 
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8800/api/property/";
+  const baseURL = "http://localhost:8800/api/property/${id}";
 
   useEffect(() => {
     axios.get(baseURL).then((resp) => {
