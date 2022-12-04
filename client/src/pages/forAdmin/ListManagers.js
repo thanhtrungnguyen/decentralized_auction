@@ -2,7 +2,7 @@ import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css"
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
-import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
+import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Outlet, Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
@@ -10,10 +10,10 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const MyAuctions = () => {
+const ListForManagers = () => {
   const [page, setPage] = React.useState(1);
-  const [cagetory, setCategory] = useState("Car");
-  const [propertyName, setPropertyName] = useState(null);
+
+  const [email, setEmail] = useState(null);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const baseURL = "http://localhost:8800/api/auction/";
@@ -27,18 +27,14 @@ const MyAuctions = () => {
   }, [baseURL]);
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    if (id === "cagetory") {
-      setCategory(value);
-    }
-    if (id === "propertyName") {
-      setPropertyName(value);
+    if (id === "email") {
+      setEmail(value);
     }
   };
   const handleSubmit = (event) => {
     const formData = new FormData();
 
-    formData.append("propertyName", propertyName);
-    formData.append("cagetory", cagetory);
+    formData.append("email", email);
 
     axios
       .get("http://localhost:8800/api/auction", formData, {
@@ -50,7 +46,7 @@ const MyAuctions = () => {
         alert(res.data.message);
         setData(res.data);
 
-        navigate("/myProperty");
+        navigate("/autionsListForManager");
       });
     event.preventDefault();
   };
@@ -63,33 +59,25 @@ const MyAuctions = () => {
       <NavBar />
       <form onSubmit={handleSubmit}>
         <div className={styles.container}>
-          <SideBarSeller />
+          <SideBarAdmin />
           <div className={styles.content}>
             <div className={styles.search}>
               <div className={styles.floatLeft}>
-                <p className={styles.title}>Property Name</p>
+                <p className={styles.title}>Search</p>
                 <input
-                  id="propertyName"
+                  id="email"
                   className={styles.input}
                   type="text"
-                  placeholder="Please input"
-                  value={propertyName}
+                  placeholder="Email"
+                  value={email}
                   onChange={(e) => handleInputChange(e)}
                   required
                 ></input>
               </div>
-              <p className={styles.title}>Category</p>
-              <select
-                className={styles.select}
-                onChange={(e) => handleInputChange(e)}
-                id="cagetory"
-                placeholder="Category"
-                defaultValue="Car"
-              >
-                {data.map((property) => (
-                  <option value={property.category}>{property.category}</option>
-                ))}
-              </select>
+              <br />
+              <br />
+              <br />
+              <br />
               <br />
               <br />
               <input
@@ -109,20 +97,12 @@ const MyAuctions = () => {
                 All
               </Link>
               <Link className={styles.link} to="/">
-                Request add
+                Activite{" "}
               </Link>
               <Link className={styles.link} to="/">
-                Approved
+                Baned
               </Link>
-              <Link className={styles.link} to="/">
-                Upcoming
-              </Link>
-              <Link className={styles.link} to="/">
-                Bidding
-              </Link>
-              <Link className={styles.link} to="/">
-                Closed
-              </Link>
+
               <hr />
               <p className={styles.txtBold}>69 Properties</p>
               {/* <Link className={styles.btnAdd} to="/addProperty">
@@ -154,9 +134,15 @@ const MyAuctions = () => {
                     <td className={styles.td}>
                       <Link
                         className={styles.linkBlue}
-                        to={`/autitoDetailForSeller/${auction._id}`}
+                        to={`/autitoDetailForManager/${auction._id}`}
                       >
                         View
+                      </Link>
+                      <Link
+                        className={styles.linkBlue}
+                        to={`/approveAuction/${auction._id}`}
+                      >
+                        Approve
                       </Link>
                     </td>
                   </tr>
@@ -173,9 +159,12 @@ const MyAuctions = () => {
                   <td className={styles.td}>
                     <Link
                       className={styles.linkBlue}
-                      to="/autitoDetailForSeller"
+                      to="/autitoDetailForManager"
                     >
                       View
+                    </Link>
+                    <Link className={styles.linkBlue} to="/approveAuction">
+                      Approve
                     </Link>
                   </td>
                 </tr>
@@ -196,4 +185,4 @@ const MyAuctions = () => {
     </>
   );
 };
-export default MyAuctions;
+export default ListForManagers;

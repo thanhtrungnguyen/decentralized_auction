@@ -1,22 +1,25 @@
 import express from "express";
-import { createAuction, createLot, getAllAuction, getAuctionDetailByID, updateAuction, uploadImage } from "../controllers/AuctionController.js";
+import { createAuction,  getAllAuction, getAuctionDetailByID, updateAuction, uploadImage , approveAuction, rejectAuction} from "../controllers/AuctionController.js";
 import { verifySeller } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
 
-router.post("/", verifySeller ,createAuction);
+router.post("/", createAuction);
 
+router.put("/approve/:id", approveAuction);
+
+router.put("/reject/:id", rejectAuction);
 
 router.put("/:id", verifySeller ,updateAuction);
 
 router.get("/",  getAllAuction);
 
-router.get("/auctiondetail/:id",  getAuctionDetailByID);
+router.get("/auctiondetail/:auctionId/:propertyId",  getAuctionDetailByID);
 
 router.get('/images/:key', uploadImage)
 
-router.post("/lot/",  createLot);
+
 
 
 export default router
