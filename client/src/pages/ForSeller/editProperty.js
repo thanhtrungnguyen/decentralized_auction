@@ -10,6 +10,7 @@ import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const AddProperty = () => {
   // const [date, setDate] = useState([
@@ -32,9 +33,10 @@ const AddProperty = () => {
   ]);
 
   const [data, setData] = useState([]);
+  const { id } = useParams();
 
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8800/api/property/";
+  const baseURL = "http://localhost:8800/api/property/${id}";
 
   useEffect(() => {
     axios.get(baseURL).then((resp) => {
@@ -98,7 +100,7 @@ const AddProperty = () => {
     // formData.append("startBid", startBid);
     // formData.append("biddingPreiod", biddingPreiod);
     axios
-      .post("http://localhost:8800/api/property", formData, {
+      .put("http://localhost:8800/api/editProperty", formData, {
         withCredentials: true,
       })
       .then((res) => {
@@ -168,6 +170,7 @@ const AddProperty = () => {
                   id="propertyVideo"
                   onChange={(e) => handleInputChange(e)}
                   required
+                  //   defaultValue={data.property.propertyVideo}
                 ></input>
                 <input
                   id="propertyName"
@@ -176,6 +179,7 @@ const AddProperty = () => {
                   className={styles.inputText}
                   value={propertyName}
                   onChange={(e) => handleInputChange(e)}
+                  //   defaultValue={data.property.propertyName}
                   required
                 ></input>
 
@@ -184,7 +188,7 @@ const AddProperty = () => {
                   onChange={(e) => handleInputChange(e)}
                   id="cagetory"
                   placeholder="Category"
-                  defaultValue="Car"
+                  // defaultValue={data.property.cagetory}
                 >
                   {data.map((property) => (
                     <option value={property.category}>
@@ -199,6 +203,7 @@ const AddProperty = () => {
                   className={styles.inputText}
                   value={startBid}
                   onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.startBid}
                   required
                 ></input>
                 <input
@@ -208,6 +213,7 @@ const AddProperty = () => {
                   className={styles.inputText}
                   value={deposit}
                   onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.deposit}
                   required
                 ></input>
                 <input
@@ -217,6 +223,7 @@ const AddProperty = () => {
                   className={styles.inputText}
                   value={priceStep}
                   onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.priceStep}
                   required
                 ></input>
                 <input
@@ -226,6 +233,7 @@ const AddProperty = () => {
                   className={styles.inputText}
                   value={placeViewProperty}
                   onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.placeViewProperty}
                   required
                 ></input>
                 <div className={styles.date}>
@@ -240,6 +248,7 @@ const AddProperty = () => {
                     numberOfMonths={2}
                     format="MM/DD/YYYY HH:mm:ss"
                     plugins={[<TimePicker />]}
+                    //   defaultValue={data.property.placeViewProperty}
                   />
                 </div>
                 <textarea
@@ -247,6 +256,7 @@ const AddProperty = () => {
                   value={propertyDescription}
                   className={styles.textarea}
                   onChange={(e) => handleInputChange(e)}
+                  // defaultValue={data.property.propertyDescription}
                   required
                 ></textarea>
               </div>
@@ -286,7 +296,7 @@ const AddProperty = () => {
             <input
               className={styles.btnSave}
               type="submit"
-              value="Save"
+              value="Save "
             ></input>
             {/* 
             <input

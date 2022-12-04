@@ -21,6 +21,14 @@ import ConfirmCode from "./pages/forgotPassword/ConfirmCode";
 import NewPassword from "./pages/forgotPassword/NewPassword";
 import MyAuctions from "./pages/ForSeller/MyAuctions";
 import EditAuction from "./pages/ForSeller/EditAuction";
+import EditProperty from "./pages/ForSeller/EditProperty";
+import PropertyDetail from "./pages/ForSeller/PropertyDetail";
+import AuctionsListForManager from "./pages/forManager/AuctionsListForManager";
+import ApproveAuction from "./pages/forManager/ApproveAuction";
+import ManagerCategorys from "./pages/forManager/ManageCategorys";
+import AddCategory from "./pages/forManager/AddCategory";
+import EditCategory from "./pages/forManager/EditCategory";
+import ListManagers from "./pages/forAdmin/ListManagers";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -41,6 +49,10 @@ function App() {
         <Route path="sellerCenter" element={<SellerCenter />} />
         <Route path="myProperty" element={<MyProperty />} />
         <Route path="addProperty" element={<AddProperty />} />
+        <Route path="editProperty/:id" element={<EditProperty />} />
+        <Route path="editProperty" element={<EditProperty />} />
+        <Route path="propertyDetail" element={<PropertyDetail />} />
+        <Route path="propertyDetail:id" element={<PropertyDetail />} />
         <Route path="enterEmail" element={<EnterEmail />} />
         <Route path="confirmCode/:email" element={<ConfirmCode />} />
         <Route path="newPassword/:email" element={<NewPassword />} />
@@ -55,6 +67,17 @@ function App() {
           path="autitoDetailForSeller"
           element={<AuctionDetailForSeller />}
         />
+        <Route
+          path="autionsListForManager"
+          element={<AuctionsListForManager />}
+        />
+        <Route path="approveAuction/:id" element={<ApproveAuction />} />
+        <Route path="approveAuction" element={<ApproveAuction />} />
+        <Route path="managerCategorys" element={<ManagerCategorys />} />
+        <Route path="addCategory" element={<AddCategory />} />
+        <Route path="editCategory/:id" element={<EditCategory />} />
+        <Route path="editCategory" element={<EditCategory />} />
+        <Route path="listManagers" element={<ListManagers />} />
       </Routes>
     </BrowserRouter>
   );
