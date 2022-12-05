@@ -161,6 +161,7 @@ const MyProperty = () => {
                       <Link className={styles.linkBlue} to="/">
                         Delete
                       </Link>
+                      
                     </td>
                   </tr>
                 ))}
@@ -182,6 +183,12 @@ const MyProperty = () => {
                     <Link className={styles.linkBlue} to="/">
                       Delete
                     </Link>
+                    <Link
+                        className={styles.linkBlue}
+                        to={`/editProperty/`}
+                      >
+                        Request Add
+                      </Link>
                   </td>
                 </tr>
               </table>

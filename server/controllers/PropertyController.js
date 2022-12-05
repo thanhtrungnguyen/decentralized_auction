@@ -170,10 +170,12 @@ export const findPropertyByID = async (req, res, next) => {
         var property;
         // const updateProperty = await Property.findById(req.params.id);
         // res.status(200).json(updateProperty);
-        await conn.sobject("Property_DAP__c").find({ Id: req.params.id }, (err, ret) => {
-            if (err) console.error(err)
-            property = ret
+        await conn.query("Select Category_Id__r.Name, Deposit_Amount__c, End_View_Property_Time__c, Place_View_Property__c, Price_Step__c, Description__c, Name, Start_Bid__c, Start_View_Property_Time__c, Status__c, User_Id__c, (Select Name from Properties_Media__r) from Property_DAP__c Where Id ='"+req.params.id+"'",
+        (err, res)=>{
+            if(err) return console.error(err);
+            property = res.records[0];
         })
+        console.log(property);
         res.status(200).json(property);
     } catch (error) {
         next(error);
