@@ -340,7 +340,7 @@ export const forgotPassword = async (req, res, next) => {
       id: user.Id
     }
     const token = jwt.sign(payload, secret, { expiresIn: '15m' })
-    const link = `http://localhost:8800/api/auth/resetPassword/${user.Id}/${token}`;
+    const link = `http://localhost:3000/newPassword/${user.Id}/${token}`;
     console.log(link)
 
     sendMail(user.Name, "Reset Password", `<a href="${link}"> Reset Password </a>`)
@@ -349,7 +349,7 @@ export const forgotPassword = async (req, res, next) => {
     //   sendMail(contact.Email__c, "Reset password", `<a href="${link}"> Reset Password </a>`)
     //   console.log(`${link}`);
     // })
-    res.json({
+    res.status(200).json({
       link: link
     })
     } catch (error) {
@@ -357,18 +357,19 @@ export const forgotPassword = async (req, res, next) => {
   }
 }
 export const resetPassword = async (req, res, next) => {
+  var user, password1, password2 = null;
   try {
-    var user, password1, password2 = null;
+    await conn.sobject('User__c').findOne({
+      Id: req.body.userId
+    }, (err, ret) => {
+      if (err) console.error(err)
+      user = ret
+    })
     const secret = process.env.JWT + user.Password__c;
-    try {
-      const payload = jwt.verify(token, secret)
-      await conn.sobject('User__c').findOne({
-        Name: payload.email
-      }, (err, ret) => {
-        if (err) console.error(err)
-        user = ret
-      })
-      if (req.body.id !== user) {
+    
+      const payload = jwt.verify(req.body.token,secret)
+      
+      if (req.body.userId !== payload.id && user.Name !== payload.email) {
         console.log("Invalid user")
         return
       }
@@ -379,16 +380,14 @@ export const resetPassword = async (req, res, next) => {
       else {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(password1, salt);
-        await conn.sobject("User__c").upsert({
+        await conn.sobject("User__c").update({
           Id: user.Id,
           Password__c: hash
         },(err,ret)=>{
           if(err) console.error(err)
         })
       }
-    } catch (error) {
-      console.log(error)
-    }
+    
   } catch (error) {
     next(err)
   }
