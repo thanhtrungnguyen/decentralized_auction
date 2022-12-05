@@ -20,7 +20,7 @@ const AddProperty = () => {
   const [propertyImage, setPropertyImage] = useState(null);
   const [propertyVideo, setPropertyVideo] = useState(null);
   const [propertyName, setPropertyName] = useState(null);
-  const [cagetory, setCategory] = useState("Car");
+  const [category, setCategory] = useState("Car");
   const [propertyDescription, setPropertyDescription] = useState(null);
   const [startBid, setStartBid] = useState(null);
   const [deposit, setDeposit] = useState(null);
@@ -31,20 +31,30 @@ const AddProperty = () => {
     new DateObject().setDay(15),
     new DateObject().add(1, "month").setDay(15),
   ]);
-
-  const [data, setData] = useState([]);
+  
+  const [property, setProperty] = useState([]);
   const { id } = useParams();
 
   const navigate = useNavigate();
-  const baseURL = `http://localhost:8800/api/property/${id}`;
+  const baseURLCategory = `http://localhost:8800/api/category`;
 
   useEffect(() => {
-    axios.get(baseURL).then((resp) => {
+    axios.get(baseURLCategory).then((resp) => {
       console.log(resp.data);
       console.log("axios get");
-      setData(resp.data);
+      setCategory(resp.data);
     });
-  }, [baseURL]);
+  }, [baseURLCategory]);
+
+  const baseURLProperty = `http://localhost:8800/api/property/${id}`;
+
+  useEffect(() => {
+    axios.get(baseURLProperty).then((resp) => {
+      console.log(resp.data);
+      console.log("axios get");
+      setProperty(resp.data);
+    });
+  }, [baseURLProperty]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -52,12 +62,12 @@ const AddProperty = () => {
       setPropertyImage(e.target.files);
     }
     if (id === "propertyVideo") {
-      setPropertyVideo(e.target.files[0]);
+      setPropertyVideo(value);
     }
     if (id === "propertyName") {
       setPropertyName(value);
     }
-    if (id === "cagetory") {
+    if (id === "category") {
       setCategory(value);
     }
     if (id === "propertyDescription") {
@@ -90,7 +100,7 @@ const AddProperty = () => {
     }
     formData.append("propertyVideo", propertyVideo);
     formData.append("propertyName", propertyName);
-    formData.append("cagetory", cagetory);
+    formData.append("category", category);
     formData.append("propertyDescription", propertyDescription);
     formData.append("viewPropertyTime", viewPropertyTime);
     formData.append("startBid", startBid);
@@ -100,7 +110,7 @@ const AddProperty = () => {
     // formData.append("startBid", startBid);
     // formData.append("biddingPreiod", biddingPreiod);
     axios
-      .put("http://localhost:8800/api/editProperty", formData, {
+      .put(`http://localhost:8800/api/property/${id}`, formData, {
         withCredentials: true,
       })
       .then((res) => {
@@ -121,7 +131,7 @@ const AddProperty = () => {
     // " " +
     // propertyName +
     // " " +
-    // cagetory +
+    // category +
     // " " +
     // propertyDescription +
     // " " +
@@ -166,7 +176,7 @@ const AddProperty = () => {
                 <br />
                 <input
                   className={styles.inputImg}
-                  type="file"
+                  type="text"
                   id="propertyVideo"
                   onChange={(e) => handleInputChange(e)}
                   required
@@ -186,13 +196,13 @@ const AddProperty = () => {
                 <select
                   className={styles.drop}
                   onChange={(e) => handleInputChange(e)}
-                  id="cagetory"
+                  id="category"
                   placeholder="Category"
-                  // defaultValue={data.property.cagetory}
+                  // defaultValue={data.property.category}
                 >
-                  {data.map((property) => (
-                    <option value={property.category}>
-                      {property.category}
+                  {category.map((item) => (
+                    <option value={item.Name}>
+                      {item.Name}
                     </option>
                   ))}
                 </select>

@@ -19,7 +19,7 @@ export const createProperty = async (req, res, next) => {
     const result2 = await uploadFile(files.propertyImage2[0]);
     console.log(result2);
 
-    
+
 
     jwt.verify(token, process.env.JWT, (err, user) => {
         if (err) return next(createError(403, "Token is not valid!"));
@@ -28,15 +28,15 @@ export const createProperty = async (req, res, next) => {
 
     var startViewPropertyTime = new Date(req.body.viewPropertyTime.split(',')[0]).toISOString();
     var endViewPropertyTime = new Date(req.body.viewPropertyTime.split(',')[1]).toISOString();
-    
+
 
     try {
         // find category 
-        await conn.query(`Select Id, Name from Category_DAP__c where Name = '${req.body.category}'`,(err, result) => {
+        await conn.query(`Select Id, Name from Category_DAP__c where Name = '${req.body.category}'`, (err, result) => {
             if (err) return console.error(err)
             category = result.records[0].Id
         });
- 
+
 
         await conn.sobject("Property_DAP__c").create({
             Name: req.body.propertyName,
@@ -88,7 +88,7 @@ export const createProperty = async (req, res, next) => {
 
 }
 
-// get all property
+// get all property by user
 export const getAllPropertyByUser = async (req, res, next) => {
 
     try {
@@ -98,12 +98,16 @@ export const getAllPropertyByUser = async (req, res, next) => {
             if (err) return next(createError(403, "Token is not valid!"));
             userId = user.id;
         })
-
-        await conn.sobject("Property_DAP__c").find({User_Id__c:`${userId}`}, (err, result) => {
+        await conn.query("Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c ", (err, result) => {
             if (err) console.error(err)
-            properties = result
+            properties = result.records
         })
-        res.status(200).json(properties).send();
+        // await conn.sobject("Property_DAP__c").find({User_Id__c:`${userId}`}, (err, result) => {
+        //     if (err) console.error(err)
+        //     properties = result
+        // })
+        //console.log(properties);
+        res.status(200).json(properties);
 
     } catch (error) {
         next(error);
@@ -126,35 +130,33 @@ export const updateProperty = async (req, res, next) => {
 
     jwt.verify(token, process.env.JWT, (err, user) => {
         if (err) return next(createError(403, "Token is not valid!"));
-        userId = user.id;    
+        userId = user.id;
     })
 
     try {
-        await conn.sobject("Category__c").findOne({
-            Id: req.body.CategoryId
-        }, (err, result) => {
+        await conn.query(`Select Id, Name from Category_DAP__c where Name = '${req.body.category}'`, (err, result) => {
             if (err) return console.error(err)
-            category = result.Id
+            category = result.records[0].Id
         });
         var status = req.body.status;
         if (status == "Created" || status == "Reject" || status == "Failed") {
             await conn.sobject("Property_DAP__c")
                 .find({ Id: req.params.id })
                 .update({
-                    Name: req.body.PropertyName,
+                    Name: req.body.propertyName,
                     Category_Id__c: category,
                     Description__c: req.body.propertyDescription,
-                    Deposit_Amount__c: req.body.DepositAmount,
-                    Start_View_Property_Time__c: req.body.StartViewPropertyTime,
-                    End_View_Property_Time__c: req.body.EndViewPropertyTime,
-                    Place_View_Property__c: req.body.PlaceViewProperty,
-                    Price_Step__c: req.body.PriceStep,
-                    Start_Bid__c: req.body.StartBid,
+                    Deposit_Amount__c: req.body.deposit,
+                    Start_View_Property_Time__c: startViewPropertyTime,
+                    End_View_Property_Time__c: endViewPropertyTime,
+                    Place_View_Property__c: req.body.placeViewProperty,
+                    Price_Step__c: req.body.priceStep,
+                    Start_Bid__c: req.body.startBid,
                     //User_Id__c: req.body.userId
                     User_Id__c: userId
                 }, (err, result) => {
                     if (err) console.error(err)
-                    property=result
+                    property = result
                 })
             res.status(200).json(property);
         }

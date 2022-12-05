@@ -13,18 +13,28 @@ const MyProperty = () => {
   const [page, setPage] = React.useState(1);
   const [category, setCategory] = useState("Car");
   const [propertyName, setPropertyName] = useState(null);
-  const [data, setData] = useState([]);
+  const [listCategory, setListCategory] = useState([]);
+  const [listProperty, setListProperty] = useState([]);
+
 
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8800/api/property/";
+  const baseURLCategory = "http://localhost:8800/api/category/";
+  const baseURLProperty = "http://localhost:8800/api/property/";
 
   useEffect(() => {
-    axios.get(baseURL).then((resp) => {
+    axios.get(baseURLCategory).then((resp) => {
       console.log(resp.data);
       console.log("axios get");
-      setData(resp.data);
+      setListCategory(resp.data);
     });
-  }, [baseURL]);
+  }, [baseURLCategory]);
+  useEffect(() => {
+    axios.get(baseURLProperty, { withCredentials: true }).then((resp) => {
+      console.log(resp.data);
+      console.log("axios get");
+      setListProperty(resp.data);
+    });
+  }, [baseURLProperty]);
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -51,7 +61,7 @@ const MyProperty = () => {
         console.log(res);
         console.log(res.data);
         alert(res.data.message);
-        setData(res.data);
+       // setData(res.data);
 
         // navigate("/myProperty");
       });
@@ -87,8 +97,8 @@ const MyProperty = () => {
                 placeholder="Category"
                 defaultValue="Car"
               >
-                {data.map((property) => (
-                  <option value={property.category}>{property.category}</option>
+                {listCategory.map((item) => (
+                  <option value={item.Name}>{item.Name}</option>
                 ))}
               </select>
               <br />
@@ -132,19 +142,19 @@ const MyProperty = () => {
                   <th className={styles.th}>Status</th>
                   <th className={styles.th}>Action</th>
                 </tr>
-                {data.map((property) => (
+                {listProperty.map((property) => (
                   <tr>
                     <td className={styles.td}>
                       <input type="checkbox"></input>
                     </td>
-                    <td className={styles.td}>{property.propertyName}</td>
-                    <td className={styles.td}>{property.category}</td>
-                    <td className={styles.td}>{property.StartBid}</td>
-                    <td className={styles.td}>{property.Status}</td>
+                    <td className={styles.td}>{property.Name}</td>
+                    <td className={styles.td}>{property.Category_Id__r.Name}</td>
+                    <td className={styles.td}>{property.Start_Bid__c}</td>
+                    <td className={styles.td}>{property.Status__c}</td>
                     <td className={styles.td}>
                       <Link
                         className={styles.linkBlue}
-                        to={`/editProperty/${property._id}`}
+                        to={`/editProperty/${property.Id}`}
                       >
                         Edit
                       </Link>
@@ -166,7 +176,7 @@ const MyProperty = () => {
                     <Link className={styles.linkBlue} to="/propertyDetail">
                       View
                     </Link>
-                    <Link className={styles.linkBlue} to="/editProperty">
+                    <Link className={styles.linkBlue} to="/editProperty/">
                       Edit
                     </Link>
                     <Link className={styles.linkBlue} to="/">
