@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-const AddProperty = () => {
+const EditProperty = () => {
   // const [date, setDate] = useState([
   //   new DateObject().setDay(15),
   //   new DateObject().add(1, "month").setDay(15),
@@ -327,4 +327,4 @@ const AddProperty = () => {
     </>
   );
 };
-export default AddProperty;
+export default EditProperty;
