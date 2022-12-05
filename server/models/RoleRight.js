@@ -4,11 +4,11 @@
 // const RoleRightSchema = new Schema({
 //     UserId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'users'       
+//         ref: 'users'
 //     },
 //     RoleId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'roles'  
+//         ref: 'roles'
 //     }
 // })
 

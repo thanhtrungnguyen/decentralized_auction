@@ -1,221 +1,221 @@
 .container {
-  position: fixed;
-  width: 1000px;
-  height: 600px;
-  left: 50%;
-  margin-left: -500px;
-  top: 50%;
-  margin-top: -300px;
-  background: #ffffff;
-  border: 1px solid #9da0ae;
-  box-shadow: 0px 0px 25px 10px #f6f4fd;
-  border-radius: 20px;
+    position: fixed;
+    width: 1000px;
+    height: 600px;
+    left: 50%;
+    margin-left: -500px;
+    top: 50%;
+    margin-top: -300px;
+    background: #ffffff;
+    border: 1px solid #9da0ae;
+    box-shadow: 0px 0px 25px 10px #f6f4fd;
+    border-radius: 20px;
 }
 .txtBlack {
-  font-family: "Josefin Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 29px;
-  /* identical to box height, or 72% */
-  margin-left: 30px;
-  color: #000000;
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 29px;
+    /* identical to box height, or 72% */
+    margin-left: 30px;
+    color: #000000;
 }
 .txt {
-  font-family: "B612";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  /* identical to box height, or 153% */
-  margin-left: 30px;
+    font-family: "B612";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height, or 153% */
+    margin-left: 30px;
 
-  color: #000000;
+    color: #000000;
 }
 .info {
-  width: 350px;
-  height: 350px;
-  background: #ffffff;
-  border: 1px solid #9da0ae;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 9px;
-  margin-left: 50px;
-  float: left;
+    width: 350px;
+    height: 350px;
+    background: #ffffff;
+    border: 1px solid #9da0ae;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 9px;
+    margin-left: 50px;
+    float: left;
 }
 .detail {
-  width: 439px;
-  height: 230px;
-  background: #ffffff;
-  border: 1px solid #9da0ae;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 9px;
-  float: right;
-  margin-right: 50px;
+    width: 439px;
+    height: 230px;
+    background: #ffffff;
+    border: 1px solid #9da0ae;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 9px;
+    float: right;
+    margin-right: 50px;
 }
 .img {
-  width: 140px;
-  height: 140px;
-  border: 1px solid #000000;
-  border-radius: 3px;
-  margin-left: 10px;
-  margin-top: 10px;
-  float: left;
-  margin-right: 20px;
+    width: 140px;
+    height: 140px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    margin-right: 20px;
 }
 .title {
-  font-family: "B612";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 19px;
-  line-height: 29px;
-  /* identical to box height, or 153% */
-  margin-left: 15px;
+    font-family: "B612";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 29px;
+    /* identical to box height, or 153% */
+    margin-left: 15px;
 
-  color: #000000;
+    color: #000000;
 }
 
 .txtM {
-  font-family: "B612";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
-  /* identical to box height, or 207% */
+    font-family: "B612";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 207% */
 
-  color: rgba(23, 21, 21, 0.75);
-  margin-left: 15px;
-  margin-top: 20px;
+    color: rgba(23, 21, 21, 0.75);
+    margin-left: 15px;
+    margin-top: 20px;
 }
 .txtNormal {
-  font-family: "B612";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
-  /* identical to box height, or 207% */
+    font-family: "B612";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 207% */
 
-  color: #000000;
-  margin-left: 15px;
+    color: #000000;
+    margin-left: 15px;
 }
 .txtT {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  /* identical to box height, or 150% */
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
 
-  /* Gray/800 */
+    /* Gray/800 */
 
-  color: #3f3f3f;
+    color: #3f3f3f;
 
-  /* Inside auto layout */
+    /* Inside auto layout */
 
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-  margin-left: 15px;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    margin-left: 15px;
 }
 .input {
-  width: 382px;
-  height: 30px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  /* identical to box height, or 143% */
+    width: 382px;
+    height: 30px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
 
-  /* Gray_02 / 40 */
-  margin-left: 15px;
+    /* Gray_02 / 40 */
+    margin-left: 15px;
 
-  color: #757575;
+    color: #757575;
 }
 .mess {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  /* identical to box height, or 133% */
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    /* identical to box height, or 133% */
 
-  /* Danger / Main */
-  margin-left: 15px;
+    /* Danger / Main */
+    margin-left: 15px;
 
-  color: #a92525;
+    color: #a92525;
 }
 .btn {
-  width: 382px;
-  height: 36px;
-  left: 1025px;
-  top: 900px;
+    width: 382px;
+    height: 36px;
+    left: 1025px;
+    top: 900px;
 
-  /* Primary/Main
+    /* Primary/Main
 
 4C34C2
 */
-  margin-left: 15px;
+    margin-left: 15px;
 
-  background: #4c34c2;
-  border-radius: 4px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  /* identical to box height, or 143% */
+    background: #4c34c2;
+    border-radius: 4px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
 
-  /* Gray_02/100 */
+    /* Gray_02/100 */
 
-  color: #ffffff;
+    color: #ffffff;
 
-  /* Inside auto layout */
+    /* Inside auto layout */
 
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 }
 
 .transactions {
-  width: 439px;
-  height: 200px;
-  background: #ffffff;
-  border: 1px solid #9da0ae;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 9px;
-  float: right;
-  margin-right: 50px;
-  margin-top: 20px;
-  /* display: none; */
+    width: 439px;
+    height: 200px;
+    background: #ffffff;
+    border: 1px solid #9da0ae;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 9px;
+    float: right;
+    margin-right: 50px;
+    margin-top: 20px;
+    /* display: none; */
 }
 .left {
-  float: left;
-  margin-left: 10px;
+    float: left;
+    margin-left: 10px;
 }
 .right {
-  float: right;
-  margin-right: 10px;
+    float: right;
+    margin-right: 10px;
 }
 .col1 {
-  width: 80%;
-  height: 100%;
-  float: left;
+    width: 80%;
+    height: 100%;
+    float: left;
 }
 .col2 {
-  width: 20%;
-  height: 100%;
-  float: right;
+    width: 20%;
+    height: 100%;
+    float: right;
 }
 .tran {
-  width: 100%;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 10px;
-  /* identical to box height, or 240% */
+    width: 100%;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 10px;
+    /* identical to box height, or 240% */
 
-  color: #000000;
-  margin-left: 10px;
+    color: #000000;
+    margin-left: 10px;
 }

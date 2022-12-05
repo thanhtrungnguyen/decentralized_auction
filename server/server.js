@@ -1,34 +1,35 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const authRoute = require("./routers/auth.js");
-const userRoute = require("./routers/users.js");
-const accountRoute = require("./routers/accounts.js");
-const auctionRoute = require("./routers/auctions.js");
-const propertyRoute = require("./routers/properties.js");
-const categoryRoute = require("./routers/categories.js");
-const jsforce = require("jsforce");
-const multer = require("multer");
-
+const express = require("express")
+const mongoose = require("mongoose")
+const dotenv = require("dotenv")
+const cors = require("cors")
+const cookieParser = require("cookie-parser")
+const authRoute = require("./routers/auth.js")
+const userRoute = require("./routers/users.js")
+const accountRoute = require("./routers/accounts.js")
+const auctionRoute = require("./routers/auctions.js")
+const propertyRoute = require("./routers/properties.js")
+const categoryRoute = require("./routers/categories.js")
+const jsforce = require("jsforce")
+const multer = require("multer")
 
 // config app
-const app = express();
+const app = express()
 
 //config library
-const PORT = 8800;
-dotenv.config();
-app.use(cookieParser());
-app.use(cors({
-  origin:["http://localhost:3000"],
-  credentials:true,
-}));
-app.use(express.json());
+const PORT = 8800
+dotenv.config()
+app.use(cookieParser())
+app.use(
+    cors({
+        origin: ["http://localhost:3000"],
+        credentials: true,
+    })
+)
+app.use(express.json())
 // app.use(express.urlencoded({
 //   extended:true
 // }))
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: "uploads/" })
 
 // //connect DB
 // const connectDB = async () => {
@@ -88,23 +89,23 @@ const upload = multer({ dest: "uploads/" });
 
 //connect salesforce
 const conn = new jsforce.Connection({
-  loginUrl: process.env.SF_LOGIN_URL
+    loginUrl: process.env.SF_LOGIN_URL,
 })
 
 conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOKEN, (err, res) => {
-  if (err) {
-    console.error(err)
-  } else {
-    console.log(res.id)
-  }
+    if (err) {
+        console.error(err)
+    } else {
+        console.log(res.id)
+    }
 })
 
-app.use("/api/auth", authRoute);
-app.use("/api/user", userRoute);
-app.use("/api/property",propertyRoute);
-app.use("/api/auction", auctionRoute);
-app.use("/api/account",accountRoute);
-app.use("/api/category",categoryRoute);
+app.use("/api/auth", authRoute)
+app.use("/api/user", userRoute)
+app.use("/api/property", propertyRoute)
+app.use("/api/auction", auctionRoute)
+app.use("/api/account", accountRoute)
+app.use("/api/category", categoryRoute)
 
 // app.get('/Account/getAllAccount', (req, res) => {
 //   conn.query("Select Id, Name, Phone, NumberOfEmployees from Account", (err, result) => {
@@ -117,8 +118,8 @@ app.use("/api/category",categoryRoute);
 //   })
 // })
 app.listen(PORT, () => {
-  // connect();
-  console.log("Connected to backend.")
-});
+    // connect();
+    console.log("Connected to backend.")
+})
 
-module.export = conn;
+module.exports = { conn }

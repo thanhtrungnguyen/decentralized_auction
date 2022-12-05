@@ -4,19 +4,19 @@ const { network } = require("hardhat")
 
 module.exports = async () => {
     if (process.env.UPDATE_CLIENT) {
-        console.log("Writing to front end...")
+        console.log("Writing to client...")
         await updateContractAddresses()
         await updateAbi()
-        console.log("Front end written!")
+        console.log("Client end written!")
     }
 }
 
-async function updateAbi() {
+updateAbi = async () => {
     const auction = await ethers.getContract("Auction")
     fs.writeFileSync(clientAbiFile, auction.interface.format(ethers.utils.FormatTypes.json))
 }
 
-async function updateContractAddresses() {
+updateContractAddresses = async () => {
     const auction = await ethers.getContract("Auction")
     const contractAddresses = JSON.parse(fs.readFileSync(clientContractsFile, "utf8"))
     if (network.config.chainId.toString() in contractAddresses) {

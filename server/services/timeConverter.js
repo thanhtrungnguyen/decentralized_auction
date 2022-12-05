@@ -1,13 +1,13 @@
 const OFFSET = 7 // (UTC+7)
 
-function convertEpochToSpecificTimezone(timeEpoch) {
+convertEpochToSpecificTimezone = (timeEpoch) => {
     const d = new Date(timeEpoch)
     const utc = d.getTime() + d.getTimezoneOffset() * 60000 //This converts to UTC 00:00
     const nd = new Date(utc + 3600000 * OFFSET)
     return nd //.toLocaleString()
 }
 
-function convertSpecificTimezoneToEpoch(time) {
+convertSpecificTimezoneToEpoch = (time) => {
     const d = new Date(time)
     const utc = d.getTime() + d.getTimezoneOffset() * 60000 //This converts to UTC 00:00
     const epoch = new Date(utc) / 1000
