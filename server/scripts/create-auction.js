@@ -35,7 +35,7 @@ async function createAuction(
     }
 }
 
-const auctionId = 3
+const auctionId = 4
 const startRegistrationTime = getEpoch("December 6, 2022 17:15:00")
 const endRegistrationTime = getEpoch("December 6, 2022 18:16:00")
 const startAuctionTime = getEpoch("December 6, 2022 19:17:00")
