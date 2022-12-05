@@ -6,18 +6,18 @@
 //         type: String
 //     },
 //     PropertyInformation:{
-//         type: String       
+//         type: String
 //     },
 //     MediaURL:{
-//         type: Array(String)       
+//         type: Array(String)
 //     },
 //     UserId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'users'       
+//         ref: 'users'
 //     },
 //     CategoryId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'categories'       
+//         ref: 'categories'
 //     },
 // })
 

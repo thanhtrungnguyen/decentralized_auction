@@ -7,8 +7,8 @@ This demo project contains a parse-server backend to migrate from a hosted serve
 1. Copy/download this project
 2. Make sure to have `yarn` or `npm` insalled
 3. Setup mongo-db and redis locally (see below)
-5. Install all dependencies via `yarn install` or `npm install` 
-6. Copy `.env.example` to `.env` and fill in the values
+4. Install all dependencies via `yarn install` or `npm install`
+5. Copy `.env.example` to `.env` and fill in the values
 
 ### Run your dapp
 
@@ -23,10 +23,13 @@ Note: by default the cloud-code is referenced in build/cloud, so make sure to ru
 In order to run a server instance of parse-server, you will need to setup a mongo-db instance. For more information you can see https://www.mongodb.com/docs/manual/installation/
 
 For local development, you can use the mongo-db-runner (see https://github.com/mongodb-js/runner). **This should only be used for local development**. To start this run:
+
 ```
 yarn dev:db-start
 ```
+
 And to stop it, run
+
 ```
 yarn dev:db-stop
 ```

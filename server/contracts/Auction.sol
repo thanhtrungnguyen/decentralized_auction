@@ -282,14 +282,10 @@ contract Auction {
         return 0;
     }
 
-    function placeBid(uint256 auctionId, uint256 bidAmount)
-        external
-        payable
-        isAuctionExist(auctionId)
-        isAuctionTime(auctionId)
-        isRegisteredBidder(auctionId)
-        isValidBidAmount(auctionId, bidAmount)
-    {
+    function placeBid(
+        uint256 auctionId,
+        uint256 bidAmount
+    ) external payable isAuctionExist(auctionId) isAuctionTime(auctionId) isRegisteredBidder(auctionId) isValidBidAmount(auctionId, bidAmount) {
         s_bidInfomations[auctionId][getIndexOfBidder(auctionId)].bidAmount = bidAmount;
         emit PlacedBid(auctionId, msg.sender, bidAmount);
     }

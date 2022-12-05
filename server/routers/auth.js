@@ -1,40 +1,40 @@
-const express = require("express");
+const express = require("express")
 
-const {changePassword, forgotPassword, login, logout, register, resetPassword } = require("../controllers/AuthController.js");
-const { getAllAccount } = require("../controllers/AccountController.js");
-const multer = require("multer");
+const { changePassword, forgotPassword, login, logout, register, resetPassword } = require("../controllers/AuthController.js")
+const { getAllAccount } = require("../controllers/AccountController.js")
+const multer = require("multer")
 
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: "uploads/" })
 
-const router = express.Router();
+const router = express.Router()
 
 //  router.post("/register", register);
 router.post(
-  "/register",
-  upload.fields([
-    {
-      name: "cardFront",
-      maxCount: 1,
-    },
-    {
-      name: "cardBack",
-      maxCount: 1,
-    },
-  ]),
-  register
-);
-router.post("/login", login);
+    "/register",
+    upload.fields([
+        {
+            name: "cardFront",
+            maxCount: 1,
+        },
+        {
+            name: "cardBack",
+            maxCount: 1,
+        },
+    ]),
+    register
+)
+router.post("/login", login)
 
 //router.post("/role", addRole);
 
-router.get("/account",getAllAccount);
+router.get("/account", getAllAccount)
 
-router.post("/logout", logout);
+router.post("/logout", logout)
 
-router.put("/changePassword", changePassword);
+router.put("/changePassword", changePassword)
 
-router.post("/forgotPassword",forgotPassword);
+router.post("/forgotPassword", forgotPassword)
 
-router.post("/reset-password",resetPassword);
+router.post("/reset-password", resetPassword)
 
-module.exports = router;
+module.exports = router

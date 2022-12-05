@@ -4,11 +4,11 @@
 // const RepresentativeAccountSchema = new Schema({
 //     AccountId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'accounts'  
+//         ref: 'accounts'
 //     },
 //     ContactId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'contacts'  
+//         ref: 'contacts'
 //     }
 // })
 

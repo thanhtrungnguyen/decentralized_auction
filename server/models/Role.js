@@ -3,7 +3,7 @@
 
 // const RoleSchema = new Schema({
 //     RoleName:{
-//         type: String       
+//         type: String
 //     }
 // })
 

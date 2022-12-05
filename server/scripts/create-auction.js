@@ -2,7 +2,7 @@ const { ethers, network } = require("hardhat")
 const { getEpoch } = require("../services/timeConverter")
 const { moveBlocks } = require("../utils/move-blocks")
 
-async function createAuction(
+createAuction = async (
     auctionId,
     startRegistrationTime,
     endRegistrationTime,
@@ -13,7 +13,7 @@ async function createAuction(
     depositAmount,
     startBid,
     priceStep
-) {
+) => {
     const auction = await ethers.getContract("Auction")
     console.log("Creating auction...")
     const createAuction = await auction.createAuction(

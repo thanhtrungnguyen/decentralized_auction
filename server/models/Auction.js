@@ -2,12 +2,12 @@
 // const Schema = mongoose.Schema
 
 // const AuctionSchema = new Schema({
-    
+
 //     PropertyId: {
 //         type: Schema.Types.ObjectId,
-//         ref: 'properties'       
+//         ref: 'properties'
 //     },
-    
+
 //     StartBid:{
 //         type: Number
 //     },
@@ -19,7 +19,7 @@
 //     },
 //     UserId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'users'       
+//         ref: 'users'
 //     }
 // })
 

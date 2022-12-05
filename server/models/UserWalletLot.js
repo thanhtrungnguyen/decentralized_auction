@@ -4,11 +4,11 @@
 // const UserWalletLotSchema = new Schema({
 //     AuctionLotId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'auctionLots'       
+//         ref: 'auctionLots'
 //     },
 //     UserId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'users'       
+//         ref: 'users'
 //     },
 //     WalletAddress:{
 //         type: String

@@ -1,248 +1,248 @@
 .container {
-  position: relative;
-  width: 1100px;
-  height: 509px;
-  left: 50%;
-  margin-left: -550px;
-  background: #ffffff;
-  box-shadow: 0px 0px 25px 10px #f6f4fd;
-  border-radius: 2px;
-  margin-top: 100px;
-  margin-bottom: 100px;
-  display: table;
+    position: relative;
+    width: 1100px;
+    height: 509px;
+    left: 50%;
+    margin-left: -550px;
+    background: #ffffff;
+    box-shadow: 0px 0px 25px 10px #f6f4fd;
+    border-radius: 2px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: table;
 }
 .btn {
-  width: 108px;
-  height: 36px;
-  background: #4c34c2;
-  border-radius: 4px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  /* identical to box height, or 143% */
+    width: 108px;
+    height: 36px;
+    background: #4c34c2;
+    border-radius: 4px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
 
-  /* Gray_02/100 */
+    /* Gray_02/100 */
 
-  color: #ffffff;
+    color: #ffffff;
 }
 .col1 {
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  float: left;
-  /* display: table-cell; */
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    float: left;
+    /* display: table-cell; */
 }
 .col3 {
-  position: absolute;
-  width: 30%;
-  height: 100%;
-  float: left;
-  /* display: table-cell; */
+    position: absolute;
+    width: 30%;
+    height: 100%;
+    float: left;
+    /* display: table-cell; */
 }
 .col2 {
-  width: 50%;
-  height: 100%;
-  /* display: table-cell; */
-  /* padding: 1rem; */
-  padding: 10px;
-  float: right;
-  position: relative;
+    width: 50%;
+    height: 100%;
+    /* display: table-cell; */
+    /* padding: 1rem; */
+    padding: 10px;
+    float: right;
+    position: relative;
 }
 .col4 {
-  width: 70%;
-  height: 100%;
-  /* display: table-cell; */
-  /* padding: 1rem; */
-  padding: 10px;
-  float: right;
-  position: relative;
+    width: 70%;
+    height: 100%;
+    /* display: table-cell; */
+    /* padding: 1rem; */
+    padding: 10px;
+    float: right;
+    position: relative;
 }
 .row {
-  width: 90%;
-  height: 30%;
-  margin-top: 10px;
-  margin-left: 10px;
+    width: 90%;
+    height: 30%;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 .conI {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 .des {
-  width: 100%;
-  height: 649px;
-  background: #f9f8fe;
-  padding-top: 100px;
-  position: relative;
+    width: 100%;
+    height: 649px;
+    background: #f9f8fe;
+    padding-top: 100px;
+    position: relative;
 }
 .cont {
-  position: relative;
-  width: 1100px;
-  height: 100%;
-  left: 50%;
-  margin-left: -550px;
-  display: table;
+    position: relative;
+    width: 1100px;
+    height: 100%;
+    left: 50%;
+    margin-left: -550px;
+    display: table;
 }
 
 .txtDesBold {
-  font-family: "Josefin Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 24px;
-  /* identical to box height */
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 24px;
+    /* identical to box height */
 
-  text-decoration-line: underline;
+    text-decoration-line: underline;
 
-  /* Text */
+    /* Text */
 
-  color: #151875;
+    color: #151875;
 }
 .txtDes {
-  font-family: "Josefin Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 20px;
-  /* identical to box height */
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    /* identical to box height */
 
-  /* sale tage coloe */
+    /* sale tage coloe */
 
-  color: #3f509e;
+    color: #3f509e;
 
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .colcont1 {
-  position: relative;
-  width: 40%;
-  height: 100%;
-  display: table-cell;
+    position: relative;
+    width: 40%;
+    height: 100%;
+    display: table-cell;
 }
 .colcont2 {
-  position: relative;
-  width: 60%;
-  height: 100%;
-  display: table-cell;
+    position: relative;
+    width: 60%;
+    height: 100%;
+    display: table-cell;
 }
 .RelatedAuctions {
-  position: relative;
-  width: 1100px;
-  height: 400px;
-  left: 50%;
-  margin-left: -550px;
-  background: #ffffff;
-  margin-top: 100px;
-  margin-bottom: 100px;
+    position: relative;
+    width: 1100px;
+    height: 400px;
+    left: 50%;
+    margin-left: -550px;
+    background: #ffffff;
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
 .tb {
-  width: 1100px;
-  height: 300px;
-  display: table;
-  position: absolute;
+    width: 1100px;
+    height: 300px;
+    display: table;
+    position: absolute;
 }
 .col {
-  /* position: absolute; */
-  width: 25%;
-  height: 100%;
-  display: table-cell;
+    /* position: absolute; */
+    width: 25%;
+    height: 100%;
+    display: table-cell;
 }
 .img {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 .img2 {
-  width: 85%;
-  height: 95%;
-  margin-left: 5%;
+    width: 85%;
+    height: 95%;
+    margin-left: 5%;
 }
 .video {
-  position: absolute;
-  width: 85%;
-  height: 95%;
-  margin-left: 5%;
+    position: absolute;
+    width: 85%;
+    height: 95%;
+    margin-left: 5%;
 }
 .img:hover {
-  transform: scale(
-    1.2
-  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    transform: scale(
+        1.2
+    ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .img2:hover {
-  transform: scale(
-    1.2
-  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    transform: scale(
+        1.2
+    ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .title {
-  font-family: "Josefin Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 36px;
-  color: #0d134e;
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 36px;
+    color: #0d134e;
 }
 .area {
-  position: relative;
-  width: 700px;
-  height: 400px;
-  /* left: 50%;
+    position: relative;
+    width: 700px;
+    height: 400px;
+    /* left: 50%;
   margin-left: -350px; */
-  font-family: "Josefin Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 29px;
-  /* or 181% */
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 29px;
+    /* or 181% */
 
-  color: #000000;
+    color: #000000;
 }
 .txtBold {
-  font-family: "Josefin Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 29px;
-  /* identical to box height, or 181% */
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 29px;
+    /* identical to box height, or 181% */
 
-  text-transform: capitalize;
+    text-transform: capitalize;
 
-  /* Text */
+    /* Text */
 
-  color: #151875;
+    color: #151875;
 }
 
 .txt {
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 28px;
-  /* or 175% */
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    /* or 175% */
 
-  color: #9295aa;
+    color: #9295aa;
 }
 .txtImg {
-  font-family: "Josefin Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 16px;
-  /* identical to box height */
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    /* identical to box height */
 
-  /* Text */
+    /* Text */
 
-  color: #151875;
-  margin: 10%;
+    color: #151875;
+    margin: 10%;
 }
 .txtImgS {
-  font-family: "Josefin Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 13px;
-  /* identical to box height */
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 13px;
+    /* identical to box height */
 
-  /* Text */
+    /* Text */
 
-  color: #151875;
-  margin: 10%;
+    color: #151875;
+    margin: 10%;
 }
