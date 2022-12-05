@@ -38,7 +38,7 @@ contract Auction {
         uint256 bidAmount;
     }
 
-    event AddedAuction(
+    event CreatedAuction(
         uint256 startRegistrationTime,
         uint256 endRegistrationTime,
         uint256 startAuctionTime,
@@ -240,7 +240,7 @@ contract Auction {
             s_auctionInfomations[auctionId] = auction;
             s_auctionList.push(auctionId);
 
-            emit AddedAuction(
+            emit CreatedAuction(
                 startRegistrationTime,
                 endRegistrationTime,
                 startAuctionTime,

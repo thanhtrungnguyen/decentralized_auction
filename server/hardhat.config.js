@@ -12,11 +12,9 @@ const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || process.env.ALCHEMY_MAINN
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL
 const POLYGON_MAINNET_RPC_URL = process.env.POLYGON_MAINNET_RPC_URL
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x"
-
-// Your API key for Etherscan, obtain one at https://etherscan.io/
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY
 const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY
-const REPORT_GAS = process.env.REPORT_GAS || true
+const REPORT_GAS = process.env.REPORT_GAS
 
 module.exports = {
     defaultNetwork: "hardhat",
@@ -64,7 +62,7 @@ module.exports = {
         },
     },
     gasReporter: {
-        enabled: REPORT_GAS,
+        enabled: REPORT_GAS ? true : false,
         currency: "USD",
         outputFile: "gas-report.txt",
         noColors: true,
@@ -72,7 +70,7 @@ module.exports = {
     },
     contractSizer: {
         runOnCompile: false,
-        only: ["NftMarketplace"],
+        only: ["Auction"],
     },
     namedAccounts: {
         deployer: {
