@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import { createError } from "./error.js";
+const jwt = require("jsonwebtoken");
+const { createError } = require("./error.js");
 
 //define role
 const BIDDER = "BIDDER";
@@ -8,7 +8,7 @@ const ADMIN = "ADMIN";
 
 
 //verify access_token
-export const verifyToken = (req,res,next)=>{
+const verifyToken = (req,res,next)=>{
     const token = req.cookies.access_token;
     if(!token){
         return next(createError(401,"You are not authenticated!"));
@@ -20,7 +20,7 @@ export const verifyToken = (req,res,next)=>{
     })
 }
 //check author Seller 
-export const verifySeller = (req,res,next) =>{
+const verifySeller = (req,res,next) =>{
     verifyToken(req,res,()=>{
         if( req.user.role === SELLER ){
             next()
@@ -31,7 +31,7 @@ export const verifySeller = (req,res,next) =>{
 }
 
 //check author Admin
-export const verifyAdmin = (req,res,next) =>{
+const verifyAdmin = (req,res,next) =>{
     verifyToken(req,res,()=>{
         if( req.user.role == ADMIN){
             next()
@@ -40,7 +40,7 @@ export const verifyAdmin = (req,res,next) =>{
         }
     })
 }
-export const verifyBidder = (req,res,next) =>{
+const verifyBidder = (req,res,next) =>{
     verifyToken(req,res,()=>{
         if(req.user.role == BIDDER ){
             next()
@@ -49,3 +49,4 @@ export const verifyBidder = (req,res,next) =>{
         }
     })
 }
+module.exports = {verifyToken,verifySeller,verifyAdmin,verifyBidder}

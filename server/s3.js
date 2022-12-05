@@ -1,7 +1,7 @@
-import pkg from "aws-sdk";
+const pkg = require("aws-sdk");
 const { S3 } = pkg;
-import dotenv from "dotenv";
-import fs from "fs";
+const dotenv = require("dotenv");
+const fs = require("fs");
 
 dotenv.config();
 const bucketName = process.env.AWS_BUCKET_NAME;
@@ -16,7 +16,7 @@ const s3 = new S3({
   secretAccessKey,
 });
 
-export const uploadFile = (file) => {
+const uploadFile = (file) => {
   const fileStream = fs.createReadStream(file.path);
 
   const uploadParams = {
@@ -28,7 +28,7 @@ export const uploadFile = (file) => {
   return s3.upload(uploadParams).promise();
 };
 
-export const getFileStream = (fileKey) => {
+const getFileStream = (fileKey) => {
   const downloadParams = {
     Key: fileKey,
     Bucket: bucketName,
@@ -36,3 +36,5 @@ export const getFileStream = (fileKey) => {
 
   return s3.getObject(downloadParams).createReadStream();
 };
+
+module.exports = {uploadFile,getFileStream}
