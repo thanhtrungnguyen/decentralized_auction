@@ -1,9 +1,9 @@
-import mailer from "nodemailer";
-import dotenv from "dotenv";
+const mailer = require("nodemailer");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
-export const sendMail = async (to, subject, htmlContent) => {
+const sendMail = async (to, subject, htmlContent) => {
   const transport = mailer.createTransport({
     host: process.env.MAIL_HOST,
     port: process.env.MAIL_PORT,
@@ -25,3 +25,4 @@ export const sendMail = async (to, subject, htmlContent) => {
   console.log("email sent...", result);
   return result;
 };
+module.exports = {sendMail}

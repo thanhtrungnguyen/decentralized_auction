@@ -1,16 +1,16 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import authRoute from "./routers/auth.js";
-import userRoute from "./routers/users.js";
-import accountRoute from "./routers/accounts.js"
-import auctionRoute from "./routers/auctions.js";
-import propertyRoute from "./routers/properties.js";
-import categoryRoute from"./routers/categories.js"
-import jsforce from "jsforce"
-import multer from "multer";
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const authRoute = require("./routers/auth.js");
+const userRoute = require("./routers/users.js");
+const accountRoute = require("./routers/accounts.js");
+const auctionRoute = require("./routers/auctions.js");
+const propertyRoute = require("./routers/properties.js");
+const categoryRoute = require("./routers/categories.js");
+const jsforce = require("jsforce");
+const multer = require("multer");
 
 
 // config app
@@ -121,4 +121,4 @@ app.listen(PORT, () => {
   console.log("Connected to backend.")
 });
 
-export {conn}
+module.exports = {conn}
