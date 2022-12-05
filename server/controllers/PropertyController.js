@@ -8,7 +8,8 @@ import jwt from "jsonwebtoken";
 //create property
 export const createProperty = async (req, res, next) => {
     const token = req.cookies.access_token;
-    var category, property, propertyId, userId = null;
+    var category, propertyId, userId = null;
+    var property;
 
     var files = req.files;
     const result = await uploadFile(files.propertyImage0[0]);
@@ -17,47 +18,51 @@ export const createProperty = async (req, res, next) => {
     console.log(result1);
     const result2 = await uploadFile(files.propertyImage2[0]);
     console.log(result2);
-    const result3 = await uploadFile(files.propertyVideo[0]);
-    console.log(result3);
-    // const newPro = new Property(req.body);
-    
-    jwt.verify(token,process.env.JWT,(err,user)=>{
-        if(err) return next(createError(403,"Token is not valid!"));
+
+
+
+    jwt.verify(token, process.env.JWT, (err, user) => {
+        if (err) return next(createError(403, "Token is not valid!"));
         userId = user.id;
-        next()
     })
 
-    try {
-        // const savedProperty = await newPro.save();
-        // res.status(200).json(savedProperty);
+    var startViewPropertyTime = new Date(req.body.viewPropertyTime.split(',')[0]).toISOString();
+    var endViewPropertyTime = new Date(req.body.viewPropertyTime.split(',')[1]).toISOString();
 
+
+    try {
         // find category 
-        await conn.sobject("Category__c").findOne({
-            Name: req.body.category
-        }, (err, result) => {
+        await conn.query(`Select Id, Name from Category_DAP__c where Name = '${req.body.category}'`, (err, result) => {
             if (err) return console.error(err)
-            category = result.Id
+            category = result.records[0].Id
         });
+
 
         await conn.sobject("Property_DAP__c").create({
             Name: req.body.propertyName,
             Category_Id__c: category,
-            Property_Information__c: req.body.propertyDescription,
+            Description__c: req.body.propertyDescription,
+            Deposit_Amount__c: req.body.deposit,
+            Start_View_Property_Time__c: startViewPropertyTime,
+            End_View_Property_Time__c: endViewPropertyTime,
+            Place_View_Property__c: req.body.placeViewProperty,
+            Price_Step__c: req.body.priceStep,
+            Start_Bid__c: req.body.startBid,
             //User_Id__c: req.body.userId
             User_Id__c: userId
         }, (err, result) => {
             if (err) console.error(err)
-            property = result.Id
+            property = result.id
         })
         await conn.sobject("Property_DAP__c").findOne({
-            Property_Id__c: property
+            Id: property
         }, (err, result) => {
             if (err) console.error(err)
             propertyId = result.Id
         })
-        var mediaUrl = [{ Name: result.key, Property_Id__c: propertyId }, { Name: result1.key, Property_Id__c: propertyId },
-        { Name: result2.key, Property_Id__c: propertyId }, { Name: result3.Key, Property_Id__c: propertyId }]
-        
+        var mediaUrl = [{ Name: result.key, Property_DAP_Id__c: propertyId }, { Name: result1.key, Property_DAP_Id__c: propertyId },
+        { Name: result2.key, Property_DAP_Id__c: propertyId }, { Name: req.body.propertyVideo, Property_DAP_Id__c: propertyId }]
+
         await conn.bulk.load("Property_Media__c", "insert", mediaUrl, function (err, rets) {
             if (err) { return console.error(err); }
             for (var i = 0; i < rets.length; i++) {
@@ -75,7 +80,7 @@ export const createProperty = async (req, res, next) => {
         //         console.log(item)
         //     })
         // })
-
+        res.status(200).send("Property has been created.");
 
     } catch (error) {
         next(error);
@@ -83,61 +88,95 @@ export const createProperty = async (req, res, next) => {
 
 }
 
-// get all property
+// get all property by user
 export const getAllPropertyByUser = async (req, res, next) => {
 
     try {
         const token = req.cookies.access_token;
-        var userId,properties;
+        var userId, properties;
         jwt.verify(token, process.env.JWT, (err, user) => {
             if (err) return next(createError(403, "Token is not valid!"));
             userId = user.id;
         })
-        
-        await conn.query(`Select Id,Name From Property_DAP__c Where User_Id__c = '${userId}'`,(err,result)=>{
-            if(err) console.error(err)
-            properties = result
+        await conn.query("Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c ", (err, result) => {
+            if (err) console.error(err)
+            properties = result.records
         })
-
-        // await conn.sobject("Property_DAP__c").upsert({
-
-        // }, (err, result) => {
+        // await conn.sobject("Property_DAP__c").find({User_Id__c:`${userId}`}, (err, result) => {
         //     if (err) console.error(err)
+        //     properties = result
         // })
-        res.status(200).json(properties).send();
+        //console.log(properties);
+        res.status(200).json(properties);
 
     } catch (error) {
         next(error);
     }
 }
+
+
 //update property
 export const updateProperty = async (req, res, next) => {
+    const token = req.cookies.access_token;
+    var category, property, userId = null;
 
+    var files = req.files;
+    const result = await uploadFile(files.propertyImage0[0]);
+    console.log(result);
+    const result1 = await uploadFile(files.propertyImage1[0]);
+    console.log(result1);
+    const result2 = await uploadFile(files.propertyImage2[0]);
+    console.log(result2);
+
+    jwt.verify(token, process.env.JWT, (err, user) => {
+        if (err) return next(createError(403, "Token is not valid!"));
+        userId = user.id;
+    })
 
     try {
-        await conn.sobject("Property_DAP__c")
-        .find({Id: req.params.Id})
-        .update({
-            Name: req.body.propertyName,
-            Category_Id__c: req.body.category,
-            Property_Information__c: req.body.propertyDescription
-        },(err, result) => {
-            if (err) console.error(err)
-        })
-        res.status(200).json(updateProperty);
-
+        await conn.query(`Select Id, Name from Category_DAP__c where Name = '${req.body.category}'`, (err, result) => {
+            if (err) return console.error(err)
+            category = result.records[0].Id
+        });
+        var status = req.body.status;
+        if (status == "Created" || status == "Reject" || status == "Failed") {
+            await conn.sobject("Property_DAP__c")
+                .find({ Id: req.params.id })
+                .update({
+                    Name: req.body.propertyName,
+                    Category_Id__c: category,
+                    Description__c: req.body.propertyDescription,
+                    Deposit_Amount__c: req.body.deposit,
+                    Start_View_Property_Time__c: startViewPropertyTime,
+                    End_View_Property_Time__c: endViewPropertyTime,
+                    Place_View_Property__c: req.body.placeViewProperty,
+                    Price_Step__c: req.body.priceStep,
+                    Start_Bid__c: req.body.startBid,
+                    //User_Id__c: req.body.userId
+                    User_Id__c: userId
+                }, (err, result) => {
+                    if (err) console.error(err)
+                    property = result
+                })
+            res.status(200).json(property);
+        }
     } catch (error) {
         next(error);
     }
 }
 //find property by id
 export const findPropertyByID = async (req, res, next) => {
-
-
     try {
-        const updateProperty = await Property.findById(req.params.id);
-        res.status(200).json(updateProperty);
-
+        var property;
+        // const updateProperty = await Property.findById(req.params.id);
+        // res.status(200).json(updateProperty);
+        await conn.query("Select Category_Id__r.Name, Deposit_Amount__c, End_View_Property_Time__c, Place_View_Property__c, Price_Step__c, Description__c, Name, Start_Bid__c, Start_View_Property_Time__c, Status__c, User_Id__c, (Select Name from Properties_Media__r) from Property_DAP__c Where Id ='"+req.params.id+"'",
+        (err, res)=>{
+            if(err) return console.error(err);
+            property = res.records[0];
+        })
+        console.log(property);
+        res.status(200).json(property);
     } catch (error) {
         next(error);
     }
@@ -147,12 +186,16 @@ export const findPropertyByID = async (req, res, next) => {
 
 // create category
 export const createCate = async (req, res, next) => {
-    const newCate = new Category(req.body);
+    var category;
 
     try {
-        const savedCate = await newCate.save();
-        res.status(200).json(savedCate);
-
+        await conn.sobject("Category__c").create({
+            Name: req.body.name
+        }, (err, ret) => {
+            if (err) console.error(err)
+            category = ret
+        })
+        res.status(200).json(category);
     } catch (error) {
         next(error);
     }
@@ -160,10 +203,13 @@ export const createCate = async (req, res, next) => {
 
 // get all category
 export const getAllCate = async (req, res, next) => {
+    var category;
     try {
-        const categories = await Category.find();
-        res.status(200).json(categories);
-
+        await conn.sobject("Category_DAP__c").find({}, (err, ret) => {
+            if (err) console.error(err)
+            category = ret
+        })
+        res.status(200).json(category);
     } catch (error) {
         next(error);
     }

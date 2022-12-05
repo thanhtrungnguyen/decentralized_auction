@@ -86,9 +86,9 @@ const AuctionsListForManager = () => {
                 placeholder="Category"
                 defaultValue="Car"
               >
-                {data.map((property) => (
+                {/* {data.map((property) => (
                   <option value={property.category}>{property.category}</option>
-                ))}
+                ))} */}
               </select>
               <br />
               <br />
@@ -137,7 +137,7 @@ const AuctionsListForManager = () => {
                   <th className={styles.th}>Status</th>
                   <th className={styles.th}>Action</th>
                 </tr>
-                {data.map((auction) => (
+                {/* {data.map((auction) => (
                   <tr>
                     <td className={styles.td}>
                       <input type="checkbox"></input>
@@ -166,7 +166,7 @@ const AuctionsListForManager = () => {
                       </Link>
                     </td>
                   </tr>
-                ))}
+                ))} */}
                 <tr>
                   <td className={styles.td}>Dianne Russell</td>
                   <td className={styles.td}>

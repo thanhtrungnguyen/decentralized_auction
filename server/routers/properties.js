@@ -9,7 +9,8 @@ const router = express.Router();
 
 
 
-router.post("/", verifySeller, upload.fields([
+router.post("/", verifySeller,
+ upload.fields([
     {
       name: "propertyImage0",
       maxCount: 1,
@@ -26,11 +27,8 @@ router.post("/", verifySeller, upload.fields([
         name: "propertyImage3",
         maxCount: 1,
     },
-    {
-        name: "propertyVideo",
-        maxCount: 1,
-    },
-  ]) ,createProperty);
+  ]) ,
+  createProperty);
 
 router.put("/:id", verifySeller ,updateProperty);
 
@@ -41,12 +39,5 @@ router.get("/",verifySeller,getAllPropertyByUser)
 router.post("/category/", verifyAdmin ,createCate);
 
 router.get("/category/",  getAllCate);
-
-
-
-
-
-
-
 
 export default router
