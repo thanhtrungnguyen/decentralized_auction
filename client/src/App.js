@@ -32,6 +32,8 @@ import ListManagers from "./pages/forAdmin/ListManagers";
 import AddManager from "./pages/forAdmin/AddManager";
 import ListSellers from "./pages/forAdmin/ListSellers";
 import AddSeller from "./pages/forAdmin/AddSeller";
+import ListBidders from "./pages/forAdmin/ListBidders";
+import BidderDetail from "./pages/forAdmin/BidderDetail";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -84,6 +86,9 @@ function App() {
         <Route path="addManager" element={<AddManager />} />
         <Route path="listSellers" element={<ListSellers />} />
         <Route path="addSeller" element={<AddSeller />} />
+        <Route path="listBidders" element={<ListBidders />} />
+        <Route path="bidderDetail" element={<AddSeller />} />
+        <Route path="bidderDetail/:id" element={<AddSeller />} />
       </Routes>
     </BrowserRouter>
   );
