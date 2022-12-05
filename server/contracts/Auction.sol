@@ -146,10 +146,7 @@ contract Auction {
         _;
     }
     modifier isAuctionTime(uint256 auctionId) {
-        if (
-            s_auctionInfomations[auctionId].startAuctionTime < block.timestamp ||
-            s_auctionInfomations[auctionId].endAuctionTime > block.timestamp
-        ) {
+        if (s_auctionInfomations[auctionId].startAuctionTime < block.timestamp || s_auctionInfomations[auctionId].endAuctionTime > block.timestamp) {
             revert Auction__OutOfAuctionTime();
         }
         _;
@@ -157,8 +154,7 @@ contract Auction {
     modifier isValidBidAmount(uint256 auctionId, uint256 bidAmount) {
         if (
             bidAmount < s_auctionInfomations[auctionId].depositAmount ||
-            bidAmount <
-            getHightestBidOfAuction(auctionId) + s_auctionInfomations[auctionId].priceStep
+            bidAmount < getHightestBidOfAuction(auctionId) + s_auctionInfomations[auctionId].priceStep
         ) {
             revert Auction__InvalidBidAmount();
         }
@@ -206,7 +202,7 @@ contract Auction {
     }
 
     function createAuction(
-        uint256 auctionId, //need validate
+        uint256 auctionId,
         uint256 startRegistrationTime,
         uint256 endRegistrationTime,
         uint256 startAuctionTime,
@@ -216,7 +212,7 @@ contract Auction {
         uint256 depositAmount,
         uint256 startBid,
         uint256 priceStep
-    ) external {
+    ) external payable {
         if (
             isValidatedInput(
                 auctionId,
@@ -258,14 +254,8 @@ contract Auction {
         }
     }
 
-    function registerToBid(uint256 auctionId)
-        external
-        payable
-        isVailidAuctionId(auctionId)
-        isRegistrationTime(auctionId)
-    {
-        uint256 requireAmountToRegister = s_auctionInfomations[auctionId].registrationFee +
-            s_auctionInfomations[auctionId].depositAmount;
+    function registerToBid(uint256 auctionId) external payable isVailidAuctionId(auctionId) isRegistrationTime(auctionId) {
+        uint256 requireAmountToRegister = s_auctionInfomations[auctionId].registrationFee + s_auctionInfomations[auctionId].depositAmount;
         if (msg.value < requireAmountToRegister) {
             revert Auction__RequireAmountToRegisterNotMet(auctionId, requireAmountToRegister);
         }

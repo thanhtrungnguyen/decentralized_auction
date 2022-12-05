@@ -5,10 +5,8 @@ const { developmentChains, VERIFICATION_BLOCK_CONFIRMATIONS } = require("../help
 module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
-    const waitBlockConfirmations = developmentChains.includes(network.name)
-        ? 1
-        : VERIFICATION_BLOCK_CONFIRMATIONS
-    log("--------------------------------------------------------")
+    const waitBlockConfirmations = developmentChains.includes(network.name) ? 1 : VERIFICATION_BLOCK_CONFIRMATIONS
+    log("-------------------------------------------------------------------------------------")
     const arguments = []
     const auction = await deploy("Auction", {
         from: deployer,
@@ -22,6 +20,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         log("Verifying...")
         await verify(auction.address, arguments)
     }
-    log("--------------------------------------------------------")
+    log("-------------------------------------------------------------------------------------")
 }
 module.exports.tags = ["all", "auction"]
