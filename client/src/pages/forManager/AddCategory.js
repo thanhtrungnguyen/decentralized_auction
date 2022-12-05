@@ -15,7 +15,7 @@ const AddCategory = () => {
   const baseURL = "http://localhost:8800/api/property/";
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    if (id === "propertyImage") {
+    if (id === "categoryName") {
       setCategoryName(value);
     }
   };
@@ -44,6 +44,7 @@ const AddCategory = () => {
             <label className={styles.title}>Add a New Category</label>
             <label className={styles.txt}>Category Name</label>
             <input
+              id="categoryName"
               type="text"
               placeholder="Enter category name"
               value={cagetoryName}

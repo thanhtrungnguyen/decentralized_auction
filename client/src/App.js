@@ -29,6 +29,9 @@ import ManagerCategorys from "./pages/forManager/ManageCategorys";
 import AddCategory from "./pages/forManager/AddCategory";
 import EditCategory from "./pages/forManager/EditCategory";
 import ListManagers from "./pages/forAdmin/ListManagers";
+import AddManager from "./pages/forAdmin/AddManager";
+import ListSellers from "./pages/forAdmin/ListSellers";
+import AddSeller from "./pages/forAdmin/AddSeller";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -78,6 +81,9 @@ function App() {
         <Route path="editCategory/:id" element={<EditCategory />} />
         <Route path="editCategory" element={<EditCategory />} />
         <Route path="listManagers" element={<ListManagers />} />
+        <Route path="addManager" element={<AddManager />} />
+        <Route path="listSellers" element={<ListSellers />} />
+        <Route path="addSeller" element={<AddSeller />} />
       </Routes>
     </BrowserRouter>
   );

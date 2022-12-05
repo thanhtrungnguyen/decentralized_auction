@@ -10,10 +10,10 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Popup from "reactjs-popup";
-import BanedManager from "../../components/popups/forAdmin/BanManager";
-import ActiveManager from "../../components/popups/forAdmin/ActiveManager";
+import BanedSeller from "../../components/popups/forAdmin/BanSeller";
+import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
 
-const ListForManagers = () => {
+const ListSellers = () => {
   const [page, setPage] = React.useState(1);
 
   const [email, setEmail] = useState(null);
@@ -21,7 +21,7 @@ const ListForManagers = () => {
   const [status, setStatus] = useState("Active");
   const [status2, setStatus2] = useState("Baned");
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8800/api/manager/";
+  const baseURL = "http://localhost:8800/api/seller/";
 
   useEffect(() => {
     axios.get(baseURL).then((resp) => {
@@ -42,7 +42,7 @@ const ListForManagers = () => {
     formData.append("email", email);
 
     axios
-      .get("http://localhost:8800/api/auction", formData, {
+      .get("http://localhost:8800/api/seller", formData, {
         withCredentials: true,
       })
       .then((res) => {
@@ -51,7 +51,7 @@ const ListForManagers = () => {
         alert(res.data.message);
         setData(res.data);
 
-        navigate("/autionsListForManager");
+        navigate("/listSellers");
       });
     event.preventDefault();
   };
@@ -99,7 +99,7 @@ const ListForManagers = () => {
               <br />
               <br />
               <hr className={styles.hr} />
-              <Link className={styles.bold} to="/listManagers">
+              <Link className={styles.bold} to="/listSellers">
                 All
               </Link>
               <Link className={styles.link} to="/">
@@ -111,8 +111,8 @@ const ListForManagers = () => {
 
               <hr />
               <p className={styles.txtBold}>69 Properties</p>
-              <Link className={styles.btnAdd} to="/addManager">
-                Add a New Manager
+              <Link className={styles.btnAdd} to="/addSeller">
+                Add a New Seller
               </Link>
               <br />
               <table className={styles.table}>
@@ -123,15 +123,15 @@ const ListForManagers = () => {
                   <th className={styles.th}>Status</th>
                   <th className={styles.th}>Action</th>
                 </tr>
-                {data.map((manager) => (
+                {data.map((seller) => (
                   <tr>
-                    <td className={styles.td}>{manager}</td>
-                    <td className={styles.td}>{manager}</td>
-                    <td className={styles.td}>{manager}</td>
-                    <td className={styles.td}>{manager}</td>
+                    <td className={styles.td}>{seller}</td>
+                    <td className={styles.td}>{seller}</td>
+                    <td className={styles.td}>{seller}</td>
+                    <td className={styles.td}>{seller}</td>
                     <td className={styles.td}>
                       {(() => {
-                        if (manager.status === "Active") {
+                        if (seller.status === "Active") {
                           return (
                             <Popup
                               trigger={
@@ -139,7 +139,7 @@ const ListForManagers = () => {
                               }
                               position="right center"
                             >
-                              <BanedManager idManager={manager._id} />
+                              <BanedSeller idSeller={seller._id} />
                             </Popup>
                           );
                         } else {
@@ -152,7 +152,7 @@ const ListForManagers = () => {
                               }
                               position="right center"
                             >
-                              <ActiveManager idManager={manager._id} />
+                              <ActiveSeller idSeller={seller._id} />
                             </Popup>
                           );
                         }
@@ -178,7 +178,7 @@ const ListForManagers = () => {
                             }
                             position="right center"
                           >
-                            <BanedManager idManager={123} />
+                            <BanedSeller idManager={123} />
                           </Popup>
                         );
                       } else {
@@ -189,7 +189,7 @@ const ListForManagers = () => {
                             }
                             position="right center"
                           >
-                            <ActiveManager idManager={123} />
+                            <ActiveSeller idManager={123} />
                           </Popup>
                         );
                       }
@@ -214,7 +214,7 @@ const ListForManagers = () => {
                             }
                             position="right center"
                           >
-                            <BanedManager idManager={123} />
+                            <BanedSeller idManager={123} />
                           </Popup>
                         );
                       } else {
@@ -225,7 +225,7 @@ const ListForManagers = () => {
                             }
                             position="right center"
                           >
-                            <ActiveManager idManager={123} />
+                            <ActiveSeller idManager={123} />
                           </Popup>
                         );
                       }
@@ -249,4 +249,4 @@ const ListForManagers = () => {
     </>
   );
 };
-export default ListForManagers;
+export default ListSellers;

@@ -7,28 +7,28 @@ const SidebarAdmin = () => {
     <>
       <div className={styles.container}>
         <p className={styles.title}>Manager User</p>
-        <Link to="/autionsListForManager" className={styles.txt}>
+        <Link to="/listManagers" className={styles.txt}>
           Managers
         </Link>
         <br />
         <br />
-        <Link to="/autionsListForManager" className={styles.txt}>
+        <Link to="/listSellers" className={styles.txt}>
           Sellers
         </Link>
         <br />
         <br />
-        <Link to="/autionsListForManager" className={styles.txt}>
+        <Link to="/listBidders" className={styles.txt}>
           Bidders
         </Link>
         <br />
         <br />
         <p className={styles.title}>Manager News</p>
-        <Link to="/managerCategorys" className={styles.txt}>
+        <Link to="/listNews" className={styles.txt}>
           News
         </Link>{" "}
         <br />
         <p className={styles.title}>Data</p>
-        <Link to="/managerCategorys" className={styles.txt}>
+        <Link to="/dashboard" className={styles.txt}>
           Dashboard
         </Link>{" "}
         <br />
