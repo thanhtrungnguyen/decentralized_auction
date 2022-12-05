@@ -8,24 +8,24 @@ import Footer from "../../components/footer/Footer";
 const EnterEmail = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
 
   const handleSubmit = async (event) => {
-    navigate(`/confirmCode/${email}`);
+ 
 
     event.preventDefault();
-    // axios
-    //   .post(
-    //     "http://localhost:8800/api/auth/login",
-    //     { email },
-    //     { withCredentials: true }
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //     // alert(res.data.message);
-    //     navigate(`/confirmCode/${email}`);
-    //   });
+    axios
+      .post(
+        "http://localhost:8800/api/auth/forgotPassword",
+        { userName },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        // alert(res.data.message);
+        
+      });
   };
 
   return (
@@ -44,8 +44,8 @@ const EnterEmail = () => {
                 type="text"
                 className={styles.textField}
                 placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
                 required
               ></input>
               <br />

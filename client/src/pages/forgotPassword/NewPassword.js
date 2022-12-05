@@ -8,7 +8,7 @@ import Footer from "../../components/footer/Footer";
 import { useParams } from "react-router-dom";
 
 const NewPassword = () => {
-  const { email } = useParams();
+  const { userId,token } = useParams();
 
   const navigate = useNavigate();
 
@@ -17,21 +17,26 @@ const NewPassword = () => {
 
   const handleSubmit = async (event) => {
     navigate(`/login`);
-
+    
     event.preventDefault();
-    // axios
-    //   .post(
-    //     "http://localhost:8800/api/auth/login",
-    //     { password },
-    //     { withCredentials: true }
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //     // alert(res.data.message);
-    //     navigate(`/newPassword/${email}`);
-    //   });
+    axios
+      .post(
+        "http://localhost:8800/api/auth/reset-password",
+        { password1: password, 
+          password2: rePassword,
+          userId: userId,
+          token:token
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        // alert(res.data.message);
+       
+      });
   };
+
 
   return (
     <>
