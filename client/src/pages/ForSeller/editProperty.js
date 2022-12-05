@@ -36,7 +36,7 @@ const AddProperty = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8800/api/property/${id}";
+  const baseURL = `http://localhost:8800/api/property/${id}`;
 
   useEffect(() => {
     axios.get(baseURL).then((resp) => {

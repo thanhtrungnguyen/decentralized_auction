@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const MyProperty = () => {
   const [page, setPage] = React.useState(1);
-  const [cagetory, setCategory] = useState("Car");
+  const [category, setCategory] = useState("Car");
   const [propertyName, setPropertyName] = useState(null);
   const [data, setData] = useState([]);
 
@@ -30,7 +30,7 @@ const MyProperty = () => {
   };
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    if (id === "cagetory") {
+    if (id === "category") {
       setCategory(value);
     }
     if (id === "propertyName") {
@@ -41,7 +41,7 @@ const MyProperty = () => {
     const formData = new FormData();
 
     formData.append("propertyName", propertyName);
-    formData.append("cagetory", cagetory);
+    formData.append("category", category);
 
     axios
       .get("http://localhost:8800/api/property", formData, {
@@ -53,7 +53,7 @@ const MyProperty = () => {
         alert(res.data.message);
         setData(res.data);
 
-        navigate("/myProperty");
+        // navigate("/myProperty");
       });
     event.preventDefault();
   };
@@ -83,7 +83,7 @@ const MyProperty = () => {
               <select
                 className={styles.select}
                 onChange={(e) => handleInputChange(e)}
-                id="cagetory"
+                id="category"
                 placeholder="Category"
                 defaultValue="Car"
               >

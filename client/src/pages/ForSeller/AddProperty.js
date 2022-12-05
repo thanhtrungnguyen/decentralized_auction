@@ -19,7 +19,7 @@ const AddProperty = () => {
   const [propertyImage, setPropertyImage] = useState(null);
   const [propertyVideo, setPropertyVideo] = useState(null);
   const [propertyName, setPropertyName] = useState(null);
-  const [cagetory, setCategory] = useState('Car');
+  const [category, setCategory] = useState("Chair");
   const [propertyDescription, setPropertyDescription] = useState(null);
   const [startBid, setStartBid] = useState(null);
   const [deposit, setDeposit] = useState(null);
@@ -56,7 +56,7 @@ const AddProperty = () => {
     if (id === "propertyName") {
       setPropertyName(value);
     }
-    if (id === "cagetory") {
+    if (id === "category") {
       setCategory(value);
     }
     if (id === "propertyDescription") {
@@ -89,13 +89,14 @@ const AddProperty = () => {
     }
     formData.append("propertyVideo", propertyVideo);
     formData.append("propertyName", propertyName);
-    formData.append("cagetory", cagetory);
+    formData.append("category", category);
     formData.append("propertyDescription", propertyDescription);
     formData.append("viewPropertyTime", viewPropertyTime);
     formData.append("startBid", startBid);
     formData.append("deposit", deposit);
     formData.append("priceStep", priceStep);
     formData.append("placeViewProperty", placeViewProperty);
+    console.log(formData);
     // formData.append("startBid", startBid);
     // formData.append("biddingPreiod", biddingPreiod);
     axios
@@ -120,7 +121,7 @@ const AddProperty = () => {
     // " " +
     // propertyName +
     // " " +
-    // cagetory +
+    // category +
     // " " +
     // propertyDescription +
     // " " +
@@ -183,9 +184,9 @@ const AddProperty = () => {
                 <select
                   className={styles.drop}
                   onChange={(e) => handleInputChange(e)}
-                  id="cagetory"
+                  id="category"
                   placeholder="Category"
-                  defaultValue="Car"
+                  defaultValue="Chair"
                 >
                   {data.map((item) => (
                     <option value={item.Name}>
