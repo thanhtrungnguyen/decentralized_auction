@@ -20,7 +20,7 @@ const PropertyDetail = () => {
   // ]);
   const { id } = useParams();
 
-  const baseURL = "http://localhost:8800/api/property/${id}";
+  const baseURL = `http://localhost:8800/api/property/${id}`;
 
   useEffect(() => {
     axios.get(baseURL).then((resp) => {
@@ -81,35 +81,35 @@ const PropertyDetail = () => {
                 <p className={styles.lable}>Property Description</p>
               </div>
               <div className={styles.col2}>
-                <img
-                  className={styles.img}
-                  src="https://www.w3schools.com/html/pic_trulli.jpg"
-                  alt="images"
-                />
                 {/* <img
                   className={styles.img}
-                  src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`}
+                  src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
                 <img
                   className={styles.img}
-                  src="https://www.w3schools.com/html/pic_trulli.jpg"
+                  src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
                   alt="images"
                 />
                 {/* <img
                   className={styles.img}
-                  src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`}
+                  src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
                 <img
                   className={styles.img}
-                  src="https://www.w3schools.com/html/pic_trulli.jpg"
+                  src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
+                  alt="images"
+                />
+                <img
+                  className={styles.img}
+                  src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
                   alt="images"
                 />
                 <div className={styles.video}>
                   <ReactPlayer
                     className={styles.video}
-                    url="https://www.youtube.com/watch?v=6ltIt-NtQjQ"
+                    url={data.Properties_Media__r.records[3].Name}
                     playing={true}
                     controls={true}
                     loop={true}
@@ -145,19 +145,19 @@ const PropertyDetail = () => {
                   type="text"
                   placeholder="Enter Property Name"
                   className={styles.inputText}
-                  //   value={data.property.propertyName}
-                  value={"name"}
+                    value={data.Name}
+                 
                   readonly
                 ></input>
                 <select
                   className={styles.drop}
                   id="cagetory"
                   placeholder="Category"
-                  // value={data.property.cagetory}
-                  // defaultValue={data.property.cagetory}
+                  // value={data.Category_Id__r.Name}
+                  // defaultValue={data.Category_Id__r.Name}
                   readonly
                 >
-                  <option value={"Car"}>Car</option>
+                  <option value={data.Category_Id__r.Name}>{data.Category_Id__r.Name}</option>
                   {/* <option value={data.property.category}>{data.property.category}</option> */}
 
                   {/* {data.map((property) => (
@@ -170,8 +170,8 @@ const PropertyDetail = () => {
                   placeholder="Enter Start Bid"
                   className={styles.inputText}
                   // value={startBid}
-                  // value={data.property.startBid}
-                  value={"123"}
+                  value={data.Start_Bid__c}
+                  // value={"123"}
                   required
                 ></input>
                 <input
@@ -180,8 +180,8 @@ const PropertyDetail = () => {
                   placeholder="Enter Deposit"
                   className={styles.inputText}
                   // value={deposit}
-                  // value={data.property.deposit}
-                  value={"123"}
+                  value={data.Deposit_Amount__c}
+                  // value={"123"}
                   required
                   readonly
                 ></input>
@@ -191,8 +191,8 @@ const PropertyDetail = () => {
                   placeholder="Enter Price Step"
                   className={styles.inputText}
                   // value={priceStep}
-                  // value={data.property.priceStep}
-                  value={"321"}
+                  value={data.Price_Step__c}
+                  // value={"321"}
                   required
                   readonly
                 ></input>
@@ -202,8 +202,8 @@ const PropertyDetail = () => {
                   placeholder="Enter Place View Property"
                   className={styles.inputText}
                   // value={placeViewProperty}
-                  // value={data.property.placeViewProperty}
-                  value={"Ha Noi"}
+                  value={data.Place_View_Property__c}
+                  // value={"Ha Noi"}
                   required
                   readonly
                 ></input>
@@ -226,10 +226,10 @@ const PropertyDetail = () => {
                 <textarea
                   id="propertyDescription"
                   // value={propertyDescription}
-                  // value={data.property.propertyDescription}
-                  value={
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                  }
+                  value={data.Description__c}
+                  // value={
+                  //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                  // }
                   className={styles.textarea}
                   required
                 ></textarea>{" "}

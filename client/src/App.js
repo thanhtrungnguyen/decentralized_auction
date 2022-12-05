@@ -52,7 +52,7 @@ function App() {
         <Route path="editProperty/:id" element={<EditProperty />} />
         <Route path="editProperty" element={<EditProperty />} />
         <Route path="propertyDetail" element={<PropertyDetail />} />
-        <Route path="propertyDetail:id" element={<PropertyDetail />} />
+        <Route path="propertyDetail/:id" element={<PropertyDetail />} />
         <Route path="enterEmail" element={<EnterEmail />} />
         <Route path="confirmCode/:email" element={<ConfirmCode />} />
         <Route path="newPassword/:userId/:token" element={<NewPassword />} />
