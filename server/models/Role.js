@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema
+// import mongoose from "mongoose";
+// const Schema = mongoose.Schema
 
-const RoleSchema = new Schema({
-    RoleName:{
-        type: String       
-    }
-})
+// const RoleSchema = new Schema({
+//     RoleName:{
+//         type: String       
+//     }
+// })
 
-export default mongoose.model('roles', RoleSchema)
+// export default mongoose.model('roles', RoleSchema)

@@ -1,8 +1,8 @@
-import express from "express"
-import { } from "../controllers/AccountController.js";
+const express = require("express");
+
 
 const router = express.Router();
 
 
 
-export default router
+module.exports = {router}

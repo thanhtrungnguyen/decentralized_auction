@@ -1,7 +1,7 @@
-import express from "express";
-import { createCate, createProperty, findPropertyByID, getAllCate, getAllPropertyByUser, updateProperty } from "../controllers/PropertyController.js";
-import { verifyAdmin, verifySeller, verifyToken } from "../utils/verifyToken.js";
-import multer from "multer";
+const express = require("express");
+const { createCate, createProperty, findPropertyByID, getAllCate, getAllPropertyByUser, updateProperty } = require("../controllers/PropertyController.js");
+const { verifyAdmin, verifySeller, verifyToken } = require("../utils/verifyToken.js");
+const multer = require("multer");
 
 const upload = multer({ dest: "uploads/" });
 
@@ -40,4 +40,4 @@ router.post("/category/", verifyAdmin ,createCate);
 
 router.get("/category/",  getAllCate);
 
-export default router
+module.exports = {router}

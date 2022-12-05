@@ -1,11 +1,11 @@
-import Auction from "../models/Auction.js";
-import AuctionBidder from "../models/AuctionBidder.js";
-import Property from "../models/Property.js";
-import { getFileStream } from "../s3.js";
-import { conn } from "../server.js";
+const Auction = require("../models/Auction.js");
+const AuctionBidder = require("../models/AuctionBidder.js");
+const Property = require("../models/Property.js");
+const { getFileStream } = require("../s3.js");
+const { conn } = require("../server.js");
 
 
-export const createAuction = async (req, res, next) => {
+ const createAuction = async (req, res, next) => {
 
     await conn.sobject("Auction__c").create({
         Name: req.body.name,
@@ -24,7 +24,7 @@ export const createAuction = async (req, res, next) => {
       
 }
 
-export const rejectAuction = async (req, res, next) => {
+ const rejectAuction = async (req, res, next) => {
 
 
     const event = new Date(1974,10,8,9,30,30);
@@ -36,7 +36,7 @@ export const rejectAuction = async (req, res, next) => {
 
 
 
-export const approveAuction = async (req, res, next) => {
+ const approveAuction = async (req, res, next) => {
 
 
     await conn.sobject("Auction__c").update({
@@ -53,7 +53,7 @@ export const approveAuction = async (req, res, next) => {
 
 
 
-export const updateAuction = async (req, res, next) => {
+ const updateAuction = async (req, res, next) => {
 
     await conn.sobject("Auction__c").update({
         Id : req.params.id,
@@ -74,7 +74,7 @@ export const updateAuction = async (req, res, next) => {
 
 
 
-export const getAllAuction = async (req, res, next) => {
+ const getAllAuction = async (req, res, next) => {
     
    
     try {
@@ -101,7 +101,7 @@ export const getAllAuction = async (req, res, next) => {
 
 
 
-export const getAuctionDetailByID = async (req, res, next) => {
+ const getAuctionDetailByID = async (req, res, next) => {
     
     var auctionId = req.params.auctionId;
     var propertyId = req.params.propertyId;
@@ -125,7 +125,7 @@ export const getAuctionDetailByID = async (req, res, next) => {
     }
 }
 
-export const uploadImage = async (req, res, next) => {
+ const uploadImage = async (req, res, next) => {
     console.log(req.params)
     const key = req.params.key
     const readStream = getFileStream(key)
@@ -138,7 +138,7 @@ export const uploadImage = async (req, res, next) => {
 //add BidderAuction
 
 
-export const addBidderAuction = async (req, res, next ) => {
+ const addBidderAuction = async (req, res, next ) => {
     try {
          const ab = new AuctionBidder(req.body);
 
@@ -147,3 +147,6 @@ export const addBidderAuction = async (req, res, next ) => {
        next(error); 
     }
 }
+
+
+module.exports = {addBidderAuction,uploadImage,getAuctionDetailByID,getAllAuction,rejectAuction,approveAuction,createAuction}

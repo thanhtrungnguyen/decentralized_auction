@@ -1,9 +1,9 @@
 
-import { conn } from "../server.js"
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+const { conn } = require("../server.js");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
-export const getAllAccount = async (req, res, next) => {
+ const getAllAccount = async (req, res, next) => {
   try {
     if (conn) {
       await conn.sobject('Account').find({}).execute((err, result) => {
@@ -24,7 +24,7 @@ export const getAllAccount = async (req, res, next) => {
 }
 
 
-export const getAccountById = async (req, res, next) => {
+ const getAccountById = async (req, res, next) => {
   try {
     if (conn) {
       await conn.sobject('Account').find({}).execute((err, result) => {
@@ -44,3 +44,4 @@ export const getAccountById = async (req, res, next) => {
   }
 }
 
+module.exports = {getAccountById,getAllAccount}

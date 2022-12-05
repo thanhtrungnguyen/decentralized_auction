@@ -1,12 +1,12 @@
-import Category from "../models/Category.js";
-import Property from "../models/Property.js";
-import { uploadFile } from "../s3.js";
-import { conn } from "../server.js";
-import jwt from "jsonwebtoken";
+const Category = require("../models/Category.js");
+const Property = require("../models/Property.js");
+const { uploadFile } = require("../s3.js");
+const { conn } = require("../server.js");
+const jwt = require("jsonwebtoken");
 
 
 //create property
-export const createProperty = async (req, res, next) => {
+ const createProperty = async (req, res, next) => {
     const token = req.cookies.access_token;
     var category, propertyId, userId = null;
     var property;
@@ -89,7 +89,7 @@ export const createProperty = async (req, res, next) => {
 }
 
 // get all property by user
-export const getAllPropertyByUser = async (req, res, next) => {
+ const getAllPropertyByUser = async (req, res, next) => {
 
     try {
         const token = req.cookies.access_token;
@@ -116,7 +116,7 @@ export const getAllPropertyByUser = async (req, res, next) => {
 
 
 //update property
-export const updateProperty = async (req, res, next) => {
+ const updateProperty = async (req, res, next) => {
     const token = req.cookies.access_token;
     var category, property, userId = null;
 
@@ -165,7 +165,7 @@ export const updateProperty = async (req, res, next) => {
     }
 }
 //find property by id
-export const findPropertyByID = async (req, res, next) => {
+ const findPropertyByID = async (req, res, next) => {
     try {
         var property;
         // const updateProperty = await Property.findById(req.params.id);
@@ -185,7 +185,7 @@ export const findPropertyByID = async (req, res, next) => {
 
 
 // create category
-export const createCate = async (req, res, next) => {
+ const createCate = async (req, res, next) => {
     var category;
 
     try {
@@ -202,7 +202,7 @@ export const createCate = async (req, res, next) => {
 }
 
 // get all category
-export const getAllCate = async (req, res, next) => {
+ const getAllCate = async (req, res, next) => {
     var category;
     try {
         await conn.sobject("Category_DAP__c").find({}, (err, ret) => {
@@ -214,3 +214,5 @@ export const getAllCate = async (req, res, next) => {
         next(error);
     }
 }
+
+module.exports = {getAllCate,createCate,findPropertyByID,updateProperty,getAllPropertyByUser,createProperty}

@@ -1,6 +1,6 @@
-import express from "express";
-import { createAuction,  getAllAuction, getAuctionDetailByID, updateAuction, uploadImage , approveAuction, rejectAuction} from "../controllers/AuctionController.js";
-import { verifySeller } from "../utils/verifyToken.js";
+const express = require("express");
+const { createAuction,  getAllAuction, getAuctionDetailByID, updateAuction, uploadImage , approveAuction, rejectAuction} = require("../controllers/AuctionController.js");
+const { verifySeller } = require("../utils/verifyToken.js");
 
 const router = express.Router();
 
@@ -22,4 +22,4 @@ router.get('/images/:key', uploadImage)
 
 
 
-export default router
+module.exports = {router}

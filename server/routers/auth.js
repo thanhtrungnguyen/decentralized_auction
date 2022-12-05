@@ -1,8 +1,8 @@
-import express from "express";
+const express = require("express");
 
-import {changePassword, forgotPassword, login, logout, register, resetPassword } from "../controllers/AuthController.js";
-import { getAllAccount } from "../controllers/AccountController.js";
-import multer from "multer";
+const {changePassword, forgotPassword, login, logout, register, resetPassword } = require("../controllers/AuthController.js");
+const { getAllAccount } = require("../controllers/AccountController.js");
+const multer = require("multer");
 
 const upload = multer({ dest: "uploads/" });
 
@@ -37,4 +37,4 @@ router.post("/forgotPassword",forgotPassword);
 
 router.post("/reset-password",resetPassword);
 
-export default router;
+module.exports = {router}

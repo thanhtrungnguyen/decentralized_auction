@@ -1,13 +1,13 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import User from "../models/User.js";
-import Role from "../models/Role.js";
-import RoleRight from "../models/RoleRight.js";
-import { createError } from "../utils/error.js";
-import Contact from "../models/Contact.js";
-import { uploadFile } from "../s3.js";
-import { conn } from "../server.js";
-import { sendMail } from "../utils/mailer.js"
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const User = require("../models/User.js");
+const Role = require("../models/Role.js");
+const RoleRight = require("../models/RoleRight.js");
+const { createError } = require("../utils/error.js");
+const Contact = require("../models/Contact.js");
+const { uploadFile } = require("../s3.js");
+const { conn } = require("../server.js");
+const { sendMail } = require("../utils/mailer.js");
 
 //define role
 const BIDDER = "BIDDER";
@@ -17,7 +17,7 @@ const CONTACT = "CONTACT";
 const ACCOUNT = "ACCOUNT";
 
 //register new User
-export const register = async (req, res, next) => {
+ const register = async (req, res, next) => {
 
   try {
     var user,contact,account = null;
@@ -196,7 +196,7 @@ export const register = async (req, res, next) => {
 
 //roles: tạo hàm để tiện insert role mặc dù ko dùng
 //1-Bidder, 2- seller, 3- admin
-// export const addRole = async (req, res, next) => {
+//  const addRole = async (req, res, next) => {
 //   try {
 //     const role = new Role({
 //       RoleName: req.body.RoleName,
@@ -209,7 +209,7 @@ export const register = async (req, res, next) => {
 // };
 
 //login
-export const login = async (req, res, next) => {
+ const login = async (req, res, next) => {
   try {
     var user = null;
     var roleRight = null;
@@ -261,7 +261,7 @@ export const login = async (req, res, next) => {
 };
 
 //change the password
-export const changePassword = async (req, res, next) => {
+ const changePassword = async (req, res, next) => {
   try {
     var user = null;
     // const user = await User.findOne({ UserName: req.body.username });
@@ -307,7 +307,7 @@ export const changePassword = async (req, res, next) => {
     next(error);
   }
 };
-export const logout = async (req, res, next) => {
+ const logout = async (req, res, next) => {
   try {
     res
       .clearCookie("access_token")
@@ -318,7 +318,7 @@ export const logout = async (req, res, next) => {
   }
 };
 
-export const forgotPassword = async (req, res, next) => {
+ const forgotPassword = async (req, res, next) => {
   try {
     var user, contact = null;
 
@@ -356,7 +356,7 @@ export const forgotPassword = async (req, res, next) => {
     next(error)
   }
 }
-export const resetPassword = async (req, res, next) => {
+ const resetPassword = async (req, res, next) => {
   var user, password1, password2 = null;
   try {
     await conn.sobject('User__c').findOne({
@@ -392,3 +392,5 @@ export const resetPassword = async (req, res, next) => {
     next(err)
   }
 }
+
+module.exports = {resetPassword,forgotPassword,logout,changePassword,login,register}
