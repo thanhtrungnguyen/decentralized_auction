@@ -11,16 +11,15 @@ export const createProperty = async (req, res, next) => {
     var category, propertyId, userId = null;
     var property;
 
-    // var files = req.files;
-    // const result = await uploadFile(files.propertyImage0[0]);
-    // console.log(result);
-    // const result1 = await uploadFile(files.propertyImage1[0]);
-    // console.log(result1);
-    // const result2 = await uploadFile(files.propertyImage2[0]);
-    // console.log(result2);
-    // const result3 = await uploadFile(files.propertyVideo[0]);
-    // console.log(result3);
-    // const newPro = new Property(req.body);
+    var files = req.files;
+    const result = await uploadFile(files.propertyImage0[0]);
+    console.log(result);
+    const result1 = await uploadFile(files.propertyImage1[0]);
+    console.log(result1);
+    const result2 = await uploadFile(files.propertyImage2[0]);
+    console.log(result2);
+
+    
 
     jwt.verify(token, process.env.JWT, (err, user) => {
         if (err) return next(createError(403, "Token is not valid!"));
@@ -52,26 +51,26 @@ export const createProperty = async (req, res, next) => {
             if (err) console.error(err)
             property = result.id
         })
-        // await conn.sobject("Property_DAP__c").findOne({
-        //     Property_Id__c: property
-        // }, (err, result) => {
-        //     if (err) console.error(err)
-        //     propertyId = result.id
-        // })
-        // var mediaUrl = [{ Name: result.key, Property_Id__c: propertyId }, { Name: result1.key, Property_Id__c: propertyId },
-        // { Name: result2.key, Property_Id__c: propertyId }, { Name: result3.Key, Property_Id__c: propertyId }]
+        await conn.sobject("Property_DAP__c").findOne({
+            Id: property
+        }, (err, result) => {
+            if (err) console.error(err)
+            propertyId = result.Id
+        })
+        var mediaUrl = [{ Name: result.key, Property_DAP_Id__c: propertyId }, { Name: result1.key, Property_DAP_Id__c: propertyId },
+        { Name: result2.key, Property_DAP_Id__c: propertyId }, { Name: req.body.propertyVideo, Property_DAP_Id__c: propertyId }]
 
-        // await conn.bulk.load("Property_Media__c", "insert", mediaUrl, function (err, rets) {
-        //     if (err) { return console.error(err); }
-        //     for (var i = 0; i < rets.length; i++) {
-        //         if (rets[i].success) {
-        //             console.log("#" + (i + 1) + " loaded successfully, id = " + rets[i].id);
-        //         } else {
-        //             console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
-        //         }
-        //     }
-        //     // ...
-        // });
+        await conn.bulk.load("Property_Media__c", "insert", mediaUrl, function (err, rets) {
+            if (err) { return console.error(err); }
+            for (var i = 0; i < rets.length; i++) {
+                if (rets[i].success) {
+                    console.log("#" + (i + 1) + " loaded successfully, id = " + rets[i].id);
+                } else {
+                    console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
+                }
+            }
+            // ...
+        });
         // await conn.sobject("Property_Media__c").insertBulk(mediaUrl, (err, result) => {
         //     if (err) console.error(err)
         //     result.map(item => {

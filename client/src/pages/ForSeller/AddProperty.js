@@ -19,7 +19,7 @@ const AddProperty = () => {
   const [propertyImage, setPropertyImage] = useState(null);
   const [propertyVideo, setPropertyVideo] = useState(null);
   const [propertyName, setPropertyName] = useState(null);
-  const [cagetory, setCategory] = useState("Car");
+  const [cagetory, setCategory] = useState('Car');
   const [propertyDescription, setPropertyDescription] = useState(null);
   const [startBid, setStartBid] = useState(null);
   const [deposit, setDeposit] = useState(null);
@@ -34,12 +34,13 @@ const AddProperty = () => {
   const [data, setData] = useState([]);
 
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8800/api/property/";
+  const baseURL = "http://localhost:8800/api/category/";
 
   useEffect(() => {
     axios.get(baseURL).then((resp) => {
       console.log(resp.data);
       console.log("axios get");
+
       setData(resp.data);
     });
   }, [baseURL]);
@@ -50,7 +51,7 @@ const AddProperty = () => {
       setPropertyImage(e.target.files);
     }
     if (id === "propertyVideo") {
-      setPropertyVideo(e.target.files[0]);
+      setPropertyVideo(value);
     }
     if (id === "propertyName") {
       setPropertyName(value);
@@ -163,8 +164,8 @@ const AddProperty = () => {
                 ></input>
                 <br />
                 <input
-                  className={styles.inputImg}
-                  type="file"
+                  className={styles.inputText}
+                  type="text"
                   id="propertyVideo"
                   onChange={(e) => handleInputChange(e)}
                   required
@@ -186,11 +187,11 @@ const AddProperty = () => {
                   placeholder="Category"
                   defaultValue="Car"
                 >
-                  {data.map((property) => (
-                    <option value={property.category}>
-                      {property.category}
+                  {data.map((item) => (
+                    <option value={item.Name}>
+                      {item.Name}
                     </option>
-                  ))}
+                  ))} 
                 </select>
                 <input
                   id="startBid"
