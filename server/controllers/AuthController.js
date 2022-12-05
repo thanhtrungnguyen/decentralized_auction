@@ -1,12 +1,12 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const User = require("../models/User.js");
-const Role = require("../models/Role.js");
-const RoleRight = require("../models/RoleRight.js");
+// const User = require("../models/User.js");
+// const Role = require("../models/Role.js");
+// const RoleRight = require("../models/RoleRight.js");
+// const Contact = require("../models/Contact.js");
 const { createError } = require("../utils/error.js");
-const Contact = require("../models/Contact.js");
 const { uploadFile } = require("../s3.js");
-const { conn } = require("../server.js");
+const  conn  = require("../server.js");
 const { sendMail } = require("../utils/mailer.js");
 
 //define role

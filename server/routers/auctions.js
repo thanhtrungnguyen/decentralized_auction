@@ -22,4 +22,4 @@ router.get('/images/:key', uploadImage)
 
 
 
-module.exports = {router}
+module.exports = router;

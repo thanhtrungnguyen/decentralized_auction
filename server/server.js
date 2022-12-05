@@ -121,4 +121,4 @@ app.listen(PORT, () => {
   console.log("Connected to backend.")
 });
 
-module.exports = {conn}
+module.export = conn;

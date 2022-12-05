@@ -1,8 +1,8 @@
-const Auction = require("../models/Auction.js");
-const AuctionBidder = require("../models/AuctionBidder.js");
-const Property = require("../models/Property.js");
+// const Auction = require("../models/Auction.js");
+// const AuctionBidder = require("../models/AuctionBidder.js");
+// const Property = require("../models/Property.js");
 const { getFileStream } = require("../s3.js");
-const { conn } = require("../server.js");
+const conn  = require("../server.js");
 
 
  const createAuction = async (req, res, next) => {
@@ -23,7 +23,6 @@ const { conn } = require("../server.js");
       })
       
 }
-
  const rejectAuction = async (req, res, next) => {
 
 
@@ -31,11 +30,6 @@ const { conn } = require("../server.js");
     const event1 = new Date(1974,10,8,9,30,30);
     console.log(event - event1 ==0);
 }
-
-
-
-
-
  const approveAuction = async (req, res, next) => {
 
 
@@ -49,10 +43,6 @@ const { conn } = require("../server.js");
       })
       
 }
-
-
-
-
  const updateAuction = async (req, res, next) => {
 
     await conn.sobject("Auction__c").update({
@@ -71,9 +61,6 @@ const { conn } = require("../server.js");
       })
       
 }
-
-
-
  const getAllAuction = async (req, res, next) => {
     
    
@@ -98,9 +85,6 @@ const { conn } = require("../server.js");
         next(error);
     }
 }
-
-
-
  const getAuctionDetailByID = async (req, res, next) => {
     
     var auctionId = req.params.auctionId;
@@ -124,7 +108,6 @@ const { conn } = require("../server.js");
         next(error);
     }
 }
-
  const uploadImage = async (req, res, next) => {
     console.log(req.params)
     const key = req.params.key
@@ -138,15 +121,15 @@ const { conn } = require("../server.js");
 //add BidderAuction
 
 
- const addBidderAuction = async (req, res, next ) => {
-    try {
-         const ab = new AuctionBidder(req.body);
+//  const addBidderAuction = async (req, res, next ) => {
+//     try {
+//          const ab = new AuctionBidder(req.body);
 
-         const newBidderAuction = await ab.save();
-    } catch (error) {
-       next(error); 
-    }
-}
+//          const newBidderAuction = await ab.save();
+//     } catch (error) {
+//        next(error); 
+//     }
+// }
 
 
-module.exports = {addBidderAuction,uploadImage,getAuctionDetailByID,getAllAuction,rejectAuction,approveAuction,createAuction}
+module.exports = {uploadImage,getAuctionDetailByID,getAllAuction,rejectAuction,approveAuction,createAuction,updateAuction}

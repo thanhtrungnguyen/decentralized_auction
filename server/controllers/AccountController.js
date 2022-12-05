@@ -1,5 +1,5 @@
 
-const { conn } = require("../server.js");
+const  conn  = require("../server.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 

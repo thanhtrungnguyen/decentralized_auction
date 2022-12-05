@@ -1,7 +1,7 @@
-const Category = require("../models/Category.js");
-const Property = require("../models/Property.js");
+// const Category = require("../models/Category.js");
+// const Property = require("../models/Property.js");
 const { uploadFile } = require("../s3.js");
-const { conn } = require("../server.js");
+const  conn  = require("../server.js");
 const jwt = require("jsonwebtoken");
 
 

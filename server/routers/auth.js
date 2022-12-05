@@ -37,4 +37,4 @@ router.post("/forgotPassword",forgotPassword);
 
 router.post("/reset-password",resetPassword);
 
-module.exports = {router}
+module.exports = router;

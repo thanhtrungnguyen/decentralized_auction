@@ -40,4 +40,4 @@ router.post("/category/", verifyAdmin ,createCate);
 
 router.get("/category/",  getAllCate);
 
-module.exports = {router}
+module.exports = router;

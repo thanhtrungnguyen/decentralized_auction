@@ -7,4 +7,4 @@ router.post("/", verifyAdmin ,createCate);
 
 router.get("/",  getAllCate);
 
-module.exports = {router}
+module.exports = router;
