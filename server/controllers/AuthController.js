@@ -12,6 +12,7 @@ const { sendMail } = require("../utils/mailer.js");
 //define role
 const BIDDER = "BIDDER";
 const SELLER = "SELLER";
+const MANAGER = "MANAGER";
 const ADMIN = "ADMIN";
 const CONTACT = "CONTACT";
 const ACCOUNT = "ACCOUNT";
@@ -27,12 +28,12 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
   }
 })
 //register new User
- const register = async (req, res, next) => {
+const register = async (req, res, next) => {
 
   try {
-    var user,contact,account = null;
+    var user, contact, account = null;
     var role = null;
-    if(conn){
+    if (conn) {
       if (req.body.usertype === CONTACT) {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(req.body.password, salt);
@@ -50,16 +51,16 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         //console.log(user)
         const files = req.files;
         // console.log("files: " + files);
-  
+
         const result = await uploadFile(files.cardFront[0]);
         console.log(result);
-  
+
         const result1 = await uploadFile(files.cardBack[0]);
         console.log(result1);
-        
+
         //add contact
         await conn.sobject("Contact__c").create({
-          Name: req.body.firstName +" "+ req.body.lastName,
+          Name: req.body.firstName + " " + req.body.lastName,
           First_Name__c: req.body.firstName,
           Last_Name__c: req.body.lastName,
           Gender__c: req.body.gender,
@@ -80,7 +81,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
           if (err || !ret.success) { return console.error(err, ret); }
           console.log("Created contact : " + ret);
         })
-        
+
         await conn.sobject("Role__c").findOne({
           Name: req.body.role,
         }, (err, ret) => {
@@ -101,9 +102,114 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
 
 
       //add new account
-      if (req.body.usertype === ACCOUNT){
+      if (req.body.usertype === ACCOUNT) {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(req.body.password, salt);
+        // create user
+        await conn.sobject("User__c").create({
+          Name: req.body.username,
+          Password__c: hash,
+        }, (err, result) => {
+          if (err) { return console.error(err, result); }
+          user = result.id
+          console.log("Created record id : " + result.id);
+        })
+
+        const files = req.files;
+        // console.log("files: " + files);
+
+        const result = await uploadFile(files.cardFront[0]);
+        console.log(result);
+
+        const result1 = await uploadFile(files.cardBack[0]);
+        console.log(result1);
+
+        // create information contact
+        await conn.sobject("Contact__c").create({
+          Name: req.body.firstName + " " + req.body.lastName,
+          First_Name__c: req.body.firstName,
+          Last_Name__c: req.body.lastName,
+          Gender__c: req.body.gender,
+          Email__c: req.body.email,
+          Date_Of_Birth__c: req.body.dateOfBirth,
+          Phone__c: req.body.phone,
+          Wards__c: req.body.ward,
+          City__c: req.body.city,
+          District__c: req.body.district,
+          Address__c: req.body.sepecificAddress,
+          Card_Number__c: req.body.cardNumber,
+          Card_Granted_Date__c: req.body.dateRangeCard,
+          Card_Granted_Place__c: req.body.cardGrantedPlace,
+          Font_Side_Image__c: result.key,
+          Back_Side_Image__c: result1.key,
+          User_Id__c: user,
+        }, (err, ret) => {
+          if (err) { return console.error(err, ret); }
+          contact = ret.id
+          console.log("Created contact : " + ret);
+        })
+
+        // create information account
+        await conn.sobject('Account__c').create({
+          Name: req.body.organizationName,
+          //Company_Certificate__c: req.body.certificateCompany,
+          //Employees__c:
+          //Phone__c: 
+          Specific_Address__c: req.body.specificAddressOrganization,
+          Tax_Code__c: req.body.taxCode,
+          Tax_Code_Granted_Date__c: req.body.taxCodeGrantedDate,
+          Tax_Code_Granted_Place__c: req.body.taxCodeGrantedPlace,
+          //Website__c:
+          User_Id__c: user,
+          Contact_DAP__c: contact
+        }, (err, result) => {
+          if (err) return console.error(err)
+          account = result.id
+          console.log("Created account id : " + result.id);
+        })
+
+        await conn.sobject("Representative_Account_DAP__c").create({
+          Account_DAP__c: account,
+          Contact_DAP__c: contact,
+          Name: req.body.position
+        }, (err, result) => {
+          if (err || !result.success) { return console.error(err, result); }
+          console.log("Created Representative Account DAP : " + result);
+        })
+
+
+        // add role
+        await conn.sobject("Role__c").findOne({
+          Name: req.body.role,
+        }, (err, result) => {
+          if (err) { return console.error(err, result); }
+          else {
+            role = result.Id
+            console.log("Role Id : " + result.Id);
+          }
+        })
+        await conn.sobject("Role_Right__c").create({
+          Role_Id__c: role,
+          User_DAP__c: user
+        }, (err, result) => {
+          if (err || !result.success) { return console.error(err, result); }
+          console.log("Created role right : " + result);
+        })
+      }
+    } else {
+      console.log("Connection failed with salesforce");
+    }
+    res.status(200).send("Seller has been created.");
+
+  } catch (error) {
+    next(error);
+  }
+};
+const registerSeller = async (req, res, next) => {
+  try {
+    if (conn) {
+      var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(req.body.password, salt);
       // create user
       await conn.sobject("User__c").create({
         Name: req.body.username,
@@ -115,17 +221,17 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
       })
 
       const files = req.files;
-        // console.log("files: " + files);
-  
-        const result = await uploadFile(files.cardFront[0]);
-        console.log(result);
-  
-        const result1 = await uploadFile(files.cardBack[0]);
-        console.log(result1);
+      // console.log("files: " + files);
+
+      const result = await uploadFile(files.cardFront[0]);
+      console.log(result);
+
+      const result1 = await uploadFile(files.cardBack[0]);
+      console.log(result1);
 
       // create information contact
       await conn.sobject("Contact__c").create({
-        Name: req.body.firstName +" "+ req.body.lastName,
+        Name: req.body.firstName + " " + req.body.lastName,
         First_Name__c: req.body.firstName,
         Last_Name__c: req.body.lastName,
         Gender__c: req.body.gender,
@@ -147,7 +253,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         contact = ret.id
         console.log("Created contact : " + ret);
       })
-      
+
       // create information account
       await conn.sobject('Account__c').create({
         Name: req.body.organizationName,
@@ -163,7 +269,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         Contact_DAP__c: contact
       }, (err, result) => {
         if (err) return console.error(err)
-        account=result.id
+        account = result.id
         console.log("Created account id : " + result.id);
       })
 
@@ -175,11 +281,11 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         if (err || !result.success) { return console.error(err, result); }
         console.log("Created Representative Account DAP : " + result);
       })
-      
+
 
       // add role
       await conn.sobject("Role__c").findOne({
-        Name: req.body.role,
+        Name: SELLER,
       }, (err, result) => {
         if (err) { return console.error(err, result); }
         else {
@@ -194,17 +300,54 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         if (err || !result.success) { return console.error(err, result); }
         console.log("Created role right : " + result);
       })
-      }
-    }else {
+    } else {
       console.log("Connection failed with salesforce");
     }
-    res.status(200).send("User has been created.");
-
+    res.status(200).send("Seller has been created.");
   } catch (error) {
-    next(error);
+    next(error)
   }
-};
+}
+const registerManager = async (req, res, next) => {
+  try {
+    if (conn) {
+      var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(req.body.password, salt);
+      // create user
+      await conn.sobject("User__c").create({
+        Name: req.body.username,
+        Password__c: hash,
+      }, (err, result) => {
+        if (err) { return console.error(err, result); }
+        user = result.id
+        console.log("Created user id : " + result.id);
+      })
+      // add role
+      await conn.sobject("Role__c").findOne({
+        Name: MANAGER,
+      }, (err, result) => {
+        if (err) { return console.error(err, result); }
+        else {
+          role = result.Id
+          console.log("Role Id : " + result.Id);
+        }
+      })
+      await conn.sobject("Role_Right__c").create({
+        Role_Id__c: role,
+        User_DAP__c: user
+      }, (err, result) => {
+        if (err || !result.success) { return console.error(err, result); }
+        console.log("Created role right : " + result);
+      })
 
+    } else {
+      console.log("Connection failed with salesforce");
+    }
+    res.status(200).send("Manager has been created.");
+  } catch (error) {
+    next(error)
+  }
+}
 //roles: tạo hàm để tiện insert role mặc dù ko dùng
 //1-Bidder, 2- seller, 3- admin
 //  const addRole = async (req, res, next) => {
@@ -220,7 +363,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
 // };
 
 //login
- const login = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
     var user = null;
     var roleRight = null;
@@ -272,7 +415,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
 };
 
 //change the password
- const changePassword = async (req, res, next) => {
+const changePassword = async (req, res, next) => {
   try {
     var user = null;
     // const user = await User.findOne({ UserName: req.body.username });
@@ -318,7 +461,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
     next(error);
   }
 };
- const logout = async (req, res, next) => {
+const logout = async (req, res, next) => {
   try {
     res
       .clearCookie("access_token")
@@ -329,7 +472,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
   }
 };
 
- const forgotPassword = async (req, res, next) => {
+const forgotPassword = async (req, res, next) => {
   try {
     var user, contact = null;
 
@@ -363,11 +506,11 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
     res.status(200).json({
       link: link
     })
-    } catch (error) {
+  } catch (error) {
     next(error)
   }
-}
- const resetPassword = async (req, res, next) => {
+};
+const resetPassword = async (req, res, next) => {
   var user, password1, password2 = null;
   try {
     await conn.sobject('User__c').findOne({
@@ -377,31 +520,30 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
       user = ret
     })
     const secret = process.env.JWT + user.Password__c;
-    
-      const payload = jwt.verify(req.body.token,secret)
-      
-      if (req.body.userId !== payload.id && user.Name !== payload.email) {
-        console.log("Invalid user")
-        return
-      }
-      password1 = req.body.password1;
-      password2 = req.body.password2;
 
-      if (password1 !== password2) res.status(4).json({ message: "Password must be same" })
-      else {
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(password1, salt);
-        await conn.sobject("User__c").update({
-          Id: user.Id,
-          Password__c: hash
-        },(err,ret)=>{
-          if(err) console.error(err)
-        })
-      }
-    
+    const payload = jwt.verify(req.body.token, secret)
+
+    if (req.body.userId !== payload.id && user.Name !== payload.email) {
+      console.log("Invalid user")
+      return
+    }
+    password1 = req.body.password1;
+    password2 = req.body.password2;
+
+    if (password1 !== password2) res.status(4).json({ message: "Password must be same" })
+    else {
+      var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(password1, salt);
+      await conn.sobject("User__c").update({
+        Id: user.Id,
+        Password__c: hash
+      }, (err, ret) => {
+        if (err) console.error(err)
+      })
+    }
+
   } catch (error) {
     next(err)
   }
-}
-
-module.exports = {resetPassword,forgotPassword,logout,changePassword,login,register}
+};
+module.exports = { resetPassword, forgotPassword, logout, changePassword, login, register, registerSeller,registerManager }

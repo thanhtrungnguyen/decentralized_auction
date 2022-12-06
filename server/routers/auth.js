@@ -1,8 +1,9 @@
 const express = require("express");
 
-const {changePassword, forgotPassword, login, logout, register, resetPassword } = require("../controllers/AuthController.js");
+const {changePassword, forgotPassword, login, logout, register, resetPassword, registerSeller, registerManager } = require("../controllers/AuthController.js");
 const { getAllAccount } = require("../controllers/AccountController.js");
 const multer = require("multer");
+const { verifyAdmin } = require("../utils/verifyToken.js");
 
 const upload = multer({ dest: "uploads/" });
 
@@ -22,6 +23,36 @@ router.post(
     },
   ]),
   register
+);
+router.post(
+  "/registerSeller",
+  upload.fields([
+    {
+      name: "cardFront",
+      maxCount: 1,
+    },
+    {
+      name: "cardBack",
+      maxCount: 1,
+    },
+  ]),
+  //verifyAdmin,
+  registerSeller
+);
+router.post(
+  "/registerManager",
+  upload.fields([
+    {
+      name: "cardFront",
+      maxCount: 1,
+    },
+    {
+      name: "cardBack",
+      maxCount: 1,
+    },
+  ]),
+  //verifyAdmin,
+  registerManager
 );
 router.post("/login", login);
 

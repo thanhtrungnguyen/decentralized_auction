@@ -9,7 +9,7 @@ const accountRoute = require("./routers/accounts.js");
 const auctionRoute = require("./routers/auctions.js");
 const propertyRoute = require("./routers/properties.js");
 const categoryRoute = require("./routers/categories.js");
-
+const newsRoute = require("./routers/news.js")
 const multer = require("multer");
 
 
@@ -94,6 +94,7 @@ app.use("/api/property",propertyRoute);
 app.use("/api/auction", auctionRoute);
 app.use("/api/account",accountRoute);
 app.use("/api/category",categoryRoute);
+app.use("/api/news",newsRoute);
 
 // app.get('/Account/getAllAccount', (req, res) => {
 //   conn.query("Select Id, Name, Phone, NumberOfEmployees from Account", (err, result) => {
