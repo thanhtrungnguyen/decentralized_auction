@@ -10,18 +10,18 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Popup from "reactjs-popup";
-import BanedSeller from "../../components/popups/forAdmin/BanSeller";
-import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
+import PublishNews from "../../components/popups/forAdmin/PublishNews";
+import PrivateNews from "../../components/popups/forAdmin/PrivateNews";
 
-const ListSellers = () => {
+const ListNews = () => {
   const [page, setPage] = React.useState(1);
 
-  const [email, setEmail] = useState(null);
+  const [title, setTitle] = useState(null);
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState("Active");
-  const [status2, setStatus2] = useState("Baned");
+  const [status, setStatus] = useState("Published");
+  const [status2, setStatus2] = useState("Private");
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8800/api/seller/";
+  const baseURL = "http://localhost:8800/api/new/";
 
   useEffect(() => {
     axios.get(baseURL).then((resp) => {
@@ -32,17 +32,17 @@ const ListSellers = () => {
   }, [baseURL]);
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    if (id === "email") {
-      setEmail(value);
+    if (id === "title") {
+      setTitle(value);
     }
   };
   const handleSubmit = (event) => {
     const formData = new FormData();
 
-    formData.append("email", email);
+    formData.append("title", title);
 
     axios
-      .get("http://localhost:8800/api/seller", formData, {
+      .get("http://localhost:8800/api/new", formData, {
         withCredentials: true,
       })
       .then((res) => {
@@ -51,7 +51,7 @@ const ListSellers = () => {
         alert(res.data.message);
         setData(res.data);
 
-        navigate("/listSellers");
+        navigate("/listNews");
       });
     event.preventDefault();
   };
@@ -71,11 +71,11 @@ const ListSellers = () => {
               <div className={styles.floatLeft}>
                 <p className={styles.title}>Search</p>
                 <input
-                  id="email"
+                  id="title"
                   className={styles.input}
                   type="text"
-                  placeholder="Email"
-                  value={email}
+                  placeholder="Title"
+                  value={title}
                   onChange={(e) => handleInputChange(e)}
                   required
                 ></input>
@@ -99,47 +99,47 @@ const ListSellers = () => {
               <br />
               <br />
               <hr className={styles.hr} />
-              <Link className={styles.bold} to="/listSellers">
+              <Link className={styles.bold} to="/listNews">
                 All
               </Link>
               <Link className={styles.link} to="/">
-                Activite{" "}
+                Published{" "}
               </Link>
               <Link className={styles.link} to="/">
-                Baned
+                Private
               </Link>
 
               <hr />
-              <p className={styles.txtBold}>69 Properties</p>
-              <Link className={styles.btnAdd} to="/addSeller">
-                Add a New Seller
+              <p className={styles.txtBold}>69 News</p>
+              <Link className={styles.btnAdd} to="/addNew">
+                Add a new New
               </Link>
               <br />
               <table className={styles.table}>
                 <tr>
-                  <th className={styles.th}>Full Name</th>
-                  <th className={styles.th}>Phone</th>
-                  <th className={styles.th}>Email</th>
+                  <th className={styles.th}>Title</th>
+                  <th className={styles.th}>Last modified</th>
                   <th className={styles.th}>Status</th>
                   <th className={styles.th}>Action</th>
                 </tr>
-                {data.map((seller) => (
+                {data.map((news) => (
                   <tr>
-                    <td className={styles.td}>{seller}</td>
-                    <td className={styles.td}>{seller}</td>
-                    <td className={styles.td}>{seller}</td>
-                    <td className={styles.td}>{seller}</td>
+                    <td className={styles.td}>{news}</td>
+                    <td className={styles.td}>{news}</td>
+                    <td className={styles.td}>{news}</td>
                     <td className={styles.td}>
                       {(() => {
-                        if (seller.status === "Active") {
+                        if (news.status === "Published") {
                           return (
                             <Popup
                               trigger={
-                                <label className={styles.linkBlue}>Baned</label>
+                                <label className={styles.linkBlue}>
+                                  Private
+                                </label>
                               }
                               position="right center"
                             >
-                              <BanedSeller idSeller={seller._id} />
+                              <PrivateNews idNews={news._id} />
                             </Popup>
                           );
                         } else {
@@ -147,12 +147,12 @@ const ListSellers = () => {
                             <Popup
                               trigger={
                                 <label className={styles.linkBlue}>
-                                  Active
+                                  Publish
                                 </label>
                               }
                               position="right center"
                             >
-                              <ActiveSeller idSeller={seller._id} />
+                              <PublishNews idNews={news._id} />
                             </Popup>
                           );
                         }
@@ -161,35 +161,36 @@ const ListSellers = () => {
                   </tr>
                 ))}
                 <tr>
-                  <td className={styles.td}>Dianne Russell</td>
-                  <td className={styles.td}>0123456789 </td>
-                  <td className={styles.td}>abcde@abc.com </td>
-                  <td className={styles.td}>Active</td>
                   <td className={styles.td}>
-                    <Link className={styles.linkBlue} to="/editManager">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  </td>
+                  <td className={styles.td}>01/01/2022 - 10:00 </td>
+                  <td className={styles.td}>Published</td>
+                  <td className={styles.td}>
+                    <Link className={styles.linkBlue} to="/editNew">
                       Edit
                     </Link>
                     {(() => {
-                      if (status === "Active") {
+                      if (status === "Published") {
                         return (
                           <Popup
                             trigger={
-                              <label className={styles.linkBlue}>Baned</label>
+                              <label className={styles.linkBlue}>Private</label>
                             }
                             position="right center"
                           >
-                            <BanedSeller idSeller={123} />
+                            <PrivateNews idNews={123} />
                           </Popup>
                         );
                       } else {
                         return (
                           <Popup
                             trigger={
-                              <label className={styles.linkBlue}>Active</label>
+                              <label className={styles.linkBlue}>Publish</label>
                             }
                             position="right center"
                           >
-                            <ActiveSeller idSeller={123} />
+                            <PublishNews idNews={123} />
                           </Popup>
                         );
                       }
@@ -197,35 +198,36 @@ const ListSellers = () => {
                   </td>
                 </tr>
                 <tr>
-                  <td className={styles.td}>Dianne Russell</td>
-                  <td className={styles.td}>0123456789 </td>
-                  <td className={styles.td}>abcde@abc.com </td>
-                  <td className={styles.td}>Baned</td>
                   <td className={styles.td}>
-                    <Link className={styles.linkBlue} to="/editManager">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  </td>
+                  <td className={styles.td}>01/01/2022 - 10:00 </td>
+                  <td className={styles.td}>Private</td>
+                  <td className={styles.td}>
+                    <Link className={styles.linkBlue} to="/editNew">
                       Edit
                     </Link>
                     {(() => {
-                      if (status2 === "Active") {
+                      if (status2 === "Published") {
                         return (
                           <Popup
                             trigger={
-                              <label className={styles.linkBlue}>Baned</label>
+                              <label className={styles.linkBlue}>Private</label>
                             }
                             position="right center"
                           >
-                            <BanedSeller idSeller={123} />
+                            <PrivateNews idNews={123} />
                           </Popup>
                         );
                       } else {
                         return (
                           <Popup
                             trigger={
-                              <label className={styles.linkBlue}>Active</label>
+                              <label className={styles.linkBlue}>Publish</label>
                             }
                             position="right center"
                           >
-                            <ActiveSeller idSeller={123} />
+                            <PublishNews idNews={123} />
                           </Popup>
                         );
                       }
@@ -249,4 +251,4 @@ const ListSellers = () => {
     </>
   );
 };
-export default ListSellers;
+export default ListNews;

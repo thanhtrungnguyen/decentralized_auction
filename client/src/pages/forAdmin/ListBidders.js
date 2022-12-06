@@ -139,7 +139,7 @@ const ListBidders = () => {
                               }
                               position="right center"
                             >
-                              <BanedBidder idSeller={bidder._id} />
+                              <BanedBidder idBidder={bidder._id} />
                             </Popup>
                           );
                         } else {
@@ -152,7 +152,7 @@ const ListBidders = () => {
                               }
                               position="right center"
                             >
-                              <ActiveBidder idSeller={bidder._id} />
+                              <ActiveBidder idBidder={bidder._id} />
                             </Popup>
                           );
                         }
@@ -176,7 +176,7 @@ const ListBidders = () => {
                             }
                             position="right center"
                           >
-                            <BanedBidder idManager={123} />
+                            <BanedBidder idBidder={123} />
                           </Popup>
                         );
                       } else {
@@ -187,7 +187,7 @@ const ListBidders = () => {
                             }
                             position="right center"
                           >
-                            <ActiveBidder idManager={123} />
+                            <ActiveBidder idBidder={123} />
                           </Popup>
                         );
                       }
@@ -210,7 +210,7 @@ const ListBidders = () => {
                             }
                             position="right center"
                           >
-                            <BanedBidder idManager={123} />
+                            <BanedBidder idBidder={123} />
                           </Popup>
                         );
                       } else {
@@ -221,7 +221,7 @@ const ListBidders = () => {
                             }
                             position="right center"
                           >
-                            <ActiveBidder idManager={123} />
+                            <ActiveBidder idBidder={123} />
                           </Popup>
                         );
                       }
