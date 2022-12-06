@@ -1,5 +1,5 @@
 const express = require("express");
-const { createCate, createProperty, findPropertyByID, getAllCate, getAllPropertyByUser, updateProperty } = require("../controllers/PropertyController.js");
+const { createCate, createProperty, findPropertyByID, getAllCate, getAllPropertyByUser, updateProperty, getListByStatus } = require("../controllers/PropertyController.js");
 const { verifyAdmin, verifySeller, verifyToken } = require("../utils/verifyToken.js");
 const multer = require("multer");
 
@@ -33,6 +33,8 @@ router.post("/", verifySeller,
 router.put("/:id", verifySeller ,updateProperty);
 
 router.get("/:id",findPropertyByID);
+
+router.get("/getListByStatus/:status",getListByStatus);
 
 router.get("/",verifySeller,getAllPropertyByUser)
 
