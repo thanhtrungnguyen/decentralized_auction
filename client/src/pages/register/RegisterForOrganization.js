@@ -13,14 +13,7 @@ const Register = () => {
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true)
     const navigate = useNavigate()
 
-    const {
-        cityOptions,
-        districtOptions,
-        wardOptions,
-        selectedCity,
-        selectedDistrict,
-        selectedWard,
-    } = state
+    const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state
 
     const [organizationName, setOrganizationName] = useState(null)
     const [taxCode, setTaxCode] = useState(null)
@@ -231,55 +224,17 @@ const Register = () => {
                     </div>
                     <p className={styles.textBlue}>Organization information</p>
                     <p className={styles.textRed}>Basic information</p>
-                    <input
-                        className={styles.inputT}
-                        type="text"
-                        placeholder="Organization name"
-                        value={organizationName}
-                        onChange={(e) => handleInputChange(e)}
-                        id="organizationName"
-                        required
-                    ></input>
+                    <input className={styles.inputT} type="text" placeholder="Organization name" value={organizationName} onChange={(e) => handleInputChange(e)} id="organizationName" required></input>
                     <p className={styles.txtBlack}>Message</p>
-                    <input
-                        className={styles.inputT}
-                        type="text"
-                        placeholder="Tax code"
-                        value={taxCode}
-                        onChange={(e) => handleInputChange(e)}
-                        id="taxCode"
-                        required
-                    ></input>
+                    <input className={styles.inputT} type="text" placeholder="Tax code" value={taxCode} onChange={(e) => handleInputChange(e)} id="taxCode" required></input>
                     <p className={styles.txtBlack}>Message</p>
                     <p className={styles.txtBlack}>Tax code granted date</p>
-                    <input
-                        type="date"
-                        className={styles.ipdate}
-                        value={taxCodeGrantedDate}
-                        onChange={(e) => handleInputChange(e)}
-                        id="taxCodeGrantedDate"
-                    ></input>
-                    <input
-                        className={styles.inputT}
-                        type="text"
-                        placeholder="Tax code granted place"
-                        value={taxCodeGrantedPlace}
-                        onChange={(e) => handleInputChange(e)}
-                        id="taxCodeGrantedPlace"
-                        required
-                    ></input>
+                    <input type="date" className={styles.ipdate} value={taxCodeGrantedDate} onChange={(e) => handleInputChange(e)} id="taxCodeGrantedDate"></input>
+                    <input className={styles.inputT} type="text" placeholder="Tax code granted place" value={taxCodeGrantedPlace} onChange={(e) => handleInputChange(e)} id="taxCodeGrantedPlace" required></input>
                     <br />
                     <br />
                     <br />
-                    <input
-                        className={styles.inputT}
-                        type="text"
-                        placeholder="Specific address"
-                        value={specificAddressOrganization}
-                        onChange={(e) => handleInputChange(e)}
-                        id="specificAddressOrganization"
-                        required
-                    ></input>
+                    <input className={styles.inputT} type="text" placeholder="Specific address" value={specificAddressOrganization} onChange={(e) => handleInputChange(e)} id="specificAddressOrganization" required></input>
                     <input
                         className={styles.imgCard}
                         id="companyCertifcate"
@@ -292,44 +247,17 @@ const Register = () => {
                     />
                     <p className={styles.textBlue}>Representative Infomation</p>
                     <p className={styles.textRed}>Basic information</p>
-                    <input
-                        className={styles.inputT}
-                        type="text"
-                        placeholder="First name"
-                        value={firstName}
-                        onChange={(e) => handleInputChange(e)}
-                        id="firstName"
-                        required
-                    ></input>
+                    <input className={styles.inputT} type="text" placeholder="First name" value={firstName} onChange={(e) => handleInputChange(e)} id="firstName" required></input>
                     <p className={styles.txtBlack}>Message</p>
-                    <input
-                        className={styles.inputT}
-                        type="text"
-                        placeholder="Last name"
-                        value={lastName}
-                        onChange={(e) => handleInputChange(e)}
-                        id="lastName"
-                        required
-                    ></input>
+                    <input className={styles.inputT} type="text" placeholder="Last name" value={lastName} onChange={(e) => handleInputChange(e)} id="lastName" required></input>
                     <p className={styles.txtBlack}>Message</p>
-                    <select
-                        id="gender"
-                        className={styles.dropdown}
-                        onChange={(e) => handleInputChange(e)}
-                        placeholder="Gender"
-                    >
+                    <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
                     </select>
                     <p className={styles.txtBlack}>Date of birth</p>
-                    <input
-                        type="date"
-                        className={styles.ipdate}
-                        value={dateOfBirth}
-                        onChange={(e) => handleInputChange(e)}
-                        id="dateOfBirth"
-                    ></input>
+                    <input type="date" className={styles.ipdate} value={dateOfBirth} onChange={(e) => handleInputChange(e)} id="dateOfBirth"></input>
                     <input
                         className={styles.inputEP}
                         type="email"
@@ -350,15 +278,7 @@ const Register = () => {
                         id="phone"
                         required
                     ></input>
-                    <input
-                        className={styles.inputT}
-                        type="text"
-                        placeholder="Position"
-                        value={specificAddressOrganization}
-                        onChange={(e) => handleInputChange(e)}
-                        id="position"
-                        required
-                    ></input>
+                    <input className={styles.inputT} type="text" placeholder="Position" value={specificAddressOrganization} onChange={(e) => handleInputChange(e)} id="position" required></input>
                     <p className={styles.textRed}>Address</p>
                     <Select
                         className={styles.select}
@@ -390,41 +310,11 @@ const Register = () => {
                         onChange={(option) => onWardSelect(option)}
                         defaultValue={selectedWard}
                     />
-                    <input
-                        className={styles.ipadd}
-                        type="text"
-                        placeholder="Specific address"
-                        value={specificAddress}
-                        onChange={(e) => handleInputChange(e)}
-                        id="specificAddress"
-                        required
-                    ></input>{" "}
+                    <input className={styles.ipadd} type="text" placeholder="Specific address" value={specificAddress} onChange={(e) => handleInputChange(e)} id="specificAddress" required></input>{" "}
                     <p className={styles.textRed}>Identity/Citizen card</p>
-                    <input
-                        type="text"
-                        placeholder="Card number"
-                        className={styles.ip3}
-                        value={cardNumber}
-                        onChange={(e) => handleInputChange(e)}
-                        id="cardNumber"
-                        required
-                    ></input>
-                    <input
-                        type="date"
-                        className={styles.ip3}
-                        value={dateRangeCard}
-                        onChange={(e) => handleInputChange(e)}
-                        id="dateRangeCard"
-                    ></input>
-                    <input
-                        type="text"
-                        placeholder="Card granted place"
-                        className={styles.ip3}
-                        value={cardGrantedPlace}
-                        onChange={(e) => handleInputChange(e)}
-                        id="cardGrantedPlace"
-                        required
-                    ></input>
+                    <input type="text" placeholder="Card number" className={styles.ip3} value={cardNumber} onChange={(e) => handleInputChange(e)} id="cardNumber" required></input>
+                    <input type="date" className={styles.ip3} value={dateRangeCard} onChange={(e) => handleInputChange(e)} id="dateRangeCard"></input>
+                    <input type="text" placeholder="Card granted place" className={styles.ip3} value={cardGrantedPlace} onChange={(e) => handleInputChange(e)} id="cardGrantedPlace" required></input>
                     <input
                         className={styles.imgCard}
                         id="cardFront"
@@ -455,24 +345,8 @@ const Register = () => {
                         placeholder="Username"
                         required
                     ></input>
-                    <input
-                        className={styles.inputEP}
-                        type="text"
-                        value={password}
-                        onChange={(e) => handleInputChange(e)}
-                        id="password"
-                        placeholder="Password"
-                        required
-                    ></input>
-                    <input
-                        className={styles.inputEP}
-                        type="text"
-                        value={rePassword}
-                        onChange={(e) => handleInputChange(e)}
-                        id="rePassword"
-                        placeholder="Re-eneter the password"
-                        required
-                    ></input>
+                    <input className={styles.inputEP} type="text" value={password} onChange={(e) => handleInputChange(e)} id="password" placeholder="Password" required></input>
+                    <input className={styles.inputEP} type="text" value={rePassword} onChange={(e) => handleInputChange(e)} id="rePassword" placeholder="Re-eneter the password" required></input>
                     {/* <select
             id="role"
             className={styles.dropdown}

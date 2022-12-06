@@ -27,10 +27,7 @@ const EditProperty = () => {
     const [priceStep, setPriceStep] = useState(null)
     const [placeViewProperty, setPlaceViewProperty] = useState(null)
     // const [startBid, setStartBid] = useState(null);
-    const [viewPropertyTime, setViewPropertyTime] = useState([
-        new DateObject().setDay(15),
-        new DateObject().add(1, "month").setDay(15),
-    ])
+    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
 
     const [property, setProperty] = useState([])
     const { id } = useParams()
@@ -165,14 +162,7 @@ const EditProperty = () => {
                                 <p className={styles.lable}>Property Description</p>
                             </div>
                             <div className={styles.col2}>
-                                <input
-                                    className={styles.inputImg}
-                                    id="propertyImage"
-                                    onChange={(e) => handleInputChange(e)}
-                                    type="file"
-                                    multiple
-                                    required
-                                ></input>
+                                <input className={styles.inputImg} id="propertyImage" onChange={(e) => handleInputChange(e)} type="file" multiple required></input>
                                 <br />
                                 <input
                                     className={styles.inputImg}

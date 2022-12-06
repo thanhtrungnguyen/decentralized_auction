@@ -35,11 +35,7 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            <img
-                                className={styles.img}
-                                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`}
-                                alt="images"
-                            />
+                            <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`} alt="images" />
                         </div>
                         <div className={styles.row}>
                             {/* <img
@@ -47,11 +43,7 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            <img
-                                className={styles.img}
-                                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`}
-                                alt="images"
-                            />
+                            <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`} alt="images" />
                         </div>
                         <div className={styles.row}>
                             {/* <img
@@ -59,11 +51,7 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            <img
-                                className={styles.img}
-                                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[2].Name}`}
-                                alt="images"
-                            />
+                            <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[2].Name}`} alt="images" />
                         </div>
                     </div>
                     {/* </div> */}
@@ -112,21 +100,12 @@ const AuctionDetail = () => {
                 </div>
                 <div className={styles.col2}>
                     <p className={styles.title}>{data[0].Name}</p>
-                    <p className={styles.txtBold}>
-                        Start Bid : ${data[0].Auctions1__r.records[0].Start_Bid__c}
-                    </p>
+                    <p className={styles.txtBold}>Start Bid : ${data[0].Auctions1__r.records[0].Start_Bid__c}</p>
 
-                    <p className={styles.txt}>
-                        Auction Start Time : ${data[0].Auctions1__r.records[0].Time_Start__c}
-                    </p>
-                    <p className={styles.txt}>
-                        Auction End Time : ${data[0].Auctions1__r.records[0].Time_End__c}
-                    </p>
+                    <p className={styles.txt}>Auction Start Time : ${data[0].Auctions1__r.records[0].Time_Start__c}</p>
+                    <p className={styles.txt}>Auction End Time : ${data[0].Auctions1__r.records[0].Time_End__c}</p>
                     {/* </div> */}
-                    <Popup
-                        trigger={<button className={styles.btn}>Place Bid</button>}
-                        position="right center"
-                    >
+                    <Popup trigger={<button className={styles.btn}>Place Bid</button>} position="right center">
                         <PlaceABid sendAuction={data} />
                     </Popup>
                 </div>
@@ -142,38 +121,22 @@ const AuctionDetail = () => {
                 <p className={styles.title}>Related Auctions</p>
                 <div className={styles.tb}>
                     <div className={styles.col}>
-                        <img
-                            className={styles.img2}
-                            src="https://www.w3schools.com/html/pic_trulli.jpg"
-                            alt="images"
-                        />
+                        <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                         <p className={styles.txtImg}>Mens Fashion Wear</p>
                         <p className={styles.txtImgS}>Starting price : $43.00</p>
                     </div>
                     <div className={styles.col}>
-                        <img
-                            className={styles.img2}
-                            src="https://www.w3schools.com/html/pic_trulli.jpg"
-                            alt="images"
-                        />
+                        <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                         <p className={styles.txtImg}>Mens Fashion Wear</p>
                         <p className={styles.txtImgS}>Starting price : $43.00</p>
                     </div>
                     <div className={styles.col}>
-                        <img
-                            className={styles.img2}
-                            src="https://www.w3schools.com/html/pic_trulli.jpg"
-                            alt="images"
-                        />
+                        <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                         <p className={styles.txtImg}>Mens Fashion Wear</p>
                         <p className={styles.txtImgS}>Starting price : $43.00</p>
                     </div>
                     <div className={styles.col}>
-                        <img
-                            className={styles.img2}
-                            src="https://www.w3schools.com/html/pic_trulli.jpg"
-                            alt="images"
-                        />
+                        <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                         <p className={styles.txtImg}>Mens Fashion Wear</p>
                         <p className={styles.txtImgS}>Starting price : $43.00</p>
                     </div>

@@ -1,12 +1,14 @@
 import ReactDOM from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { MoralisProvider } from "react-moralis"
+import { useState } from "react"
+
 import Homepage from "./pages/homepage/Homepage"
 import Login from "./pages/login/Login"
 import Register from "./pages/register/Register"
 import RegisterForO from "./pages/register/RegisterForOrganization"
 import ErrorPage from "./pages/errorPage/ErrorPage"
 import AuctionDetail from "./pages/auctionDetails/AuctionDetail"
-import { useState } from "react"
 import PlaceABid from "./components/popups/PlaceABid"
 import ConfirmPayment from "./pages/confirmPayment/confirmPayment"
 import AuctionList from "./pages/auctionList/AuctionList"
@@ -34,6 +36,7 @@ import ListSellers from "./pages/forAdmin/ListSellers"
 import AddSeller from "./pages/forAdmin/AddSeller"
 import ListBidders from "./pages/forAdmin/ListBidders"
 import BidderDetail from "./pages/forAdmin/BidderDetail"
+import PlaceBidButton from "./pages/bidder/popup"
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -79,7 +82,13 @@ function App() {
                 <Route path="addSeller" element={<AddSeller />} />
                 <Route path="listBidders" element={<ListBidders />} />
                 <Route path="bidderDetail" element={<AddSeller />} />
-                <Route path="bidderDetail/:id" element={<AddSeller />} />
+                <Route path="bidderDetail/:id" element={<AddSeller />}></Route>
+                {/* test */}
+                {/* <MoralisProvider initializeOnMount={false}> */}
+                <Route path="BidPopup" element={<PlaceBidButton />} />
+                {/* </MoralisProvider> */}
+                {/* test */}
+                <Route path="bidderDetail/auc/:id" element={<AddSeller />} />
             </Routes>
         </BrowserRouter>
     )

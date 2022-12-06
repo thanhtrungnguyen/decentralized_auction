@@ -144,15 +144,10 @@ const AuctionList = () => {
                     {data.map((auction) => (
                         <div className={styles.product}>
                             <div>
-                                <img
-                                    className={styles.img}
-                                    src="https://image.thanhnien.vn/w1024/Uploaded/2022/ywfsm/2019_09_07/10_xfvb.jpg"
-                                />
+                                <img className={styles.img} src="https://image.thanhnien.vn/w1024/Uploaded/2022/ywfsm/2019_09_07/10_xfvb.jpg" />
                             </div>
                             <div>
-                                <p className={styles.txtBlueB}>
-                                    {auction.Auctions1__r.records[0].Name}
-                                </p>
+                                <p className={styles.txtBlueB}>{auction.Auctions1__r.records[0].Name}</p>
 
                                 <p className={styles.txtDes}>{auction.Property_Information__c}</p>
 
@@ -160,16 +155,11 @@ const AuctionList = () => {
                                     <p className={styles.txtBlueB}>Current auction</p>
                                     <div>
                                         <label className={styles.txtBlueB}>Start Bid:</label>
-                                        <label className={styles.txtBlueB}>
-                                            {auction.Auctions1__r.records[0].Start_Bid__c}
-                                        </label>
+                                        <label className={styles.txtBlueB}>{auction.Auctions1__r.records[0].Start_Bid__c}</label>
                                     </div>
                                     <br />
                                     <div>
-                                        <Link
-                                            className={styles.link}
-                                            to={`/auctiondetail/${auction.Auctions1__r.records[0].Id}`}
-                                        >
+                                        <Link className={styles.link} to={`/auctiondetail/${auction.Auctions1__r.records[0].Id}`}>
                                             Details
                                         </Link>
                                     </div>

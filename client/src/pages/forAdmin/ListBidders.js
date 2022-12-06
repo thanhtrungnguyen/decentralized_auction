@@ -70,15 +70,7 @@ const ListBidders = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Search</p>
-                                <input
-                                    id="email"
-                                    className={styles.input}
-                                    type="text"
-                                    placeholder="Email"
-                                    value={email}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
+                                <input id="email" className={styles.input} type="text" placeholder="Email" value={email} onChange={(e) => handleInputChange(e)} required></input>
                             </div>
                             <br />
                             <br />
@@ -116,36 +108,19 @@ const ListBidders = () => {
                                         <td className={styles.td}>{bidder}</td>
                                         <td className={styles.td}>{bidder}</td>
                                         <td className={styles.td}>
-                                            <Link
-                                                className={styles.linkBlue}
-                                                to={`/bidderDetail/${bidder._id}`}
-                                            >
+                                            <Link className={styles.linkBlue} to={`/bidderDetail/${bidder._id}`}>
                                                 View
                                             </Link>
                                             {(() => {
                                                 if (bidder.status === "Active") {
                                                     return (
-                                                        <Popup
-                                                            trigger={
-                                                                <label className={styles.linkBlue}>
-                                                                    Baned
-                                                                </label>
-                                                            }
-                                                            position="right center"
-                                                        >
+                                                        <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
                                                             <BanedSeller idSeller={bidder._id} />
                                                         </Popup>
                                                     )
                                                 } else {
                                                     return (
-                                                        <Popup
-                                                            trigger={
-                                                                <label className={styles.linkBlue}>
-                                                                    Active
-                                                                </label>
-                                                            }
-                                                            position="right center"
-                                                        >
+                                                        <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
                                                             <ActiveSeller idSeller={bidder._id} />
                                                         </Popup>
                                                     )
@@ -164,27 +139,13 @@ const ListBidders = () => {
                                         {(() => {
                                             if (status === "Active") {
                                                 return (
-                                                    <Popup
-                                                        trigger={
-                                                            <label className={styles.linkBlue}>
-                                                                Baned
-                                                            </label>
-                                                        }
-                                                        position="right center"
-                                                    >
+                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
                                                         <BanedSeller idManager={123} />
                                                     </Popup>
                                                 )
                                             } else {
                                                 return (
-                                                    <Popup
-                                                        trigger={
-                                                            <label className={styles.linkBlue}>
-                                                                Active
-                                                            </label>
-                                                        }
-                                                        position="right center"
-                                                    >
+                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
                                                         <ActiveSeller idManager={123} />
                                                     </Popup>
                                                 )
@@ -202,27 +163,13 @@ const ListBidders = () => {
                                         {(() => {
                                             if (status2 === "Active") {
                                                 return (
-                                                    <Popup
-                                                        trigger={
-                                                            <label className={styles.linkBlue}>
-                                                                Baned
-                                                            </label>
-                                                        }
-                                                        position="right center"
-                                                    >
+                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
                                                         <BanedSeller idManager={123} />
                                                     </Popup>
                                                 )
                                             } else {
                                                 return (
-                                                    <Popup
-                                                        trigger={
-                                                            <label className={styles.linkBlue}>
-                                                                Active
-                                                            </label>
-                                                        }
-                                                        position="right center"
-                                                    >
+                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
                                                         <ActiveSeller idManager={123} />
                                                     </Popup>
                                                 )
@@ -232,12 +179,7 @@ const ListBidders = () => {
                                 </tr>
                             </table>
                             <div>
-                                <Pagination
-                                    className={styles.pagi}
-                                    count={10}
-                                    page={page}
-                                    onChange={handleChange}
-                                />
+                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

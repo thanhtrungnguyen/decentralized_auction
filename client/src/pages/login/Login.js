@@ -15,18 +15,12 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        axios
-            .post(
-                "http://localhost:8800/api/auth/login",
-                { userName, password },
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                // alert(res.data.message);
-                navigate("/")
-            })
+        axios.post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true }).then((res) => {
+            console.log(res)
+            console.log(res.data)
+            // alert(res.data.message);
+            navigate("/")
+        })
     }
 
     return (
@@ -38,25 +32,9 @@ const Login = () => {
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Login</p>
-                            <p className={styles.text}>
-                                Please login using account detail bellow.
-                            </p>
-                            <input
-                                type="text"
-                                className={styles.textField}
-                                placeholder="Email Address"
-                                value={userName}
-                                onChange={(e) => setUserName(e.target.value)}
-                                required
-                            ></input>
-                            <input
-                                type="password"
-                                className={styles.textField}
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            ></input>
+                            <p className={styles.text}>Please login using account detail bellow.</p>
+                            <input type="text" className={styles.textField} placeholder="Email Address" value={userName} onChange={(e) => setUserName(e.target.value)} required></input>
+                            <input type="password" className={styles.textField} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
                             <p className={styles.text}>
                                 <Link to="/enterEmail" className={styles.text}>
                                     Forgot your password?

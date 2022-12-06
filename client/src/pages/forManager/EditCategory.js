@@ -55,19 +55,10 @@ const EditCategory = () => {
                     <div className={styles.detail}>
                         <label className={styles.title}>Edit Category</label>
                         <label className={styles.txt}>Category Name</label>
-                        <input
-                            type="text"
-                            placeholder="Enter category name"
-                            value={cagetoryName}
-                            onChange={(e) => handleInputChange(e)}
-                            className={styles.input}
-                            defaultValue={data.cagetoryName}
-                            required
-                        ></input>
+                        <input type="text" placeholder="Enter category name" value={cagetoryName} onChange={(e) => handleInputChange(e)} className={styles.input} defaultValue={data.cagetoryName} required></input>
                     </div>
                     <div className={styles.btn}>
-                        <input type="button" value="Cancel" className={styles.btnCancel}></input>{" "}
-                        <input type="submit" value="Save" className={styles.btnSave}></input>
+                        <input type="button" value="Cancel" className={styles.btnCancel}></input> <input type="submit" value="Save" className={styles.btnSave}></input>
                     </div>
                     <Footer />
                 </div>

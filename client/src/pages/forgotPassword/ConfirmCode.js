@@ -41,17 +41,8 @@ const ConfirmCode = () => {
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Forgot Password</p>
-                            <p className={styles.text}>
-                                Please enter code chagne password we send your email{" "}
-                            </p>
-                            <input
-                                type="text"
-                                className={styles.textField}
-                                placeholder="Enter code"
-                                value={code}
-                                onChange={(e) => setCode(e.target.value)}
-                                required
-                            ></input>
+                            <p className={styles.text}>Please enter code chagne password we send your email </p>
+                            <input type="text" className={styles.textField} placeholder="Enter code" value={code} onChange={(e) => setCode(e.target.value)} required></input>
                             <br />
                             <br />
                             <br />

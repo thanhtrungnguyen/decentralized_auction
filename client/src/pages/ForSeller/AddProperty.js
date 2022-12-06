@@ -26,10 +26,7 @@ const AddProperty = () => {
     const [priceStep, setPriceStep] = useState(null)
     const [placeViewProperty, setPlaceViewProperty] = useState(null)
     // const [startBid, setStartBid] = useState(null);
-    const [viewPropertyTime, setViewPropertyTime] = useState([
-        new DateObject().setDay(15),
-        new DateObject().add(1, "month").setDay(15),
-    ])
+    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
 
     const [data, setData] = useState([])
 
@@ -155,70 +152,19 @@ const AddProperty = () => {
                                 <p className={styles.lable}>Property Description</p>
                             </div>
                             <div className={styles.col2}>
-                                <input
-                                    className={styles.inputImg}
-                                    id="propertyImage"
-                                    onChange={(e) => handleInputChange(e)}
-                                    type="file"
-                                    multiple
-                                    required
-                                ></input>
+                                <input className={styles.inputImg} id="propertyImage" onChange={(e) => handleInputChange(e)} type="file" multiple required></input>
                                 <br />
-                                <input
-                                    className={styles.inputText}
-                                    type="text"
-                                    id="propertyVideo"
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
-                                <input
-                                    id="propertyName"
-                                    type="text"
-                                    placeholder="Enter Property Name"
-                                    className={styles.inputText}
-                                    value={propertyName}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
+                                <input className={styles.inputText} type="text" id="propertyVideo" onChange={(e) => handleInputChange(e)} required></input>
+                                <input id="propertyName" type="text" placeholder="Enter Property Name" className={styles.inputText} value={propertyName} onChange={(e) => handleInputChange(e)} required></input>
 
-                                <select
-                                    className={styles.drop}
-                                    onChange={(e) => handleInputChange(e)}
-                                    id="category"
-                                    placeholder="Category"
-                                    defaultValue="Chair"
-                                >
+                                <select className={styles.drop} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category" defaultValue="Chair">
                                     {data.map((item) => (
                                         <option value={item.Name}>{item.Name}</option>
                                     ))}
                                 </select>
-                                <input
-                                    id="startBid"
-                                    type="number"
-                                    placeholder="Enter Start Bid"
-                                    className={styles.inputText}
-                                    value={startBid}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
-                                <input
-                                    id="deposit"
-                                    type="text"
-                                    placeholder="Enter Deposit"
-                                    className={styles.inputText}
-                                    value={deposit}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
-                                <input
-                                    id="priceStep"
-                                    type="number"
-                                    placeholder="Enter Price Step"
-                                    className={styles.inputText}
-                                    value={priceStep}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
+                                <input id="startBid" type="number" placeholder="Enter Start Bid" className={styles.inputText} value={startBid} onChange={(e) => handleInputChange(e)} required></input>
+                                <input id="deposit" type="text" placeholder="Enter Deposit" className={styles.inputText} value={deposit} onChange={(e) => handleInputChange(e)} required></input>
+                                <input id="priceStep" type="number" placeholder="Enter Price Step" className={styles.inputText} value={priceStep} onChange={(e) => handleInputChange(e)} required></input>
                                 <input
                                     id="placeViewProperty"
                                     type="text"
@@ -242,13 +188,7 @@ const AddProperty = () => {
                                         plugins={[<TimePicker />]}
                                     />
                                 </div>
-                                <textarea
-                                    id="propertyDescription"
-                                    value={propertyDescription}
-                                    className={styles.textarea}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></textarea>
+                                <textarea id="propertyDescription" value={propertyDescription} className={styles.textarea} onChange={(e) => handleInputChange(e)} required></textarea>
                             </div>
                         </div>
                     </div>

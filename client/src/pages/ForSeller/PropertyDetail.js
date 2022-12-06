@@ -39,10 +39,7 @@ const PropertyDetail = () => {
     const [priceStep, setPriceStep] = useState(null)
     const [placeViewProperty, setPlaceViewProperty] = useState(null)
     // const [startBid, setStartBid] = useState(null);
-    const [viewPropertyTime, setViewPropertyTime] = useState([
-        new DateObject().setDay(15),
-        new DateObject().add(1, "month").setDay(15),
-    ])
+    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
 
     const [data, setData] = useState([])
 
@@ -86,26 +83,14 @@ const PropertyDetail = () => {
                   src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
-                                <img
-                                    className={styles.img}
-                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
-                                    alt="images"
-                                />
+                                <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`} alt="images" />
                                 {/* <img
                   className={styles.img}
                   src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
-                                <img
-                                    className={styles.img}
-                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
-                                    alt="images"
-                                />
-                                <img
-                                    className={styles.img}
-                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
-                                    alt="images"
-                                />
+                                <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`} alt="images" />
+                                <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`} alt="images" />
                                 <div className={styles.video}>
                                     <ReactPlayer
                                         className={styles.video}
@@ -140,14 +125,7 @@ const PropertyDetail = () => {
                   required
                   //   defaultValue={data.property.propertyVideo}
                 ></input> */}
-                                <input
-                                    id="propertyName"
-                                    type="text"
-                                    placeholder="Enter Property Name"
-                                    className={styles.inputText}
-                                    value={data.Name}
-                                    readonly
-                                ></input>
+                                <input id="propertyName" type="text" placeholder="Enter Property Name" className={styles.inputText} value={data.Name} readonly></input>
                                 <select
                                     className={styles.drop}
                                     id="cagetory"
@@ -156,9 +134,7 @@ const PropertyDetail = () => {
                                     // defaultValue={data.Category_Id__r.Name}
                                     readonly
                                 >
-                                    <option value={data.Category_Id__r.Name}>
-                                        {data.Category_Id__r.Name}
-                                    </option>
+                                    <option value={data.Category_Id__r.Name}>{data.Category_Id__r.Name}</option>
                                     {/* <option value={data.property.category}>{data.property.category}</option> */}
 
                                     {/* {data.map((property) => (

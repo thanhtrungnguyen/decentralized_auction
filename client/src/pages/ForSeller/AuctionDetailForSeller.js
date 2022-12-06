@@ -28,11 +28,7 @@ const AuctionDetailForSeller = () => {
                         <div className={styles.col1}>
                             <div className={styles.col3}>
                                 <div className={styles.row}>
-                                    <img
-                                        className={styles.img}
-                                        src="https://www.w3schools.com/html/pic_trulli.jpg"
-                                        alt="images"
-                                    />
+                                    <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                     {/* <img
                     className={styles.img}
                     src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`}
@@ -40,11 +36,7 @@ const AuctionDetailForSeller = () => {
                   /> */}
                                 </div>
                                 <div className={styles.row}>
-                                    <img
-                                        className={styles.img}
-                                        src="https://www.w3schools.com/html/pic_trulli.jpg"
-                                        alt="images"
-                                    />
+                                    <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                     {/* <img
                     className={styles.img}
                     src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`}
@@ -52,11 +44,7 @@ const AuctionDetailForSeller = () => {
                   /> */}
                                 </div>
                                 <div className={styles.row}>
-                                    <img
-                                        className={styles.img}
-                                        src="https://www.w3schools.com/html/pic_trulli.jpg"
-                                        alt="images"
-                                    />
+                                    <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                     {/* <img
                     className={styles.img}
                     src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[2].Name}`}
@@ -119,12 +107,8 @@ const AuctionDetailForSeller = () => {
                             ))}
                             <tr>
                                 <td className={styles.td}>Dianne Russell</td>
-                                <td className={styles.td}>
-                                    From 10:00-06/24/2021 to 10:00-06/24/2021
-                                </td>
-                                <td className={styles.td}>
-                                    From 10:00-06/24/2021 to 10:00-06/24/2021
-                                </td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
                             </tr>
                         </table>
                     </div>
@@ -133,34 +117,16 @@ const AuctionDetailForSeller = () => {
                             <p className={styles.titleDes}>Description </p>
                             {/* <label className={styles.label}>{data.auction.description}</label> */}
                             <label className={styles.label}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum
-                                dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                                voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit
-                                amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                mollit anim id est laborum.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                                deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                                sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                             </label>
                         </div>
                     </div>

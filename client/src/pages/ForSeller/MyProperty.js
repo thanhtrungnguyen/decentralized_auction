@@ -78,24 +78,10 @@ const MyProperty = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Property Name</p>
-                                <input
-                                    id="propertyName"
-                                    className={styles.input}
-                                    type="text"
-                                    placeholder="Please input"
-                                    value={propertyName}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
+                                <input id="propertyName" className={styles.input} type="text" placeholder="Please input" value={propertyName} onChange={(e) => handleInputChange(e)} required></input>
                             </div>
                             <p className={styles.title}>Category</p>
-                            <select
-                                className={styles.select}
-                                onChange={(e) => handleInputChange(e)}
-                                id="category"
-                                placeholder="Category"
-                                defaultValue="Car"
-                            >
+                            <select className={styles.select} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category" defaultValue="Car">
                                 {listCategory.map((item) => (
                                     <option value={item.Name}>{item.Name}</option>
                                 ))}
@@ -139,16 +125,11 @@ const MyProperty = () => {
                                             <input type="checkbox"></input>
                                         </td>
                                         <td className={styles.td}>{property.Name}</td>
-                                        <td className={styles.td}>
-                                            {property.Category_Id__r.Name}
-                                        </td>
+                                        <td className={styles.td}>{property.Category_Id__r.Name}</td>
                                         <td className={styles.td}>{property.Start_Bid__c}</td>
                                         <td className={styles.td}>{property.Status__c}</td>
                                         <td className={styles.td}>
-                                            <Link
-                                                className={styles.linkBlue}
-                                                to={`/editProperty/${property.Id}`}
-                                            >
+                                            <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
                                                 Edit
                                             </Link>
                                             <Link className={styles.linkBlue} to="/">
@@ -182,12 +163,7 @@ const MyProperty = () => {
                                 </tr>
                             </table>
                             <div>
-                                <Pagination
-                                    className={styles.pagi}
-                                    count={10}
-                                    page={page}
-                                    onChange={handleChange}
-                                />
+                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

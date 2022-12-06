@@ -1,9 +1,12 @@
 import React from "react"
-import styles from "../../styleCss/stylesComponents/placeABid.module.css"
-import ConfirmPayment from "../../pages/confirmPayment/confirmPayment"
+import styles from "../../../styleCss/stylesComponents/placeABid.module.css"
+import ConfirmPayment from "../../../pages/confirmPayment/confirmPayment"
 import { Outlet, Link } from "react-router-dom"
+// import { Button } from "@web3uikit/core"
+import { ConnectButton } from "web3uikit"
+import { MoralisProvider } from "react-moralis"
 
-const PlaceABid = ({ sendAuction }) => {
+const PlaceBid = () => {
     // const myFunction = () => {
     //   let x = document.getElementById("trans");
     //   if (x.style.display === "none") {
@@ -18,22 +21,25 @@ const PlaceABid = ({ sendAuction }) => {
         <>
             <div className={styles.container}>
                 <p className={styles.txtBlack}>Pay a bid</p>
+                {/* <ConnectButton /> */}
                 <p className={styles.txt}>You have selected:</p>
                 <div>
                     <div className={styles.info}>
                         {/* <img
               className={styles.img}
               src="https://www.w3schools.com/html/pic_trulli.jpg"
-              alt="images"
+              alt="images" 
             /> */}
-                        <img className={styles.img} src={sendAuction.MediaURL[0]} alt="images" />
-                        <p className={styles.title}>{sendAuction.PropertyName}</p>
+                        {/* <img className={styles.img} src={sendAuction.MediaURL[0]} alt="images" /> */}
+                        <img className={styles.img} src="https://static.vecteezy.com/packs/media/photos/term-bg-3-f6a12264.jpg" alt="images" />
+                        {/* <p className={styles.title}>{sendAuction.PropertyName}</p> */}
+                        <p className={styles.title}>PropertyName</p>
                         <br />
                         <br />
                         <br />
                         <br />
                         <p className={styles.txtM}>Starting bid:</p>
-                        <p className={styles.txtNormal}>{sendAuction.StartBid}</p>
+                        <p className={styles.txtNormal}>100</p>
                         <p className={styles.txtM}>Current bid:</p>
                         <p className={styles.txtNormal}>6969 ETH</p>
                         {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
@@ -87,4 +93,4 @@ const PlaceABid = ({ sendAuction }) => {
     )
 }
 
-export default PlaceABid
+export default PlaceBid

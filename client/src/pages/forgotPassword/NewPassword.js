@@ -19,17 +19,11 @@ const NewPassword = () => {
         navigate(`/login`)
 
         event.preventDefault()
-        axios
-            .post(
-                "http://localhost:8800/api/auth/reset-password",
-                { password1: password, password2: rePassword, userId: userId, token: token },
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                // alert(res.data.message);
-            })
+        axios.post("http://localhost:8800/api/auth/reset-password", { password1: password, password2: rePassword, userId: userId, token: token }, { withCredentials: true }).then((res) => {
+            console.log(res)
+            console.log(res.data)
+            // alert(res.data.message);
+        })
     }
 
     return (
@@ -41,25 +35,9 @@ const NewPassword = () => {
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Forgot Password</p>
-                            <p className={styles.text}>
-                                Please enter code chagne password we send your email{" "}
-                            </p>
-                            <input
-                                type="text"
-                                className={styles.textField}
-                                placeholder="Enter New Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            ></input>
-                            <input
-                                type="text"
-                                className={styles.textField}
-                                placeholder="Re-Enter New Password"
-                                value={rePassword}
-                                onChange={(e) => setRePassword(e.target.value)}
-                                required
-                            ></input>
+                            <p className={styles.text}>Please enter code chagne password we send your email </p>
+                            <input type="text" className={styles.textField} placeholder="Enter New Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
+                            <input type="text" className={styles.textField} placeholder="Re-Enter New Password" value={rePassword} onChange={(e) => setRePassword(e.target.value)} required></input>
                             <br />
                             <br />
                             <br />

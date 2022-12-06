@@ -8,17 +8,11 @@ const Footer = () => {
                 <div className={styles.col1}>
                     <label className={styles.label}>DAP</label>
                     <br />
-                    <input
-                        type="text"
-                        className={styles.input}
-                        placeholder="Enter Email Address"
-                    ></input>
+                    <input type="text" className={styles.input} placeholder="Enter Email Address"></input>
                     <button className={styles.btn}>Sign Up</button>
                     <br />
                     <p className={styles.txt}>Contact Info</p>
-                    <p className={styles.txt}>
-                        17 Princess Road, London, Greater London NW1 8JR, UK
-                    </p>
+                    <p className={styles.txt}>17 Princess Road, London, Greater London NW1 8JR, UK</p>
                 </div>
                 <div className={styles.col2}>
                     <p className={styles.txtBold}>Customer Care</p>

@@ -52,38 +52,16 @@ const AddSeller = () => {
                             <label className={styles.title}>Add a New Seller</label>
                             <br />
                             <label className={styles.txt}>Username</label>
-                            <input
-                                id="username"
-                                type="text"
-                                className={styles.input}
-                                value={username}
-                                onChange={(e) => handleInputChange(e)}
-                                required
-                            ></input>
+                            <input id="username" type="text" className={styles.input} value={username} onChange={(e) => handleInputChange(e)} required></input>
                             <label></label>
                             <br />
                             <br />
                             <br />
                             <label className={styles.txt}>Password</label>
-                            <input
-                                id="password"
-                                type="text"
-                                className={styles.input}
-                                value={password}
-                                onChange={(e) => handleInputChange(e)}
-                                required
-                            ></input>
+                            <input id="password" type="text" className={styles.input} value={password} onChange={(e) => handleInputChange(e)} required></input>
                             <br />
-                            <input
-                                type="button"
-                                value="Cancel"
-                                className={styles.btnCancel}
-                            ></input>
-                            <input
-                                type="submit"
-                                value="Add Seller"
-                                className={styles.btnSubmit}
-                            ></input>
+                            <input type="button" value="Cancel" className={styles.btnCancel}></input>
+                            <input type="submit" value="Add Seller" className={styles.btnSubmit}></input>
                         </div>
                     </div>
                     <Footer />

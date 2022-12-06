@@ -68,24 +68,10 @@ const MyAuctions = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Property Name</p>
-                                <input
-                                    id="propertyName"
-                                    className={styles.input}
-                                    type="text"
-                                    placeholder="Please input"
-                                    value={propertyName}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
+                                <input id="propertyName" className={styles.input} type="text" placeholder="Please input" value={propertyName} onChange={(e) => handleInputChange(e)} required></input>
                             </div>
                             <p className={styles.title}>Category</p>
-                            <select
-                                className={styles.select}
-                                onChange={(e) => handleInputChange(e)}
-                                id="cagetory"
-                                placeholder="Category"
-                                defaultValue="Car"
-                            >
+                            <select className={styles.select} onChange={(e) => handleInputChange(e)} id="cagetory" placeholder="Category" defaultValue="Car">
                                 {data.map((property) => (
                                     <option value={property.category}>{property.category}</option>
                                 ))}
@@ -134,20 +120,13 @@ const MyAuctions = () => {
                                         <td className={styles.td}>
                                             <input type="checkbox"></input>
                                         </td>
-                                        <td className={styles.td}>
-                                            {auction.property.propertyName}
-                                        </td>
+                                        <td className={styles.td}>{auction.property.propertyName}</td>
                                         <td className={styles.td}>{auction.property.category}</td>
-                                        <td className={styles.td}>
-                                            {auction.property.registrationTime}
-                                        </td>
+                                        <td className={styles.td}>{auction.property.registrationTime}</td>
                                         <td className={styles.td}>{auction.auctionTime}</td>
                                         <td className={styles.td}>{auction.auctionStatus}</td>
                                         <td className={styles.td}>
-                                            <Link
-                                                className={styles.linkBlue}
-                                                to={`/autitoDetailForSeller/${auction._id}`}
-                                            >
+                                            <Link className={styles.linkBlue} to={`/autitoDetailForSeller/${auction._id}`}>
                                                 View
                                             </Link>
                                         </td>
@@ -155,30 +134,18 @@ const MyAuctions = () => {
                                 ))}
                                 <tr>
                                     <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>
-                                        From 10:00-06/24/2021 to 10:00-06/24/2021
-                                    </td>
-                                    <td className={styles.td}>
-                                        From 10:00-06/24/2021 to 10:00-06/24/2021
-                                    </td>
+                                    <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                                    <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
                                     <td className={styles.td}>Bidding</td>
                                     <td className={styles.td}>
-                                        <Link
-                                            className={styles.linkBlue}
-                                            to="/autitoDetailForSeller"
-                                        >
+                                        <Link className={styles.linkBlue} to="/autitoDetailForSeller">
                                             View
                                         </Link>
                                     </td>
                                 </tr>
                             </table>
                             <div>
-                                <Pagination
-                                    className={styles.pagi}
-                                    count={10}
-                                    page={page}
-                                    onChange={handleChange}
-                                />
+                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

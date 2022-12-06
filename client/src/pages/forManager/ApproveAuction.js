@@ -24,14 +24,8 @@ const PropertyDetail = () => {
     const navigate = useNavigate()
     const baseURL = "http://localhost:8800/api/property/${id}"
     const [registrationFee, setRegistrationFee] = useState(null)
-    const [timeRegistration, setTimeRegistration] = useState([
-        new DateObject().setDay(15),
-        new DateObject().add(1, "month").setDay(15),
-    ])
-    const [auctionTime, setAuctionTime] = useState([
-        new DateObject().setDay(15),
-        new DateObject().add(1, "month").setDay(15),
-    ])
+    const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
+    const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
 
     useEffect(() => {
         axios.get(baseURL).then((resp) => {
@@ -74,31 +68,19 @@ const PropertyDetail = () => {
                                 <p className={styles.lable}>Property Description</p>
                             </div>
                             <div className={styles.col2}>
-                                <img
-                                    className={styles.img}
-                                    src="https://www.w3schools.com/html/pic_trulli.jpg"
-                                    alt="images"
-                                />
+                                <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                 {/* <img
                   className={styles.img}
                   src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`}
                   alt="images"
                 /> */}
-                                <img
-                                    className={styles.img}
-                                    src="https://www.w3schools.com/html/pic_trulli.jpg"
-                                    alt="images"
-                                />
+                                <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                 {/* <img
                   className={styles.img}
                   src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`}
                   alt="images"
                 /> */}
-                                <img
-                                    className={styles.img}
-                                    src="https://www.w3schools.com/html/pic_trulli.jpg"
-                                    alt="images"
-                                />
+                                <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                 <div className={styles.video}>
                                     <ReactPlayer
                                         className={styles.video}
@@ -282,17 +264,9 @@ const PropertyDetail = () => {
                         </div>
                     </div>
                     <div className={styles.btn2}>
-                        <input
-                            className={styles.btnSave2}
-                            type="submit"
-                            value="Save and Publish"
-                        ></input>
+                        <input className={styles.btnSave2} type="submit" value="Save and Publish"></input>
 
-                        <input
-                            className={styles.btnDraft}
-                            type="button"
-                            value="Reject Request Add"
-                        ></input>
+                        <input className={styles.btnDraft} type="button" value="Reject Request Add"></input>
                         <input className={styles.btnCancel} type="button" value="Cancel"></input>
                     </div>{" "}
                     <Footer />

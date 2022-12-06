@@ -22,10 +22,7 @@ const EditAuction = () => {
     const [cagetory, setCategory] = useState("Car")
     const [propertyDescription, setPropertyDescription] = useState(null)
     const [startBid, setStartBid] = useState(null)
-    const [biddingPreiod, setBiddingPreiod] = useState([
-        new DateObject().setDay(15),
-        new DateObject().add(1, "month").setDay(15),
-    ])
+    const [biddingPreiod, setBiddingPreiod] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
     const navigate = useNavigate()
 
     const handleInputChange = (e) => {
@@ -74,23 +71,7 @@ const EditAuction = () => {
         for (const [key, value] of formData) {
             alert(key + ": " + value)
         }
-        alert(
-            "infomation: " +
-                formData +
-                propertyImage +
-                " " +
-                propertyVideo.name +
-                " " +
-                propertyName +
-                " " +
-                cagetory +
-                " " +
-                propertyDescription +
-                " " +
-                startBid +
-                " " +
-                biddingPreiod
-        )
+        alert("infomation: " + formData + propertyImage + " " + propertyVideo.name + " " + propertyName + " " + cagetory + " " + propertyDescription + " " + startBid + " " + biddingPreiod)
         event.preventDefault()
     }
     return (
@@ -112,51 +93,18 @@ const EditAuction = () => {
                                 <p className={styles.lable}>Property Description</p>
                             </div>
                             <div className={styles.col2}>
-                                <input
-                                    className={styles.inputImg}
-                                    id="propertyImage"
-                                    onChange={(e) => handleInputChange(e)}
-                                    type="file"
-                                    multiple
-                                    required
-                                ></input>
+                                <input className={styles.inputImg} id="propertyImage" onChange={(e) => handleInputChange(e)} type="file" multiple required></input>
                                 <br />
-                                <input
-                                    className={styles.inputImg}
-                                    type="file"
-                                    id="propertyVideo"
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
-                                <input
-                                    id="propertyName"
-                                    type="text"
-                                    placeholder="Enter Property Name"
-                                    className={styles.inputText}
-                                    value={propertyName}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
+                                <input className={styles.inputImg} type="file" id="propertyVideo" onChange={(e) => handleInputChange(e)} required></input>
+                                <input id="propertyName" type="text" placeholder="Enter Property Name" className={styles.inputText} value={propertyName} onChange={(e) => handleInputChange(e)} required></input>
                             </div>
 
-                            <select
-                                className={styles.drop}
-                                onChange={(e) => handleInputChange(e)}
-                                id="cagetory"
-                                placeholder="Category"
-                                defaultValue="volvo"
-                            >
+                            <select className={styles.drop} onChange={(e) => handleInputChange(e)} id="cagetory" placeholder="Category" defaultValue="volvo">
                                 <option value="Car">Car</option>
                                 <option value="Table">Table</option>
                                 <option value="Chair">Chair</option>
                             </select>
-                            <textarea
-                                id="propertyDescription"
-                                value={propertyDescription}
-                                className={styles.textarea}
-                                onChange={(e) => handleInputChange(e)}
-                                required
-                            ></textarea>
+                            <textarea id="propertyDescription" value={propertyDescription} className={styles.textarea} onChange={(e) => handleInputChange(e)} required></textarea>
                         </div>
                     </div>
                     <div className={styles.auction}>
@@ -166,15 +114,7 @@ const EditAuction = () => {
                             <p className={styles.lable}>Bidding Period</p>
                         </div>
                         <div className={styles.col2}>
-                            <input
-                                id="startBid"
-                                type="number"
-                                placeholder="Enter Start bid"
-                                className={styles.inputText}
-                                onChange={(e) => handleInputChange(e)}
-                                value={startBid}
-                                required
-                            ></input>
+                            <input id="startBid" type="number" placeholder="Enter Start bid" className={styles.inputText} onChange={(e) => handleInputChange(e)} value={startBid} required></input>
                             <DatePicker
                                 id="biddingPreiod"
                                 // onChange={(e) => handleInputChange(e)}
@@ -190,17 +130,9 @@ const EditAuction = () => {
                         </div>
                     </div>
                     <div className={styles.btn}>
-                        <input
-                            className={styles.btnSave}
-                            type="submit"
-                            value="Save and Pulish"
-                        ></input>
+                        <input className={styles.btnSave} type="submit" value="Save and Pulish"></input>
 
-                        <input
-                            className={styles.btnDraft}
-                            type="button"
-                            value="Save as Draft"
-                        ></input>
+                        <input className={styles.btnDraft} type="button" value="Save as Draft"></input>
                         <input className={styles.btnCancel} type="button" value="Cancel"></input>
                     </div>
 

@@ -63,15 +63,7 @@ const ManagerCategorys = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Property Name</p>
-                                <input
-                                    id="categoryName"
-                                    className={styles.input}
-                                    type="text"
-                                    placeholder="Please input"
-                                    value={categoryName}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
+                                <input id="categoryName" className={styles.input} type="text" placeholder="Please input" value={categoryName} onChange={(e) => handleInputChange(e)} required></input>
                             </div>
 
                             <br />
@@ -103,27 +95,16 @@ const ManagerCategorys = () => {
                                 </tr>
                                 {data.map((auction) => (
                                     <tr>
-                                        <td className={styles.td}>
-                                            {auction.property.propertyName}
-                                        </td>
+                                        <td className={styles.td}>{auction.property.propertyName}</td>
 
                                         <td className={styles.td}>
-                                            <Link
-                                                className={styles.linkBlue}
-                                                to={`/categoryDetail/${auction._id}`}
-                                            >
+                                            <Link className={styles.linkBlue} to={`/categoryDetail/${auction._id}`}>
                                                 View
                                             </Link>
-                                            <Link
-                                                className={styles.linkBlue}
-                                                to={`/editCategory/${auction._id}`}
-                                            >
+                                            <Link className={styles.linkBlue} to={`/editCategory/${auction._id}`}>
                                                 Edit
                                             </Link>
-                                            <Link
-                                                className={styles.linkBlue}
-                                                to={`/deleteCategory/${auction._id}`}
-                                            >
+                                            <Link className={styles.linkBlue} to={`/deleteCategory/${auction._id}`}>
                                                 Delete
                                             </Link>
                                         </td>
@@ -146,12 +127,7 @@ const ManagerCategorys = () => {
                                 </tr>
                             </table>
                             <div>
-                                <Pagination
-                                    className={styles.pagi}
-                                    count={10}
-                                    page={page}
-                                    onChange={handleChange}
-                                />
+                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

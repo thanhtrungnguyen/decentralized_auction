@@ -34,11 +34,7 @@ async function fetchLocationOptions(fetchType, locationId) {
 
 async function fetchInitialData() {
     const { cityId, districtId, wardId } = (await axios.get(PATHS.LOCATION)).data
-    const [cities, districts, wards] = await Promise.all([
-        fetchLocationOptions(FETCH_TYPES.CITIES),
-        fetchLocationOptions(FETCH_TYPES.DISTRICTS, cityId),
-        fetchLocationOptions(FETCH_TYPES.WARDS, districtId),
-    ])
+    const [cities, districts, wards] = await Promise.all([fetchLocationOptions(FETCH_TYPES.CITIES), fetchLocationOptions(FETCH_TYPES.DISTRICTS, cityId), fetchLocationOptions(FETCH_TYPES.WARDS, districtId)])
     return {
         cityOptions: cities,
         districtOptions: districts,

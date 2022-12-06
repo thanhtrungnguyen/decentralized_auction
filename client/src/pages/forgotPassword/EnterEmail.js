@@ -12,17 +12,11 @@ const EnterEmail = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        axios
-            .post(
-                "http://localhost:8800/api/auth/forgotPassword",
-                { userName },
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                // alert(res.data.message);
-            })
+        axios.post("http://localhost:8800/api/auth/forgotPassword", { userName }, { withCredentials: true }).then((res) => {
+            console.log(res)
+            console.log(res.data)
+            // alert(res.data.message);
+        })
     }
 
     return (
@@ -34,17 +28,8 @@ const EnterEmail = () => {
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Forgot Password</p>
-                            <p className={styles.text}>
-                                Please enter your email to reset password{" "}
-                            </p>
-                            <input
-                                type="text"
-                                className={styles.textField}
-                                placeholder="Email Address"
-                                value={userName}
-                                onChange={(e) => setUserName(e.target.value)}
-                                required
-                            ></input>
+                            <p className={styles.text}>Please enter your email to reset password </p>
+                            <input type="text" className={styles.textField} placeholder="Email Address" value={userName} onChange={(e) => setUserName(e.target.value)} required></input>
                             <br />
                             <br />
                             <br />

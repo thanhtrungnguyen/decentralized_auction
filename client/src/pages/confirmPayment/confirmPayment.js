@@ -19,9 +19,7 @@ const ConfirmPayment = () => {
                 </div>
                 <div className={styles.col2}>
                     <p className={styles.txtNormalB}>Connected with Metamask</p>
-                    <p className={styles.txtNormalB2}>
-                        0x26594a6109a5154C8E10765C5f15F4B7F54e0420
-                    </p>
+                    <p className={styles.txtNormalB2}>0x26594a6109a5154C8E10765C5f15F4B7F54e0420</p>
                 </div>
                 <br />
                 <button className={styles.btn}>Insufficient Balance</button>

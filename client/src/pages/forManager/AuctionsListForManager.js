@@ -68,24 +68,10 @@ const AuctionsListForManager = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Property Name</p>
-                                <input
-                                    id="propertyName"
-                                    className={styles.input}
-                                    type="text"
-                                    placeholder="Please input"
-                                    value={propertyName}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
+                                <input id="propertyName" className={styles.input} type="text" placeholder="Please input" value={propertyName} onChange={(e) => handleInputChange(e)} required></input>
                             </div>
                             <p className={styles.title}>Category</p>
-                            <select
-                                className={styles.select}
-                                onChange={(e) => handleInputChange(e)}
-                                id="cagetory"
-                                placeholder="Category"
-                                defaultValue="Car"
-                            >
+                            <select className={styles.select} onChange={(e) => handleInputChange(e)} id="cagetory" placeholder="Category" defaultValue="Car">
                                 {/* {data.map((property) => (
                   <option value={property.category}>{property.category}</option>
                 ))} */}
@@ -161,18 +147,11 @@ const AuctionsListForManager = () => {
                 ))} */}
                                 <tr>
                                     <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>
-                                        From 10:00-06/24/2021 to 10:00-06/24/2021
-                                    </td>
-                                    <td className={styles.td}>
-                                        From 10:00-06/24/2021 to 10:00-06/24/2021
-                                    </td>
+                                    <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                                    <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
                                     <td className={styles.td}>Bidding</td>
                                     <td className={styles.td}>
-                                        <Link
-                                            className={styles.linkBlue}
-                                            to="/autitoDetailForManager"
-                                        >
+                                        <Link className={styles.linkBlue} to="/autitoDetailForManager">
                                             View
                                         </Link>
                                         <Link className={styles.linkBlue} to="/approveAuction">
@@ -182,12 +161,7 @@ const AuctionsListForManager = () => {
                                 </tr>
                             </table>
                             <div>
-                                <Pagination
-                                    className={styles.pagi}
-                                    count={10}
-                                    page={page}
-                                    onChange={handleChange}
-                                />
+                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

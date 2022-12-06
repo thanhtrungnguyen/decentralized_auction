@@ -31,6 +31,11 @@ const NavBar = () => {
                     <Link className={styles.link} to="/listManagers">
                         Admin Center
                     </Link>
+                    {/* test */}
+                    <Link className={styles.link} color="red" to="/BidPopup">
+                        BidPopup
+                    </Link>
+                    {/* test */}
                     <div className={styles.flright}>
                         <input className={styles.ip} type="text"></input>
                         <BsSearch className={styles.icon} />

@@ -70,15 +70,7 @@ const ListSellers = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Search</p>
-                                <input
-                                    id="email"
-                                    className={styles.input}
-                                    type="text"
-                                    placeholder="Email"
-                                    value={email}
-                                    onChange={(e) => handleInputChange(e)}
-                                    required
-                                ></input>
+                                <input id="email" className={styles.input} type="text" placeholder="Email" value={email} onChange={(e) => handleInputChange(e)} required></input>
                             </div>
                             <br />
                             <br />
@@ -125,27 +117,13 @@ const ListSellers = () => {
                                             {(() => {
                                                 if (seller.status === "Active") {
                                                     return (
-                                                        <Popup
-                                                            trigger={
-                                                                <label className={styles.linkBlue}>
-                                                                    Baned
-                                                                </label>
-                                                            }
-                                                            position="right center"
-                                                        >
+                                                        <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
                                                             <BanedSeller idSeller={seller._id} />
                                                         </Popup>
                                                     )
                                                 } else {
                                                     return (
-                                                        <Popup
-                                                            trigger={
-                                                                <label className={styles.linkBlue}>
-                                                                    Active
-                                                                </label>
-                                                            }
-                                                            position="right center"
-                                                        >
+                                                        <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
                                                             <ActiveSeller idSeller={seller._id} />
                                                         </Popup>
                                                     )
@@ -166,27 +144,13 @@ const ListSellers = () => {
                                         {(() => {
                                             if (status === "Active") {
                                                 return (
-                                                    <Popup
-                                                        trigger={
-                                                            <label className={styles.linkBlue}>
-                                                                Baned
-                                                            </label>
-                                                        }
-                                                        position="right center"
-                                                    >
+                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
                                                         <BanedSeller idManager={123} />
                                                     </Popup>
                                                 )
                                             } else {
                                                 return (
-                                                    <Popup
-                                                        trigger={
-                                                            <label className={styles.linkBlue}>
-                                                                Active
-                                                            </label>
-                                                        }
-                                                        position="right center"
-                                                    >
+                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
                                                         <ActiveSeller idManager={123} />
                                                     </Popup>
                                                 )
@@ -206,27 +170,13 @@ const ListSellers = () => {
                                         {(() => {
                                             if (status2 === "Active") {
                                                 return (
-                                                    <Popup
-                                                        trigger={
-                                                            <label className={styles.linkBlue}>
-                                                                Baned
-                                                            </label>
-                                                        }
-                                                        position="right center"
-                                                    >
+                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
                                                         <BanedSeller idManager={123} />
                                                     </Popup>
                                                 )
                                             } else {
                                                 return (
-                                                    <Popup
-                                                        trigger={
-                                                            <label className={styles.linkBlue}>
-                                                                Active
-                                                            </label>
-                                                        }
-                                                        position="right center"
-                                                    >
+                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
                                                         <ActiveSeller idManager={123} />
                                                     </Popup>
                                                 )
@@ -236,12 +186,7 @@ const ListSellers = () => {
                                 </tr>
                             </table>
                             <div>
-                                <Pagination
-                                    className={styles.pagi}
-                                    count={10}
-                                    page={page}
-                                    onChange={handleChange}
-                                />
+                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>
