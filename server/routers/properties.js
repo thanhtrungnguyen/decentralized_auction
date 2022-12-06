@@ -36,7 +36,7 @@ router.get("/:id",findPropertyByID);
 
 router.get("/getListByStatus/:status",getListByStatus);
 
-router.get("/getListByName/:name",getListByName);
+router.get("/getListByName/:name/:status",filterProperty);
 
 router.get("/",verifySeller,getAllPropertyByUser)
 

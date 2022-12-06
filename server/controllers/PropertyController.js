@@ -239,8 +239,8 @@ const conn = new jsforce.Connection({
         next(error);
     }
 }
-// get list property by Name Property
-const getListByName = async (req, res, next) => {
+// get list property by PropertyName and status
+const filterProperty = async (req, res, next) => {
     try {
         // var property;
         // const updateProperty = await Property.findById(req.params.id);
@@ -251,7 +251,7 @@ const getListByName = async (req, res, next) => {
             if (err) return next(createError(403, "Token is not valid!"));
             userId = user.id;
         })
-        await conn.query(`Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' And Name like '%${req.params.name}%'`, (err, result) => {
+        await conn.query(`Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' And Name like '%${req.params.name}%' And Status__c = '${req.params.status}'`, (err, result) => {
             if (err) console.error(err)
             properties = result.records
         })
@@ -261,4 +261,4 @@ const getListByName = async (req, res, next) => {
         next(error);
     }
 }
-module.exports = {getAllCate,createCate,findPropertyByID,updateProperty,getAllPropertyByUser,createProperty,getListByStatus,getListByName}
+module.exports = {getAllCate,createCate,findPropertyByID,updateProperty,getAllPropertyByUser,createProperty,getListByStatus,filterProperty}
