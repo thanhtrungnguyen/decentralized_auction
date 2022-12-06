@@ -356,7 +356,7 @@ const Register = () => {
             className={styles.inputT}
             type="text"
             placeholder="Position"
-            value={specificAddressOrganization}
+            value={position}
             onChange={(e) => handleInputChange(e)}
             id="position"
             required
