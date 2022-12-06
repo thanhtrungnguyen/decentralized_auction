@@ -33,7 +33,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
     var user,contact,account = null;
     var role = null;
     if(conn){
-      if (req.body.userType === CONTACT) {
+      if (req.body.usertype === CONTACT) {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(req.body.password, salt);
         // add new user
@@ -43,18 +43,19 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         }, (err, ret) => {
           if (err || !ret.success) { return console.error(err, ret); }
           console.log("Created record id : " + ret.id);
+          user = ret.id;
         })
 
 
         //console.log(user)
-        // const files = req.files;
-        // // console.log("files: " + files);
+        const files = req.files;
+        // console.log("files: " + files);
   
-        // const result = await uploadFile(files.cardFront[0]);
-        // console.log(result);
+        const result = await uploadFile(files.cardFront[0]);
+        console.log(result);
   
-        // const result1 = await uploadFile(files.cardBack[0]);
-        // console.log(result1);
+        const result1 = await uploadFile(files.cardBack[0]);
+        console.log(result1);
         
         //add contact
         await conn.sobject("Contact__c").create({
@@ -65,15 +66,15 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
           Email__c: req.body.email,
           Date_Of_Birth__c: req.body.dateOfBirth,
           Phone__c: req.body.phone,
-          Wards__c: req.body.wardId,
-          City__c: req.body.cityId,
-          District__c: req.body.districtId,
-          Address__c: req.body.Address,
+          Wards__c: req.body.ward,
+          City__c: req.body.city,
+          District__c: req.body.distric,
+          Address__c: req.body.sepecificAddress,
           Card_Number__c: req.body.cardNumber,
           Card_Granted_Date__c: req.body.dateRangeCard,
           Card_Granted_Place__c: req.body.cardGrantedPlace,
-          // Font_Side_Image__c: result.key,
-          // Back_Side_Image__c: result1.key,
+          Font_Side_Image__c: result.key,
+          Back_Side_Image__c: result1.key,
           User_Id__c: user,
         }, (err, ret) => {
           if (err || !ret.success) { return console.error(err, ret); }
@@ -100,7 +101,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
 
 
       //add new account
-      if (req.body.userType === ACCOUNT){
+      if (req.body.usertype === ACCOUNT){
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(req.body.password, salt);
       // create user
