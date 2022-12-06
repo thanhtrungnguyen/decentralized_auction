@@ -9,7 +9,7 @@ const accountRoute = require("./routers/accounts.js");
 const auctionRoute = require("./routers/auctions.js");
 const propertyRoute = require("./routers/properties.js");
 const categoryRoute = require("./routers/categories.js");
-const jsforce = require("jsforce");
+
 const multer = require("multer");
 
 
@@ -87,17 +87,6 @@ const upload = multer({ dest: "uploads/" });
 // });
 
 //connect salesforce
-const conn = new jsforce.Connection({
-  loginUrl: process.env.SF_LOGIN_URL
-})
-
-conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOKEN, (err, res) => {
-  if (err) {
-    console.error(err)
-  } else {
-    console.log(res.id)
-  }
-})
 
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
@@ -121,4 +110,3 @@ app.listen(PORT, () => {
   console.log("Connected to backend.")
 });
 
-module.export = conn;

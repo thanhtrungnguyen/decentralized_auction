@@ -22,8 +22,6 @@ const bcrypt = require("bcryptjs");
     next(error);
   }
 }
-
-
  const getAccountById = async (req, res, next) => {
   try {
     if (conn) {

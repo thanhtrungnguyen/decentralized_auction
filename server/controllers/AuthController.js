@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 // const Contact = require("../models/Contact.js");
 const { createError } = require("../utils/error.js");
 const { uploadFile } = require("../s3.js");
-const  conn  = require("../server.js");
+const jsforce = require("jsforce");
 const { sendMail } = require("../utils/mailer.js");
 
 //define role
@@ -15,7 +15,17 @@ const SELLER = "SELLER";
 const ADMIN = "ADMIN";
 const CONTACT = "CONTACT";
 const ACCOUNT = "ACCOUNT";
+const conn = new jsforce.Connection({
+  loginUrl: process.env.SF_LOGIN_URL
+})
 
+conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOKEN, (err, res) => {
+  if (err) {
+    console.error(err)
+  } else {
+    console.log(res.id)
+  }
+})
 //register new User
  const register = async (req, res, next) => {
 
