@@ -112,7 +112,7 @@ const Register = () => {
     formData.append("cityId", cityId);
     formData.append("city", selectedCity.label);
     formData.append("districtId", districtId);
-    formData.append("distric", selectedDistrict.label);
+    formData.append("district", selectedDistrict.label);
     formData.append("wardId", wardId);
     formData.append("ward", selectedWard.label);
     formData.append("sepecificAddress", sepecificAddress);
@@ -129,7 +129,7 @@ const Register = () => {
     axios
       .post("http://localhost:8800/api/auth/register", formData, {
         headers: { "Content-Type": "multipart/form-data" },
-      })
+      },{ withCredentials: true })
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -138,7 +138,7 @@ const Register = () => {
       });
     console.log(formData);
     alert(
-      "infomation: " +
+      "information: " +
         firstName +
         " " +
         lastName +
