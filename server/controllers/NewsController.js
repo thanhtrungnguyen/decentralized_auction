@@ -10,7 +10,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         console.log(res.id)
     }
 })
-
+const perPage = 10;
 // Create News
 const createNews = async (req, res, next) => {
     try {
@@ -74,8 +74,9 @@ const changeStatusNews = async (req, res, next) => {
 const getAllNews = async (req, res, next) => {
     try {
         var listNews = null;
+        var num = (parseInt(req.params.index) - 1)*perPage;
         if (conn) {
-            await conn.query("Select Id, Name,Status__c from News_DAP__c",(err, result) => {
+            await conn.query(`Select Id, Name,Status__c from News_DAP__c order by CreatedDate desc limit ${perPage} offset ${num}`,(err, result) => {
                 if (err) console.log(err)
                 listNews = result
             })                
@@ -91,8 +92,9 @@ const getAllNews = async (req, res, next) => {
 const filterNews = async (req, res, next) => {
     try {
         var listNews = null;
+        var num = (parseInt(req.params.index) - 1)*perPage;
         if (conn) {
-            await conn.query(`Select Id, Name,Status__c from News_DAP__c where Name like '%${req.params.title}%' And Status__c = '${req.params.status}'`,(err, result) => {
+            await conn.query(`Select Id, Name,Status__c from News_DAP__c where Name like '%${req.params.title}%' And Status__c = '${req.params.status}' order by CreatedDate desc limit ${perPage} offset ${num}`,(err, result) => {
                 if (err) console.log(err)
                 listNews = result
             })                
@@ -104,11 +106,13 @@ const filterNews = async (req, res, next) => {
         next(error)
     }
 }
+// Get News By Status
 const getByStatus = async (req, res, next) => {
     try {
         var listNews = null;
+        var num = (parseInt(req.params.index) - 1)*perPage;
         if (conn) {
-            await conn.query(`Select Id, Name,Status__c from News_DAP__c where Status__c = '${req.params.status}'`,(err, result) => {
+            await conn.query(`Select Id, Name,Status__c from News_DAP__c where Status__c = '${req.params.status}' order by CreatedDate desc limit ${perPage} offset ${num}`,(err, result) => {
                 if (err) console.log(err)
                 listNews = result
             })                
