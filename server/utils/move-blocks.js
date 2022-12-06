@@ -1,10 +1,10 @@
 const { network } = require("hardhat")
 
-function sleep(timeInMs) {
+const sleep = (timeInMs) => {
     return new Promise((resolve) => setTimeout(resolve, timeInMs))
 }
 
-async function moveBlocks(amount, sleepAmount = 0) {
+const moveBlocks = async (amount, sleepAmount = 0) => {
     console.log("Moving blocks...")
     for (let index = 0; index < amount; index++) {
         await network.provider.request({
