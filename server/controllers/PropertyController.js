@@ -1,9 +1,20 @@
 // const Category = require("../models/Category.js");
 // const Property = require("../models/Property.js");
 const { uploadFile } = require("../s3.js")
-const conn = require("../server.js")
+const jsforce = require("jsforce")
 const jwt = require("jsonwebtoken")
 
+const conn = new jsforce.Connection({
+    loginUrl: process.env.SF_LOGIN_URL,
+})
+
+conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOKEN, (err, res) => {
+    if (err) {
+        console.error(err)
+    } else {
+        console.log(res.id)
+    }
+})
 //create property
 const createProperty = async (req, res, next) => {
     const token = req.cookies.access_token
@@ -117,7 +128,6 @@ const getAllPropertyByUser = async (req, res, next) => {
         next(error)
     }
 }
-
 //update property
 const updateProperty = async (req, res, next) => {
     const token = req.cookies.access_token
@@ -194,7 +204,6 @@ const findPropertyByID = async (req, res, next) => {
         next(error)
     }
 }
-
 // create category
 const createCate = async (req, res, next) => {
     var category
