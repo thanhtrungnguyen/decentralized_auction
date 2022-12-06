@@ -1,6 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
-const dotenv = require("dotenv")
+require("dotenv").config()
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 const authRoute = require("./routers/auth.js")
@@ -17,7 +17,6 @@ const app = express()
 
 //config library
 const PORT = 8800
-dotenv.config()
 app.use(cookieParser())
 app.use(
     cors({
