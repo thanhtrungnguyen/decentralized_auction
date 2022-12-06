@@ -68,7 +68,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
           Phone__c: req.body.phone,
           Wards__c: req.body.ward,
           City__c: req.body.city,
-          District__c: req.body.distric,
+          District__c: req.body.district,
           Address__c: req.body.sepecificAddress,
           Card_Number__c: req.body.cardNumber,
           Card_Granted_Date__c: req.body.dateRangeCard,
@@ -114,14 +114,14 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         console.log("Created record id : " + result.id);
       })
 
-      // const files = req.files;
-      //   // console.log("files: " + files);
+      const files = req.files;
+        // console.log("files: " + files);
   
-      //   const result = await uploadFile(files.cardFront[0]);
-      //   console.log(result);
+        const result = await uploadFile(files.cardFront[0]);
+        console.log(result);
   
-      //   const result1 = await uploadFile(files.cardBack[0]);
-      //   console.log(result1);
+        const result1 = await uploadFile(files.cardBack[0]);
+        console.log(result1);
 
       // create information contact
       await conn.sobject("Contact__c").create({
@@ -132,15 +132,15 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         Email__c: req.body.email,
         Date_Of_Birth__c: req.body.dateOfBirth,
         Phone__c: req.body.phone,
-        Wards__c: req.body.wardId,
-        City__c: req.body.cityId,
-        District__c: req.body.districtId,
-        Address__c: req.body.Address,
+        Wards__c: req.body.ward,
+        City__c: req.body.city,
+        District__c: req.body.district,
+        Address__c: req.body.sepecificAddress,
         Card_Number__c: req.body.cardNumber,
         Card_Granted_Date__c: req.body.dateRangeCard,
         Card_Granted_Place__c: req.body.cardGrantedPlace,
-        // Font_Side_Image__c: result.key,
-        // Back_Side_Image__c: result1.key,
+        Font_Side_Image__c: result.key,
+        Back_Side_Image__c: result1.key,
         User_Id__c: user,
       }, (err, ret) => {
         if (err) { return console.error(err, ret); }
@@ -150,11 +150,11 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
       
       // create information account
       await conn.sobject('Account__c').create({
-        Name: req.body.accountName,
+        Name: req.body.organizationName,
         //Company_Certificate__c: req.body.certificateCompany,
         //Employees__c:
         //Phone__c: 
-        Specific_Address__c: req.body.specificAddress,
+        Specific_Address__c: req.body.specificAddressOrganization,
         Tax_Code__c: req.body.taxCode,
         Tax_Code_Granted_Date__c: req.body.taxCodeGrantedDate,
         Tax_Code_Granted_Place__c: req.body.taxCodeGrantedPlace,
@@ -170,7 +170,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
       await conn.sobject("Representative_Account_DAP__c").create({
         Account_DAP__c: account,
         Contact_DAP__c: contact,
-        Position__c: req.body.position
+        Name: req.body.position
       }, (err, result) => {
         if (err || !result.success) { return console.error(err, result); }
         console.log("Created Representative Account DAP : " + result);
