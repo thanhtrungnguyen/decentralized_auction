@@ -10,8 +10,8 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Popup from "reactjs-popup";
-import BanedSeller from "../../components/popups/forAdmin/BanSeller";
-import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
+import BanedBidder from "../../components/popups/forAdmin/BanBidder";
+import ActiveBidder from "../../components/popups/forAdmin/ActiveBidder";
 
 const ListBidders = () => {
   const [page, setPage] = React.useState(1);
@@ -139,7 +139,7 @@ const ListBidders = () => {
                               }
                               position="right center"
                             >
-                              <BanedSeller idSeller={bidder._id} />
+                              <BanedBidder idSeller={bidder._id} />
                             </Popup>
                           );
                         } else {
@@ -152,7 +152,7 @@ const ListBidders = () => {
                               }
                               position="right center"
                             >
-                              <ActiveSeller idSeller={bidder._id} />
+                              <ActiveBidder idSeller={bidder._id} />
                             </Popup>
                           );
                         }
@@ -176,7 +176,7 @@ const ListBidders = () => {
                             }
                             position="right center"
                           >
-                            <BanedSeller idManager={123} />
+                            <BanedBidder idManager={123} />
                           </Popup>
                         );
                       } else {
@@ -187,7 +187,7 @@ const ListBidders = () => {
                             }
                             position="right center"
                           >
-                            <ActiveSeller idManager={123} />
+                            <ActiveBidder idManager={123} />
                           </Popup>
                         );
                       }
@@ -210,7 +210,7 @@ const ListBidders = () => {
                             }
                             position="right center"
                           >
-                            <BanedSeller idManager={123} />
+                            <BanedBidder idManager={123} />
                           </Popup>
                         );
                       } else {
@@ -221,7 +221,7 @@ const ListBidders = () => {
                             }
                             position="right center"
                           >
-                            <ActiveSeller idManager={123} />
+                            <ActiveBidder idManager={123} />
                           </Popup>
                         );
                       }

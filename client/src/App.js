@@ -87,8 +87,8 @@ function App() {
         <Route path="listSellers" element={<ListSellers />} />
         <Route path="addSeller" element={<AddSeller />} />
         <Route path="listBidders" element={<ListBidders />} />
-        <Route path="bidderDetail" element={<AddSeller />} />
-        <Route path="bidderDetail/:id" element={<AddSeller />} />
+        <Route path="bidderDetail" element={<BidderDetail />} />
+        <Route path="bidderDetail/:id" element={<BidderDetail />} />
       </Routes>
     </BrowserRouter>
   );
