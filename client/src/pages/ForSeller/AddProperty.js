@@ -150,6 +150,7 @@ const AddProperty = () => {
                 <br />
                 <br />
                 <br />
+                <br />
                 <p className={styles.lable}>Property Video</p>
                 <p className={styles.lable}>Property Name</p>
                 <p className={styles.lable}>Category</p>
@@ -183,27 +184,31 @@ const AddProperty = () => {
                   type="file"
                   required
                 ></input>
-                {propertyImage1 && (
-                  <img
-                    src={URL.createObjectURL(propertyImage1)}
-                    className={styles.image}
-                    alt="Thumb"
-                  />
-                )}{" "}
-                {propertyImage2 && (
-                  <img
-                    src={URL.createObjectURL(propertyImage2)}
-                    className={styles.image}
-                    alt="Thumb"
-                  />
-                )}{" "}
-                {propertyImage3 && (
-                  <img
-                    src={URL.createObjectURL(propertyImage3)}
-                    className={styles.image}
-                    alt="Thumb"
-                  />
-                )}
+                <div className={styles.conImg}>
+                  {" "}
+                  {propertyImage1 && (
+                    <img
+                      src={URL.createObjectURL(propertyImage1)}
+                      className={styles.image}
+                      alt="Thumb"
+                    />
+                  )}{" "}
+                  {propertyImage2 && (
+                    <img
+                      src={URL.createObjectURL(propertyImage2)}
+                      className={styles.image}
+                      alt="Thumb"
+                    />
+                  )}{" "}
+                  {propertyImage3 && (
+                    <img
+                      src={URL.createObjectURL(propertyImage3)}
+                      className={styles.image}
+                      alt="Thumb"
+                    />
+                  )}
+                </div>
+
                 <br />
                 <input
                   className={styles.inputText}

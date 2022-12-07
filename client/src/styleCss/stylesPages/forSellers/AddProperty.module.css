@@ -242,3 +242,7 @@
   color: "white";
   border: "none";
 }
+.conImg {
+  width: 100%;
+  height: 100px;
+}

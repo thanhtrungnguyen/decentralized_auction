@@ -17,7 +17,9 @@ const EditProperty = () => {
   //   new DateObject().setDay(15),
   //   new DateObject().add(1, "month").setDay(15),
   // ]);
-  const [propertyImage, setPropertyImage] = useState(null);
+  const [propertyImage1, setPropertyImage1] = useState(null);
+  const [propertyImage2, setPropertyImage2] = useState(null);
+  const [propertyImage3, setPropertyImage3] = useState(null);
   const [propertyVideo, setPropertyVideo] = useState(null);
   const [propertyName, setPropertyName] = useState(null);
   const [category, setCategory] = useState("Chair");
@@ -55,13 +57,22 @@ const EditProperty = () => {
       console.log(resp.data);
       console.log("axios get");
       setProperty(resp.data);
+      setPropertyImage1(resp.data.propertyImage1);
+      setPropertyImage2(resp.data.propertyImage2);
+      setPropertyImage3(resp.data.propertyImage3);
     });
   }, [baseURLProperty]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    if (id === "propertyImage") {
-      setPropertyImage(e.target.files);
+    if (id === "propertyImage1") {
+      setPropertyImage1(e.target.files[0]);
+    }
+    if (id === "propertyImage2") {
+      setPropertyImage2(e.target.files[0]);
+    }
+    if (id === "propertyImage3") {
+      setPropertyImage3(e.target.files[0]);
     }
     if (id === "propertyVideo") {
       setPropertyVideo(value);
@@ -97,9 +108,9 @@ const EditProperty = () => {
 
   const handleSubmit = (event) => {
     const formData = new FormData();
-    for (let i = 0; i < propertyImage.length; i++) {
-      formData.append(`propertyImage${i}`, propertyImage[i]);
-    }
+    formData.append("propertyImage1", propertyImage1);
+    formData.append("propertyImage2", propertyImage2);
+    formData.append("propertyImage3", propertyImage3);
     formData.append("propertyVideo", propertyVideo);
     formData.append("propertyName", propertyName);
     formData.append("category", category);
@@ -137,6 +148,15 @@ const EditProperty = () => {
 
               <div className={styles.col1}>
                 <p className={styles.lable}>Property Image</p>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <p className={styles.lable}>Property Video</p>
                 <p className={styles.lable}>Property Name</p>
                 <p className={styles.lable}>Category</p>
@@ -150,15 +170,53 @@ const EditProperty = () => {
               <div className={styles.col2}>
                 <input
                   className={styles.inputImg}
-                  id="propertyImage"
+                  id="propertyImage1"
                   onChange={(e) => handleInputChange(e)}
                   type="file"
-                  multiple
                   required
                 ></input>
-                <br />
                 <input
                   className={styles.inputImg}
+                  id="propertyImage2"
+                  onChange={(e) => handleInputChange(e)}
+                  type="file"
+                  required
+                ></input>
+                <input
+                  className={styles.inputImg}
+                  id="propertyImage3"
+                  onChange={(e) => handleInputChange(e)}
+                  type="file"
+                  required
+                ></input>
+                <div className={styles.conImg}>
+                  {" "}
+                  {propertyImage1 && (
+                    <img
+                      src={URL.createObjectURL(propertyImage1)}
+                      className={styles.image}
+                      alt="Thumb"
+                    />
+                  )}
+                  {propertyImage2 && (
+                    <img
+                      src={URL.createObjectURL(propertyImage2)}
+                      className={styles.image}
+                      alt="Thumb"
+                    />
+                  )}{" "}
+                  {propertyImage3 && (
+                    <img
+                      src={URL.createObjectURL(propertyImage3)}
+                      className={styles.image}
+                      alt="Thumb"
+                    />
+                  )}
+                </div>
+
+                <br />
+                <input
+                  className={styles.inputText}
                   type="text"
                   id="propertyVideo"
                   onChange={(e) => handleInputChange(e)}
@@ -175,7 +233,6 @@ const EditProperty = () => {
                   //   defaultValue={data.property.propertyName}
                   required
                 ></input>
-
                 <select
                   className={styles.drop}
                   onChange={(e) => handleInputChange(e)}
