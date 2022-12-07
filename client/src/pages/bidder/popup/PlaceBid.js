@@ -4,8 +4,7 @@ import ConfirmPayment from "../../../pages/confirmPayment/confirmPayment"
 import { Outlet, Link } from "react-router-dom"
 // import { Button } from "@web3uikit/core"
 import { ConnectButton } from "web3uikit"
-import { MoralisProvider } from "react-moralis"
-
+import HeaderBid from "../../../components/header/HeaderBid"
 const PlaceBid = () => {
     // const myFunction = () => {
     //   let x = document.getElementById("trans");
@@ -21,7 +20,7 @@ const PlaceBid = () => {
         <>
             <div className={styles.container}>
                 <p className={styles.txtBlack}>Pay a bid</p>
-                {/* <ConnectButton /> */}
+
                 <p className={styles.txt}>You have selected:</p>
                 <div>
                     <div className={styles.info}>

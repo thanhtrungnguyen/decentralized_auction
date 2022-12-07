@@ -36,11 +36,11 @@ createAuction = async (
 }
 
 const auctionId = 4
-const startRegistrationTime = getEpoch("December 6, 2022 17:15:00")
-const endRegistrationTime = getEpoch("December 6, 2022 18:16:00")
-const startAuctionTime = getEpoch("December 6, 2022 19:17:00")
-const endAuctionTime = getEpoch("December 6, 2022 20:18:00")
-const duePaymentTime = getEpoch("December 6, 2022 21:19:00")
+const startRegistrationTime = getEpoch("December 9, 2022 17:15:00")
+const endRegistrationTime = getEpoch("December 9, 2022 18:16:00")
+const startAuctionTime = getEpoch("December 9, 2022 19:17:00")
+const endAuctionTime = getEpoch("December 9, 2022 20:18:00")
+const duePaymentTime = getEpoch("December 9, 2022 21:19:00")
 const registrationFee = 10
 const depositAmount = 200
 const startBid = 500

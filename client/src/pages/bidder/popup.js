@@ -1,5 +1,6 @@
 import { Button } from "@web3uikit/core"
 import { useState } from "react"
+import HeaderBid from "../../components/header/HeaderBid"
 import PlaceBid from "./popup/PlaceBid"
 
 const PlaceBidButton = () => {
@@ -14,6 +15,7 @@ const PlaceBidButton = () => {
     return (
         <>
             <h1>Popup Bid</h1>
+            <HeaderBid />
             <PlaceBid />
         </>
     )

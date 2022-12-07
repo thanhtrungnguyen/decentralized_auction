@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
+
 const authRoute = require("./routers/auth.js")
 const userRoute = require("./routers/users.js")
 const accountRoute = require("./routers/accounts.js")
@@ -41,6 +42,17 @@ const upload = multer({ dest: "uploads/" })
 //     process.exit(1);
 //   }
 // };
+
+//connect MONGO_DB_SYNC_BLOCKCHAIN
+const connectSyncBlockchainDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_DB_SYNC_BLOCKCHAIN)
+        console.log("MongoDB Sync with Blockchain connected")
+    } catch (error) {
+        console.log(error)
+        process.exit(1)
+    }
+}
 
 // // network DB disconnected
 // mongoose.connection.on("disconnected", () => {
