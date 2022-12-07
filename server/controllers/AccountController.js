@@ -1,6 +1,6 @@
-const conn = require("../server.js")
-const jwt = require("jsonwebtoken")
-const bcrypt = require("bcryptjs")
+const conn = require("../server.js");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const getAllAccount = async (req, res, next) => {
     try {
@@ -10,19 +10,19 @@ const getAllAccount = async (req, res, next) => {
                 .find({})
                 .execute((err, result) => {
                     if (err) {
-                        next(err)
+                        next(err);
                     } else {
-                        console.log("Total records" + result.totalSize)
-                        res.status(200).json(result)
+                        console.log("Total records" + result.totalSize);
+                        res.status(200).json(result);
                     }
-                })
+                });
         } else {
-            console.log("Connection failed with salesforce")
+            console.log("Connection failed with salesforce");
         }
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
+};
 
 const getAccountById = async (req, res, next) => {
     try {
@@ -32,18 +32,18 @@ const getAccountById = async (req, res, next) => {
                 .find({})
                 .execute((err, result) => {
                     if (err) {
-                        next(err)
+                        next(err);
                     } else {
-                        console.log("Total records" + result.totalSize)
-                        res.status(200).json(result)
+                        console.log("Total records" + result.totalSize);
+                        res.status(200).json(result);
                     }
-                })
+                });
         } else {
-            console.log("Connection failed with salesforce")
+            console.log("Connection failed with salesforce");
         }
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
+};
 
-module.exports = { getAccountById, getAllAccount }
+module.exports = { getAccountById, getAllAccount };

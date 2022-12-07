@@ -1,4 +1,4 @@
-const express = require("express")
+const express = require("express");
 const {
     createCate,
     createProperty,
@@ -6,13 +6,13 @@ const {
     getAllCate,
     getAllPropertyByUser,
     updateProperty,
-} = require("../controllers/PropertyController.js")
-const { verifyAdmin, verifySeller, verifyToken } = require("../utils/verifyToken.js")
-const multer = require("multer")
+} = require("../controllers/PropertyController.js");
+const { verifyAdmin, verifySeller, verifyToken } = require("../utils/verifyToken.js");
+const multer = require("multer");
 
-const upload = multer({ dest: "uploads/" })
+const upload = multer({ dest: "uploads/" });
 
-const router = express.Router()
+const router = express.Router();
 
 router.post(
     "/",
@@ -36,16 +36,16 @@ router.post(
         },
     ]),
     createProperty
-)
+);
 
-router.put("/:id", verifySeller, updateProperty)
+router.put("/:id", verifySeller, updateProperty);
 
-router.get("/:id", findPropertyByID)
+router.get("/:id", findPropertyByID);
 
-router.get("/", verifySeller, getAllPropertyByUser)
+router.get("/", verifySeller, getAllPropertyByUser);
 
-router.post("/category/", verifyAdmin, createCate)
+router.post("/category/", verifyAdmin, createCate);
 
-router.get("/category/", getAllCate)
+router.get("/category/", getAllCate);
 
-module.exports = router
+module.exports = router;

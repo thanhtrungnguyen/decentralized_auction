@@ -1,7 +1,7 @@
-const mailer = require("nodemailer")
-const dotenv = require("dotenv")
+const mailer = require("nodemailer");
+const dotenv = require("dotenv");
 
-dotenv.config()
+dotenv.config();
 
 const sendMail = async (to, subject, htmlContent) => {
     const transport = mailer.createTransport({
@@ -13,16 +13,16 @@ const sendMail = async (to, subject, htmlContent) => {
             user: process.env.MAIL_USERNAME,
             pass: process.env.MAIL_PASSWORD,
         },
-    })
+    });
 
     const options = {
         from: process.env.MAIL_FROM_ADDRESS,
         to: to,
         subject: subject,
         html: htmlContent,
-    }
-    const result = await transport.sendMail(options)
-    console.log("email sent...", result)
-    return result
-}
-module.exports = { sendMail }
+    };
+    const result = await transport.sendMail(options);
+    console.log("email sent...", result);
+    return result;
+};
+module.exports = { sendMail };

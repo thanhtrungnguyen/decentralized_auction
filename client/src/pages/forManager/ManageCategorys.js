@@ -1,57 +1,57 @@
-import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarSeller from "../../components/sidebar_manager/SidebarManager"
-import { Outlet, Link } from "react-router-dom"
-import Pagination from "@mui/material/Pagination"
-import React, { useEffect, useState } from "react"
-import { BsFillCheckSquareFill } from "react-icons/bs"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
+import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
+import { Outlet, Link } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import React, { useEffect, useState } from "react";
+import { BsFillCheckSquareFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ManagerCategorys = () => {
-    const [page, setPage] = React.useState(1)
-    const [categoryName, setCategory] = useState(null)
-    const [data, setData] = useState([])
-    const navigate = useNavigate()
-    const baseURL = "http://localhost:8800/api/auction/"
+    const [page, setPage] = React.useState(1);
+    const [categoryName, setCategory] = useState(null);
+    const [data, setData] = useState([]);
+    const navigate = useNavigate();
+    const baseURL = "http://localhost:8800/api/auction/";
 
     useEffect(() => {
         axios.get(baseURL).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
-            setData(resp.data)
-        })
-    }, [baseURL])
+            console.log(resp.data);
+            console.log("axios get");
+            setData(resp.data);
+        });
+    }, [baseURL]);
     const handleInputChange = (e) => {
-        const { id, value } = e.target
+        const { id, value } = e.target;
         if (id === "categoryName") {
-            setCategory(value)
+            setCategory(value);
         }
-    }
+    };
     const handleSubmit = (event) => {
-        const formData = new FormData()
+        const formData = new FormData();
 
-        formData.append("categoryName", categoryName)
+        formData.append("categoryName", categoryName);
 
         axios
             .get("http://localhost:8800/api/auction", formData, {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-                setData(res.data)
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                setData(res.data);
 
-                navigate("/autionsListForManager")
-            })
-        event.preventDefault()
-    }
+                navigate("/autionsListForManager");
+            });
+        event.preventDefault();
+    };
     const handleChange = (event, value) => {
-        setPage(value)
-    }
+        setPage(value);
+    };
     return (
         <>
             <Header />
@@ -63,7 +63,15 @@ const ManagerCategorys = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Property Name</p>
-                                <input id="categoryName" className={styles.input} type="text" placeholder="Please input" value={categoryName} onChange={(e) => handleInputChange(e)} required></input>
+                                <input
+                                    id="categoryName"
+                                    className={styles.input}
+                                    type="text"
+                                    placeholder="Please input"
+                                    value={categoryName}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
                             </div>
 
                             <br />
@@ -135,6 +143,6 @@ const ManagerCategorys = () => {
                 </div>
             </form>
         </>
-    )
-}
-export default ManagerCategorys
+    );
+};
+export default ManagerCategorys;

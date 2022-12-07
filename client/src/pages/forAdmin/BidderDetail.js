@@ -3,6 +3,6 @@ const BidderDetail = () => {
         <>
             <div>BidderDetail</div>
         </>
-    )
-}
-export default BidderDetail
+    );
+};
+export default BidderDetail;

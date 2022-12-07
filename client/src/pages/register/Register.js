@@ -1,134 +1,134 @@
-import styles from "../../styleCss/register.module.css"
-import Dropdown from "react-dropdown"
-import "react-dropdown/style.css"
-import useLocationForm from "./useLocationForm"
-import Select from "react-select"
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import { BsFillPersonFill, BsBank2 } from "react-icons/bs"
-import { Outlet, Link } from "react-router-dom"
+import styles from "../../styleCss/register.module.css";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+import useLocationForm from "./useLocationForm";
+import Select from "react-select";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
+import { Outlet, Link } from "react-router-dom";
 
-import ReactDOM from "react-dom/client"
+import ReactDOM from "react-dom/client";
 // axios.defaults.withCredentials = true;
 const Register = () => {
-    const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true)
-    const navigate = useNavigate()
+    const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
+    const navigate = useNavigate();
 
-    const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state
+    const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
 
-    const [firstName, setFirstName] = useState(null)
-    const [lastName, setlastName] = useState(null)
-    const [gender, setgender] = useState("Male")
-    const [dateOfBirth, setdateOfBirth] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [phone, setPhone] = useState(null)
-    const [sepecificAddress, setSepecificAddress] = useState(null)
-    const [cardNumber, setcardNumber] = useState(null)
-    const [dateRangeCard, setdateRangeCard] = useState(null)
-    const [cardGrantedPlace, setCardGrantedPlace] = useState(null)
-    const [cardFront, setCardFront] = useState(null)
-    const [cardBack, setCardBack] = useState(null)
-    const [username, setUsername] = useState(null)
-    const [password, setPassword] = useState(null)
-    const [rePassword, setRePassword] = useState(null)
-    const [role, setRole] = useState("BIDDER")
-    const [usertype, setUsertype] = useState("CONTACT")
+    const [firstName, setFirstName] = useState(null);
+    const [lastName, setlastName] = useState(null);
+    const [gender, setgender] = useState("Male");
+    const [dateOfBirth, setdateOfBirth] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [phone, setPhone] = useState(null);
+    const [sepecificAddress, setSepecificAddress] = useState(null);
+    const [cardNumber, setcardNumber] = useState(null);
+    const [dateRangeCard, setdateRangeCard] = useState(null);
+    const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
+    const [cardFront, setCardFront] = useState(null);
+    const [cardBack, setCardBack] = useState(null);
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [rePassword, setRePassword] = useState(null);
+    const [role, setRole] = useState("BIDDER");
+    const [usertype, setUsertype] = useState("CONTACT");
 
     const handleInputChange = (e) => {
-        const { id, value } = e.target
+        const { id, value } = e.target;
         if (id === "firstName") {
-            setFirstName(value)
+            setFirstName(value);
         }
         if (id === "lastName") {
-            setlastName(value)
+            setlastName(value);
         }
         if (id === "gender") {
-            setgender(value)
+            setgender(value);
         }
         if (id === "dateOfBirth") {
-            setdateOfBirth(value)
+            setdateOfBirth(value);
         }
         if (id === "email") {
-            setEmail(value)
+            setEmail(value);
         }
         if (id === "phone") {
-            setPhone(value)
+            setPhone(value);
         }
         if (id === "sepecificAddress") {
-            setSepecificAddress(value)
+            setSepecificAddress(value);
         }
         if (id === "cardNumber") {
-            setcardNumber(value)
+            setcardNumber(value);
         }
         if (id === "dateRangeCard") {
-            setdateRangeCard(value)
+            setdateRangeCard(value);
         }
         if (id === "cardGrantedPlace") {
-            setCardGrantedPlace(value)
+            setCardGrantedPlace(value);
         }
         if (id === "cardFront") {
-            setCardFront(e.target.files[0])
+            setCardFront(e.target.files[0]);
         }
         if (id === "cardBack") {
-            setCardBack(e.target.files[0])
+            setCardBack(e.target.files[0]);
         }
         if (id === "userName") {
-            setUsername(value)
+            setUsername(value);
         }
         if (id === "password") {
-            setPassword(value)
+            setPassword(value);
         }
         if (id === "rePassword") {
-            setRePassword(value)
+            setRePassword(value);
         }
         // if (id === "role") {
         //   setRole(value);
         // }
-    }
+    };
     const handleSubmit = (event) => {
-        let cityId = selectedCity.value
-        let districtId = selectedDistrict.value
-        let wardId = selectedWard.value
+        let cityId = selectedCity.value;
+        let districtId = selectedDistrict.value;
+        let wardId = selectedWard.value;
 
-        const formData = new FormData()
-        formData.append("firstName", firstName)
-        formData.append("lastName", lastName)
-        formData.append("gender", gender)
-        formData.append("dateOfBirth", dateOfBirth)
-        formData.append("email", email)
-        formData.append("phone", phone)
-        formData.append("cityId", cityId)
-        formData.append("city", selectedCity.label)
-        formData.append("districtId", districtId)
-        formData.append("distric", selectedDistrict.label)
-        formData.append("wardId", wardId)
-        formData.append("ward", selectedWard.label)
-        formData.append("sepecificAddress", sepecificAddress)
-        formData.append("cardNumber", cardNumber)
-        formData.append("dateRangeCard", dateRangeCard)
-        formData.append("cardGrantedPlace", cardGrantedPlace)
-        formData.append("cardFront", cardFront)
-        formData.append("cardBack", cardBack)
-        formData.append("username", username)
-        formData.append("password", password)
-        formData.append("role", role)
-        formData.append("usertype", usertype)
+        const formData = new FormData();
+        formData.append("firstName", firstName);
+        formData.append("lastName", lastName);
+        formData.append("gender", gender);
+        formData.append("dateOfBirth", dateOfBirth);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        formData.append("cityId", cityId);
+        formData.append("city", selectedCity.label);
+        formData.append("districtId", districtId);
+        formData.append("distric", selectedDistrict.label);
+        formData.append("wardId", wardId);
+        formData.append("ward", selectedWard.label);
+        formData.append("sepecificAddress", sepecificAddress);
+        formData.append("cardNumber", cardNumber);
+        formData.append("dateRangeCard", dateRangeCard);
+        formData.append("cardGrantedPlace", cardGrantedPlace);
+        formData.append("cardFront", cardFront);
+        formData.append("cardBack", cardBack);
+        formData.append("username", username);
+        formData.append("password", password);
+        formData.append("role", role);
+        formData.append("usertype", usertype);
 
         axios
             .post("http://localhost:8800/api/auth/register", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-                navigate("/login")
-            })
-        console.log(formData)
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                navigate("/login");
+            });
+        console.log(formData);
         alert(
             "infomation: " +
                 firstName +
@@ -171,10 +171,10 @@ const Register = () => {
                 rePassword +
                 " " +
                 role
-        )
+        );
 
-        event.preventDefault()
-    }
+        event.preventDefault();
+    };
 
     return (
         <>
@@ -197,11 +197,34 @@ const Register = () => {
                     </div>
                     <p className={styles.textBlue}>Personal Infomation</p>
                     <p className={styles.textRed}>Basic information</p>
-                    <input className={styles.inputT} type="text" placeholder="First name" value={firstName} onChange={(e) => handleInputChange(e)} id="firstName" required></input>
+                    <input
+                        className={styles.inputT}
+                        type="text"
+                        placeholder="First name"
+                        value={firstName}
+                        onChange={(e) => handleInputChange(e)}
+                        id="firstName"
+                        required
+                    ></input>
                     <p className={styles.txtBlack}>Message</p>
-                    <input className={styles.inputT} type="text" placeholder="Last name" value={lastName} onChange={(e) => handleInputChange(e)} id="lastName" required></input>
+                    <input
+                        className={styles.inputT}
+                        type="text"
+                        placeholder="Last name"
+                        value={lastName}
+                        onChange={(e) => handleInputChange(e)}
+                        id="lastName"
+                        required
+                    ></input>
                     <p className={styles.txtBlack}>Message</p>
-                    <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender" value={gender} defaultValue="Male">
+                    <select
+                        id="gender"
+                        className={styles.dropdown}
+                        onChange={(e) => handleInputChange(e)}
+                        placeholder="Gender"
+                        value={gender}
+                        defaultValue="Male"
+                    >
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
@@ -259,11 +282,35 @@ const Register = () => {
                         onChange={(option) => onWardSelect(option)}
                         defaultValue={selectedWard}
                     />
-                    <input className={styles.ipadd} type="text" placeholder="Specific address" value={sepecificAddress} onChange={(e) => handleInputChange(e)} id="sepecificAddress" required></input>{" "}
+                    <input
+                        className={styles.ipadd}
+                        type="text"
+                        placeholder="Specific address"
+                        value={sepecificAddress}
+                        onChange={(e) => handleInputChange(e)}
+                        id="sepecificAddress"
+                        required
+                    ></input>{" "}
                     <p className={styles.textRed}>Identity/Citizen card</p>
-                    <input type="text" placeholder="Card number" className={styles.ip3} value={cardNumber} onChange={(e) => handleInputChange(e)} id="cardNumber" required></input>
+                    <input
+                        type="text"
+                        placeholder="Card number"
+                        className={styles.ip3}
+                        value={cardNumber}
+                        onChange={(e) => handleInputChange(e)}
+                        id="cardNumber"
+                        required
+                    ></input>
                     <input type="date" className={styles.ip3} value={dateRangeCard} onChange={(e) => handleInputChange(e)} id="dateRangeCard"></input>
-                    <input type="text" placeholder="Card granted place" className={styles.ip3} value={cardGrantedPlace} onChange={(e) => handleInputChange(e)} id="cardGrantedPlace" required></input>
+                    <input
+                        type="text"
+                        placeholder="Card granted place"
+                        className={styles.ip3}
+                        value={cardGrantedPlace}
+                        onChange={(e) => handleInputChange(e)}
+                        id="cardGrantedPlace"
+                        required
+                    ></input>
                     <input
                         className={styles.imgCard}
                         id="cardFront"
@@ -296,8 +343,24 @@ const Register = () => {
                         placeholder="Username"
                         required
                     ></input>
-                    <input className={styles.inputEP} type="text" value={password} onChange={(e) => handleInputChange(e)} id="password" placeholder="Password" required></input>
-                    <input className={styles.inputEP} type="text" value={rePassword} onChange={(e) => handleInputChange(e)} id="rePassword" placeholder="Re-eneter the password" required></input>
+                    <input
+                        className={styles.inputEP}
+                        type="text"
+                        value={password}
+                        onChange={(e) => handleInputChange(e)}
+                        id="password"
+                        placeholder="Password"
+                        required
+                    ></input>
+                    <input
+                        className={styles.inputEP}
+                        type="text"
+                        value={rePassword}
+                        onChange={(e) => handleInputChange(e)}
+                        id="rePassword"
+                        placeholder="Re-eneter the password"
+                        required
+                    ></input>
                     <p className={styles.txtBlack}>Role</p>
                     {/* <select
             id="role"
@@ -314,7 +377,7 @@ const Register = () => {
             </div>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default Register
+export default Register;

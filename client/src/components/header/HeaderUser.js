@@ -1,6 +1,6 @@
-import styles from "../../styleCss/stylesComponents/header.module.css"
-import { BiMessageDetail, BiBell } from "react-icons/bi"
-import { Outlet, Link } from "react-router-dom"
+import styles from "../../styleCss/stylesComponents/header.module.css";
+import { BiMessageDetail, BiBell } from "react-icons/bi";
+import { Outlet, Link } from "react-router-dom";
 
 const Header = () => {
     return (
@@ -15,7 +15,7 @@ const Header = () => {
                 <BiBell className={styles.icon2} />
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

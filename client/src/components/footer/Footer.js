@@ -1,5 +1,5 @@
-import styles from "../../styleCss/stylesComponents/footer.module.css"
-import { Outlet, Link } from "react-router-dom"
+import styles from "../../styleCss/stylesComponents/footer.module.css";
+import { Outlet, Link } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -30,7 +30,7 @@ const Footer = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Footer
+export default Footer;

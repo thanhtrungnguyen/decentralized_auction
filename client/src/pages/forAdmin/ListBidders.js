@@ -1,63 +1,63 @@
-import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin"
-import { Outlet, Link } from "react-router-dom"
-import Pagination from "@mui/material/Pagination"
-import React, { useEffect, useState } from "react"
-import { BsFillCheckSquareFill } from "react-icons/bs"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import Popup from "reactjs-popup"
-import BanedSeller from "../../components/popups/forAdmin/BanSeller"
-import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller"
+import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
+import { Outlet, Link } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import React, { useEffect, useState } from "react";
+import { BsFillCheckSquareFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Popup from "reactjs-popup";
+import BanedSeller from "../../components/popups/forAdmin/BanSeller";
+import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
 
 const ListBidders = () => {
-    const [page, setPage] = React.useState(1)
+    const [page, setPage] = React.useState(1);
 
-    const [email, setEmail] = useState(null)
-    const [data, setData] = useState([])
-    const [status, setStatus] = useState("Active")
-    const [status2, setStatus2] = useState("Baned")
-    const navigate = useNavigate()
-    const baseURL = "http://localhost:8800/api/seller/"
+    const [email, setEmail] = useState(null);
+    const [data, setData] = useState([]);
+    const [status, setStatus] = useState("Active");
+    const [status2, setStatus2] = useState("Baned");
+    const navigate = useNavigate();
+    const baseURL = "http://localhost:8800/api/seller/";
 
     useEffect(() => {
         axios.get(baseURL).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
-            setData(resp.data)
-        })
-    }, [baseURL])
+            console.log(resp.data);
+            console.log("axios get");
+            setData(resp.data);
+        });
+    }, [baseURL]);
     const handleInputChange = (e) => {
-        const { id, value } = e.target
+        const { id, value } = e.target;
         if (id === "email") {
-            setEmail(value)
+            setEmail(value);
         }
-    }
+    };
     const handleSubmit = (event) => {
-        const formData = new FormData()
+        const formData = new FormData();
 
-        formData.append("email", email)
+        formData.append("email", email);
 
         axios
             .get("http://localhost:8800/api/bidder", formData, {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-                setData(res.data)
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                setData(res.data);
 
-                navigate("/listBidders")
-            })
-        event.preventDefault()
-    }
+                navigate("/listBidders");
+            });
+        event.preventDefault();
+    };
     const handleChange = (event, value) => {
-        setPage(value)
-    }
+        setPage(value);
+    };
 
     return (
         <>
@@ -70,7 +70,15 @@ const ListBidders = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Search</p>
-                                <input id="email" className={styles.input} type="text" placeholder="Email" value={email} onChange={(e) => handleInputChange(e)} required></input>
+                                <input
+                                    id="email"
+                                    className={styles.input}
+                                    type="text"
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
                             </div>
                             <br />
                             <br />
@@ -117,13 +125,13 @@ const ListBidders = () => {
                                                         <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
                                                             <BanedSeller idSeller={bidder._id} />
                                                         </Popup>
-                                                    )
+                                                    );
                                                 } else {
                                                     return (
                                                         <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
                                                             <ActiveSeller idSeller={bidder._id} />
                                                         </Popup>
-                                                    )
+                                                    );
                                                 }
                                             })()}
                                         </td>
@@ -142,13 +150,13 @@ const ListBidders = () => {
                                                     <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
                                                         <BanedSeller idManager={123} />
                                                     </Popup>
-                                                )
+                                                );
                                             } else {
                                                 return (
                                                     <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
                                                         <ActiveSeller idManager={123} />
                                                     </Popup>
-                                                )
+                                                );
                                             }
                                         })()}
                                     </td>
@@ -166,13 +174,13 @@ const ListBidders = () => {
                                                     <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
                                                         <BanedSeller idManager={123} />
                                                     </Popup>
-                                                )
+                                                );
                                             } else {
                                                 return (
                                                     <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
                                                         <ActiveSeller idManager={123} />
                                                     </Popup>
-                                                )
+                                                );
                                             }
                                         })()}
                                     </td>
@@ -187,6 +195,6 @@ const ListBidders = () => {
                 </div>
             </form>
         </>
-    )
-}
-export default ListBidders
+    );
+};
+export default ListBidders;

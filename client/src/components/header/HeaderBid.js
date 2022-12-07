@@ -1,7 +1,7 @@
-import React from "react"
-import { ConnectButton } from "web3uikit"
+import React from "react";
+import { ConnectButton } from "web3uikit";
 
-import styles from "../../styleCss/stylesComponents/placeABid.module.css"
+import styles from "../../styleCss/stylesComponents/placeABid.module.css";
 
 const HeaderBid = () => {
     return (
@@ -10,7 +10,7 @@ const HeaderBid = () => {
 
             <ConnectButton />
         </div>
-    )
-}
+    );
+};
 
-export default HeaderBid
+export default HeaderBid;

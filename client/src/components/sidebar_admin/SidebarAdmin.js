@@ -1,6 +1,6 @@
-import styles from "../../styleCss/stylesComponents/sidebar_seller.module.css"
+import styles from "../../styleCss/stylesComponents/sidebar_seller.module.css";
 
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link } from "react-router-dom";
 
 const SidebarAdmin = () => {
     return (
@@ -34,7 +34,7 @@ const SidebarAdmin = () => {
                 <br />
             </div>
         </>
-    )
-}
+    );
+};
 
-export default SidebarAdmin
+export default SidebarAdmin;

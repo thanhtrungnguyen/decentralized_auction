@@ -1,39 +1,39 @@
-import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarSeller from "../../components/sidebar_manager/SidebarManager"
-import { Outlet, Link } from "react-router-dom"
-import React, { useEffect, useState } from "react"
-import DatePicker, { DateObject } from "react-multi-date-picker"
-import Ft from "react-multi-date-picker/plugins/range_picker_footer"
-import TimePicker from "react-multi-date-picker/plugins/analog_time_picker"
-import { useNavigate } from "react-router-dom"
-import ReactPlayer from "react-player"
-import axios from "axios"
-import { useParams } from "react-router-dom"
+import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
+import { Outlet, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
+import { useNavigate } from "react-router-dom";
+import ReactPlayer from "react-player";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
-    const { id } = useParams()
-    const [data, setData] = useState([])
+    const { id } = useParams();
+    const [data, setData] = useState([]);
 
-    const navigate = useNavigate()
-    const baseURL = "http://localhost:8800/api/property/${id}"
-    const [registrationFee, setRegistrationFee] = useState(null)
-    const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
-    const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
+    const navigate = useNavigate();
+    const baseURL = "http://localhost:8800/api/property/${id}";
+    const [registrationFee, setRegistrationFee] = useState(null);
+    const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
+    const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
     useEffect(() => {
         axios.get(baseURL).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
-            setData(resp.data)
-        })
-    }, [baseURL])
+            console.log(resp.data);
+            console.log("axios get");
+            setData(resp.data);
+        });
+    }, [baseURL]);
 
     return (
         <>
@@ -273,6 +273,6 @@ const PropertyDetail = () => {
                 </div>
             </form>
         </>
-    )
-}
-export default PropertyDetail
+    );
+};
+export default PropertyDetail;

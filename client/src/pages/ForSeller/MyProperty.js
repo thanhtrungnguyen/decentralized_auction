@@ -1,71 +1,71 @@
-import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarSeller from "../../components/sidebar_seller/SidebarSeller"
-import { Outlet, Link } from "react-router-dom"
-import Pagination from "@mui/material/Pagination"
-import React, { useEffect, useState } from "react"
-import { BsFillCheckSquareFill } from "react-icons/bs"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
+import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
+import { Outlet, Link } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import React, { useEffect, useState } from "react";
+import { BsFillCheckSquareFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const MyProperty = () => {
-    const [page, setPage] = React.useState(1)
-    const [category, setCategory] = useState("Car")
-    const [propertyName, setPropertyName] = useState(null)
-    const [listCategory, setListCategory] = useState([])
-    const [listProperty, setListProperty] = useState([])
+    const [page, setPage] = React.useState(1);
+    const [category, setCategory] = useState("Car");
+    const [propertyName, setPropertyName] = useState(null);
+    const [listCategory, setListCategory] = useState([]);
+    const [listProperty, setListProperty] = useState([]);
 
-    const navigate = useNavigate()
-    const baseURLCategory = "http://localhost:8800/api/category/"
-    const baseURLProperty = "http://localhost:8800/api/property/"
+    const navigate = useNavigate();
+    const baseURLCategory = "http://localhost:8800/api/category/";
+    const baseURLProperty = "http://localhost:8800/api/property/";
 
     useEffect(() => {
         axios.get(baseURLCategory).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
-            setListCategory(resp.data)
-        })
-    }, [baseURLCategory])
+            console.log(resp.data);
+            console.log("axios get");
+            setListCategory(resp.data);
+        });
+    }, [baseURLCategory]);
     useEffect(() => {
         axios.get(baseURLProperty, { withCredentials: true }).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
-            setListProperty(resp.data)
-        })
-    }, [baseURLProperty])
+            console.log(resp.data);
+            console.log("axios get");
+            setListProperty(resp.data);
+        });
+    }, [baseURLProperty]);
     const handleChange = (event, value) => {
-        setPage(value)
-    }
+        setPage(value);
+    };
     const handleInputChange = (e) => {
-        const { id, value } = e.target
+        const { id, value } = e.target;
         if (id === "category") {
-            setCategory(value)
+            setCategory(value);
         }
         if (id === "propertyName") {
-            setPropertyName(value)
+            setPropertyName(value);
         }
-    }
+    };
     const handleSubmit = (event) => {
-        const formData = new FormData()
+        const formData = new FormData();
 
-        formData.append("propertyName", propertyName)
-        formData.append("category", category)
+        formData.append("propertyName", propertyName);
+        formData.append("category", category);
 
         axios
             .get("http://localhost:8800/api/property", formData, {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
                 // setData(res.data);
 
                 // navigate("/myProperty");
-            })
-        event.preventDefault()
-    }
+            });
+        event.preventDefault();
+    };
     return (
         <>
             <Header />
@@ -78,10 +78,24 @@ const MyProperty = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Property Name</p>
-                                <input id="propertyName" className={styles.input} type="text" placeholder="Please input" value={propertyName} onChange={(e) => handleInputChange(e)} required></input>
+                                <input
+                                    id="propertyName"
+                                    className={styles.input}
+                                    type="text"
+                                    placeholder="Please input"
+                                    value={propertyName}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
                             </div>
                             <p className={styles.title}>Category</p>
-                            <select className={styles.select} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category" defaultValue="Car">
+                            <select
+                                className={styles.select}
+                                onChange={(e) => handleInputChange(e)}
+                                id="category"
+                                placeholder="Category"
+                                defaultValue="Car"
+                            >
                                 {listCategory.map((item) => (
                                     <option value={item.Name}>{item.Name}</option>
                                 ))}
@@ -172,7 +186,7 @@ const MyProperty = () => {
                 </div>
             </form>
         </>
-    )
-}
+    );
+};
 
-export default MyProperty
+export default MyProperty;

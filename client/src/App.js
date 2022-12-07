@@ -1,42 +1,42 @@
-import ReactDOM from "react-dom/client"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { MoralisProvider } from "react-moralis"
-import { useState } from "react"
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MoralisProvider } from "react-moralis";
+import { useState } from "react";
 
-import Homepage from "./pages/homepage/Homepage"
-import Login from "./pages/login/Login"
-import Register from "./pages/register/Register"
-import RegisterForO from "./pages/register/RegisterForOrganization"
-import ErrorPage from "./pages/errorPage/ErrorPage"
-import AuctionDetail from "./pages/auctionDetails/AuctionDetail"
-import PlaceABid from "./components/popups/PlaceABid"
-import ConfirmPayment from "./pages/confirmPayment/confirmPayment"
-import AuctionList from "./pages/auctionList/AuctionList"
-import PaymentResult from "./pages/paymentResult/PaymemtResult"
-import News from "./pages/news/News"
-import SellerCenter from "./pages/ForSeller/SellerCenter"
-import MyProperty from "./pages/ForSeller/MyProperty"
-import AddProperty from "./pages/ForSeller/AddProperty"
-import AuctionDetailForSeller from "./pages/ForSeller/AuctionDetailForSeller"
-import EnterEmail from "./pages/forgotPassword/EnterEmail"
-import ConfirmCode from "./pages/forgotPassword/ConfirmCode"
-import NewPassword from "./pages/forgotPassword/NewPassword"
-import MyAuctions from "./pages/ForSeller/MyAuctions"
-import EditAuction from "./pages/ForSeller/EditAuction"
-import EditProperty from "./pages/ForSeller/EditProperty"
-import PropertyDetail from "./pages/ForSeller/PropertyDetail"
-import AuctionsListForManager from "./pages/forManager/AuctionsListForManager"
-import ApproveAuction from "./pages/forManager/ApproveAuction"
-import ManagerCategorys from "./pages/forManager/ManageCategorys"
-import AddCategory from "./pages/forManager/AddCategory"
-import EditCategory from "./pages/forManager/EditCategory"
-import ListManagers from "./pages/forAdmin/ListManagers"
-import AddManager from "./pages/forAdmin/AddManager"
-import ListSellers from "./pages/forAdmin/ListSellers"
-import AddSeller from "./pages/forAdmin/AddSeller"
-import ListBidders from "./pages/forAdmin/ListBidders"
-import BidderDetail from "./pages/forAdmin/BidderDetail"
-import PlaceBidButton from "./pages/bidder/popup"
+import Homepage from "./pages/homepage/Homepage";
+import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
+import RegisterForO from "./pages/register/RegisterForOrganization";
+import ErrorPage from "./pages/errorPage/ErrorPage";
+import AuctionDetail from "./pages/auctionDetails/AuctionDetail";
+import PlaceABid from "./components/popups/PlaceABid";
+import ConfirmPayment from "./pages/confirmPayment/confirmPayment";
+import AuctionList from "./pages/auctionList/AuctionList";
+import PaymentResult from "./pages/paymentResult/PaymemtResult";
+import News from "./pages/news/News";
+import SellerCenter from "./pages/ForSeller/SellerCenter";
+import MyProperty from "./pages/ForSeller/MyProperty";
+import AddProperty from "./pages/ForSeller/AddProperty";
+import AuctionDetailForSeller from "./pages/ForSeller/AuctionDetailForSeller";
+import EnterEmail from "./pages/forgotPassword/EnterEmail";
+import ConfirmCode from "./pages/forgotPassword/ConfirmCode";
+import NewPassword from "./pages/forgotPassword/NewPassword";
+import MyAuctions from "./pages/ForSeller/MyAuctions";
+import EditAuction from "./pages/ForSeller/EditAuction";
+import EditProperty from "./pages/ForSeller/EditProperty";
+import PropertyDetail from "./pages/ForSeller/PropertyDetail";
+import AuctionsListForManager from "./pages/forManager/AuctionsListForManager";
+import ApproveAuction from "./pages/forManager/ApproveAuction";
+import ManagerCategorys from "./pages/forManager/ManageCategorys";
+import AddCategory from "./pages/forManager/AddCategory";
+import EditCategory from "./pages/forManager/EditCategory";
+import ListManagers from "./pages/forAdmin/ListManagers";
+import AddManager from "./pages/forAdmin/AddManager";
+import ListSellers from "./pages/forAdmin/ListSellers";
+import AddSeller from "./pages/forAdmin/AddSeller";
+import ListBidders from "./pages/forAdmin/ListBidders";
+import BidderDetail from "./pages/forAdmin/BidderDetail";
+import PlaceBidButton from "./pages/bidder/popup";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -93,7 +93,7 @@ function App() {
                 </Routes>
             </BrowserRouter>
         </MoralisProvider>
-    )
+    );
 }
 
-export default App
+export default App;

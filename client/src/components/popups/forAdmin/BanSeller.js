@@ -1,25 +1,25 @@
-import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module.css"
-import React, { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module.css";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import axios from "axios"
+import axios from "axios";
 const BanedSeller = ({ idSeller }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
-        console.log(idSeller)
+        console.log(idSeller);
         axios
             .put("http://localhost:8800/api/banedSeller", idSeller, {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-                navigate("/listSellers")
-            })
-        event.preventDefault()
-    }
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                navigate("/listSellers");
+            });
+        event.preventDefault();
+    };
     return (
         <>
             <div className={styles.container}>
@@ -34,6 +34,6 @@ const BanedSeller = ({ idSeller }) => {
                 </form>
             </div>
         </>
-    )
-}
-export default BanedSeller
+    );
+};
+export default BanedSeller;

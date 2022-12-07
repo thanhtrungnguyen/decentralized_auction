@@ -1,5 +1,5 @@
-import styles from "../../styleCss/stylesComponents/header.module.css"
-import { Outlet, Link } from "react-router-dom"
+import styles from "../../styleCss/stylesComponents/header.module.css";
+import { Outlet, Link } from "react-router-dom";
 
 const Header = () => {
     return (
@@ -17,7 +17,7 @@ const Header = () => {
                 </Link>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

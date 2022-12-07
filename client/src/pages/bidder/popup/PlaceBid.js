@@ -1,10 +1,10 @@
-import React from "react"
-import styles from "../../../styleCss/stylesComponents/placeABid.module.css"
-import ConfirmPayment from "../../../pages/confirmPayment/confirmPayment"
-import { Outlet, Link } from "react-router-dom"
+import React from "react";
+import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
+import ConfirmPayment from "../../../pages/confirmPayment/confirmPayment";
+import { Outlet, Link } from "react-router-dom";
 // import { Button } from "@web3uikit/core"
-import { ConnectButton } from "web3uikit"
-import HeaderBid from "../../../components/header/HeaderBid"
+import { ConnectButton } from "web3uikit";
+import HeaderBid from "../../../components/header/HeaderBid";
 const PlaceBid = () => {
     // const myFunction = () => {
     //   let x = document.getElementById("trans");
@@ -89,7 +89,7 @@ const PlaceBid = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default PlaceBid
+export default PlaceBid;

@@ -1,9 +1,9 @@
-import { Outlet, Link } from "react-router-dom"
-import Header from "../../components/header/HeaderUser"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import styles from "../../styleCss/stylesPages/news.module.css"
-import { BsPencil, BsCalendar3, BsSearch } from "react-icons/bs"
+import { Outlet, Link } from "react-router-dom";
+import Header from "../../components/header/HeaderUser";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import styles from "../../styleCss/stylesPages/news.module.css";
+import { BsPencil, BsCalendar3, BsSearch } from "react-icons/bs";
 
 const News = () => {
     return (
@@ -102,6 +102,6 @@ const News = () => {
 
             <Footer />
         </>
-    )
-}
-export default News
+    );
+};
+export default News;

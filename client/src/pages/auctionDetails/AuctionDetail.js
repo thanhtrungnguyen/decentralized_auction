@@ -1,24 +1,24 @@
-import Header from "../../components/header/HeaderUser"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import styles from "../../styleCss/auctionDetail.module.css"
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import { useParams } from "react-router-dom"
-import Popup from "reactjs-popup"
-import PlaceABid from "../../components/popups/PlaceABid"
-import useFetch from "../../hook/useFetch"
-import ReactPlayer from "react-player"
-import { Player } from "video-react"
+import Header from "../../components/header/HeaderUser";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import styles from "../../styleCss/auctionDetail.module.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import Popup from "reactjs-popup";
+import PlaceABid from "../../components/popups/PlaceABid";
+import useFetch from "../../hook/useFetch";
+import ReactPlayer from "react-player";
+import { Player } from "video-react";
 
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
-    const { id } = useParams()
-    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}`
-    const { data, loading, error } = useFetch(baseURL)
+    const { id } = useParams();
+    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}`;
+    const { data, loading, error } = useFetch(baseURL);
 
-    console.log(data)
-    console.log(loading)
+    console.log(data);
+    console.log(loading);
     return loading ? (
         "loading please wait"
     ) : (
@@ -35,7 +35,11 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`} alt="images" />
+                            <img
+                                className={styles.img}
+                                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`}
+                                alt="images"
+                            />
                         </div>
                         <div className={styles.row}>
                             {/* <img
@@ -43,7 +47,11 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`} alt="images" />
+                            <img
+                                className={styles.img}
+                                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`}
+                                alt="images"
+                            />
                         </div>
                         <div className={styles.row}>
                             {/* <img
@@ -51,7 +59,11 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[2].Name}`} alt="images" />
+                            <img
+                                className={styles.img}
+                                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[2].Name}`}
+                                alt="images"
+                            />
                         </div>
                     </div>
                     {/* </div> */}
@@ -144,7 +156,7 @@ const AuctionDetail = () => {
             </div>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default AuctionDetail
+export default AuctionDetail;

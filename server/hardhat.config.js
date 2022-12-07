@@ -1,20 +1,20 @@
-require("@nomiclabs/hardhat-waffle")
-require("@nomiclabs/hardhat-etherscan")
-require("hardhat-deploy")
-require("solidity-coverage")
-require("hardhat-gas-reporter")
-require("hardhat-contract-sizer")
-require("dotenv").config()
+require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
+require("hardhat-deploy");
+require("solidity-coverage");
+require("hardhat-gas-reporter");
+require("hardhat-contract-sizer");
+require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 
-const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || process.env.ALCHEMY_MAINNET_RPC_URL
-const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL
-const POLYGON_MAINNET_RPC_URL = process.env.POLYGON_MAINNET_RPC_URL
-const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x"
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY
-const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY
-const REPORT_GAS = process.env.REPORT_GAS
+const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || process.env.ALCHEMY_MAINNET_RPC_URL;
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
+const POLYGON_MAINNET_RPC_URL = process.env.POLYGON_MAINNET_RPC_URL;
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x";
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
+const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY;
+const REPORT_GAS = process.env.REPORT_GAS;
 
 module.exports = {
     defaultNetwork: "hardhat",
@@ -91,4 +91,4 @@ module.exports = {
     mocha: {
         timeout: 200000, // 200 seconds max for running tests
     },
-}
+};

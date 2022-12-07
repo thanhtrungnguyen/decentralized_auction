@@ -1,62 +1,62 @@
-import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarSeller from "../../components/sidebar_seller/SidebarSeller"
-import { Outlet, Link } from "react-router-dom"
-import Pagination from "@mui/material/Pagination"
-import React, { useEffect, useState } from "react"
-import { BsFillCheckSquareFill } from "react-icons/bs"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
+import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
+import { Outlet, Link } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import React, { useEffect, useState } from "react";
+import { BsFillCheckSquareFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const MyAuctions = () => {
-    const [page, setPage] = React.useState(1)
-    const [cagetory, setCategory] = useState("Car")
-    const [propertyName, setPropertyName] = useState(null)
-    const [data, setData] = useState([])
-    const navigate = useNavigate()
-    const baseURL = "http://localhost:8800/api/auction/"
+    const [page, setPage] = React.useState(1);
+    const [cagetory, setCategory] = useState("Car");
+    const [propertyName, setPropertyName] = useState(null);
+    const [data, setData] = useState([]);
+    const navigate = useNavigate();
+    const baseURL = "http://localhost:8800/api/auction/";
 
     useEffect(() => {
         axios.get(baseURL).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
-            setData(resp.data)
-        })
-    }, [baseURL])
+            console.log(resp.data);
+            console.log("axios get");
+            setData(resp.data);
+        });
+    }, [baseURL]);
     const handleInputChange = (e) => {
-        const { id, value } = e.target
+        const { id, value } = e.target;
         if (id === "cagetory") {
-            setCategory(value)
+            setCategory(value);
         }
         if (id === "propertyName") {
-            setPropertyName(value)
+            setPropertyName(value);
         }
-    }
+    };
     const handleSubmit = (event) => {
-        const formData = new FormData()
+        const formData = new FormData();
 
-        formData.append("propertyName", propertyName)
-        formData.append("cagetory", cagetory)
+        formData.append("propertyName", propertyName);
+        formData.append("cagetory", cagetory);
 
         axios
             .get("http://localhost:8800/api/auction", formData, {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-                setData(res.data)
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                setData(res.data);
 
-                navigate("/myProperty")
-            })
-        event.preventDefault()
-    }
+                navigate("/myProperty");
+            });
+        event.preventDefault();
+    };
     const handleChange = (event, value) => {
-        setPage(value)
-    }
+        setPage(value);
+    };
     return (
         <>
             <Header />
@@ -68,10 +68,24 @@ const MyAuctions = () => {
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Property Name</p>
-                                <input id="propertyName" className={styles.input} type="text" placeholder="Please input" value={propertyName} onChange={(e) => handleInputChange(e)} required></input>
+                                <input
+                                    id="propertyName"
+                                    className={styles.input}
+                                    type="text"
+                                    placeholder="Please input"
+                                    value={propertyName}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
                             </div>
                             <p className={styles.title}>Category</p>
-                            <select className={styles.select} onChange={(e) => handleInputChange(e)} id="cagetory" placeholder="Category" defaultValue="Car">
+                            <select
+                                className={styles.select}
+                                onChange={(e) => handleInputChange(e)}
+                                id="cagetory"
+                                placeholder="Category"
+                                defaultValue="Car"
+                            >
                                 {data.map((property) => (
                                     <option value={property.category}>{property.category}</option>
                                 ))}
@@ -153,6 +167,6 @@ const MyAuctions = () => {
                 </div>
             </form>
         </>
-    )
-}
-export default MyAuctions
+    );
+};
+export default MyAuctions;

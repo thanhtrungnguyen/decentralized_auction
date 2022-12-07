@@ -1,7 +1,7 @@
-import React from "react"
-import styles from "../../styleCss/stylesPages/confirmPayment.module.css"
-import { IoReturnUpBackOutline } from "react-icons/io5"
-import { FaEthereum } from "react-icons/fa"
+import React from "react";
+import styles from "../../styleCss/stylesPages/confirmPayment.module.css";
+import { IoReturnUpBackOutline } from "react-icons/io5";
+import { FaEthereum } from "react-icons/fa";
 const ConfirmPayment = () => {
     return (
         <>
@@ -25,6 +25,6 @@ const ConfirmPayment = () => {
                 <button className={styles.btn}>Insufficient Balance</button>
             </div>
         </>
-    )
-}
-export default ConfirmPayment
+    );
+};
+export default ConfirmPayment;

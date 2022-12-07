@@ -1,25 +1,25 @@
-import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module.css"
-import React, { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module.css";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import axios from "axios"
+import axios from "axios";
 const BanedManager = ({ idManager }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
-        console.log(idManager)
+        console.log(idManager);
         axios
             .put("http://localhost:8800/api/banedManager", idManager, {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-                navigate("/listManagers")
-            })
-        event.preventDefault()
-    }
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                navigate("/listManagers");
+            });
+        event.preventDefault();
+    };
     return (
         <>
             <div className={styles.container}>
@@ -34,6 +34,6 @@ const BanedManager = ({ idManager }) => {
                 </form>
             </div>
         </>
-    )
-}
-export default BanedManager
+    );
+};
+export default BanedManager;

@@ -1,99 +1,99 @@
-import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarSeller from "../../components/sidebar_seller/SidebarSeller"
-import { Outlet, Link } from "react-router-dom"
-import React, { useEffect, useState } from "react"
-import DatePicker, { DateObject } from "react-multi-date-picker"
-import Ft from "react-multi-date-picker/plugins/range_picker_footer"
-import TimePicker from "react-multi-date-picker/plugins/analog_time_picker"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
+import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
+import { Outlet, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AddProperty = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
-    const [propertyImage, setPropertyImage] = useState(null)
-    const [propertyVideo, setPropertyVideo] = useState(null)
-    const [propertyName, setPropertyName] = useState(null)
-    const [category, setCategory] = useState("Chair")
-    const [propertyDescription, setPropertyDescription] = useState(null)
-    const [startBid, setStartBid] = useState(null)
-    const [deposit, setDeposit] = useState(null)
-    const [priceStep, setPriceStep] = useState(null)
-    const [placeViewProperty, setPlaceViewProperty] = useState(null)
+    const [propertyImage, setPropertyImage] = useState(null);
+    const [propertyVideo, setPropertyVideo] = useState(null);
+    const [propertyName, setPropertyName] = useState(null);
+    const [category, setCategory] = useState("Chair");
+    const [propertyDescription, setPropertyDescription] = useState(null);
+    const [startBid, setStartBid] = useState(null);
+    const [deposit, setDeposit] = useState(null);
+    const [priceStep, setPriceStep] = useState(null);
+    const [placeViewProperty, setPlaceViewProperty] = useState(null);
     // const [startBid, setStartBid] = useState(null);
-    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
+    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
 
-    const navigate = useNavigate()
-    const baseURL = "http://localhost:8800/api/category/"
+    const navigate = useNavigate();
+    const baseURL = "http://localhost:8800/api/category/";
 
     useEffect(() => {
         axios.get(baseURL).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
+            console.log(resp.data);
+            console.log("axios get");
 
-            setData(resp.data)
-        })
-    }, [baseURL])
+            setData(resp.data);
+        });
+    }, [baseURL]);
 
     const handleInputChange = (e) => {
-        const { id, value } = e.target
+        const { id, value } = e.target;
         if (id === "propertyImage") {
-            setPropertyImage(e.target.files)
+            setPropertyImage(e.target.files);
         }
         if (id === "propertyVideo") {
-            setPropertyVideo(value)
+            setPropertyVideo(value);
         }
         if (id === "propertyName") {
-            setPropertyName(value)
+            setPropertyName(value);
         }
         if (id === "category") {
-            setCategory(value)
+            setCategory(value);
         }
         if (id === "propertyDescription") {
-            setPropertyDescription(value)
+            setPropertyDescription(value);
         }
         if (id === "startBid") {
-            setStartBid(value)
+            setStartBid(value);
         }
         if (id === "deposit") {
-            setDeposit(value)
+            setDeposit(value);
         }
         if (id === "priceStep") {
-            setPriceStep(value)
+            setPriceStep(value);
         }
         if (id === "placeViewProperty") {
-            setPlaceViewProperty(value)
+            setPlaceViewProperty(value);
         }
         // if (id === "startBid") {
         //   setStartBid(value);
         // }
         if (id === "viewPropertyTime") {
-            setViewPropertyTime(value)
+            setViewPropertyTime(value);
         }
-    }
+    };
 
     const handleSubmit = (event) => {
-        const formData = new FormData()
+        const formData = new FormData();
         for (let i = 0; i < propertyImage.length; i++) {
-            formData.append(`propertyImage${i}`, propertyImage[i])
+            formData.append(`propertyImage${i}`, propertyImage[i]);
         }
-        formData.append("propertyVideo", propertyVideo)
-        formData.append("propertyName", propertyName)
-        formData.append("category", category)
-        formData.append("propertyDescription", propertyDescription)
-        formData.append("viewPropertyTime", viewPropertyTime)
-        formData.append("startBid", startBid)
-        formData.append("deposit", deposit)
-        formData.append("priceStep", priceStep)
-        formData.append("placeViewProperty", placeViewProperty)
-        console.log(formData)
+        formData.append("propertyVideo", propertyVideo);
+        formData.append("propertyName", propertyName);
+        formData.append("category", category);
+        formData.append("propertyDescription", propertyDescription);
+        formData.append("viewPropertyTime", viewPropertyTime);
+        formData.append("startBid", startBid);
+        formData.append("deposit", deposit);
+        formData.append("priceStep", priceStep);
+        formData.append("placeViewProperty", placeViewProperty);
+        console.log(formData);
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
         axios
@@ -101,11 +101,11 @@ const AddProperty = () => {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-                navigate("/myProperty")
-            })
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                navigate("/myProperty");
+            });
         // for (const [key, value] of formData) {
         //   alert(key + ": " + value);
         // }
@@ -126,8 +126,8 @@ const AddProperty = () => {
         // " " +
         // biddingPreiod
         // );
-        event.preventDefault()
-    }
+        event.preventDefault();
+    };
     return (
         <>
             <Header />
@@ -152,19 +152,70 @@ const AddProperty = () => {
                                 <p className={styles.lable}>Property Description</p>
                             </div>
                             <div className={styles.col2}>
-                                <input className={styles.inputImg} id="propertyImage" onChange={(e) => handleInputChange(e)} type="file" multiple required></input>
+                                <input
+                                    className={styles.inputImg}
+                                    id="propertyImage"
+                                    onChange={(e) => handleInputChange(e)}
+                                    type="file"
+                                    multiple
+                                    required
+                                ></input>
                                 <br />
-                                <input className={styles.inputText} type="text" id="propertyVideo" onChange={(e) => handleInputChange(e)} required></input>
-                                <input id="propertyName" type="text" placeholder="Enter Property Name" className={styles.inputText} value={propertyName} onChange={(e) => handleInputChange(e)} required></input>
+                                <input
+                                    className={styles.inputText}
+                                    type="text"
+                                    id="propertyVideo"
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
+                                <input
+                                    id="propertyName"
+                                    type="text"
+                                    placeholder="Enter Property Name"
+                                    className={styles.inputText}
+                                    value={propertyName}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
 
-                                <select className={styles.drop} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category" defaultValue="Chair">
+                                <select
+                                    className={styles.drop}
+                                    onChange={(e) => handleInputChange(e)}
+                                    id="category"
+                                    placeholder="Category"
+                                    defaultValue="Chair"
+                                >
                                     {data.map((item) => (
                                         <option value={item.Name}>{item.Name}</option>
                                     ))}
                                 </select>
-                                <input id="startBid" type="number" placeholder="Enter Start Bid" className={styles.inputText} value={startBid} onChange={(e) => handleInputChange(e)} required></input>
-                                <input id="deposit" type="text" placeholder="Enter Deposit" className={styles.inputText} value={deposit} onChange={(e) => handleInputChange(e)} required></input>
-                                <input id="priceStep" type="number" placeholder="Enter Price Step" className={styles.inputText} value={priceStep} onChange={(e) => handleInputChange(e)} required></input>
+                                <input
+                                    id="startBid"
+                                    type="number"
+                                    placeholder="Enter Start Bid"
+                                    className={styles.inputText}
+                                    value={startBid}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
+                                <input
+                                    id="deposit"
+                                    type="text"
+                                    placeholder="Enter Deposit"
+                                    className={styles.inputText}
+                                    value={deposit}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
+                                <input
+                                    id="priceStep"
+                                    type="number"
+                                    placeholder="Enter Price Step"
+                                    className={styles.inputText}
+                                    value={priceStep}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
                                 <input
                                     id="placeViewProperty"
                                     type="text"
@@ -188,7 +239,13 @@ const AddProperty = () => {
                                         plugins={[<TimePicker />]}
                                     />
                                 </div>
-                                <textarea id="propertyDescription" value={propertyDescription} className={styles.textarea} onChange={(e) => handleInputChange(e)} required></textarea>
+                                <textarea
+                                    id="propertyDescription"
+                                    value={propertyDescription}
+                                    className={styles.textarea}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></textarea>
                             </div>
                         </div>
                     </div>
@@ -237,6 +294,6 @@ const AddProperty = () => {
                 </div>
             </form>
         </>
-    )
-}
-export default AddProperty
+    );
+};
+export default AddProperty;

@@ -1,6 +1,6 @@
-import styles from "../../styleCss/stylesComponents/sidebar_seller.module.css"
+import styles from "../../styleCss/stylesComponents/sidebar_seller.module.css";
 
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link } from "react-router-dom";
 
 const SidebarSeller = () => {
     return (
@@ -49,7 +49,7 @@ const SidebarSeller = () => {
                 <p className={styles.title}>Help</p>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default SidebarSeller
+export default SidebarSeller;

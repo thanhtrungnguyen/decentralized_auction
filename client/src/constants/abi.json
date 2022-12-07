@@ -1,1 +1,244 @@
-[{"type":"error","name":"Auction__ConfirmationTimeout","inputs":[]},{"type":"error","name":"Auction__InvalidAuctionId","inputs":[]},{"type":"error","name":"Auction__InvalidAuctionTime","inputs":[]},{"type":"error","name":"Auction__InvalidBidAmount","inputs":[]},{"type":"error","name":"Auction__InvalidDepositAmount","inputs":[]},{"type":"error","name":"Auction__InvalidDuePaymentTime","inputs":[]},{"type":"error","name":"Auction__InvalidPriceStep","inputs":[]},{"type":"error","name":"Auction__InvalidRegistrationFee","inputs":[]},{"type":"error","name":"Auction__InvalidRegistrationTime","inputs":[]},{"type":"error","name":"Auction__InvalidStartAuctionTime","inputs":[]},{"type":"error","name":"Auction__InvalidStartBid","inputs":[]},{"type":"error","name":"Auction__NotExistAuctionId","inputs":[]},{"type":"error","name":"Auction__NotRegisteredBidder","inputs":[]},{"type":"error","name":"Auction__NotWinnerOfAuction","inputs":[]},{"type":"error","name":"Auction__OutOfAuctionTime","inputs":[]},{"type":"error","name":"Auction__OutOfRegistrationTime","inputs":[]},{"type":"error","name":"Auction__RequireAmountToPaymentNotMet","inputs":[{"type":"uint256","name":"auctionId"},{"type":"uint256","name":"requirePaymentAmount"}]},{"type":"error","name":"Auction__RequireAmountToRegisterNotMet","inputs":[{"type":"uint256","name":"auctionId"},{"type":"uint256","name":"requireAmountToRegister"}]},{"type":"event","anonymous":false,"name":"CanceledAuctionResult","inputs":[{"type":"uint256","name":"auctionId","indexed":false},{"type":"address","name":"bidder","indexed":false},{"type":"uint8","name":"bidderState","indexed":false}]},{"type":"event","anonymous":false,"name":"ClosedAuction","inputs":[{"type":"uint256","name":"auctionId","indexed":false}]},{"type":"event","anonymous":false,"name":"ClosedAuctionSucessfully","inputs":[{"type":"uint256","name":"auctionId","indexed":false},{"type":"address","name":"bidder","indexed":false},{"type":"uint256","name":"paidAmount","indexed":false}]},{"type":"event","anonymous":false,"name":"CreatedAuction","inputs":[{"type":"uint256","name":"auctionId","indexed":false},{"type":"uint256","name":"startRegistrationTime","indexed":false},{"type":"uint256","name":"endRegistrationTime","indexed":false},{"type":"uint256","name":"startAuctionTime","indexed":false},{"type":"uint256","name":"endAuctionTime","indexed":false},{"type":"uint256","name":"duePaymentTime","indexed":false},{"type":"uint256","name":"registrationFee","indexed":false},{"type":"uint256","name":"depositAmount","indexed":false},{"type":"uint256","name":"startBid","indexed":false},{"type":"uint256","name":"priceStep","indexed":false}]},{"type":"event","anonymous":false,"name":"PlacedBid","inputs":[{"type":"uint256","name":"auctionId","indexed":false},{"type":"address","name":"bidder","indexed":false},{"type":"uint256","name":"bidAmount","indexed":false}]},{"type":"event","anonymous":false,"name":"RegisteredToBid","inputs":[{"type":"uint256","name":"auctionId","indexed":false},{"type":"address","name":"bidder","indexed":false},{"type":"uint8","name":"bidderState","indexed":false}]},{"type":"event","anonymous":false,"name":"Withdrew","inputs":[{"type":"uint256","name":"auctionId","indexed":false},{"type":"address","name":"bidder","indexed":false}]},{"type":"function","name":"cancelAuctionResult","constant":false,"stateMutability":"payable","payable":true,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[]},{"type":"function","name":"closeAuction","constant":false,"payable":false,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[]},{"type":"function","name":"createAuction","constant":false,"stateMutability":"payable","payable":true,"inputs":[{"type":"uint256","name":"auctionId"},{"type":"uint256","name":"startRegistrationTime"},{"type":"uint256","name":"endRegistrationTime"},{"type":"uint256","name":"startAuctionTime"},{"type":"uint256","name":"endAuctionTime"},{"type":"uint256","name":"duePaymentTime"},{"type":"uint256","name":"registrationFee"},{"type":"uint256","name":"depositAmount"},{"type":"uint256","name":"startBid"},{"type":"uint256","name":"priceStep"}],"outputs":[]},{"type":"function","name":"getBidInformationByAuctionId","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[{"type":"tuple[]","components":[{"type":"address","name":"bidder"},{"type":"uint256","name":"bidAmount"},{"type":"uint8","name":"bidderState"}]}]},{"type":"function","name":"getHightestBidOfAuction","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getIndexOfBidder","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getIndexOfHighestBidOfAuction","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getIndexOfSecondWinnerOfAuction","constant":false,"payable":false,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getListAuctionId","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"uint256[]"}]},{"type":"function","name":"getListAuctionInformationById","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[{"type":"tuple","components":[{"type":"uint256","name":"startRegistrationTime"},{"type":"uint256","name":"endRegistrationTime"},{"type":"uint256","name":"startAuctionTime"},{"type":"uint256","name":"endAuctionTime"},{"type":"uint256","name":"duePaymentTime"},{"type":"uint256","name":"registrationFee"},{"type":"uint256","name":"depositAmount"},{"type":"uint256","name":"startBid"},{"type":"uint256","name":"priceStep"}]}]},{"type":"function","name":"payment","constant":false,"stateMutability":"payable","payable":true,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[]},{"type":"function","name":"placeBid","constant":false,"stateMutability":"payable","payable":true,"inputs":[{"type":"uint256","name":"auctionId"},{"type":"uint256","name":"bidAmount"}],"outputs":[]},{"type":"function","name":"registerToBid","constant":false,"stateMutability":"payable","payable":true,"inputs":[{"type":"uint256","name":"auctionId"}],"outputs":[]}]
+[
+    { "type": "error", "name": "Auction__ConfirmationTimeout", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidAuctionId", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidAuctionTime", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidBidAmount", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidDepositAmount", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidDuePaymentTime", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidPriceStep", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidRegistrationFee", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidRegistrationTime", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidStartAuctionTime", "inputs": [] },
+    { "type": "error", "name": "Auction__InvalidStartBid", "inputs": [] },
+    { "type": "error", "name": "Auction__NotExistAuctionId", "inputs": [] },
+    { "type": "error", "name": "Auction__NotRegisteredBidder", "inputs": [] },
+    { "type": "error", "name": "Auction__NotWinnerOfAuction", "inputs": [] },
+    { "type": "error", "name": "Auction__OutOfAuctionTime", "inputs": [] },
+    { "type": "error", "name": "Auction__OutOfRegistrationTime", "inputs": [] },
+    {
+        "type": "error",
+        "name": "Auction__RequireAmountToPaymentNotMet",
+        "inputs": [
+            { "type": "uint256", "name": "auctionId" },
+            { "type": "uint256", "name": "requirePaymentAmount" }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Auction__RequireAmountToRegisterNotMet",
+        "inputs": [
+            { "type": "uint256", "name": "auctionId" },
+            { "type": "uint256", "name": "requireAmountToRegister" }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "CanceledAuctionResult",
+        "inputs": [
+            { "type": "uint256", "name": "auctionId", "indexed": false },
+            { "type": "address", "name": "bidder", "indexed": false },
+            { "type": "uint8", "name": "bidderState", "indexed": false }
+        ]
+    },
+    { "type": "event", "anonymous": false, "name": "ClosedAuction", "inputs": [{ "type": "uint256", "name": "auctionId", "indexed": false }] },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "ClosedAuctionSucessfully",
+        "inputs": [
+            { "type": "uint256", "name": "auctionId", "indexed": false },
+            { "type": "address", "name": "bidder", "indexed": false },
+            { "type": "uint256", "name": "paidAmount", "indexed": false }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "CreatedAuction",
+        "inputs": [
+            { "type": "uint256", "name": "auctionId", "indexed": false },
+            { "type": "uint256", "name": "startRegistrationTime", "indexed": false },
+            { "type": "uint256", "name": "endRegistrationTime", "indexed": false },
+            { "type": "uint256", "name": "startAuctionTime", "indexed": false },
+            { "type": "uint256", "name": "endAuctionTime", "indexed": false },
+            { "type": "uint256", "name": "duePaymentTime", "indexed": false },
+            { "type": "uint256", "name": "registrationFee", "indexed": false },
+            { "type": "uint256", "name": "depositAmount", "indexed": false },
+            { "type": "uint256", "name": "startBid", "indexed": false },
+            { "type": "uint256", "name": "priceStep", "indexed": false }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "PlacedBid",
+        "inputs": [
+            { "type": "uint256", "name": "auctionId", "indexed": false },
+            { "type": "address", "name": "bidder", "indexed": false },
+            { "type": "uint256", "name": "bidAmount", "indexed": false }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "RegisteredToBid",
+        "inputs": [
+            { "type": "uint256", "name": "auctionId", "indexed": false },
+            { "type": "address", "name": "bidder", "indexed": false },
+            { "type": "uint8", "name": "bidderState", "indexed": false }
+        ]
+    },
+    {
+        "type": "event",
+        "anonymous": false,
+        "name": "Withdrew",
+        "inputs": [
+            { "type": "uint256", "name": "auctionId", "indexed": false },
+            { "type": "address", "name": "bidder", "indexed": false }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "cancelAuctionResult",
+        "constant": false,
+        "stateMutability": "payable",
+        "payable": true,
+        "inputs": [{ "type": "uint256", "name": "auctionId" }],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "closeAuction",
+        "constant": false,
+        "payable": false,
+        "inputs": [{ "type": "uint256", "name": "auctionId" }],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "createAuction",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+            { "type": "uint256", "name": "auctionId" },
+            { "type": "uint256", "name": "startRegistrationTime" },
+            { "type": "uint256", "name": "endRegistrationTime" },
+            { "type": "uint256", "name": "startAuctionTime" },
+            { "type": "uint256", "name": "endAuctionTime" },
+            { "type": "uint256", "name": "duePaymentTime" },
+            { "type": "uint256", "name": "registrationFee" },
+            { "type": "uint256", "name": "depositAmount" },
+            { "type": "uint256", "name": "startBid" },
+            { "type": "uint256", "name": "priceStep" }
+        ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "getAuctionInformationById",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [{ "type": "uint256", "name": "auctionId" }],
+        "outputs": [
+            {
+                "type": "tuple",
+                "components": [
+                    { "type": "uint256", "name": "startRegistrationTime" },
+                    { "type": "uint256", "name": "endRegistrationTime" },
+                    { "type": "uint256", "name": "startAuctionTime" },
+                    { "type": "uint256", "name": "endAuctionTime" },
+                    { "type": "uint256", "name": "duePaymentTime" },
+                    { "type": "uint256", "name": "registrationFee" },
+                    { "type": "uint256", "name": "depositAmount" },
+                    { "type": "uint256", "name": "startBid" },
+                    { "type": "uint256", "name": "priceStep" }
+                ]
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "getBidInformationByAuctionId",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [{ "type": "uint256", "name": "auctionId" }],
+        "outputs": [
+            {
+                "type": "tuple[]",
+                "components": [
+                    { "type": "address", "name": "bidder" },
+                    { "type": "uint256", "name": "bidAmount" },
+                    { "type": "uint8", "name": "bidderState" }
+                ]
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "name": "getHightestBidOfAuction",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [{ "type": "uint256", "name": "auctionId" }],
+        "outputs": [{ "type": "uint256" }]
+    },
+    {
+        "type": "function",
+        "name": "getIndexOfHighestBidOfAuction",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [{ "type": "uint256", "name": "auctionId" }],
+        "outputs": [{ "type": "uint256" }]
+    },
+    {
+        "type": "function",
+        "name": "getIndexOfSecondWinnerOfAuction",
+        "constant": false,
+        "payable": false,
+        "inputs": [{ "type": "uint256", "name": "auctionId" }],
+        "outputs": [{ "type": "uint256" }]
+    },
+    {
+        "type": "function",
+        "name": "getListAuctionId",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [{ "type": "uint256[]" }]
+    },
+    {
+        "type": "function",
+        "name": "payment",
+        "constant": false,
+        "stateMutability": "payable",
+        "payable": true,
+        "inputs": [{ "type": "uint256", "name": "auctionId" }],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "placeBid",
+        "constant": false,
+        "stateMutability": "payable",
+        "payable": true,
+        "inputs": [
+            { "type": "uint256", "name": "auctionId" },
+            { "type": "uint256", "name": "bidAmount" }
+        ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "registerToBid",
+        "constant": false,
+        "stateMutability": "payable",
+        "payable": true,
+        "inputs": [{ "type": "uint256", "name": "auctionId" }],
+        "outputs": []
+    }
+]

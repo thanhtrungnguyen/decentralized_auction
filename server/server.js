@@ -1,36 +1,36 @@
-const express = require("express")
-const mongoose = require("mongoose")
-const dotenv = require("dotenv")
-const cors = require("cors")
-const cookieParser = require("cookie-parser")
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
-const authRoute = require("./routers/auth.js")
-const userRoute = require("./routers/users.js")
-const accountRoute = require("./routers/accounts.js")
-const auctionRoute = require("./routers/auctions.js")
-const propertyRoute = require("./routers/properties.js")
-const categoryRoute = require("./routers/categories.js")
+const authRoute = require("./routers/auth.js");
+const userRoute = require("./routers/users.js");
+const accountRoute = require("./routers/accounts.js");
+const auctionRoute = require("./routers/auctions.js");
+const propertyRoute = require("./routers/properties.js");
+const categoryRoute = require("./routers/categories.js");
 
-const multer = require("multer")
+const multer = require("multer");
 
 // config app
-const app = express()
+const app = express();
 
 //config library
-const PORT = 8800
-dotenv.config()
-app.use(cookieParser())
+const PORT = 8800;
+dotenv.config();
+app.use(cookieParser());
 app.use(
     cors({
         origin: ["http://localhost:3000"],
         credentials: true,
     })
-)
-app.use(express.json())
+);
+app.use(express.json());
 // app.use(express.urlencoded({
 //   extended:true
 // }))
-const upload = multer({ dest: "uploads/" })
+const upload = multer({ dest: "uploads/" });
 
 // //connect DB
 // const connectDB = async () => {
@@ -46,13 +46,13 @@ const upload = multer({ dest: "uploads/" })
 //connect MONGO_DB_SYNC_BLOCKCHAIN
 const connectSyncBlockchainDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_DB_SYNC_BLOCKCHAIN)
-        console.log("MongoDB Sync with Blockchain connected")
+        await mongoose.connect(process.env.MONGO_DB_SYNC_BLOCKCHAIN);
+        console.log("MongoDB Sync with Blockchain connected");
     } catch (error) {
-        console.log(error)
-        process.exit(1)
+        console.log(error);
+        process.exit(1);
     }
-}
+};
 
 // // network DB disconnected
 // mongoose.connection.on("disconnected", () => {
@@ -101,12 +101,12 @@ const connectSyncBlockchainDB = async () => {
 
 //connect salesforce
 
-app.use("/api/auth", authRoute)
-app.use("/api/user", userRoute)
-app.use("/api/property", propertyRoute)
-app.use("/api/auction", auctionRoute)
-app.use("/api/account", accountRoute)
-app.use("/api/category", categoryRoute)
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
+app.use("/api/property", propertyRoute);
+app.use("/api/auction", auctionRoute);
+app.use("/api/account", accountRoute);
+app.use("/api/category", categoryRoute);
 
 // app.get('/Account/getAllAccount', (req, res) => {
 //   conn.query("Select Id, Name, Phone, NumberOfEmployees from Account", (err, result) => {
@@ -120,5 +120,5 @@ app.use("/api/category", categoryRoute)
 // })
 app.listen(PORT, () => {
     // connect();
-    console.log("Connected to backend.")
-})
+    console.log("Connected to backend.");
+});

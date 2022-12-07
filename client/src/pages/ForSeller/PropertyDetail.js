@@ -1,49 +1,49 @@
-import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarSeller from "../../components/sidebar_seller/SidebarSeller"
-import { Outlet, Link } from "react-router-dom"
-import React, { useEffect, useState } from "react"
-import DatePicker, { DateObject } from "react-multi-date-picker"
-import Ft from "react-multi-date-picker/plugins/range_picker_footer"
-import TimePicker from "react-multi-date-picker/plugins/analog_time_picker"
-import { useNavigate } from "react-router-dom"
-import ReactPlayer from "react-player"
-import axios from "axios"
-import { useParams } from "react-router-dom"
+import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
+import { Outlet, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
+import { useNavigate } from "react-router-dom";
+import ReactPlayer from "react-player";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
-    const { id } = useParams()
+    const { id } = useParams();
 
-    const baseURL = `http://localhost:8800/api/property/${id}`
+    const baseURL = `http://localhost:8800/api/property/${id}`;
 
     useEffect(() => {
         axios.get(baseURL).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
-            setData(resp.data)
-        })
-    }, [baseURL])
-    const [propertyImage, setPropertyImage] = useState(null)
-    const [propertyVideo, setPropertyVideo] = useState(null)
-    const [propertyName, setPropertyName] = useState(null)
-    const [cagetory, setCategory] = useState("Car")
-    const [propertyDescription, setPropertyDescription] = useState(null)
-    const [startBid, setStartBid] = useState(null)
-    const [deposit, setDeposit] = useState(null)
-    const [priceStep, setPriceStep] = useState(null)
-    const [placeViewProperty, setPlaceViewProperty] = useState(null)
+            console.log(resp.data);
+            console.log("axios get");
+            setData(resp.data);
+        });
+    }, [baseURL]);
+    const [propertyImage, setPropertyImage] = useState(null);
+    const [propertyVideo, setPropertyVideo] = useState(null);
+    const [propertyName, setPropertyName] = useState(null);
+    const [cagetory, setCategory] = useState("Car");
+    const [propertyDescription, setPropertyDescription] = useState(null);
+    const [startBid, setStartBid] = useState(null);
+    const [deposit, setDeposit] = useState(null);
+    const [priceStep, setPriceStep] = useState(null);
+    const [placeViewProperty, setPlaceViewProperty] = useState(null);
     // const [startBid, setStartBid] = useState(null);
-    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)])
+    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <>
@@ -83,14 +83,26 @@ const PropertyDetail = () => {
                   src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
-                                <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`} alt="images" />
+                                <img
+                                    className={styles.img}
+                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
+                                    alt="images"
+                                />
                                 {/* <img
                   className={styles.img}
                   src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
-                                <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`} alt="images" />
-                                <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`} alt="images" />
+                                <img
+                                    className={styles.img}
+                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
+                                    alt="images"
+                                />
+                                <img
+                                    className={styles.img}
+                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
+                                    alt="images"
+                                />
                                 <div className={styles.video}>
                                     <ReactPlayer
                                         className={styles.video}
@@ -125,7 +137,14 @@ const PropertyDetail = () => {
                   required
                   //   defaultValue={data.property.propertyVideo}
                 ></input> */}
-                                <input id="propertyName" type="text" placeholder="Enter Property Name" className={styles.inputText} value={data.Name} readonly></input>
+                                <input
+                                    id="propertyName"
+                                    type="text"
+                                    placeholder="Enter Property Name"
+                                    className={styles.inputText}
+                                    value={data.Name}
+                                    readonly
+                                ></input>
                                 <select
                                     className={styles.drop}
                                     id="cagetory"
@@ -218,6 +237,6 @@ const PropertyDetail = () => {
                 </div>
             </form>
         </>
-    )
-}
-export default PropertyDetail
+    );
+};
+export default PropertyDetail;

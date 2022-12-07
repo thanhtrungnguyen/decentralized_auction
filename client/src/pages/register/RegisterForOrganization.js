@@ -1,127 +1,127 @@
-import styles from "../../styleCss/registerForO.module.css"
-import "react-dropdown/style.css"
-import useLocationForm from "./useLocationForm"
-import Select from "react-select"
-import React, { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import axios from "axios"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import { BsFillPersonFill, BsBank2 } from "react-icons/bs"
-import Footer from "../../components/footer/Footer"
+import styles from "../../styleCss/registerForO.module.css";
+import "react-dropdown/style.css";
+import useLocationForm from "./useLocationForm";
+import Select from "react-select";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
+import Footer from "../../components/footer/Footer";
 const Register = () => {
-    const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true)
-    const navigate = useNavigate()
+    const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
+    const navigate = useNavigate();
 
-    const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state
+    const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
 
-    const [organizationName, setOrganizationName] = useState(null)
-    const [taxCode, setTaxCode] = useState(null)
-    const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null)
-    const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null)
-    const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null)
-    const [companyCertifcate, setCompanyCertifcate] = useState(null)
-    const [firstName, setFirstName] = useState(null)
-    const [lastName, setlastName] = useState(null)
-    const [gender, setgender] = useState("Male")
-    const [dateOfBirth, setdateOfBirth] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [phone, setPhone] = useState(null)
-    const [specificAddress, setSepecificAddress] = useState(null)
-    const [cardNumber, setcardNumber] = useState(null)
-    const [dateRangeCard, setdateRangeCard] = useState(null)
-    const [cardGrantedPlace, setCardGrantedPlace] = useState(null)
-    const [cardFront, setCardFront] = useState(null)
-    const [cardBack, setCardBack] = useState(null)
-    const [userName, setUsername] = useState(null)
-    const [password, setPassword] = useState(null)
-    const [rePassword, setRePassword] = useState(null)
-    const [position, setPosition] = useState(null)
-    const [role, setRole] = useState("BIDDER")
-    const [usertype, setUsertype] = useState("ACCOUNT")
+    const [organizationName, setOrganizationName] = useState(null);
+    const [taxCode, setTaxCode] = useState(null);
+    const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null);
+    const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null);
+    const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null);
+    const [companyCertifcate, setCompanyCertifcate] = useState(null);
+    const [firstName, setFirstName] = useState(null);
+    const [lastName, setlastName] = useState(null);
+    const [gender, setgender] = useState("Male");
+    const [dateOfBirth, setdateOfBirth] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [phone, setPhone] = useState(null);
+    const [specificAddress, setSepecificAddress] = useState(null);
+    const [cardNumber, setcardNumber] = useState(null);
+    const [dateRangeCard, setdateRangeCard] = useState(null);
+    const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
+    const [cardFront, setCardFront] = useState(null);
+    const [cardBack, setCardBack] = useState(null);
+    const [userName, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [rePassword, setRePassword] = useState(null);
+    const [position, setPosition] = useState(null);
+    const [role, setRole] = useState("BIDDER");
+    const [usertype, setUsertype] = useState("ACCOUNT");
 
     const handleInputChange = (e) => {
-        const { id, value } = e.target
+        const { id, value } = e.target;
         if (id === "organizationName") {
-            setOrganizationName(value)
+            setOrganizationName(value);
         }
         if (id === "position") {
-            setPosition(value)
+            setPosition(value);
         }
         if (id === "taxCode") {
-            setTaxCode(value)
+            setTaxCode(value);
         }
         if (id === "taxCodeGrantedDate") {
-            setTaxCodeGrantedDate(value)
+            setTaxCodeGrantedDate(value);
         }
         if (id === "taxCodeGrantedPlace") {
-            setTaxCodeGrantedPlace(value)
+            setTaxCodeGrantedPlace(value);
         }
         if (id === "specificAddressOrganization") {
-            setSpecificAddressOrganization(value)
+            setSpecificAddressOrganization(value);
         }
         if (id === "companyCertifcate") {
-            setCompanyCertifcate(e.target.files[0])
+            setCompanyCertifcate(e.target.files[0]);
         }
         if (id === "firstName") {
-            setFirstName(value)
+            setFirstName(value);
         }
         if (id === "lastName") {
-            setlastName(value)
+            setlastName(value);
         }
         if (id === "gender") {
-            setgender(value)
+            setgender(value);
         }
         if (id === "dateOfBirth") {
-            setdateOfBirth(value)
+            setdateOfBirth(value);
         }
         if (id === "email") {
-            setEmail(value)
+            setEmail(value);
         }
         if (id === "phone") {
-            setPhone(value)
+            setPhone(value);
         }
         if (id === "specificAddress") {
-            setSepecificAddress(value)
+            setSepecificAddress(value);
         }
         if (id === "cardNumber") {
-            setcardNumber(value)
+            setcardNumber(value);
         }
         if (id === "dateRangeCard") {
-            setdateRangeCard(value)
+            setdateRangeCard(value);
         }
         if (id === "cardGrantedPlace") {
-            setCardGrantedPlace(value)
+            setCardGrantedPlace(value);
         }
         if (id === "cardFront") {
-            setCardFront(e.target.files[0])
+            setCardFront(e.target.files[0]);
         }
         if (id === "cardBack") {
-            setCardBack(e.target.files[0])
+            setCardBack(e.target.files[0]);
         }
         if (id === "userName") {
-            setUsername(value)
+            setUsername(value);
         }
         if (id === "password") {
-            setPassword(value)
+            setPassword(value);
         }
         if (id === "rePassword") {
-            setRePassword(value)
+            setRePassword(value);
         }
         if (id === "role") {
-            setRole(value)
+            setRole(value);
         }
-    }
+    };
     const handleSubmit = (event) => {
-        let cityId = selectedCity.value
-        let city = selectedCity.label
-        let districtId = selectedDistrict.value
-        let district = selectedDistrict.label
-        let wardId = selectedWard.value
-        let ward = selectedWard.label
-        let cardfront = cardFront.name
-        let cardback = cardBack.name
-        let certificateCompany = companyCertifcate.name
+        let cityId = selectedCity.value;
+        let city = selectedCity.label;
+        let districtId = selectedDistrict.value;
+        let district = selectedDistrict.label;
+        let wardId = selectedWard.value;
+        let ward = selectedWard.label;
+        let cardfront = cardFront.name;
+        let cardback = cardBack.name;
+        let certificateCompany = companyCertifcate.name;
         axios
             .post("http://localhost:8800/api/auth/registerForO", {
                 organizationName,
@@ -155,11 +155,11 @@ const Register = () => {
                 position,
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-                navigate("/login")
-            })
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                navigate("/login");
+            });
         alert(
             "infomation: " +
                 firstName +
@@ -200,9 +200,9 @@ const Register = () => {
                 rePassword +
                 " " +
                 role
-        )
-        event.preventDefault()
-    }
+        );
+        event.preventDefault();
+    };
     return (
         <>
             <Header />
@@ -224,17 +224,55 @@ const Register = () => {
                     </div>
                     <p className={styles.textBlue}>Organization information</p>
                     <p className={styles.textRed}>Basic information</p>
-                    <input className={styles.inputT} type="text" placeholder="Organization name" value={organizationName} onChange={(e) => handleInputChange(e)} id="organizationName" required></input>
+                    <input
+                        className={styles.inputT}
+                        type="text"
+                        placeholder="Organization name"
+                        value={organizationName}
+                        onChange={(e) => handleInputChange(e)}
+                        id="organizationName"
+                        required
+                    ></input>
                     <p className={styles.txtBlack}>Message</p>
-                    <input className={styles.inputT} type="text" placeholder="Tax code" value={taxCode} onChange={(e) => handleInputChange(e)} id="taxCode" required></input>
+                    <input
+                        className={styles.inputT}
+                        type="text"
+                        placeholder="Tax code"
+                        value={taxCode}
+                        onChange={(e) => handleInputChange(e)}
+                        id="taxCode"
+                        required
+                    ></input>
                     <p className={styles.txtBlack}>Message</p>
                     <p className={styles.txtBlack}>Tax code granted date</p>
-                    <input type="date" className={styles.ipdate} value={taxCodeGrantedDate} onChange={(e) => handleInputChange(e)} id="taxCodeGrantedDate"></input>
-                    <input className={styles.inputT} type="text" placeholder="Tax code granted place" value={taxCodeGrantedPlace} onChange={(e) => handleInputChange(e)} id="taxCodeGrantedPlace" required></input>
+                    <input
+                        type="date"
+                        className={styles.ipdate}
+                        value={taxCodeGrantedDate}
+                        onChange={(e) => handleInputChange(e)}
+                        id="taxCodeGrantedDate"
+                    ></input>
+                    <input
+                        className={styles.inputT}
+                        type="text"
+                        placeholder="Tax code granted place"
+                        value={taxCodeGrantedPlace}
+                        onChange={(e) => handleInputChange(e)}
+                        id="taxCodeGrantedPlace"
+                        required
+                    ></input>
                     <br />
                     <br />
                     <br />
-                    <input className={styles.inputT} type="text" placeholder="Specific address" value={specificAddressOrganization} onChange={(e) => handleInputChange(e)} id="specificAddressOrganization" required></input>
+                    <input
+                        className={styles.inputT}
+                        type="text"
+                        placeholder="Specific address"
+                        value={specificAddressOrganization}
+                        onChange={(e) => handleInputChange(e)}
+                        id="specificAddressOrganization"
+                        required
+                    ></input>
                     <input
                         className={styles.imgCard}
                         id="companyCertifcate"
@@ -247,9 +285,25 @@ const Register = () => {
                     />
                     <p className={styles.textBlue}>Representative Infomation</p>
                     <p className={styles.textRed}>Basic information</p>
-                    <input className={styles.inputT} type="text" placeholder="First name" value={firstName} onChange={(e) => handleInputChange(e)} id="firstName" required></input>
+                    <input
+                        className={styles.inputT}
+                        type="text"
+                        placeholder="First name"
+                        value={firstName}
+                        onChange={(e) => handleInputChange(e)}
+                        id="firstName"
+                        required
+                    ></input>
                     <p className={styles.txtBlack}>Message</p>
-                    <input className={styles.inputT} type="text" placeholder="Last name" value={lastName} onChange={(e) => handleInputChange(e)} id="lastName" required></input>
+                    <input
+                        className={styles.inputT}
+                        type="text"
+                        placeholder="Last name"
+                        value={lastName}
+                        onChange={(e) => handleInputChange(e)}
+                        id="lastName"
+                        required
+                    ></input>
                     <p className={styles.txtBlack}>Message</p>
                     <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
                         <option value="Male">Male</option>
@@ -278,7 +332,15 @@ const Register = () => {
                         id="phone"
                         required
                     ></input>
-                    <input className={styles.inputT} type="text" placeholder="Position" value={specificAddressOrganization} onChange={(e) => handleInputChange(e)} id="position" required></input>
+                    <input
+                        className={styles.inputT}
+                        type="text"
+                        placeholder="Position"
+                        value={specificAddressOrganization}
+                        onChange={(e) => handleInputChange(e)}
+                        id="position"
+                        required
+                    ></input>
                     <p className={styles.textRed}>Address</p>
                     <Select
                         className={styles.select}
@@ -310,11 +372,35 @@ const Register = () => {
                         onChange={(option) => onWardSelect(option)}
                         defaultValue={selectedWard}
                     />
-                    <input className={styles.ipadd} type="text" placeholder="Specific address" value={specificAddress} onChange={(e) => handleInputChange(e)} id="specificAddress" required></input>{" "}
+                    <input
+                        className={styles.ipadd}
+                        type="text"
+                        placeholder="Specific address"
+                        value={specificAddress}
+                        onChange={(e) => handleInputChange(e)}
+                        id="specificAddress"
+                        required
+                    ></input>{" "}
                     <p className={styles.textRed}>Identity/Citizen card</p>
-                    <input type="text" placeholder="Card number" className={styles.ip3} value={cardNumber} onChange={(e) => handleInputChange(e)} id="cardNumber" required></input>
+                    <input
+                        type="text"
+                        placeholder="Card number"
+                        className={styles.ip3}
+                        value={cardNumber}
+                        onChange={(e) => handleInputChange(e)}
+                        id="cardNumber"
+                        required
+                    ></input>
                     <input type="date" className={styles.ip3} value={dateRangeCard} onChange={(e) => handleInputChange(e)} id="dateRangeCard"></input>
-                    <input type="text" placeholder="Card granted place" className={styles.ip3} value={cardGrantedPlace} onChange={(e) => handleInputChange(e)} id="cardGrantedPlace" required></input>
+                    <input
+                        type="text"
+                        placeholder="Card granted place"
+                        className={styles.ip3}
+                        value={cardGrantedPlace}
+                        onChange={(e) => handleInputChange(e)}
+                        id="cardGrantedPlace"
+                        required
+                    ></input>
                     <input
                         className={styles.imgCard}
                         id="cardFront"
@@ -345,8 +431,24 @@ const Register = () => {
                         placeholder="Username"
                         required
                     ></input>
-                    <input className={styles.inputEP} type="text" value={password} onChange={(e) => handleInputChange(e)} id="password" placeholder="Password" required></input>
-                    <input className={styles.inputEP} type="text" value={rePassword} onChange={(e) => handleInputChange(e)} id="rePassword" placeholder="Re-eneter the password" required></input>
+                    <input
+                        className={styles.inputEP}
+                        type="text"
+                        value={password}
+                        onChange={(e) => handleInputChange(e)}
+                        id="password"
+                        placeholder="Password"
+                        required
+                    ></input>
+                    <input
+                        className={styles.inputEP}
+                        type="text"
+                        value={rePassword}
+                        onChange={(e) => handleInputChange(e)}
+                        id="rePassword"
+                        placeholder="Re-eneter the password"
+                        required
+                    ></input>
                     {/* <select
             id="role"
             className={styles.dropdown}
@@ -361,7 +463,7 @@ const Register = () => {
             </div>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default Register
+export default Register;

@@ -1,10 +1,10 @@
-import { Outlet, Link } from "react-router-dom"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import PlaceABid from "../../components/popups/PlaceABid"
-import SidebarSeller from "../../components/sidebar_seller/SidebarSeller"
-import styles from "../../styleCss/stylesPages/hompage.module.css"
+import { Outlet, Link } from "react-router-dom";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import PlaceABid from "../../components/popups/PlaceABid";
+import SidebarSeller from "../../components/sidebar_seller/SidebarSeller";
+import styles from "../../styleCss/stylesPages/hompage.module.css";
 
 const Home = () => {
     return (
@@ -133,7 +133,7 @@ const Home = () => {
             </div>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

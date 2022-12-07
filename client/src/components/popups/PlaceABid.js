@@ -1,7 +1,7 @@
-import React from "react"
-import styles from "../../styleCss/stylesComponents/placeABid.module.css"
-import ConfirmPayment from "../../pages/confirmPayment/confirmPayment"
-import { Outlet, Link } from "react-router-dom"
+import React from "react";
+import styles from "../../styleCss/stylesComponents/placeABid.module.css";
+import ConfirmPayment from "../../pages/confirmPayment/confirmPayment";
+import { Outlet, Link } from "react-router-dom";
 
 const PlaceABid = ({ sendAuction }) => {
     // const myFunction = () => {
@@ -84,7 +84,7 @@ const PlaceABid = ({ sendAuction }) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default PlaceABid
+export default PlaceABid;

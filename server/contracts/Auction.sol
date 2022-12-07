@@ -279,7 +279,7 @@ contract Auction {
         uint256 depositAmount,
         uint256 startBid,
         uint256 priceStep
-    ) external payable {
+    ) external {
         if (
             isValidatedInput(
                 auctionId,
@@ -335,7 +335,7 @@ contract Auction {
     function getHightestBidOfAuction(uint256 auctionId) public view returns (uint256) {
         uint256 highestBid = 0;
         for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {
-            if (s_BidInformations[auctionId][i].bidAmount > highestBid) {
+            if (s_BidInformations[auctionId][i].bidAmount > highestBid && s_BidInformations[auctionId][i].bidderState != BidderState.CANCEL) {
                 highestBid = s_BidInformations[auctionId][i].bidAmount;
             }
         }
@@ -343,7 +343,7 @@ contract Auction {
     }
 
     //get index of bidder who is sender
-    function getIndexOfBidder(uint256 auctionId) public view returns (uint256) {
+    function getIndexOfBidder(uint256 auctionId) internal view returns (uint256) {
         for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {
             if (s_BidInformations[auctionId][i].bidder == msg.sender) {
                 return i;
@@ -352,14 +352,10 @@ contract Auction {
         return 0;
     }
 
-    function placeBid(uint256 auctionId, uint256 bidAmount)
-        external
-        payable
-        isAuctionExist(auctionId)
-        isAuctionTime(auctionId)
-        isRegisteredBidder(auctionId)
-        isValidBidAmount(auctionId, bidAmount)
-    {
+    function placeBid(
+        uint256 auctionId,
+        uint256 bidAmount
+    ) external payable isAuctionExist(auctionId) isAuctionTime(auctionId) isRegisteredBidder(auctionId) isValidBidAmount(auctionId, bidAmount) {
         s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount = bidAmount;
         emit PlacedBid(auctionId, msg.sender, bidAmount);
     }
@@ -446,7 +442,7 @@ contract Auction {
         return s_auctionList;
     }
 
-    function getListAuctionInformationById(uint256 auctionId) external view isExistAuctionId(auctionId) returns (AuctionInformation memory) {
+    function getAuctionInformationById(uint256 auctionId) external view isExistAuctionId(auctionId) returns (AuctionInformation memory) {
         return s_AuctionInformations[auctionId];
     }
 

@@ -1,16 +1,16 @@
-import { Button } from "@web3uikit/core"
-import { useState } from "react"
-import HeaderBid from "../../components/header/HeaderBid"
-import PlaceBid from "./popup/PlaceBid"
+import { Button } from "@web3uikit/core";
+import { useState } from "react";
+import HeaderBid from "../../components/header/HeaderBid";
+import PlaceBid from "./popup/PlaceBid";
 
 const PlaceBidButton = () => {
     const [buttonPopup, setButtonPopup] = useState(() => {
-        return false
-    })
+        return false;
+    });
 
     const setPopupTrue = () => {
-        setButtonPopup(true)
-    }
+        setButtonPopup(true);
+    };
 
     return (
         <>
@@ -18,7 +18,7 @@ const PlaceBidButton = () => {
             <HeaderBid />
             <PlaceBid />
         </>
-    )
-}
+    );
+};
 
-export default PlaceBidButton
+export default PlaceBidButton;

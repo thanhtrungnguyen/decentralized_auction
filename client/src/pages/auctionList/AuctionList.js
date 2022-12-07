@@ -1,33 +1,33 @@
-import Header from "../../components/header/HeaderUser"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import styles from "../../styleCss/auctionList.module.css"
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import { useParams, Link } from "react-router-dom"
-import Popup from "reactjs-popup"
-import PlaceABid from "../../components/popups/PlaceABid"
-import Pagination from "@mui/material/Pagination"
+import Header from "../../components/header/HeaderUser";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import styles from "../../styleCss/auctionList.module.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams, Link } from "react-router-dom";
+import Popup from "reactjs-popup";
+import PlaceABid from "../../components/popups/PlaceABid";
+import Pagination from "@mui/material/Pagination";
 
 const AuctionList = () => {
-    const [buttonPopup, setButtonPopup] = useState(false)
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
+    const [buttonPopup, setButtonPopup] = useState(false);
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
-    const baseURL = "http://localhost:8800/api/auction/"
+    const baseURL = "http://localhost:8800/api/auction/";
 
     useEffect(() => {
         axios.get(baseURL).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
-            setData(resp.data)
-        })
-    }, [baseURL])
-    const [page, setPage] = React.useState(1)
+            console.log(resp.data);
+            console.log("axios get");
+            setData(resp.data);
+        });
+    }, [baseURL]);
+    const [page, setPage] = React.useState(1);
     const handleChange = (event, value) => {
-        setPage(value)
-    }
+        setPage(value);
+    };
     //   useEffect(()=>{
     //     const fetchData = async ()=>{
     //         setLoading(true);
@@ -174,7 +174,7 @@ const AuctionList = () => {
             </section>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default AuctionList
+export default AuctionList;

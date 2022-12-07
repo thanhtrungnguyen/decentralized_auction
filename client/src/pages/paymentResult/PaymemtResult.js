@@ -1,8 +1,8 @@
-import React from "react"
-import styles from "../../styleCss/stylesPages/confirmPayment.module.css"
-import { IoReturnUpBackOutline } from "react-icons/io5"
-import { FaEthereum } from "react-icons/fa"
-import { Outlet, Link } from "react-router-dom"
+import React from "react";
+import styles from "../../styleCss/stylesPages/confirmPayment.module.css";
+import { IoReturnUpBackOutline } from "react-icons/io5";
+import { FaEthereum } from "react-icons/fa";
+import { Outlet, Link } from "react-router-dom";
 const PaymentResult = () => {
     return (
         <>
@@ -29,6 +29,6 @@ const PaymentResult = () => {
                 </Link>
             </div>
         </>
-    )
-}
-export default PaymentResult
+    );
+};
+export default PaymentResult;

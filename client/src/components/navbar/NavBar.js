@@ -1,6 +1,6 @@
-import styles from "../../styleCss/stylesComponents/navbar.module.css"
-import { Outlet, Link } from "react-router-dom"
-import { BsSearch } from "react-icons/bs"
+import styles from "../../styleCss/stylesComponents/navbar.module.css";
+import { Outlet, Link } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
 const NavBar = () => {
     return (
         <>
@@ -43,7 +43,7 @@ const NavBar = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default NavBar
+export default NavBar;
