@@ -36,6 +36,9 @@ import ListSellers from "./pages/forAdmin/ListSellers";
 import AddSeller from "./pages/forAdmin/AddSeller";
 import ListBidders from "./pages/forAdmin/ListBidders";
 import BidderDetail from "./pages/forAdmin/BidderDetail";
+import ListNews from "./pages/forAdmin/ListNews";
+import AddNew from "./pages/forAdmin/AddNews";
+import EditNew from "./pages/forAdmin/EditNew";
 import PlaceBidButton from "./pages/bidder/popup";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
@@ -83,13 +86,12 @@ function App() {
                     <Route path="addSeller" element={<AddSeller />} />
                     <Route path="listBidders" element={<ListBidders />} />
                     <Route path="bidderDetail" element={<AddSeller />} />
-                    <Route path="bidderDetail/:id" element={<AddSeller />}></Route>
+                    <Route path="bidderDetail/:id" element={<AddSeller />} />
                     {/* test */}
 
                     <Route path="BidPopup" element={<PlaceBidButton />} />
 
                     {/* test */}
-                    <Route path="bidderDetail/auc/:id" element={<AddSeller />} />
                 </Routes>
             </BrowserRouter>
         </MoralisProvider>

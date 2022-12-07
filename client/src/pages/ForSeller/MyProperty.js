@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Button } from "@mui/material";
 const MyProperty = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState("Car");
@@ -19,7 +20,7 @@ const MyProperty = () => {
     const navigate = useNavigate();
     const baseURLCategory = "http://localhost:8800/api/category/";
     const baseURLProperty = "http://localhost:8800/api/property/";
-
+    const requestAuction = "http://localhost:8800/api/auction/request/";
     useEffect(() => {
         axios.get(baseURLCategory).then((resp) => {
             console.log(resp.data);
@@ -34,6 +35,17 @@ const MyProperty = () => {
             setListProperty(resp.data);
         });
     }, [baseURLProperty]);
+
+    const RequestAuction = (propertyId) => {
+        axios.post(requestAuction + propertyId, { withCredentials: true }).then((resp) => {
+            console.log(resp.data);
+            console.log("axios get");
+            setListProperty(resp.data);
+        });
+
+        alert(propertyId);
+    };
+
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -149,6 +161,9 @@ const MyProperty = () => {
                                             <Link className={styles.linkBlue} to="/">
                                                 Delete
                                             </Link>
+                                            <Button className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
+                                                Request Add
+                                            </Button>
                                         </td>
                                     </tr>
                                 ))}

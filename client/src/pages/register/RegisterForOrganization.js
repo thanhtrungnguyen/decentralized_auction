@@ -20,7 +20,7 @@ const Register = () => {
     const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null);
     const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null);
     const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null);
-    const [companyCertifcate, setCompanyCertifcate] = useState(null);
+    //const [companyCertifcate, setCompanyCertifcate] = useState(null);
     const [firstName, setFirstName] = useState(null);
     const [lastName, setlastName] = useState(null);
     const [gender, setgender] = useState("Male");
@@ -60,9 +60,9 @@ const Register = () => {
         if (id === "specificAddressOrganization") {
             setSpecificAddressOrganization(value);
         }
-        if (id === "companyCertifcate") {
-            setCompanyCertifcate(e.target.files[0]);
-        }
+        // if (id === "companyCertifcate") {
+        //   setCompanyCertifcate(e.target.files[0]);
+        // }
         if (id === "firstName") {
             setFirstName(value);
         }
@@ -121,39 +121,47 @@ const Register = () => {
         let ward = selectedWard.label;
         let cardfront = cardFront.name;
         let cardback = cardBack.name;
-        let certificateCompany = companyCertifcate.name;
+        //let certificateCompany = companyCertifcate.name;
+
+        const formData = new FormData();
+        formData.append("organizationName", organizationName);
+        formData.append("taxCode", taxCode);
+        formData.append("taxCodeGrantedDate", taxCodeGrantedDate);
+        formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace);
+        formData.append("specificAddressOrganization", specificAddressOrganization);
+
+        formData.append("firstName", firstName);
+        formData.append("lastName", lastName);
+        formData.append("gender", gender);
+        formData.append("dateOfBirth", dateOfBirth);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        formData.append("position", position);
+        formData.append("cityId", cityId);
+        formData.append("city", selectedCity.label);
+        formData.append("districtId", districtId);
+        formData.append("district", selectedDistrict.label);
+        formData.append("wardId", wardId);
+        formData.append("ward", selectedWard.label);
+        formData.append("sepecificAddress", specificAddress);
+        formData.append("cardNumber", cardNumber);
+        formData.append("dateRangeCard", dateRangeCard);
+        formData.append("cardGrantedPlace", cardGrantedPlace);
+        formData.append("cardFront", cardFront);
+        formData.append("cardBack", cardBack);
+        formData.append("username", userName);
+        formData.append("password", password);
+        formData.append("role", role);
+        formData.append("usertype", usertype);
         axios
-            .post("http://localhost:8800/api/auth/registerForO", {
-                organizationName,
-                taxCode,
-                taxCodeGrantedDate,
-                taxCodeGrantedPlace,
-                specificAddressOrganization,
-                certificateCompany,
-                firstName,
-                lastName,
-                gender,
-                dateOfBirth,
-                email,
-                phone,
-                cityId,
-                city,
-                districtId,
-                district,
-                wardId,
-                ward,
-                specificAddress,
-                cardNumber,
-                dateRangeCard,
-                cardGrantedPlace,
-                cardFront,
-                cardBack,
-                userName,
-                password,
-                role,
-                usertype,
-                position,
-            })
+            .post(
+                "http://localhost:8800/api/auth/register",
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                },
+                { withCredentials: true }
+            )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -161,7 +169,7 @@ const Register = () => {
                 navigate("/login");
             });
         alert(
-            "infomation: " +
+            "information: " +
                 firstName +
                 " " +
                 lastName +
@@ -203,6 +211,7 @@ const Register = () => {
         );
         event.preventDefault();
     };
+
     return (
         <>
             <Header />
@@ -262,6 +271,7 @@ const Register = () => {
                         required
                     ></input>
                     <br />
+                    Information
                     <br />
                     <br />
                     <input
@@ -273,17 +283,17 @@ const Register = () => {
                         id="specificAddressOrganization"
                         required
                     ></input>
-                    <input
-                        className={styles.imgCard}
-                        id="companyCertifcate"
-                        type="file"
-                        // onChange={(e) => {
-                        //   console.log(e.target.files[0]);
-                        // }}
-                        onChange={(e) => handleInputChange(e)}
-                        required
-                    />
-                    <p className={styles.textBlue}>Representative Infomation</p>
+                    {/* <input
+            className={styles.imgCard}
+            id="companyCertifcate"
+            type="file"
+            // onChange={(e) => {
+            //   console.log(e.target.files[0]);
+            // }}
+            onChange={(e) => handleInputChange(e)}
+            required
+          /> */}
+                    <p className={styles.textBlue}>Representative Information</p>
                     <p className={styles.textRed}>Basic information</p>
                     <input
                         className={styles.inputT}
@@ -336,7 +346,7 @@ const Register = () => {
                         className={styles.inputT}
                         type="text"
                         placeholder="Position"
-                        value={specificAddressOrganization}
+                        value={position}
                         onChange={(e) => handleInputChange(e)}
                         id="position"
                         required
@@ -420,7 +430,7 @@ const Register = () => {
                         onChange={(e) => handleInputChange(e)}
                         required
                     />
-                    <p className={styles.textBlue}>Account Infomation</p>
+                    <p className={styles.textBlue}>Account Information</p>
                     <input
                         className={styles.inputEP}
                         type="email"
@@ -458,7 +468,7 @@ const Register = () => {
             <option value="BIDDER">BIDDER</option>
             <option value="SELLER">SELLER</option>
           </select> */}
-                    <input type="submit" className={styles.ipsubmit} value="SIGN IN"></input>
+                    <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>
                 </form>
             </div>
             <Footer />

@@ -153,13 +153,13 @@ const ListSellers = () => {
                                             if (status === "Active") {
                                                 return (
                                                     <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                        <BanedSeller idManager={123} />
+                                                        <BanedSeller idSeller={123} />
                                                     </Popup>
                                                 );
                                             } else {
                                                 return (
                                                     <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                        <ActiveSeller idManager={123} />
+                                                        <ActiveSeller idSeller={123} />
                                                     </Popup>
                                                 );
                                             }
@@ -179,13 +179,13 @@ const ListSellers = () => {
                                             if (status2 === "Active") {
                                                 return (
                                                     <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                        <BanedSeller idManager={123} />
+                                                        <BanedSeller idSeller={123} />
                                                     </Popup>
                                                 );
                                             } else {
                                                 return (
                                                     <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                        <ActiveSeller idManager={123} />
+                                                        <ActiveSeller idSeller={123} />
                                                     </Popup>
                                                 );
                                             }

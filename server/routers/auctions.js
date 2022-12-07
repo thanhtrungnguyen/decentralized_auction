@@ -12,7 +12,7 @@ const { verifySeller } = require("../utils/verifyToken.js");
 
 const router = express.Router();
 
-router.post("/", createAuction);
+router.post("/request/:id", createAuction);
 
 router.put("/approve/:id", approveAuction);
 

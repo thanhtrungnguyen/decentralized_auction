@@ -10,7 +10,7 @@ const accountRoute = require("./routers/accounts.js");
 const auctionRoute = require("./routers/auctions.js");
 const propertyRoute = require("./routers/properties.js");
 const categoryRoute = require("./routers/categories.js");
-
+const newsRoute = require("./routers/news.js");
 const multer = require("multer");
 
 // config app
@@ -44,15 +44,15 @@ const upload = multer({ dest: "uploads/" });
 // };
 
 //connect MONGO_DB_SYNC_BLOCKCHAIN
-const connectSyncBlockchainDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_DB_SYNC_BLOCKCHAIN);
-        console.log("MongoDB Sync with Blockchain connected");
-    } catch (error) {
-        console.log(error);
-        process.exit(1);
-    }
-};
+// const connectSyncBlockchainDB = async () => {
+//     try {
+//         await mongoose.connect(process.env.MONGO_DB_SYNC_BLOCKCHAIN);
+//         console.log("MongoDB Sync with Blockchain connected");
+//     } catch (error) {
+//         console.log(error);
+//         process.exit(1);
+//     }
+// };
 
 // // network DB disconnected
 // mongoose.connection.on("disconnected", () => {
@@ -107,6 +107,7 @@ app.use("/api/property", propertyRoute);
 app.use("/api/auction", auctionRoute);
 app.use("/api/account", accountRoute);
 app.use("/api/category", categoryRoute);
+app.use("/api/news", newsRoute);
 
 // app.get('/Account/getAllAccount', (req, res) => {
 //   conn.query("Select Id, Name, Phone, NumberOfEmployees from Account", (err, result) => {

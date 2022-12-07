@@ -5,7 +5,7 @@ import styles from "../../styleCss/stylesPages/forSellers/AuctionDetailForSeller
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import useFetch from "../../hook/useFetch";
+import {useFetch} from "../../hook/useFetch";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
 import ReactPlayer from "react-player";
 

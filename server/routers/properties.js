@@ -6,6 +6,9 @@ const {
     getAllCate,
     getAllPropertyByUser,
     updateProperty,
+    getListByStatus,
+    getListByName,
+    filterProperty,
 } = require("../controllers/PropertyController.js");
 const { verifyAdmin, verifySeller, verifyToken } = require("../utils/verifyToken.js");
 const multer = require("multer");
@@ -42,10 +45,14 @@ router.put("/:id", verifySeller, updateProperty);
 
 router.get("/:id", findPropertyByID);
 
+router.get("/getListByStatus/:status", getListByStatus);
+
+router.get("/getListByName/:name/:status", filterProperty);
+
 router.get("/", verifySeller, getAllPropertyByUser);
 
-router.post("/category/", verifyAdmin, createCate);
-
 router.get("/category/", getAllCate);
+
+router.post("/category/", verifyAdmin, createCate);
 
 module.exports = router;

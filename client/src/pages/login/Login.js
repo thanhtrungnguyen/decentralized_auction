@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
-import { Outlet, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 
 const Login = () => {
     const navigate = useNavigate();

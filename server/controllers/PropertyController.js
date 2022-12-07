@@ -236,5 +236,54 @@ const getAllCate = async (req, res, next) => {
         next(error);
     }
 };
-
-module.exports = { getAllCate, createCate, findPropertyByID, updateProperty, getAllPropertyByUser, createProperty };
+// get list property by status
+const getListByStatus = async (req, res, next) => {
+    try {
+        // var property;
+        // const updateProperty = await Property.findById(req.params.id);
+        // res.status(200).json(updateProperty);
+        const token = req.cookies.access_token;
+        var userId, properties;
+        jwt.verify(token, process.env.JWT, (err, user) => {
+            if (err) return next(createError(403, "Token is not valid!"));
+            userId = user.id;
+        });
+        await conn.query(
+            `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' And Status__c = '${req.params.status}'`,
+            (err, result) => {
+                if (err) console.error(err);
+                properties = result.records;
+            }
+        );
+        console.log(properties);
+        res.status(200).json(properties);
+    } catch (error) {
+        next(error);
+    }
+};
+// get list property by PropertyName and status
+const filterProperty = async (req, res, next) => {
+    try {
+        // var property;
+        // const updateProperty = await Property.findById(req.params.id);
+        // res.status(200).json(updateProperty);
+        const token = req.cookies.access_token;
+        var userId, properties;
+        jwt.verify(token, process.env.JWT, (err, user) => {
+            if (err) return next(createError(403, "Token is not valid!"));
+            userId = user.id;
+        });
+        await conn.query(
+            `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' And Name like '%${req.params.name}%' And Status__c = '${req.params.status}'`,
+            (err, result) => {
+                if (err) console.error(err);
+                properties = result.records;
+            }
+        );
+        console.log(properties);
+        res.status(200).json(properties);
+    } catch (error) {
+        next(error);
+    }
+};
+module.exports = { getAllCate, createCate, findPropertyByID, updateProperty, getAllPropertyByUser, createProperty, getListByStatus, filterProperty };
