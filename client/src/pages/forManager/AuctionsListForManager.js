@@ -17,14 +17,27 @@ const AuctionsListForManager = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const baseURL = "http://localhost:8800/api/auction/";
+  const baseURLCategory = "http://localhost:8800/api/category/";
+  const baseURLAuction = "http://localhost:8800/api/auction/";
+  const [listCategory, setListCategory] = useState([]);
+  const [listAuction, setListAuction] = useState([]);
 
   useEffect(() => {
-    axios.get(baseURL).then((resp) => {
+    axios.get(baseURLCategory).then((resp) => {
       console.log(resp.data);
       console.log("axios get");
-      setData(resp.data);
+      setListCategory(resp.data);
     });
-  }, [baseURL]);
+  }, [baseURLCategory]);
+
+  useEffect(() => {
+    axios.get(baseURLAuction).then((resp) => {
+      console.log(resp.data);
+      console.log("axios get");
+      setListAuction(resp.data);
+    });
+  }, [baseURLAuction]);
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     if (id === "cagetory") {
@@ -86,9 +99,9 @@ const AuctionsListForManager = () => {
                 placeholder="Category"
                 defaultValue="Car"
               >
-                {/* {data.map((property) => (
-                  <option value={property.category}>{property.category}</option>
-                ))} */}
+                {listCategory.map((item) => (
+                  <option value={item.Name}>{item.Name}</option>
+                ))}
               </select>
               <br />
               <br />
@@ -132,25 +145,37 @@ const AuctionsListForManager = () => {
               <table className={styles.table}>
                 <tr>
                   <th className={styles.th}>Property Name</th>
+                  <th className={styles.th}>Category Name</th>
                   <th className={styles.th}>Registration Time</th>
                   <th className={styles.th}>Auction Time</th>
                   <th className={styles.th}>Status</th>
                   <th className={styles.th}>Action</th>
                 </tr>
-                {/* {data.map((auction) => (
+                {listAuction.map((auction) => (
                   <tr>
+
                     <td className={styles.td}>
-                      <input type="checkbox"></input>
+                      {auction.Name}
+                    </td>
+                    <td className={styles.td}>{auction.Category_Id__r.Name}</td>
+                    <td className={styles.td}>
+                      {
+                        auction.Auctions1__r.records[0].Status__c == "Request" && `__`
+                      }
+                      {
+                        auction.Auctions1__r.records[0].Status__c != "Request" && "From "+ auction.Auctions1__r.records[0].Start_Registration_Time__c +" To " + auction.Auctions1__r.records[0].End_Registration_Time__c
+                      }
+
                     </td>
                     <td className={styles.td}>
-                      {auction.property.propertyName}
-                    </td>
-                    <td className={styles.td}>{auction.property.category}</td>
-                    <td className={styles.td}>
-                      {auction.property.registrationTime}
-                    </td>
-                    <td className={styles.td}>{auction.auctionTime}</td>
-                    <td className={styles.td}>{auction.auctionStatus}</td>
+                      {
+                        auction.Auctions1__r.records[0].Status__c == "Request" && `__`
+                      }
+                      {
+                        auction.Auctions1__r.records[0].Status__c != "Request" && "From "+ auction.Auctions1__r.records[0].Start_Aution_Time__c +" To " + auction.Auctions1__r.records[0].End_Auction_Time__c
+                      }
+                      </td>
+                    <td className={styles.td}>{auction.Auctions1__r.records[0].Status__c}</td>
                     <td className={styles.td}>
                       <Link
                         className={styles.linkBlue}
@@ -160,34 +185,14 @@ const AuctionsListForManager = () => {
                       </Link>
                       <Link
                         className={styles.linkBlue}
-                        to={`/approveAuction/${auction._id}`}
+                        to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
                       >
                         Approve
                       </Link>
                     </td>
                   </tr>
-                ))} */}
-                <tr>
-                  <td className={styles.td}>Dianne Russell</td>
-                  <td className={styles.td}>
-                    From 10:00-06/24/2021 to 10:00-06/24/2021
-                  </td>
-                  <td className={styles.td}>
-                    From 10:00-06/24/2021 to 10:00-06/24/2021
-                  </td>
-                  <td className={styles.td}>Bidding</td>
-                  <td className={styles.td}>
-                    <Link
-                      className={styles.linkBlue}
-                      to="/autitoDetailForManager"
-                    >
-                      View
-                    </Link>
-                    <Link className={styles.linkBlue} to="/approveAuction">
-                      Approve
-                    </Link>
-                  </td>
-                </tr>
+                ))}
+
               </table>
               <div>
                 <Pagination

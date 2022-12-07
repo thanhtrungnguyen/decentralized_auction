@@ -12,36 +12,72 @@ import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import useFetch from "../../hook/useFetch";
 
 const PropertyDetail = () => {
   // const [date, setDate] = useState([
   //   new DateObject().setDay(15),
   //   new DateObject().add(1, "month").setDay(15),
   // ]);
-  const { id } = useParams();
-  const [data, setData] = useState([]);
+  const { id , propertyId} = useParams();
+ 
 
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8800/api/property/${id}";
+  const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
   const [registrationFee, setRegistrationFee] = useState(null);
+  const [name, setName] = useState(null);
   const [timeRegistration, setTimeRegistration] = useState([
     new DateObject().setDay(15),
     new DateObject().add(1, "month").setDay(15),
   ]);
+
   const [auctionTime, setAuctionTime] = useState([
     new DateObject().setDay(15),
     new DateObject().add(1, "month").setDay(15),
   ]);
 
-  useEffect(() => {
-    axios.get(baseURL).then((resp) => {
-      console.log(resp.data);
-      console.log("axios get");
-      setData(resp.data);
-    });
-  }, [baseURL]);
+  const { data, loading, error } = useFetch(baseURL);
 
-  return (
+  const handleInputChange =  (e) =>{
+    const { id, value } = e.target;
+    if (id === "registrationFee") {
+      setRegistrationFee(value);
+    }
+    if (id === "name") {
+      setName(value);
+    }
+  }
+  var startviewTime = data.End_View_Property_Time__c || '';
+  var startViewPropertyTime = new Date(startviewTime.split(',')[0]);
+  var daySTView = parseInt(startViewPropertyTime.getUTCDate());
+
+
+ const AprroveAuction = ()=>{
+  alert(name+registrationFee+timeRegistration+auctionTime)
+  axios
+  .put("http://localhost:8800/api/auction/approve/" +id, {
+    registrationFee:registrationFee,
+    timeRegistration:timeRegistration,
+    auctionTime:auctionTime,
+    name:name,
+    propertyId:propertyId
+
+  }, {
+    withCredentials: true,
+  })
+  .then((res) => {
+    console.log(res);
+    console.log(res.data);
+    alert(res.data.message);
+ 
+  });
+ }
+  
+
+
+  return loading ? (
+    "loading please wait"
+  ) :(
     <>
       <Header />
       <NavBar />
@@ -74,35 +110,35 @@ const PropertyDetail = () => {
                 <p className={styles.lable}>Property Description</p>
               </div>
               <div className={styles.col2}>
-                <img
-                  className={styles.img}
-                  src="https://www.w3schools.com/html/pic_trulli.jpg"
-                  alt="images"
-                />
                 {/* <img
                   className={styles.img}
-                  src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`}
+                  src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
                 <img
                   className={styles.img}
-                  src="https://www.w3schools.com/html/pic_trulli.jpg"
+                  src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
                   alt="images"
                 />
                 {/* <img
                   className={styles.img}
-                  src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`}
+                  src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
                 <img
                   className={styles.img}
-                  src="https://www.w3schools.com/html/pic_trulli.jpg"
+                  src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
+                  alt="images"
+                />
+                <img
+                  className={styles.img}
+                  src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
                   alt="images"
                 />
                 <div className={styles.video}>
                   <ReactPlayer
                     className={styles.video}
-                    url="https://www.youtube.com/watch?v=6ltIt-NtQjQ"
+                    url={`${data.Properties_Media__r.records[3].Name}`}
                     playing={true}
                     controls={true}
                     loop={true}
@@ -138,19 +174,19 @@ const PropertyDetail = () => {
                   type="text"
                   placeholder="Enter Property Name"
                   className={styles.inputText}
-                  //   value={data.property.propertyName}
-                  value={"name"}
+                  value={data.Name}
+                  
                   readonly
                 ></input>
                 <select
                   className={styles.drop}
                   id="cagetory"
                   placeholder="Category"
-                  // value={data.property.cagetory}
-                  // defaultValue={data.property.cagetory}
+                  // value={data.Category_Id__r.Name}
+                  // defaultValue={data.Category_Id__r.Name}
                   readonly
                 >
-                  <option value={"Car"}>Car</option>
+                  <option value={data.Category_Id__r.Name}>{data.Category_Id__r.Name}</option>
                   {/* <option value={data.property.category}>{data.property.category}</option> */}
 
                   {/* {data.map((property) => (
@@ -163,8 +199,8 @@ const PropertyDetail = () => {
                   placeholder="Enter Start Bid"
                   className={styles.inputText}
                   // value={startBid}
-                  // value={data.property.startBid}
-                  value={"123"}
+                  value={data.Start_Bid__c}
+                  // value={"123"}
                   required
                 ></input>
                 <input
@@ -173,8 +209,8 @@ const PropertyDetail = () => {
                   placeholder="Enter Deposit"
                   className={styles.inputText}
                   // value={deposit}
-                  // value={data.property.deposit}
-                  value={"123"}
+                  value={data.Deposit_Amount__c}
+                  // value={"123"}
                   required
                   readonly
                 ></input>
@@ -184,8 +220,8 @@ const PropertyDetail = () => {
                   placeholder="Enter Price Step"
                   className={styles.inputText}
                   // value={priceStep}
-                  // value={data.property.priceStep}
-                  value={"321"}
+                  value={data.Price_Step__c}
+                  // value={"321"}
                   required
                   readonly
                 ></input>
@@ -195,8 +231,8 @@ const PropertyDetail = () => {
                   placeholder="Enter Place View Property"
                   className={styles.inputText}
                   // value={placeViewProperty}
-                  // value={data.property.placeViewProperty}
-                  value={"Ha Noi"}
+                  value={data.Place_View_Property__c}
+                  // value={"Ha Noi"}
                   required
                   readonly
                 ></input>
@@ -206,7 +242,10 @@ const PropertyDetail = () => {
                     // onChange={(e) => handleInputChange(e)}
                     // onChange={setViewPropertyTime}
                     ClassName={styles.datePicker}
-                    value={timeRegistration}
+                    value={[
+                      new Date(new Date(data.Start_View_Property_Time__c).toUTCString()),
+                      new Date(new Date(data.End_View_Property_Time__c).toUTCString()),
+                    ]}
                     //   value={data.property.viewPropertyTime}
                     // onChange={setValue}
                     range
@@ -219,10 +258,10 @@ const PropertyDetail = () => {
                 <textarea
                   id="propertyDescription"
                   // value={propertyDescription}
-                  // value={data.property.propertyDescription}
-                  value={
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                  }
+                  value={data.Description__c}
+                  // value={
+                  //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                  // }
                   className={styles.textarea}
                   required
                 ></textarea>{" "}
@@ -233,11 +272,23 @@ const PropertyDetail = () => {
             <p className={styles.title}>Auction</p>
             <div className={styles.col1}>
               {" "}
+              <p className={styles.lable}>Auction Name</p>
               <p className={styles.lable}>Registration Fee</p>
               <p className={styles.lable}>Time Registration</p>
               <p className={styles.lable}>Auction Time</p>
             </div>
             <div className={styles.col2}>
+            <input
+                id="name"
+                type="text"
+                placeholder="Enter Auction Name"
+                className={styles.inputText}
+                // value={priceStep}
+                // value={data.property.priceStep}
+                value={name}
+                onChange={(e) => handleInputChange(e)}
+                required
+              ></input>
               <input
                 id="registrationFee"
                 type="number"
@@ -246,8 +297,9 @@ const PropertyDetail = () => {
                 // value={priceStep}
                 // value={data.property.priceStep}
                 value={registrationFee}
+                onChange={(e) => handleInputChange(e)}
                 required
-              ></input>
+              ></input>            
               <div className={styles.date}>
                 <DatePicker
                   id="timeRegistration"
@@ -284,8 +336,9 @@ const PropertyDetail = () => {
           <div className={styles.btn2}>
             <input
               className={styles.btnSave2}
-              type="submit"
+              type="button"
               value="Save and Publish"
+              onClick={()=>AprroveAuction()}
             ></input>
 
             <input
