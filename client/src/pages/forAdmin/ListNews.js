@@ -3,10 +3,11 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useParams } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
+import Moment from 'moment';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Popup from "reactjs-popup";
@@ -14,14 +15,15 @@ import PublishNews from "../../components/popups/forAdmin/PublishNews";
 import PrivateNews from "../../components/popups/forAdmin/PrivateNews";
 
 const ListNews = () => {
-  const [page, setPage] = React.useState(1);
-
+  const [page, setPage] = useState(1);
+  
   const [title, setTitle] = useState(null);
   const [data, setData] = useState([]);
   const [status, setStatus] = useState("Published");
   const [status2, setStatus2] = useState("Private");
+  var { index } = useParams();
   const navigate = useNavigate();
-  const baseURL = "http://localhost:8800/api/new/";
+  var baseURL = `http://localhost:8800/api/news/${page}`;
 
   useEffect(() => {
     axios.get(baseURL).then((resp) => {
@@ -29,7 +31,7 @@ const ListNews = () => {
       console.log("axios get");
       setData(resp.data);
     });
-  }, [baseURL]);
+  }, [baseURL],[page]);
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     if (id === "title") {
@@ -42,7 +44,7 @@ const ListNews = () => {
     formData.append("title", title);
 
     axios
-      .get("http://localhost:8800/api/new", formData, {
+      .get("http://localhost:8800/api/news", formData, {
         withCredentials: true,
       })
       .then((res) => {
@@ -55,8 +57,8 @@ const ListNews = () => {
       });
     event.preventDefault();
   };
-  const handleChange = (event, value) => {
-    setPage(value);
+  const handleChange = (event, page) => {
+    setPage(page);
   };
 
   return (
@@ -112,7 +114,7 @@ const ListNews = () => {
               <hr />
               <p className={styles.txtBold}>69 News</p>
               <Link className={styles.btnAdd} to="/addNew">
-                Add a new New
+                Add News
               </Link>
               <br />
               <table className={styles.table}>
@@ -122,14 +124,14 @@ const ListNews = () => {
                   <th className={styles.th}>Status</th>
                   <th className={styles.th}>Action</th>
                 </tr>
-                {data.map((news) => (
+                {data.map((item) => (
                   <tr>
-                    <td className={styles.td}>{news}</td>
-                    <td className={styles.td}>{news}</td>
-                    <td className={styles.td}>{news}</td>
+                    <td className={styles.td}>{item.Name}</td>
+                    <td className={styles.td}>{Moment(item.LastModifiedDate).format("DD/MM/yyy - H:mm")}</td>
+                    <td className={styles.td}>{item.Status__c}</td>
                     <td className={styles.td}>
                       {(() => {
-                        if (news.status === "Published") {
+                        if (item.status === "Published") {
                           return (
                             <Popup
                               trigger={
@@ -139,7 +141,7 @@ const ListNews = () => {
                               }
                               position="right center"
                             >
-                              <PrivateNews idNews={news._id} />
+                              <PrivateNews idNews={item.Id} />
                             </Popup>
                           );
                         } else {
@@ -152,7 +154,7 @@ const ListNews = () => {
                               }
                               position="right center"
                             >
-                              <PublishNews idNews={news._id} />
+                              <PublishNews idNews={item.Id} />
                             </Popup>
                           );
                         }
@@ -160,84 +162,11 @@ const ListNews = () => {
                     </td>
                   </tr>
                 ))}
-                <tr>
-                  <td className={styles.td}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </td>
-                  <td className={styles.td}>01/01/2022 - 10:00 </td>
-                  <td className={styles.td}>Published</td>
-                  <td className={styles.td}>
-                    <Link className={styles.linkBlue} to="/editNew">
-                      Edit
-                    </Link>
-                    {(() => {
-                      if (status === "Published") {
-                        return (
-                          <Popup
-                            trigger={
-                              <label className={styles.linkBlue}>Private</label>
-                            }
-                            position="right center"
-                          >
-                            <PrivateNews idNews={123} />
-                          </Popup>
-                        );
-                      } else {
-                        return (
-                          <Popup
-                            trigger={
-                              <label className={styles.linkBlue}>Publish</label>
-                            }
-                            position="right center"
-                          >
-                            <PublishNews idNews={123} />
-                          </Popup>
-                        );
-                      }
-                    })()}
-                  </td>
-                </tr>
-                <tr>
-                  <td className={styles.td}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </td>
-                  <td className={styles.td}>01/01/2022 - 10:00 </td>
-                  <td className={styles.td}>Private</td>
-                  <td className={styles.td}>
-                    <Link className={styles.linkBlue} to="/editNew">
-                      Edit
-                    </Link>
-                    {(() => {
-                      if (status2 === "Published") {
-                        return (
-                          <Popup
-                            trigger={
-                              <label className={styles.linkBlue}>Private</label>
-                            }
-                            position="right center"
-                          >
-                            <PrivateNews idNews={123} />
-                          </Popup>
-                        );
-                      } else {
-                        return (
-                          <Popup
-                            trigger={
-                              <label className={styles.linkBlue}>Publish</label>
-                            }
-                            position="right center"
-                          >
-                            <PublishNews idNews={123} />
-                          </Popup>
-                        );
-                      }
-                    })()}
-                  </td>
-                </tr>
               </table>
               <div>
                 <Pagination
                   className={styles.pagi}
+                  size="large"
                   count={10}
                   page={page}
                   onChange={handleChange}

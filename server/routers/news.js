@@ -14,4 +14,5 @@ router.get("/:index",  getAllNews);
 router.get("/:title/:status/:index",  filterNews);
 
 router.get("/:status/:index",  getByStatus);
+
 module.exports = router;

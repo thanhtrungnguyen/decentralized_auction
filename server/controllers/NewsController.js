@@ -73,13 +73,18 @@ const changeStatusNews = async (req, res, next) => {
 // Get All News
 const getAllNews = async (req, res, next) => {
     try {
-        var listNews = null;
-        var num = (parseInt(req.params.index) - 1)*perPage;
+        var listNews,total = null;
+        var num = (parseInt(req.params.index) - 1)  * perPage;
         if (conn) {
-            await conn.query(`Select Id, Name,Status__c from News_DAP__c order by CreatedDate desc limit ${perPage} offset ${num}`,(err, result) => {
+            await conn.query(`Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c order by CreatedDate desc limit ${perPage} offset ${num} `,(err, result) => {
                 if (err) console.log(err)
-                listNews = result
-            })                
+                listNews = result.records
+            }) 
+            await conn.query(`Select Id from News_DAP__c`,(err, result) => {
+                if (err) console.log(err)
+                total = result
+            })
+            listNews.totalNews = total.totalSize;
         } else {
             console.log("Connection failed with salesforce");
         }
