@@ -20,7 +20,9 @@ const EditProperty = () => {
   const [propertyImage, setPropertyImage] = useState(null);
   const [propertyVideo, setPropertyVideo] = useState(null);
   const [propertyName, setPropertyName] = useState(null);
-  const [category, setCategory] = useState("Car");
+  const [category, setCategory] = useState("Chair");
+  const [listCategory, setlistCategory] = useState([]);
+
   const [propertyDescription, setPropertyDescription] = useState(null);
   const [startBid, setStartBid] = useState(null);
   const [deposit, setDeposit] = useState(null);
@@ -31,7 +33,7 @@ const EditProperty = () => {
     new DateObject().setDay(15),
     new DateObject().add(1, "month").setDay(15),
   ]);
-  
+
   const [property, setProperty] = useState([]);
   const { id } = useParams();
 
@@ -42,7 +44,7 @@ const EditProperty = () => {
     axios.get(baseURLCategory).then((resp) => {
       console.log(resp.data);
       console.log("axios get");
-      setCategory(resp.data);
+      setlistCategory(resp.data);
     });
   }, [baseURLCategory]);
 
@@ -119,26 +121,7 @@ const EditProperty = () => {
         alert(res.data.message);
         navigate("/myProperty");
       });
-    // for (const [key, value] of formData) {
-    //   alert(key + ": " + value);
-    // }
-    // alert(
-    //   "infomation: " + formData
 
-    // propertyImage.name +
-    // " " +
-    // propertyVideo.name +
-    // " " +
-    // propertyName +
-    // " " +
-    // category +
-    // " " +
-    // propertyDescription +
-    // " " +
-    // startBid +
-    // " " +
-    // biddingPreiod
-    // );
     event.preventDefault();
   };
   return (
@@ -200,10 +183,8 @@ const EditProperty = () => {
                   placeholder="Category"
                   // defaultValue={data.property.category}
                 >
-                  {category.map((item) => (
-                    <option value={item.Name}>
-                      {item.Name}
-                    </option>
+                  {listCategory.map((item) => (
+                    <option value={item.Name}>{item.Name}</option>
                   ))}
                 </select>
                 <input
@@ -308,12 +289,7 @@ const EditProperty = () => {
               type="submit"
               value="Save "
             ></input>
-            {/* 
-            <input
-              className={styles.btnDraft}
-              type="button"
-              value="Save as Draft"
-            ></input> */}
+
             <input
               className={styles.btnCancel}
               type="button"

@@ -5,6 +5,7 @@ import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
 const BidderDetail = () => {
   const { id } = useParams();
   const baseURL = `http://localhost:8800/api/bidder/bidderDetail/${id}`;
@@ -13,10 +14,9 @@ const BidderDetail = () => {
   console.log(loading);
 
   return loading ? (
-    "loading please wait"
+    <Loading />
   ) : (
     <>
-      {" "}
       <Header />
       <NavBar />
       <div className={styles.container}>

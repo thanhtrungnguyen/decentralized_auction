@@ -16,7 +16,9 @@ const AddProperty = () => {
   //   new DateObject().setDay(15),
   //   new DateObject().add(1, "month").setDay(15),
   // ]);
-  const [propertyImage, setPropertyImage] = useState(null);
+  const [propertyImage1, setPropertyImage1] = useState(null);
+  const [propertyImage2, setPropertyImage2] = useState(null);
+  const [propertyImage3, setPropertyImage3] = useState(null);
   const [propertyVideo, setPropertyVideo] = useState(null);
   const [propertyName, setPropertyName] = useState(null);
   const [category, setCategory] = useState("Chair");
@@ -47,8 +49,14 @@ const AddProperty = () => {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    if (id === "propertyImage") {
-      setPropertyImage(e.target.files);
+    if (id === "propertyImage1") {
+      setPropertyImage1(e.target.files[0]);
+    }
+    if (id === "propertyImage2") {
+      setPropertyImage2(e.target.files[0]);
+    }
+    if (id === "propertyImage3") {
+      setPropertyImage3(e.target.files[0]);
     }
     if (id === "propertyVideo") {
       setPropertyVideo(value);
@@ -84,9 +92,9 @@ const AddProperty = () => {
 
   const handleSubmit = (event) => {
     const formData = new FormData();
-    for (let i = 0; i < propertyImage.length; i++) {
-      formData.append(`propertyImage${i}`, propertyImage[i]);
-    }
+    formData.append("propertyImage1", propertyImage1);
+    formData.append("propertyImage2", propertyImage2);
+    formData.append("propertyImage3", propertyImage3);
     formData.append("propertyVideo", propertyVideo);
     formData.append("propertyName", propertyName);
     formData.append("category", category);
@@ -109,28 +117,18 @@ const AddProperty = () => {
         alert(res.data.message);
         navigate("/myProperty");
       });
-    // for (const [key, value] of formData) {
-    //   alert(key + ": " + value);
-    // }
-    // alert(
-    //   "infomation: " + formData
 
-    // propertyImage.name +
-    // " " +
-    // propertyVideo.name +
-    // " " +
-    // propertyName +
-    // " " +
-    // category +
-    // " " +
-    // propertyDescription +
-    // " " +
-    // startBid +
-    // " " +
-    // biddingPreiod
-    // );
     event.preventDefault();
   };
+  const [selectedImage, setSelectedImage] = useState();
+
+  // This function will be triggered when the file field change
+  const imageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -144,6 +142,14 @@ const AddProperty = () => {
 
               <div className={styles.col1}>
                 <p className={styles.lable}>Property Image</p>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <p className={styles.lable}>Property Video</p>
                 <p className={styles.lable}>Property Name</p>
                 <p className={styles.lable}>Category</p>
@@ -155,14 +161,49 @@ const AddProperty = () => {
                 <p className={styles.lable}>Property Description</p>
               </div>
               <div className={styles.col2}>
+                {/* <input accept="image/*" type="file" onChange={imageChange} /> */}
                 <input
                   className={styles.inputImg}
-                  id="propertyImage"
+                  id="propertyImage1"
                   onChange={(e) => handleInputChange(e)}
                   type="file"
-                  multiple
                   required
                 ></input>
+                <input
+                  className={styles.inputImg}
+                  id="propertyImage2"
+                  onChange={(e) => handleInputChange(e)}
+                  type="file"
+                  required
+                ></input>
+                <input
+                  className={styles.inputImg}
+                  id="propertyImage3"
+                  onChange={(e) => handleInputChange(e)}
+                  type="file"
+                  required
+                ></input>
+                {propertyImage1 && (
+                  <img
+                    src={URL.createObjectURL(propertyImage1)}
+                    className={styles.image}
+                    alt="Thumb"
+                  />
+                )}{" "}
+                {propertyImage2 && (
+                  <img
+                    src={URL.createObjectURL(propertyImage2)}
+                    className={styles.image}
+                    alt="Thumb"
+                  />
+                )}{" "}
+                {propertyImage3 && (
+                  <img
+                    src={URL.createObjectURL(propertyImage3)}
+                    className={styles.image}
+                    alt="Thumb"
+                  />
+                )}
                 <br />
                 <input
                   className={styles.inputText}
@@ -180,7 +221,6 @@ const AddProperty = () => {
                   onChange={(e) => handleInputChange(e)}
                   required
                 ></input>
-
                 <select
                   className={styles.drop}
                   onChange={(e) => handleInputChange(e)}
@@ -189,10 +229,8 @@ const AddProperty = () => {
                   defaultValue="Chair"
                 >
                   {data.map((item) => (
-                    <option value={item.Name}>
-                      {item.Name}
-                    </option>
-                  ))} 
+                    <option value={item.Name}>{item.Name}</option>
+                  ))}
                 </select>
                 <input
                   id="startBid"

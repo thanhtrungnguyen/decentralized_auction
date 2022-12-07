@@ -9,7 +9,7 @@
 
 .info {
   width: 1174px;
-  height: 1100;
+  height: 1300px;
   background: #ffffff;
   left: 50%;
   margin-left: -500px;
@@ -133,9 +133,9 @@
 .btn {
   width: 1174px;
   left: 50%;
-  margin-left: -500px;
+  margin-left: -600px;
   position: absolute;
-  margin-top: 930px;
+  margin-top: 1100px;
 }
 .btnCancel {
   width: 79px;
@@ -224,4 +224,21 @@
   float: right;
   color: #ffffff;
   margin-left: 20px;
+}
+.preview {
+  display: flex;
+  margin-top: 50px;
+  flex-direction: column;
+}
+.image {
+  width: 100px;
+  height: 100px;
+  margin-left: 110px;
+}
+.delete {
+  cursor: "pointer";
+  padding: 15;
+  background: "red";
+  color: "white";
+  border: "none";
 }
