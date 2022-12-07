@@ -163,7 +163,7 @@ const ListNews = () => {
                 <Pagination
                   className={styles.pagi}
                   size="large"
-                  count={10}
+                  count={Math.round(data.totalNews/10)} 
                   page={page}
                   onChange={handleChange}
                 />
