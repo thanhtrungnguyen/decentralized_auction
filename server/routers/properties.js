@@ -1,5 +1,5 @@
 const express = require("express");
-const { createCate, createProperty, findPropertyByID, getAllCate, getAllPropertyByUser, updateProperty, getListByStatus, getListByName } = require("../controllers/PropertyController.js");
+const { createCate, createProperty, findPropertyByID, getAllCate, getAllPropertyByUser, updateProperty, getListByStatus, getListByName, filterProperty } = require("../controllers/PropertyController.js");
 const { verifyAdmin, verifySeller, verifyToken } = require("../utils/verifyToken.js");
 const multer = require("multer");
 

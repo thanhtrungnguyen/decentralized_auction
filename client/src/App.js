@@ -95,7 +95,7 @@ function App() {
         <Route path="editNew/:id" element={<EditNew />} />
         <Route path="editNew" element={<EditNew />} />
         <Route path="addNew" element={<AddNew />} />
-        <Route path="listNews" element={<ListNews />} />
+        <Route path="listNews/:index" element={<ListNews />} />
       </Routes>
     </BrowserRouter>
   );

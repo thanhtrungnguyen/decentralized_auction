@@ -25,8 +25,8 @@ const BidderDetail = () => {
           <div className={styles.left}>
             <p className={styles.title}>Personal Information</p>
             <p className={styles.bold}>Basic Information</p>
-            <p className={styles.txt}>Firstname</p>
-            <p className={styles.txt}>Lastname</p>
+            <p className={styles.txt}>First Name</p>
+            <p className={styles.txt}>Last Name</p>
             <p className={styles.txt}>Gender</p>
             <p className={styles.txt}>Date of birth</p>
             <p className={styles.txt}>Email address</p>
