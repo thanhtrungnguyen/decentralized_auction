@@ -21,6 +21,7 @@ const PropertyDetail = () => {
   const { id } = useParams();
 
   const baseURL = `http://localhost:8800/api/property/${id}`;
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     axios.get(baseURL).then((resp) => {
@@ -29,24 +30,11 @@ const PropertyDetail = () => {
       setData(resp.data);
     });
   }, [baseURL]);
-  const [propertyImage, setPropertyImage] = useState(null);
-  const [propertyVideo, setPropertyVideo] = useState(null);
-  const [propertyName, setPropertyName] = useState(null);
-  const [cagetory, setCategory] = useState("Car");
-  const [propertyDescription, setPropertyDescription] = useState(null);
-  const [startBid, setStartBid] = useState(null);
-  const [deposit, setDeposit] = useState(null);
-  const [priceStep, setPriceStep] = useState(null);
-  const [placeViewProperty, setPlaceViewProperty] = useState(null);
-  // const [startBid, setStartBid] = useState(null);
+
   const [viewPropertyTime, setViewPropertyTime] = useState([
     new DateObject().setDay(15),
     new DateObject().add(1, "month").setDay(15),
   ]);
-
-  const [data, setData] = useState([]);
-
-  const navigate = useNavigate();
 
   return (
     <>
@@ -145,8 +133,7 @@ const PropertyDetail = () => {
                   type="text"
                   placeholder="Enter Property Name"
                   className={styles.inputText}
-                    value={data.Name}
-                 
+                  value={data.Name}
                   readonly
                 ></input>
                 <select
@@ -157,7 +144,9 @@ const PropertyDetail = () => {
                   // defaultValue={data.Category_Id__r.Name}
                   readonly
                 >
-                  <option value={data.Category_Id__r.Name}>{data.Category_Id__r.Name}</option>
+                  <option value={data.Category_Id__r.Name}>
+                    {data.Category_Id__r.Name}
+                  </option>
                   {/* <option value={data.property.category}>{data.property.category}</option> */}
 
                   {/* {data.map((property) => (
