@@ -1,6 +1,6 @@
 const { verifyAdmin, verifySeller, verifyToken } = require("../utils/verifyToken.js");
 const express = require("express");
-const { createNews, updateNews, changeStatusNews, getAllNews, filterNews, getByStatus } = require("../controllers/NewsController.js");
+const { createNews, updateNews, changeStatusNews, getAllNews, filterNews, getByStatus, countNews } = require("../controllers/NewsController.js");
 const router = express.Router();
 
 router.post("/createNews",  createNews);
@@ -15,4 +15,5 @@ router.get("/:title/:status/:index",  filterNews);
 
 router.get("/:status/:index",  getByStatus);
 
+router.get("/countNews",  countNews);
 module.exports = router;

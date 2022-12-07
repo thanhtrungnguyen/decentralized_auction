@@ -73,7 +73,7 @@ const changeStatusNews = async (req, res, next) => {
 // Get All News
 const getAllNews = async (req, res, next) => {
     try {
-        var listNews,total = null;
+        var listNews,total,totalNews  = null;
         var num = (parseInt(req.params.index) - 1)  * perPage;
         if (conn) {
             await conn.query(`Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c order by CreatedDate desc limit ${perPage} offset ${num} `,(err, result) => {
@@ -82,13 +82,14 @@ const getAllNews = async (req, res, next) => {
             }) 
             await conn.query(`Select Id from News_DAP__c`,(err, result) => {
                 if (err) console.log(err)
-                total = result
+                total = result;
+               totalNews = total.totalSize;
             })
-            listNews.totalNews = total.totalSize;
+            
         } else {
             console.log("Connection failed with salesforce");
         }
-        res.status(200).json(listNews);
+        res.status(200).json({listNews, totalNews});
     } catch (error) {
         next(error)
     }
@@ -129,5 +130,28 @@ const getByStatus = async (req, res, next) => {
         next(error)
     }
 }
+// Count All News
+const countNews = async (req, res, next) => {
+    try {
+        var listNews,total = null;
+        //var num = (parseInt(req.params.index) - 1)  * perPage;
+        if (conn) {
+            // await conn.query(`Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c order by CreatedDate desc limit ${perPage} offset ${num} `,(err, result) => {
+            //     if (err) console.log(err)
+            //     listNews = result.records
+            // }) 
+            await conn.query(`Select Id from News_DAP__c`,(err, result) => {
+                if (err) console.log(err)
+                total = result
+            })
+           // listNews.totalNews = total.totalSize;
+        } else {
+            console.log("Connection failed with salesforce");
+        }
+        res.status(200).json(total);
+    } catch (error) {
+        next(error)
+    }
+}
 
-module.exports = {changeStatusNews,createNews,updateNews,getAllNews,filterNews,getByStatus}
+module.exports = {changeStatusNews,createNews,updateNews,getAllNews,filterNews,getByStatus,countNews}

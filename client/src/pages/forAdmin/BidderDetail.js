@@ -4,7 +4,7 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { useParams } from "react-router-dom";
-import useFetch from "../../hook/useFetch";
+import {useFetch} from "../../hook/useFetch";
 const BidderDetail = () => {
   const { id } = useParams();
   const baseURL = `http://localhost:8800/api/bidder/bidderDetail/${id}`;
@@ -25,8 +25,8 @@ const BidderDetail = () => {
           <div className={styles.left}>
             <p className={styles.title}>Personal Information</p>
             <p className={styles.bold}>Basic Information</p>
-            <p className={styles.txt}>Firstname</p>
-            <p className={styles.txt}>Lastname</p>
+            <p className={styles.txt}>First Name</p>
+            <p className={styles.txt}>Last Name</p>
             <p className={styles.txt}>Gender</p>
             <p className={styles.txt}>Date of birth</p>
             <p className={styles.txt}>Email address</p>

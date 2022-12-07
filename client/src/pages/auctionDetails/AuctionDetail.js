@@ -7,7 +7,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Popup from "reactjs-popup";
 import PlaceABid from "../../components/popups/PlaceABid";
-import useFetch from "../../hook/useFetch";
+import {useFetch} from "../../hook/useFetch";
 import ReactPlayer from "react-player";
 import { Player } from "video-react";
 
