@@ -11,6 +11,8 @@ import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import useFetch from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
 
 const EditProperty = () => {
   // const [date, setDate] = useState([
@@ -51,17 +53,18 @@ const EditProperty = () => {
   }, [baseURLCategory]);
 
   const baseURLProperty = `http://localhost:8800/api/property/${id}`;
+  const { data, loading, error } = useFetch(baseURLProperty);
 
-  useEffect(() => {
-    axios.get(baseURLProperty).then((resp) => {
-      console.log(resp.data);
-      console.log("axios get");
-      setProperty(resp.data);
-      setPropertyImage1(resp.data.propertyImage1);
-      setPropertyImage2(resp.data.propertyImage2);
-      setPropertyImage3(resp.data.propertyImage3);
-    });
-  }, [baseURLProperty]);
+  // useEffect(() => {
+  //   axios.get(baseURLProperty).then((resp) => {
+  //     console.log(resp.data);
+  //     console.log("axios get");
+  //     setProperty(resp.data);
+  //     setPropertyImage1(property.Properties_Media__r.records[0].Name);
+  //     setPropertyImage2(property.Properties_Media__r.records[1].Name);
+  //     setPropertyImage3(property.Properties_Media__r.records[2].Name);
+  //   });
+  // }, [baseURLProperty]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -107,6 +110,7 @@ const EditProperty = () => {
   };
 
   const handleSubmit = (event) => {
+    console.log(propertyImage1);
     const formData = new FormData();
     formData.append("propertyImage1", propertyImage1);
     formData.append("propertyImage2", propertyImage2);
@@ -135,7 +139,9 @@ const EditProperty = () => {
 
     event.preventDefault();
   };
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <Header />
       <NavBar />
@@ -190,22 +196,42 @@ const EditProperty = () => {
                   required
                 ></input>
                 <div className={styles.conImg}>
-                  {" "}
-                  {propertyImage1 && (
+                  {propertyImage1 == null && (
+                    <img
+                      src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
+                      className={styles.image}
+                      alt="Thumb"
+                    />
+                  )}
+                  {propertyImage1 != null && (
                     <img
                       src={URL.createObjectURL(propertyImage1)}
                       className={styles.image}
                       alt="Thumb"
                     />
                   )}
-                  {propertyImage2 && (
+                  {propertyImage2 == null && (
+                    <img
+                      src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
+                      className={styles.image}
+                      alt="Thumb"
+                    />
+                  )}
+                  {propertyImage2 != null && (
                     <img
                       src={URL.createObjectURL(propertyImage2)}
                       className={styles.image}
                       alt="Thumb"
                     />
-                  )}{" "}
-                  {propertyImage3 && (
+                  )}
+                  {propertyImage3 == null && (
+                    <img
+                      src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
+                      className={styles.image}
+                      alt="Thumb"
+                    />
+                  )}
+                  {propertyImage3 != null && (
                     <img
                       src={URL.createObjectURL(propertyImage3)}
                       className={styles.image}
