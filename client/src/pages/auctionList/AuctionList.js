@@ -8,7 +8,9 @@ import { useParams, Link } from "react-router-dom";
 import Popup from "reactjs-popup";
 import PlaceABid from "../../components/popups/PlaceABid";
 import Pagination from "@mui/material/Pagination";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const AuctionList = () => {
     const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState([]);
@@ -41,10 +43,26 @@ const AuctionList = () => {
     //     };
     //     fetchData();
     //   },[]);
-
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "BIDDER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
             <NavBar />
 
             <div className={styles.nav}>

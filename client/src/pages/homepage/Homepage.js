@@ -27,8 +27,15 @@ const HomePage = () => {
     console.log(getUser());
     return (
         <>
-            {getUser().role == "BIDDER" && <HeaderUser username={getUser().userName} />}
-            {getUser().role != "BIDDER" && <Header />}
+            {(() => {
+                if (getUser().role == "BIDDER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
+            {/* {getUser().role == "BIDDER" && <HeaderUser username={getUser().userName} />}
+            {getUser().role != "BIDDER" && <Header />} */}
 
             <NavBar />
             <div>

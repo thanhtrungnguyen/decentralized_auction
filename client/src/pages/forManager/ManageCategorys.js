@@ -9,7 +9,9 @@ import React, { useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const ManagerCategorys = () => {
     const [page, setPage] = React.useState(1);
     const [categoryName, setCategory] = useState(null);
@@ -52,9 +54,26 @@ const ManagerCategorys = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "MANAGER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}{" "}
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>

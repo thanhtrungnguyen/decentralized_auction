@@ -6,18 +6,37 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const BidderDetail = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/bidder/bidderDetail/${id}`;
     const { data, loading, error } = useFetch(baseURL);
     console.log(data);
     console.log(loading);
-
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return loading ? (
         <Loading />
     ) : (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "ADMIN") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}{" "}
             <NavBar />
             <div className={styles.container}>
                 <SideBarAdmin />

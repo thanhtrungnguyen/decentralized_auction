@@ -8,7 +8,9 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const AddCategory = () => {
     const [cagetoryName, setCategoryName] = useState(null);
     const navigate = useNavigate();
@@ -32,10 +34,27 @@ const AddCategory = () => {
             });
         event.preventDefault();
     };
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return (
         <>
             {" "}
-            <Header />
+            {(() => {
+                if (getUser().role == "MANAGER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}{" "}
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>

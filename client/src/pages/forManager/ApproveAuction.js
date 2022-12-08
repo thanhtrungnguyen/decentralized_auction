@@ -14,7 +14,9 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 import Popup from "reactjs-popup";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -91,11 +93,28 @@ const PropertyDetail = () => {
     const Cancel = () => {
         navigate("/autionsListForManager");
     };
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return loading ? (
         "loading please wait"
     ) : (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "MANAGER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
             <NavBar />
             <form>
                 <div className={styles.root}>

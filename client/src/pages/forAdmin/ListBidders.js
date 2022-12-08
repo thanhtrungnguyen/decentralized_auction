@@ -12,7 +12,9 @@ import axios from "axios";
 import Popup from "reactjs-popup";
 import BanedBidder from "../../components/popups/forAdmin/BanBidder";
 import ActiveBidder from "../../components/popups/forAdmin/ActiveBidder";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const ListBidders = () => {
     const [page, setPage] = React.useState(1);
 
@@ -58,10 +60,26 @@ const ListBidders = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "ADMIN") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
