@@ -12,7 +12,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
     if (err) {
         console.error(err);
     } else {
-        console.log(res.id);
+       // console.log(res.id);
     }
 });
 //create property
