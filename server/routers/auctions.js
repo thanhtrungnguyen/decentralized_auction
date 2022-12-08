@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-    createAuction,
+    createAuctionRequest,
     getAllAuction,
     getAuctionDetailByID,
     updateAuction,
@@ -12,7 +12,7 @@ const { verifySeller } = require("../utils/verifyToken.js");
 
 const router = express.Router();
 
-router.post("/request/:id", createAuction);
+router.post("/request/:id", createAuctionRequest);
 
 router.put("/approve/:id", approveAuction);
 

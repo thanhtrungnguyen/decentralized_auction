@@ -3,6 +3,7 @@
 // const Property = require("../models/Property.js");
 const { getFileStream } = require("../s3.js");
 const jsforce = require("jsforce");
+const { createAuction } = require("../services/callContractFunction.js");
 const conn = new jsforce.Connection({
     loginUrl: process.env.SF_LOGIN_URL,
 });
@@ -15,7 +16,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
     }
 });
 
-const createAuction = async (req, res, next) => {
+const createAuctionRequest = async (req, res, next) => {
     await conn.sobject("Auction__c").create(
         {
             Property_DAP_Id__c: req.params.id,
@@ -39,35 +40,65 @@ const createAuction = async (req, res, next) => {
             }
         }
     );
-    res.status(200).json("create auction successful");
+    res.status(200).json("create auction successfully!");
 };
 
 const rejectAuction = async (req, res, next) => {
-    const event = new Date(1974, 10, 8, 9, 30, 30);
-    const event1 = new Date(1974, 10, 8, 9, 30, 30);
-    console.log(event - event1 == 0);
+    await conn.sobject("Auction__c").update(
+        {
+            Status__c: "Rejected",
+            Id: req.params.id,
+        },
+        (err, ret) => {
+            if (err || !ret.success) {
+                return console.error(err);
+            }
+        }
+    );
+
+    await conn.sobject("Property_DAP__c").update(
+        {
+            Status__c: "Rejected",
+            Id: req.body.propertyId,
+        },
+        (err, ret) => {
+            if (err || !ret.success) {
+                return console.error(err);
+            }
+        }
+    );
+    res.status(200).json("Reject auction !!!");
 };
 const approveAuction = async (req, res, next) => {
+    var property ;
+
     var startRegistrationTime = new Date(req.body.timeRegistration[0]);
     var startRegistrationTimeVN = startRegistrationTime.setTime(startRegistrationTime.getTime() + 7 * 60 * 60 * 1000);
     var startRegistrationTimeFN = new Date(startRegistrationTimeVN).toISOString();
+    var startRegistrationTimeFN1 = new Date(startRegistrationTimeVN).toUTCString();
 
     var endRegistrationTime = new Date(req.body.timeRegistration[1]);
     var endRegistrationTimeVN = endRegistrationTime.setTime(endRegistrationTime.getTime() + 7 * 60 * 60 * 1000);
     var endRegistrationTimeFN = new Date(endRegistrationTimeVN).toISOString();
+    var endRegistrationTimeFN1 = new Date(endRegistrationTimeVN).toUTCString();
+
 
     var startAuctionTime = new Date(req.body.auctionTime[0]);
     var startAuctionTimeVN = startAuctionTime.setTime(startAuctionTime.getTime() + 7 * 60 * 60 * 1000);
     var startAuctionTimeFN = new Date(startAuctionTimeVN).toISOString();
+    var startAuctionTimeFN1 = new Date(startAuctionTimeVN).toUTCString();
+
 
     var endAuctionTime = new Date(req.body.auctionTime[1]);
     var endAuctionTimeVN = endAuctionTime.setTime(endAuctionTime.getTime() + 7 * 60 * 60 * 1000);
     var endAuctionTimeFN = new Date(endAuctionTimeVN).toISOString();
+    var endAuctionTimeFN1 = new Date(endAuctionTimeVN).toUTCString();
 
     var paymentTime = new Date(req.body.auctionTime[1]);
     var paymentTimeVN = paymentTime.setTime(paymentTime.getTime() + 7 * 60 * 60 * 1000 + 5 * 60 * 1000);
     var paymentTimeFN = new Date(paymentTimeVN).toISOString();
-
+    var paymentTimeFN1 = new Date(paymentTimeVN).toUTCString();
+    
     await conn.sobject("Auction__c").update(
         {
             Status__c: "Approved",
@@ -98,6 +129,29 @@ const approveAuction = async (req, res, next) => {
             }
         }
     );
+    await conn.query(
+        "Select Category_Id__r.Name, Deposit_Amount__c, End_View_Property_Time__c, Place_View_Property__c, Price_Step__c, Description__c, Name, Start_Bid__c, Start_View_Property_Time__c, Status__c, User_Id__c, (Select Name from Properties_Media__r) from Property_DAP__c Where Id ='" +
+            req.body.propertyId +
+            "'",
+        (err, res) => {
+            if (err) return console.error(err);
+            property = res.records[0];
+        }
+    );
+
+    await createAuction(
+        req.params.id,
+        startRegistrationTimeFN1,
+        endRegistrationTimeFN1,
+        startAuctionTimeFN1,
+        endAuctionTimeFN1,
+        paymentTimeFN1,
+        parseFloat(req.body.registrationFee),
+        property.Deposit_Amount__c,
+        property.Start_Bid__c,
+        property.Price_Step__c
+        );
+
     res.status(200).json("Approve Successfully!!");
 };
 const updateAuction = async (req, res, next) => {
@@ -190,4 +244,4 @@ const uploadImage = async (req, res, next) => {
 //     }
 // }
 
-module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuction, updateAuction };
+module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction };
