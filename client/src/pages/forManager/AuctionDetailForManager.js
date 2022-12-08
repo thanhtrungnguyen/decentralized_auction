@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 import Popup from "reactjs-popup";
 
-const PropertyDetail = () => {
+const AuctionDetailForManager = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
@@ -393,4 +393,4 @@ const PropertyDetail = () => {
         </>
     );
 };
-export default PropertyDetail;
+export default AuctionDetailForManager;

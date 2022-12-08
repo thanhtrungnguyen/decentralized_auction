@@ -165,10 +165,13 @@ const AuctionsListForManager = () => {
                                         </td>
                                         <td className={styles.td}>{auction.Auctions1__r.records[0].Status__c}</td>
                                         <td className={styles.td}>
-                                            <Link className={styles.linkBlue} to={`/autitoDetailForManager/${auction._id}`}>
+                                            <Link
+                                                className={styles.linkBlue}
+                                                to={`/auctionDetailForManager/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
+                                            >
                                                 View
                                             </Link>
-                                            
+
                                             <Link
                                                 className={styles.linkBlue}
                                                 to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}

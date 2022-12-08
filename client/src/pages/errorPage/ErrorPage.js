@@ -6,8 +6,8 @@ const ErrorPage = ({ error }) => {
         <>
             <Header />
             <NavBar />
-            <h1>{error.code}</h1>
-            <h2>{error.message}</h2>
+            {/* <h1>{error.code}</h1>
+            <h2>{error.message}</h2> */}
             <h3>ErrorPage</h3>
             <Footer />
         </>
