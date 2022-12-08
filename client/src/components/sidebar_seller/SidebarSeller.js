@@ -19,11 +19,7 @@ const SidebarSeller = () => {
                 <Link to="/myAuctions" className={styles.txt}>
                     Auction List
                 </Link>{" "}
-                <br />
-                <Link to="/" className={styles.txt}>
-                    Add New Auction
-                </Link>{" "}
-                <br />
+                {/* <br />
                 <p className={styles.title}>Finance</p>
                 <Link to="/" className={styles.txt}>
                     My Income
@@ -45,8 +41,8 @@ const SidebarSeller = () => {
                 <Link to="/" className={styles.txt}>
                     Account Health
                 </Link>{" "}
-                <br />
-                <p className={styles.title}>Help</p>
+                <br /> */}
+                {/* <p className={styles.title}>Help</p> */}
             </div>
         </>
     );

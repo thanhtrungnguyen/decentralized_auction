@@ -1,6 +1,6 @@
 import styles from "../../styleCss/stylesPages/forAdmin/addManager.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import React, { useEffect, useState } from "react";

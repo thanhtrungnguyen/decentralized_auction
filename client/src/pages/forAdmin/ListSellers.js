@@ -1,8 +1,8 @@
 import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
-import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
+import SidebarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Outlet, Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
@@ -65,7 +65,7 @@ const ListSellers = () => {
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
-                    <SideBarAdmin />
+                    <SidebarAdmin />
                     <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
