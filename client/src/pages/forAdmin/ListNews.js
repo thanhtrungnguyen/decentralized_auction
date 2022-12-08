@@ -13,6 +13,7 @@ import Popup from "reactjs-popup"
 import PublishNews from "../../components/popups/forAdmin/PublishNews"
 import PrivateNews from "../../components/popups/forAdmin/PrivateNews"
 import { useFetchPagination } from "../../hook/useFetch"
+import Loading from "../../components/loading/Loading"
 
 const ListNews = () => {
     const [page, setPage] = useState(1)
@@ -56,7 +57,7 @@ const ListNews = () => {
     }
 
     return loading ? (
-        "loading please wait"
+        <Loading/>
     ) : (
         <>
             <Header />
@@ -99,77 +100,73 @@ const ListNews = () => {
                                 Private
                             </Link>
 
-                            <hr />
-                            <p className={styles.txtBold}>{data.totalNews}</p>
-                            <Link className={styles.btnAdd} to="/addNew">
-                                Add News
-                            </Link>
-                            <br />
-                            <table className={styles.table}>
-                                <tr>
-                                    <th className={styles.th}>Title</th>
-                                    <th className={styles.th}>Last modified</th>
-                                    <th className={styles.th}>Status</th>
-                                    <th className={styles.th}>Action</th>
-                                </tr>
-                                {data.listNews.map((item) => (
-                                    <tr>
-                                        <td className={styles.td}>{item.Name}</td>
-                                        <td className={styles.td}>
-                                            {Moment(item.LastModifiedDate).format(
-                                                "DD/MM/yyy - H:mm"
-                                            )}
-                                        </td>
-                                        <td className={styles.td}>{item.Status__c}</td>
-                                        <td className={styles.td}>
-                                            {(() => {
-                                                if (item.status === "Published") {
-                                                    return (
-                                                        <Popup
-                                                            trigger={
-                                                                <label className={styles.linkBlue}>
-                                                                    Private
-                                                                </label>
-                                                            }
-                                                            position="right center"
-                                                        >
-                                                            <PrivateNews idNews={item.Id} />
-                                                        </Popup>
-                                                    )
-                                                } else {
-                                                    return (
-                                                        <Popup
-                                                            trigger={
-                                                                <label className={styles.linkBlue}>
-                                                                    Publish
-                                                                </label>
-                                                            }
-                                                            position="right center"
-                                                        >
-                                                            <PublishNews idNews={item.Id} />
-                                                        </Popup>
-                                                    )
-                                                }
-                                            })()}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </table>
-                            <div>
-                                <Pagination
-                                    className={styles.pagi}
-                                    size="large"
-                                    count={10}
-                                    page={page}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <Footer />
-                </div>
-            </form>
-        </>
-    )
-}
-export default ListNews
+              <hr />
+              <p className={styles.txtBold}>{data.totalNews}</p>
+              <Link className={styles.btnAdd} to="/addNew">
+                Add News
+              </Link>
+              <br />
+              <table className={styles.table}>
+                <tr>
+                  <th className={styles.th}>Title</th>
+                  <th className={styles.th}>Last modified</th>
+                  <th className={styles.th}>Status</th>
+                  <th className={styles.th}>Action</th>
+                </tr>
+                {data.listNews.map((item) => (
+                  <tr>
+                    <td className={styles.td}>{item.Name}</td>
+                    <td className={styles.td}>{Moment(item.LastModifiedDate).format("DD/MM/yyy - H:mm")}</td>
+                    <td className={styles.td}>{item.Status__c}</td>
+                    <td className={styles.td}>
+                      {(() => {
+                        if (item.status === "Published") {
+                          return (
+                            <Popup
+                              trigger={
+                                <label className={styles.linkBlue}>
+                                  Private
+                                </label>
+                              }
+                              position="right center"
+                            >
+                              <PrivateNews idNews={item.Id} />
+                            </Popup>
+                          );
+                        } else {
+                          return (
+                            <Popup
+                              trigger={
+                                <label className={styles.linkBlue}>
+                                  Publish
+                                </label>
+                              }
+                              position="right center"
+                            >
+                              <PublishNews idNews={item.Id} />
+                            </Popup>
+                          );
+                        }
+                      })()}
+                    </td>
+                  </tr>
+                ))}
+              </table>
+              <div>
+                <Pagination
+                  className={styles.pagi}
+                  size="large"
+                  count={Math.round(data.totalNews/10)} 
+                  page={page}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      </form>
+    </>
+  );
+};
+export default ListNews;
