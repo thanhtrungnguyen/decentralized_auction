@@ -6,7 +6,7 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin"
 import { Link, useParams } from "react-router-dom"
 import Pagination from "@mui/material/Pagination"
 import React, { useState } from "react"
-import { Moment } from "moment"
+import Moment  from "moment"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import Popup from "reactjs-popup"
@@ -101,7 +101,7 @@ const ListNews = () => {
                             </Link>
 
               <hr />
-              <p className={styles.txtBold}>{data.totalNews}</p>
+              <p className={styles.txtBold}>Total News: {data.totalNews}</p>
               <Link className={styles.btnAdd} to="/addNew">
                 Add News
               </Link>

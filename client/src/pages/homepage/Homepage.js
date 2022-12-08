@@ -10,7 +10,7 @@ import styles from "../../styleCss/stylesPages/hompage.module.css";
 import jwt from "jsonwebtoken";
 import { useState } from "react";
 
-const Home = () => {
+const HomePage = () => {
     return (
         <>
             <Header />
