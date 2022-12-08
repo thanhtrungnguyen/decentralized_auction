@@ -16,6 +16,7 @@ const MANAGER = "MANAGER";
 const ADMIN = "ADMIN";
 const CONTACT = "CONTACT";
 const ACCOUNT = "ACCOUNT";
+// login salesforce
 const conn = new jsforce.Connection({
     loginUrl: process.env.SF_LOGIN_URL,
 });
@@ -24,7 +25,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
     if (err) {
         console.error(err);
     } else {
-        console.log(res.id);
+       // console.log(res.id);
     }
 });
 //register new User
@@ -43,6 +44,7 @@ const register = async (req, res, next) => {
                     {
                         Name: req.body.username,
                         Password__c: hash,
+                        Status__c:"Activate"
                     },
                     (err, ret) => {
                         if (err || !ret.success) {
@@ -128,6 +130,7 @@ const register = async (req, res, next) => {
                     {
                         Name: req.body.username,
                         Password__c: hash,
+                        Status__c:"Activate"
                     },
                     (err, result) => {
                         if (err) {
@@ -258,6 +261,7 @@ const registerSeller = async (req, res, next) => {
                 {
                     Name: req.body.username,
                     Password__c: hash,
+                    Status__c:"Activate"
                 },
                 (err, result) => {
                     if (err) {
@@ -387,6 +391,7 @@ const registerManager = async (req, res, next) => {
                 {
                     Name: req.body.username,
                     Password__c: hash,
+                    Status__c:"Activate"
                 },
                 (err, result) => {
                     if (err) {
@@ -450,7 +455,7 @@ const login = async (req, res, next) => {
         var user = null;
         var roleRight = null;
         var role = null;
-        await conn.sobject("User__c").findOne({ Name: req.body.userName }, (err, ret) => {
+        await conn.sobject("User__c").findOne({ Name: req.body.userName,  Status__c:"Activate" }, (err, ret) => {
             if (err) console.error(err);
             user = ret;
         });

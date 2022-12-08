@@ -12,24 +12,20 @@ import axios from "axios";
 import Popup from "reactjs-popup";
 import BanedManager from "../../components/popups/forAdmin/BanManager";
 import ActiveManager from "../../components/popups/forAdmin/ActiveManager";
+import Loading from "../../components/loading/Loading";
+import { useFetchPagination } from "../../hook/useFetch";
 
 const ListForManagers = () => {
     const [page, setPage] = React.useState(1);
 
     const [email, setEmail] = useState(null);
-    const [data, setData] = useState([]);
     const [status, setStatus] = useState("Active");
     const [status2, setStatus2] = useState("Baned");
     const navigate = useNavigate();
-    const baseURL = "http://localhost:8800/api/manager/";
+    const baseURL = `http://localhost:8800/api/user/MANAGER/${page}`;
 
-    useEffect(() => {
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setData(resp.data);
-        });
-    }, [baseURL]);
+    const {data, loading, error } = useFetchPagination(baseURL, page)
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "email") {
@@ -49,7 +45,7 @@ const ListForManagers = () => {
                 console.log(res);
                 console.log(res.data);
                 alert(res.data.message);
-                setData(res.data);
+                // setData(res.data);
 
                 navigate("/autionsListForManager");
             });
@@ -59,7 +55,9 @@ const ListForManagers = () => {
         setPage(value);
     };
 
-    return (
+    return loading ? (
+        <Loading/>
+    ) : (
         <>
             <Header />
             <NavBar />
@@ -102,37 +100,36 @@ const ListForManagers = () => {
                             </Link>
 
                             <hr />
-                            <p className={styles.txtBold}>69 Properties</p>
+                            <p className={styles.txtBold}>Total MANAGER: {data.total}</p>
                             <Link className={styles.btnAdd} to="/addManager">
                                 Add a New Manager
                             </Link>
                             <br />
                             <table className={styles.table}>
                                 <tr>
-                                    <th className={styles.th}>Full Name</th>
-                                    <th className={styles.th}>Phone</th>
-                                    <th className={styles.th}>Email</th>
+                                    <th className={styles.th}>User Name</th>
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {data.map((manager) => (
+                                {data.listUser.map((item) => (
                                     <tr>
-                                        <td className={styles.td}>{manager}</td>
-                                        <td className={styles.td}>{manager}</td>
-                                        <td className={styles.td}>{manager}</td>
-                                        <td className={styles.td}>{manager}</td>
+                                        <td className={styles.td}>{item.User_DAP__r.Name}</td>
+                                        <td className={styles.td}>{item.User_DAP__r.Status__c }</td>
                                         <td className={styles.td}>
+                                            <Link className={styles.linkBlue} to={`/editManager/${item.User_DAP__r.id}`}>
+                                                View
+                                            </Link>
                                             {(() => {
-                                                if (manager.status === "Active") {
+                                                if (item.User_DAP__r.Status__c === "Activate") {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                            <BanedManager idManager={manager._id} />
+                                                        <Popup trigger={<label className={styles.linkBlue}>Deactivate</label>} position="right center">
+                                                            <BanedManager idBidder={item.User_DAP__r.Id} />
                                                         </Popup>
                                                     );
                                                 } else {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                            <ActiveManager idManager={manager._id} />
+                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
+                                                            <ActiveManager idBidder={item.User_DAP__r.Id} />
                                                         </Popup>
                                                     );
                                                 }
@@ -140,61 +137,9 @@ const ListForManagers = () => {
                                         </td>
                                     </tr>
                                 ))}
-                                <tr>
-                                    <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>0123456789 </td>
-                                    <td className={styles.td}>abcde@abc.com </td>
-                                    <td className={styles.td}>Active</td>
-                                    <td className={styles.td}>
-                                        <Link className={styles.linkBlue} to="/editManager">
-                                            Edit
-                                        </Link>
-                                        {(() => {
-                                            if (status === "Active") {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                        <BanedManager idManager={123} />
-                                                    </Popup>
-                                                );
-                                            } else {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                        <ActiveManager idManager={123} />
-                                                    </Popup>
-                                                );
-                                            }
-                                        })()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>0123456789 </td>
-                                    <td className={styles.td}>abcde@abc.com </td>
-                                    <td className={styles.td}>Baned</td>
-                                    <td className={styles.td}>
-                                        <Link className={styles.linkBlue} to="/editManager">
-                                            Edit
-                                        </Link>
-                                        {(() => {
-                                            if (status2 === "Active") {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                        <BanedManager idManager={123} />
-                                                    </Popup>
-                                                );
-                                            } else {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                        <ActiveManager idManager={123} />
-                                                    </Popup>
-                                                );
-                                            }
-                                        })()}
-                                    </td>
-                                </tr>
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={Math.floor(data.total/10)+1} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>
