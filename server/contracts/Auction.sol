@@ -30,6 +30,7 @@ error Auction__RequireAmountToPaymentNotMet(string auctionId, uint256 requirePay
 contract Auction {
     string[] private s_auctionList;
     uint16 private constant CONFIRMATION_TIME = 300;
+    uint128 f = 34000000000000000000;
     enum BidderState {
         BIDING, //registered or bidding
         WAITING, //top 2 bidder who is watting for top 1 confirm result

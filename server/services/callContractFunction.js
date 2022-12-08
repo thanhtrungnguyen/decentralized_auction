@@ -1,7 +1,8 @@
-const { ethers } = require("ethers");
+const { ethers } = require("hardhat");
 const deployments = require("../deployments/goerli/Auction.json");
 // const abi = require("../artifacts/contracts/Auction.sol/Auction.json")
 const { getEpoch } = require("../services/timeConverter");
+const {} = require("moralis");
 require("dotenv").config();
 
 const GOERLI_RPC_URL = "https://eth-goerli.g.alchemy.com/v2/Bt82l8JDTtigrUmMLXl53vCpn1AGkpaR";
@@ -24,6 +25,13 @@ const contract = new ethers.Contract(contractAddress, abi, walletWithProvider);
 // const startBid = 500
 // const priceStep = 1
 
+const parseWei = (number) => {
+    // const k = ethers.utils.parseUnits(number.toString(), "wei");
+
+    // console.log(number);
+    return number * (10 ^ 18);
+};
+
 const createAuction = async (
     auctionId,
     startRegistrationTime,
@@ -43,10 +51,10 @@ const createAuction = async (
         const startAuctionTimeGotEpoch = getEpoch(startAuctionTime);
         const endAuctionTimeGotEpoch = getEpoch(endAuctionTime);
         const duePaymentTimeGotEpoch = getEpoch(duePaymentTime);
-        const registrationFeeParsed = ethers.utils.parseEther(registrationFee);
-        const depositAmountParsed = ethers.utils.parseEther(depositAmount);
-        const startBidParsed = ethers.utils.parseEther(startBid);
-        const priceStepParsed = ethers.utils.parseEther(priceStep);
+        const registrationFeeParsed = parseWei(registrationFee);
+        const depositAmountParsed = parseWei(depositAmount);
+        const startBidParsed = parseWei(startBid);
+        const priceStepParsed = parseWei(priceStep);
         await contract.createAuction(
             auctionId,
             startRegistrationTimeGotEpoch,

@@ -2,6 +2,7 @@ const { ethers, network } = require("hardhat");
 const { getEpoch } = require("../services/timeConverter");
 const { moveBlocks } = require("../utils/move-blocks");
 
+// npx hardhat run scripts/create-auction.js --network goerli
 createAuction = async (
     auctionId,
     startRegistrationTime,
@@ -35,7 +36,7 @@ createAuction = async (
     }
 };
 
-const auctionId = 4;
+const auctionId = "54t45i87i678i7j7t5";
 const startRegistrationTime = getEpoch("December 9, 2022 17:15:00");
 const endRegistrationTime = getEpoch("December 9, 2022 18:16:00");
 const startAuctionTime = getEpoch("December 9, 2022 19:17:00");

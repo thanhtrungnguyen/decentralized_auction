@@ -13,6 +13,7 @@ const propertyRoute = require("./routers/properties.js");
 const categoryRoute = require("./routers/categories.js");
 const newsRoute = require("./routers/news.js");
 const multer = require("multer");
+const getAuctionById = require("./services/logs");
 
 // config app
 const app = express();
@@ -105,6 +106,12 @@ const upload = multer({ dest: "uploads/" });
 
 //connect salesforce
 
+// app.post("/webhook", (req, res) => {
+//     const webhook = req.body;
+//     console.log(webhook);
+//     res.status(200).json;
+// });
+
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/property", propertyRoute);
@@ -123,6 +130,13 @@ app.use("/api/news", newsRoute);
 //     }
 //   })
 // })
+getAuctionById();
+function getLogs() {
+    console.log();
+}
+
+getLogs();
+console.log("=====================");
 app.listen(PORT, () => {
     // connect();
     console.log("Connected to backend.");
