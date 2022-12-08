@@ -43,6 +43,10 @@ const createAuction = async (
         const startAuctionTimeGotEpoch = getEpoch(startAuctionTime);
         const endAuctionTimeGotEpoch = getEpoch(endAuctionTime);
         const duePaymentTimeGotEpoch = getEpoch(duePaymentTime);
+        const registrationFeeParsed = ethers.utils.parseEther(registrationFee);
+        const depositAmountParsed = ethers.utils.parseEther(depositAmount);
+        const startBidParsed = ethers.utils.parseEther(startBid);
+        const priceStepParsed = ethers.utils.parseEther(priceStep);
         await contract.createAuction(
             auctionId,
             startRegistrationTimeGotEpoch,
@@ -50,10 +54,10 @@ const createAuction = async (
             startAuctionTimeGotEpoch,
             endAuctionTimeGotEpoch,
             duePaymentTimeGotEpoch,
-            registrationFee,
-            depositAmount,
-            startBid,
-            priceStep
+            registrationFeeParsed,
+            depositAmountParsed,
+            startBidParsed,
+            priceStepParsed
         );
         console.log("The auction created on smartcontract!!!");
     } catch (error) {
