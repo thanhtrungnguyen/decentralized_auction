@@ -9,11 +9,25 @@ import SidebarSeller from "../../components/sidebar_seller/SidebarSeller";
 import styles from "../../styleCss/stylesPages/hompage.module.css";
 import jwt from "jsonwebtoken";
 import { useState } from "react";
+import Cookies from 'js-cookie';
+const HomePage = () => {
+    
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get('access_token');
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, "dhgaasdiq231231wdahuioSDHFYGUIAFUIAF12345", (err, user) => {
+            users =  user;
 
-const Home = () => {
+        });
+        return users;
+    };
+    console.log(getUser());
     return (
         <>
-            <Header />
+            <HeaderUser username />
             <NavBar />
             <div>
                 <div className={styles.banner}>
