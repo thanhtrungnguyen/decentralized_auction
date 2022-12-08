@@ -24,6 +24,8 @@
     "bootstrap": "^5.2.2",
     "cloudinary": "^1.32.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "magic-sdk": "^7.0.0",
     "material-ui-pagination-react": "^1.9.0",

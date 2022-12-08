@@ -480,11 +480,9 @@ const login = async (req, res, next) => {
             }
         );
 
-        const token = jwt.sign({ id: user.Id, role: role }, process.env.JWT);
+        const token = jwt.sign({ id: user.Id, role: role, userName: user.Name }, process.env.JWT);
 
-        res.cookie("access_token", token, {
-            httpOnly: true,
-        })
+        res.cookie("access_token", token)
             .status(200)
             .json({ userId: user.Id, userName: user.Name, role: role, token: token })
             .send();
