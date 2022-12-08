@@ -10,6 +10,9 @@ import styles from "../../styleCss/stylesPages/hompage.module.css";
 import jwt from "jsonwebtoken";
 import { useState } from "react";
 import Cookies from 'js-cookie';
+import { get } from "mongoose";
+
+
 const HomePage = () => {
     
     const getUser = () => {
@@ -18,7 +21,7 @@ const HomePage = () => {
         if (!token) {
             console.log("Not authenticated");
         }
-        jwt.verify(token, "dhgaasdiq231231wdahuioSDHFYGUIAFUIAF12345", (err, user) => {
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
             users =  user;
 
         });
@@ -26,8 +29,14 @@ const HomePage = () => {
     };
     console.log(getUser());
     return (
-        <>
-            <HeaderUser username />
+        <>  
+            {
+                getUser().role == "BIDDER"  && <HeaderUser username={getUser().userName} />
+            }
+            {
+                getUser().role != "BIDDER"  && <Header />
+            }
+            
             <NavBar />
             <div>
                 <div className={styles.banner}>

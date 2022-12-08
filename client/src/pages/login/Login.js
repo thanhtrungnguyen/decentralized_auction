@@ -17,9 +17,14 @@ const Login = () => {
         event.preventDefault();
         axios.post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true }).then((res) => {
             console.log(res);
-            console.log(res.data);
+            if(res.data.role == "BIDDER"){
+                navigate("/homePage");
+            }
+            if(res.data.role == "ADMIN"){
+                navigate("/listManagers");
+            }
             // alert(res.data.message);
-            navigate("/homePage");
+            
         });
     };
 
