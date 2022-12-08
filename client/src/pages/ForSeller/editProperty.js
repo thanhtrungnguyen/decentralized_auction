@@ -1,59 +1,56 @@
-import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarSeller from "../../components/sidebar_seller/SidebarSeller"
-import { Outlet, Link } from "react-router-dom"
-import React, { useEffect, useState } from "react"
-import DatePicker, { DateObject } from "react-multi-date-picker"
-import Ft from "react-multi-date-picker/plugins/range_picker_footer"
-import TimePicker from "react-multi-date-picker/plugins/analog_time_picker"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import { useParams } from "react-router-dom"
-import { useFetch } from "../../hook/useFetch"
-import Loading from "../../components/loading/Loading"
+import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
+import { Outlet, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useFetch } from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
 
 const EditProperty = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
-    const [propertyImage1, setPropertyImage1] = useState(null)
-    const [propertyImage2, setPropertyImage2] = useState(null)
-    const [propertyImage3, setPropertyImage3] = useState(null)
-    const [propertyVideo, setPropertyVideo] = useState(null)
-    const [propertyName, setPropertyName] = useState(null)
-    const [category, setCategory] = useState("Chair")
-    const [listCategory, setlistCategory] = useState([])
+    const [propertyImage1, setPropertyImage1] = useState(null);
+    const [propertyImage2, setPropertyImage2] = useState(null);
+    const [propertyImage3, setPropertyImage3] = useState(null);
+    const [propertyVideo, setPropertyVideo] = useState(null);
+    const [propertyName, setPropertyName] = useState(null);
+    const [category, setCategory] = useState("Chair");
+    const [listCategory, setlistCategory] = useState([]);
 
-    const [propertyDescription, setPropertyDescription] = useState(null)
-    const [startBid, setStartBid] = useState(null)
-    const [deposit, setDeposit] = useState(null)
-    const [priceStep, setPriceStep] = useState(null)
-    const [placeViewProperty, setPlaceViewProperty] = useState(null)
+    const [propertyDescription, setPropertyDescription] = useState(null);
+    const [startBid, setStartBid] = useState(null);
+    const [deposit, setDeposit] = useState(null);
+    const [priceStep, setPriceStep] = useState(null);
+    const [placeViewProperty, setPlaceViewProperty] = useState(null);
     // const [startBid, setStartBid] = useState(null);
-    const [viewPropertyTime, setViewPropertyTime] = useState([
-        new DateObject().setDay(15),
-        new DateObject().add(1, "month").setDay(15),
-    ])
+    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const [property, setProperty] = useState([])
-    const { id } = useParams()
+    const [property, setProperty] = useState([]);
+    const { id } = useParams();
 
-    const navigate = useNavigate()
-    const baseURLCategory = `http://localhost:8800/api/category`
+    const navigate = useNavigate();
+    const baseURLCategory = `http://localhost:8800/api/category`;
 
     useEffect(() => {
         axios.get(baseURLCategory).then((resp) => {
-            console.log(resp.data)
-            console.log("axios get")
-            setlistCategory(resp.data)
-        })
-    }, [baseURLCategory])
+            console.log(resp.data);
+            console.log("axios get");
+            setlistCategory(resp.data);
+        });
+    }, [baseURLCategory]);
 
-    const baseURLProperty = `http://localhost:8800/api/property/${id}`
-    const { data, loading, error } = useFetch(baseURLProperty)
+    const baseURLProperty = `http://localhost:8800/api/property/${id}`;
+    const { data, loading, error } = useFetch(baseURLProperty);
 
     // useEffect(() => {
     //   axios.get(baseURLProperty).then((resp) => {
@@ -67,63 +64,63 @@ const EditProperty = () => {
     // }, [baseURLProperty]);
 
     const handleInputChange = (e) => {
-        const { id, value } = e.target
+        const { id, value } = e.target;
         if (id === "propertyImage1") {
-            setPropertyImage1(e.target.files[0])
+            setPropertyImage1(e.target.files[0]);
         }
         if (id === "propertyImage2") {
-            setPropertyImage2(e.target.files[0])
+            setPropertyImage2(e.target.files[0]);
         }
         if (id === "propertyImage3") {
-            setPropertyImage3(e.target.files[0])
+            setPropertyImage3(e.target.files[0]);
         }
         if (id === "propertyVideo") {
-            setPropertyVideo(value)
+            setPropertyVideo(value);
         }
         if (id === "propertyName") {
-            setPropertyName(value)
+            setPropertyName(value);
         }
         if (id === "category") {
-            setCategory(value)
+            setCategory(value);
         }
         if (id === "propertyDescription") {
-            setPropertyDescription(value)
+            setPropertyDescription(value);
         }
         if (id === "startBid") {
-            setStartBid(value)
+            setStartBid(value);
         }
         if (id === "deposit") {
-            setDeposit(value)
+            setDeposit(value);
         }
         if (id === "priceStep") {
-            setPriceStep(value)
+            setPriceStep(value);
         }
         if (id === "placeViewProperty") {
-            setPlaceViewProperty(value)
+            setPlaceViewProperty(value);
         }
         // if (id === "startBid") {
         //   setStartBid(value);
         // }
         if (id === "viewPropertyTime") {
-            setViewPropertyTime(value)
+            setViewPropertyTime(value);
         }
-    }
+    };
 
     const handleSubmit = (event) => {
-        console.log(propertyImage1)
-        const formData = new FormData()
-        formData.append("propertyImage1", propertyImage1)
-        formData.append("propertyImage2", propertyImage2)
-        formData.append("propertyImage3", propertyImage3)
-        formData.append("propertyVideo", propertyVideo)
-        formData.append("propertyName", propertyName)
-        formData.append("category", category)
-        formData.append("propertyDescription", propertyDescription)
-        formData.append("viewPropertyTime", viewPropertyTime)
-        formData.append("startBid", startBid)
-        formData.append("deposit", deposit)
-        formData.append("priceStep", priceStep)
-        formData.append("placeViewProperty", placeViewProperty)
+        console.log(propertyImage1);
+        const formData = new FormData();
+        formData.append("propertyImage1", propertyImage1);
+        formData.append("propertyImage2", propertyImage2);
+        formData.append("propertyImage3", propertyImage3);
+        formData.append("propertyVideo", propertyVideo);
+        formData.append("propertyName", propertyName);
+        formData.append("category", category);
+        formData.append("propertyDescription", propertyDescription);
+        formData.append("viewPropertyTime", viewPropertyTime);
+        formData.append("startBid", startBid);
+        formData.append("deposit", deposit);
+        formData.append("priceStep", priceStep);
+        formData.append("placeViewProperty", placeViewProperty);
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
         axios
@@ -131,14 +128,14 @@ const EditProperty = () => {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-                navigate("/myProperty")
-            })
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                navigate("/myProperty");
+            });
 
-        event.preventDefault()
-    }
+        event.preventDefault();
+    };
     return loading ? (
         <Loading />
     ) : (
@@ -203,13 +200,7 @@ const EditProperty = () => {
                                             alt="Thumb"
                                         />
                                     )}
-                                    {propertyImage1 != null && (
-                                        <img
-                                            src={URL.createObjectURL(propertyImage1)}
-                                            className={styles.image}
-                                            alt="Thumb"
-                                        />
-                                    )}
+                                    {propertyImage1 != null && <img src={URL.createObjectURL(propertyImage1)} className={styles.image} alt="Thumb" />}
                                     {propertyImage2 == null && (
                                         <img
                                             src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
@@ -217,13 +208,7 @@ const EditProperty = () => {
                                             alt="Thumb"
                                         />
                                     )}
-                                    {propertyImage2 != null && (
-                                        <img
-                                            src={URL.createObjectURL(propertyImage2)}
-                                            className={styles.image}
-                                            alt="Thumb"
-                                        />
-                                    )}
+                                    {propertyImage2 != null && <img src={URL.createObjectURL(propertyImage2)} className={styles.image} alt="Thumb" />}
                                     {propertyImage3 == null && (
                                         <img
                                             src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
@@ -231,13 +216,7 @@ const EditProperty = () => {
                                             alt="Thumb"
                                         />
                                     )}
-                                    {propertyImage3 != null && (
-                                        <img
-                                            src={URL.createObjectURL(propertyImage3)}
-                                            className={styles.image}
-                                            alt="Thumb"
-                                        />
-                                    )}
+                                    {propertyImage3 != null && <img src={URL.createObjectURL(propertyImage3)} className={styles.image} alt="Thumb" />}
                                 </div>
 
                                 <br />
@@ -376,6 +355,6 @@ const EditProperty = () => {
                 </div>
             </form>
         </>
-    )
-}
-export default EditProperty
+    );
+};
+export default EditProperty;

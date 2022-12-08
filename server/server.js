@@ -3,15 +3,15 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+
 const authRoute = require("./routers/auth.js");
 const userRoute = require("./routers/users.js");
 const accountRoute = require("./routers/accounts.js");
 const auctionRoute = require("./routers/auctions.js");
 const propertyRoute = require("./routers/properties.js");
 const categoryRoute = require("./routers/categories.js");
-const newsRoute = require("./routers/news.js")
+const newsRoute = require("./routers/news.js");
 const multer = require("multer");
-
 
 // config app
 const app = express();
@@ -20,10 +20,12 @@ const app = express();
 const PORT = 8800;
 dotenv.config();
 app.use(cookieParser());
-app.use(cors({
-  origin:["http://localhost:3000"],
-  credentials:true,
-}));
+app.use(
+    cors({
+        origin: ["http://localhost:3000"],
+        credentials: true,
+    })
+);
 app.use(express.json());
 // app.use(express.urlencoded({
 //   extended:true
@@ -39,6 +41,17 @@ const upload = multer({ dest: "uploads/" });
 //     console.log(error);
 //     process.exit(1);
 //   }
+// };
+
+//connect MONGO_DB_SYNC_BLOCKCHAIN
+// const connectSyncBlockchainDB = async () => {
+//     try {
+//         await mongoose.connect(process.env.MONGO_DB_SYNC_BLOCKCHAIN);
+//         console.log("MongoDB Sync with Blockchain connected");
+//     } catch (error) {
+//         console.log(error);
+//         process.exit(1);
+//     }
 // };
 
 // // network DB disconnected
@@ -90,11 +103,11 @@ const upload = multer({ dest: "uploads/" });
 
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
-app.use("/api/property",propertyRoute);
+app.use("/api/property", propertyRoute);
 app.use("/api/auction", auctionRoute);
-app.use("/api/account",accountRoute);
-app.use("/api/category",categoryRoute);
-app.use("/api/news",newsRoute);
+app.use("/api/account", accountRoute);
+app.use("/api/category", categoryRoute);
+app.use("/api/news", newsRoute);
 
 // app.get('/Account/getAllAccount', (req, res) => {
 //   conn.query("Select Id, Name, Phone, NumberOfEmployees from Account", (err, result) => {
@@ -107,7 +120,6 @@ app.use("/api/news",newsRoute);
 //   })
 // })
 app.listen(PORT, () => {
-  // connect();
-  console.log("Connected to backend.")
+    // connect();
+    console.log("Connected to backend.");
 });
-

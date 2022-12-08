@@ -1,57 +1,51 @@
-import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarSeller from "../../components/sidebar_manager/SidebarManager"
-import { Outlet, Link } from "react-router-dom"
-import React, { useEffect, useState } from "react"
-import DatePicker, { DateObject } from "react-multi-date-picker"
-import Ft from "react-multi-date-picker/plugins/range_picker_footer"
-import TimePicker from "react-multi-date-picker/plugins/analog_time_picker"
-import { useNavigate } from "react-router-dom"
-import ReactPlayer from "react-player"
-import axios from "axios"
-import { useParams } from "react-router-dom"
-import { useFetch } from "../../hook/useFetch"
+import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
+import { Outlet, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
+import { useNavigate } from "react-router-dom";
+import ReactPlayer from "react-player";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useFetch } from "../../hook/useFetch";
 
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
-    const { id, propertyId } = useParams()
+    const { id, propertyId } = useParams();
 
-    const navigate = useNavigate()
-    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`
-    const [registrationFee, setRegistrationFee] = useState(null)
-    const [name, setName] = useState(null)
-    const [timeRegistration, setTimeRegistration] = useState([
-        new DateObject().setDay(15),
-        new DateObject().add(1, "month").setDay(15),
-    ])
+    const navigate = useNavigate();
+    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
+    const [registrationFee, setRegistrationFee] = useState(null);
+    const [name, setName] = useState(null);
+    const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const [auctionTime, setAuctionTime] = useState([
-        new DateObject().setDay(15),
-        new DateObject().add(1, "month").setDay(15),
-    ])
+    const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const { data, loading, error } = useFetch(baseURL)
+    const { data, loading, error } = useFetch(baseURL);
 
     const handleInputChange = (e) => {
-        const { id, value } = e.target
+        const { id, value } = e.target;
         if (id === "registrationFee") {
-            setRegistrationFee(value)
+            setRegistrationFee(value);
         }
         if (id === "name") {
-            setName(value)
+            setName(value);
         }
-    }
-    var startviewTime = data.End_View_Property_Time__c || ""
-    var startViewPropertyTime = new Date(startviewTime.split(",")[0])
-    var daySTView = parseInt(startViewPropertyTime.getUTCDate())
+    };
+    var startviewTime = data.End_View_Property_Time__c || "";
+    var startViewPropertyTime = new Date(startviewTime.split(",")[0]);
+    var daySTView = parseInt(startViewPropertyTime.getUTCDate());
 
     const AprroveAuction = () => {
-        alert(name + registrationFee + timeRegistration + auctionTime)
+        alert(name + registrationFee + timeRegistration + auctionTime);
         axios
             .put(
                 "http://localhost:8800/api/auction/approve/" + id,
@@ -67,11 +61,11 @@ const PropertyDetail = () => {
                 }
             )
             .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                alert(res.data.message)
-            })
-    }
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+            });
+    };
 
     return loading ? (
         "loading please wait"
@@ -183,9 +177,7 @@ const PropertyDetail = () => {
                                     // defaultValue={data.Category_Id__r.Name}
                                     readonly
                                 >
-                                    <option value={data.Category_Id__r.Name}>
-                                        {data.Category_Id__r.Name}
-                                    </option>
+                                    <option value={data.Category_Id__r.Name}>{data.Category_Id__r.Name}</option>
                                     {/* <option value={data.property.category}>{data.property.category}</option> */}
 
                                     {/* {data.map((property) => (
@@ -242,16 +234,8 @@ const PropertyDetail = () => {
                                         // onChange={setViewPropertyTime}
                                         ClassName={styles.datePicker}
                                         value={[
-                                            new Date(
-                                                new Date(
-                                                    data.Start_View_Property_Time__c
-                                                ).toUTCString()
-                                            ),
-                                            new Date(
-                                                new Date(
-                                                    data.End_View_Property_Time__c
-                                                ).toUTCString()
-                                            ),
+                                            new Date(new Date(data.Start_View_Property_Time__c).toUTCString()),
+                                            new Date(new Date(data.End_View_Property_Time__c).toUTCString()),
                                         ]}
                                         //   value={data.property.viewPropertyTime}
                                         // onChange={setValue}
@@ -341,24 +325,15 @@ const PropertyDetail = () => {
                         </div>
                     </div>
                     <div className={styles.btn2}>
-                        <input
-                            className={styles.btnSave2}
-                            type="button"
-                            value="Save and Publish"
-                            onClick={() => AprroveAuction()}
-                        ></input>
+                        <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input>
 
-                        <input
-                            className={styles.btnDraft}
-                            type="button"
-                            value="Reject Request Add"
-                        ></input>
+                        <input className={styles.btnDraft} type="button" value="Reject Request Add"></input>
                         <input className={styles.btnCancel} type="button" value="Cancel"></input>
                     </div>{" "}
                     <Footer />
                 </div>
             </form>
         </>
-    )
-}
-export default PropertyDetail
+    );
+};
+export default PropertyDetail;

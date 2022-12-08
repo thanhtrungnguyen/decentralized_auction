@@ -138,3 +138,6 @@ typechain-types
 cache
 artifacts
 
+# testing
+/coverage
+

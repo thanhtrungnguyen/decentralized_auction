@@ -4,14 +4,14 @@
 // const AuctionBidderSchema = new Schema({
 //     AuctionLotId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'auctionLots'       
+//         ref: 'auctionLots'
 //     },
 //     CustomerKey:{
-//         type: String        
+//         type: String
 //     },
 //     UserId:{
 //         type: Schema.Types.ObjectId,
-//         ref: 'users'       
+//         ref: 'users'
 //     }
 // })
 // export default mongoose.model('auctionBidders', AuctionBidderSchema)

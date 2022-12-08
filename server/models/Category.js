@@ -3,7 +3,7 @@
 
 // const CategorySchema = new Schema({
 //     CategoryName:{
-//         type: String       
+//         type: String
 //     }
 // })
 

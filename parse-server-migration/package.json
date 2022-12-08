@@ -4,9 +4,9 @@
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
-    "@moralisweb3/parse-server": "2.8.2",
     "@codemirror/language": "^0.20.0",
     "@moralisweb3/common-core": "^2.8.2",
+    "@moralisweb3/parse-server": "2.8.2",
     "@types/node": "^18.7.15",
     "dotenv": "^16.0.1",
     "envalid": "7.3.1",
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@moralisweb3/eslint-config": "^1.0.1",
+    "@types/cors": "^2.8.13",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "axios": "^0.27.2",

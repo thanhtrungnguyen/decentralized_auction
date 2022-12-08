@@ -1,17 +1,17 @@
-import styles from "../../styleCss/stylesPages/forAdmin/bidderDetail.module.css"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin"
-import { useParams } from "react-router-dom"
-import { useFetch } from "../../hook/useFetch"
-import Loading from "../../components/loading/Loading"
+import styles from "../../styleCss/stylesPages/forAdmin/bidderDetail.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
+import { useParams } from "react-router-dom";
+import { useFetch } from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
 const BidderDetail = () => {
-    const { id } = useParams()
-    const baseURL = `http://localhost:8800/api/bidder/bidderDetail/${id}`
-    const { data, loading, error } = useFetch(baseURL)
-    console.log(data)
-    console.log(loading)
+    const { id } = useParams();
+    const baseURL = `http://localhost:8800/api/bidder/bidderDetail/${id}`;
+    const { data, loading, error } = useFetch(baseURL);
+    console.log(data);
+    console.log(loading);
 
     return loading ? (
         <Loading />
@@ -40,11 +40,7 @@ const BidderDetail = () => {
                         <p className={styles.txt}>Card number</p>
                         <p className={styles.txt}>Card granted date</p>
                         <p className={styles.txt}>Card granted place</p>
-                        <img
-                            className={styles.img}
-                            src="https://www.w3schools.com/html/pic_trulli.jpg"
-                            alt="images"
-                        />
+                        <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                         {/* <img
               className={styles.img}
               src={`http://localhost:8800/api/auction/images/${data.cardFront}`}
@@ -98,11 +94,7 @@ const BidderDetail = () => {
                         <p className={styles.txtR}>Hanoi</p>
                         {/* <p className={styles.txtR}>${data.cardGrantedPlace}</p> */}
 
-                        <img
-                            className={styles.img2}
-                            src="https://www.w3schools.com/html/pic_trulli.jpg"
-                            alt="images"
-                        />
+                        <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                         {/* <img
               className={styles.img2}
               src={`http://localhost:8800/api/auction/images/${data.cardBack}`}
@@ -119,6 +111,6 @@ const BidderDetail = () => {
                 <Footer />
             </div>
         </>
-    )
-}
-export default BidderDetail
+    );
+};
+export default BidderDetail;

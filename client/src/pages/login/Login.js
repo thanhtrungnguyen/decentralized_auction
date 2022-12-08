@@ -1,33 +1,27 @@
-import styles from "../../styleCss/login.module.css"
-import { useState } from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
-import Footer from "../../components/footer/Footer"
-import { Link } from "react-router-dom"
+import styles from "../../styleCss/login.module.css";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import Footer from "../../components/footer/Footer";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const [userName, setUserName] = useState("")
-    const [password, setPassword] = useState("")
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSubmit = async (event) => {
-        event.preventDefault()
-        axios
-            .post(
-                "http://localhost:8800/api/auth/login",
-                { userName, password },
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res)
-                console.log(res.data)
-                // alert(res.data.message);
-                navigate(`/homePage/${userName}`)
-            })
-    }
+        event.preventDefault();
+        axios.post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true }).then((res) => {
+            console.log(res);
+            console.log(res.data);
+            // alert(res.data.message);
+            navigate("/homePage");
+        });
+    };
 
     return (
         <>
@@ -38,9 +32,7 @@ const Login = () => {
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Login</p>
-                            <p className={styles.text}>
-                                Please login using account detail bellow.
-                            </p>
+                            <p className={styles.text}>Please login using account detail bellow.</p>
                             <input
                                 type="text"
                                 className={styles.textField}
@@ -71,7 +63,7 @@ const Login = () => {
             </div>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

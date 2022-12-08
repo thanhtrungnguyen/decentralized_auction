@@ -23,12 +23,12 @@ const networkConfig = {
         name: "mainnet",
         keepersUpdateInterval: "30",
     },
-}
+};
 
-const developmentChains = ["hardhat", "localhost"]
-const VERIFICATION_BLOCK_CONFIRMATIONS = 6
-const clientContractsFile = "../client/constants/networkMapping.json"
-const clientAbiFile = "../client/constants/"
+const developmentChains = ["hardhat", "localhost"];
+const VERIFICATION_BLOCK_CONFIRMATIONS = 6;
+const clientContractsFile = "../client/src/constants/contractAddress.json";
+const clientAbiFile = "../client/src/constants/abi.json";
 
 module.exports = {
     networkConfig,
@@ -36,4 +36,4 @@ module.exports = {
     VERIFICATION_BLOCK_CONFIRMATIONS,
     clientContractsFile,
     clientAbiFile,
-}
+};

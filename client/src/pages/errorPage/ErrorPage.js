@@ -1,6 +1,6 @@
-import Footer from "../../components/footer/Footer"
-import Header from "../../components/header/Header"
-import NavBar from "../../components/navbar/NavBar"
+import Footer from "../../components/footer/Footer";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
 const ErrorPage = ({ error }) => {
     return (
         <>
@@ -11,7 +11,7 @@ const ErrorPage = ({ error }) => {
             <h3>ErrorPage</h3>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default ErrorPage
+export default ErrorPage;

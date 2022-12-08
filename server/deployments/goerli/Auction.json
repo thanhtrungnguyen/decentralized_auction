@@ -1,6 +1,11 @@
 {
-  "address": "0x18ECd27d8888d2aC08eb872C9f8d21f19fa61c81",
+  "address": "0x10CE134bD5D76f2515F9eA11Aa3F70701B37e25A",
   "abi": [
+    {
+      "inputs": [],
+      "name": "Auction__ConfirmationTimeout",
+      "type": "error"
+    },
     {
       "inputs": [],
       "name": "Auction__InvalidAuctionId",
@@ -53,7 +58,17 @@
     },
     {
       "inputs": [],
+      "name": "Auction__NotExistAuctionId",
+      "type": "error"
+    },
+    {
+      "inputs": [],
       "name": "Auction__NotRegisteredBidder",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Auction__NotWinnerOfAuction",
       "type": "error"
     },
     {
@@ -75,6 +90,22 @@
         },
         {
           "internalType": "uint256",
+          "name": "requirePaymentAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Auction__RequireAmountToPaymentNotMet",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
           "name": "requireAmountToRegister",
           "type": "uint256"
         }
@@ -85,6 +116,75 @@
     {
       "anonymous": false,
       "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bidder",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum Auction.BidderState",
+          "name": "bidderState",
+          "type": "uint8"
+        }
+      ],
+      "name": "CanceledAuctionResult",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ClosedAuction",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bidder",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "paidAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ClosedAuctionSucessfully",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        },
         {
           "indexed": false,
           "internalType": "uint256",
@@ -140,7 +240,7 @@
           "type": "uint256"
         }
       ],
-      "name": "AddedAuction",
+      "name": "CreatedAuction",
       "type": "event"
     },
     {
@@ -182,13 +282,57 @@
           "internalType": "address",
           "name": "bidder",
           "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum Auction.BidderState",
+          "name": "bidderState",
+          "type": "uint8"
         }
       ],
       "name": "RegisteredToBid",
       "type": "event"
     },
     {
-      "inputs": [],
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "bidder",
+          "type": "address"
+        }
+      ],
+      "name": "Withdrew",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "cancelAuctionResult",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        }
+      ],
       "name": "closeAuction",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -260,6 +404,108 @@
           "type": "uint256"
         }
       ],
+      "name": "getAuctionInformationById",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "startRegistrationTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endRegistrationTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startAuctionTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endAuctionTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "duePaymentTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "registrationFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "depositAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startBid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "priceStep",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Auction.AuctionInformation",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBidInformationByAuctionId",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "bidder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bidAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "enum Auction.BidderState",
+              "name": "bidderState",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct Auction.BidInformation[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        }
+      ],
       "name": "getHightestBidOfAuction",
       "outputs": [
         {
@@ -279,7 +525,7 @@
           "type": "uint256"
         }
       ],
-      "name": "getIndexOfBidder",
+      "name": "getIndexOfHighestBidOfAuction",
       "outputs": [
         {
           "internalType": "uint256",
@@ -288,6 +534,51 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getIndexOfSecondWinnerOfAuction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getListAuctionId",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "auctionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "payment",
+      "outputs": [],
+      "stateMutability": "payable",
       "type": "function"
     },
     {
@@ -320,139 +611,48 @@
       "outputs": [],
       "stateMutability": "payable",
       "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "s_auctionInfomations",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "startRegistrationTime",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "endRegistrationTime",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "startAuctionTime",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "endAuctionTime",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "duePaymentTime",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "registrationFee",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "depositAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "startBid",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "priceStep",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "s_bidInfomations",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "bidder",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "bidAmount",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "withdaw",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
     }
   ],
-  "transactionHash": "0x7f7c77c2d3f50fe2a9bfa1de531f65dad2b719b5327ae796809c62086a8ed884",
+  "transactionHash": "0xcbea48140df11f9ecfcca00b68181829f0c8e151ec80d99ba21a95b5f1d020b6",
   "receipt": {
     "to": null,
     "from": "0x26594a6109a5154C8E10765C5f15F4B7F54e0420",
-    "contractAddress": "0x18ECd27d8888d2aC08eb872C9f8d21f19fa61c81",
-    "transactionIndex": 50,
-    "gasUsed": "1035935",
+    "contractAddress": "0x10CE134bD5D76f2515F9eA11Aa3F70701B37e25A",
+    "transactionIndex": 94,
+    "gasUsed": "2211343",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "blockHash": "0xdf7740bb7d3e4edad05ad13018ad1b5703460bd12add237420f7a191bc46a692",
-    "transactionHash": "0x7f7c77c2d3f50fe2a9bfa1de531f65dad2b719b5327ae796809c62086a8ed884",
+    "blockHash": "0x45e93ae89ae53b1846eeda7893af159e78be3a75502c745053243c9c6ea9d023",
+    "transactionHash": "0xcbea48140df11f9ecfcca00b68181829f0c8e151ec80d99ba21a95b5f1d020b6",
     "logs": [],
-    "blockNumber": 8060354,
-    "cumulativeGasUsed": "12091934",
+    "blockNumber": 8091215,
+    "cumulativeGasUsed": "21399297",
     "status": 1,
     "byzantium": true
   },
   "args": [],
-  "numDeployments": 2,
-  "solcInputHash": "108e9c09aaac47074db34b77ae1ad703",
-  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"Auction__InvalidAuctionId\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidAuctionTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidBidAmount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidDepositAmount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidDuePaymentTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidPriceStep\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidRegistrationFee\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidRegistrationTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidStartAuctionTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidStartBid\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__NotRegisteredBidder\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__OutOfAuctionTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__OutOfRegistrationTime\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"requireAmountToRegister\",\"type\":\"uint256\"}],\"name\":\"Auction__RequireAmountToRegisterNotMet\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startRegistrationTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"endRegistrationTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startAuctionTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"endAuctionTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"duePaymentTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"registrationFee\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"depositAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startBid\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"priceStep\",\"type\":\"uint256\"}],\"name\":\"AddedAuction\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"bidAmount\",\"type\":\"uint256\"}],\"name\":\"PlacedBid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"}],\"name\":\"RegisteredToBid\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"closeAuction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startRegistrationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endRegistrationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startAuctionTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endAuctionTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duePaymentTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"registrationFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"depositAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startBid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"priceStep\",\"type\":\"uint256\"}],\"name\":\"createAuction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"getHightestBidOfAuction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"getIndexOfBidder\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bidAmount\",\"type\":\"uint256\"}],\"name\":\"placeBid\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"registerToBid\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"s_auctionInfomations\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"startRegistrationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endRegistrationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startAuctionTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endAuctionTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duePaymentTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"registrationFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"depositAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startBid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"priceStep\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"s_bidInfomations\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"bidAmount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdaw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Auction.sol\":\"Auction\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/Auction.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.17;\\n\\nerror Auction__InvalidRegistrationTime();\\nerror Auction__InvalidAuctionTime();\\nerror Auction__InvalidDuePaymentTime();\\nerror Auction__InvalidStartAuctionTime();\\nerror Auction__InvalidRegistrationFee();\\nerror Auction__InvalidDepositAmount();\\nerror Auction__InvalidStartBid();\\nerror Auction__InvalidPriceStep();\\nerror Auction__InvalidDatetime();\\nerror Auction__InvalidAuctionId();\\nerror Auction__OutOfRegistrationTime();\\nerror Auction__RequireAmountToRegisterNotMet(uint256 auctionId, uint256 requireAmountToRegister);\\nerror Auction__OutOfAuctionTime();\\nerror Auction__InvalidBidAmount();\\nerror Auction__NotRegisteredBidder();\\n\\ncontract Auction {\\n    uint256[] private s_auctionList;\\n    uint16 private constant CONFIRMATION_TIME = 300;\\n\\n    struct AuctionInfomation {\\n        uint256 startRegistrationTime;\\n        uint256 endRegistrationTime;\\n        uint256 startAuctionTime;\\n        uint256 endAuctionTime;\\n        uint256 duePaymentTime;\\n        uint256 registrationFee;\\n        uint256 depositAmount;\\n        uint256 startBid;\\n        uint256 priceStep;\\n    }\\n\\n    struct BidInfomation {\\n        address bidder;\\n        uint256 bidAmount;\\n    }\\n\\n    event AddedAuction(\\n        uint256 startRegistrationTime,\\n        uint256 endRegistrationTime,\\n        uint256 startAuctionTime,\\n        uint256 endAuctionTime,\\n        uint256 duePaymentTime,\\n        uint256 registrationFee,\\n        uint256 depositAmount,\\n        uint256 startBid,\\n        uint256 priceStep\\n    );\\n    event PlacedBid(uint256 auctionId, address bidder, uint256 bidAmount);\\n    event RegisteredToBid(uint256 auctionId, address bidder);\\n\\n    mapping(uint256 => AuctionInfomation) public s_auctionInfomations;\\n    mapping(uint256 => BidInfomation[]) public s_bidInfomations;\\n    // mapping(uint256 => BidInfomation[])\\n\\n    modifier isVailidAuctionId(uint256 auctionId) {\\n        for (uint256 i = 0; i < s_auctionList.length; i++) {\\n            if (auctionId == i) {\\n                revert Auction__InvalidAuctionId();\\n            }\\n        }\\n        _;\\n    }\\n\\n    modifier isValidRegistrationTime(uint256 startRegistrationTime, uint256 endRegistrationTime) {\\n        if (\\n            startRegistrationTime < block.timestamp ||\\n            // block.timestamp > endRegistrationTime ||\\n            startRegistrationTime >= endRegistrationTime\\n        ) {\\n            revert Auction__InvalidRegistrationTime();\\n        }\\n        _;\\n    }\\n\\n    modifier isValidStartAuctionTime(uint256 endRegistrationTime, uint256 startAuctionTime) {\\n        if (endRegistrationTime >= startAuctionTime) {\\n            revert Auction__InvalidStartAuctionTime();\\n        }\\n        _;\\n    }\\n\\n    modifier isValidAuctionTime(uint256 startAuctionTime, uint256 endAuctionTime) {\\n        if (startAuctionTime >= endAuctionTime) {\\n            revert Auction__InvalidAuctionTime();\\n        }\\n        _;\\n    }\\n\\n    modifier isValidDuePaymentTime(uint256 endAuctionTime, uint256 duePaymentTime) {\\n        if (endAuctionTime >= duePaymentTime) {\\n            revert Auction__InvalidDuePaymentTime();\\n        }\\n        _;\\n    }\\n\\n    modifier isValidRegistrationFee(uint256 registrationFee) {\\n        if (registrationFee <= 0) {\\n            revert Auction__InvalidRegistrationFee();\\n        }\\n        _;\\n    }\\n\\n    modifier isValidDepositAmount(uint256 depositAmount) {\\n        if (depositAmount <= 0) {\\n            revert Auction__InvalidDepositAmount();\\n        }\\n        _;\\n    }\\n\\n    modifier isValidStartBid(uint256 depositAmount) {\\n        if (depositAmount <= 0) {\\n            revert Auction__InvalidStartBid();\\n        }\\n        _;\\n    }\\n\\n    modifier isValidPriceStep(uint256 depositAmount) {\\n        if (depositAmount <= 0) {\\n            revert Auction__InvalidPriceStep();\\n        }\\n        _;\\n    }\\n\\n    modifier isAuctionExist(uint256 auctionId) {\\n        uint256 count;\\n        for (uint256 i = 0; i < s_auctionList.length; i++) {\\n            count++;\\n        }\\n        if (count == s_auctionList.length) {\\n            revert Auction__InvalidAuctionId();\\n        }\\n        _;\\n    }\\n\\n    modifier isRegistrationTime(uint256 auctionId) {\\n        if (\\n            s_auctionInfomations[auctionId].startRegistrationTime < block.timestamp ||\\n            s_auctionInfomations[auctionId].endRegistrationTime > block.timestamp\\n        ) {\\n            revert Auction__OutOfRegistrationTime();\\n        }\\n        _;\\n    }\\n    modifier isAuctionTime(uint256 auctionId) {\\n        if (\\n            s_auctionInfomations[auctionId].startAuctionTime < block.timestamp ||\\n            s_auctionInfomations[auctionId].endAuctionTime > block.timestamp\\n        ) {\\n            revert Auction__OutOfAuctionTime();\\n        }\\n        _;\\n    }\\n    modifier isValidBidAmount(uint256 auctionId, uint256 bidAmount) {\\n        if (\\n            bidAmount < s_auctionInfomations[auctionId].depositAmount ||\\n            bidAmount <\\n            getHightestBidOfAuction(auctionId) + s_auctionInfomations[auctionId].priceStep\\n        ) {\\n            revert Auction__InvalidBidAmount();\\n        }\\n        _;\\n    }\\n    modifier isRegisteredBidder(uint256 auctionId) {\\n        uint256 count = 0;\\n        for (uint256 i = 0; i < s_bidInfomations[auctionId].length; i++) {\\n            if (s_bidInfomations[auctionId][i].bidder != msg.sender) {\\n                count++;\\n            }\\n        }\\n        if (count == s_bidInfomations[auctionId].length) {\\n            revert Auction__NotRegisteredBidder();\\n        }\\n        _;\\n    }\\n\\n    function isValidatedInput(\\n        uint256 auctionId, //need validate\\n        uint256 startRegistrationTime,\\n        uint256 endRegistrationTime,\\n        uint256 startAuctionTime,\\n        uint256 endAuctionTime,\\n        uint256 duePaymentTime,\\n        uint256 registrationFee,\\n        uint256 depositAmount,\\n        uint256 startBid,\\n        uint256 priceStep\\n    )\\n        internal\\n        view\\n        isVailidAuctionId(auctionId)\\n        isValidRegistrationTime(startRegistrationTime, endRegistrationTime)\\n        isValidStartAuctionTime(endRegistrationTime, startAuctionTime)\\n        isValidAuctionTime(startAuctionTime, endAuctionTime)\\n        isValidDuePaymentTime(endAuctionTime, duePaymentTime)\\n        isValidRegistrationFee(registrationFee)\\n        isValidDepositAmount(depositAmount)\\n        isValidStartBid(startBid)\\n        isValidPriceStep(priceStep)\\n        returns (bool)\\n    {\\n        return true;\\n    }\\n\\n    function createAuction(\\n        uint256 auctionId, //need validate\\n        uint256 startRegistrationTime,\\n        uint256 endRegistrationTime,\\n        uint256 startAuctionTime,\\n        uint256 endAuctionTime,\\n        uint256 duePaymentTime,\\n        uint256 registrationFee,\\n        uint256 depositAmount,\\n        uint256 startBid,\\n        uint256 priceStep\\n    ) external {\\n        if (\\n            isValidatedInput(\\n                auctionId,\\n                startRegistrationTime,\\n                endRegistrationTime,\\n                startAuctionTime,\\n                endAuctionTime,\\n                duePaymentTime,\\n                registrationFee,\\n                depositAmount,\\n                startBid,\\n                priceStep\\n            )\\n        ) {\\n            AuctionInfomation memory auction;\\n            auction.startRegistrationTime = startRegistrationTime;\\n            auction.endRegistrationTime = endRegistrationTime;\\n            auction.startAuctionTime = startAuctionTime;\\n            auction.endAuctionTime = endAuctionTime;\\n            auction.duePaymentTime = duePaymentTime;\\n            auction.registrationFee = registrationFee;\\n            auction.depositAmount = depositAmount;\\n            auction.startBid = startBid;\\n            auction.priceStep = priceStep;\\n            s_auctionInfomations[auctionId] = auction;\\n            s_auctionList.push(auctionId);\\n\\n            emit AddedAuction(\\n                startRegistrationTime,\\n                endRegistrationTime,\\n                startAuctionTime,\\n                endAuctionTime,\\n                duePaymentTime,\\n                registrationFee,\\n                depositAmount,\\n                startBid,\\n                priceStep\\n            );\\n        }\\n    }\\n\\n    function registerToBid(uint256 auctionId)\\n        external\\n        payable\\n        isVailidAuctionId(auctionId)\\n        isRegistrationTime(auctionId)\\n    {\\n        uint256 requireAmountToRegister = s_auctionInfomations[auctionId].registrationFee +\\n            s_auctionInfomations[auctionId].depositAmount;\\n        if (msg.value < requireAmountToRegister) {\\n            revert Auction__RequireAmountToRegisterNotMet(auctionId, requireAmountToRegister);\\n        }\\n        s_bidInfomations[auctionId][s_bidInfomations[auctionId].length].bidder = msg.sender;\\n        emit RegisteredToBid(auctionId, msg.sender);\\n    }\\n\\n    function getHightestBidOfAuction(uint256 auctionId) public view returns (uint256) {\\n        uint256 highestBid = 0;\\n        for (uint256 i = 0; i < s_bidInfomations[auctionId].length; i++) {\\n            if (s_bidInfomations[auctionId][i].bidAmount > highestBid) {\\n                highestBid = s_bidInfomations[auctionId][i].bidAmount;\\n            }\\n        }\\n        return highestBid;\\n    }\\n\\n    function getIndexOfBidder(uint256 auctionId) public view returns (uint256) {\\n        for (uint256 i = 0; i < s_bidInfomations[auctionId].length; i++) {\\n            if (s_bidInfomations[auctionId][i].bidder == msg.sender) {\\n                return i;\\n            }\\n        }\\n        return 0;\\n    }\\n\\n    function placeBid(uint256 auctionId, uint256 bidAmount)\\n        external\\n        payable\\n        isAuctionExist(auctionId)\\n        isAuctionTime(auctionId)\\n        isRegisteredBidder(auctionId)\\n        isValidBidAmount(auctionId, bidAmount)\\n    {\\n        s_bidInfomations[auctionId][getIndexOfBidder(auctionId)].bidAmount = bidAmount;\\n        emit PlacedBid(auctionId, msg.sender, bidAmount);\\n    }\\n\\n    function closeAuction() external {}\\n\\n    function withdaw() external {}\\n\\n    // function getAuction(uint256 auctionId) external view returns (AuctionInfomation memory) {\\n    //     return s_auctionInfomations[auctionId];\\n    // }\\n\\n    // function getRankOfAuction\\n}\\n\",\"keccak256\":\"0x0f3cc7c3cb9db46552b9a9f8bba52ac91d09a269d77578b964a80f85fe88e396\",\"license\":\"MIT\"}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b506111e6806100206000396000f3fe6080604052600436106100865760003560e01c8063485f422211610059578063485f42221461016257806357c90de51461018b57806365dfc368146101a7578063c73a090a146101be578063c832aae8146101fb57610086565b806316e349191461008b5780632109db40146100d0578063378252f21461010e5780634206250814610125575b600080fd5b34801561009757600080fd5b506100b260048036038101906100ad9190610de0565b610217565b6040516100c799989796959493929190610e1c565b60405180910390f35b3480156100dc57600080fd5b506100f760048036038101906100f29190610ea9565b610265565b604051610105929190610f2a565b60405180910390f35b34801561011a57600080fd5b506101236102c6565b005b34801561013157600080fd5b5061014c60048036038101906101479190610de0565b6102c8565b6040516101599190610f53565b60405180910390f35b34801561016e57600080fd5b5061018960048036038101906101849190610f6e565b610385565b005b6101a560048036038101906101a09190610ea9565b6104ef565b005b3480156101b357600080fd5b506101bc610802565b005b3480156101ca57600080fd5b506101e560048036038101906101e09190610de0565b610804565b6040516101f29190610f53565b60405180910390f35b61021560048036038101906102109190610de0565b6108da565b005b60016020528060005260406000206000915090508060000154908060010154908060020154908060030154908060040154908060050154908060060154908060070154908060080154905089565b6002602052816000526040600020818154811061028157600080fd5b9060005260206000209060020201600091509150508060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060010154905082565b565b6000806000905060005b600260008581526020019081526020016000208054905081101561037b57816002600086815260200190815260200160002082815481106103165761031561104d565b5b9060005260206000209060020201600101541115610368576002600085815260200190815260200160002081815481106103535761035261104d565b5b90600052602060002090600202016001015491505b8080610373906110ab565b9150506102d2565b5080915050919050565b6103978a8a8a8a8a8a8a8a8a8a610af6565b156104e3576103a4610d59565b8981600001818152505088816020018181525050878160400181815250508681606001818152505085816080018181525050848160a0018181525050838160c0018181525050828160e0018181525050818161010001818152505080600160008d8152602001908152602001600020600082015181600001556020820151816001015560408201518160020155606082015181600301556080820151816004015560a0820151816005015560c0820151816006015560e08201518160070155610100820151816008015590505060008b90806001815401808255809150506001900390600052602060002001600090919091909150557f5e5349425087c1238d28e708f531b922272667303d666c67b1186d9b6848f25a8a8a8a8a8a8a8a8a8a6040516104d999989796959493929190610e1c565b60405180910390a1505b50505050505050505050565b81600080600090505b600080549050811015610526578180610510906110ab565b925050808061051e906110ab565b9150506104f8565b506000805490508103610565576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b83426001600083815260200190815260200160002060020154108061059f5750426001600083815260200190815260200160002060030154115b156105d6576040517f355d234800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b846000805b60026000848152602001908152602001600020805490508110156106a4573373ffffffffffffffffffffffffffffffffffffffff166002600085815260200190815260200160002082815481106106355761063461104d565b5b906000526020600020906002020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff161461069157818061068d906110ab565b9250505b808061069c906110ab565b9150506105db565b50600260008381526020019081526020016000208054905081036106f4576040517f2ffd4a0c00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8686600160008381526020019081526020016000206006015481108061074257506001600083815260200190815260200160002060080154610735836102c8565b61073f91906110f3565b81105b15610779576040517fabdda60f00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b87600260008b81526020019081526020016000206107968b610804565b815481106107a7576107a661104d565b5b9060005260206000209060020201600101819055507f897645643062f7e221aec187272e76020e3832294b4bf87b8f683c4e3ef8aa6d89338a6040516107ef93929190611127565b60405180910390a1505050505050505050565b565b600080600090505b60026000848152602001908152602001600020805490508110156108cf573373ffffffffffffffffffffffffffffffffffffffff166002600085815260200190815260200160002082815481106108665761086561104d565b5b906000526020600020906002020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16036108bc57809150506108d5565b80806108c7906110ab565b91505061080c565b50600090505b919050565b8060005b60008054905081101561093757808203610924576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b808061092f906110ab565b9150506108de565b508142600160008381526020019081526020016000206000015410806109725750426001600083815260200190815260200160002060010154115b156109a9576040517f60acd97900000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6000600160008581526020019081526020016000206006015460016000868152602001908152602001600020600501546109e391906110f3565b905080341015610a2c5783816040517ffea0958a000000000000000000000000000000000000000000000000000000008152600401610a2392919061115e565b60405180910390fd5b3360026000868152602001908152602001600020600260008781526020019081526020016000208054905081548110610a6857610a6761104d565b5b906000526020600020906002020160000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055507fc8e8a52ec1fa7775a3d2e5e7a7f1173441f31b9ee4047c62482192a3d497a2778433604051610ae8929190611187565b60405180910390a150505050565b60008a60005b600080549050811015610b5557808203610b42576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8080610b4d906110ab565b915050610afc565b508a8a42821080610b665750808210155b15610b9d576040517f5e83d5f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8b8b808210610bd8576040517f7a9971e800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8c8c808210610c13576040517fe2049fa500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d8d808210610c4e576040517fcc2116a000000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111610c89576040517fb25c88c500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111610cc4576040517fb0f07a6300000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111610cff576040517ffb833a9900000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111610d3a576040517fa9ed13a300000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60019d50505050505050505050505050509a9950505050505050505050565b6040518061012001604052806000815260200160008152602001600081526020016000815260200160008152602001600081526020016000815260200160008152602001600081525090565b600080fd5b6000819050919050565b610dbd81610daa565b8114610dc857600080fd5b50565b600081359050610dda81610db4565b92915050565b600060208284031215610df657610df5610da5565b5b6000610e0484828501610dcb565b91505092915050565b610e1681610daa565b82525050565b600061012082019050610e32600083018c610e0d565b610e3f602083018b610e0d565b610e4c604083018a610e0d565b610e596060830189610e0d565b610e666080830188610e0d565b610e7360a0830187610e0d565b610e8060c0830186610e0d565b610e8d60e0830185610e0d565b610e9b610100830184610e0d565b9a9950505050505050505050565b60008060408385031215610ec057610ebf610da5565b5b6000610ece85828601610dcb565b9250506020610edf85828601610dcb565b9150509250929050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000610f1482610ee9565b9050919050565b610f2481610f09565b82525050565b6000604082019050610f3f6000830185610f1b565b610f4c6020830184610e0d565b9392505050565b6000602082019050610f686000830184610e0d565b92915050565b6000806000806000806000806000806101408b8d031215610f9257610f91610da5565b5b6000610fa08d828e01610dcb565b9a50506020610fb18d828e01610dcb565b9950506040610fc28d828e01610dcb565b9850506060610fd38d828e01610dcb565b9750506080610fe48d828e01610dcb565b96505060a0610ff58d828e01610dcb565b95505060c06110068d828e01610dcb565b94505060e06110178d828e01610dcb565b9350506101006110298d828e01610dcb565b92505061012061103b8d828e01610dcb565b9150509295989b9194979a5092959850565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b60006110b682610daa565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82036110e8576110e761107c565b5b600182019050919050565b60006110fe82610daa565b915061110983610daa565b92508282019050808211156111215761112061107c565b5b92915050565b600060608201905061113c6000830186610e0d565b6111496020830185610f1b565b6111566040830184610e0d565b949350505050565b60006040820190506111736000830185610e0d565b6111806020830184610e0d565b9392505050565b600060408201905061119c6000830185610e0d565b6111a96020830184610f1b565b939250505056fea2646970667358221220c8219b41ab6c66a46a36bcbf125204dac397088975bc6fd76ffa441e2ae5dc1a64736f6c63430008110033",
-  "deployedBytecode": "0x6080604052600436106100865760003560e01c8063485f422211610059578063485f42221461016257806357c90de51461018b57806365dfc368146101a7578063c73a090a146101be578063c832aae8146101fb57610086565b806316e349191461008b5780632109db40146100d0578063378252f21461010e5780634206250814610125575b600080fd5b34801561009757600080fd5b506100b260048036038101906100ad9190610de0565b610217565b6040516100c799989796959493929190610e1c565b60405180910390f35b3480156100dc57600080fd5b506100f760048036038101906100f29190610ea9565b610265565b604051610105929190610f2a565b60405180910390f35b34801561011a57600080fd5b506101236102c6565b005b34801561013157600080fd5b5061014c60048036038101906101479190610de0565b6102c8565b6040516101599190610f53565b60405180910390f35b34801561016e57600080fd5b5061018960048036038101906101849190610f6e565b610385565b005b6101a560048036038101906101a09190610ea9565b6104ef565b005b3480156101b357600080fd5b506101bc610802565b005b3480156101ca57600080fd5b506101e560048036038101906101e09190610de0565b610804565b6040516101f29190610f53565b60405180910390f35b61021560048036038101906102109190610de0565b6108da565b005b60016020528060005260406000206000915090508060000154908060010154908060020154908060030154908060040154908060050154908060060154908060070154908060080154905089565b6002602052816000526040600020818154811061028157600080fd5b9060005260206000209060020201600091509150508060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060010154905082565b565b6000806000905060005b600260008581526020019081526020016000208054905081101561037b57816002600086815260200190815260200160002082815481106103165761031561104d565b5b9060005260206000209060020201600101541115610368576002600085815260200190815260200160002081815481106103535761035261104d565b5b90600052602060002090600202016001015491505b8080610373906110ab565b9150506102d2565b5080915050919050565b6103978a8a8a8a8a8a8a8a8a8a610af6565b156104e3576103a4610d59565b8981600001818152505088816020018181525050878160400181815250508681606001818152505085816080018181525050848160a0018181525050838160c0018181525050828160e0018181525050818161010001818152505080600160008d8152602001908152602001600020600082015181600001556020820151816001015560408201518160020155606082015181600301556080820151816004015560a0820151816005015560c0820151816006015560e08201518160070155610100820151816008015590505060008b90806001815401808255809150506001900390600052602060002001600090919091909150557f5e5349425087c1238d28e708f531b922272667303d666c67b1186d9b6848f25a8a8a8a8a8a8a8a8a8a6040516104d999989796959493929190610e1c565b60405180910390a1505b50505050505050505050565b81600080600090505b600080549050811015610526578180610510906110ab565b925050808061051e906110ab565b9150506104f8565b506000805490508103610565576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b83426001600083815260200190815260200160002060020154108061059f5750426001600083815260200190815260200160002060030154115b156105d6576040517f355d234800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b846000805b60026000848152602001908152602001600020805490508110156106a4573373ffffffffffffffffffffffffffffffffffffffff166002600085815260200190815260200160002082815481106106355761063461104d565b5b906000526020600020906002020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff161461069157818061068d906110ab565b9250505b808061069c906110ab565b9150506105db565b50600260008381526020019081526020016000208054905081036106f4576040517f2ffd4a0c00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8686600160008381526020019081526020016000206006015481108061074257506001600083815260200190815260200160002060080154610735836102c8565b61073f91906110f3565b81105b15610779576040517fabdda60f00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b87600260008b81526020019081526020016000206107968b610804565b815481106107a7576107a661104d565b5b9060005260206000209060020201600101819055507f897645643062f7e221aec187272e76020e3832294b4bf87b8f683c4e3ef8aa6d89338a6040516107ef93929190611127565b60405180910390a1505050505050505050565b565b600080600090505b60026000848152602001908152602001600020805490508110156108cf573373ffffffffffffffffffffffffffffffffffffffff166002600085815260200190815260200160002082815481106108665761086561104d565b5b906000526020600020906002020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16036108bc57809150506108d5565b80806108c7906110ab565b91505061080c565b50600090505b919050565b8060005b60008054905081101561093757808203610924576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b808061092f906110ab565b9150506108de565b508142600160008381526020019081526020016000206000015410806109725750426001600083815260200190815260200160002060010154115b156109a9576040517f60acd97900000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6000600160008581526020019081526020016000206006015460016000868152602001908152602001600020600501546109e391906110f3565b905080341015610a2c5783816040517ffea0958a000000000000000000000000000000000000000000000000000000008152600401610a2392919061115e565b60405180910390fd5b3360026000868152602001908152602001600020600260008781526020019081526020016000208054905081548110610a6857610a6761104d565b5b906000526020600020906002020160000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055507fc8e8a52ec1fa7775a3d2e5e7a7f1173441f31b9ee4047c62482192a3d497a2778433604051610ae8929190611187565b60405180910390a150505050565b60008a60005b600080549050811015610b5557808203610b42576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8080610b4d906110ab565b915050610afc565b508a8a42821080610b665750808210155b15610b9d576040517f5e83d5f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8b8b808210610bd8576040517f7a9971e800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8c8c808210610c13576040517fe2049fa500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d8d808210610c4e576040517fcc2116a000000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111610c89576040517fb25c88c500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111610cc4576040517fb0f07a6300000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111610cff576040517ffb833a9900000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111610d3a576040517fa9ed13a300000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60019d50505050505050505050505050509a9950505050505050505050565b6040518061012001604052806000815260200160008152602001600081526020016000815260200160008152602001600081526020016000815260200160008152602001600081525090565b600080fd5b6000819050919050565b610dbd81610daa565b8114610dc857600080fd5b50565b600081359050610dda81610db4565b92915050565b600060208284031215610df657610df5610da5565b5b6000610e0484828501610dcb565b91505092915050565b610e1681610daa565b82525050565b600061012082019050610e32600083018c610e0d565b610e3f602083018b610e0d565b610e4c604083018a610e0d565b610e596060830189610e0d565b610e666080830188610e0d565b610e7360a0830187610e0d565b610e8060c0830186610e0d565b610e8d60e0830185610e0d565b610e9b610100830184610e0d565b9a9950505050505050505050565b60008060408385031215610ec057610ebf610da5565b5b6000610ece85828601610dcb565b9250506020610edf85828601610dcb565b9150509250929050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000610f1482610ee9565b9050919050565b610f2481610f09565b82525050565b6000604082019050610f3f6000830185610f1b565b610f4c6020830184610e0d565b9392505050565b6000602082019050610f686000830184610e0d565b92915050565b6000806000806000806000806000806101408b8d031215610f9257610f91610da5565b5b6000610fa08d828e01610dcb565b9a50506020610fb18d828e01610dcb565b9950506040610fc28d828e01610dcb565b9850506060610fd38d828e01610dcb565b9750506080610fe48d828e01610dcb565b96505060a0610ff58d828e01610dcb565b95505060c06110068d828e01610dcb565b94505060e06110178d828e01610dcb565b9350506101006110298d828e01610dcb565b92505061012061103b8d828e01610dcb565b9150509295989b9194979a5092959850565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b60006110b682610daa565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82036110e8576110e761107c565b5b600182019050919050565b60006110fe82610daa565b915061110983610daa565b92508282019050808211156111215761112061107c565b5b92915050565b600060608201905061113c6000830186610e0d565b6111496020830185610f1b565b6111566040830184610e0d565b949350505050565b60006040820190506111736000830185610e0d565b6111806020830184610e0d565b9392505050565b600060408201905061119c6000830185610e0d565b6111a96020830184610f1b565b939250505056fea2646970667358221220c8219b41ab6c66a46a36bcbf125204dac397088975bc6fd76ffa441e2ae5dc1a64736f6c63430008110033",
+  "numDeployments": 13,
+  "solcInputHash": "6b7c41d1ab431634e6b657f1dde44c08",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"Auction__ConfirmationTimeout\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidAuctionId\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidAuctionTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidBidAmount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidDepositAmount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidDuePaymentTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidPriceStep\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidRegistrationFee\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidRegistrationTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidStartAuctionTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__InvalidStartBid\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__NotExistAuctionId\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__NotRegisteredBidder\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__NotWinnerOfAuction\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__OutOfAuctionTime\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Auction__OutOfRegistrationTime\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"requirePaymentAmount\",\"type\":\"uint256\"}],\"name\":\"Auction__RequireAmountToPaymentNotMet\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"requireAmountToRegister\",\"type\":\"uint256\"}],\"name\":\"Auction__RequireAmountToRegisterNotMet\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"enum Auction.BidderState\",\"name\":\"bidderState\",\"type\":\"uint8\"}],\"name\":\"CanceledAuctionResult\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"ClosedAuction\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"paidAmount\",\"type\":\"uint256\"}],\"name\":\"ClosedAuctionSucessfully\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startRegistrationTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"endRegistrationTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startAuctionTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"endAuctionTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"duePaymentTime\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"registrationFee\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"depositAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startBid\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"priceStep\",\"type\":\"uint256\"}],\"name\":\"CreatedAuction\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"bidAmount\",\"type\":\"uint256\"}],\"name\":\"PlacedBid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"enum Auction.BidderState\",\"name\":\"bidderState\",\"type\":\"uint8\"}],\"name\":\"RegisteredToBid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"}],\"name\":\"Withdrew\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"cancelAuctionResult\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"closeAuction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startRegistrationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endRegistrationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startAuctionTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endAuctionTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duePaymentTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"registrationFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"depositAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startBid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"priceStep\",\"type\":\"uint256\"}],\"name\":\"createAuction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"getAuctionInformationById\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"startRegistrationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endRegistrationTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startAuctionTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endAuctionTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duePaymentTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"registrationFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"depositAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startBid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"priceStep\",\"type\":\"uint256\"}],\"internalType\":\"struct Auction.AuctionInformation\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"getBidInformationByAuctionId\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"bidAmount\",\"type\":\"uint256\"},{\"internalType\":\"enum Auction.BidderState\",\"name\":\"bidderState\",\"type\":\"uint8\"}],\"internalType\":\"struct Auction.BidInformation[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"getHightestBidOfAuction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"getIndexOfHighestBidOfAuction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"getIndexOfSecondWinnerOfAuction\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getListAuctionId\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"payment\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bidAmount\",\"type\":\"uint256\"}],\"name\":\"placeBid\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"auctionId\",\"type\":\"uint256\"}],\"name\":\"registerToBid\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Nguyen Thanh Trung\",\"details\":\"This implements the auctioneer job\",\"kind\":\"dev\",\"methods\":{},\"title\":\"Decentralized Auction\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"This contract is for Decentralized Auction Platform\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Auction.sol\":\"Auction\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/Auction.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.17;\\r\\n\\r\\nerror Auction__InvalidRegistrationTime();\\r\\nerror Auction__InvalidAuctionTime();\\r\\nerror Auction__InvalidDuePaymentTime();\\r\\nerror Auction__InvalidStartAuctionTime();\\r\\nerror Auction__InvalidRegistrationFee();\\r\\nerror Auction__InvalidDepositAmount();\\r\\nerror Auction__InvalidStartBid();\\r\\nerror Auction__InvalidPriceStep();\\r\\nerror Auction__InvalidDatetime();\\r\\nerror Auction__InvalidAuctionId();\\r\\nerror Auction__OutOfRegistrationTime();\\r\\nerror Auction__RequireAmountToRegisterNotMet(uint256 auctionId, uint256 requireAmountToRegister);\\r\\nerror Auction__OutOfAuctionTime();\\r\\nerror Auction__InvalidBidAmount();\\r\\nerror Auction__NotRegisteredBidder();\\r\\nerror Auction__NotExistAuctionId();\\r\\nerror Auction__ConfirmationTimeout();\\r\\nerror Auction__NotWinnerOfAuction();\\r\\nerror Auction__TransferFailed();\\r\\nerror Auction__RequireAmountToPaymentNotMet(uint256 auctionId, uint256 requirePaymentAmount);\\r\\n\\r\\n/**@title Decentralized Auction\\r\\n * @author Nguyen Thanh Trung\\r\\n * @notice This contract is for Decentralized Auction Platform\\r\\n * @dev This implements the auctioneer job\\r\\n */\\r\\ncontract Auction {\\r\\n    uint256[] private s_auctionList;\\r\\n    uint16 private constant CONFIRMATION_TIME = 300;\\r\\n\\r\\n    enum BidderState {\\r\\n        BIDING, //registered or bidding\\r\\n        WAITING, //top 2 bidder who is watting for top 1 confirm result\\r\\n        WIN, //winner\\r\\n        LOSE, // top 3 or lower\\r\\n        CANCEL, //cencel bid or auction result\\r\\n        WITHDEW, //paid back deposit\\r\\n        PAID // payment complete\\r\\n    }\\r\\n\\r\\n    struct AuctionInformation {\\r\\n        uint256 startRegistrationTime;\\r\\n        uint256 endRegistrationTime;\\r\\n        uint256 startAuctionTime;\\r\\n        uint256 endAuctionTime;\\r\\n        uint256 duePaymentTime;\\r\\n        uint256 registrationFee;\\r\\n        uint256 depositAmount;\\r\\n        uint256 startBid;\\r\\n        uint256 priceStep;\\r\\n    }\\r\\n\\r\\n    struct BidInformation {\\r\\n        address bidder;\\r\\n        uint256 bidAmount;\\r\\n        BidderState bidderState;\\r\\n    }\\r\\n\\r\\n    event CreatedAuction(\\r\\n        uint256 auctionId,\\r\\n        uint256 startRegistrationTime,\\r\\n        uint256 endRegistrationTime,\\r\\n        uint256 startAuctionTime,\\r\\n        uint256 endAuctionTime,\\r\\n        uint256 duePaymentTime,\\r\\n        uint256 registrationFee,\\r\\n        uint256 depositAmount,\\r\\n        uint256 startBid,\\r\\n        uint256 priceStep\\r\\n    );\\r\\n    event PlacedBid(uint256 auctionId, address bidder, uint256 bidAmount);\\r\\n    event RegisteredToBid(uint256 auctionId, address bidder, BidderState bidderState);\\r\\n    event ClosedAuction(uint256 auctionId);\\r\\n    event CanceledAuctionResult(uint256 auctionId, address bidder, BidderState bidderState);\\r\\n    event Withdrew(uint256 auctionId, address bidder);\\r\\n    event ClosedAuctionSucessfully(uint256 auctionId, address bidder, uint256 paidAmount);\\r\\n\\r\\n    mapping(uint256 => AuctionInformation) private s_AuctionInformations;\\r\\n    mapping(uint256 => BidInformation[]) private s_BidInformations;\\r\\n\\r\\n    modifier isVailidAuctionId(uint256 auctionId) {\\r\\n        for (uint256 i = 0; i < s_auctionList.length; i++) {\\r\\n            if (auctionId == s_auctionList[i]) {\\r\\n                revert Auction__InvalidAuctionId();\\r\\n            }\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isExistAuctionId(uint256 auctionId) {\\r\\n        uint256 count = 0;\\r\\n        for (uint256 i = 0; i < s_auctionList.length; i++) {\\r\\n            if (auctionId != s_auctionList[i]) {\\r\\n                count++;\\r\\n            }\\r\\n        }\\r\\n        if (count == s_auctionList.length) {\\r\\n            revert Auction__NotExistAuctionId();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isValidRegistrationTime(uint256 startRegistrationTime, uint256 endRegistrationTime) {\\r\\n        if (\\r\\n            startRegistrationTime < block.timestamp ||\\r\\n            // block.timestamp > endRegistrationTime ||\\r\\n            startRegistrationTime >= endRegistrationTime\\r\\n        ) {\\r\\n            revert Auction__InvalidRegistrationTime();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isValidStartAuctionTime(uint256 endRegistrationTime, uint256 startAuctionTime) {\\r\\n        if (endRegistrationTime >= startAuctionTime) {\\r\\n            revert Auction__InvalidStartAuctionTime();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isValidAuctionTime(uint256 startAuctionTime, uint256 endAuctionTime) {\\r\\n        if (startAuctionTime >= endAuctionTime) {\\r\\n            revert Auction__InvalidAuctionTime();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isValidDuePaymentTime(uint256 endAuctionTime, uint256 duePaymentTime) {\\r\\n        if (endAuctionTime >= duePaymentTime) {\\r\\n            revert Auction__InvalidDuePaymentTime();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isValidRegistrationFee(uint256 registrationFee) {\\r\\n        if (registrationFee <= 0) {\\r\\n            revert Auction__InvalidRegistrationFee();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isValidDepositAmount(uint256 depositAmount) {\\r\\n        if (depositAmount <= 0) {\\r\\n            revert Auction__InvalidDepositAmount();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isValidStartBid(uint256 depositAmount) {\\r\\n        if (depositAmount <= 0) {\\r\\n            revert Auction__InvalidStartBid();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isValidPriceStep(uint256 depositAmount) {\\r\\n        if (depositAmount <= 0) {\\r\\n            revert Auction__InvalidPriceStep();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isAuctionExist(uint256 auctionId) {\\r\\n        uint256 count;\\r\\n        for (uint256 i = 0; i < s_auctionList.length; i++) {\\r\\n            count++;\\r\\n        }\\r\\n        if (count == s_auctionList.length) {\\r\\n            revert Auction__InvalidAuctionId();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isRegistrationTime(uint256 auctionId) {\\r\\n        if (\\r\\n            s_AuctionInformations[auctionId].startRegistrationTime < block.timestamp ||\\r\\n            s_AuctionInformations[auctionId].endRegistrationTime > block.timestamp\\r\\n        ) {\\r\\n            revert Auction__OutOfRegistrationTime();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isAuctionTime(uint256 auctionId) {\\r\\n        if (\\r\\n            s_AuctionInformations[auctionId].startAuctionTime < block.timestamp || s_AuctionInformations[auctionId].endAuctionTime > block.timestamp\\r\\n        ) {\\r\\n            revert Auction__OutOfAuctionTime();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isValidBidAmount(uint256 auctionId, uint256 bidAmount) {\\r\\n        if (\\r\\n            bidAmount < s_AuctionInformations[auctionId].depositAmount ||\\r\\n            bidAmount < getHightestBidOfAuction(auctionId) + s_AuctionInformations[auctionId].priceStep\\r\\n        ) {\\r\\n            revert Auction__InvalidBidAmount();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isRegisteredBidder(uint256 auctionId) {\\r\\n        uint256 count = 0;\\r\\n        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {\\r\\n            if (s_BidInformations[auctionId][i].bidder != msg.sender) {\\r\\n                count++;\\r\\n            }\\r\\n        }\\r\\n        if (count == s_BidInformations[auctionId].length) {\\r\\n            revert Auction__NotRegisteredBidder();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier isConfirmationTime(uint256 auctionId) {\\r\\n        if (msg.sender == s_BidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)].bidder) {\\r\\n            uint256 dueConfirmationTime = s_AuctionInformations[auctionId].endAuctionTime + CONFIRMATION_TIME;\\r\\n            if (dueConfirmationTime > block.timestamp) {\\r\\n                revert Auction__ConfirmationTimeout();\\r\\n            }\\r\\n        }\\r\\n        if (msg.sender == s_BidInformations[auctionId][getIndexOfSecondWinnerOfAuction(auctionId)].bidder) {\\r\\n            uint256 dueConfirmationTime = s_AuctionInformations[auctionId].endAuctionTime + CONFIRMATION_TIME * 2;\\r\\n            if (dueConfirmationTime > block.timestamp) {\\r\\n                revert Auction__ConfirmationTimeout();\\r\\n            }\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    //check sender is winner or not\\r\\n    modifier isWinnerOfAuction(uint256 auctionId) {\\r\\n        if (s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState != BidderState.WIN) {\\r\\n            revert Auction__NotWinnerOfAuction();\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    function isValidatedInput(\\r\\n        uint256 auctionId, //need validate\\r\\n        uint256 startRegistrationTime,\\r\\n        uint256 endRegistrationTime,\\r\\n        uint256 startAuctionTime,\\r\\n        uint256 endAuctionTime,\\r\\n        uint256 duePaymentTime,\\r\\n        uint256 registrationFee,\\r\\n        uint256 depositAmount,\\r\\n        uint256 startBid,\\r\\n        uint256 priceStep\\r\\n    )\\r\\n        internal\\r\\n        view\\r\\n        isVailidAuctionId(auctionId)\\r\\n        isValidRegistrationTime(startRegistrationTime, endRegistrationTime)\\r\\n        isValidStartAuctionTime(endRegistrationTime, startAuctionTime)\\r\\n        isValidAuctionTime(startAuctionTime, endAuctionTime)\\r\\n        isValidDuePaymentTime(endAuctionTime, duePaymentTime)\\r\\n        isValidRegistrationFee(registrationFee)\\r\\n        isValidDepositAmount(depositAmount)\\r\\n        isValidStartBid(startBid)\\r\\n        isValidPriceStep(priceStep)\\r\\n        returns (bool)\\r\\n    {\\r\\n        return true;\\r\\n    }\\r\\n\\r\\n    function createAuction(\\r\\n        uint256 auctionId,\\r\\n        uint256 startRegistrationTime,\\r\\n        uint256 endRegistrationTime,\\r\\n        uint256 startAuctionTime,\\r\\n        uint256 endAuctionTime,\\r\\n        uint256 duePaymentTime,\\r\\n        uint256 registrationFee,\\r\\n        uint256 depositAmount,\\r\\n        uint256 startBid,\\r\\n        uint256 priceStep\\r\\n    ) external {\\r\\n        if (\\r\\n            isValidatedInput(\\r\\n                auctionId,\\r\\n                startRegistrationTime,\\r\\n                endRegistrationTime,\\r\\n                startAuctionTime,\\r\\n                endAuctionTime,\\r\\n                duePaymentTime,\\r\\n                registrationFee,\\r\\n                depositAmount,\\r\\n                startBid,\\r\\n                priceStep\\r\\n            )\\r\\n        ) {\\r\\n            AuctionInformation memory auction;\\r\\n            auction.startRegistrationTime = startRegistrationTime;\\r\\n            auction.endRegistrationTime = endRegistrationTime;\\r\\n            auction.startAuctionTime = startAuctionTime;\\r\\n            auction.endAuctionTime = endAuctionTime;\\r\\n            auction.duePaymentTime = duePaymentTime;\\r\\n            auction.registrationFee = registrationFee;\\r\\n            auction.depositAmount = depositAmount;\\r\\n            auction.startBid = startBid;\\r\\n            auction.priceStep = priceStep;\\r\\n            s_AuctionInformations[auctionId] = auction;\\r\\n            s_auctionList.push(auctionId);\\r\\n\\r\\n            emit CreatedAuction(\\r\\n                auctionId,\\r\\n                startRegistrationTime,\\r\\n                endRegistrationTime,\\r\\n                startAuctionTime,\\r\\n                endAuctionTime,\\r\\n                duePaymentTime,\\r\\n                registrationFee,\\r\\n                depositAmount,\\r\\n                startBid,\\r\\n                priceStep\\r\\n            );\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function registerToBid(uint256 auctionId) external payable isVailidAuctionId(auctionId) isRegistrationTime(auctionId) {\\r\\n        uint256 requireAmountToRegister = s_AuctionInformations[auctionId].registrationFee + s_AuctionInformations[auctionId].depositAmount;\\r\\n        if (msg.value < requireAmountToRegister) {\\r\\n            revert Auction__RequireAmountToRegisterNotMet(auctionId, requireAmountToRegister);\\r\\n        }\\r\\n        s_BidInformations[auctionId][s_BidInformations[auctionId].length].bidder = msg.sender;\\r\\n        s_BidInformations[auctionId][s_BidInformations[auctionId].length].bidderState = BidderState.BIDING;\\r\\n        emit RegisteredToBid(auctionId, msg.sender, s_BidInformations[auctionId][s_BidInformations[auctionId].length].bidderState);\\r\\n    }\\r\\n\\r\\n    function getHightestBidOfAuction(uint256 auctionId) public view returns (uint256) {\\r\\n        uint256 highestBid = 0;\\r\\n        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {\\r\\n            if (s_BidInformations[auctionId][i].bidAmount > highestBid && s_BidInformations[auctionId][i].bidderState != BidderState.CANCEL) {\\r\\n                highestBid = s_BidInformations[auctionId][i].bidAmount;\\r\\n            }\\r\\n        }\\r\\n        return highestBid;\\r\\n    }\\r\\n\\r\\n    //get index of bidder who is sender\\r\\n    function getIndexOfBidder(uint256 auctionId) internal view returns (uint256) {\\r\\n        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {\\r\\n            if (s_BidInformations[auctionId][i].bidder == msg.sender) {\\r\\n                return i;\\r\\n            }\\r\\n        }\\r\\n        return 0;\\r\\n    }\\r\\n\\r\\n    function placeBid(uint256 auctionId, uint256 bidAmount)\\r\\n        external\\r\\n        payable\\r\\n        isAuctionExist(auctionId)\\r\\n        isAuctionTime(auctionId)\\r\\n        isRegisteredBidder(auctionId)\\r\\n        isValidBidAmount(auctionId, bidAmount)\\r\\n    {\\r\\n        s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount = bidAmount;\\r\\n        emit PlacedBid(auctionId, msg.sender, bidAmount);\\r\\n    }\\r\\n\\r\\n    function getIndexOfHighestBidOfAuction(uint256 auctionId) public view returns (uint256) {\\r\\n        uint256 highestIndex;\\r\\n        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {\\r\\n            if (highestIndex < s_BidInformations[auctionId][i].bidAmount && s_BidInformations[auctionId][i].bidderState != BidderState.CANCEL) {\\r\\n                highestIndex = i;\\r\\n            }\\r\\n        }\\r\\n        return highestIndex;\\r\\n    }\\r\\n\\r\\n    function closeAuction(uint256 auctionId) external isExistAuctionId(auctionId) {\\r\\n        uint256 index = getIndexOfHighestBidOfAuction(auctionId);\\r\\n        s_BidInformations[auctionId][index].bidderState = BidderState.WIN;\\r\\n        uint256 index2 = getIndexOfSecondWinnerOfAuction(auctionId);\\r\\n        s_BidInformations[auctionId][index2].bidderState = BidderState.WAITING;\\r\\n        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {\\r\\n            if (s_BidInformations[auctionId][i].bidderState == BidderState.BIDING) {\\r\\n                s_BidInformations[auctionId][i].bidderState == BidderState.LOSE;\\r\\n            }\\r\\n        }\\r\\n        emit ClosedAuction(auctionId);\\r\\n    }\\r\\n\\r\\n    function cancelAuctionResult(uint256 auctionId) external payable isConfirmationTime(auctionId) isWinnerOfAuction(auctionId) {\\r\\n        if (msg.sender == s_BidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)].bidder) {\\r\\n            s_BidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)].bidderState = BidderState.CANCEL;\\r\\n            s_BidInformations[auctionId][getIndexOfSecondWinnerOfAuction(auctionId)].bidderState = BidderState.WIN;\\r\\n        } else {\\r\\n            s_BidInformations[auctionId][getIndexOfSecondWinnerOfAuction(auctionId)].bidderState = BidderState.CANCEL;\\r\\n        }\\r\\n        emit CanceledAuctionResult(auctionId, msg.sender, s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState);\\r\\n    }\\r\\n\\r\\n    function getIndexOfSecondWinnerOfAuction(uint256 auctionId) public returns (uint256) {\\r\\n        BidInformation[] storage tempBidInformation = s_BidInformations[auctionId];\\r\\n        uint256 index = getHightestBidOfAuction(auctionId);\\r\\n        require(index < tempBidInformation.length);\\r\\n        tempBidInformation[index] = tempBidInformation[tempBidInformation.length - 1];\\r\\n        tempBidInformation.pop();\\r\\n        uint256 highestIndex;\\r\\n        for (uint256 i = 0; i < tempBidInformation.length; i++) {\\r\\n            if (highestIndex < tempBidInformation[i].bidAmount) {\\r\\n                highestIndex = i;\\r\\n            }\\r\\n        }\\r\\n        return highestIndex;\\r\\n    }\\r\\n\\r\\n    function withdaw(uint256 auctionId) internal {\\r\\n        uint256 depositAmount = s_AuctionInformations[auctionId].depositAmount;\\r\\n        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {\\r\\n            if (s_BidInformations[auctionId][i].bidderState == BidderState.LOSE) {\\r\\n                bool success = payable(s_BidInformations[auctionId][i].bidder).send(depositAmount);\\r\\n                // require(success, \\\"Failed to send Ether\\\");\\r\\n                if (!success) {\\r\\n                    revert Auction__TransferFailed();\\r\\n                } else {\\r\\n                    s_BidInformations[auctionId][i].bidderState = BidderState.WITHDEW;\\r\\n                    emit Withdrew(auctionId, s_BidInformations[auctionId][i].bidder);\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n\\r\\n    modifier isValidPaymentAmount(uint256 auctionId) {\\r\\n        uint256 requirePaymentAmount = s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount -\\r\\n            s_AuctionInformations[auctionId].depositAmount;\\r\\n        if (msg.value != requirePaymentAmount) {\\r\\n            revert Auction__RequireAmountToPaymentNotMet(auctionId, requirePaymentAmount);\\r\\n        }\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    function payment(uint256 auctionId) external payable isWinnerOfAuction(auctionId) isValidPaymentAmount(auctionId) {\\r\\n        s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState.PAID;\\r\\n        emit ClosedAuctionSucessfully(auctionId, msg.sender, msg.value);\\r\\n    }\\r\\n\\r\\n    function getListAuctionId() external view returns (uint256[] memory) {\\r\\n        return s_auctionList;\\r\\n    }\\r\\n\\r\\n    function getAuctionInformationById(uint256 auctionId) external view isExistAuctionId(auctionId) returns (AuctionInformation memory) {\\r\\n        return s_AuctionInformations[auctionId];\\r\\n    }\\r\\n\\r\\n    function getBidInformationByAuctionId(uint256 auctionId) external view isExistAuctionId(auctionId) returns (BidInformation[] memory) {\\r\\n        return s_BidInformations[auctionId];\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x1adcee42bf5340a823ae0aa703ed62a0e8805338c883c9b2a313b00ad6df5cb2\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061273f806100206000396000f3fe6080604052600436106100a75760003560e01c8063485f422211610064578063485f4222146101d3578063497c3cc6146101fc57806357c90de5146102395780638b3c99e314610255578063a9b0957714610271578063c832aae8146102ae576100a7565b806319315db2146100ac5780631c46583b146100c8578063236ed8f3146100f3578063237e81801461011c57806332a1b8ad146101595780634206250814610196575b600080fd5b6100c660048036038101906100c19190611f3c565b6102ca565b005b3480156100d457600080fd5b506100dd6107c9565b6040516100ea9190612027565b60405180910390f35b3480156100ff57600080fd5b5061011a60048036038101906101159190611f3c565b610821565b005b34801561012857600080fd5b50610143600480360381019061013e9190611f3c565b610adf565b6040516101509190612058565b60405180910390f35b34801561016557600080fd5b50610180600480360381019061017b9190611f3c565b610bd6565b60405161018d9190612058565b60405180910390f35b3480156101a257600080fd5b506101bd60048036038101906101b89190611f3c565b610dde565b6040516101ca9190612058565b60405180910390f35b3480156101df57600080fd5b506101fa60048036038101906101f59190612073565b610f0f565b005b34801561020857600080fd5b50610223600480360381019061021e9190611f3c565b61107b565b60405161023091906122fb565b60405180910390f35b610253600480360381019061024e919061231d565b611222565b005b61026f600480360381019061026a9190611f3c565b611535565b005b34801561027d57600080fd5b5061029860048036038101906102939190611f3c565b611732565b6040516102a59190612414565b60405180910390f35b6102c860048036038101906102c39190611f3c565b611854565b005b80600260008281526020019081526020016000206102e782610adf565b815481106102f8576102f7612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16036103c457600061012c61ffff166001600084815260200190815260200160002060030154610386919061248e565b9050428111156103c2576040517f49107ff700000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b505b600260008281526020019081526020016000206103e082610bd6565b815481106103f1576103f0612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16036104c9576000600261012c61046691906124d0565b61ffff16600160008481526020019081526020016000206003015461048b919061248e565b9050428111156104c7576040517f49107ff700000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b505b81600260068111156104de576104dd6121bf565b5b600260008381526020019081526020016000206104fa83611b5e565b8154811061050b5761050a612430565b5b906000526020600020906003020160020160009054906101000a900460ff16600681111561053c5761053b6121bf565b5b14610573576040517f7963b56f00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6002600084815260200190815260200160002061058f84610adf565b815481106105a05761059f612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16036106d65760046002600085815260200190815260200160002061062285610adf565b8154811061063357610632612430565b5b906000526020600020906003020160020160006101000a81548160ff02191690836006811115610666576106656121bf565b5b0217905550600280600085815260200190815260200160002061068885610bd6565b8154811061069957610698612430565b5b906000526020600020906003020160020160006101000a81548160ff021916908360068111156106cc576106cb6121bf565b5b021790555061073e565b6004600260008581526020019081526020016000206106f485610bd6565b8154811061070557610704612430565b5b906000526020600020906003020160020160006101000a81548160ff02191690836006811115610738576107376121bf565b5b02179055505b7f1b356cc706b6c1f5ac4ad77235bdfbec3ba7a0bf33c4f3b6130ce36ccac429f983336002600087815260200190815260200160002061077d87611b5e565b8154811061078e5761078d612430565b5b906000526020600020906003020160020160009054906101000a900460ff166040516107bc9392919061252b565b60405180910390a1505050565b6060600080548060200260200160405190810160405280929190818152602001828054801561081757602002820191906000526020600020905b815481526020019060010190808311610803575b5050505050905090565b806000805b60008054905081101561087a576000818154811061084757610846612430565b5b9060005260206000200154831461086757818061086390612562565b9250505b808061087290612562565b915050610826565b5060008054905081036108b9576040517fc1c7f9a100000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60006108c484610adf565b9050600280600086815260200190815260200160002082815481106108ec576108eb612430565b5b906000526020600020906003020160020160006101000a81548160ff0219169083600681111561091f5761091e6121bf565b5b0217905550600061092f85610bd6565b9050600160026000878152602001908152602001600020828154811061095857610957612430565b5b906000526020600020906003020160020160006101000a81548160ff0219169083600681111561098b5761098a6121bf565b5b021790555060005b6002600087815260200190815260200160002080549050811015610aa057600060068111156109c5576109c46121bf565b5b6002600088815260200190815260200160002082815481106109ea576109e9612430565b5b906000526020600020906003020160020160009054906101000a900460ff166006811115610a1b57610a1a6121bf565b5b03610a8d5760036006811115610a3457610a336121bf565b5b600260008881526020019081526020016000208281548110610a5957610a58612430565b5b906000526020600020906003020160020160009054906101000a900460ff166006811115610a8a57610a896121bf565b5b50505b8080610a9890612562565b915050610993565b507f279c403f9207a168d9dff1055d3fc145405e25a2b26bf9e1f230366f65a651d985604051610ad09190612058565b60405180910390a15050505050565b60008060005b6002600085815260200190815260200160002080549050811015610bcc57600260008581526020019081526020016000208181548110610b2857610b27612430565b5b90600052602060002090600302016001015482108015610bb0575060046006811115610b5757610b566121bf565b5b600260008681526020019081526020016000208281548110610b7c57610b7b612430565b5b906000526020600020906003020160020160009054906101000a900460ff166006811115610bad57610bac6121bf565b5b14155b15610bb9578091505b8080610bc490612562565b915050610ae5565b5080915050919050565b6000806002600084815260200190815260200160002090506000610bf984610dde565b905081805490508110610c0b57600080fd5b8160018380549050610c1d91906125aa565b81548110610c2e57610c2d612430565b5b9060005260206000209060030201828281548110610c4f57610c4e612430565b5b90600052602060002090600302016000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff168160000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600182015481600101556002820160009054906101000a900460ff168160020160006101000a81548160ff02191690836006811115610d0657610d056121bf565b5b021790555090505081805480610d1f57610d1e6125de565b5b6001900381819060005260206000209060030201600080820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff021916905560018201600090556002820160006101000a81549060ff021916905550509055600080600090505b8380549050811015610dd257838181548110610da257610da1612430565b5b906000526020600020906003020160010154821015610dbf578091505b8080610dca90612562565b915050610d83565b50809350505050919050565b6000806000905060005b6002600085815260200190815260200160002080549050811015610f055781600260008681526020019081526020016000208281548110610e2c57610e2b612430565b5b906000526020600020906003020160010154118015610eb3575060046006811115610e5a57610e596121bf565b5b600260008681526020019081526020016000208281548110610e7f57610e7e612430565b5b906000526020600020906003020160020160009054906101000a900460ff166006811115610eb057610eaf6121bf565b5b14155b15610ef257600260008581526020019081526020016000208181548110610edd57610edc612430565b5b90600052602060002090600302016001015491505b8080610efd90612562565b915050610de8565b5080915050919050565b610f218a8a8a8a8a8a8a8a8a8a611c34565b1561106f57610f2e611eb5565b8981600001818152505088816020018181525050878160400181815250508681606001818152505085816080018181525050848160a0018181525050838160c0018181525050828160e0018181525050818161010001818152505080600160008d8152602001908152602001600020600082015181600001556020820151816001015560408201518160020155606082015181600301556080820151816004015560a0820151816005015560c0820151816006015560e08201518160070155610100820151816008015590505060008b90806001815401808255809150506001900390600052602060002001600090919091909150557fbf32ac378b094c01cee4de6b05076ce3628ad0310a89fc49de1a56ff1729b9828b8b8b8b8b8b8b8b8b8b6040516110659a9998979695949392919061260d565b60405180910390a1505b50505050505050505050565b6060816000805b6000805490508110156110d657600081815481106110a3576110a2612430565b5b906000526020600020015483146110c35781806110bf90612562565b9250505b80806110ce90612562565b915050611082565b506000805490508103611115576040517fc1c7f9a100000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60026000858152602001908152602001600020805480602002602001604051908101604052809291908181526020016000905b8282101561121557838290600052602060002090600302016040518060600160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600182015481526020016002820160009054906101000a900460ff1660068111156111f0576111ef6121bf565b5b6006811115611202576112016121bf565b5b8152505081526020019060010190611148565b5050505092505050919050565b81600080600090505b60008054905081101561125957818061124390612562565b925050808061125190612562565b91505061122b565b506000805490508103611298576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8342600160008381526020019081526020016000206002015410806112d25750426001600083815260200190815260200160002060030154115b15611309576040517f355d234800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b846000805b60026000848152602001908152602001600020805490508110156113d7573373ffffffffffffffffffffffffffffffffffffffff1660026000858152602001908152602001600020828154811061136857611367612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16146113c45781806113c090612562565b9250505b80806113cf90612562565b91505061130e565b5060026000838152602001908152602001600020805490508103611427576040517f2ffd4a0c00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b868660016000838152602001908152602001600020600601548110806114755750600160008381526020019081526020016000206008015461146883610dde565b611472919061248e565b81105b156114ac576040517fabdda60f00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b87600260008b81526020019081526020016000206114c98b611b5e565b815481106114da576114d9612430565b5b9060005260206000209060030201600101819055507f897645643062f7e221aec187272e76020e3832294b4bf87b8f683c4e3ef8aa6d89338a604051611522939291906126a9565b60405180910390a1505050505050505050565b806002600681111561154a576115496121bf565b5b6002600083815260200190815260200160002061156683611b5e565b8154811061157757611576612430565b5b906000526020600020906003020160020160009054906101000a900460ff1660068111156115a8576115a76121bf565b5b146115df576040517f7963b56f00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b81600060016000838152602001908152602001600020600601546002600084815260200190815260200160002061161584611b5e565b8154811061162657611625612430565b5b90600052602060002090600302016001015461164291906125aa565b905080341461168a5781816040517f6b1fb6fc0000000000000000000000000000000000000000000000000000000081526004016116819291906126e0565b60405180910390fd5b6006600260008681526020019081526020016000206116a886611b5e565b815481106116b9576116b8612430565b5b906000526020600020906003020160020160006101000a81548160ff021916908360068111156116ec576116eb6121bf565b5b02179055507f7b5ceba626af36d16f2f87203d946e0ecfb9750e22b32fc636681b9eeeac1fcd843334604051611724939291906126a9565b60405180910390a150505050565b61173a611eb5565b816000805b60008054905081101561179357600081815481106117605761175f612430565b5b9060005260206000200154831461178057818061177c90612562565b9250505b808061178b90612562565b91505061173f565b5060008054905081036117d2576040517fc1c7f9a100000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6001600085815260200190815260200160002060405180610120016040529081600082015481526020016001820154815260200160028201548152602001600382015481526020016004820154815260200160058201548152602001600682015481526020016007820154815260200160088201548152505092505050919050565b8060005b6000805490508110156118cf576000818154811061187957611878612430565b5b906000526020600020015482036118bc576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b80806118c790612562565b915050611858565b5081426001600083815260200190815260200160002060000154108061190a5750426001600083815260200190815260200160002060010154115b15611941576040517f60acd97900000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60006001600085815260200190815260200160002060060154600160008681526020019081526020016000206005015461197b919061248e565b9050803410156119c45783816040517ffea0958a0000000000000000000000000000000000000000000000000000000081526004016119bb9291906126e0565b60405180910390fd5b3360026000868152602001908152602001600020600260008781526020019081526020016000208054905081548110611a00576119ff612430565b5b906000526020600020906003020160000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600060026000868152602001908152602001600020600260008781526020019081526020016000208054905081548110611a8c57611a8b612430565b5b906000526020600020906003020160020160006101000a81548160ff02191690836006811115611abf57611abe6121bf565b5b02179055507fea2bf18cdaf74f8bd6d3fc5c7d0e89165af029961e99d76595e7b03c374aa6b9843360026000888152602001908152602001600020600260008981526020019081526020016000208054905081548110611b2257611b21612430565b5b906000526020600020906003020160020160009054906101000a900460ff16604051611b509392919061252b565b60405180910390a150505050565b600080600090505b6002600084815260200190815260200160002080549050811015611c29573373ffffffffffffffffffffffffffffffffffffffff16600260008581526020019081526020016000208281548110611bc057611bbf612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1603611c165780915050611c2f565b8080611c2190612562565b915050611b66565b50600090505b919050565b60008a60005b600080549050811015611cb15760008181548110611c5b57611c5a612430565b5b90600052602060002001548203611c9e576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8080611ca990612562565b915050611c3a565b508a8a42821080611cc25750808210155b15611cf9576040517f5e83d5f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8b8b808210611d34576040517f7a9971e800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8c8c808210611d6f576040517fe2049fa500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d8d808210611daa576040517fcc2116a000000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111611de5576040517fb25c88c500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111611e20576040517fb0f07a6300000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111611e5b576040517ffb833a9900000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111611e96576040517fa9ed13a300000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60019d50505050505050505050505050509a9950505050505050505050565b6040518061012001604052806000815260200160008152602001600081526020016000815260200160008152602001600081526020016000815260200160008152602001600081525090565b600080fd5b6000819050919050565b611f1981611f06565b8114611f2457600080fd5b50565b600081359050611f3681611f10565b92915050565b600060208284031215611f5257611f51611f01565b5b6000611f6084828501611f27565b91505092915050565b600081519050919050565b600082825260208201905092915050565b6000819050602082019050919050565b611f9e81611f06565b82525050565b6000611fb08383611f95565b60208301905092915050565b6000602082019050919050565b6000611fd482611f69565b611fde8185611f74565b9350611fe983611f85565b8060005b8381101561201a5781516120018882611fa4565b975061200c83611fbc565b925050600181019050611fed565b5085935050505092915050565b600060208201905081810360008301526120418184611fc9565b905092915050565b61205281611f06565b82525050565b600060208201905061206d6000830184612049565b92915050565b6000806000806000806000806000806101408b8d03121561209757612096611f01565b5b60006120a58d828e01611f27565b9a505060206120b68d828e01611f27565b99505060406120c78d828e01611f27565b98505060606120d88d828e01611f27565b97505060806120e98d828e01611f27565b96505060a06120fa8d828e01611f27565b95505060c061210b8d828e01611f27565b94505060e061211c8d828e01611f27565b93505061010061212e8d828e01611f27565b9250506101206121408d828e01611f27565b9150509295989b9194979a5092959850565b600081519050919050565b600082825260208201905092915050565b6000819050602082019050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b60006121a98261217e565b9050919050565b6121b98161219e565b82525050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b600781106121ff576121fe6121bf565b5b50565b6000819050612210826121ee565b919050565b600061222082612202565b9050919050565b61223081612215565b82525050565b60608201600082015161224c60008501826121b0565b50602082015161225f6020850182611f95565b5060408201516122726040850182612227565b50505050565b60006122848383612236565b60608301905092915050565b6000602082019050919050565b60006122a882612152565b6122b2818561215d565b93506122bd8361216e565b8060005b838110156122ee5781516122d58882612278565b97506122e083612290565b9250506001810190506122c1565b5085935050505092915050565b60006020820190508181036000830152612315818461229d565b905092915050565b6000806040838503121561233457612333611f01565b5b600061234285828601611f27565b925050602061235385828601611f27565b9150509250929050565b610120820160008201516123746000850182611f95565b5060208201516123876020850182611f95565b50604082015161239a6040850182611f95565b5060608201516123ad6060850182611f95565b5060808201516123c06080850182611f95565b5060a08201516123d360a0850182611f95565b5060c08201516123e660c0850182611f95565b5060e08201516123f960e0850182611f95565b5061010082015161240e610100850182611f95565b50505050565b60006101208201905061242a600083018461235d565b92915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b600061249982611f06565b91506124a483611f06565b92508282019050808211156124bc576124bb61245f565b5b92915050565b600061ffff82169050919050565b60006124db826124c2565b91506124e6836124c2565b92508282026124f4816124c2565b91508082146125065761250561245f565b5b5092915050565b6125168161219e565b82525050565b61252581612215565b82525050565b60006060820190506125406000830186612049565b61254d602083018561250d565b61255a604083018461251c565b949350505050565b600061256d82611f06565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff820361259f5761259e61245f565b5b600182019050919050565b60006125b582611f06565b91506125c083611f06565b92508282039050818111156125d8576125d761245f565b5b92915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603160045260246000fd5b600061014082019050612623600083018d612049565b612630602083018c612049565b61263d604083018b612049565b61264a606083018a612049565b6126576080830189612049565b61266460a0830188612049565b61267160c0830187612049565b61267e60e0830186612049565b61268c610100830185612049565b61269a610120830184612049565b9b9a5050505050505050505050565b60006060820190506126be6000830186612049565b6126cb602083018561250d565b6126d86040830184612049565b949350505050565b60006040820190506126f56000830185612049565b6127026020830184612049565b939250505056fea2646970667358221220c0219cb724458c11b5d23ace559ade862c818cde6702d5ab4edd40ade983097964736f6c63430008110033",
+  "deployedBytecode": "0x6080604052600436106100a75760003560e01c8063485f422211610064578063485f4222146101d3578063497c3cc6146101fc57806357c90de5146102395780638b3c99e314610255578063a9b0957714610271578063c832aae8146102ae576100a7565b806319315db2146100ac5780631c46583b146100c8578063236ed8f3146100f3578063237e81801461011c57806332a1b8ad146101595780634206250814610196575b600080fd5b6100c660048036038101906100c19190611f3c565b6102ca565b005b3480156100d457600080fd5b506100dd6107c9565b6040516100ea9190612027565b60405180910390f35b3480156100ff57600080fd5b5061011a60048036038101906101159190611f3c565b610821565b005b34801561012857600080fd5b50610143600480360381019061013e9190611f3c565b610adf565b6040516101509190612058565b60405180910390f35b34801561016557600080fd5b50610180600480360381019061017b9190611f3c565b610bd6565b60405161018d9190612058565b60405180910390f35b3480156101a257600080fd5b506101bd60048036038101906101b89190611f3c565b610dde565b6040516101ca9190612058565b60405180910390f35b3480156101df57600080fd5b506101fa60048036038101906101f59190612073565b610f0f565b005b34801561020857600080fd5b50610223600480360381019061021e9190611f3c565b61107b565b60405161023091906122fb565b60405180910390f35b610253600480360381019061024e919061231d565b611222565b005b61026f600480360381019061026a9190611f3c565b611535565b005b34801561027d57600080fd5b5061029860048036038101906102939190611f3c565b611732565b6040516102a59190612414565b60405180910390f35b6102c860048036038101906102c39190611f3c565b611854565b005b80600260008281526020019081526020016000206102e782610adf565b815481106102f8576102f7612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16036103c457600061012c61ffff166001600084815260200190815260200160002060030154610386919061248e565b9050428111156103c2576040517f49107ff700000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b505b600260008281526020019081526020016000206103e082610bd6565b815481106103f1576103f0612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16036104c9576000600261012c61046691906124d0565b61ffff16600160008481526020019081526020016000206003015461048b919061248e565b9050428111156104c7576040517f49107ff700000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b505b81600260068111156104de576104dd6121bf565b5b600260008381526020019081526020016000206104fa83611b5e565b8154811061050b5761050a612430565b5b906000526020600020906003020160020160009054906101000a900460ff16600681111561053c5761053b6121bf565b5b14610573576040517f7963b56f00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6002600084815260200190815260200160002061058f84610adf565b815481106105a05761059f612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16036106d65760046002600085815260200190815260200160002061062285610adf565b8154811061063357610632612430565b5b906000526020600020906003020160020160006101000a81548160ff02191690836006811115610666576106656121bf565b5b0217905550600280600085815260200190815260200160002061068885610bd6565b8154811061069957610698612430565b5b906000526020600020906003020160020160006101000a81548160ff021916908360068111156106cc576106cb6121bf565b5b021790555061073e565b6004600260008581526020019081526020016000206106f485610bd6565b8154811061070557610704612430565b5b906000526020600020906003020160020160006101000a81548160ff02191690836006811115610738576107376121bf565b5b02179055505b7f1b356cc706b6c1f5ac4ad77235bdfbec3ba7a0bf33c4f3b6130ce36ccac429f983336002600087815260200190815260200160002061077d87611b5e565b8154811061078e5761078d612430565b5b906000526020600020906003020160020160009054906101000a900460ff166040516107bc9392919061252b565b60405180910390a1505050565b6060600080548060200260200160405190810160405280929190818152602001828054801561081757602002820191906000526020600020905b815481526020019060010190808311610803575b5050505050905090565b806000805b60008054905081101561087a576000818154811061084757610846612430565b5b9060005260206000200154831461086757818061086390612562565b9250505b808061087290612562565b915050610826565b5060008054905081036108b9576040517fc1c7f9a100000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60006108c484610adf565b9050600280600086815260200190815260200160002082815481106108ec576108eb612430565b5b906000526020600020906003020160020160006101000a81548160ff0219169083600681111561091f5761091e6121bf565b5b0217905550600061092f85610bd6565b9050600160026000878152602001908152602001600020828154811061095857610957612430565b5b906000526020600020906003020160020160006101000a81548160ff0219169083600681111561098b5761098a6121bf565b5b021790555060005b6002600087815260200190815260200160002080549050811015610aa057600060068111156109c5576109c46121bf565b5b6002600088815260200190815260200160002082815481106109ea576109e9612430565b5b906000526020600020906003020160020160009054906101000a900460ff166006811115610a1b57610a1a6121bf565b5b03610a8d5760036006811115610a3457610a336121bf565b5b600260008881526020019081526020016000208281548110610a5957610a58612430565b5b906000526020600020906003020160020160009054906101000a900460ff166006811115610a8a57610a896121bf565b5b50505b8080610a9890612562565b915050610993565b507f279c403f9207a168d9dff1055d3fc145405e25a2b26bf9e1f230366f65a651d985604051610ad09190612058565b60405180910390a15050505050565b60008060005b6002600085815260200190815260200160002080549050811015610bcc57600260008581526020019081526020016000208181548110610b2857610b27612430565b5b90600052602060002090600302016001015482108015610bb0575060046006811115610b5757610b566121bf565b5b600260008681526020019081526020016000208281548110610b7c57610b7b612430565b5b906000526020600020906003020160020160009054906101000a900460ff166006811115610bad57610bac6121bf565b5b14155b15610bb9578091505b8080610bc490612562565b915050610ae5565b5080915050919050565b6000806002600084815260200190815260200160002090506000610bf984610dde565b905081805490508110610c0b57600080fd5b8160018380549050610c1d91906125aa565b81548110610c2e57610c2d612430565b5b9060005260206000209060030201828281548110610c4f57610c4e612430565b5b90600052602060002090600302016000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff168160000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600182015481600101556002820160009054906101000a900460ff168160020160006101000a81548160ff02191690836006811115610d0657610d056121bf565b5b021790555090505081805480610d1f57610d1e6125de565b5b6001900381819060005260206000209060030201600080820160006101000a81549073ffffffffffffffffffffffffffffffffffffffff021916905560018201600090556002820160006101000a81549060ff021916905550509055600080600090505b8380549050811015610dd257838181548110610da257610da1612430565b5b906000526020600020906003020160010154821015610dbf578091505b8080610dca90612562565b915050610d83565b50809350505050919050565b6000806000905060005b6002600085815260200190815260200160002080549050811015610f055781600260008681526020019081526020016000208281548110610e2c57610e2b612430565b5b906000526020600020906003020160010154118015610eb3575060046006811115610e5a57610e596121bf565b5b600260008681526020019081526020016000208281548110610e7f57610e7e612430565b5b906000526020600020906003020160020160009054906101000a900460ff166006811115610eb057610eaf6121bf565b5b14155b15610ef257600260008581526020019081526020016000208181548110610edd57610edc612430565b5b90600052602060002090600302016001015491505b8080610efd90612562565b915050610de8565b5080915050919050565b610f218a8a8a8a8a8a8a8a8a8a611c34565b1561106f57610f2e611eb5565b8981600001818152505088816020018181525050878160400181815250508681606001818152505085816080018181525050848160a0018181525050838160c0018181525050828160e0018181525050818161010001818152505080600160008d8152602001908152602001600020600082015181600001556020820151816001015560408201518160020155606082015181600301556080820151816004015560a0820151816005015560c0820151816006015560e08201518160070155610100820151816008015590505060008b90806001815401808255809150506001900390600052602060002001600090919091909150557fbf32ac378b094c01cee4de6b05076ce3628ad0310a89fc49de1a56ff1729b9828b8b8b8b8b8b8b8b8b8b6040516110659a9998979695949392919061260d565b60405180910390a1505b50505050505050505050565b6060816000805b6000805490508110156110d657600081815481106110a3576110a2612430565b5b906000526020600020015483146110c35781806110bf90612562565b9250505b80806110ce90612562565b915050611082565b506000805490508103611115576040517fc1c7f9a100000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60026000858152602001908152602001600020805480602002602001604051908101604052809291908181526020016000905b8282101561121557838290600052602060002090600302016040518060600160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600182015481526020016002820160009054906101000a900460ff1660068111156111f0576111ef6121bf565b5b6006811115611202576112016121bf565b5b8152505081526020019060010190611148565b5050505092505050919050565b81600080600090505b60008054905081101561125957818061124390612562565b925050808061125190612562565b91505061122b565b506000805490508103611298576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8342600160008381526020019081526020016000206002015410806112d25750426001600083815260200190815260200160002060030154115b15611309576040517f355d234800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b846000805b60026000848152602001908152602001600020805490508110156113d7573373ffffffffffffffffffffffffffffffffffffffff1660026000858152602001908152602001600020828154811061136857611367612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16146113c45781806113c090612562565b9250505b80806113cf90612562565b91505061130e565b5060026000838152602001908152602001600020805490508103611427576040517f2ffd4a0c00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b868660016000838152602001908152602001600020600601548110806114755750600160008381526020019081526020016000206008015461146883610dde565b611472919061248e565b81105b156114ac576040517fabdda60f00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b87600260008b81526020019081526020016000206114c98b611b5e565b815481106114da576114d9612430565b5b9060005260206000209060030201600101819055507f897645643062f7e221aec187272e76020e3832294b4bf87b8f683c4e3ef8aa6d89338a604051611522939291906126a9565b60405180910390a1505050505050505050565b806002600681111561154a576115496121bf565b5b6002600083815260200190815260200160002061156683611b5e565b8154811061157757611576612430565b5b906000526020600020906003020160020160009054906101000a900460ff1660068111156115a8576115a76121bf565b5b146115df576040517f7963b56f00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b81600060016000838152602001908152602001600020600601546002600084815260200190815260200160002061161584611b5e565b8154811061162657611625612430565b5b90600052602060002090600302016001015461164291906125aa565b905080341461168a5781816040517f6b1fb6fc0000000000000000000000000000000000000000000000000000000081526004016116819291906126e0565b60405180910390fd5b6006600260008681526020019081526020016000206116a886611b5e565b815481106116b9576116b8612430565b5b906000526020600020906003020160020160006101000a81548160ff021916908360068111156116ec576116eb6121bf565b5b02179055507f7b5ceba626af36d16f2f87203d946e0ecfb9750e22b32fc636681b9eeeac1fcd843334604051611724939291906126a9565b60405180910390a150505050565b61173a611eb5565b816000805b60008054905081101561179357600081815481106117605761175f612430565b5b9060005260206000200154831461178057818061177c90612562565b9250505b808061178b90612562565b91505061173f565b5060008054905081036117d2576040517fc1c7f9a100000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6001600085815260200190815260200160002060405180610120016040529081600082015481526020016001820154815260200160028201548152602001600382015481526020016004820154815260200160058201548152602001600682015481526020016007820154815260200160088201548152505092505050919050565b8060005b6000805490508110156118cf576000818154811061187957611878612430565b5b906000526020600020015482036118bc576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b80806118c790612562565b915050611858565b5081426001600083815260200190815260200160002060000154108061190a5750426001600083815260200190815260200160002060010154115b15611941576040517f60acd97900000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60006001600085815260200190815260200160002060060154600160008681526020019081526020016000206005015461197b919061248e565b9050803410156119c45783816040517ffea0958a0000000000000000000000000000000000000000000000000000000081526004016119bb9291906126e0565b60405180910390fd5b3360026000868152602001908152602001600020600260008781526020019081526020016000208054905081548110611a00576119ff612430565b5b906000526020600020906003020160000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600060026000868152602001908152602001600020600260008781526020019081526020016000208054905081548110611a8c57611a8b612430565b5b906000526020600020906003020160020160006101000a81548160ff02191690836006811115611abf57611abe6121bf565b5b02179055507fea2bf18cdaf74f8bd6d3fc5c7d0e89165af029961e99d76595e7b03c374aa6b9843360026000888152602001908152602001600020600260008981526020019081526020016000208054905081548110611b2257611b21612430565b5b906000526020600020906003020160020160009054906101000a900460ff16604051611b509392919061252b565b60405180910390a150505050565b600080600090505b6002600084815260200190815260200160002080549050811015611c29573373ffffffffffffffffffffffffffffffffffffffff16600260008581526020019081526020016000208281548110611bc057611bbf612430565b5b906000526020600020906003020160000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1603611c165780915050611c2f565b8080611c2190612562565b915050611b66565b50600090505b919050565b60008a60005b600080549050811015611cb15760008181548110611c5b57611c5a612430565b5b90600052602060002001548203611c9e576040517f6b9108f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8080611ca990612562565b915050611c3a565b508a8a42821080611cc25750808210155b15611cf9576040517f5e83d5f800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8b8b808210611d34576040517f7a9971e800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8c8c808210611d6f576040517fe2049fa500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d8d808210611daa576040517fcc2116a000000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111611de5576040517fb25c88c500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111611e20576040517fb0f07a6300000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111611e5b576040517ffb833a9900000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8d60008111611e96576040517fa9ed13a300000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60019d50505050505050505050505050509a9950505050505050505050565b6040518061012001604052806000815260200160008152602001600081526020016000815260200160008152602001600081526020016000815260200160008152602001600081525090565b600080fd5b6000819050919050565b611f1981611f06565b8114611f2457600080fd5b50565b600081359050611f3681611f10565b92915050565b600060208284031215611f5257611f51611f01565b5b6000611f6084828501611f27565b91505092915050565b600081519050919050565b600082825260208201905092915050565b6000819050602082019050919050565b611f9e81611f06565b82525050565b6000611fb08383611f95565b60208301905092915050565b6000602082019050919050565b6000611fd482611f69565b611fde8185611f74565b9350611fe983611f85565b8060005b8381101561201a5781516120018882611fa4565b975061200c83611fbc565b925050600181019050611fed565b5085935050505092915050565b600060208201905081810360008301526120418184611fc9565b905092915050565b61205281611f06565b82525050565b600060208201905061206d6000830184612049565b92915050565b6000806000806000806000806000806101408b8d03121561209757612096611f01565b5b60006120a58d828e01611f27565b9a505060206120b68d828e01611f27565b99505060406120c78d828e01611f27565b98505060606120d88d828e01611f27565b97505060806120e98d828e01611f27565b96505060a06120fa8d828e01611f27565b95505060c061210b8d828e01611f27565b94505060e061211c8d828e01611f27565b93505061010061212e8d828e01611f27565b9250506101206121408d828e01611f27565b9150509295989b9194979a5092959850565b600081519050919050565b600082825260208201905092915050565b6000819050602082019050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b60006121a98261217e565b9050919050565b6121b98161219e565b82525050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b600781106121ff576121fe6121bf565b5b50565b6000819050612210826121ee565b919050565b600061222082612202565b9050919050565b61223081612215565b82525050565b60608201600082015161224c60008501826121b0565b50602082015161225f6020850182611f95565b5060408201516122726040850182612227565b50505050565b60006122848383612236565b60608301905092915050565b6000602082019050919050565b60006122a882612152565b6122b2818561215d565b93506122bd8361216e565b8060005b838110156122ee5781516122d58882612278565b97506122e083612290565b9250506001810190506122c1565b5085935050505092915050565b60006020820190508181036000830152612315818461229d565b905092915050565b6000806040838503121561233457612333611f01565b5b600061234285828601611f27565b925050602061235385828601611f27565b9150509250929050565b610120820160008201516123746000850182611f95565b5060208201516123876020850182611f95565b50604082015161239a6040850182611f95565b5060608201516123ad6060850182611f95565b5060808201516123c06080850182611f95565b5060a08201516123d360a0850182611f95565b5060c08201516123e660c0850182611f95565b5060e08201516123f960e0850182611f95565b5061010082015161240e610100850182611f95565b50505050565b60006101208201905061242a600083018461235d565b92915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b600061249982611f06565b91506124a483611f06565b92508282019050808211156124bc576124bb61245f565b5b92915050565b600061ffff82169050919050565b60006124db826124c2565b91506124e6836124c2565b92508282026124f4816124c2565b91508082146125065761250561245f565b5b5092915050565b6125168161219e565b82525050565b61252581612215565b82525050565b60006060820190506125406000830186612049565b61254d602083018561250d565b61255a604083018461251c565b949350505050565b600061256d82611f06565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff820361259f5761259e61245f565b5b600182019050919050565b60006125b582611f06565b91506125c083611f06565b92508282039050818111156125d8576125d761245f565b5b92915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603160045260246000fd5b600061014082019050612623600083018d612049565b612630602083018c612049565b61263d604083018b612049565b61264a606083018a612049565b6126576080830189612049565b61266460a0830188612049565b61267160c0830187612049565b61267e60e0830186612049565b61268c610100830185612049565b61269a610120830184612049565b9b9a5050505050505050505050565b60006060820190506126be6000830186612049565b6126cb602083018561250d565b6126d86040830184612049565b949350505050565b60006040820190506126f56000830185612049565b6127026020830184612049565b939250505056fea2646970667358221220c0219cb724458c11b5d23ace559ade862c818cde6702d5ab4edd40ade983097964736f6c63430008110033",
   "devdoc": {
+    "author": "Nguyen Thanh Trung",
+    "details": "This implements the auctioneer job",
     "kind": "dev",
     "methods": {},
+    "title": "Decentralized Auction",
     "version": 1
   },
   "userdoc": {
     "kind": "user",
     "methods": {},
+    "notice": "This contract is for Decentralized Auction Platform",
     "version": 1
   },
   "storageLayout": {
     "storage": [
       {
-        "astId": 38,
+        "astId": 53,
         "contract": "contracts/Auction.sol:Auction",
         "label": "s_auctionList",
         "offset": 0,
@@ -460,20 +660,20 @@
         "type": "t_array(t_uint256)dyn_storage"
       },
       {
-        "astId": 104,
+        "astId": 162,
         "contract": "contracts/Auction.sol:Auction",
-        "label": "s_auctionInfomations",
+        "label": "s_AuctionInformations",
         "offset": 0,
         "slot": "1",
-        "type": "t_mapping(t_uint256,t_struct(AuctionInfomation)60_storage)"
+        "type": "t_mapping(t_uint256,t_struct(AuctionInformation)83_storage)"
       },
       {
-        "astId": 110,
+        "astId": 168,
         "contract": "contracts/Auction.sol:Auction",
-        "label": "s_bidInfomations",
+        "label": "s_BidInformations",
         "offset": 0,
         "slot": "2",
-        "type": "t_mapping(t_uint256,t_array(t_struct(BidInfomation)65_storage)dyn_storage)"
+        "type": "t_mapping(t_uint256,t_array(t_struct(BidInformation)91_storage)dyn_storage)"
       }
     ],
     "types": {
@@ -482,10 +682,10 @@
         "label": "address",
         "numberOfBytes": "20"
       },
-      "t_array(t_struct(BidInfomation)65_storage)dyn_storage": {
-        "base": "t_struct(BidInfomation)65_storage",
+      "t_array(t_struct(BidInformation)91_storage)dyn_storage": {
+        "base": "t_struct(BidInformation)91_storage",
         "encoding": "dynamic_array",
-        "label": "struct Auction.BidInfomation[]",
+        "label": "struct Auction.BidInformation[]",
         "numberOfBytes": "32"
       },
       "t_array(t_uint256)dyn_storage": {
@@ -494,26 +694,31 @@
         "label": "uint256[]",
         "numberOfBytes": "32"
       },
-      "t_mapping(t_uint256,t_array(t_struct(BidInfomation)65_storage)dyn_storage)": {
-        "encoding": "mapping",
-        "key": "t_uint256",
-        "label": "mapping(uint256 => struct Auction.BidInfomation[])",
-        "numberOfBytes": "32",
-        "value": "t_array(t_struct(BidInfomation)65_storage)dyn_storage"
-      },
-      "t_mapping(t_uint256,t_struct(AuctionInfomation)60_storage)": {
-        "encoding": "mapping",
-        "key": "t_uint256",
-        "label": "mapping(uint256 => struct Auction.AuctionInfomation)",
-        "numberOfBytes": "32",
-        "value": "t_struct(AuctionInfomation)60_storage"
-      },
-      "t_struct(AuctionInfomation)60_storage": {
+      "t_enum(BidderState)64": {
         "encoding": "inplace",
-        "label": "struct Auction.AuctionInfomation",
+        "label": "enum Auction.BidderState",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_uint256,t_array(t_struct(BidInformation)91_storage)dyn_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct Auction.BidInformation[])",
+        "numberOfBytes": "32",
+        "value": "t_array(t_struct(BidInformation)91_storage)dyn_storage"
+      },
+      "t_mapping(t_uint256,t_struct(AuctionInformation)83_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct Auction.AuctionInformation)",
+        "numberOfBytes": "32",
+        "value": "t_struct(AuctionInformation)83_storage"
+      },
+      "t_struct(AuctionInformation)83_storage": {
+        "encoding": "inplace",
+        "label": "struct Auction.AuctionInformation",
         "members": [
           {
-            "astId": 43,
+            "astId": 66,
             "contract": "contracts/Auction.sol:Auction",
             "label": "startRegistrationTime",
             "offset": 0,
@@ -521,7 +726,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 45,
+            "astId": 68,
             "contract": "contracts/Auction.sol:Auction",
             "label": "endRegistrationTime",
             "offset": 0,
@@ -529,7 +734,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 47,
+            "astId": 70,
             "contract": "contracts/Auction.sol:Auction",
             "label": "startAuctionTime",
             "offset": 0,
@@ -537,7 +742,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 49,
+            "astId": 72,
             "contract": "contracts/Auction.sol:Auction",
             "label": "endAuctionTime",
             "offset": 0,
@@ -545,7 +750,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 51,
+            "astId": 74,
             "contract": "contracts/Auction.sol:Auction",
             "label": "duePaymentTime",
             "offset": 0,
@@ -553,7 +758,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 53,
+            "astId": 76,
             "contract": "contracts/Auction.sol:Auction",
             "label": "registrationFee",
             "offset": 0,
@@ -561,7 +766,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 55,
+            "astId": 78,
             "contract": "contracts/Auction.sol:Auction",
             "label": "depositAmount",
             "offset": 0,
@@ -569,7 +774,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 57,
+            "astId": 80,
             "contract": "contracts/Auction.sol:Auction",
             "label": "startBid",
             "offset": 0,
@@ -577,7 +782,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 59,
+            "astId": 82,
             "contract": "contracts/Auction.sol:Auction",
             "label": "priceStep",
             "offset": 0,
@@ -587,12 +792,12 @@
         ],
         "numberOfBytes": "288"
       },
-      "t_struct(BidInfomation)65_storage": {
+      "t_struct(BidInformation)91_storage": {
         "encoding": "inplace",
-        "label": "struct Auction.BidInfomation",
+        "label": "struct Auction.BidInformation",
         "members": [
           {
-            "astId": 62,
+            "astId": 85,
             "contract": "contracts/Auction.sol:Auction",
             "label": "bidder",
             "offset": 0,
@@ -600,15 +805,23 @@
             "type": "t_address"
           },
           {
-            "astId": 64,
+            "astId": 87,
             "contract": "contracts/Auction.sol:Auction",
             "label": "bidAmount",
             "offset": 0,
             "slot": "1",
             "type": "t_uint256"
+          },
+          {
+            "astId": 90,
+            "contract": "contracts/Auction.sol:Auction",
+            "label": "bidderState",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_enum(BidderState)64"
           }
         ],
-        "numberOfBytes": "64"
+        "numberOfBytes": "96"
       },
       "t_uint256": {
         "encoding": "inplace",
