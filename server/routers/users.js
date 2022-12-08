@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAll } = require("../controllers/UserController.js");
+const { getAllUserController } = require("../controllers/UserController.js");
 // const { deleteUser, findAllUser, findByUserID, updateUser } = require("'../controllers/user.js");
 const { verifyAdmin, verifyToken, verifySeller } = require("../utils/verifyToken.js");
 
@@ -17,5 +17,5 @@ router.get("/checkadmin/:id", verifyAdmin, (req, res, next) => {
     res.send("hello admin");
 });
 
-router.get("/:role/:index",getAll)
+router.get("/:role/:index",getAllUserController)
 module.exports = router;
