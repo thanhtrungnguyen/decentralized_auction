@@ -1,6 +1,6 @@
 import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Link, useParams } from "react-router-dom";

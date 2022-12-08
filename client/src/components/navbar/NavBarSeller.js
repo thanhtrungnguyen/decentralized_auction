@@ -7,7 +7,7 @@ const NavBar = () => {
             <div className={styles.container}>
                 <div className={styles.navbar}>
                     <label className={styles.dap}>DAP</label>
-                    <Link className={styles.home} to="/sellerCenter">
+                    <Link className={styles.home} to="/myProperty">
                         Seller Center
                     </Link>
                 </div>

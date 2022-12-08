@@ -1,11 +1,11 @@
 import Header from "../../components/header/HeaderUser";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/stylesPages/forSellers/AuctionDetailForSeller.module.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import {useFetch} from "../../hook/useFetch";
+import { useFetch } from "../../hook/useFetch";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
 import ReactPlayer from "react-player";
 

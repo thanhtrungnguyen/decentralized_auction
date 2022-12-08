@@ -20,7 +20,7 @@ const NavBar = () => {
                     <Link className={styles.link} to="/">
                         About us
                     </Link>
-                    <Link className={styles.link} to="/sellerCenter">
+                    <Link className={styles.link} to="/myProperty">
                         Seller Center
                     </Link>
                     <Link className={styles.link} to="/autionsListForManager">
