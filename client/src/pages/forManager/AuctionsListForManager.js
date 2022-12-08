@@ -168,6 +168,7 @@ const AuctionsListForManager = () => {
                                             <Link className={styles.linkBlue} to={`/autitoDetailForManager/${auction._id}`}>
                                                 View
                                             </Link>
+                                            
                                             <Link
                                                 className={styles.linkBlue}
                                                 to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
