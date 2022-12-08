@@ -12,24 +12,21 @@ import axios from "axios";
 import Popup from "reactjs-popup";
 import BanedSeller from "../../components/popups/forAdmin/BanSeller";
 import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
+import { useFetchPagination } from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
 
 const ListSellers = () => {
     const [page, setPage] = React.useState(1);
 
     const [email, setEmail] = useState(null);
-    const [data, setData] = useState([]);
+  
     const [status, setStatus] = useState("Active");
     const [status2, setStatus2] = useState("Baned");
     const navigate = useNavigate();
-    const baseURL = "http://localhost:8800/api/seller/";
+    const baseURL = `http://localhost:8800/api/user/SELLER/${page}`;
 
-    useEffect(() => {
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setData(resp.data);
-        });
-    }, [baseURL]);
+    const {data, loading, error } = useFetchPagination(baseURL, page)
+    
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "email") {
@@ -49,7 +46,7 @@ const ListSellers = () => {
                 console.log(res);
                 console.log(res.data);
                 alert(res.data.message);
-                setData(res.data);
+                //setData(res.data);
 
                 navigate("/listSellers");
             });
@@ -59,7 +56,9 @@ const ListSellers = () => {
         setPage(value);
     };
 
-    return (
+    return loading ? (
+        <Loading/>
+    ) : (
         <>
             <Header />
             <NavBar />
@@ -102,7 +101,7 @@ const ListSellers = () => {
                             </Link>
 
                             <hr />
-                            <p className={styles.txtBold}>69 Properties</p>
+                            <p className={styles.txtBold}>Total SELLER: {data.total}</p>
                             <Link className={styles.btnAdd} to="/addSeller">
                                 Add a New Seller
                             </Link>
@@ -115,24 +114,27 @@ const ListSellers = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {data.map((seller) => (
+                                {data.listUser.map((item) => (
                                     <tr>
-                                        <td className={styles.td}>{seller}</td>
-                                        <td className={styles.td}>{seller}</td>
-                                        <td className={styles.td}>{seller}</td>
-                                        <td className={styles.td}>{seller}</td>
+                                        <td className={styles.td}>{item.Name}</td>
+                                        <td className={styles.td}>{item.Email__c}</td>
+                                        <td className={styles.td}>{item.Phone__c}</td>
+                                        <td className={styles.td}>{item.User_Id__r.Status__c }</td>
                                         <td className={styles.td}>
+                                            <Link className={styles.linkBlue} to={`/bidderDetail/${item.id}`}>
+                                                View
+                                            </Link>
                                             {(() => {
-                                                if (seller.status === "Active") {
+                                                if (item.User_Id__r.Status__c === "Active") {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                            <BanedSeller idSeller={seller._id} />
+                                                        <Popup trigger={<label className={styles.linkBlue}>Deactivate</label>} position="right center">
+                                                            <BanedSeller idBidder={item.User_Id__c} />
                                                         </Popup>
                                                     );
                                                 } else {
                                                     return (
                                                         <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                            <ActiveSeller idSeller={seller._id} />
+                                                            <ActiveSeller idBidder={item.User_Id__c} />
                                                         </Popup>
                                                     );
                                                 }
@@ -140,61 +142,9 @@ const ListSellers = () => {
                                         </td>
                                     </tr>
                                 ))}
-                                <tr>
-                                    <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>0123456789 </td>
-                                    <td className={styles.td}>abcde@abc.com </td>
-                                    <td className={styles.td}>Active</td>
-                                    <td className={styles.td}>
-                                        <Link className={styles.linkBlue} to="/editManager">
-                                            Edit
-                                        </Link>
-                                        {(() => {
-                                            if (status === "Active") {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                        <BanedSeller idSeller={123} />
-                                                    </Popup>
-                                                );
-                                            } else {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                        <ActiveSeller idSeller={123} />
-                                                    </Popup>
-                                                );
-                                            }
-                                        })()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>0123456789 </td>
-                                    <td className={styles.td}>abcde@abc.com </td>
-                                    <td className={styles.td}>Baned</td>
-                                    <td className={styles.td}>
-                                        <Link className={styles.linkBlue} to="/editManager">
-                                            Edit
-                                        </Link>
-                                        {(() => {
-                                            if (status2 === "Active") {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                        <BanedSeller idSeller={123} />
-                                                    </Popup>
-                                                );
-                                            } else {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                        <ActiveSeller idSeller={123} />
-                                                    </Popup>
-                                                );
-                                            }
-                                        })()}
-                                    </td>
-                                </tr>
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={Math.floor(data.total/10)+1} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

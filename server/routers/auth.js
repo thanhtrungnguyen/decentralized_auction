@@ -50,16 +50,6 @@ router.post(
 );
 router.post(
     "/registerManager",
-    upload.fields([
-        {
-            name: "cardFront",
-            maxCount: 1,
-        },
-        {
-            name: "cardBack",
-            maxCount: 1,
-        },
-    ]),
     //verifyAdmin,
     registerManager
 );
