@@ -66,6 +66,24 @@ const PropertyDetail = () => {
                 alert(res.data.message);
             });
     };
+    const RejectAuction = () => {
+        
+        axios
+            .put(
+                "http://localhost:8800/api/auction/reject/" + id,
+                {
+                    propertyId: propertyId,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+            });
+    };
 
     return loading ? (
         "loading please wait"
@@ -327,7 +345,7 @@ const PropertyDetail = () => {
                     <div className={styles.btn2}>
                         <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input>
 
-                        <input className={styles.btnDraft} type="button" value="Reject Request Add"></input>
+                        <input className={styles.btnDraft} type="button" value="Reject Request Add" onClick={() => RejectAuction()}></input>
                         <input className={styles.btnCancel} type="button" value="Cancel"></input>
                     </div>{" "}
                     <Footer />
