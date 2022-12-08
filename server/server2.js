@@ -1,5 +1,5 @@
 const { createAuction } = require("./services/callContractFunction");
-const auctionId = 978;
+const auctionId = "a0H5g000005qUxhEAE";
 const startRegistrationTime = "December 8, 2022 20:15:00";
 const endRegistrationTime = "December 8, 2022 20:16:00";
 const startAuctionTime = "December 8, 2022 20:17:00";
