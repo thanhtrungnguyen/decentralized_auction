@@ -4,6 +4,7 @@
 const { getFileStream } = require("../s3.js");
 const jsforce = require("jsforce");
 const { createAuction } = require("../services/callContractFunction.js");
+const  auctionService  = require("../services/AuctionService.js");
 const conn = new jsforce.Connection({
     loginUrl: process.env.SF_LOGIN_URL,
 });
@@ -17,17 +18,8 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
 });
 
 const createAuctionRequest = async (req, res, next) => {
-    await conn.sobject("Auction__c").create(
-        {
-            Property_DAP_Id__c: req.params.id,
-            Status__c: "Request",
-        },
-        (err, ret) => {
-            if (err || !ret.success) {
-                return console.error(err);
-            }
-        }
-    );
+    
+    await auctionService.createRequestAuction(req.params.id,"Request");
 
     await conn.sobject("Property_DAP__c").update(
         {
