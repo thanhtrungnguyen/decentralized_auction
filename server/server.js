@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const connectSyncBlockchainDB = require("./databases/connectSyncBlockchainBD");
 
 const authRoute = require("./routers/auth.js");
 const userRoute = require("./routers/users.js");
@@ -30,6 +31,9 @@ app.use(express.json());
 // app.use(express.urlencoded({
 //   extended:true
 // }))
+
+connectSyncBlockchainDB();
+
 const upload = multer({ dest: "uploads/" });
 
 // //connect DB
