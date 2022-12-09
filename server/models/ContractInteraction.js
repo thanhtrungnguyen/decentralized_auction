@@ -16,11 +16,11 @@ const userSchema = new mongoose.Schema({
     _updated_at: { type: Date },
     //Auction Information
     auctionId: { type: String },
-    startRegistrationTime: { type: Number },
-    endRegistrationTime: { type: Number },
-    startAuctionTime: { type: Number },
-    endAuctionTime: { type: Number },
-    duePaymentTime: { type: Number },
+    startRegistrationTime: { type: String },
+    endRegistrationTime: { type: String },
+    startAuctionTime: { type: String },
+    endAuctionTime: { type: String },
+    duePaymentTime: { type: String },
     registrationFee: { type: Number },
     depositAmount: { type: Number },
     startBid: { type: Number },
@@ -33,6 +33,6 @@ const userSchema = new mongoose.Schema({
     k: { type: Number },
 });
 
-let Logs = mongoose.model("AuctionLogs", userSchema, "AuctionLogs");
+let ContractInteraction = mongoose.model("ContractInteraction", userSchema, "AuctionLogs");
 
-module.exports = Logs;
+module.exports = ContractInteraction;

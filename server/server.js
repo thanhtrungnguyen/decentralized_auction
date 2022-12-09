@@ -12,9 +12,9 @@ const auctionRoute = require("./routers/auctions.js");
 const propertyRoute = require("./routers/properties.js");
 const categoryRoute = require("./routers/categories.js");
 const newsRoute = require("./routers/news.js");
-const multer = require("multer");
-const getAuctionById = require("./services/logs");
 
+const multer = require("multer");
+console.log("Starting...");
 // config app
 const app = express();
 
@@ -120,6 +120,13 @@ app.use("/api/account", accountRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/news", newsRoute);
 
+app.use(require("./routers"));
+
+// const ContractInteractionService = require("./services/ContractInteractionService");
+// console.log(ContractInteractionService.getAuctionInformationById("89hg3485gj"));
+
+// const ContractInteractionController = require("./controllers/ContractInteractionController");
+// console.log(ContractInteractionController.getAuctionInformationById("89hg3485gj"));
 // app.get('/Account/getAllAccount', (req, res) => {
 //   conn.query("Select Id, Name, Phone, NumberOfEmployees from Account", (err, result) => {
 //     if (err) {
@@ -130,12 +137,7 @@ app.use("/api/news", newsRoute);
 //     }
 //   })
 // })
-getAuctionById();
-function getLogs() {
-    console.log();
-}
 
-getLogs();
 console.log("=====================");
 app.listen(PORT, () => {
     // connect();

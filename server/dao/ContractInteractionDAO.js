@@ -1,7 +1,6 @@
-const Logs = require("../models/Logs");
+const Logs = require("../models/ContractInteraction");
 
-const getAuctionById = async () => {
-    const id = "54t455t5";
+const getAuctionInformationById = async (id) => {
     const auction = await Logs.find(
         {
             name: "CreatedAuction",
@@ -33,8 +32,7 @@ const getAuctionById = async () => {
             //     _updated_at: 0,
         }
     );
-    console.log(auction);
     return auction;
 };
 
-module.exports = getAuctionById;
+module.exports = { getAuctionInformationById };

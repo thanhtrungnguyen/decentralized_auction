@@ -1,20 +1,19 @@
-const OFFSET = 7; // (UTC+7)
+const OFFSET = 7; // GMT+0700 (Indochina Time)
 
-convertEpochToSpecificTimezone = (timeEpoch) => {
-    const d = new Date(timeEpoch);
+convertEpochTimestampToSpecificTimezone = (epoch) => {
+    const d = new Date(epoch * 1000);
     const utc = d.getTime() + d.getTimezoneOffset() * 60000; //This converts to UTC 00:00
     const nd = new Date(utc + 3600000 * OFFSET);
-    return nd; //.toLocaleString()
+    return nd.toLocaleString("en-UK");
 };
 
-convertSpecificTimezoneToEpoch = (time) => {
-    const d = new Date(time);
-    const utc = d.getTime() + d.getTimezoneOffset() * 60000; //This converts to UTC 00:00
-    const epoch = new Date(utc) / 1000;
-    return epoch;
+convertSpecificTimezoneToEpochTimestamp = (time) => {
+    const d = new Date(time).toUTCString();
+    const nd = new Date(d + 3600000 * OFFSET).getTime() / 1000;
+    return nd;
 };
 
 module.exports = {
-    getHumanReadableTime: convertEpochToSpecificTimezone,
-    getEpoch: convertSpecificTimezoneToEpoch,
+    getTime: convertEpochTimestampToSpecificTimezone,
+    getEpoch: convertSpecificTimezoneToEpochTimestamp,
 };

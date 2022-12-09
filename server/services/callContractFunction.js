@@ -25,13 +25,6 @@ const contract = new ethers.Contract(contractAddress, abi, walletWithProvider);
 // const startBid = 500
 // const priceStep = 1
 
-const parseWei = (number) => {
-    // const k = ethers.utils.parseUnits(number.toString(), "wei");
-
-    // console.log(number);
-    return number * (10 ^ 18);
-};
-
 const createAuction = async (
     auctionId,
     startRegistrationTime,
