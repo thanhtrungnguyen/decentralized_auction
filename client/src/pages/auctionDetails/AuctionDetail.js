@@ -7,9 +7,12 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Popup from "reactjs-popup";
 import PlaceABid from "../../components/popups/PlaceABid";
-import {useFetch} from "../../hook/useFetch";
+import { useFetch } from "../../hook/useFetch";
 import ReactPlayer from "react-player";
 import { Player } from "video-react";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
+import HeaderUser from "../../components/header/HeaderUser";
 
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
@@ -19,11 +22,28 @@ const AuctionDetail = () => {
 
     console.log(data);
     console.log(loading);
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return loading ? (
         "loading please wait"
     ) : (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "BIDDER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
             <NavBar />
             <div className={styles.container}>
                 <div className={styles.col1}>

@@ -39,7 +39,7 @@ import ListNews from "./pages/forAdmin/ListNews";
 import AddNew from "./pages/forAdmin/AddNews";
 import EditNew from "./pages/forAdmin/EditNew";
 import PlaceBidButton from "./pages/bidder/popup";
-
+import AuctionDetailForManager from "./pages/forManager/AuctionDetailForManager";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -76,6 +76,8 @@ function App() {
                     <Route path="autitoDetailForSeller/:id" element={<AuctionDetailForSeller />} />
                     <Route path="autitoDetailForSeller" element={<AuctionDetailForSeller />} />
                     <Route path="autionsListForManager" element={<AuctionsListForManager />} />
+                    <Route path="auctionDetailForManager" element={<AuctionDetailForManager />} />
+                    <Route path="auctionDetailForManager/:id/:propertyId" element={<AuctionDetailForManager />} />
                     <Route path="approveAuction/:id/:propertyId" element={<ApproveAuction />} />
                     <Route path="approveAuction" element={<ApproveAuction />} />
                     <Route path="managerCategorys" element={<ManagerCategorys />} />

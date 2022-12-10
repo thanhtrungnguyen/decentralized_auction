@@ -1,14 +1,33 @@
 import { Outlet, Link } from "react-router-dom";
-import Header from "../../components/header/HeaderUser";
+import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/stylesPages/news.module.css";
 import { BsPencil, BsCalendar3, BsSearch } from "react-icons/bs";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const News = () => {
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "BIDDER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}{" "}
             <NavBar />
             <div className={styles.container}>
                 <div className={styles.col1}>
@@ -99,7 +118,6 @@ const News = () => {
                     </div>
                 </div>
             </div>
-
             <Footer />
         </>
     );

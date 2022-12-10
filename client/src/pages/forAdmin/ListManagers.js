@@ -14,7 +14,9 @@ import BanedManager from "../../components/popups/forAdmin/BanManager";
 import ActiveManager from "../../components/popups/forAdmin/ActiveManager";
 import Loading from "../../components/loading/Loading";
 import { useFetchPagination } from "../../hook/useFetch";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const ListForManagers = () => {
     const [page, setPage] = React.useState(1);
 
@@ -24,7 +26,7 @@ const ListForManagers = () => {
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/MANAGER/${page}`;
 
-    const {data, loading, error } = useFetchPagination(baseURL, page)
+    const { data, loading, error } = useFetchPagination(baseURL, page);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -54,12 +56,28 @@ const ListForManagers = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return loading ? (
-        <Loading/>
+        <Loading />
     ) : (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "ADMIN") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
@@ -114,7 +132,7 @@ const ListForManagers = () => {
                                 {data.listUser.map((item) => (
                                     <tr>
                                         <td className={styles.td}>{item.User_DAP__r.Name}</td>
-                                        <td className={styles.td}>{item.User_DAP__r.Status__c }</td>
+                                        <td className={styles.td}>{item.User_DAP__r.Status__c}</td>
                                         <td className={styles.td}>
                                             <Link className={styles.linkBlue} to={`/editManager/${item.User_DAP__r.id}`}>
                                                 View
@@ -122,7 +140,10 @@ const ListForManagers = () => {
                                             {(() => {
                                                 if (item.User_DAP__r.Status__c === "Activate") {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Deactivate</label>} position="right center">
+                                                        <Popup
+                                                            trigger={<label className={styles.linkBlue}>Deactivate</label>}
+                                                            position="right center"
+                                                        >
                                                             <BanedManager idBidder={item.User_DAP__r.Id} />
                                                         </Popup>
                                                     );
@@ -139,7 +160,7 @@ const ListForManagers = () => {
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={Math.floor(data.total/10)+1} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

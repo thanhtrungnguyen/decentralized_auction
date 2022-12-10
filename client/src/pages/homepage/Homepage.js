@@ -9,34 +9,34 @@ import SidebarSeller from "../../components/sidebar_seller/SidebarSeller";
 import styles from "../../styleCss/stylesPages/hompage.module.css";
 import jwt from "jsonwebtoken";
 import { useState } from "react";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { get } from "mongoose";
 
-
 const HomePage = () => {
-    
     const getUser = () => {
         var users = null;
-        const token = Cookies.get('access_token');
+        const token = Cookies.get("access_token");
         if (!token) {
             console.log("Not authenticated");
         }
         jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users =  user;
-
+            users = user;
         });
         return users;
     };
     console.log(getUser());
     return (
-        <>  
-            {
-                getUser().role == "BIDDER"  && <HeaderUser username={getUser().userName} />
-            }
-            {
-                getUser().role != "BIDDER"  && <Header />
-            }
-            
+        <>
+            {(() => {
+                if (getUser().role == "BIDDER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
+            {/* {getUser().role == "BIDDER" && <HeaderUser username={getUser().userName} />}
+            {getUser().role != "BIDDER" && <Header />} */}
+
             <NavBar />
             <div>
                 <div className={styles.banner}>
