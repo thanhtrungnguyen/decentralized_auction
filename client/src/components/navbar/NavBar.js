@@ -20,15 +20,6 @@ const NavBar = () => {
                     <Link className={styles.link} to="/">
                         About us
                     </Link>
-                    <Link className={styles.link} to="/myProperty">
-                        Seller Center
-                    </Link>
-                    <Link className={styles.link} to="/autionsListForManager">
-                        Manager Center
-                    </Link>
-                    <Link className={styles.link} to="/listManagers">
-                        Admin Center
-                    </Link>
 
                     <Link className={styles.link} to="/BidPopup">
                         BidPopup

@@ -13,6 +13,9 @@ import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { useFetch } from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
+
 const AddProperty = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -32,19 +35,9 @@ const AddProperty = () => {
     // const [startBid, setStartBid] = useState(null);
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const [data, setData] = useState([]);
-
     const navigate = useNavigate();
     const baseURL = "http://localhost:8800/api/category/";
-
-    useEffect(() => {
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-
-            setData(resp.data);
-        });
-    }, [baseURL]);
+    const { data, loading, error } = useFetch(baseURL);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -138,7 +131,9 @@ const AddProperty = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
                 if (getUser().role == "SELLER") {

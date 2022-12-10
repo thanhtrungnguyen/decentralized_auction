@@ -1,18 +1,18 @@
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../../components/header/Header";
 import HeaderUser from "../../components/header/HeaderUser";
 
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
-import PlaceABid from "../../components/popups/PlaceABid";
-import SidebarSeller from "../../components/sidebar_seller/SidebarSeller";
 import styles from "../../styleCss/stylesPages/hompage.module.css";
 import jwt from "jsonwebtoken";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { get } from "mongoose";
+import Loading from "../../components/loading/Loading";
 
 const HomePage = () => {
+    const [loading, setLoading] = useState(true);
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -24,11 +24,23 @@ const HomePage = () => {
         });
         return users;
     };
+    const [role, setRole] = useState();
+    useEffect(() => {
+        if (getUser() != null) {
+            setRole(getUser().role);
+            setLoading(false);
+        } else {
+            setRole("");
+            setLoading(false);
+        }
+    }, []);
     console.log(getUser());
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "BIDDER") {
+                if (role === "BIDDER") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
