@@ -20,7 +20,7 @@ const NavBar = () => {
                     <Link className={styles.link} to="/">
                         About us
                     </Link>
-                    <Link className={styles.link} to="/myProperty">
+                    {/* <Link className={styles.link} to="/myProperty">
                         Seller Center
                     </Link>
                     <Link className={styles.link} to="/autionsListForManager">
@@ -32,7 +32,7 @@ const NavBar = () => {
 
                     <Link className={styles.link} to="/BidPopup">
                         BidPopup
-                    </Link>
+                    </Link> */}
 
                     <div className={styles.flright}>
                         <input className={styles.ip} type="text"></input>

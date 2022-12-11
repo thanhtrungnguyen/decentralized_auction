@@ -12,7 +12,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
 
 const perPage = 10;
 
-const getAllDAO = async (index) => {
+const getAll = async (index) => {
     try {
         var listNews, total, totalNews = null;
         var num = (parseInt(index) - 1) * perPage;
@@ -30,7 +30,7 @@ const getAllDAO = async (index) => {
         console.error(error);
     }
 }
-const getByStatusDAO = async (index, status) => {
+const getByStatus = async (index, status) => {
     try {
         var listNews, total, totalNews = null;
         var num = (parseInt(index) - 1) * perPage;
@@ -48,7 +48,7 @@ const getByStatusDAO = async (index, status) => {
         console.error(error)
     }
 }
-const filterDAO = async (title,index,status)=>{
+const filter = async (title,index,status)=>{
     try {
         var listNews,total, totalNews = null;
         var num = (parseInt(index) - 1)*perPage;
@@ -66,7 +66,7 @@ const filterDAO = async (title,index,status)=>{
         console.error(error)
     }
 }
-const changeStatusDAO = async (id,status)=>{
+const changeStatus = async (id,status)=>{
     try {
        const changedStatus =  await conn.sobject("News_DAP__c")
             .find({ Id: id })
@@ -80,7 +80,7 @@ const changeStatusDAO = async (id,status)=>{
         console.error(error)
     }
 }
-const updateDAO = async (id,title,description,status)=>{
+const update = async (id,title,description,status)=>{
     try {
         var updated = await conn.sobject("News_DAP__c")
                 .find({ Id: id })
@@ -96,7 +96,7 @@ const updateDAO = async (id,title,description,status)=>{
         console.error(error)
     }
 }
-const createDAO = async (title,description)=>{
+const create = async (title,description)=>{
     try {
         var created = await conn.sobject("News_DAP__c").create({
             Name: title,
@@ -110,5 +110,5 @@ const createDAO = async (title,description)=>{
         console.error(error)
     }
 }
-module.exports = { getAllDAO, getByStatusDAO,filterDAO,changeStatusDAO,updateDAO,createDAO }
+module.exports = { getAll, getByStatus,filter,changeStatus,update,create }
 

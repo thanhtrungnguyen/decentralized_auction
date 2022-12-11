@@ -1,52 +1,52 @@
 const NewsDAO = require('../dal/NewsDAO');
 
-const getAllService = async(index)=>{
+const getAll = async(index)=>{
     try {
-       var list =  await NewsDAO.getAllDAO(index);
+       var list =  await NewsDAO.getAll(index);
        return list;
     } catch (error) {
         console.error(error);
     }
 }
-const getByStatusService = async(index,status)=>{
+const getByStatus = async(index,status)=>{
     try {
-        var list = await NewsDAO.getByStatusDAO(index,status);
+        var list = await NewsDAO.getByStatus(index,status);
         return list;
     } catch (error) {
         console.error(error)
     }
 }
-const filterService = async(title,index,status)=>{
+const filter = async(title,index,status)=>{
     try {
-        var list = await NewsDAO.filterDAO(title,index,status);
+        var list = await NewsDAO.filter(title,index,status);
         return list;
     } catch (error) {
         console.error(error)
     }
 }
-const changeStatusService = async(id,status)=>{
+const changeStatus = async(id,status)=>{
     try {
-        var changedStatus = await NewsDAO.changeStatusDAO(id,status);
+        var changedStatus = await NewsDAO.changeStatus(id,status);
         return changedStatus;
     } catch (error) {
         console.error(error)
     }
 }
-const updateService = async(id,title,description,status)=>{
+const update = async(id,title,description,status)=>{
     try {
-        var updated = await NewsDAO.updateDAO(id,title,description,status);
+        var updated = await NewsDAO.update(id,title,description,status);
         return updated;
     } catch (error) {
         console.error(error)
     }
 }
-const createService = async(title,description)=>{
+const create = async(title,description)=>{
     try {
-        var created = await NewsDAO.createDAO(title,description);
+        var created = await NewsDAO.create(title,description);
         return created;
     } catch (error) {
         console.error(error)
     }
 }
 
-module.exports = {getAllService,getByStatusService,filterService,changeStatusService,updateService,createService}
+module.exports = {getAll,getByStatus,filter,changeStatus,update,create}
