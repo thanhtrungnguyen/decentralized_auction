@@ -27,7 +27,7 @@ const Register = () => {
     const [dateOfBirth, setdateOfBirth] = useState(null);
     const [email, setEmail] = useState(null);
     const [phone, setPhone] = useState(null);
-    const [specificAddress, setSepecificAddress] = useState(null);
+    const [specificAddress, setSpecificAddress] = useState(null);
     const [cardNumber, setcardNumber] = useState(null);
     const [dateRangeCard, setdateRangeCard] = useState(null);
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
@@ -82,7 +82,7 @@ const Register = () => {
             setPhone(value);
         }
         if (id === "specificAddress") {
-            setSepecificAddress(value);
+            setSpecificAddress(value);
         }
         if (id === "cardNumber") {
             setcardNumber(value);
@@ -143,7 +143,7 @@ const Register = () => {
         formData.append("district", selectedDistrict.label);
         formData.append("wardId", wardId);
         formData.append("ward", selectedWard.label);
-        formData.append("sepecificAddress", specificAddress);
+        formData.append("specificAddress", specificAddress);
         formData.append("cardNumber", cardNumber);
         formData.append("dateRangeCard", dateRangeCard);
         formData.append("cardGrantedPlace", cardGrantedPlace);
