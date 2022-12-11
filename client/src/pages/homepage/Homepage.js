@@ -8,7 +8,6 @@ import styles from "../../styleCss/stylesPages/hompage.module.css";
 import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { get } from "mongoose";
 import Loading from "../../components/loading/Loading";
 
 const HomePage = () => {
