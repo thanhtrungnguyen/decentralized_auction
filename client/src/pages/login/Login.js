@@ -17,14 +17,19 @@ const Login = () => {
         event.preventDefault();
         axios.post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true }).then((res) => {
             console.log(res);
-            if(res.data.role == "BIDDER"){
+            if (res.data.role == "BIDDER") {
                 navigate("/homePage");
             }
-            if(res.data.role == "ADMIN"){
+            if (res.data.role == "ADMIN") {
                 navigate("/listManagers");
             }
+            if (res.data.role == "SELLER") {
+                navigate("/myProperty");
+            }
+            if (res.data.role == "MANAGER") {
+                navigate("/autionsListForManager");
+            }
             // alert(res.data.message);
-            
         });
     };
 

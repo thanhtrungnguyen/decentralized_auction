@@ -1,8 +1,8 @@
 import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBarSeller";
+import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
-import SidebarSeller from "../../components/sidebar_seller/SidebarSeller";
+import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
@@ -12,28 +12,87 @@ import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useFetch } from "../../hook/useFetch";
+import Popup from "reactjs-popup";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-const PropertyDetail = () => {
+const AuctionDetailForManager = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
-    const { id } = useParams();
+    const { id, propertyId } = useParams();
+    const [show, setShow] = useState(false);
+    const navigate = useNavigate();
+    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
+    const [registrationFee, setRegistrationFee] = useState(null);
+    const [name, setName] = useState(null);
+    const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const baseURL = `http://localhost:8800/api/property/${id}`;
-    const [data, setData] = useState([]);
+    const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    useEffect(() => {
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setData(resp.data);
-        });
-    }, [baseURL]);
+    const { data, loading, error } = useFetch(baseURL);
+    const onClick = () => {
+        console.log(show);
 
-    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
+        setShow(false);
+    };
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        if (id === "registrationFee") {
+            setRegistrationFee(value);
+        }
+        if (id === "name") {
+            setName(value);
+        }
+    };
+    var startviewTime = data.End_View_Property_Time__c || "";
+    var startViewPropertyTime = new Date(startviewTime.split(",")[0]);
+    var daySTView = parseInt(startViewPropertyTime.getUTCDate());
+
+    const AprroveAuction = () => {
+        alert(name + registrationFee + timeRegistration + auctionTime);
+        axios
+            .put(
+                "http://localhost:8800/api/auction/approve/" + id,
+                {
+                    registrationFee: registrationFee,
+                    timeRegistration: timeRegistration,
+                    auctionTime: auctionTime,
+                    name: name,
+                    propertyId: propertyId,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+            });
+    };
+    const RejectAuction = () => {
+        axios
+            .put(
+                "http://localhost:8800/api/auction/reject/" + id,
+                {
+                    propertyId: propertyId,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+            });
+    };
+    const Cancel = () => {
+        navigate("/autionsListForManager");
+    };
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -45,22 +104,24 @@ const PropertyDetail = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        "loading please wait"
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "SELLER") {
+                if (getUser().role == "MANAGER") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
                 }
-            })()}{" "}
+            })()}
             <NavBar />
             <form>
                 <div className={styles.root}>
-                    <SidebarSeller />
+                    <SideBarSeller />
                     <div className={styles.info}>
                         <div>
-                            <p className={styles.title}>Basic Information</p>
+                            <p className={styles.title}>Property Information</p>
 
                             <div className={styles.col1}>
                                 <p className={styles.lable}>Property Image</p>
@@ -112,7 +173,7 @@ const PropertyDetail = () => {
                                 <div className={styles.video}>
                                     <ReactPlayer
                                         className={styles.video}
-                                        url={data.Properties_Media__r.records[3].Name}
+                                        url={`${data.Properties_Media__r.records[3].Name}`}
                                         playing={true}
                                         controls={true}
                                         loop={true}
@@ -213,9 +274,12 @@ const PropertyDetail = () => {
                                     <DatePicker
                                         id="placeViewProperty"
                                         // onChange={(e) => handleInputChange(e)}
-                                        onChange={setViewPropertyTime}
+                                        // onChange={setViewPropertyTime}
                                         ClassName={styles.datePicker}
-                                        value={viewPropertyTime}
+                                        value={[
+                                            new Date(new Date(data.Start_View_Property_Time__c).toUTCString()),
+                                            new Date(new Date(data.End_View_Property_Time__c).toUTCString()),
+                                        ]}
                                         //   value={data.property.viewPropertyTime}
                                         // onChange={setValue}
                                         range
@@ -238,11 +302,114 @@ const PropertyDetail = () => {
                             </div>
                         </div>
                     </div>
+                    <div className={styles.auctionForm}>
+                        <p className={styles.title}>Auction</p>
+                        <div className={styles.col1}>
+                            {" "}
+                            <p className={styles.lable}>Auction Name</p>
+                            <p className={styles.lable}>Registration Fee</p>
+                            <p className={styles.lable}>Time Registration</p>
+                            <p className={styles.lable}>Auction Time</p>
+                        </div>
+                        <div className={styles.col2}>
+                            <input
+                                id="name"
+                                type="text"
+                                placeholder="Enter Auction Name"
+                                className={styles.inputText}
+                                // value={priceStep}
+                                // value={data.property.priceStep}
+                                value={name}
+                                onChange={(e) => handleInputChange(e)}
+                                required
+                            ></input>
+                            <input
+                                id="registrationFee"
+                                type="number"
+                                placeholder="Enter Registration Fee"
+                                className={styles.inputText}
+                                // value={priceStep}
+                                // value={data.property.priceStep}
+                                value={registrationFee}
+                                onChange={(e) => handleInputChange(e)}
+                                required
+                            ></input>
+                            <div className={styles.date}>
+                                <DatePicker
+                                    id="timeRegistration"
+                                    // onChange={(e) => handleInputChange(e)}
+                                    onChange={setTimeRegistration}
+                                    ClassName={styles.datePicker}
+                                    value={timeRegistration}
+                                    //   value={data.property.viewPropertyTime}
+                                    // onChange={setValue}
+                                    range
+                                    numberOfMonths={2}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker />]}
+                                />
+                            </div>
+                            <br />
+                            <div className={styles.date}>
+                                <DatePicker
+                                    id="auctionTime"
+                                    // onChange={(e) => handleInputChange(e)}
+                                    onChange={setAuctionTime}
+                                    ClassName={styles.datePicker}
+                                    value={auctionTime}
+                                    //   value={data.property.viewPropertyTime}
+                                    // onChange={setValue}
+                                    range
+                                    numberOfMonths={2}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker />]}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.btn2}>
+                        {/* <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input> */}
 
+                        <Popup
+                            visible={show}
+                            trigger={<input className={styles.btnSave2} type="button" value="Save and Publish"></input>}
+                            position="right center"
+                        >
+                            <div className={styles.popup}>
+                                <label className={styles.title}>Save and Publish this auction</label>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <input className={styles.btnCancel} type="button" value="Cancel" onClick={onClick}></input>
+                                <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input>
+                            </div>
+                        </Popup>
+                        {/* <input className={styles.btnDraft} type="button" value="Reject Request Add" onClick={() => RejectAuction()}></input> */}
+                        <Popup trigger={<input className={styles.btnDraft} type="button" value="Reject Request Add"></input>} position="right center">
+                            <div className={styles.popup}>
+                                <label className={styles.title}>Reject Request Add this auction</label>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <input className={styles.btnCancel} type="button" value="Cancel" onClick={onClick}></input>
+                                <input className={styles.btnSave2} type="button" value="Reject Request Add" onClick={() => RejectAuction()}></input>
+                            </div>
+                        </Popup>
+
+                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
+                    </div>{" "}
                     <Footer />
                 </div>
             </form>
         </>
     );
 };
-export default PropertyDetail;
+export default AuctionDetailForManager;

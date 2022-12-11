@@ -14,7 +14,9 @@ import BanedBidder from "../../components/popups/forAdmin/BanBidder";
 import ActiveBidder from "../../components/popups/forAdmin/ActiveBidder";
 import { useFetchPagination } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const ListBidders = () => {
     const [page, setPage] = React.useState(1);
 
@@ -24,7 +26,7 @@ const ListBidders = () => {
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/BIDDER/${page}`;
 
-    const {data, loading, error } = useFetchPagination(baseURL, page);
+    const { data, loading, error } = useFetchPagination(baseURL, page);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -54,12 +56,28 @@ const ListBidders = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return loading ? (
-        <Loading/>
+        <Loading />
     ) : (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "ADMIN") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
@@ -116,7 +134,7 @@ const ListBidders = () => {
                                         <td className={styles.td}>{item.Name}</td>
                                         <td className={styles.td}>{item.Email__c}</td>
                                         <td className={styles.td}>{item.Phone__c}</td>
-                                        <td className={styles.td}>{item.User_Id__r.Status__c }</td>
+                                        <td className={styles.td}>{item.User_Id__r.Status__c}</td>
                                         <td className={styles.td}>
                                             <Link className={styles.linkBlue} to={`/bidderDetail/${item.id}`}>
                                                 View
@@ -124,7 +142,10 @@ const ListBidders = () => {
                                             {(() => {
                                                 if (item.User_Id__r.Status__c === "Activate") {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Deactivate</label>} position="right center">
+                                                        <Popup
+                                                            trigger={<label className={styles.linkBlue}>Deactivate</label>}
+                                                            position="right center"
+                                                        >
                                                             <BanedBidder idBidder={item.User_Id__c} />
                                                         </Popup>
                                                     );
@@ -141,7 +162,7 @@ const ListBidders = () => {
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={Math.floor(data.total/10)+1} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

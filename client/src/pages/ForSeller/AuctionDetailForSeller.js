@@ -1,4 +1,4 @@
-import Header from "../../components/header/HeaderUser";
+import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/stylesPages/forSellers/AuctionDetailForSeller.module.css";
@@ -8,18 +8,37 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
 import ReactPlayer from "react-player";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const AuctionDetailForSeller = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/auction/auctiondetailForSeller/${id}`;
     const { data, loading, error } = useFetch(baseURL);
     console.log(data);
     console.log(loading);
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return loading ? (
         "loading please wait"
     ) : (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "SELLER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}{" "}
             <NavBar />
             <div className={styles.container}>
                 <SideBarSeller />
