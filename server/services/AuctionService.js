@@ -79,7 +79,7 @@ const approveAuction = async (auction) =>{
         startAuctionTimeFN1,
         endAuctionTimeFN1,
         paymentTimeFN1,
-        parseFloat(req.body.registrationFee),
+        parseFloat(auction.registrationFee),
         property.Deposit_Amount__c,
         property.Start_Bid__c,
         property.Price_Step__c
@@ -93,8 +93,8 @@ const getAllAuction = async () =>{
 
 
 const getAuctionDetailByID = async (auctionId,propertyId) =>{
-    var auctionDetail = await auctionDAO.getAuctionDetailByID(auctionId,propertyId);
-    return auctionDetail;
+    var data = await auctionDAO.getAuctionDetailByID(auctionId,propertyId);
+    return data;
 }
 
 // exports.createRequestAuction = createRequestAuction;

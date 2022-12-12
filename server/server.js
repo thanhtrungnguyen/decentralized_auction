@@ -50,12 +50,14 @@ app.use("/api/news", newsRoute);
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "Sth went wrong!";
-  return res.status(500).json({
-    success: false,
-    status: errorStatus,
-    message: errorMessage,
-    stack: err.stack,
-  });
+   res.status(err.status ).json(
+    {
+      success: false,
+      status: errorStatus,
+      message: errorMessage,
+      stack: err.stack,
+    }
+  );
 });
 
 

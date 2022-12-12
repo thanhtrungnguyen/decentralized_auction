@@ -5,6 +5,7 @@ const { getFileStream } = require("../s3.js");
 const jsforce = require("jsforce");
 const { createAuction } = require("../services/callContractFunction.js");
 const  auctionService  = require("../services/AuctionService.js");
+const { createError } = require("../utils/error.js");
 const conn = new jsforce.Connection({
     loginUrl: process.env.SF_LOGIN_URL,
 });
@@ -86,11 +87,13 @@ const getAuctionDetailByID = async (req, res, next) => {
     var auctionId = req.params.auctionId;
     var propertyId = req.params.propertyId;
     try {
-        var auctionlist = await auctionService.getAuctionDetailByID(auctionId,propertyId);
-
-        res.status(200).json(auctionlist);
+        var data = await auctionService.getAuctionDetailByID(auctionId,propertyId);
+   
+            res.status(200).json(data);
+        
+        
     } catch (error) {
-        next(error);
+        next(createError('500','không tìm thấy auction'));
     }
 };
 const uploadImage = async (req, res, next) => {

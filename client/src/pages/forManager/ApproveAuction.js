@@ -71,6 +71,7 @@ const PropertyDetail = () => {
                 console.log(res);
                 console.log(res.data);
                 alert(res.data.message);
+                navigate("/autionsListForManager");
             });
     };
     const RejectAuction = () => {

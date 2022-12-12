@@ -218,7 +218,7 @@ const createCate = async (req, res, next) => {
                 category = ret;
             }
         );
-        res.status(200).json(category);
+       return res.status(200).json(category);
     } catch (error) {
         next(error);
     }

@@ -34,23 +34,21 @@ const createManagerService = async (user, role) => {
     }
 }
 const loginService = async (user) => {
-    try {
+    
         //Status__c: "Activate"
         var findUser = await AuthDAO.getUserByNameDAO(user)
 
-        if (!findUser)
-            return { error: '404', success: 'Failed', message: "User Not Found !!!" }
+        if (!findUser)  return { user:null, error: '404', success: 'Failed', message: "User Not Found !!!" }
+           
 
         const isPasswordCorrect = await bcrypt.compare(user.password, findUser.password);
 
-        if (!isPasswordCorrect) return { error: '400', success: 'Failed', message: "Password incorrect !!!" }
+        if (!isPasswordCorrect) return { user:null, error: '400', success: 'Failed', message: "Password incorrect !!!" }
 
         const token = jwt.sign({ id: findUser.Id, role: findUser.role, userName: findUser.userName }, process.env.JWT);
 
         return { user: findUser, token: token };
-    } catch (error) {
-        console.error(error)
-    }
+
 }
 const changePasswordService = async (user, oldPassword, newPassword) => {
     try {
