@@ -32,11 +32,16 @@ const AddManager = () => {
 
         formData.append("username", username);
         formData.append("password", password);
-
+        console.log(formData)
         axios
-            .post("http://localhost:8800/api/auction", formData, {
-                withCredentials: true,
-            })
+            .post(
+                "http://localhost:8800/api/auth/registerManager",
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                },
+                { withCredentials: true }
+            )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);

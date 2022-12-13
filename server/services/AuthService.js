@@ -3,44 +3,52 @@ const { uploadFile } = require('../s3');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { sendMail } = require("../utils/mailer.js");
-const createContactService = async (user, contact, role, files) => {
+
+
+const createContact = async (user, contact, role, files) => {
     try {
         const result = await uploadFile(files.cardFront[0]);
         const result1 = await uploadFile(files.cardBack[0]);
         const filesImg = { result: result, result1: result1 }
-        var contactId = await AuthDAO.createContactDAO(user, contact, role, filesImg)
+        var userHashPassword = await hashPasswordService(user)
+        var contactId = await AuthDAO.createContact(userHashPassword, contact, role, filesImg)
         return contactId;
     } catch (error) {
         console.error(error)
     }
 }
-const createAccountService = async (user, contact, role, files, account) => {
+const createAccount = async (user, contact, role, files, account) => {
     try {
         const result = await uploadFile(files.cardFront[0]);
         const result1 = await uploadFile(files.cardBack[0]);
         const filesImg = { result: result, result1: result1 }
-        var accountId = await AuthDAO.createAccountDAO(user, contact, role, filesImg, account)
+        var accountId = await AuthDAO.createAccount(user, contact, role, filesImg, account)
         return accountId;
     } catch (error) {
         console.error(error)
     }
 }
-const createManagerService = async (user, role) => {
+const createManager = async (user, role) => {
     try {
-        var userId = await AuthDAO.createManagerDAO(user, role)
+        var userId = await AuthDAO.createManager(user, role)
         return userId;
     } catch (error) {
         console.error(error)
     }
 }
-const loginService = async (user) => {
+const hashPasswordService = async(user) =>{
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(user.password, salt);
+    return {userName:user.userName,password:hash}
+}
+const login = async (user) => {
     try {
         //Status__c: "Activate"
-        var findUser = await AuthDAO.getUserByNameDAO(user)
+        var findUser = await AuthDAO.getUserByName(user)
 
         if (!findUser)
             return { error: '404', success: 'Failed', message: "User Not Found !!!" }
-
+ 
         const isPasswordCorrect = await bcrypt.compare(user.password, findUser.password);
 
         if (!isPasswordCorrect) return { error: '400', success: 'Failed', message: "Password incorrect !!!" }
@@ -52,9 +60,9 @@ const loginService = async (user) => {
         console.error(error)
     }
 }
-const changePasswordService = async (user, oldPassword, newPassword) => {
+const changePassword = async (user, oldPassword, newPassword) => {
     try {
-        var findUser = await AuthDAO.getUserByNameDAO(user);
+        var findUser = await AuthDAO.getUserByName(user);
 
         if (!findUser) return false;
         //next(createError(404, "User not found!"));
@@ -66,15 +74,15 @@ const changePasswordService = async (user, oldPassword, newPassword) => {
 
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(newPassword, salt);
-        var isChange = await AuthDAO.changePasswordDAO(findUser, hash);
+        var isChange = await AuthDAO.changePassword(findUser, hash);
         if (isChange) return true;
     } catch (error) {
         console.error(error)
     }
 }
-const forgotPasswordService = async (user) => {
+const forgotPassword = async (user) => {
     try {
-        var findUser = await AuthDAO.getUserByNameDAO(user);
+        var findUser = await AuthDAO.getUserByName(user);
         if (!findUser) return false;
         //next(createError(404, "Email not found!"));
 
@@ -92,9 +100,9 @@ const forgotPasswordService = async (user) => {
         console.error(error)
     }
 }
-const resetPasswordService = async (user, password1, password2, token) => {
+const resetPassword = async (user, password1, password2, token) => {
     try {
-        var findUser = await AuthDAO.getUserByNameDAO(user);
+        var findUser = await AuthDAO.getUserByName(user);
         const secret = process.env.JWT + findUser.password;
 
         const payload = jwt.verify(token, secret);
@@ -108,7 +116,7 @@ const resetPasswordService = async (user, password1, password2, token) => {
 
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(password1, salt);
-        var isChange = await AuthDAO.changePasswordDAO(findUser, hash);
+        var isChange = await AuthDAO.changePassword(findUser, hash);
         if (isChange) return true;
 
     } catch (error) {
@@ -116,4 +124,4 @@ const resetPasswordService = async (user, password1, password2, token) => {
     }
 }
 
-module.exports = { createContactService, createAccountService, createManagerService, loginService, changePasswordService, forgotPasswordService, resetPasswordService }
+module.exports = { createContact, createAccount, createManager, login, changePassword, forgotPassword, resetPassword }

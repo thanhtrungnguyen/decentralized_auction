@@ -1,22 +1,8 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const jsforce = require("jsforce");
+const conn = require('./connectSF')
 
-const conn = new jsforce.Connection({
-    loginUrl: process.env.SF_LOGIN_URL,
-});
-
-conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOKEN, (err, res) => {
-    if (err) {
-        console.error(err);
-    } else {
-        // console.log(res.id);
-    }
-});
-
-const createContactDAO = async (user, contact, role, filesImg) => {
+const createContact = async (user, contact, role, filesImg) => {
     var contactId = null;
-    var userId = await createUserDAO(user);
+    var userId = await createUser(user);
     await conn.sobject("Contact__c").create(
         {
             Name: contact.Name,
@@ -44,14 +30,14 @@ const createContactDAO = async (user, contact, role, filesImg) => {
             console.log("Created contact : " + ret);
         }
     );
-    await addRoleForUserDAO(role, userId);
+    await addRoleForUser(role, userId);
     return contactId;
 }
-const createAccountDAO = async (user, contact, role, filesImg, account) => {
+const createAccount = async (user, contact, role, filesImg, account) => {
     try {
         var accountId = null;
-        var userId = await createUserDAO(user);
-        var contactId = await createContactDAO(user, contact, role, filesImg)
+        var userId = await createUser(user);
+        var contactId = await createContact(user, contact, role, filesImg)
         await conn.sobject("Account__c").create(
             {
                 Name: account.Name,
@@ -78,26 +64,23 @@ const createAccountDAO = async (user, contact, role, filesImg, account) => {
         console.error(error)
     }
 }
-const createManagerDAO = async (user, role) => {
+const createManager = async (user, role) => {
     try {
-        var userId = await createUserDAO(user);
-        await addRoleForUserDAO(role);
+        var userId = await createUser(user);
+        await addRoleForUser(role);
         return userId;
     } catch (error) {
         console.error(error)
     }
 }
-const createUserDAO = async (user) => {
+const createUser = async (user) => {
     try {
-
         var userId = null;
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(user.password, salt);
         // add new user
         await conn.sobject("User__c").create(
             {
                 Name: user.userName,
-                Password__c: hash,
+                Password__c: user.password,
                 Status__c: "Activate"
             }, (err, ret) => {
                 if (err || !ret.success) {
@@ -112,7 +95,7 @@ const createUserDAO = async (user) => {
         console.error(error)
     }
 }
-const addRoleForUserDAO = async (role, userId) => {
+const addRoleForUser = async (role, userId) => {
     try {
         await conn.sobject("Role__c").findOne(
             {
@@ -162,7 +145,7 @@ const addRepresentativeAccount = async (accountId, contactId, position) => {
         console.error(error);
     }
 }
-const getUserByNameDAO = async (user) => {
+const getUserByName = async (user) => {
     try {
         var findUser, role = null;
         await conn.sobject("User__c").findOne({ Name: user.userName }, (err, ret) => {
@@ -181,7 +164,7 @@ const getUserByNameDAO = async (user) => {
         console.error(error)
     }
 }
-const getUserByIdDAO = async (user) => {
+const getUserById = async (user) => {
     try {
         var findUser, role = null;
         await conn.sobject("User__c").findOne({ Id: user.Id }, (err, ret) => {
@@ -197,7 +180,7 @@ const getUserByIdDAO = async (user) => {
         console.error(error)
     }
 }
-const changePasswordDAO = async (user, password) => {
+const changePassword = async (user, password) => {
     try {
         await conn.sobject("User__c").update(
             {
@@ -213,4 +196,4 @@ const changePasswordDAO = async (user, password) => {
     }
 }
 
-module.exports = { createContactDAO, createAccountDAO, createManagerDAO, getUserByNameDAO, changePasswordDAO, getUserByIdDAO }
+module.exports = { createContact, createAccount, createManager, getUserByName, changePassword, getUserById }

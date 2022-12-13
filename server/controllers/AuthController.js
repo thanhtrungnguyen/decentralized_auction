@@ -1,10 +1,3 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-
-const { createError } = require("../utils/error.js");
-const { uploadFile } = require("../s3.js");
-const jsforce = require("jsforce");
-
 const AuthService = require('../services/AuthService');
 
 //define role
@@ -14,18 +7,6 @@ const MANAGER = "MANAGER";
 const ADMIN = "ADMIN";
 const CONTACT = "CONTACT";
 const ACCOUNT = "ACCOUNT";
-// login salesforce
-const conn = new jsforce.Connection({
-    loginUrl: process.env.SF_LOGIN_URL,
-});
-
-conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOKEN, (err, res) => {
-    if (err) {
-        console.error(err);
-    } else {
-        // console.log(res.id);
-    }
-});
 //register new Bidder
 const register = async (req, res, next) => {
     try {
@@ -62,12 +43,12 @@ const register = async (req, res, next) => {
         }
         if (req.body.usertype === CONTACT) {
             //add contact
-            var newContact = await AuthService.createContactService(user, contact, role, files)
+            var newContact = await AuthService.createContact(user, contact, role, files)
 
         }
         if (req.body.usertype === ACCOUNT) {
             //add new account
-            var newAccount = await AuthService.createAccountService(user, contact, role, files, account)
+            var newAccount = await AuthService.createAccount(user, contact, role, files, account)
         }
         if (newAccount || newContact) {
             res.status(200).send("User has been created.");
@@ -110,7 +91,7 @@ const registerSeller = async (req, res, next) => {
             //Website__c:
             Position: req.body.position,
         }
-        var accountId = await AuthService.createAccountService(user, contact, role, files, account)
+        var accountId = await AuthService.createAccount(user, contact, role, files, account)
         if (accountId)
             res.status(200).send("Seller has been created.");
     } catch (error) {
@@ -122,7 +103,7 @@ const registerManager = async (req, res, next) => {
     try {
         const user = { userName: req.body.username, password: req.body.password };
         const role = MANAGER;
-        var userId = await AuthService.createManagerService(user, role)
+        var userId = await AuthService.createManager(user, role)
         if (userId)
             res.status(200).send("Manager has been created.");
     } catch (error) {
@@ -133,7 +114,7 @@ const registerManager = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const user = { userName: req.body.userName, password: req.body.password };
-        var findUser = await AuthService.loginService(user);
+        var findUser = await AuthService.login(user);
 
         res.cookie("access_token", findUser.token)
             .status(200)
@@ -151,7 +132,7 @@ const changePassword = async (req, res, next) => {
         var user = { userName: req.body.userName }
         var oldPassword = req.body.oldPassword
         var newPassword = req.body.newPassword
-        var isChange = await AuthService.changePasswordService(user, oldPassword, newPassword);
+        var isChange = await AuthService.changePassword(user, oldPassword, newPassword);
         if (isChange) res.status(200).send("Changed successful !!!");
     } catch (error) {
         next(error);
@@ -169,7 +150,7 @@ const logout = async (req, res, next) => {
 const forgotPassword = async (req, res, next) => {
     try {
         var user = { userName: req.body.userName }
-        var link = await AuthService.forgotPasswordService(user);
+        var link = await AuthService.forgotPassword(user);
         res.status(200).json({
             link: link,
         });
@@ -183,7 +164,7 @@ const resetPassword = async (req, res, next) => {
         var password1 = req.body.password1;
         var password2 = req.body.password2;
         var token = req.body.token;
-        var isChange = await AuthService.resetPasswordService(user, password1, password2, token);
+        var isChange = await AuthService.resetPassword(user, password1, password2, token);
         if (isChange) res.status(200).send("Changed successful !!!");
 
     } catch (error) {

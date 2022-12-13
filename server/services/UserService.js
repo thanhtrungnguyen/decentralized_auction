@@ -1,12 +1,17 @@
 const  UserDAO  = require ("../dal/UserDAO")
 
-const getAllUserService = async(role,index)=>{
+const getAllUser= async(role,index)=>{
     try {
-        var list = await UserDAO.getAllUserDAO(role,index);
+        var list = await UserDAO.getAllUser(role,index);
         return list
     } catch (error) {
         
     }
 }
 
-module.exports = {getAllUserService}
+const getUserById = async (userId) =>{
+    var user = await UserDAO.getUserById(userId);
+    return user
+} 
+
+module.exports = {getAllUser,getUserById}

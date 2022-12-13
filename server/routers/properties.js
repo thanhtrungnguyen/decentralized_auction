@@ -22,10 +22,6 @@ router.post(
     verifySeller,
     upload.fields([
         {
-            name: "propertyImage0",
-            maxCount: 1,
-        },
-        {
             name: "propertyImage1",
             maxCount: 1,
         },
@@ -51,8 +47,8 @@ router.get("/getListByName/:name/:status", filterProperty);
 
 router.get("/", verifySeller, getAllPropertyByUser);
 
-router.get("/category/", getAllCate);
+// router.get("/category/", getAllCate);
 
-router.post("/category/", verifyAdmin, createCate);
+// router.post("/category/", verifyAdmin, createCate);
 
 module.exports = router;
