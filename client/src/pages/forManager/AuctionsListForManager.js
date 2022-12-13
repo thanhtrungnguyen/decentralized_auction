@@ -190,13 +190,14 @@ const AuctionsListForManager = () => {
                                             >
                                                 View
                                             </Link>
-
+                                            {auction.Auctions1__r.records[0].Status__c != "Approved" && 
                                             <Link
                                                 className={styles.linkBlue}
                                                 to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
                                             >
                                                 Approve
-                                            </Link>
+                                            </Link>}
+                                            
                                         </td>
                                     </tr>
                                 ))}

@@ -139,7 +139,7 @@ const ListBidders = () => {
                                         <td className={styles.td}>{item.Phone__c}</td>
                                         <td className={styles.td} style={item.User_Id__r.Status__c==='Activate'?{}:{color:"red"}} >{item.User_Id__r.Status__c}</td>
                                         <td className={styles.td}>
-                                            <Link className={styles.linkBlue} to={`/bidderDetail/${item.id}`}>
+                                            <Link className={styles.linkBlue} to={`/bidderDetail/${item.User_Id__c}`}>
                                                 View
                                             </Link>
                                             {(() => {

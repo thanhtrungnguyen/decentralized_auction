@@ -12,21 +12,18 @@ import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { useFetch } from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
+
 const MyAuctions = () => {
     const [page, setPage] = React.useState(1);
     const [cagetory, setCategory] = useState("Car");
     const [propertyName, setPropertyName] = useState(null);
-    const [data, setData] = useState([]);
-    const navigate = useNavigate();
-    const baseURL = "http://localhost:8800/api/auction/";
 
-    useEffect(() => {
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setData(resp.data);
-        });
-    }, [baseURL]);
+    const navigate = useNavigate();
+    const baseURL = "http://localhost:8800/api/myAuctions/";
+    const { data, loading, error } = useFetch(baseURL);
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "cagetory") {
@@ -50,7 +47,6 @@ const MyAuctions = () => {
                 console.log(res);
                 console.log(res.data);
                 alert(res.data.message);
-                setData(res.data);
 
                 navigate("/myProperty");
             });
@@ -70,7 +66,9 @@ const MyAuctions = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
                 if (getUser().role == "SELLER") {
@@ -98,7 +96,7 @@ const MyAuctions = () => {
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
-                            <select
+                            {/* <select
                                 className={styles.select}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cagetory"
@@ -108,7 +106,7 @@ const MyAuctions = () => {
                                 {data.map((property) => (
                                     <option value={property.category}>{property.category}</option>
                                 ))}
-                            </select>
+                            </select> */}
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>

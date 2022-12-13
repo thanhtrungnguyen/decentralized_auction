@@ -114,12 +114,17 @@ const registerManager = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const user = { userName: req.body.userName, password: req.body.password };
-        var findUser = await AuthService.login(user);
-
-        res.cookie("access_token", findUser.token)
+        var data = await AuthService.loginService(user);
+        if(data.user==null){
+            next(createError(data.error,data.message))
+        }else{
+            res.cookie("access_token", data.token)
             .status(200)
-            .json({ userId: findUser.user.Id, userName: findUser.user.userName, role: findUser.user.role, token: findUser.token })
+            .json({ userId: data.user.Id, userName: data.user.userName, role: data.user.role, token: data.token })
             .send();
+        }
+
+        
         // return res.redirect("/");
     } catch (error) {
         next(error);

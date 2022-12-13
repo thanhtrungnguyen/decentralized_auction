@@ -40,6 +40,8 @@ import AddNew from "./pages/forAdmin/AddNews";
 import EditNew from "./pages/forAdmin/EditNew";
 import PlaceBidButton from "./pages/bidder/popup";
 import AuctionDetailForManager from "./pages/forManager/AuctionDetailForManager";
+import ViewManager from "./pages/forAdmin/ViewManager";
+import ViewSeller from "./pages/forAdmin/ViewSeller";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 function App() {
@@ -94,7 +96,13 @@ function App() {
                     <Route path="editNew/:id" element={<EditNew />} />
                     <Route path="editNew" element={<EditNew />} />
                     <Route path="addNew" element={<AddNew />} />
+                    <Route path="listNews/:index" element={<ListNews />} />
                     <Route path="listNews" element={<ListNews />} />
+                    <Route path="viewManager" element={<ViewManager />} />
+                    <Route path="viewManager/:id" element={<ViewManager />} />
+                    <Route path="viewSeller" element={<ViewSeller />} />
+                    <Route path="viewSeller/:id" element={<ViewSeller />} />
+
                     <Route path="BidPopup" element={<PlaceBidButton />} />
                 </Routes>
             </BrowserRouter>

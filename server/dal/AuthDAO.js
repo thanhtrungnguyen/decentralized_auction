@@ -64,7 +64,7 @@ const createAccount = async (user, contact, role, filesImg, account) => {
         console.error(error)
     }
 }
-const createManager = async (user, role) => {
+const createManagerDAO = async (user, role) => {
     try {
         var userId = await createUser(user);
         await addRoleForUser(role);
@@ -145,26 +145,32 @@ const addRepresentativeAccount = async (accountId, contactId, position) => {
         console.error(error);
     }
 }
-const getUserByName = async (user) => {
-    try {
-        var findUser, role = null;
-        await conn.sobject("User__c").findOne({ Name: user.userName }, (err, ret) => {
-            if (err) {
-                return null;
-                console.error(err)
-            };
+const getUserByNameDAO = async (user) => {
+    var findUser, role, data = null;
+
+
+    await conn.sobject("User__c").findOne({ Name: user.userName }, async (err, ret) => {
+        if (ret==null||err) {
+            console.error(err);
+        } else{
             findUser = ret;
-        });
-        await conn.query(`Select Role_Id__r.Name from Role_Right__c where User_DAP__r.Id = '${findUser.Id}'`, (err, result) => {
-            if (err) console.error(err);
-            role = result.records[0].Role_Id__r.Name;
-        })
-        return { userName: findUser.Name, password: findUser.Password__c, role: role, status: findUser.Status__c, Id: findUser.Id };
-    } catch (error) {
-        console.error(error)
-    }
+            await conn.query(`Select Role_Id__r.Name from Role_Right__c where User_DAP__r.Id = '${findUser.Id}'`, (err, result) => {
+                if (ret==null||err) {
+                    console.error(err);
+                }
+                role = result.records[0].Role_Id__r.Name;
+                
+            })
+            data = { userName: findUser.Name, password: findUser.Password__c, role: role, status: findUser.Status__c, Id: findUser.Id };
+        }
+      
+       
+    });
+    
+    return data;
+
 }
-const getUserById = async (user) => {
+const getUserByIdDAO = async (user) => {
     try {
         var findUser, role = null;
         await conn.sobject("User__c").findOne({ Id: user.Id }, (err, ret) => {
@@ -180,7 +186,7 @@ const getUserById = async (user) => {
         console.error(error)
     }
 }
-const changePassword = async (user, password) => {
+const changePasswordDAO = async (user, password) => {
     try {
         await conn.sobject("User__c").update(
             {
@@ -196,4 +202,4 @@ const changePassword = async (user, password) => {
     }
 }
 
-module.exports = { createContact, createAccount, createManager, getUserByName, changePassword, getUserById }
+module.exports = { createContactDAO, createAccountDAO, createManagerDAO, getUserByNameDAO, changePasswordDAO, getUserByIdDAO }

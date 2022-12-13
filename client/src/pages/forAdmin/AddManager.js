@@ -49,6 +49,9 @@ const AddManager = () => {
             });
         event.preventDefault();
     };
+    const cancel = () => {
+        navigate("/listManagers");
+    };
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -100,7 +103,7 @@ const AddManager = () => {
                                 required
                             ></input>
                             <br />
-                            <input type="button" value="Cancel" className={styles.btnCancel}></input>
+                            <input type="button" value="Cancel" className={styles.btnCancel} onClick={cancel}></input>
                             <input type="submit" value="Add Manager" className={styles.btnSubmit}></input>
                         </div>
                     </div>
