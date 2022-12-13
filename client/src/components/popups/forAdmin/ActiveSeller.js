@@ -35,7 +35,7 @@ const ActiveSeller = ({ idSeller }) => {
                         <br />
 
                         <input type="submit" value="OK" className={styles.btnOK}></input>
-                        <input type="button" value="Cancel" className={styles.btnCancel}></input>
+                        <input type="button" value="Cancel" className={styles.btnCancel} onClick={handCancel}></input>
                     </form>
                 </div>
             ) : null}
