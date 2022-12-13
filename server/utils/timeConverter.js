@@ -4,7 +4,7 @@ convertEpochTimestampToSpecificTimezone = (epoch) => {
     const d = new Date(epoch * 1000);
     const utc = d.getTime() + d.getTimezoneOffset() * 60000; //This converts to UTC 00:00
     const nd = new Date(utc + 3600000 * OFFSET);
-    return nd.toLocaleString("en-UK");
+    return nd;
 };
 
 convertSpecificTimezoneToEpochTimestamp = (time) => {

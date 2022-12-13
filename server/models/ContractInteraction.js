@@ -16,21 +16,21 @@ const userSchema = new mongoose.Schema({
     _updated_at: { type: Date },
     //Auction Information
     auctionId: { type: String },
+
     startRegistrationTime: { type: String },
     endRegistrationTime: { type: String },
     startAuctionTime: { type: String },
     endAuctionTime: { type: String },
     duePaymentTime: { type: String },
-    registrationFee: { type: Number },
-    depositAmount: { type: Number },
-    startBid: { type: Number },
-    priceStep: { type: Number },
-    //Bid Information
+    registrationFee: { type: String },
+    depositAmount: { type: String },
+    startBid: { type: String },
+    priceStep: { type: String },
+    //Bid Information: RegisteredToBid, PlaceBid
     bidder: { type: String },
-    bidAmount: { type: Number },
+    bidAmount: { type: String },
     bidderState: { type: String },
-    //TestDB
-    k: { type: Number },
+    //
 });
 
 let ContractInteraction = mongoose.model("ContractInteraction", userSchema, "AuctionLogs");

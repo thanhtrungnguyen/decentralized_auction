@@ -32,8 +32,8 @@ const NavBar = () => {
                         Admin Center
                     </Link>
                     {/* test */}
-                    <Link className={styles.link} color="red" to="/BidPopup">
-                        BidPopup
+                    <Link className={styles.link} color="red" to="/FakeAuctionDetail">
+                        Fake AuctionDetail
                     </Link>
                     {/* test */}
                     <div className={styles.flright}>

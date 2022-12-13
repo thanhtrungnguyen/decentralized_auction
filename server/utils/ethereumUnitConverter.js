@@ -1,11 +1,11 @@
 const { ethers } = require("ethers");
 
 const convertEtherToWei = (ether) => {
-    return parseInt(ethers.utils.parseEther(ether.toString()));
+    return ethers.utils.parseEther(ether.toString()).toString();
 };
 
 const convertWeiToEther = (wei) => {
-    return parseFloat(ethers.utils.formatEther(wei));
+    return ethers.utils.formatEther(wei).toString();
 };
 
 module.exports = { parseWei: convertEtherToWei, parseEther: convertWeiToEther };

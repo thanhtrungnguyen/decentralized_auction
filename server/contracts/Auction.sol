@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+// import "hardhat/console.sol";
+
 error Auction__InvalidRegistrationTime();
 error Auction__InvalidAuctionTime();
 error Auction__InvalidDuePaymentTime();
@@ -12,7 +14,7 @@ error Auction__InvalidPriceStep();
 error Auction__InvalidDatetime();
 error Auction__InvalidAuctionId();
 error Auction__OutOfRegistrationTime();
-error Auction__RequireAmountToRegisterNotMet(string auctionId, uint256 requireAmountToRegister);
+error Auction__RequireAmountToRegisterNotMet(string auctionId, uint256 value, uint256 requireAmountToRegister);
 error Auction__OutOfAuctionTime();
 error Auction__InvalidBidAmount();
 error Auction__NotRegisteredBidder();
@@ -21,6 +23,9 @@ error Auction__ConfirmationTimeout();
 error Auction__NotWinnerOfAuction();
 error Auction__TransferFailed();
 error Auction__RequireAmountToPaymentNotMet(string auctionId, uint256 requirePaymentAmount);
+error Auction__NotExistAuction();
+error Auction__NotOwner();
+error Auction__AlreadyRegisteredBidder();
 
 /**@title Decentralized Auction
  * @author Nguyen Thanh Trung
@@ -29,6 +34,7 @@ error Auction__RequireAmountToPaymentNotMet(string auctionId, uint256 requirePay
  */
 contract Auction {
     string[] private s_auctionList;
+    address private immutable i_owner;
     uint16 private constant CONFIRMATION_TIME = 300;
     uint128 f = 34000000000000000000;
     enum BidderState {
@@ -37,7 +43,7 @@ contract Auction {
         WIN, //winner
         LOSE, // top 3 or lower
         CANCEL, //cencel bid or auction result
-        WITHDEW, //paid back deposit
+        PAIDBACK, //paid back deposit
         PAID // payment complete
     }
 
@@ -52,6 +58,10 @@ contract Auction {
         uint256 depositAmount;
         uint256 startBid;
         uint256 priceStep;
+    }
+
+    constructor() {
+        i_owner = msg.sender;
     }
 
     struct BidInformation {
@@ -76,12 +86,16 @@ contract Auction {
     event RegisteredToBid(string auctionId, address bidder, BidderState bidderState);
     event ClosedAuction(string auctionId);
     event CanceledAuctionResult(string auctionId, address bidder, BidderState bidderState);
-    event Withdrew(string auctionId, address bidder);
+    event Paidback(string auctionId, address bidder);
     event ClosedAuctionSucessfully(string auctionId, address bidder, uint256 paidAmount);
-    event TestDB(uint256 k);
 
-    mapping(string => AuctionInformation) private s_AuctionInformations;
-    mapping(string => BidInformation[]) private s_BidInformations;
+    mapping(string => AuctionInformation) private s_auctionInformations;
+    mapping(string => BidInformation[]) private s_bidInformations;
+
+    modifier onlyOwner() {
+        if (msg.sender != i_owner) revert Auction__NotOwner();
+        _;
+    }
 
     modifier isVailidAuctionId(string memory auctionId) {
         for (uint256 i = 0; i < s_auctionList.length; i++) {
@@ -106,11 +120,7 @@ contract Auction {
     }
 
     modifier isValidRegistrationTime(uint256 startRegistrationTime, uint256 endRegistrationTime) {
-        if (
-            startRegistrationTime < block.timestamp ||
-            // block.timestamp > endRegistrationTime ||
-            startRegistrationTime >= endRegistrationTime
-        ) {
+        if (startRegistrationTime < block.timestamp || startRegistrationTime >= endRegistrationTime) {
             revert Auction__InvalidRegistrationTime();
         }
         _;
@@ -165,21 +175,10 @@ contract Auction {
         _;
     }
 
-    modifier isAuctionExist(string memory auctionId) {
-        uint256 count;
-        for (uint256 i = 0; i < s_auctionList.length; i++) {
-            count++;
-        }
-        if (count == s_auctionList.length) {
-            revert Auction__InvalidAuctionId();
-        }
-        _;
-    }
-
     modifier isRegistrationTime(string memory auctionId) {
         if (
-            s_AuctionInformations[auctionId].startRegistrationTime < block.timestamp ||
-            s_AuctionInformations[auctionId].endRegistrationTime > block.timestamp
+            s_auctionInformations[auctionId].startRegistrationTime > block.timestamp ||
+            s_auctionInformations[auctionId].endRegistrationTime < block.timestamp
         ) {
             revert Auction__OutOfRegistrationTime();
         }
@@ -188,7 +187,7 @@ contract Auction {
 
     modifier isAuctionTime(string memory auctionId) {
         if (
-            s_AuctionInformations[auctionId].startAuctionTime < block.timestamp || s_AuctionInformations[auctionId].endAuctionTime > block.timestamp
+            s_auctionInformations[auctionId].startAuctionTime > block.timestamp || s_auctionInformations[auctionId].endAuctionTime < block.timestamp
         ) {
             revert Auction__OutOfAuctionTime();
         }
@@ -197,8 +196,8 @@ contract Auction {
 
     modifier isValidBidAmount(string memory auctionId, uint256 bidAmount) {
         if (
-            bidAmount < s_AuctionInformations[auctionId].depositAmount ||
-            bidAmount < getHightestBidOfAuction(auctionId) + s_AuctionInformations[auctionId].priceStep
+            bidAmount < s_auctionInformations[auctionId].startBid ||
+            bidAmount < getHighestBidOfAuction(auctionId) + s_auctionInformations[auctionId].priceStep
         ) {
             revert Auction__InvalidBidAmount();
         }
@@ -207,26 +206,33 @@ contract Auction {
 
     modifier isRegisteredBidder(string memory auctionId) {
         uint256 count = 0;
-        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {
-            if (s_BidInformations[auctionId][i].bidder != msg.sender) {
+        for (uint256 i = 0; i < s_bidInformations[auctionId].length; i++) {
+            if (s_bidInformations[auctionId][i].bidder != msg.sender) {
                 count++;
             }
         }
-        if (count == s_BidInformations[auctionId].length) {
+        if (count == s_bidInformations[auctionId].length) {
             revert Auction__NotRegisteredBidder();
         }
         _;
     }
-
+    modifier isAlreadyRegisteredBidder(string memory auctionId) {
+        for (uint256 i = 0; i < s_bidInformations[auctionId].length; i++) {
+            if (s_bidInformations[auctionId][i].bidder == msg.sender) {
+                revert Auction__AlreadyRegisteredBidder();
+            }
+        }
+        _;
+    }
     modifier isConfirmationTime(string memory auctionId) {
-        if (msg.sender == s_BidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)].bidder) {
-            uint256 dueConfirmationTime = s_AuctionInformations[auctionId].endAuctionTime + CONFIRMATION_TIME;
+        if (msg.sender == s_bidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)].bidder) {
+            uint256 dueConfirmationTime = s_auctionInformations[auctionId].endAuctionTime + CONFIRMATION_TIME;
             if (dueConfirmationTime > block.timestamp) {
                 revert Auction__ConfirmationTimeout();
             }
         }
-        if (msg.sender == s_BidInformations[auctionId][getIndexOfSecondWinnerOfAuction(auctionId)].bidder) {
-            uint256 dueConfirmationTime = s_AuctionInformations[auctionId].endAuctionTime + CONFIRMATION_TIME * 2;
+        if (msg.sender == s_bidInformations[auctionId][getIndexOfSecondWinnerOfAuction(auctionId)].bidder) {
+            uint256 dueConfirmationTime = s_auctionInformations[auctionId].endAuctionTime + CONFIRMATION_TIME * 2;
             if (dueConfirmationTime > block.timestamp) {
                 revert Auction__ConfirmationTimeout();
             }
@@ -236,7 +242,7 @@ contract Auction {
 
     //check sender is winner or not
     modifier isWinnerOfAuction(string memory auctionId) {
-        if (s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState != BidderState.WIN) {
+        if (s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState != BidderState.WIN) {
             revert Auction__NotWinnerOfAuction();
         }
         _;
@@ -306,7 +312,7 @@ contract Auction {
             auction.depositAmount = depositAmount;
             auction.startBid = startBid;
             auction.priceStep = priceStep;
-            s_AuctionInformations[auctionId] = auction;
+            s_auctionInformations[auctionId] = auction;
             s_auctionList.push(auctionId);
 
             emit CreatedAuction(
@@ -324,21 +330,29 @@ contract Auction {
         }
     }
 
-    function registerToBid(string memory auctionId) external payable isVailidAuctionId(auctionId) isRegistrationTime(auctionId) {
-        uint256 requireAmountToRegister = s_AuctionInformations[auctionId].registrationFee + s_AuctionInformations[auctionId].depositAmount;
-        if (msg.value < requireAmountToRegister) {
-            revert Auction__RequireAmountToRegisterNotMet(auctionId, requireAmountToRegister);
+    function registerToBid(string memory auctionId)
+        external
+        payable
+        isExistAuctionId(auctionId)
+        isRegistrationTime(auctionId)
+        isAlreadyRegisteredBidder(auctionId)
+    {
+        uint256 requireAmountToRegister = s_auctionInformations[auctionId].registrationFee + s_auctionInformations[auctionId].depositAmount;
+        if (msg.value != requireAmountToRegister) {
+            revert Auction__RequireAmountToRegisterNotMet(auctionId, msg.value, requireAmountToRegister);
         }
-        s_BidInformations[auctionId][s_BidInformations[auctionId].length].bidder = msg.sender;
-        s_BidInformations[auctionId][s_BidInformations[auctionId].length].bidderState = BidderState.BIDING;
-        emit RegisteredToBid(auctionId, msg.sender, s_BidInformations[auctionId][s_BidInformations[auctionId].length].bidderState);
+        BidInformation memory bidInformation;
+        bidInformation.bidder = msg.sender;
+        bidInformation.bidderState = BidderState.BIDING;
+        s_bidInformations[auctionId].push(bidInformation);
+        emit RegisteredToBid(auctionId, bidInformation.bidder, bidInformation.bidderState);
     }
 
-    function getHightestBidOfAuction(string memory auctionId) public view returns (uint256) {
+    function getHighestBidOfAuction(string memory auctionId) public view returns (uint256) {
         uint256 highestBid = 0;
-        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {
-            if (s_BidInformations[auctionId][i].bidAmount > highestBid && s_BidInformations[auctionId][i].bidderState != BidderState.CANCEL) {
-                highestBid = s_BidInformations[auctionId][i].bidAmount;
+        for (uint256 i = 0; i < s_bidInformations[auctionId].length; i++) {
+            if (s_bidInformations[auctionId][i].bidAmount > highestBid && s_bidInformations[auctionId][i].bidderState != BidderState.CANCEL) {
+                highestBid = s_bidInformations[auctionId][i].bidAmount;
             }
         }
         return highestBid;
@@ -346,8 +360,8 @@ contract Auction {
 
     //get index of bidder who is sender
     function getIndexOfBidder(string memory auctionId) internal view returns (uint256) {
-        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {
-            if (s_BidInformations[auctionId][i].bidder == msg.sender) {
+        for (uint256 i = 0; i < s_bidInformations[auctionId].length; i++) {
+            if (s_bidInformations[auctionId][i].bidder == msg.sender) {
                 return i;
             }
         }
@@ -357,19 +371,19 @@ contract Auction {
     function placeBid(string memory auctionId, uint256 bidAmount)
         external
         payable
-        isAuctionExist(auctionId)
+        isExistAuctionId(auctionId)
         isAuctionTime(auctionId)
         isRegisteredBidder(auctionId)
         isValidBidAmount(auctionId, bidAmount)
     {
-        s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount = bidAmount;
+        s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount = bidAmount;
         emit PlacedBid(auctionId, msg.sender, bidAmount);
     }
 
     function getIndexOfHighestBidOfAuction(string memory auctionId) public view returns (uint256) {
         uint256 highestIndex;
-        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {
-            if (highestIndex < s_BidInformations[auctionId][i].bidAmount && s_BidInformations[auctionId][i].bidderState != BidderState.CANCEL) {
+        for (uint256 i = 0; i < s_bidInformations[auctionId].length; i++) {
+            if (highestIndex < s_bidInformations[auctionId][i].bidAmount && s_bidInformations[auctionId][i].bidderState != BidderState.CANCEL) {
                 highestIndex = i;
             }
         }
@@ -378,30 +392,30 @@ contract Auction {
 
     function closeAuction(string memory auctionId) external isExistAuctionId(auctionId) {
         uint256 index = getIndexOfHighestBidOfAuction(auctionId);
-        s_BidInformations[auctionId][index].bidderState = BidderState.WIN;
+        s_bidInformations[auctionId][index].bidderState = BidderState.WIN;
         uint256 index2 = getIndexOfSecondWinnerOfAuction(auctionId);
-        s_BidInformations[auctionId][index2].bidderState = BidderState.WAITING;
-        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {
-            if (s_BidInformations[auctionId][i].bidderState == BidderState.BIDING) {
-                s_BidInformations[auctionId][i].bidderState == BidderState.LOSE;
+        s_bidInformations[auctionId][index2].bidderState = BidderState.WAITING;
+        for (uint256 i = 0; i < s_bidInformations[auctionId].length; i++) {
+            if (s_bidInformations[auctionId][i].bidderState == BidderState.BIDING) {
+                s_bidInformations[auctionId][i].bidderState == BidderState.LOSE;
             }
         }
         emit ClosedAuction(auctionId);
     }
 
     function cancelAuctionResult(string memory auctionId) external payable isConfirmationTime(auctionId) isWinnerOfAuction(auctionId) {
-        if (msg.sender == s_BidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)].bidder) {
-            s_BidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)].bidderState = BidderState.CANCEL;
-            s_BidInformations[auctionId][getIndexOfSecondWinnerOfAuction(auctionId)].bidderState = BidderState.WIN;
+        if (msg.sender == s_bidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)].bidder) {
+            s_bidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)].bidderState = BidderState.CANCEL;
+            s_bidInformations[auctionId][getIndexOfSecondWinnerOfAuction(auctionId)].bidderState = BidderState.WIN;
         } else {
-            s_BidInformations[auctionId][getIndexOfSecondWinnerOfAuction(auctionId)].bidderState = BidderState.CANCEL;
+            s_bidInformations[auctionId][getIndexOfSecondWinnerOfAuction(auctionId)].bidderState = BidderState.CANCEL;
         }
-        emit CanceledAuctionResult(auctionId, msg.sender, s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState);
+        emit CanceledAuctionResult(auctionId, msg.sender, s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState);
     }
 
     function getIndexOfSecondWinnerOfAuction(string memory auctionId) public returns (uint256) {
-        BidInformation[] storage tempBidInformation = s_BidInformations[auctionId];
-        uint256 index = getHightestBidOfAuction(auctionId);
+        BidInformation[] storage tempBidInformation = s_bidInformations[auctionId];
+        uint256 index = getHighestBidOfAuction(auctionId);
         require(index < tempBidInformation.length);
         tempBidInformation[index] = tempBidInformation[tempBidInformation.length - 1];
         tempBidInformation.pop();
@@ -414,25 +428,30 @@ contract Auction {
         return highestIndex;
     }
 
-    function withdaw(string memory auctionId) internal {
-        uint256 depositAmount = s_AuctionInformations[auctionId].depositAmount;
-        for (uint256 i = 0; i < s_BidInformations[auctionId].length; i++) {
-            if (s_BidInformations[auctionId][i].bidderState == BidderState.LOSE) {
-                bool success = payable(s_BidInformations[auctionId][i].bidder).send(depositAmount);
+    function withdraw() public onlyOwner {
+        (bool success, ) = i_owner.call{value: address(this).balance}("");
+        require(success);
+    }
+
+    function payback(string memory auctionId) internal {
+        uint256 depositAmount = s_auctionInformations[auctionId].depositAmount;
+        for (uint256 i = 0; i < s_bidInformations[auctionId].length; i++) {
+            if (s_bidInformations[auctionId][i].bidderState == BidderState.LOSE) {
+                bool success = payable(s_bidInformations[auctionId][i].bidder).send(depositAmount);
                 // require(success, "Failed to send Ether");
                 if (!success) {
                     revert Auction__TransferFailed();
                 } else {
-                    s_BidInformations[auctionId][i].bidderState = BidderState.WITHDEW;
-                    emit Withdrew(auctionId, s_BidInformations[auctionId][i].bidder);
+                    s_bidInformations[auctionId][i].bidderState = BidderState.PAIDBACK;
+                    emit Paidback(auctionId, s_bidInformations[auctionId][i].bidder);
                 }
             }
         }
     }
 
     modifier isValidPaymentAmount(string memory auctionId) {
-        uint256 requirePaymentAmount = s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount -
-            s_AuctionInformations[auctionId].depositAmount;
+        uint256 requirePaymentAmount = s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount -
+            s_auctionInformations[auctionId].depositAmount;
         if (msg.value != requirePaymentAmount) {
             revert Auction__RequireAmountToPaymentNotMet(auctionId, requirePaymentAmount);
         }
@@ -440,7 +459,7 @@ contract Auction {
     }
 
     function payment(string memory auctionId) external payable isWinnerOfAuction(auctionId) isValidPaymentAmount(auctionId) {
-        s_BidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState.PAID;
+        s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState.PAID;
         emit ClosedAuctionSucessfully(auctionId, msg.sender, msg.value);
     }
 
@@ -449,14 +468,20 @@ contract Auction {
     }
 
     function getAuctionInformationById(string memory auctionId) external view isExistAuctionId(auctionId) returns (AuctionInformation memory) {
-        return s_AuctionInformations[auctionId];
+        return s_auctionInformations[auctionId];
     }
 
     function getBidInformationByAuctionId(string memory auctionId) external view isExistAuctionId(auctionId) returns (BidInformation[] memory) {
-        return s_BidInformations[auctionId];
+        return s_bidInformations[auctionId];
     }
 
-    function testDB(uint256 k) external {
-        emit TestDB(k);
+    function receiver() external payable {}
+
+    function getBalance() external view returns (uint256) {
+        return address(this).balance;
+    }
+
+    function getOwner() public view returns (address) {
+        return i_owner;
     }
 }
