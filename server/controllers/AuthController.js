@@ -101,7 +101,7 @@ const registerSeller = async (req, res, next) => {
 //register new Manager
 const registerManager = async (req, res, next) => {
     try {
-        const user = { userName: req.body.username, password: req.body.password };
+        const user = { userName: req.body.userName, password: req.body.password };
         const role = MANAGER;
         var userId = await AuthService.createManager(user, role)
         if (userId)

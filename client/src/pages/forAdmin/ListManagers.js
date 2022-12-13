@@ -20,9 +20,8 @@ import jwt from "jsonwebtoken";
 const ListForManagers = () => {
     const [page, setPage] = React.useState(1);
 
-    const [email, setEmail] = useState(null);
-    const [status, setStatus] = useState("Active");
-    const [status2, setStatus2] = useState("Baned");
+    const [email, setEmail] = useState('');
+    const [status, setStatus] = useState('');
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/MANAGER/${page}`;
 
@@ -34,28 +33,31 @@ const ListForManagers = () => {
             setEmail(value);
         }
     };
-    const handleSubmit = (event) => {
-        const formData = new FormData();
+    // const handleSubmit = (event) => {
+    //     const formData = new FormData();
 
-        formData.append("email", email);
+    //     formData.append("email", email);
 
-        axios
-            .get("http://localhost:8800/api/auction", formData, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-                // setData(res.data);
+    //     axios
+    //         .get("http://localhost:8800/api/auction", formData, {
+    //             withCredentials: true,
+    //         })
+    //         .then((res) => {
+    //             console.log(res);
+    //             console.log(res.data);
+    //             alert(res.data.message);
+    //             // setData(res.data);
 
-                navigate("/autionsListForManager");
-            });
-        event.preventDefault();
-    };
+    //             navigate("/autionsListForManager");
+    //         });
+    //     event.preventDefault();
+    // };
     const handleChange = (event, value) => {
         setPage(value);
     };
+    const handleChangeStatus = (e)=>{
+        setStatus(e.target.value)
+    }
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -79,7 +81,7 @@ const ListForManagers = () => {
                 }
             })()}
             <NavBar />
-            <form onSubmit={handleSubmit}>
+            <form >
                 <div className={styles.container}>
                     <SideBarAdmin />
                     <div className={styles.content}>
@@ -93,7 +95,7 @@ const ListForManagers = () => {
                                     placeholder="Email"
                                     value={email}
                                     onChange={(e) => handleInputChange(e)}
-                                    required
+                                    //required
                                 ></input>
                             </div>
                             <br />
@@ -102,20 +104,20 @@ const ListForManagers = () => {
                             <br />
                             <br />
                             <br />
-                            <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset"></input>
+                            {/* <input className={styles.btn} type="submit" value="Search"></input>
+                            <input className={styles.btnReset} type="button" value="Reset"></input> */}
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <Link className={styles.bold} to="/listManagers">
+                            <button className={styles.bold} value='' onClick={(e)=>{handleChangeStatus(e)}}>
                                 All
-                            </Link>
-                            <Link className={styles.link} to="/">
-                                Activite{" "}
-                            </Link>
-                            <Link className={styles.link} to="/">
-                                Baned
-                            </Link>
+                            </button>
+                            <button className={styles.link} value='Activate' onClick={(e)=>{handleChangeStatus(e)}}>
+                                Activate
+                            </button>
+                            <button className={styles.link} value='Deactivate' onClick={(e)=>{handleChangeStatus(e)}}>
+                                Deactivate
+                            </button>
 
                             <hr />
                             <p className={styles.txtBold}>Total MANAGER: {data.total}</p>
@@ -129,7 +131,7 @@ const ListForManagers = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {data.listUser.map((item) => (
+                                {data.listUser.filter(user=>user.User_DAP__r.Name.includes(`${email}`)&&user.User_DAP__r.Status__c.includes(`${status}`)).map((item) => (
                                     <tr>
                                         <td className={styles.td}>{item.User_DAP__r.Name}</td>
                                         <td className={styles.td}>{item.User_DAP__r.Status__c}</td>

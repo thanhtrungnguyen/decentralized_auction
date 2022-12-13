@@ -17,12 +17,13 @@ import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { color } from "@mui/system";
 const ListBidders = () => {
     const [page, setPage] = React.useState(1);
 
-    const [email, setEmail] = useState(null);
-    const [status, setStatus] = useState("Active");
-    const [status2, setStatus2] = useState("Baned");
+    const [email, setEmail] = useState("");
+    const [status, setStatus] = useState('');
+    //const [filter,setFilter] = useState("");
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/BIDDER/${page}`;
 
@@ -34,6 +35,9 @@ const ListBidders = () => {
             setEmail(value);
         }
     };
+    const handleChangeStatus = (e)=>{
+        setStatus(e.target.value)
+    }
     const handleSubmit = (event) => {
         const formData = new FormData();
 
@@ -93,7 +97,7 @@ const ListBidders = () => {
                                     placeholder="Email"
                                     value={email}
                                     onChange={(e) => handleInputChange(e)}
-                                    required
+                                    // required
                                 ></input>
                             </div>
                             <br />
@@ -102,21 +106,20 @@ const ListBidders = () => {
                             <br />
                             <br />
                             <br />
-                            <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset"></input>
+                            {/* <input className={styles.btn} type="submit" value="Search"></input>
+                            <input className={styles.btnReset} type="button" value="Reset"></input> */}
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <Link className={styles.bold} to="/listSellers">
+                            <button className={styles.bold} value='' onClick={(e)=>{handleChangeStatus(e)}}>
                                 All
-                            </Link>
-                            <Link className={styles.link} to="/">
-                                Activite{" "}
-                            </Link>
-                            <Link className={styles.link} to="/">
-                                Baned
-                            </Link>
-
+                            </button>
+                            <button className={styles.link}  value='Activate' onClick={(e)=>{handleChangeStatus(e)}}>
+                                Activate{" "}
+                            </button>
+                            <button className={styles.link}  value='Deactivate' onClick={(e)=>{handleChangeStatus(e)}}>
+                                Deactivate
+                            </button>
                             <hr />
                             <p className={styles.txtBold}>Total Bidder: {data.total}</p>
 
@@ -129,12 +132,12 @@ const ListBidders = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {data.listUser.map((item) => (
+                                {data.listUser.filter(user=>user.Email__c.includes(`${email}`)&&user.User_Id__r.Status__c.includes(`${status}`)).map((item) => (
                                     <tr>
                                         <td className={styles.td}>{item.Name}</td>
                                         <td className={styles.td}>{item.Email__c}</td>
                                         <td className={styles.td}>{item.Phone__c}</td>
-                                        <td className={styles.td}>{item.User_Id__r.Status__c}</td>
+                                        <td className={styles.td} style={item.User_Id__r.Status__c==='Activate'?{}:{color:"red"}} >{item.User_Id__r.Status__c}</td>
                                         <td className={styles.td}>
                                             <Link className={styles.linkBlue} to={`/bidderDetail/${item.id}`}>
                                                 View
@@ -143,7 +146,7 @@ const ListBidders = () => {
                                                 if (item.User_Id__r.Status__c === "Activate") {
                                                     return (
                                                         <Popup
-                                                            trigger={<label className={styles.linkBlue}>Deactivate</label>}
+                                                            trigger={<label style={{color: "red"}} className={styles.linkBlue}>Deactivate</label>}
                                                             position="right center"
                                                         >
                                                             <BanedBidder idBidder={item.User_Id__c} />

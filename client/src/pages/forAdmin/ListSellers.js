@@ -20,10 +20,9 @@ import jwt from "jsonwebtoken";
 const ListSellers = () => {
     const [page, setPage] = React.useState(1);
 
-    const [email, setEmail] = useState(null);
+    const [email, setEmail] = useState('');
 
-    const [status, setStatus] = useState("Active");
-    const [status2, setStatus2] = useState("Baned");
+    const [status, setStatus] = useState('');
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/SELLER/${page}`;
 
@@ -57,6 +56,9 @@ const ListSellers = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
+    const handleChangeStatus = (e)=>{
+        setStatus(e.target.value)
+    }
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -94,7 +96,7 @@ const ListSellers = () => {
                                     placeholder="Email"
                                     value={email}
                                     onChange={(e) => handleInputChange(e)}
-                                    required
+                                   // required
                                 ></input>
                             </div>
                             <br />
@@ -108,15 +110,15 @@ const ListSellers = () => {
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <Link className={styles.bold} to="/listSellers">
+                            <button className={styles.bold} value='' onClick={(e)=>{handleChangeStatus(e)}}>
                                 All
-                            </Link>
-                            <Link className={styles.link} to="/">
-                                Activite{" "}
-                            </Link>
-                            <Link className={styles.link} to="/">
-                                Baned
-                            </Link>
+                            </button>
+                            <button className={styles.link} value='Activate' onClick={(e)=>{handleChangeStatus(e)}}>
+                                Activate
+                            </button>
+                            <button className={styles.link} value='Deactivate' onClick={(e)=>{handleChangeStatus(e)}}>
+                                Deactivate
+                            </button>
 
                             <hr />
                             <p className={styles.txtBold}>Total SELLER: {data.total}</p>
@@ -127,12 +129,12 @@ const ListSellers = () => {
                             <table className={styles.table}>
                                 <tr>
                                     <th className={styles.th}>Full Name</th>
-                                    <th className={styles.th}>Phone</th>
                                     <th className={styles.th}>Email</th>
+                                    <th className={styles.th}>Phone</th>
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {data.listUser.map((item) => (
+                                {data.listUser.filter(user=>user.Email__c.includes(`${email}`)&&user.User_Id__r.Status__c.includes(`${status}`)).map((item) => (
                                     <tr>
                                         <td className={styles.td}>{item.Name}</td>
                                         <td className={styles.td}>{item.Email__c}</td>
@@ -143,10 +145,10 @@ const ListSellers = () => {
                                                 View
                                             </Link>
                                             {(() => {
-                                                if (item.User_Id__r.Status__c === "Active") {
+                                                if (item.User_Id__r.Status__c === "Activate") {
                                                     return (
                                                         <Popup
-                                                            trigger={<label className={styles.linkBlue}>Deactivate</label>}
+                                                            trigger={<label className={styles.linkBlue} style={{color: "red"}}>Deactivate</label>}
                                                             position="right center"
                                                         >
                                                             <BanedSeller idBidder={item.User_Id__c} />
@@ -154,7 +156,7 @@ const ListSellers = () => {
                                                     );
                                                 } else {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
+                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
                                                             <ActiveSeller idBidder={item.User_Id__c} />
                                                         </Popup>
                                                     );
