@@ -114,7 +114,7 @@ const registerManager = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const user = { userName: req.body.userName, password: req.body.password };
-        var data = await AuthService.loginService(user);
+        var data = await AuthService.login(user);
         if(data.user==null){
             next(createError(data.error,data.message))
         }else{

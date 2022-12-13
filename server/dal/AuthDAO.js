@@ -64,7 +64,7 @@ const createAccount = async (user, contact, role, filesImg, account) => {
         console.error(error)
     }
 }
-const createManagerDAO = async (user, role) => {
+const createManager = async (user, role) => {
     try {
         var userId = await createUser(user);
         await addRoleForUser(role);
@@ -145,7 +145,7 @@ const addRepresentativeAccount = async (accountId, contactId, position) => {
         console.error(error);
     }
 }
-const getUserByNameDAO = async (user) => {
+const getUserByName = async (user) => {
     var findUser, role, data = null;
 
 
@@ -170,7 +170,7 @@ const getUserByNameDAO = async (user) => {
     return data;
 
 }
-const getUserByIdDAO = async (user) => {
+const getUserById = async (user) => {
     try {
         var findUser, role = null;
         await conn.sobject("User__c").findOne({ Id: user.Id }, (err, ret) => {
@@ -186,7 +186,7 @@ const getUserByIdDAO = async (user) => {
         console.error(error)
     }
 }
-const changePasswordDAO = async (user, password) => {
+const changePassword = async (user, password) => {
     try {
         await conn.sobject("User__c").update(
             {
@@ -202,4 +202,4 @@ const changePasswordDAO = async (user, password) => {
     }
 }
 
-module.exports = { createContactDAO, createAccountDAO, createManagerDAO, getUserByNameDAO, changePasswordDAO, getUserByIdDAO }
+module.exports = { createContact, createAccount, createManager, getUserByName, changePassword, getUserById }

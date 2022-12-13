@@ -23,7 +23,7 @@ const NavBar = () => {
 
                     <Link className={styles.link} to="/BidPopup">
                         BidPopup
-                    </Link> */}
+                    </Link> 
 
                     <div className={styles.flright}>
                         <input className={styles.ip} type="text"></input>
