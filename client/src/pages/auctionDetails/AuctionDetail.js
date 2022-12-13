@@ -13,6 +13,7 @@ import { Player } from "video-react";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import HeaderUser from "../../components/header/HeaderUser";
+import Loading from "../../components/loading/Loading";
 
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
@@ -34,7 +35,7 @@ const AuctionDetail = () => {
         return users;
     };
     return loading ? (
-        "loading please wait"
+        <Loading />
     ) : (
         <>
             {(() => {

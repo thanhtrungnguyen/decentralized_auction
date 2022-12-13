@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const ActiveSeller = ({ idSeller }) => {
     const navigate = useNavigate();
+    const [expanded, setExpanded] = useState(true);
 
     const handleSubmit = (event) => {
         console.log(idSeller);
@@ -20,19 +21,24 @@ const ActiveSeller = ({ idSeller }) => {
             });
         event.preventDefault();
     };
+    const handCancel = () => {
+        setExpanded(false);
+    };
     return (
         <>
-            <div className={styles.container}>
-                <form onSubmit={handleSubmit}>
-                    <label className={styles.title}>Active Seller</label>
-                    <br />
-                    <label className={styles.txt}>Are you sure about active this seller?</label>
-                    <br />
+            {expanded ? (
+                <div className={styles.container}>
+                    <form onSubmit={handleSubmit}>
+                        <label className={styles.title}>Active Seller</label>
+                        <br />
+                        <label className={styles.txt}>Are you sure about active this seller?</label>
+                        <br />
 
-                    <input type="submit" value="OK" className={styles.btnOK}></input>
-                    <input type="button" value="Cancel" className={styles.btnCancel}></input>
-                </form>
-            </div>
+                        <input type="submit" value="OK" className={styles.btnOK}></input>
+                        <input type="button" value="Cancel" className={styles.btnCancel} onClick={handCancel}></input>
+                    </form>
+                </div>
+            ) : null}
         </>
     );
 };

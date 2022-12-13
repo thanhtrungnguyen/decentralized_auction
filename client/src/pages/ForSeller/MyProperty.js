@@ -13,6 +13,9 @@ import { Button } from "@mui/material";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { useFetch } from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
+
 const MyProperty = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState("Car");
@@ -175,6 +178,9 @@ const MyProperty = () => {
                                         <td className={styles.td}>{property.Start_Bid__c}</td>
                                         <td className={styles.td}>{property.Status__c}</td>
                                         <td className={styles.td}>
+                                            <Link className={styles.linkBlue} to={`/propertyDetail/${property.Id}`}>
+                                                View
+                                            </Link>
                                             <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
                                                 Edit
                                             </Link>

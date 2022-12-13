@@ -134,7 +134,7 @@ const ListForManagers = () => {
                                         <td className={styles.td}>{item.User_DAP__r.Name}</td>
                                         <td className={styles.td}>{item.User_DAP__r.Status__c}</td>
                                         <td className={styles.td}>
-                                            <Link className={styles.linkBlue} to={`/editManager/${item.User_DAP__r.id}`}>
+                                            <Link className={styles.linkBlue} to={`/viewManager/${item.User_DAP__r.Id}`}>
                                                 View
                                             </Link>
                                             {(() => {
