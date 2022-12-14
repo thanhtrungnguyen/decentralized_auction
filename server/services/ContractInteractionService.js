@@ -1,4 +1,4 @@
-const ContractInteractionDAO = require("../dao/ContractInteractionDAO");
+const ContractInteractionDAO = require("../dal/ContractInteractionDAO");
 const { parseEther } = require("../utils/ethereumUnitConverter");
 const { getTime } = require("../utils/timeConverter");
 
