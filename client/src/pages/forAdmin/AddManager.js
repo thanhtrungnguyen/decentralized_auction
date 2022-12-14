@@ -1,6 +1,6 @@
 import styles from "../../styleCss/stylesPages/forAdmin/addManager.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Outlet, Link } from "react-router-dom";
@@ -8,10 +8,13 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 
 const AddManager = () => {
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
 
@@ -27,13 +30,17 @@ const AddManager = () => {
     const handleSubmit = (event) => {
         const formData = new FormData();
 
-        formData.append("username", username);
+        formData.append("userName", username);
         formData.append("password", password);
-
         axios
-            .post("http://localhost:8800/api/auction", formData, {
-                withCredentials: true,
-            })
+            .post(
+                "http://localhost:8800/api/auth/registerManager",
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                },
+                { withCredentials: true }
+            )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -42,9 +49,29 @@ const AddManager = () => {
             });
         event.preventDefault();
     };
+    const cancel = () => {
+        navigate("/listManagers");
+    };
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "ADMIN") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
@@ -76,7 +103,7 @@ const AddManager = () => {
                                 required
                             ></input>
                             <br />
-                            <input type="button" value="Cancel" className={styles.btnCancel}></input>
+                            <input type="button" value="Cancel" className={styles.btnCancel} onClick={cancel}></input>
                             <input type="submit" value="Add Manager" className={styles.btnSubmit}></input>
                         </div>
                     </div>

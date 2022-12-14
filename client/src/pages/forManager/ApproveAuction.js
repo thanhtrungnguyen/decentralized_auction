@@ -1,6 +1,6 @@
 import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
 import { Outlet, Link } from "react-router-dom";
@@ -13,14 +13,17 @@ import ReactPlayer from "react-player";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
-
+import Popup from "reactjs-popup";
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
     const { id, propertyId } = useParams();
-
+    const [show, setShow] = useState(false);
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
     const [registrationFee, setRegistrationFee] = useState(null);
@@ -30,7 +33,11 @@ const PropertyDetail = () => {
     const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
     const { data, loading, error } = useFetch(baseURL);
+    const onClick = () => {
+        console.log(show);
 
+        setShow(false);
+    };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "registrationFee") {
@@ -64,14 +71,51 @@ const PropertyDetail = () => {
                 console.log(res);
                 console.log(res.data);
                 alert(res.data.message);
+                navigate("/autionsListForManager");
             });
     };
-
+    const RejectAuction = () => {
+        axios
+            .put(
+                "http://localhost:8800/api/auction/reject/" + id,
+                {
+                    propertyId: propertyId,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+            });
+    };
+    const Cancel = () => {
+        navigate("/autionsListForManager");
+    };
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return loading ? (
         "loading please wait"
     ) : (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "MANAGER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
             <NavBar />
             <form>
                 <div className={styles.root}>
@@ -234,8 +278,8 @@ const PropertyDetail = () => {
                                         // onChange={setViewPropertyTime}
                                         ClassName={styles.datePicker}
                                         value={[
-                                            new Date(new Date(data.Start_View_Property_Time__c).toUTCString()),
-                                            new Date(new Date(data.End_View_Property_Time__c).toUTCString()),
+                                            new Date(data.Start_View_Property_Time__c).setTime(new Date(data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000),
+                                            new Date(data.End_View_Property_Time__c).setTime(new Date(data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000),
                                         ]}
                                         //   value={data.property.viewPropertyTime}
                                         // onChange={setValue}
@@ -325,10 +369,43 @@ const PropertyDetail = () => {
                         </div>
                     </div>
                     <div className={styles.btn2}>
-                        <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input>
+                        {/* <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input> */}
 
-                        <input className={styles.btnDraft} type="button" value="Reject Request Add"></input>
-                        <input className={styles.btnCancel} type="button" value="Cancel"></input>
+                        <Popup
+                            visible={show}
+                            trigger={<input className={styles.btnSave2} type="button" value="Save and Publish"></input>}
+                            position="right center"
+                        >
+                            <div className={styles.popup}>
+                                <label className={styles.title}>Save and Publish this auction</label>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <input className={styles.btnCancel} type="button" value="Cancel" onClick={onClick}></input>
+                                <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input>
+                            </div>
+                        </Popup>
+                        {/* <input className={styles.btnDraft} type="button" value="Reject Request Add" onClick={() => RejectAuction()}></input> */}
+                        <Popup trigger={<input className={styles.btnDraft} type="button" value="Reject Request Add"></input>} position="right center">
+                            <div className={styles.popup}>
+                                <label className={styles.title}>Reject Request Add this auction</label>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <input className={styles.btnCancel} type="button" value="Cancel" onClick={onClick}></input>
+                                <input className={styles.btnSave2} type="button" value="Reject Request Add" onClick={() => RejectAuction()}></input>
+                            </div>
+                        </Popup>
+
+                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
                     </div>{" "}
                     <Footer />
                 </div>

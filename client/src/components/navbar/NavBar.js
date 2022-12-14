@@ -10,9 +10,7 @@ const NavBar = () => {
                     <Link className={styles.home} to="/">
                         Home
                     </Link>
-                    <Link className={styles.link} to="/">
-                        Pages
-                    </Link>
+
                     <Link className={styles.link} to="/auctionList">
                         Auctions
                     </Link>
@@ -22,20 +20,9 @@ const NavBar = () => {
                     <Link className={styles.link} to="/">
                         About us
                     </Link>
-                    <Link className={styles.link} to="/sellerCenter">
-                        Seller Center
-                    </Link>
-                    <Link className={styles.link} to="/autionsListForManager">
-                        Manager Center
-                    </Link>
-                    <Link className={styles.link} to="/listManagers">
-                        Admin Center
-                    </Link>
-                    {/* test */}
                     <Link className={styles.link} color="red" to="/FakeAuctionDetail">
                         Fake AuctionDetail
                     </Link>
-                    {/* test */}
                     <div className={styles.flright}>
                         <input className={styles.ip} type="text"></input>
                         <BsSearch className={styles.icon} />

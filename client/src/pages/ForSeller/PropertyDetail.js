@@ -1,8 +1,8 @@
 import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
-import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
+import SidebarSeller from "../../components/sidebar_seller/SidebarSeller";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
@@ -12,7 +12,9 @@ import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -32,14 +34,30 @@ const PropertyDetail = () => {
     }, [baseURL]);
 
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
-
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "SELLER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}{" "}
             <NavBar />
             <form>
                 <div className={styles.root}>
-                    <SideBarSeller />
+                    <SidebarSeller />
                     <div className={styles.info}>
                         <div>
                             <p className={styles.title}>Basic Information</p>

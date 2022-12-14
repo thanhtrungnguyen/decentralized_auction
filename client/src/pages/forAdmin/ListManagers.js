@@ -1,6 +1,6 @@
 import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Outlet, Link } from "react-router-dom";
@@ -12,58 +12,76 @@ import axios from "axios";
 import Popup from "reactjs-popup";
 import BanedManager from "../../components/popups/forAdmin/BanManager";
 import ActiveManager from "../../components/popups/forAdmin/ActiveManager";
-
+import Loading from "../../components/loading/Loading";
+import { useFetchPagination } from "../../hook/useFetch";
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const ListForManagers = () => {
     const [page, setPage] = React.useState(1);
 
-    const [email, setEmail] = useState(null);
-    const [data, setData] = useState([]);
-    const [status, setStatus] = useState("Active");
-    const [status2, setStatus2] = useState("Baned");
+    const [email, setEmail] = useState('');
+    const [status, setStatus] = useState('');
     const navigate = useNavigate();
-    const baseURL = "http://localhost:8800/api/manager/";
+    const baseURL = `http://localhost:8800/api/user/MANAGER/${page}`;
 
-    useEffect(() => {
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setData(resp.data);
-        });
-    }, [baseURL]);
+    const { data, loading, error } = useFetchPagination(baseURL, page);
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "email") {
             setEmail(value);
         }
     };
-    const handleSubmit = (event) => {
-        const formData = new FormData();
+    // const handleSubmit = (event) => {
+    //     const formData = new FormData();
 
-        formData.append("email", email);
+    //     formData.append("email", email);
 
-        axios
-            .get("http://localhost:8800/api/auction", formData, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-                setData(res.data);
+    //     axios
+    //         .get("http://localhost:8800/api/auction", formData, {
+    //             withCredentials: true,
+    //         })
+    //         .then((res) => {
+    //             console.log(res);
+    //             console.log(res.data);
+    //             alert(res.data.message);
+    //             // setData(res.data);
 
-                navigate("/autionsListForManager");
-            });
-        event.preventDefault();
-    };
+    //             navigate("/autionsListForManager");
+    //         });
+    //     event.preventDefault();
+    // };
     const handleChange = (event, value) => {
         setPage(value);
     };
-
-    return (
+    const handleChangeStatus = (e)=>{
+        setStatus(e.target.value)
+    }
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
+    return loading ? (
+        <Loading />
+    ) : (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "ADMIN") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
             <NavBar />
-            <form onSubmit={handleSubmit}>
+            <form >
                 <div className={styles.container}>
                     <SideBarAdmin />
                     <div className={styles.content}>
@@ -77,7 +95,7 @@ const ListForManagers = () => {
                                     placeholder="Email"
                                     value={email}
                                     onChange={(e) => handleInputChange(e)}
-                                    required
+                                    //required
                                 ></input>
                             </div>
                             <br />
@@ -86,53 +104,55 @@ const ListForManagers = () => {
                             <br />
                             <br />
                             <br />
-                            <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset"></input>
+                            {/* <input className={styles.btn} type="submit" value="Search"></input>
+                            <input className={styles.btnReset} type="button" value="Reset"></input> */}
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <Link className={styles.bold} to="/listManagers">
+                            <button className={styles.bold} value='' onClick={(e)=>{handleChangeStatus(e)}}>
                                 All
-                            </Link>
-                            <Link className={styles.link} to="/">
-                                Activite{" "}
-                            </Link>
-                            <Link className={styles.link} to="/">
-                                Baned
-                            </Link>
+                            </button>
+                            <button className={styles.link} value='Activate' onClick={(e)=>{handleChangeStatus(e)}}>
+                                Activate
+                            </button>
+                            <button className={styles.link} value='Deactivate' onClick={(e)=>{handleChangeStatus(e)}}>
+                                Deactivate
+                            </button>
 
                             <hr />
-                            <p className={styles.txtBold}>69 Properties</p>
+                            <p className={styles.txtBold}>Total MANAGER: {data.total}</p>
                             <Link className={styles.btnAdd} to="/addManager">
                                 Add a New Manager
                             </Link>
                             <br />
                             <table className={styles.table}>
                                 <tr>
-                                    <th className={styles.th}>Full Name</th>
-                                    <th className={styles.th}>Phone</th>
-                                    <th className={styles.th}>Email</th>
+                                    <th className={styles.th}>User Name</th>
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {data.map((manager) => (
+                                {data.listUser.filter(user=>user.User_DAP__r.Name.includes(`${email}`)&&user.User_DAP__r.Status__c.includes(`${status}`)).map((item) => (
                                     <tr>
-                                        <td className={styles.td}>{manager}</td>
-                                        <td className={styles.td}>{manager}</td>
-                                        <td className={styles.td}>{manager}</td>
-                                        <td className={styles.td}>{manager}</td>
+                                        <td className={styles.td}>{item.User_DAP__r.Name}</td>
+                                        <td className={styles.td}>{item.User_DAP__r.Status__c}</td>
                                         <td className={styles.td}>
+                                            <Link className={styles.linkBlue} to={`/viewManager/${item.User_DAP__r.Id}`}>
+                                                View
+                                            </Link>
                                             {(() => {
-                                                if (manager.status === "Active") {
+                                                if (item.User_DAP__r.Status__c === "Activate") {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                            <BanedManager idManager={manager._id} />
+                                                        <Popup
+                                                            trigger={<label className={styles.linkBlue}>Deactivate</label>}
+                                                            position="right center"
+                                                        >
+                                                            <BanedManager idBidder={item.User_DAP__r.Id} />
                                                         </Popup>
                                                     );
                                                 } else {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                            <ActiveManager idManager={manager._id} />
+                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
+                                                            <ActiveManager idBidder={item.User_DAP__r.Id} />
                                                         </Popup>
                                                     );
                                                 }
@@ -140,61 +160,9 @@ const ListForManagers = () => {
                                         </td>
                                     </tr>
                                 ))}
-                                <tr>
-                                    <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>0123456789 </td>
-                                    <td className={styles.td}>abcde@abc.com </td>
-                                    <td className={styles.td}>Active</td>
-                                    <td className={styles.td}>
-                                        <Link className={styles.linkBlue} to="/editManager">
-                                            Edit
-                                        </Link>
-                                        {(() => {
-                                            if (status === "Active") {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                        <BanedManager idManager={123} />
-                                                    </Popup>
-                                                );
-                                            } else {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                        <ActiveManager idManager={123} />
-                                                    </Popup>
-                                                );
-                                            }
-                                        })()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>0123456789 </td>
-                                    <td className={styles.td}>abcde@abc.com </td>
-                                    <td className={styles.td}>Baned</td>
-                                    <td className={styles.td}>
-                                        <Link className={styles.linkBlue} to="/editManager">
-                                            Edit
-                                        </Link>
-                                        {(() => {
-                                            if (status2 === "Active") {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Baned</label>} position="right center">
-                                                        <BanedManager idManager={123} />
-                                                    </Popup>
-                                                );
-                                            } else {
-                                                return (
-                                                    <Popup trigger={<label className={styles.linkBlue}>Active</label>} position="right center">
-                                                        <ActiveManager idManager={123} />
-                                                    </Popup>
-                                                );
-                                            }
-                                        })()}
-                                    </td>
-                                </tr>
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

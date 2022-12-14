@@ -1,6 +1,6 @@
 import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
 import { Outlet, Link } from "react-router-dom";
@@ -10,7 +10,9 @@ import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const EditAuction = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -90,9 +92,26 @@ const EditAuction = () => {
         );
         event.preventDefault();
     };
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "SELLER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}{" "}
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.root}>

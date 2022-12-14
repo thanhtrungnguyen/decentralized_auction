@@ -10,6 +10,8 @@ import Register from "./pages/register/Register";
 import RegisterForO from "./pages/register/RegisterForOrganization";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import AuctionDetail from "./pages/auctionDetails/AuctionDetail";
+import { useState } from "react";
+import { MoralisProvider } from "react-moralis";
 import PlaceABid from "./components/popups/PlaceABid";
 import ConfirmPayment from "./pages/confirmPayment/confirmPayment";
 import AuctionList from "./pages/auctionList/AuctionList";
@@ -41,6 +43,9 @@ import ListNews from "./pages/forAdmin/ListNews";
 import AddNew from "./pages/forAdmin/AddNews";
 import EditNew from "./pages/forAdmin/EditNew";
 import FakeAuctionDetail from "./pages/bidder/FakeAuctionDetail";
+import AuctionDetailForManager from "./pages/forManager/AuctionDetailForManager";
+import ViewManager from "./pages/forAdmin/ViewManager";
+import ViewSeller from "./pages/forAdmin/ViewSeller";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 
@@ -52,6 +57,8 @@ function App() {
                     <Routes>
                         <Route index element={<Homepage />} />
                         <Route path="login" element={<Login />} />
+                        <Route path="homePage/:username" element={<Homepage />} />
+                        <Route path="homePage" element={<Homepage />} />
                         <Route path="register" element={<Register />} />
                         <Route path="registerForO" element={<RegisterForO />} />
                         <Route path="auctionDetail/:id" element={<AuctionDetail />} />
@@ -77,7 +84,9 @@ function App() {
                         <Route path="autitoDetailForSeller/:id" element={<AuctionDetailForSeller />} />
                         <Route path="autitoDetailForSeller" element={<AuctionDetailForSeller />} />
                         <Route path="autionsListForManager" element={<AuctionsListForManager />} />
-                        <Route path="approveAuction/:id" element={<ApproveAuction />} />
+                        <Route path="auctionDetailForManager" element={<AuctionDetailForManager />} />
+                        <Route path="auctionDetailForManager/:id/:propertyId" element={<AuctionDetailForManager />} />
+                        <Route path="approveAuction/:id/:propertyId" element={<ApproveAuction />} />
                         <Route path="approveAuction" element={<ApproveAuction />} />
                         <Route path="managerCategorys" element={<ManagerCategorys />} />
                         <Route path="addCategory" element={<AddCategory />} />
@@ -88,9 +97,17 @@ function App() {
                         <Route path="listSellers" element={<ListSellers />} />
                         <Route path="addSeller" element={<AddSeller />} />
                         <Route path="listBidders" element={<ListBidders />} />
-                        <Route path="bidderDetail" element={<AddSeller />} />
-                        <Route path="bidderDetail/:id" element={<AddSeller />} />
-                        {/* test */}
+                        <Route path="bidderDetail" element={<BidderDetail />} />
+                        <Route path="bidderDetail/:id" element={<BidderDetail />} />
+                        <Route path="editNew/:id" element={<EditNew />} />
+                        <Route path="editNew" element={<EditNew />} />
+                        <Route path="addNew" element={<AddNew />} />
+                        <Route path="listNews/:index" element={<ListNews />} />
+                        <Route path="listNews" element={<ListNews />} />
+                        <Route path="viewManager" element={<ViewManager />} />
+                        <Route path="viewManager/:id" element={<ViewManager />} />
+                        <Route path="viewSeller" element={<ViewSeller />} />
+                        <Route path="viewSeller/:id" element={<ViewSeller />} />
 
                         <Route path="FakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
 

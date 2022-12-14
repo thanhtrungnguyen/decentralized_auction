@@ -1,6 +1,6 @@
 import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
 import { Outlet, Link } from "react-router-dom";
@@ -10,6 +10,11 @@ import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
+import { useFetch } from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
 
 const AddProperty = () => {
     // const [date, setDate] = useState([
@@ -30,19 +35,9 @@ const AddProperty = () => {
     // const [startBid, setStartBid] = useState(null);
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const [data, setData] = useState([]);
-
     const navigate = useNavigate();
     const baseURL = "http://localhost:8800/api/category/";
-
-    useEffect(() => {
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-
-            setData(resp.data);
-        });
-    }, [baseURL]);
+    const { data, loading, error } = useFetch(baseURL);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -125,10 +120,28 @@ const AddProperty = () => {
             setSelectedImage(e.target.files[0]);
         }
     };
-
-    return (
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
+    return loading ? (
+        <Loading />
+    ) : (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "SELLER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}{" "}
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.root}>

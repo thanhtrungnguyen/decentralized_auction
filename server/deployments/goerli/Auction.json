@@ -100,6 +100,7 @@
       "inputs": [
         {
           "internalType": "string",
+          "internalType": "string",
           "name": "auctionId",
           "type": "string"
         },
@@ -115,6 +116,7 @@
     {
       "inputs": [
         {
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -138,6 +140,7 @@
       "inputs": [
         {
           "indexed": false,
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -164,6 +167,7 @@
         {
           "indexed": false,
           "internalType": "string",
+          "internalType": "string",
           "name": "auctionId",
           "type": "string"
         }
@@ -176,6 +180,7 @@
       "inputs": [
         {
           "indexed": false,
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -201,6 +206,7 @@
       "inputs": [
         {
           "indexed": false,
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -269,6 +275,7 @@
         {
           "indexed": false,
           "internalType": "string",
+          "internalType": "string",
           "name": "auctionId",
           "type": "string"
         },
@@ -287,6 +294,7 @@
       "inputs": [
         {
           "indexed": false,
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -336,6 +344,7 @@
       "inputs": [
         {
           "internalType": "string",
+          "internalType": "string",
           "name": "auctionId",
           "type": "string"
         }
@@ -349,6 +358,7 @@
       "inputs": [
         {
           "internalType": "string",
+          "internalType": "string",
           "name": "auctionId",
           "type": "string"
         }
@@ -361,6 +371,7 @@
     {
       "inputs": [
         {
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -419,6 +430,7 @@
     {
       "inputs": [
         {
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -535,6 +547,7 @@
       "inputs": [
         {
           "internalType": "string",
+          "internalType": "string",
           "name": "auctionId",
           "type": "string"
         }
@@ -554,6 +567,7 @@
       "inputs": [
         {
           "internalType": "string",
+          "internalType": "string",
           "name": "auctionId",
           "type": "string"
         }
@@ -572,6 +586,7 @@
     {
       "inputs": [
         {
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -593,6 +608,7 @@
       "name": "getListAuctionId",
       "outputs": [
         {
+          "internalType": "string[]",
           "internalType": "string[]",
           "name": "",
           "type": "string[]"
@@ -618,6 +634,7 @@
       "inputs": [
         {
           "internalType": "string",
+          "internalType": "string",
           "name": "auctionId",
           "type": "string"
         }
@@ -630,6 +647,7 @@
     {
       "inputs": [
         {
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -655,6 +673,7 @@
     {
       "inputs": [
         {
+          "internalType": "string",
           "internalType": "string",
           "name": "auctionId",
           "type": "string"
@@ -771,11 +790,15 @@
         "encoding": "mapping",
         "key": "t_string_memory_ptr",
         "label": "mapping(string => struct Auction.BidInformation[])",
+        "key": "t_string_memory_ptr",
+        "label": "mapping(string => struct Auction.BidInformation[])",
         "numberOfBytes": "32",
         "value": "t_array(t_struct(BidInformation)113_storage)dyn_storage"
       },
       "t_mapping(t_string_memory_ptr,t_struct(AuctionInformation)96_storage)": {
         "encoding": "mapping",
+        "key": "t_string_memory_ptr",
+        "label": "mapping(string => struct Auction.AuctionInformation)",
         "key": "t_string_memory_ptr",
         "label": "mapping(string => struct Auction.AuctionInformation)",
         "numberOfBytes": "32",

@@ -26,7 +26,7 @@ const Register = () => {
     const [dateOfBirth, setdateOfBirth] = useState(null);
     const [email, setEmail] = useState(null);
     const [phone, setPhone] = useState(null);
-    const [sepecificAddress, setSepecificAddress] = useState(null);
+    const [specificAddress, setSpecificAddress] = useState(null);
     const [cardNumber, setcardNumber] = useState(null);
     const [dateRangeCard, setdateRangeCard] = useState(null);
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
@@ -58,8 +58,8 @@ const Register = () => {
         if (id === "phone") {
             setPhone(value);
         }
-        if (id === "sepecificAddress") {
-            setSepecificAddress(value);
+        if (id === "specificAddress") {
+            setSpecificAddress(value);
         }
         if (id === "cardNumber") {
             setcardNumber(value);
@@ -107,7 +107,7 @@ const Register = () => {
         formData.append("district", selectedDistrict.label);
         formData.append("wardId", wardId);
         formData.append("ward", selectedWard.label);
-        formData.append("sepecificAddress", sepecificAddress);
+        formData.append("specificAddress", specificAddress);
         formData.append("cardNumber", cardNumber);
         formData.append("dateRangeCard", dateRangeCard);
         formData.append("cardGrantedPlace", cardGrantedPlace);
@@ -157,7 +157,7 @@ const Register = () => {
                 " " +
                 wardId +
                 " " +
-                sepecificAddress +
+                specificAddress +
                 " " +
                 cardNumber +
                 " " +
@@ -291,9 +291,9 @@ const Register = () => {
                         className={styles.ipadd}
                         type="text"
                         placeholder="Specific address"
-                        value={sepecificAddress}
+                        value={specificAddress}
                         onChange={(e) => handleInputChange(e)}
-                        id="sepecificAddress"
+                        id="specificAddress"
                         required
                     ></input>{" "}
                     <p className={styles.textRed}>Identity/Citizen card</p>

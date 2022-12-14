@@ -1,6 +1,6 @@
 import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
 import { Outlet, Link } from "react-router-dom";
@@ -10,6 +10,12 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@mui/material";
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
+import { useFetch } from "../../hook/useFetch";
+import Loading from "../../components/loading/Loading";
+
 const MyProperty = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState("Car");
@@ -78,9 +84,26 @@ const MyProperty = () => {
             });
         event.preventDefault();
     };
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     return (
         <>
-            <Header />
+            {(() => {
+                if (getUser().role == "SELLER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}{" "}
             <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
@@ -155,6 +178,9 @@ const MyProperty = () => {
                                         <td className={styles.td}>{property.Start_Bid__c}</td>
                                         <td className={styles.td}>{property.Status__c}</td>
                                         <td className={styles.td}>
+                                            <Link className={styles.linkBlue} to={`/propertyDetail/${property.Id}`}>
+                                                View
+                                            </Link>
                                             <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
                                                 Edit
                                             </Link>

@@ -5,22 +5,41 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const navigate = useNavigate();
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [message, setMassage] = useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         axios.post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true }).then((res) => {
             console.log(res);
-            console.log(res.data);
+            if(res.data.success == false){
+                alert(res.data.message);
+            }else{
+                if (res.data.role == "BIDDER") {
+                    navigate("/homePage");
+                }
+                if (res.data.role == "ADMIN") {
+                    navigate("/listManagers");
+                }
+                if (res.data.role == "SELLER") {
+                    navigate("/myProperty");
+                }
+                if (res.data.role == "MANAGER") {
+                    navigate("/autionsListForManager");
+                }
+            }
+
+            
             // alert(res.data.message);
-            navigate("/");
-        });
+        }).catch((reason) => {
+            console.log(reason);
+          });
     };
 
     return (

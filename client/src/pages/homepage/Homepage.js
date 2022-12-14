@@ -1,15 +1,53 @@
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../../components/header/Header";
+import HeaderUser from "../../components/header/HeaderUser";
+
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
-import PlaceABid from "../../components/popups/PlaceABid";
-import SidebarSeller from "../../components/sidebar_seller/SidebarSeller";
 import styles from "../../styleCss/stylesPages/hompage.module.css";
+import jwt from "jsonwebtoken";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import Loading from "../../components/loading/Loading";
 
-const Home = () => {
-    return (
+const HomePage = () => {
+    const [loading, setLoading] = useState(true);
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
+    const [role, setRole] = useState();
+    useEffect(() => {
+        if (getUser() != null) {
+            setRole(getUser().role);
+            setLoading(false);
+        } else {
+            setRole("");
+            setLoading(false);
+        }
+    }, []);
+    console.log(getUser());
+    return loading ? (
+        <Loading />
+    ) : (
         <>
-            <Header />
+            {(() => {
+                if (role === "BIDDER") {
+                    return <HeaderUser username={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
+            {/* {getUser().role == "BIDDER" && <HeaderUser username={getUser().userName} />}
+            {getUser().role != "BIDDER" && <Header />} */}
+
             <NavBar />
             <div>
                 <div className={styles.banner}>
@@ -136,4 +174,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default HomePage;

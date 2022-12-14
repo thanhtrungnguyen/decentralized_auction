@@ -15,5 +15,4 @@ router.get("/:title/:status/:index",  filterNews);
 
 router.get("/:status/:index",  getByStatus);
 
-router.get("/countNews",  countNews);
 module.exports = router;
