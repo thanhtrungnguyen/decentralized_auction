@@ -12,6 +12,7 @@ import Countdown from "react-countdown";
 import Decimal from "decimal.js";
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
+import BiddingProperty from "../components/BiddingProperty";
 
 function AuctionRegistration({ auction }) {
     const { isWeb3Enabled, chainId: chainIdHex } = useMoralis();
@@ -86,9 +87,10 @@ function AuctionRegistration({ auction }) {
                 <div>
                     <div className={styles.info}>
                         {/* <img className={styles.img} src={sendAuction.MediaURL[0]} alt="images" /> */}
-                        <img className={styles.img} src="https://static.vecteezy.com/packs/media/photos/term-bg-3-f6a12264.jpg" alt="images" />
+                        {/* <img className={styles.img} src="https://static.vecteezy.com/packs/media/photos/term-bg-3-f6a12264.jpg" alt="images" /> */}
                         {/* <p className={styles.title}>{sendAuction.PropertyName}</p> */}
-                        <p className={styles.title}>PropertyName PropertyName PropertyName PropertyName </p>
+                        {/* <p className={styles.title}>PropertyName PropertyName PropertyName PropertyName </p> */}
+                        {/* <BiddingProperty auction={auction} /> */}
                         <p className={styles.txtM}>Starting bid:</p>
                         <p className={styles.txtNormal}>{auction.startBid}</p>
                         {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}

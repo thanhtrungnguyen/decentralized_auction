@@ -1,7 +1,7 @@
 const { assert, expect } = require("chai");
 const { network, deployments, ethers } = require("hardhat");
 const { developmentChains } = require("../../helper-hardhat-config");
-const { getEpoch, getHumanReadableTime } = require("../../services/timeConverter");
+const { getEpoch, getHumanReadableTime } = require("../../utils/timeConverter");
 
 !developmentChains.includes(network.name)
     ? describe.skip
