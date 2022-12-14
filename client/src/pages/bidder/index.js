@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../../styleCss/stylesComponents/placeABid.module.css";
-import ConfirmPayment from "../confirmPayment/confirmPayment";
+import ConfirmPayment from "./ui/ConfirmPayment";
 import { Outlet, Link } from "react-router-dom";
 // import { Button } from "@web3uikit/core"
 import { ConnectButton } from "web3uikit";
