@@ -14,6 +14,8 @@ import axios from "axios";
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import TransactionStatus from "../components/TransactionStatus";
+import BiddingProperty from "../components/BiddingProperty";
+import TransactionHistory from "../components/TransactionHistory";
 function PlaceBid({ auction }) {
     const { auctionId } = useParams() || "null";
     const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}/placedBid`;
@@ -134,15 +136,15 @@ function PlaceBid({ auction }) {
         });
     };
 
-    const handleClick = async () => {
-        await setInputBidAmount(inputRef.current.value);
-        console.log(inputBidAmount);
-        await placeBid({
-            onError: handleErrorNotification,
-            onSuccess: handleSuccess,
-            onComplete: handleComplete,
-        });
-    };
+    // const handleClick = async () => {
+    //     await setInputBidAmount(inputRef.current.value);
+    //     console.log(inputBidAmount);
+    //     await placeBid({
+    //         onError: handleErrorNotification,
+    //         onSuccess: handleSuccess,
+    //         onComplete: handleComplete,
+    //     });
+    // };
 
     const handleErrorNotification = (tx) => {
         console.log("handleErrorNotification " + tx);
@@ -163,34 +165,24 @@ function PlaceBid({ auction }) {
                 <p className={styles.txt}>You have selected:</p>
                 <div>
                     <div className={styles.info}>
-                        {/* <img className={styles.img} src={sendAuction.MediaURL[0]} alt="images" /> */}
-                        <img className={styles.img} src="https://static.vecteezy.com/packs/media/photos/term-bg-3-f6a12264.jpg" alt="images" />
-                        {/* <p className={styles.title}>{sendAuction.PropertyName}</p> */}
-                        <p className={styles.title}>PropertyName PropertyName PropertyName PropertyName</p>
+                        <BiddingProperty auction={auction} />
                         <p className={styles.txtM}>Starting bid:</p>
                         <p className={styles.txtNormal}>{auction.startBid}</p>
                         <p className={styles.txtM}>Current bid:</p>
                         <p className={styles.txtNormal}>{highestBid} ETH</p>
-                        {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
                         <p className={styles.txtM}>Auction ends in:</p>
                         <p className={styles.txtNormal}>
                             <Countdown date={auction.endAuctionTime * 1000} />
                         </p>
                     </div>
                     <div className={styles.detail}>
-                        {/* <form> */}
                         <p className={styles.title}>Place bid details:</p>
-                        {/* <p className={styles.txtT}>Your bid must be at least 6969 ETH</p>
-                        {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
-                        {/* <input className={styles.input} type="text"></input> */}
-                        <Input
+                        <p className={styles.txtT}>Your bid must be at least 6969 ETH</p>
+
+                        <input
                             className={styles.input}
-                            label="Your bid must be at least 6969 ETH"
-                            placeholder=""
                             type="number"
-                            // ref={inputRef}
                             value={inputBidAmount}
-                            errorMessage="Your name must contain your name"
                             validation={{
                                 max: "",
                                 min: 1,
@@ -198,28 +190,12 @@ function PlaceBid({ auction }) {
                             onChange={(event) => {
                                 setInputBidAmount(event.target.value);
                             }}
-                        />
-                        <label className={styles.mess}>message</label>
+                        ></input>
+                        <label className={styles.mess}>Error message</label>
                         <br />
-                        <br />
-                        {/* <input
-                className={styles.btn}
-                type="submit"
-                value="Place bid"
-              ></input> */}
-                        <Button
+                        <button
                             disabled={isLoading || isFetching}
-                            // {isLoading || isFetching}
-                            // {isLoading}
-                            customize={{
-                                backgroundColor: "#E9F2FA",
-                                border: "4px solid #0B72C4",
-                                color: "#0B72C4",
-                                fontSize: "20px",
-                                fontWeight: "700",
-                                onHover: "darken",
-                                padding: "8px 12px",
-                            }}
+                            className={styles.btn}
                             onClick={async () => {
                                 console.log(inputBidAmount);
                                 placeBid({
@@ -228,29 +204,12 @@ function PlaceBid({ auction }) {
                                     onComplete: handleComplete,
                                 });
                             }}
-                            text={isLoading || isFetching ? <div>Loading...</div> : <div>Place Bid</div>}
-                            theme="colored"
-                        />
-                        {/* </form> */}
-                        {transactionStatus != null ? <TransactionStatus transactionStatus={transactionStatus} /> : ""}
-
-                        {/* <p className={styles.tran}>{transactionStatus?.hash || "???"}</p>
-                        <p className={styles.tran}>{transactionStatus?.status || "???"}</p> */}
+                        >
+                            {isLoading || isFetching ? "Loading..." : "Place Bid"}
+                        </button>
+                        {!transactionStatus ? <TransactionStatus transactionStatus={transactionStatus} /> : ""}
                     </div>
-                    <div id="trans" className={styles.transactions}>
-                        <div className={styles.col1}>
-                            <p className={styles.txtT}>Your transactions</p>
-                            <hr />
-                            <p className={styles.tran}>g43getg43</p>
-                            <p className={styles.tran}>g3g4rere</p>
-                        </div>
-                        <div className={styles.col2}>
-                            <p className={styles.txtT}>Time</p>
-                            <hr />
-                            <p className={styles.tran}>10 minutes ago</p>
-                            <p className={styles.tran}>10 minutes ago</p>
-                        </div>
-                    </div>
+                    <TransactionHistory />
                 </div>
             </div>
         </div>

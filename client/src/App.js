@@ -9,7 +9,6 @@ import RegisterForO from "./pages/register/RegisterForOrganization";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import AuctionDetail from "./pages/auctionDetails/AuctionDetail";
 import PlaceABid from "./components/popups/PlaceABid";
-import ConfirmPayment from "./pages/confirmPayment/confirmPayment";
 import AuctionList from "./pages/auctionList/AuctionList";
 import PaymentResult from "./pages/paymentResult/PaymemtResult";
 import News from "./pages/news/News";
@@ -61,7 +60,7 @@ function App() {
                         <Route path="auctionList" element={<AuctionList />} />
                         <Route path="*" element={<ErrorPage />} />
                         <Route path="placeABid" element={<PlaceABid />} />
-                        <Route path="confirmPayment" element={<ConfirmPayment />} />
+                        {/* <Route path="confirmPayment" element={<ConfirmPayment />} /> */}
                         <Route path="paymentResult" element={<PaymentResult />} />
                         <Route path="news" element={<News />} />
                         <Route path="sellerCenter" element={<SellerCenter />} />
