@@ -32,7 +32,7 @@ function PlaceBid({ auction }) {
         return "0";
     });
     const [transactionStatus, setTransactionStatus] = useState(() => {
-        return undefined;
+        return null;
     });
 
     const inputRef = useRef("0");
@@ -160,7 +160,7 @@ function PlaceBid({ auction }) {
         <div>
             <div>
                 <p className={styles.txtBlack}>Place a Bid </p>
-                <p className={styles.txt}>You have selected:</p>\
+                <p className={styles.txt}>You have selected:</p>
                 <div>
                     <div className={styles.info}>
                         {/* <img className={styles.img} src={sendAuction.MediaURL[0]} alt="images" /> */}
@@ -232,7 +232,7 @@ function PlaceBid({ auction }) {
                             theme="colored"
                         />
                         {/* </form> */}
-                        {transactionStatus != undefined ? <TransactionStatus transactionStatus={transactionStatus} /> : ""}
+                        {transactionStatus != null ? <TransactionStatus transactionStatus={transactionStatus} /> : ""}
 
                         {/* <p className={styles.tran}>{transactionStatus?.hash || "???"}</p>
                         <p className={styles.tran}>{transactionStatus?.status || "???"}</p> */}
