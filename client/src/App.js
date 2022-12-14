@@ -1,7 +1,5 @@
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MoralisProvider } from "react-moralis";
-import { useState } from "react";
 import { NotificationProvider } from "web3uikit";
 
 import Homepage from "./pages/homepage/Homepage";
@@ -10,8 +8,6 @@ import Register from "./pages/register/Register";
 import RegisterForO from "./pages/register/RegisterForOrganization";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import AuctionDetail from "./pages/auctionDetails/AuctionDetail";
-import { useState } from "react";
-import { MoralisProvider } from "react-moralis";
 import PlaceABid from "./components/popups/PlaceABid";
 import ConfirmPayment from "./pages/confirmPayment/confirmPayment";
 import AuctionList from "./pages/auctionList/AuctionList";

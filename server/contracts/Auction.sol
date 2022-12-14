@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-// import "hardhat/console.sol";
-
 error Auction__InvalidRegistrationTime();
 error Auction__InvalidAuctionTime();
 error Auction__InvalidDuePaymentTime();

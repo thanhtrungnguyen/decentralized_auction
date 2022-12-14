@@ -57,7 +57,7 @@ app.use(require("./routers"));
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
-    const errorMessage = err.message || "Sth went wrong!";
+    const errorMessage = err.message || "Something went wrong!";
     res.status(err.status).json({
         success: false,
         status: errorStatus,
@@ -66,8 +66,8 @@ app.use((err, req, res, next) => {
     });
 });
 
-console.log("=====================");
 app.listen(PORT, () => {
     // connect();
     console.log("Connected to backend.");
 });
+console.log("=======================================");

@@ -1,7 +1,7 @@
 const { ethers } = require("hardhat");
 const deployments = require("../deployments/goerli/Auction.json");
 // const abi = require("../artifacts/contracts/Auction.sol/Auction.json")
-const { getEpoch } = require("../services/timeConverter");
+const { getEpoch } = require("../utils/timeConverter");
 const {} = require("moralis");
 require("dotenv").config();
 
