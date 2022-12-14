@@ -57,7 +57,7 @@ function App() {
                         <Route path="homePage" element={<Homepage />} />
                         <Route path="register" element={<Register />} />
                         <Route path="registerForO" element={<RegisterForO />} />
-                        <Route path="auctionDetail/:id" element={<AuctionDetail />} />
+                        <Route path="auctionDetail/:id/:propertyId" element={<AuctionDetail />} />
                         <Route path="auctionList" element={<AuctionList />} />
                         <Route path="*" element={<ErrorPage />} />
                         <Route path="placeABid" element={<PlaceABid />} />

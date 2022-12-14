@@ -26,14 +26,14 @@ const PlaceABid = ({ sendAuction }) => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                        <img className={styles.img} src={sendAuction.MediaURL[0]} alt="images" />
-                        <p className={styles.title}>{sendAuction.PropertyName}</p>
+                        <img className={styles.img} src={`http://localhost:8800/api/auction/images/${sendAuction.Properties_Media__r.records[0].Name}`} alt="images" />
+                        <p className={styles.title}>{sendAuction.Name}</p>
                         <br />
                         <br />
                         <br />
                         <br />
                         <p className={styles.txtM}>Starting bid:</p>
-                        <p className={styles.txtNormal}>{sendAuction.StartBid}</p>
+                        <p className={styles.txtNormal}>{sendAuction.Start_Bid__c}</p>
                         <p className={styles.txtM}>Current bid:</p>
                         <p className={styles.txtNormal}>6969 ETH</p>
                         {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}

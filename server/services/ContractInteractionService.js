@@ -31,5 +31,20 @@ const getPlacedBidById = (id) => {
         return data;
     });
 };
+const getHighestBidder = (id) =>{
+    return ContractInteractionDAO.getPlacedBidById(id).then((data) => {
+        var highest = 0;
+        var highestBidder = null;
+        data.forEach((element) => {
+            element.bidAmount = parseEther(element.bidAmount);
+            if(element.bidAmount>highest){               
+                highest = parseEther(element.bidAmount);
+                highestBidder = element;
+            }
+            
+        });
+        return highestBidder;
+    });
+}
 
-module.exports = { getAuctionInformationById, getBidInformationById, getPlacedBidById };
+module.exports = { getAuctionInformationById, getBidInformationById, getPlacedBidById, getHighestBidder };

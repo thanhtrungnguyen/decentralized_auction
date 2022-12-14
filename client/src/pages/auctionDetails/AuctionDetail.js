@@ -17,8 +17,8 @@ import Loading from "../../components/loading/Loading";
 
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
-    const { id } = useParams();
-    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}`;
+    const { id ,propertyId} = useParams();
+    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
     const { data, loading, error } = useFetch(baseURL);
 
     console.log(data);
@@ -58,7 +58,7 @@ const AuctionDetail = () => {
             /> */}
                             <img
                                 className={styles.img}
-                                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[0].Name}`}
+                                src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
                                 alt="images"
                             />
                         </div>
@@ -70,7 +70,7 @@ const AuctionDetail = () => {
             /> */}
                             <img
                                 className={styles.img}
-                                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[1].Name}`}
+                                src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
                                 alt="images"
                             />
                         </div>
@@ -82,7 +82,7 @@ const AuctionDetail = () => {
             /> */}
                             <img
                                 className={styles.img}
-                                src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[2].Name}`}
+                                src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
                                 alt="images"
                             />
                         </div>
@@ -109,7 +109,7 @@ const AuctionDetail = () => {
             /> */}
                         <ReactPlayer
                             className={styles.video}
-                            url="https://www.youtube.com/watch?v=6ltIt-NtQjQ"
+                            url={`${data.Properties_Media__r.records[3].Name}`}
                             playing={true}
                             controls={true}
                             loop={true}
@@ -132,11 +132,12 @@ const AuctionDetail = () => {
                     {/* </div> */}
                 </div>
                 <div className={styles.col2}>
-                    <p className={styles.title}>{data[0].Name}</p>
-                    <p className={styles.txtBold}>Start Bid : ${data[0].Auctions1__r.records[0].Start_Bid__c}</p>
-
-                    <p className={styles.txt}>Auction Start Time : ${data[0].Auctions1__r.records[0].Time_Start__c}</p>
-                    <p className={styles.txt}>Auction End Time : ${data[0].Auctions1__r.records[0].Time_End__c}</p>
+                    <p className={styles.title}>{data.Name}</p>
+                    <p className={styles.txtBold}>Start Bid : {data.Start_Bid__c}</p>
+                    <p className={styles.txt}>Start Registration Time  : {new Date(new Date(data.Auctions1__r.records[0].Start_Registration_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}</p>
+                    <p className={styles.txt}>End Registration Time  : {new Date(new Date(data.Auctions1__r.records[0].End_Registration_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}</p>
+                    <p className={styles.txt}>Auction Start Time : {new Date(new Date(data.Auctions1__r.records[0].Start_Aution_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}</p>
+                    <p className={styles.txt}>Auction End Time : {new Date(new Date(data.Auctions1__r.records[0].End_Auction_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}</p>
                     {/* </div> */}
                     <Popup trigger={<button className={styles.btn}>Place Bid</button>} position="right center">
                         <PlaceABid sendAuction={data} />
@@ -147,7 +148,7 @@ const AuctionDetail = () => {
             <div className={styles.des}>
                 <div className={styles.cont}>
                     <p className={styles.txtDesBold}>Description</p>
-                    <label className={styles.area}>{data[0].Property_Information__c}</label>
+                    <label className={styles.area}>{data.Description__c}</label>
                 </div>
             </div>
             <div className={styles.RelatedAuctions}>
