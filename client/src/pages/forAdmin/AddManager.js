@@ -13,8 +13,8 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
 const AddManager = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
 
@@ -32,6 +32,7 @@ const AddManager = () => {
 
         formData.append("userName", username);
         formData.append("password", password);
+        console.log(formData.get("userName"));
         axios
             .post(
                 "http://localhost:8800/api/auth/registerManager",
