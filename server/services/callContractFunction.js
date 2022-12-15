@@ -1,4 +1,4 @@
-const abi = require("../constants/abi.json");
+const abi = require("../constants/contractAbi.json");
 const contractAddress = require("../constants/contractAddress.json");
 const { ethers } = require("ethers");
 const { getEpoch } = require("../utils/timeConverter");

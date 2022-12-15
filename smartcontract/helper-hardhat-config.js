@@ -28,9 +28,9 @@ const networkConfig = {
 const developmentChains = ["hardhat", "localhost"]
 const VERIFICATION_BLOCK_CONFIRMATIONS = 6
 const clientContractsFile = "../client/src/constants/contractAddress.json"
-const clientAbiFile = "../client/src/constants/abi.json"
+const clientAbiFile = "../client/src/constants/contractAbi.json"
 const serverContractsFile = "../server/constants/contractAddress.json"
-const serverAbiFile = "../server/constants/abi.json"
+const serverAbiFile = "../server/constants/contractAbi.json"
 
 module.exports = {
     networkConfig,
