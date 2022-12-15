@@ -3,6 +3,7 @@ const deployments = require("../deployments/goerli/Auction.json");
 // const abi = require("../artifacts/contracts/Auction.sol/Auction.json")
 const { getEpoch } = require("../utils/timeConverter");
 const {} = require("moralis");
+const { parseWei } = require("../utils/ethereumUnitConverter");
 require("dotenv").config();
 
 const GOERLI_RPC_URL = "https://eth-goerli.g.alchemy.com/v2/Bt82l8JDTtigrUmMLXl53vCpn1AGkpaR";
