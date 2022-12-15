@@ -1,4 +1,4 @@
-import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
+import styles from "../../styleCss/stylesPages/forManagers/ApproveAuction.module.css";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
@@ -32,6 +32,8 @@ const PropertyDetail = () => {
 
     const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
+    const [paymentTime, setPaymentTime] = useState(new Date());
+
     const { data, loading, error } = useFetch(baseURL);
     const onClick = () => {
         console.log(show);
@@ -62,6 +64,7 @@ const PropertyDetail = () => {
                     auctionTime: auctionTime,
                     name: name,
                     propertyId: propertyId,
+                    paymentTime: paymentTime,
                 },
                 {
                     withCredentials: true,
@@ -278,12 +281,8 @@ const PropertyDetail = () => {
                                         // onChange={setViewPropertyTime}
                                         ClassName={styles.datePicker}
                                         value={[
-                                            new Date(data.Start_View_Property_Time__c).setTime(
-                                                new Date(data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-                                            ),
-                                            new Date(data.End_View_Property_Time__c).setTime(
-                                                new Date(data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-                                            ),
+                                            new Date(data.Start_View_Property_Time__c).setTime(new Date(data.Start_View_Property_Time__c).getTime()),
+                                            new Date(data.End_View_Property_Time__c).setTime(new Date(data.End_View_Property_Time__c).getTime()),
                                         ]}
                                         //   value={data.property.viewPropertyTime}
                                         // onChange={setValue}
@@ -315,6 +314,7 @@ const PropertyDetail = () => {
                             <p className={styles.lable}>Registration Fee</p>
                             <p className={styles.lable}>Time Registration</p>
                             <p className={styles.lable}>Auction Time</p>
+                            <p className={styles.lable}>PaymentTime Time</p>
                         </div>
                         <div className={styles.col2}>
                             <input
@@ -366,6 +366,14 @@ const PropertyDetail = () => {
                                     // onChange={setValue}
                                     range
                                     numberOfMonths={2}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker />]}
+                                />
+                            </div>
+                            <div className={styles.date}>
+                                <DatePicker
+                                    selected={paymentTime}
+                                    onChange={setPaymentTime}
                                     format="MM/DD/YYYY HH:mm:ss"
                                     plugins={[<TimePicker />]}
                                 />

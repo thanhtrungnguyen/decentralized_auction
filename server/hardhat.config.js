@@ -32,6 +32,7 @@ module.exports = {
         goerli: {
             url: GOERLI_RPC_URL,
             accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+            gasPrice: 30000000000,
             //   accounts: {
             //     mnemonic: MNEMONIC,
             //   },

@@ -1,13 +1,13 @@
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MoralisProvider } from "react-moralis";
+import { NotificationProvider } from "web3uikit";
+
 import Homepage from "./pages/homepage/Homepage";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import RegisterForO from "./pages/register/RegisterForOrganization";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import AuctionDetail from "./pages/auctionDetails/AuctionDetail";
-import { useState } from "react";
-import { MoralisProvider } from "react-moralis";
 import PlaceABid from "./components/popups/PlaceABid";
 import ConfirmPayment from "./pages/confirmPayment/confirmPayment";
 import AuctionList from "./pages/auctionList/AuctionList";
@@ -38,74 +38,79 @@ import BidderDetail from "./pages/forAdmin/BidderDetail";
 import ListNews from "./pages/forAdmin/ListNews";
 import AddNew from "./pages/forAdmin/AddNews";
 import EditNew from "./pages/forAdmin/EditNew";
-import PlaceBidButton from "./pages/bidder/popup";
+import FakeAuctionDetail from "./pages/bidder/FakeAuctionDetail";
 import AuctionDetailForManager from "./pages/forManager/AuctionDetailForManager";
 import ViewManager from "./pages/forAdmin/ViewManager";
 import ViewSeller from "./pages/forAdmin/ViewSeller";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
+
 function App() {
     return (
         <MoralisProvider initializeOnMount={false}>
-            <BrowserRouter>
-                <Routes>
-                    <Route index element={<Homepage />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="homePage/:username" element={<Homepage />} />
-                    <Route path="homePage" element={<Homepage />} />
-                    <Route path="register" element={<Register />} />
-                    <Route path="registerForO" element={<RegisterForO />} />
-                    <Route path="auctionDetail/:id" element={<AuctionDetail />} />
-                    <Route path="auctionList" element={<AuctionList />} />
-                    <Route path="*" element={<ErrorPage />} />
-                    <Route path="placeABid" element={<PlaceABid />} />
-                    <Route path="confirmPayment" element={<ConfirmPayment />} />
-                    <Route path="paymentResult" element={<PaymentResult />} />
-                    <Route path="news" element={<News />} />
-                    <Route path="sellerCenter" element={<SellerCenter />} />
-                    <Route path="myProperty" element={<MyProperty />} />
-                    <Route path="addProperty" element={<AddProperty />} />
-                    <Route path="editProperty/:id" element={<EditProperty />} />
-                    <Route path="editProperty" element={<EditProperty />} />
-                    <Route path="propertyDetail" element={<PropertyDetail />} />
-                    <Route path="propertyDetail/:id" element={<PropertyDetail />} />
-                    <Route path="enterEmail" element={<EnterEmail />} />
-                    <Route path="confirmCode/:email" element={<ConfirmCode />} />
-                    <Route path="newPassword/:userId/:token" element={<NewPassword />} />
-                    <Route path="myAuctions" element={<MyAuctions />} />
-                    <Route path="editAuction/:id" element={<EditAuction />} />
-                    <Route path="editAuction" element={<EditAuction />} />
-                    <Route path="autitoDetailForSeller/:id" element={<AuctionDetailForSeller />} />
-                    <Route path="autitoDetailForSeller" element={<AuctionDetailForSeller />} />
-                    <Route path="autionsListForManager" element={<AuctionsListForManager />} />
-                    <Route path="auctionDetailForManager" element={<AuctionDetailForManager />} />
-                    <Route path="auctionDetailForManager/:id/:propertyId" element={<AuctionDetailForManager />} />
-                    <Route path="approveAuction/:id/:propertyId" element={<ApproveAuction />} />
-                    <Route path="approveAuction" element={<ApproveAuction />} />
-                    <Route path="managerCategorys" element={<ManagerCategorys />} />
-                    <Route path="addCategory" element={<AddCategory />} />
-                    <Route path="editCategory/:id" element={<EditCategory />} />
-                    <Route path="editCategory" element={<EditCategory />} />
-                    <Route path="listManagers" element={<ListManagers />} />
-                    <Route path="addManager" element={<AddManager />} />
-                    <Route path="listSellers" element={<ListSellers />} />
-                    <Route path="addSeller" element={<AddSeller />} />
-                    <Route path="listBidders" element={<ListBidders />} />
-                    <Route path="bidderDetail" element={<BidderDetail />} />
-                    <Route path="bidderDetail/:id" element={<BidderDetail />} />
-                    <Route path="editNew/:id" element={<EditNew />} />
-                    <Route path="editNew" element={<EditNew />} />
-                    <Route path="addNew" element={<AddNew />} />
-                    <Route path="listNews/:index" element={<ListNews />} />
-                    <Route path="listNews" element={<ListNews />} />
-                    <Route path="viewManager" element={<ViewManager />} />
-                    <Route path="viewManager/:id" element={<ViewManager />} />
-                    <Route path="viewSeller" element={<ViewSeller />} />
-                    <Route path="viewSeller/:id" element={<ViewSeller />} />
+            <NotificationProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route index element={<Homepage />} />
+                        <Route path="login" element={<Login />} />
+                        <Route path="homePage/:username" element={<Homepage />} />
+                        <Route path="homePage" element={<Homepage />} />
+                        <Route path="register" element={<Register />} />
+                        <Route path="registerForO" element={<RegisterForO />} />
+                        <Route path="auctionDetail/:id/:propertyId" element={<AuctionDetail />} />
+                        <Route path="auctionList" element={<AuctionList />} />
+                        <Route path="*" element={<ErrorPage />} />
+                        <Route path="placeABid" element={<PlaceABid />} />
+                        <Route path="confirmPayment" element={<ConfirmPayment />} />
+                        <Route path="paymentResult" element={<PaymentResult />} />
+                        <Route path="news" element={<News />} />
+                        <Route path="sellerCenter" element={<SellerCenter />} />
+                        <Route path="myProperty" element={<MyProperty />} />
+                        <Route path="addProperty" element={<AddProperty />} />
+                        <Route path="editProperty/:id" element={<EditProperty />} />
+                        <Route path="editProperty" element={<EditProperty />} />
+                        <Route path="propertyDetail" element={<PropertyDetail />} />
+                        <Route path="propertyDetail/:id" element={<PropertyDetail />} />
+                        <Route path="enterEmail" element={<EnterEmail />} />
+                        <Route path="confirmCode/:email" element={<ConfirmCode />} />
+                        <Route path="newPassword/:userId/:token" element={<NewPassword />} />
+                        <Route path="myAuctions" element={<MyAuctions />} />
+                        <Route path="editAuction/:id" element={<EditAuction />} />
+                        <Route path="editAuction" element={<EditAuction />} />
+                        <Route path="autitoDetailForSeller/:id" element={<AuctionDetailForSeller />} />
+                        <Route path="autitoDetailForSeller" element={<AuctionDetailForSeller />} />
+                        <Route path="autionsListForManager" element={<AuctionsListForManager />} />
+                        <Route path="auctionDetailForManager" element={<AuctionDetailForManager />} />
+                        <Route path="auctionDetailForManager/:id/:propertyId" element={<AuctionDetailForManager />} />
+                        <Route path="approveAuction/:id/:propertyId" element={<ApproveAuction />} />
+                        <Route path="approveAuction" element={<ApproveAuction />} />
+                        <Route path="managerCategorys" element={<ManagerCategorys />} />
+                        <Route path="addCategory" element={<AddCategory />} />
+                        <Route path="editCategory/:id" element={<EditCategory />} />
+                        <Route path="editCategory" element={<EditCategory />} />
+                        <Route path="listManagers" element={<ListManagers />} />
+                        <Route path="addManager" element={<AddManager />} />
+                        <Route path="listSellers" element={<ListSellers />} />
+                        <Route path="addSeller" element={<AddSeller />} />
+                        <Route path="listBidders" element={<ListBidders />} />
+                        <Route path="bidderDetail" element={<BidderDetail />} />
+                        <Route path="bidderDetail/:id" element={<BidderDetail />} />
+                        <Route path="editNew/:id" element={<EditNew />} />
+                        <Route path="editNew" element={<EditNew />} />
+                        <Route path="addNew" element={<AddNew />} />
+                        <Route path="listNews/:index" element={<ListNews />} />
+                        <Route path="listNews" element={<ListNews />} />
+                        <Route path="viewManager" element={<ViewManager />} />
+                        <Route path="viewManager/:id" element={<ViewManager />} />
+                        <Route path="viewSeller" element={<ViewSeller />} />
+                        <Route path="viewSeller/:id" element={<ViewSeller />} />
 
-                    <Route path="BidPopup" element={<PlaceBidButton />} />
-                </Routes>
-            </BrowserRouter>
+                        <Route path="FakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
+
+                        {/* test */}
+                    </Routes>
+                </BrowserRouter>
+            </NotificationProvider>
         </MoralisProvider>
     );
 }

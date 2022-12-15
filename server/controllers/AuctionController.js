@@ -43,6 +43,7 @@ const approveAuction = async (req, res, next) => {
         auctionName : req.body.name,
         registrationFee : req.body.registrationFee,
         propertyId: req.body.propertyId,
+        paymentTime: req.body.paymentTime,
     }
 
 

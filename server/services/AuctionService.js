@@ -48,10 +48,12 @@ const approveAuction = async (auction) =>{
     var endAuctionTimeFN = new Date(endAuctionTimeVN).toISOString();
     var endAuctionTimeFN1 = new Date(endAuctionTimeVN).toUTCString();
 
-    var paymentTime = new Date(auction.timeENAuction);
-    var paymentTimeVN = paymentTime.setTime(paymentTime.getTime() + 7 * 60 * 60 * 1000 + 5 * 60 * 1000);
+    var paymentTime = new Date(auction.paymentTime);
+    var paymentTimeVN = paymentTime.setTime(paymentTime.getTime() + 7 * 60 * 60 * 1000);
     var paymentTimeFN = new Date(paymentTimeVN).toISOString();
     var paymentTimeFN1 = new Date(paymentTimeVN).toUTCString();
+
+    console.log(startRegistrationTimeFN+startRegistrationTimeFN1)
 
     var auctionApprove = {
         Status__c: "Approved",
@@ -74,11 +76,11 @@ const approveAuction = async (auction) =>{
 
     await createAuction(
         auction.auctionId,
-        startRegistrationTimeFN1,
-        endRegistrationTimeFN1,
-        startAuctionTimeFN1,
-        endAuctionTimeFN1,
-        paymentTimeFN1,
+        auction.timeSTRegist,
+        auction.timeENRegist,
+        auction.timeSTAuction,
+        auction.timeENAuction,
+        auction.paymentTime,
         parseFloat(auction.registrationFee),
         property.Deposit_Amount__c,
         property.Start_Bid__c,

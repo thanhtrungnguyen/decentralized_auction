@@ -1,7 +1,9 @@
-const { ethers } = require("ethers");
+const { ethers } = require("hardhat");
 const deployments = require("../deployments/goerli/Auction.json");
 // const abi = require("../artifacts/contracts/Auction.sol/Auction.json")
-const { getEpoch } = require("../services/timeConverter");
+const { getEpoch } = require("../utils/timeConverter");
+const {} = require("moralis");
+const { parseWei } = require("../utils/ethereumUnitConverter");
 require("dotenv").config();
 
 const GOERLI_RPC_URL = "https://eth-goerli.g.alchemy.com/v2/Bt82l8JDTtigrUmMLXl53vCpn1AGkpaR";
@@ -43,6 +45,10 @@ const createAuction = async (
         const startAuctionTimeGotEpoch = getEpoch(startAuctionTime);
         const endAuctionTimeGotEpoch = getEpoch(endAuctionTime);
         const duePaymentTimeGotEpoch = getEpoch(duePaymentTime);
+        const registrationFeeParsed = parseWei(registrationFee);
+        const depositAmountParsed = parseWei(depositAmount);
+        const startBidParsed = parseWei(startBid);
+        const priceStepParsed = parseWei(priceStep);
         await contract.createAuction(
             auctionId,
             startRegistrationTimeGotEpoch,
@@ -50,10 +56,10 @@ const createAuction = async (
             startAuctionTimeGotEpoch,
             endAuctionTimeGotEpoch,
             duePaymentTimeGotEpoch,
-            registrationFee,
-            depositAmount,
-            startBid,
-            priceStep
+            registrationFeeParsed,
+            depositAmountParsed,
+            startBidParsed,
+            priceStepParsed
         );
         console.log("The auction created on smartcontract!!!");
     } catch (error) {
