@@ -4,8 +4,8 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectSyncBlockchainDB = require("./databases/connectSyncBlockchainBD");
-const http = require("http") ;
-const {Server} = require("socket.io");
+const http = require("http");
+const { Server } = require("socket.io");
 const jsforce = require("jsforce");
 
 const authRoute = require("./routers/auth.js");
@@ -22,32 +22,28 @@ console.log("Starting...");
 const app = express();
 
 const conn = new jsforce.Connection({
-  loginUrl: process.env.SF_LOGIN_URL,
-
-
-})
+    loginUrl: process.env.SF_LOGIN_URL,
+});
 conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOKEN, (err, userInfor) => {
-  if (err) {
-      console.error(err)
-  } else {
-      console.log(userInfor.id);
-  }
+    if (err) {
+        console.error(err);
+    } else {
+        console.log(userInfor.id);
+    }
 });
 
 const server = http.createServer(app);
 
 const io = new Server(server, {
-  cors: {
-      origin: "http://localhost:3000",
-      methods: ["GET", "POST", "PUT"],
-  },
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST", "PUT"],
+    },
 });
 var latestData;
 
-
 io.on("connection", async (socket) => {
-    
-    socket.emit('data', latestData);
+    socket.emit("data", latestData);
     console.log(latestData);
 });
 
@@ -61,38 +57,31 @@ io.on("connection", async (socket) => {
 //   });
 //   var currentTime = new Date();
 
-  
 //   auctionlist.map(async auction => {
 
 //       var timeStartAuction = auction.Start_Aution_Time__c || '';
 //       var timeStartAuctionVN = timeStartAuction.split('+')[0] + '+07:00';
 //       var timeStartAuctionFN = new Date(timeStartAuctionVN);
 
-
 //       var timeEndAuction = auction.End_Auction_Time__c || '';
 //       var timeEndAuctionVN = timeEndAuction.split('+')[0] + '+07:00';
 //       var timeEndAuctionFN = new Date(timeEndAuctionVN);
-
 
 //       var timeStartRegistration = auction.Start_Registration_Time__c || '';
 //       var timeStartRegistrationVN = timeStartRegistration.split('+')[0] + '+07:00';
 //       var timeStartRegistrationFN = new Date(timeStartRegistrationVN);
 
-
 //       var timeEndRegistration = auction.End_Registration_Time__c || '';
 //       var timeEndRegistrationVN = timeEndRegistration.split('+')[0] + '+07:00';
 //       var timeEndRegistrationFN = new Date(timeEndRegistrationVN);
-
 
 //       var duePaymentTime = auction.Due_Payment_Time__c || '';
 //       var duePaymentTimeVN = duePaymentTime.split('+')[0] + '+07:00';
 //       var duePaymentTimeFN = new Date(duePaymentTimeVN);
 
-
-
 //       if (currentTime - timeStartRegistrationFN >= 0 && currentTime - timeEndRegistrationFN <= 0) {
 //           if (auction.Status__c != "RegistrationTime") {
-              
+
 //               await conn.sobject("Auction__c").update({
 //                   Id: auction.Id,
 //                   Status__c: "RegistrationTime",
@@ -105,7 +94,7 @@ io.on("connection", async (socket) => {
 //       }
 //       if (currentTime - timeEndRegistrationFN > 0 && currentTime - timeStartAuctionFN < 0) {
 //           if (auction.Status__c != "UpcomingforBid") {
-             
+
 //               await conn.sobject("Auction__c").update({
 //                   Id: auction.Id,
 //                   Status__c: "UpcomingforBid",
@@ -116,7 +105,6 @@ io.on("connection", async (socket) => {
 //           }
 
 //       }
-
 
 //       if (currentTime - timeStartAuctionFN >= 0 && currentTime - timeEndAuctionFN <= 0) {
 //           if (auction.Status__c != "Bidding") {
@@ -162,8 +150,6 @@ io.on("connection", async (socket) => {
 //   console.log('Last updated: ' + new Date());
 
 // }, 1000);
-
-
 
 //config library
 const PORT = 8800;
