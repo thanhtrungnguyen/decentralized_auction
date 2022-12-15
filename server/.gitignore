@@ -156,7 +156,8 @@ typechain
 
 # don't push the environment vars!
 # .env
-
+uploads
+uploads/
 # Built application files
 .DS*
 *.apk
