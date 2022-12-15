@@ -1,13 +1,16 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+require("dotenv").config();
+
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectSyncBlockchainDB = require("./databases/connectSyncBlockchainBD");
 const http = require("http");
-const { Server } = require("socket.io");
+// const { Server } = require("socket.io");
+const { createServer } = require("http");
 const jsforce = require("jsforce");
+const multer = require("multer");
 
+const createSocket = require("./socketio");
 const authRoute = require("./routers/auth.js");
 const userRoute = require("./routers/users.js");
 const accountRoute = require("./routers/accounts.js");
@@ -16,10 +19,11 @@ const propertyRoute = require("./routers/properties.js");
 const categoryRoute = require("./routers/categories.js");
 const newsRoute = require("./routers/news.js");
 
-const multer = require("multer");
 console.log("Starting...");
-// config app
+
 const app = express();
+
+// config app
 
 const conn = new jsforce.Connection({
     loginUrl: process.env.SF_LOGIN_URL,
@@ -31,21 +35,23 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
         console.log(userInfor.id);
     }
 });
+// const http = createServer(app);
+createSocket(http);
 
 const server = http.createServer(app);
 
-const io = new Server(server, {
-    cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST", "PUT"],
-    },
-});
-var latestData;
+// const io = new Server(server, {
+//     cors: {
+//         origin: "http://localhost:3000",
+//         methods: ["GET", "POST", "PUT"],
+//     },
+// });
+// var latestData;
 
-io.on("connection", async (socket) => {
-    socket.emit("data", latestData);
-    console.log(latestData);
-});
+// io.on("connection", async (socket) => {
+//     socket.emit("data", latestData);
+//     console.log(latestData);
+// });
 
 // setInterval(async () => {
 //   var auctionlist = null;
@@ -153,7 +159,7 @@ io.on("connection", async (socket) => {
 
 //config library
 const PORT = 8800;
-dotenv.config();
+
 app.use(cookieParser());
 app.use(
     cors({

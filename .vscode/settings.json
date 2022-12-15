@@ -3,6 +3,7 @@
     "jsforce",
     "moralis",
     "nomiclabs",
-    "POLYGONSCAN"
+    "POLYGONSCAN",
+    "socketio"
   ]
 }

@@ -1,18 +1,19 @@
-const abi = require("../constants/abi.json");
+const abi = require("../constants/contractAbi.json");
 const contractAddress = require("../constants/contractAddress.json");
 const { ethers } = require("ethers");
 const { getEpoch } = require("../utils/timeConverter");
 const { parseWei } = require("../utils/ethereumUnitConverter");
 const {} = require("moralis");
-const { parseWei } = require("../utils/ethereumUnitConverter");
 require("dotenv").config();
 
 const GOERLI_RPC_URL = "https://eth-goerli.g.alchemy.com/v2/Bt82l8JDTtigrUmMLXl53vCpn1AGkpaR";
 const PRIVATE_KEY = "c5d66181926a3c32258d127d307bddb3d0e9f99671f9080b44d440c4119ed7fd";
+const chainId = 5;
 
+const address = contractAddress[chainId][0];
 const provider = new ethers.providers.JsonRpcProvider(GOERLI_RPC_URL);
 const walletWithProvider = new ethers.Wallet(PRIVATE_KEY, provider);
-const contract = new ethers.Contract(contractAddress, abi, walletWithProvider);
+const contract = new ethers.Contract(address, abi, walletWithProvider);
 
 // const auctionId = 6
 // const startRegistrationTime = getEpoch("December 9, 2022 17:15:00")

@@ -1,7 +1,7 @@
-const { ethers, network } = require("hardhat")
-const { getEpoch } = require("../utils/timeConverter")
-const { parseWei } = require("../utils/ethereumUnitConverter")
-const { moveBlocks } = require("../utils/move-blocks")
+const { ethers, network } = require("hardhat");
+const { getEpoch } = require("../utils/timeConverter");
+const { parseWei } = require("../utils/ethereumUnitConverter");
+const { moveBlocks } = require("../utils/move-blocks");
 
 // npx hardhat run scripts/create-auction.js --network goerli
 createAuction = async (
@@ -16,8 +16,8 @@ createAuction = async (
     startBid,
     priceStep
 ) => {
-    const auction = await ethers.getContract("Auction")
-    console.log("Creating auction...")
+    const auction = await ethers.getContract("Auction");
+    console.log("Creating auction...");
     const createAuction = await auction.createAuction(
         auctionId,
         startRegistrationTime,
@@ -29,24 +29,33 @@ createAuction = async (
         depositAmount,
         startBid,
         priceStep
-    )
-    await createAuction.wait(1)
-    console.log("The Auction created!")
+    );
+    await createAuction.wait(1);
+    console.log("The Auction created!");
     if (network.config.chainId == "31337") {
-        await moveBlocks(2, (sleepAmount = 1000))
+        await moveBlocks(2, (sleepAmount = 1000));
     }
-}
+};
 
-const auctionId = "f324f3"
-const startRegistrationTime = getEpoch("December 15, 2022 20:25:19")
-const endRegistrationTime = getEpoch("December 15, 2022 20:30:00")
-const startAuctionTime = getEpoch("December 15, 2022 20:31:01")
-const endAuctionTime = getEpoch("December 16, 2022 17:52:00")
-const duePaymentTime = getEpoch("December 16, 2022 18:59:00")
-const registrationFee = parseWei(0.001)
-const depositAmount = parseWei(0.02)
-const startBid = parseWei(0.05)
-const priceStep = parseWei(0.0001)
+<<<<<<< HEAD:smartcontract/scripts/create-auction.js
+const auctionId = "f324f3";
+const startRegistrationTime = getEpoch("December 15, 2022 20:25:19");
+const endRegistrationTime = getEpoch("December 15, 2022 20:30:00");
+const startAuctionTime = getEpoch("December 15, 2022 20:31:01");
+const endAuctionTime = getEpoch("December 16, 2022 17:52:00");
+const duePaymentTime = getEpoch("December 16, 2022 18:59:00");
+=======
+const auctionId = "fsafasg345";
+const startRegistrationTime = getEpoch("December 14, 2022 20:25:19");
+const endRegistrationTime = getEpoch("December 14, 2022 20:30:00");
+const startAuctionTime = getEpoch("December 14, 2022 20:31:01");
+const endAuctionTime = getEpoch("December 15, 2022 17:52:00");
+const duePaymentTime = getEpoch("December 15, 2022 18:59:00");
+>>>>>>> 490b38d720c744c734643af17c4648d9f1233415:server/scripts/create-auction.js
+const registrationFee = parseWei(0.001);
+const depositAmount = parseWei(0.02);
+const startBid = parseWei(0.05);
+const priceStep = parseWei(0.0001);
 // console.log(
 //     startRegistrationTime,
 //     endRegistrationTime,
@@ -73,6 +82,6 @@ createAuction(
 )
     .then(() => process.exit(0))
     .catch((error) => {
-        console.error(error)
-        process.exit(1)
-    })
+        console.error(error);
+        process.exit(1);
+    });

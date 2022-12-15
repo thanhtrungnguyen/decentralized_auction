@@ -49,7 +49,7 @@ const approveAuction = async (auction) => {
     var paymentTimeFN = new Date(paymentTimeVN).toISOString();
     var paymentTimeFN1 = new Date(paymentTimeVN).toUTCString();
 
-    console.log(startRegistrationTimeFN+startRegistrationTimeFN1)
+    console.log(startRegistrationTimeFN + startRegistrationTimeFN1);
 
     var auctionApprove = {
         Status__c: "Approved",

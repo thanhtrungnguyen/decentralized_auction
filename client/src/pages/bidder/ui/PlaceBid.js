@@ -4,7 +4,7 @@ import { Outlet, Link } from "react-router-dom";
 import { Button, Input, ConnectButton, useNotification } from "web3uikit";
 import { useMoralis, useWeb3Contract, useApiContract } from "react-moralis";
 import HeaderBid from "../components/HeaderBid";
-import auctionAbi from "../../../constants/abi.json";
+import auctionAbi from "../../../constants/contractAbi.json";
 import contractAddresses from "../../../constants/contractAddress.json";
 import Moralis from "moralis";
 import { ethers } from "ethers";

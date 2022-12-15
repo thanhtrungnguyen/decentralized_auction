@@ -1,10 +1,7 @@
-// const Auction = require("../models/Auction.js");
-// const AuctionBidder = require("../models/AuctionBidder.js");
-// const Property = require("../models/Property.js");
 const { getFileStream } = require("../s3.js");
 const jsforce = require("jsforce");
 const { createAuction } = require("../services/callContractFunction.js");
-const  auctionService  = require("../services/AuctionService.js");
+const auctionService = require("../services/AuctionService.js");
 const { createError } = require("../utils/error.js");
 const conn = new jsforce.Connection({
     loginUrl: process.env.SF_LOGIN_URL,
@@ -14,43 +11,36 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
     if (err) {
         console.error(err);
     } else {
-      //  console.log(res.id);
+        //  console.log(res.id);
     }
 });
 
 const createAuctionRequest = async (req, res, next) => {
-    
     await auctionService.createRequestAuction(req.params.id);
 
-   
     res.status(200).json("create auction successfully!");
 };
 
 const rejectAuction = async (req, res, next) => {
-    await auctionService.updateRejectAuction(req.params.id,req.body.propertyId);
+    await auctionService.updateRejectAuction(req.params.id, req.body.propertyId);
 
     res.status(200).json("Reject auction !!!");
 };
 //
 const approveAuction = async (req, res, next) => {
-
-    var auction ={
-        timeSTRegist : req.body.timeRegistration[0],
-        timeENRegist : req.body.timeRegistration[1],
-        timeSTAuction : req.body.auctionTime[0],
-        timeENAuction : req.body.auctionTime[1],
-        auctionId : req.params.id,
-        auctionName : req.body.name,
-        registrationFee : req.body.registrationFee,
+    var auction = {
+        timeSTRegist: req.body.timeRegistration[0],
+        timeENRegist: req.body.timeRegistration[1],
+        timeSTAuction: req.body.auctionTime[0],
+        timeENAuction: req.body.auctionTime[1],
+        auctionId: req.params.id,
+        auctionName: req.body.name,
+        registrationFee: req.body.registrationFee,
         propertyId: req.body.propertyId,
         paymentTime: req.body.paymentTime,
-    }
+    };
 
-
-   await auctionService.approveAuction(auction);
-
-
-  
+    await auctionService.approveAuction(auction);
 
     res.status(200).json("Approve Successfully!!");
 };
@@ -88,13 +78,11 @@ const getAuctionDetailByID = async (req, res, next) => {
     var auctionId = req.params.auctionId;
     var propertyId = req.params.propertyId;
     try {
-        var data = await auctionService.getAuctionDetailByID(auctionId,propertyId);
-   
-            res.status(200).json(data);
-        
-        
+        var data = await auctionService.getAuctionDetailByID(auctionId, propertyId);
+
+        res.status(200).json(data);
     } catch (error) {
-        next(createError('500','không tìm thấy auction'));
+        next(createError("500", "không tìm thấy auction"));
     }
 };
 const uploadImage = async (req, res, next) => {
