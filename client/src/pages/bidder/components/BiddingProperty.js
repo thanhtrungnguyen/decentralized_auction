@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 
-const BiddingProperty = ({ property }) => {
+const BiddingProperty = ({ auction, property }) => {
     return (
         <div>
             {/* <img className={styles.img} src={sendAuction.MediaURL[0]} alt="images" /> */}
@@ -12,6 +12,7 @@ const BiddingProperty = ({ property }) => {
             <br />
             <br />
             <br />
+            <p className={styles.title}>PropertyName PropertyName PropertyName PropertyName PropertyName</p>
         </div>
     );
 };

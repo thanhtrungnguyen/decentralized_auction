@@ -87,6 +87,7 @@
 //     );
 // };
 
+<<<<<<< HEAD
 //     return (
 //         <>
 //             <div className={styles.container}>
@@ -160,4 +161,6 @@
 //     );
 // };
 
+=======
+>>>>>>> 490b38d720c744c734643af17c4648d9f1233415
 // export default PlaceABid;
