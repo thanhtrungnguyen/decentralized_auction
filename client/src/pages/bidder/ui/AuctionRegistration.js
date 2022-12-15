@@ -13,7 +13,6 @@ import Decimal from "decimal.js";
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import BiddingProperty from "../components/BiddingProperty";
-<<<<<<< HEAD
 import { useFetch } from "../../../hook/useFetch";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -32,8 +31,6 @@ function AuctionRegistration({ auction: auctionId, property: propertyId }) {
                 console.error(err);
             });
     }, []);
-=======
->>>>>>> 490b38d720c744c734643af17c4648d9f1233415
 
     const { isWeb3Enabled, chainId: chainIdHex } = useMoralis();
     const chainId = parseInt(chainIdHex);
