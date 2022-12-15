@@ -32,7 +32,6 @@ const PropertyDetail = () => {
 
     const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-
     const [paymentTime, setPaymentTime] = useState(new Date());
 
     const { data, loading, error } = useFetch(baseURL);
@@ -65,7 +64,7 @@ const PropertyDetail = () => {
                     auctionTime: auctionTime,
                     name: name,
                     propertyId: propertyId,
-                    paymentTime:paymentTime,
+                    paymentTime: paymentTime,
                 },
                 {
                     withCredentials: true,
@@ -372,12 +371,13 @@ const PropertyDetail = () => {
                                 />
                             </div>
                             <div className={styles.date}>
-                                <DatePicker selected={paymentTime}
+                                <DatePicker
+                                    selected={paymentTime}
                                     onChange={setPaymentTime}
                                     format="MM/DD/YYYY HH:mm:ss"
-                                    plugins={[<TimePicker />]} />
+                                    plugins={[<TimePicker />]}
+                                />
                             </div>
-
                         </div>
                     </div>
                     <div className={styles.btn2}>

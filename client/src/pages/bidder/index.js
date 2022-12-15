@@ -7,7 +7,7 @@ import { ConnectButton } from "web3uikit";
 import HeaderBid from "./components/HeaderBid";
 import { useMoralis, useWeb3Contract } from "react-moralis";
 import { useState, useEffect } from "react";
-import auctionAbi from "../../constants/abi.json";
+import auctionAbi from "../../constants/contractAbi.json";
 import contractAddresses from "../../constants/contractAddress.json";
 import AuctionRegistration from "./ui/AuctionRegistration";
 import PlaceBid from "./ui/PlaceBid";
