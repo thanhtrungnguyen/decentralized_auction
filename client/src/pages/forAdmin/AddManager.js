@@ -13,8 +13,8 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
 const AddManager = () => {
-    const [userName, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
 
@@ -27,14 +27,16 @@ const AddManager = () => {
             setPassword(value);
         }
     };
-    const handleSubmit = async (event) => {
-      
+    const handleSubmit = (event) => {
+        const formData = new FormData();
 
-
-        await axios
+        formData.append("userName", username);
+        formData.append("password", password);
+        console.log(formData.get("userName"));
+        axios
             .post(
                 "http://localhost:8800/api/auth/registerManager",
-                {userName,password},
+                { userName, password },
 
                 { withCredentials: true }
             )
@@ -44,7 +46,7 @@ const AddManager = () => {
                 alert(res.data.message);
                 navigate("/listManagers");
             });
-       event.preventDefault();
+        event.preventDefault();
     };
     const cancel = () => {
         navigate("/listManagers");

@@ -54,7 +54,7 @@ const PropertyDetail = () => {
     var daySTView = parseInt(startViewPropertyTime.getUTCDate());
 
     const AprroveAuction = () => {
-        alert(name + registrationFee + timeRegistration + auctionTime);
+        // alert(name + registrationFee + timeRegistration + auctionTime);
         axios
             .put(
                 "http://localhost:8800/api/auction/approve/" + id,
@@ -281,8 +281,12 @@ const PropertyDetail = () => {
                                         // onChange={setViewPropertyTime}
                                         ClassName={styles.datePicker}
                                         value={[
-                                            new Date(data.Start_View_Property_Time__c).setTime(new Date(data.Start_View_Property_Time__c).getTime()),
-                                            new Date(data.End_View_Property_Time__c).setTime(new Date(data.End_View_Property_Time__c).getTime()),
+                                            new Date(data.Start_View_Property_Time__c).setTime(
+                                                new Date(data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
+                                            ),
+                                            new Date(data.End_View_Property_Time__c).setTime(
+                                                new Date(data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
+                                            ),
                                         ]}
                                         //   value={data.property.viewPropertyTime}
                                         // onChange={setValue}

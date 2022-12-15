@@ -1,6 +1,7 @@
-var jsforce = require("jsforce");
+const jsforce = require("jsforce");
 const dotenv = require("dotenv");
 dotenv.config();
+
 var conn = new jsforce.Connection({
     loginUrl: process.env.SF_LOGIN_URL,
 });
@@ -9,6 +10,7 @@ conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOK
     if (err) {
         console.error(err);
     } else {
+        console.log(res.id);
         console.log(res.id);
     }
 });
