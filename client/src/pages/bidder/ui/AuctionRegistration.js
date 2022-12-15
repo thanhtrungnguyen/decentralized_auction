@@ -13,6 +13,7 @@ import Decimal from "decimal.js";
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import BiddingProperty from "../components/BiddingProperty";
+<<<<<<< HEAD
 import { useFetch } from "../../../hook/useFetch";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -31,6 +32,8 @@ function AuctionRegistration({ auction: auctionId, property: propertyId }) {
                 console.error(err);
             });
     }, []);
+=======
+>>>>>>> 490b38d720c744c734643af17c4648d9f1233415
 
     const { isWeb3Enabled, chainId: chainIdHex } = useMoralis();
     const chainId = parseInt(chainIdHex);
@@ -103,7 +106,15 @@ function AuctionRegistration({ auction: auctionId, property: propertyId }) {
                 <p className={styles.txt}>You have selected:</p>\
                 <div>
                     <div className={styles.info}>
+<<<<<<< HEAD
                         <BiddingProperty auction={auction} property={propertyId} />
+=======
+                        {/* <img className={styles.img} src={sendAuction.MediaURL[0]} alt="images" /> */}
+                        {/* <img className={styles.img} src="https://static.vecteezy.com/packs/media/photos/term-bg-3-f6a12264.jpg" alt="images" /> */}
+                        {/* <p className={styles.title}>{sendAuction.PropertyName}</p> */}
+                        {/* <p className={styles.title}>PropertyName PropertyName PropertyName PropertyName </p> */}
+                        {/* <BiddingProperty auction={auction} /> */}
+>>>>>>> 490b38d720c744c734643af17c4648d9f1233415
                         <p className={styles.txtM}>Starting bid:</p>
                         <p className={styles.txtNormal}>{auction.startBid}</p>
                         {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
