@@ -1,30 +1,28 @@
-const  auctionDAO = require("../dal/auctionDAO");
+const auctionDAO = require("../dal/auctionDAO");
 const { createAuction } = require("./callContractFunction");
 
-const createRequestAuction= async(propertyId) =>{
-    try{
+const createRequestAuction = async (propertyId) => {
+    try {
         await auctionDAO.createRequestAuction(propertyId);
 
         await auctionDAO.updateRequestProperty(propertyId);
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
-    
-}
+};
 
-
-const updateRejectAuction = async (auctionId,propertyId) =>{
-    try{
+const updateRejectAuction = async (auctionId, propertyId) => {
+    try {
         await auctionDAO.updateRejectAuction(auctionId);
 
         await auctionDAO.updateRejectProperty(propertyId);
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
-}
+};
 
-const approveAuction = async (auction) =>{
-    var property ;
+const approveAuction = async (auction) => {
+    var property;
 
     var startRegistrationTime = new Date(auction.timeSTRegist);
     var startRegistrationTimeVN = startRegistrationTime.setTime(startRegistrationTime.getTime() + 7 * 60 * 60 * 1000);
@@ -36,12 +34,10 @@ const approveAuction = async (auction) =>{
     var endRegistrationTimeFN = new Date(endRegistrationTimeVN).toISOString();
     var endRegistrationTimeFN1 = new Date(endRegistrationTimeVN).toUTCString();
 
-
     var startAuctionTime = new Date(auction.timeSTAuction);
     var startAuctionTimeVN = startAuctionTime.setTime(startAuctionTime.getTime() + 7 * 60 * 60 * 1000);
     var startAuctionTimeFN = new Date(startAuctionTimeVN).toISOString();
     var startAuctionTimeFN1 = new Date(startAuctionTimeVN).toUTCString();
-
 
     var endAuctionTime = new Date(auction.timeENAuction);
     var endAuctionTimeVN = endAuctionTime.setTime(endAuctionTime.getTime() + 7 * 60 * 60 * 1000);
@@ -65,10 +61,9 @@ const approveAuction = async (auction) =>{
         End_Registration_Time__c: endRegistrationTimeFN,
         End_Auction_Time__c: endAuctionTimeFN,
         Due_Payment_Time__c: paymentTimeFN,
-    }
-    
-    await auctionDAO.updateApproveAuction(auctionApprove);
+    };
 
+    await auctionDAO.updateApproveAuction(auctionApprove);
 
     await auctionDAO.updateApproveProperty(auction.propertyId);
 
@@ -86,20 +81,19 @@ const approveAuction = async (auction) =>{
         property.Start_Bid__c,
         property.Price_Step__c
     );
-}
+};
 
-const getAllAuction = async () =>{
-     var auctionList = await auctionDAO.getAllAuction();
-     return auctionList;
-}
+const getAllAuction = async () => {
+    var auctionList = await auctionDAO.getAllAuction();
+    return auctionList;
+};
 
-
-const getAuctionDetailByID = async (auctionId,propertyId) =>{
-    var data = await auctionDAO.getAuctionDetailByID(auctionId,propertyId);
+const getAuctionDetailByID = async (auctionId, propertyId) => {
+    var data = await auctionDAO.getAuctionDetailByID(auctionId, propertyId);
     return data;
-}
+};
 
 // exports.createRequestAuction = createRequestAuction;
 // exports.updateRejectAuction = updateRejectAuction
 
-module.exports = {createRequestAuction,updateRejectAuction,approveAuction,getAllAuction,getAuctionDetailByID}
+module.exports = { createRequestAuction, updateRejectAuction, approveAuction, getAllAuction, getAuctionDetailByID };

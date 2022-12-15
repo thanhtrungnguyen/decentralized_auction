@@ -14,10 +14,10 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import HeaderUser from "../../components/header/HeaderUser";
 import Loading from "../../components/loading/Loading";
-
+import BidModal from "../bidder/index";
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
-    const { id ,propertyId} = useParams();
+    const { id, propertyId } = useParams();
     const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
     const { data, loading, error } = useFetch(baseURL);
 
@@ -34,6 +34,12 @@ const AuctionDetail = () => {
         });
         return users;
     };
+
+    const [openModal, setOpenModal] = useState(() => {
+        return false;
+    });
+
+    const [auction, setAuction] = useState([]);
     return loading ? (
         <Loading />
     ) : (
@@ -134,14 +140,36 @@ const AuctionDetail = () => {
                 <div className={styles.col2}>
                     <p className={styles.title}>{data.Name}</p>
                     <p className={styles.txtBold}>Start Bid : {data.Start_Bid__c}</p>
-                    <p className={styles.txt}>Start Registration Time  : {new Date(new Date(data.Auctions1__r.records[0].Start_Registration_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}</p>
-                    <p className={styles.txt}>End Registration Time  : {new Date(new Date(data.Auctions1__r.records[0].End_Registration_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}</p>
-                    <p className={styles.txt}>Auction Start Time : {new Date(new Date(data.Auctions1__r.records[0].Start_Aution_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}</p>
-                    <p className={styles.txt}>Auction End Time : {new Date(new Date(data.Auctions1__r.records[0].End_Auction_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}</p>
+                    <p className={styles.txt}>
+                        Start Registration Time :{" "}
+                        {new Date(new Date(data.Auctions1__r.records[0].Start_Registration_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}
+                    </p>
+                    <p className={styles.txt}>
+                        End Registration Time :{" "}
+                        {new Date(new Date(data.Auctions1__r.records[0].End_Registration_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}
+                    </p>
+                    <p className={styles.txt}>
+                        Auction Start Time :{" "}
+                        {new Date(new Date(data.Auctions1__r.records[0].Start_Aution_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}
+                    </p>
+                    <p className={styles.txt}>
+                        Auction End Time :{" "}
+                        {new Date(new Date(data.Auctions1__r.records[0].End_Auction_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}
+                    </p>
                     {/* </div> */}
-                    <Popup trigger={<button className={styles.btn}>Place Bid</button>} position="right center">
+                    {/* <Popup trigger={<button className={styles.btn}>Place Bid</button>} position="right center">
                         <PlaceABid sendAuction={data} />
-                    </Popup>
+
+                    </Popup> */}
+                    <button
+                        className={styles.btn}
+                        onClick={() => {
+                            setOpenModal(true);
+                        }}
+                    >
+                        Fucking Bid
+                    </button>
+                    {openModal && <BidModal closeModal={setOpenModal} auction={id} property={propertyId} />}
                 </div>
             </div>
             <br />

@@ -11,12 +11,17 @@ import auctionAbi from "../../constants/abi.json";
 import contractAddresses from "../../constants/contractAddress.json";
 import AuctionRegistration from "./ui/AuctionRegistration";
 import PlaceBid from "./ui/PlaceBid";
+import NotYetRegistrationTime from "./ui/NotYetRegistrationTime";
+import WaitingForAuctionTime from "./ui/WaitingForAuctionTime";
+import axios from "axios";
 
-const BidModal = ({ closeModal, auction }) => {
+const BidModal = ({ closeModal, auction: auctionId, property }) => {
+    const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
+    const [auction, setAuction] = useState([]);
     const supportedChains = ["5"];
     const [hasMetamask, setHasMetamask] = useState(false);
     const { enableWeb3, chainId, isWeb3Enabled } = useMoralis();
-
+    console.log(auction);
     // const { runContractFunction, data, error, isFetching, isLoading } = useWeb3Contract({
     //     abi: auctionAbi,
     //     contractAddress: "0xe3417CF4716Ae7F66F063f03c38D0Bc27DED9AdC", // your contract address here
@@ -24,6 +29,18 @@ const BidModal = ({ closeModal, auction }) => {
     //     params: { auctionId: "89hg348e3d35gj" },
     // });
     // console.log(data);
+
+    console.log(auctionId);
+    useEffect(() => {
+        axios
+            .get(baseURL)
+            .then((res) => {
+                setAuction(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, []);
 
     useEffect(() => {
         if (typeof window.ethereum !== "undefined") {
@@ -38,23 +55,26 @@ const BidModal = ({ closeModal, auction }) => {
         if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
         if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
         if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
+        if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
         return null;
     };
 
     const renderCurrentState = () => {
         switch (auctionState()) {
             case "NotYetRegistrationTime":
-                return <h2>NotYetRegistrationTime</h2>;
+                return <NotYetRegistrationTime auction={auction} />;
             case "RegistrationTime":
-                return <AuctionRegistration auction={auction} />;
+                return <AuctionRegistration auction={auction} property={property} />;
             case "WaitingAuctionTime":
-                return <h2>WaitingAuctionTime</h2>;
+                return <WaitingForAuctionTime auction={auction} />;
             case "AuctionTime":
-                return <PlaceBid auction={auction} />;
+                return <PlaceBid auction={auction} property={property} />;
             case "PaymentTime":
                 return <h2>PaymentTime</h2>;
+            case "AuctionEnded":
+                return <h2>Auction Ended</h2>;
             default:
-                return "Auction Ended";
+                return "Auction Not Found ";
         }
     };
     return (

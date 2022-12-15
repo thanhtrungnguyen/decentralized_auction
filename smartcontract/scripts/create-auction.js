@@ -37,12 +37,12 @@ createAuction = async (
     }
 };
 
-const auctionId = "fsafasg345";
-const startRegistrationTime = getEpoch("December 14, 2022 20:25:19");
-const endRegistrationTime = getEpoch("December 14, 2022 20:30:00");
-const startAuctionTime = getEpoch("December 14, 2022 20:31:01");
-const endAuctionTime = getEpoch("December 15, 2022 17:52:00");
-const duePaymentTime = getEpoch("December 15, 2022 18:59:00");
+const auctionId = "f324f3";
+const startRegistrationTime = getEpoch("December 15, 2022 20:25:19");
+const endRegistrationTime = getEpoch("December 15, 2022 20:30:00");
+const startAuctionTime = getEpoch("December 15, 2022 20:31:01");
+const endAuctionTime = getEpoch("December 16, 2022 17:52:00");
+const duePaymentTime = getEpoch("December 16, 2022 18:59:00");
 const registrationFee = parseWei(0.001);
 const depositAmount = parseWei(0.02);
 const startBid = parseWei(0.05);

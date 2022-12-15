@@ -13,8 +13,25 @@ import Decimal from "decimal.js";
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import BiddingProperty from "../components/BiddingProperty";
+import { useFetch } from "../../../hook/useFetch";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-function AuctionRegistration({ auction }) {
+function AuctionRegistration({ auction: auctionId, property: propertyId }) {
+    const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
+    const [auction, setAuction] = useState([]);
+    console.log(auctionId);
+    useEffect(() => {
+        axios
+            .get(baseURL)
+            .then((res) => {
+                setAuction(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, []);
+
     const { isWeb3Enabled, chainId: chainIdHex } = useMoralis();
     const chainId = parseInt(chainIdHex);
     console.log(chainId);
@@ -86,11 +103,7 @@ function AuctionRegistration({ auction }) {
                 <p className={styles.txt}>You have selected:</p>\
                 <div>
                     <div className={styles.info}>
-                        {/* <img className={styles.img} src={sendAuction.MediaURL[0]} alt="images" /> */}
-                        {/* <img className={styles.img} src="https://static.vecteezy.com/packs/media/photos/term-bg-3-f6a12264.jpg" alt="images" /> */}
-                        {/* <p className={styles.title}>{sendAuction.PropertyName}</p> */}
-                        {/* <p className={styles.title}>PropertyName PropertyName PropertyName PropertyName </p> */}
-                        {/* <BiddingProperty auction={auction} /> */}
+                        <BiddingProperty auction={auction} property={propertyId} />
                         <p className={styles.txtM}>Starting bid:</p>
                         <p className={styles.txtNormal}>{auction.startBid}</p>
                         {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
