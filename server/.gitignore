@@ -244,7 +244,8 @@ lint/tmp/
 # lint/reports/
 
 gas-report.txt
-
+uploads
+uploads/
 
 uploads/
 
