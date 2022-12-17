@@ -1,5 +1,5 @@
 const auctionDAO = require("../dal/auctionDAO");
-const { createAuction } = require("./callContractFunction");
+const callContractFunction = require("./callContractFunction");
 
 const createRequestAuction = async (propertyId) => {
     try {
@@ -69,7 +69,7 @@ const approveAuction = async (auction) => {
 
     property = await auctionDAO.findPropertyById(auction.propertyId);
 
-    await createAuction(
+    await callContractFunction.createAuction(
         auction.auctionId,
         auction.timeSTRegist,
         auction.timeENRegist,
