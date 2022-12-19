@@ -17,7 +17,7 @@ import { useFetch } from "../../../hook/useFetch";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function AuctionRegistration({ auction: auctionId, property: propertyId }) {
+function AuctionRegistration({ auction: auctionId }) {
     const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
     const [auction, setAuction] = useState([]);
     console.log(auctionId);
@@ -103,7 +103,8 @@ function AuctionRegistration({ auction: auctionId, property: propertyId }) {
                 <p className={styles.txt}>You have selected:</p>\
                 <div>
                     <div className={styles.info}>
-                        <BiddingProperty auction={auction} property={propertyId} />
+                        {/* <BiddingProperty auction={auction} property={property} /> */}
+                        <BiddingProperty />
                         <p className={styles.txtM}>Starting bid:</p>
                         <p className={styles.txtNormal}>{auction.startBid}</p>
                         {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}

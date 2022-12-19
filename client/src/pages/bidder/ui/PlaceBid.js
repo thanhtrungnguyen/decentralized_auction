@@ -165,7 +165,9 @@ function PlaceBid({ auction }) {
                 <p className={styles.txt}>You have selected:</p>
                 <div>
                     <div className={styles.info}>
-                        <BiddingProperty auction={auction} />
+                        {/* <BiddingProperty auction={auction} />
+                        <BiddingProperty auction={auction} property={property} /> */}
+                        <BiddingProperty />
                         <p className={styles.txtM}>Starting bid:</p>
                         <p className={styles.txtNormal}>{auction.startBid}</p>
                         <p className={styles.txtM}>Current bid:</p>

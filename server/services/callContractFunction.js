@@ -40,18 +40,7 @@ const createAuction = async (
 ) => {
     try {
         console.log("Creating auction on smartcontract...");
-        console.log(
-            auctionId,
-            startRegistrationTime,
-            endRegistrationTime,
-            startAuctionTime,
-            endAuctionTime,
-            duePaymentTime,
-            registrationFee,
-            depositAmount,
-            startBid,
-            priceStep
-        );
+
         const startRegistrationTimeGotEpoch = getEpoch(startRegistrationTime);
         const endRegistrationTimeGotEpoch = getEpoch(endRegistrationTime);
         const startAuctionTimeGotEpoch = getEpoch(startAuctionTime);
@@ -61,6 +50,18 @@ const createAuction = async (
         const depositAmountParsed = parseWei(depositAmount);
         const startBidParsed = parseWei(startBid);
         const priceStepParsed = parseWei(priceStep);
+        console.log(
+            auctionId,
+            startRegistrationTimeGotEpoch,
+            endRegistrationTimeGotEpoch,
+            startAuctionTimeGotEpoch,
+            endAuctionTimeGotEpoch,
+            duePaymentTimeGotEpoch,
+            registrationFeeParsed,
+            depositAmountParsed,
+            startBidParsed,
+            priceStepParsed
+        );
         await contract.createAuction(
             auctionId,
             startRegistrationTimeGotEpoch,

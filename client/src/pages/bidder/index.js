@@ -64,7 +64,8 @@ const BidModal = ({ closeModal, auction: auctionId, property }) => {
             case "NotYetRegistrationTime":
                 return <NotYetRegistrationTime auction={auction} />;
             case "RegistrationTime":
-                return <AuctionRegistration auction={auction} property={property} />;
+                // return <AuctionRegistration auction={auction} property={property} />;
+                return <AuctionRegistration auction={auction} />;
             case "WaitingAuctionTime":
                 return <WaitingForAuctionTime auction={auction} />;
             case "AuctionTime":
