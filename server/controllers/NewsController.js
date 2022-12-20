@@ -37,7 +37,9 @@ const changeStatusNews = async (req, res, next) => {
 const getAllNews = async (req, res, next) => {
     try {
         var index = req.params.index;
-        var list = await NewsService.getAll(index);
+        var status = req.params.status;
+        var title = req.params.title;
+        var list = await NewsService.getAll(index,status,title);
         res.status(200).json(list);
     } catch (error) {
         next(error)
@@ -67,5 +69,8 @@ const getByStatus = async (req, res, next) => {
     }
 }
 
+const getNewsById = async(req,res,next)=>{
+    res.status(200).json(listNews);
+}
 
 module.exports = {changeStatusNews,createNews,updateNews,getAllNews,filterNews,getByStatus}

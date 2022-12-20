@@ -10,7 +10,7 @@ const createContact = async (user, contact, role, files) => {
         const result = await uploadFile(files.cardFront[0]);
         const result1 = await uploadFile(files.cardBack[0]);
         const filesImg = { result: result, result1: result1 }
-        var userHashPassword = await hashPasswordService(user)
+        var userHashPassword = await hashPassword(user)
         var contactId = await AuthDAO.createContact(userHashPassword, contact, role, filesImg)
         return contactId;
     } catch (error) {
@@ -22,7 +22,8 @@ const createAccount = async (user, contact, role, files, account) => {
         const result = await uploadFile(files.cardFront[0]);
         const result1 = await uploadFile(files.cardBack[0]);
         const filesImg = { result: result, result1: result1 }
-        var accountId = await AuthDAO.createAccount(user, contact, role, filesImg, account)
+        var userHashPassword = await hashPassword(user)
+        var accountId = await AuthDAO.createAccount(userHashPassword, contact, role, filesImg, account)
         return accountId;
     } catch (error) {
         console.error(error)
@@ -30,13 +31,15 @@ const createAccount = async (user, contact, role, files, account) => {
 }
 const createManager = async (user, role) => {
     try {
-        var userId = await AuthDAO.createManager(user, role)
+        var userHashPassword = await hashPassword(user)
+
+        var userId = await AuthDAO.createManager(userHashPassword, role)
         return userId;
     } catch (error) {
         console.error(error)
     }
 }
-const hashPasswordService = async (user) => {
+const hashPassword = async (user) => {
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(user.password, salt);
     return { userName: user.userName, password: hash }
