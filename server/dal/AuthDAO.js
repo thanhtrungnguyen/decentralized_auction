@@ -202,4 +202,4 @@ const changePassword = async (user, password) => {
     }
 }
 
-module.exports = { createContact, createAccount, createManager, getUserByName, changePassword, getUserById }
+module.exports = { createContact, createAccount, createManager, getUserByName, changePassword, getUserById , createUser}
