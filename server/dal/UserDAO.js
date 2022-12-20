@@ -56,4 +56,7 @@ const getUserRole = async (userId) => {
     })
     return role;
 }
+const updateUser = async(user) =>{
+    
+}
 module.exports = { getAllUser, getUserById }

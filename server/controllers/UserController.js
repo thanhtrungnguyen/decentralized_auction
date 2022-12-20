@@ -1,7 +1,7 @@
-const UserService = require("../services/UserService.js")
+const UserService = require('../services/UserService')
 
 // get All 
-const getAllUserController = async (req, res, next) => {
+const getAllUser = async (req, res, next) => {
     try {
         var role = req.params.role;
         var index = (req.params.index)
@@ -12,7 +12,7 @@ const getAllUserController = async (req, res, next) => {
     }
 }
 // 
-const getUserByIdController = async(req,res,next) =>{
+const getUserById = async(req,res,next) =>{
     try {
         var userId = req.params.userId;
         var user = await UserService.getUserById(userId);
@@ -21,4 +21,13 @@ const getUserByIdController = async(req,res,next) =>{
         next(error)
     }
 } 
-module.exports = {getAllUserController,getUserByIdController}
+const updateUser = async(req,res,next) =>{
+    try {
+        var userId = req.params.userId;
+        var user = await UserService.getUserById(userId);
+        res.status(200).json(user);
+    } catch (error) {
+        next(error)
+    }
+} 
+module.exports = {getAllUser,getUserById,updateUser}

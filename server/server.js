@@ -28,10 +28,6 @@ const app = express();
 // const http = createServer(app);
 const server = createSocket(app);
 
-
-
-
-
 //config library
 const PORT = 8800;
 
@@ -75,7 +71,7 @@ app.use((err, req, res, next) => {
     res.status(err.status).json({
         success: false,
         status: errorStatus,
-        message: errorMessage, 
+        message: errorMessage,
         stack: err.stack,
     });
 });
