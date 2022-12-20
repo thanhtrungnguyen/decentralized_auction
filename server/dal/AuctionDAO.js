@@ -90,8 +90,9 @@ const updateApproveProperty = async (propertyId) => {
 }
 
 const findPropertyById = async (propertyId) => {
+    var connection = await conn();
     var property =null;
-    await conn.query(
+    await connection.query(
         "Select Category_Id__r.Name, Deposit_Amount__c, End_View_Property_Time__c, Place_View_Property__c, Price_Step__c, Description__c, Name, Start_Bid__c, Start_View_Property_Time__c, Status__c, User_Id__c, (Select Name from Properties_Media__r) from Property_DAP__c Where Id ='" +
         propertyId +
         "'",
@@ -104,9 +105,9 @@ const findPropertyById = async (propertyId) => {
 }
 
 const getAllAuction = async () => {
-
+    var connection = await conn();
     var auctionlist = null;
-    await conn.query(
+    await connection.query(
         "Select Id, Name, Description__c, Category_Id__r.Name, Deposit_Amount__c, End_View_Property_Time__c, Place_View_Property__c, Price_Step__c, Start_Bid__c, Start_View_Property_Time__c, Status__c, User_Id__c, (Select Name From Properties_Media__r), (Select Id, Name, RegistrationFee__c, Due_Payment_Time__c, End_Auction_Time__c, Start_Aution_Time__c, Start_Registration_Time__c, End_Registration_Time__c, Property_DAP_Id__c, Status__c From Auctions1__r  ) From Property_DAP__c WHERE Id IN (SELECT Property_DAP_Id__c  FROM 	Auction__c  )",
         function (err, result) {
             if (err) {
@@ -122,11 +123,11 @@ const getAllAuction = async () => {
 
 
 const getAuctionDetailByID = async (auctionId, propertyId) => {
-
+    var connection = await conn();
     var auctionlist = null;
 
 
-        await conn.query(
+        await connection.query(
             "Select Id, Name, Description__c, Category_Id__r.Name, Deposit_Amount__c, End_View_Property_Time__c, Place_View_Property__c, Price_Step__c, Start_Bid__c, Start_View_Property_Time__c, Status__c, User_Id__c, (Select Name From Properties_Media__r), (Select Id, Name, RegistrationFee__c, Due_Payment_Time__c, End_Auction_Time__c, Start_Aution_Time__c, Start_Registration_Time__c, End_Registration_Time__c, Property_DAP_Id__c, Status__c From Auctions1__r Where Id= '" +
             auctionId +
             "') From Property_DAP__c where Id = '" +
