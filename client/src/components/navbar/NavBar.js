@@ -20,7 +20,10 @@ const NavBar = () => {
                     <Link className={styles.link} to="/">
                         About us
                     </Link>
-                    <Link className={styles.link} color="red" to="/FakeAuctionDetail">
+                    <Link className={styles.link} to="/profile">
+                        Profile
+                    </Link>
+                    <Link className={styles.link} to="/FakeAuctionDetail">
                         Fake AuctionDetail
                     </Link>
                     <div className={styles.flright}>

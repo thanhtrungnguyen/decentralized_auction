@@ -11,6 +11,7 @@ import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import FooterCopy from "../../components/footer/FooterCopy";
 
 const AddManager = () => {
     const [username, setUsername] = useState("");
@@ -109,6 +110,7 @@ const AddManager = () => {
                         </div>
                     </div>
                     <Footer />
+                    <FooterCopy />
                 </div>
             </form>
         </>
