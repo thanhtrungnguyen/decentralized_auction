@@ -15,8 +15,10 @@ const EnterEmail = () => {
         axios.post("http://localhost:8800/api/auth/forgotPassword", { userName }, { withCredentials: true }).then((res) => {
             console.log(res);
             console.log(res.data);
-            // alert(res.data.message);
+            
         });
+        alert("Please check your email !!!");
+        navigate('/homePage');
     };
 
     return (

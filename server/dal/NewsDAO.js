@@ -37,6 +37,9 @@ const getByStatus = async (index, status) => {
         console.error(error)
     }
 }
+const getById = async (newsId)=>{
+
+}
 const filter = async (title,index,status)=>{
     try {
         var listNews,total, totalNews = null;
@@ -99,5 +102,5 @@ const create = async (title,description)=>{
         console.error(error)
     }
 }
-module.exports = { getAll, getByStatus,filter,changeStatus,update,create }
+module.exports = { getAll, getByStatus,filter,changeStatus,update,create,getById }
 

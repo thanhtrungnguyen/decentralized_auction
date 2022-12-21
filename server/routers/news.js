@@ -9,9 +9,9 @@ router.put("/updateNews/:id",  updateNews);
 
 router.put("/changeStatusNews/:id",  changeStatusNews);
 
-router.get("/:index",  getAllNews);
+router.get("/:index/:status/:title",  getAllNews);
 
-router.get("/:title/:status/:index",  filterNews);
+router.get("/search",  filterNews);
 
 router.get("/:status/:index",  getByStatus);
 
