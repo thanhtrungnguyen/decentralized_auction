@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
+import FooterCopy from "../../components/footer/FooterCopy";
+import PageName from "../../components/header/PageName";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -16,36 +18,40 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        axios.post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true }).then((res) => {
-            console.log(res);
-            if(res.data.success == false){
-                alert(res.data.message);
-            }else{
-                if (res.data.role == "BIDDER") {
-                    navigate("/homePage");
+        axios
+            .post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+                if (res.data.success == false) {
+                    alert(res.data.message);
+                } else {
+                    if (res.data.role == "BIDDER") {
+                        navigate("/homePage");
+                    }
+                    if (res.data.role == "ADMIN") {
+                        navigate("/listManagers");
+                    }
+                    if (res.data.role == "SELLER") {
+                        navigate("/myProperty");
+                    }
+                    if (res.data.role == "MANAGER") {
+                        navigate("/autionsListForManager");
+                    }
                 }
-                if (res.data.role == "ADMIN") {
-                    navigate("/listManagers");
-                }
-                if (res.data.role == "SELLER") {
-                    navigate("/myProperty");
-                }
-                if (res.data.role == "MANAGER") {
-                    navigate("/autionsListForManager");
-                }
-            }
 
-            
-            // alert(res.data.message);
-        }).catch((reason) => {
-            console.log(reason);
-          });
+                // alert(res.data.message);
+            })
+            .catch((reason) => {
+                console.log(reason);
+            });
     };
 
     return (
         <>
             <Header />
+
             <NavBar />
+            <PageName pageName={"Login"} link={"login"} home={"homePage"} />
             <div>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.group3}>
@@ -81,6 +87,7 @@ const Login = () => {
                 </form>
             </div>
             <Footer />
+            <FooterCopy />
         </>
     );
 };

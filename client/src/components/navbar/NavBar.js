@@ -20,6 +20,9 @@ const NavBar = () => {
                     <Link className={styles.link} to="/">
                         About us
                     </Link>
+                    <Link className={styles.link} to="/profile">
+                        Profile
+                    </Link>
                     <div className={styles.flright}>
                         <input className={styles.ip} type="text"></input>
                         <BsSearch className={styles.icon} />

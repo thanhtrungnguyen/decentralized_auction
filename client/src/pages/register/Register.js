@@ -366,17 +366,6 @@ const Register = () => {
                         placeholder="Re-eneter the password"
                         required
                     ></input>
-                    <p className={styles.txtBlack}>Role</p>
-                    {/* <select
-            id="role"
-            className={styles.dropdown}
-            onChange={(e) => handleInputChange(e)}
-            placeholder="Role"
-            defaultValue="BIDDER"
-          >
-            <option value="BIDDER">BIDDER</option>
-            <option value="SELLER">SELLER</option>
-          </select> */}
                     <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>
                 </form>
             </div>

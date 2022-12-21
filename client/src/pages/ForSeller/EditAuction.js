@@ -71,25 +71,9 @@ const EditAuction = () => {
         });
         console.log(formData);
         for (const [key, value] of formData) {
-            alert(key + ": " + value);
+            console.log(key + ": " + value);
         }
-        alert(
-            "infomation: " +
-                formData +
-                propertyImage +
-                " " +
-                propertyVideo.name +
-                " " +
-                propertyName +
-                " " +
-                cagetory +
-                " " +
-                propertyDescription +
-                " " +
-                startBid +
-                " " +
-                biddingPreiod
-        );
+
         event.preventDefault();
     };
     const getUser = () => {

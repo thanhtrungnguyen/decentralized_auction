@@ -1,0 +1,48 @@
+.header {
+    width: 100%;
+    height: 286px;
+    background: #f6f5ff;
+    position: relative;
+}
+
+.pageName {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 36px;
+    /* identical to box height */
+    left: 20%;
+    top: 20%;
+    color: #101750;
+    position: absolute;
+}
+.Link {
+    position: absolute;
+    left: 20%;
+    top: 50%;
+}
+.txt {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-decoration: none;
+    color: #000000;
+    position: relative;
+    margin-left: 10px;
+}
+.txtR {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-decoration: none;
+
+    /* pink */
+    position: relative;
+    margin-right: 50px;
+    color: #fb2e86;
+}
