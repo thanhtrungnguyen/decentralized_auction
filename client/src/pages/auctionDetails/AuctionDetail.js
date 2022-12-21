@@ -15,6 +15,8 @@ import jwt from "jsonwebtoken";
 import HeaderUser from "../../components/header/HeaderUser";
 import Loading from "../../components/loading/Loading";
 import BidModal from "../bidder/index";
+import BidModalButton from "../bidder/components/BidModalButton";
+
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
     const { id, propertyId } = useParams();
@@ -35,9 +37,9 @@ const AuctionDetail = () => {
         return users;
     };
 
-    const [openModal, setOpenModal] = useState(() => {
-        return false;
-    });
+    // const [openModal, setOpenModal] = useState(() => {
+    //     return false;
+    // });
 
     const [auction, setAuction] = useState([]);
     return loading ? (
@@ -161,15 +163,8 @@ const AuctionDetail = () => {
                         <PlaceABid sendAuction={data} />
 
                     </Popup> */}
-                    <button
-                        className={styles.btn}
-                        onClick={() => {
-                            setOpenModal(true);
-                        }}
-                    >
-                        Fucking Bid
-                    </button>
-                    {openModal && <BidModal closeModal={setOpenModal} auction={id} property={propertyId} />}
+
+                    <BidModalButton auctionId={id} propertyId={propertyId} />
                 </div>
             </div>
             <br />

@@ -40,7 +40,6 @@ const createAuction = async (
 ) => {
     try {
         console.log("Creating auction on smartcontract...");
-
         const startRegistrationTimeGotEpoch = getEpoch(startRegistrationTime);
         const endRegistrationTimeGotEpoch = getEpoch(endRegistrationTime);
         const startAuctionTimeGotEpoch = getEpoch(startAuctionTime);
@@ -79,13 +78,6 @@ const createAuction = async (
         console.log(error);
     }
 };
-
-// callFunction()
-//     .then(() => process.exit(0))
-//     .catch((error) => {
-//         console.error(error)
-//         process.exit(1)
-//     })
 
 module.exports = {
     createAuction,

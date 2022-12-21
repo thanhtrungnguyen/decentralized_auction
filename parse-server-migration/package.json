@@ -16,11 +16,13 @@
     "graphql-ws": "^5.10.1",
     "moralis": "^2.8.2",
     "ngrok": "^4.3.3",
+    "nodemailer": "^6.8.0",
     "parse-server": "^5.2.7"
   },
   "devDependencies": {
     "@moralisweb3/eslint-config": "^1.0.1",
     "@types/cors": "^2.8.13",
+    "@types/nodemailer": "^6.4.7",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "axios": "^0.27.2",

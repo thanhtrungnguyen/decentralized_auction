@@ -18,6 +18,7 @@ const auctionRoute = require("./routers/auctions.js");
 const propertyRoute = require("./routers/properties.js");
 const categoryRoute = require("./routers/categories.js");
 const newsRoute = require("./routers/news.js");
+const { address } = require("./services/callContractFunction");
 
 console.log("Starting...");
 
@@ -204,6 +205,8 @@ app.use((err, req, res, next) => {
         stack: err.stack,
     });
 });
+
+console.log(`Contract address: ${address}`);
 
 server.listen(PORT, () => {
     // connect();

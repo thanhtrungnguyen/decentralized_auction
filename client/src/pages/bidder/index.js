@@ -15,7 +15,7 @@ import NotYetRegistrationTime from "./ui/NotYetRegistrationTime";
 import WaitingForAuctionTime from "./ui/WaitingForAuctionTime";
 import axios from "axios";
 
-const BidModal = ({ closeModal, auction: auctionId, property }) => {
+const BidModal = ({ closeModal, auctionId, propertyId }) => {
     const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
     const [auction, setAuction] = useState([]);
     const supportedChains = ["5"];
@@ -69,7 +69,7 @@ const BidModal = ({ closeModal, auction: auctionId, property }) => {
             case "WaitingAuctionTime":
                 return <WaitingForAuctionTime auction={auction} />;
             case "AuctionTime":
-                return <PlaceBid auction={auction} property={property} />;
+                return <PlaceBid auction={auction} property={propertyId} />;
             case "PaymentTime":
                 return <h2>PaymentTime</h2>;
             case "AuctionEnded":
