@@ -67,7 +67,7 @@ const createAccount = async (user, contact, role, filesImg, account) => {
 const createManager = async (user, role) => {
     try {
         var userId = await createUser(user);
-        await addRoleForUser(role);
+        await addRoleForUser(role,userId);
         return userId;
     } catch (error) {
         console.error(error)

@@ -17,6 +17,6 @@ router.get("/checkadmin/:id", verifyAdmin, (req, res, next) => {
     res.send("hello admin");
 });
 
-router.get("/:role/:index",getAllUserController)
-router.get("/:userId",getUserByIdController)
+router.get("/:role/:index",getAllUser)
+router.get("/:userId",getUserById)
 module.exports = router;

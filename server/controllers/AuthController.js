@@ -1,10 +1,8 @@
 const AuthService = require('../services/AuthService');
 
 //define role
-const BIDDER = "BIDDER";
 const SELLER = "SELLER";
 const MANAGER = "MANAGER";
-const ADMIN = "ADMIN";
 const CONTACT = "CONTACT";
 const ACCOUNT = "ACCOUNT";
 //register new Bidder
@@ -101,7 +99,9 @@ const registerSeller = async (req, res, next) => {
 //register new Manager
 const registerManager = async (req, res, next) => {
     try {
-        const user = { userName: req.body.userName, password: req.body.password };
+        var userName = req.body.userName;
+        var password = req.body.password
+        const user = { userName: userName, password:  password};
         const role = MANAGER;
         var userId = await AuthService.createManager(user, role)
         if (userId)
