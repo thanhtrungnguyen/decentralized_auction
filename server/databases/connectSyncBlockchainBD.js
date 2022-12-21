@@ -6,7 +6,7 @@ const connectSyncBlockchainDB = async () => {
         return;
     }
 
-    mongoose.connect(process.env.MONGO_DB_SYNC_BLOCKCHAIN, {}, (err) => {
+    await mongoose.connect(process.env.MONGO_DB_SYNC_BLOCKCHAIN, {}, (err) => {
         if (err) throw err;
         console.log("Connected to Sync Blockchain DB (mongodb).");
     });
