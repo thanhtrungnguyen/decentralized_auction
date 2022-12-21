@@ -1,8 +1,9 @@
 const conn = require('./connectSF')
 
 const createRequestAuction = async (propertyId) => {
+    var connection = await conn();
     try {
-        await conn.sobject("Auction__c").create(
+        await connection.sobject("Auction__c").create(
             {
                 Property_DAP_Id__c: propertyId,
                 Status__c: "Request",
@@ -20,7 +21,8 @@ const createRequestAuction = async (propertyId) => {
 }
 
 const updateRequestProperty = async (propertyId) => {
-    await conn.sobject("Property_DAP__c").update(
+    var connection = await conn();
+    await connection.sobject("Property_DAP__c").update(
         {
             Id: propertyId,
             Status__c: "Request",
@@ -35,7 +37,8 @@ const updateRequestProperty = async (propertyId) => {
 
 
 const updateRejectAuction = async (auctionId) => {
-    await conn.sobject("Auction__c").update(
+    var connection = await conn();
+    await connection.sobject("Auction__c").update(
         {
             Status__c: "Rejected",
             Id: auctionId,
@@ -51,7 +54,8 @@ const updateRejectAuction = async (auctionId) => {
 
 
 const updateRejectProperty = async (propertyId) => {
-    await conn.sobject("Property_DAP__c").update(
+    var connection = await conn();
+    await connection.sobject("Property_DAP__c").update(
         {
             Status__c: "Rejected",
             Id: propertyId,
@@ -65,7 +69,9 @@ const updateRejectProperty = async (propertyId) => {
 }
 
 const updateApproveAuction = async (auctionApprove) => {
-    await conn.sobject("Auction__c").update(auctionApprove,
+    var connection = await conn();
+
+    await connection.sobject("Auction__c").update(auctionApprove,
         (err, ret) => {
             if (err || !ret.success) {
                 return console.error(err);
@@ -76,7 +82,9 @@ const updateApproveAuction = async (auctionApprove) => {
 
 
 const updateApproveProperty = async (propertyId) => {
-    await conn.sobject("Property_DAP__c").update(
+    var connection = await conn();
+
+    await connection.sobject("Property_DAP__c").update(
         {
             Status__c: "Approved",
             Id: propertyId,

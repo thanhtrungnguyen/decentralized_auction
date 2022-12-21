@@ -1,9 +1,8 @@
 const socketio = require("socket.io");
-// const { getAllAuction } = require("./dal/ContractInteractionDAO");
 const { Server } = require("socket.io");
 const http = require("http");
 const jsforce = require("jsforce");
-const { getAllAuction } = require("./dal/auctionDAO");
+const ContractInteractionService = require("./services/ContractInteractionService");
 require("dotenv").config();
 
 // const SocketEvents = require("./constants/SocketEvents");
@@ -53,18 +52,21 @@ module.exports = (app) => {
     
     io.on("connection", async (socket) => {
         socket.emit("data", latestData);
-        console.log(latestData);
+       
     });
     
-    setInterval(async () => {
-        var listAuction = await getAllAuction();
-         listAuction.map(async auction =>{
-            await console.log(auction.Name)
-        })
+    // setInterval(async () => {
+    //     var auctionlist = await ContractInteractionService.getAllAuction();
+       
+    //     auctionlist.map(async (auction) =>{
+    //         var timeStartAuctionFN = new Date(1671024661);
+    //         console.log(timeStartAuctionFN)
+    //     })
+       
         
-        console.log('Last updated: ' + new Date());
+    //     console.log('Last updated: ' + new Date());
       
-      }, 1000);
+    //   }, 1000);
 
 
 

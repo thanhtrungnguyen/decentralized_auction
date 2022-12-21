@@ -93,10 +93,11 @@ const getPlacedBidById = async (id) => {
     return bid;
 };
 const getAllAuction = async()=>{
-    const auction = await ContractInteraction.find();
+    var auction = null;
+    auction = await ContractInteraction.find({ name: "CreatedAuction"});
 
     return auction;
 
 }
 
-module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById , getAllAuction};
+module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getAllAuction};
