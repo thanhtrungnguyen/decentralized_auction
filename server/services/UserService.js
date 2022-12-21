@@ -13,5 +13,7 @@ const getUserById = async (userId) =>{
     var user = await UserDAO.getUserById(userId);
     return user
 } 
-
+const updateUser = async(userId)=>{
+    
+}
 module.exports = {getAllUser,getUserById}

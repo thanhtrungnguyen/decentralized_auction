@@ -43,7 +43,7 @@ const NewPassword = () => {
                             <p className={styles.txtLogin}>Forgot Password</p>
                             <p className={styles.text}>Please enter code chagne password we send your email </p>
                             <input
-                                type="text"
+                                type="password"
                                 className={styles.textField}
                                 placeholder="Enter New Password"
                                 value={password}
@@ -51,7 +51,7 @@ const NewPassword = () => {
                                 required
                             ></input>
                             <input
-                                type="text"
+                                type="password"
                                 className={styles.textField}
                                 placeholder="Re-Enter New Password"
                                 value={rePassword}

@@ -46,5 +46,9 @@ const getHighestBidder = (id) =>{
         return highestBidder;
     });
 }
+const getAllAuction = async ()=>{
+    var listAuction = await ContractInteractionDAO.getAllAuction();
+    return listAuction;
+}
 
-module.exports = { getAuctionInformationById, getBidInformationById, getPlacedBidById, getHighestBidder };
+module.exports = { getAuctionInformationById, getBidInformationById, getPlacedBidById, getHighestBidder, getAllAuction };

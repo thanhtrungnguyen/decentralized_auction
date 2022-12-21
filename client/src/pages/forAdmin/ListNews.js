@@ -21,8 +21,9 @@ const ListNews = () => {
     const [page, setPage] = useState(1);
     const [title, setTitle] = useState("");
     const [status, setStatus] = useState('');
+    const [searchData,setSearchData] = useState('');
     const navigate = useNavigate();
-    var baseURL = `http://localhost:8800/api/news/${page}`;
+    var baseURL = `http://localhost:8800/api/news/${page}/${status}`;
     // var totalURL = `http://localhost:8800/api/news/countNews`;
 
     var { data, loading, error } = useFetchPagination(baseURL, page);
@@ -33,20 +34,21 @@ const ListNews = () => {
             setTitle(value);
         }
     };
+
     const handleSubmit = (event) => {
         const formData = new FormData();
 
         formData.append("title", title);
-
+        //var { data, loading, error } = useFetchPagination(baseURL, page);
         axios
-            .get("http://localhost:8800/api/news", formData, {
+            .get("http://localhost:8800/api/news/search", {title}, {
                 withCredentials: true,
             })
             .then((res) => {
                 // console.log(res);
                 // console.log(res.data);
                 // alert(res.data.message);
-                // setData(res.data);
+                setSearchData(res.data);
 
                 navigate("/listNews");
             });
@@ -73,7 +75,7 @@ const ListNews = () => {
     function search(data) {
         return <>
             {
-                data.listNews.filter(news => (news.Status__c.includes(`${status}`) && news.Name.toString().toLowerCase().includes(`${title}`)))
+                data.listNews.filter(news => (news.Status__c.includes(`${status}`)))
                 .map((item) => (
                     <tr>
                         <td  className={styles.td}>{item.Name}</td>

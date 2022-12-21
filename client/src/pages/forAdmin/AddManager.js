@@ -13,32 +13,29 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
 const AddManager = () => {
-    const [username, setUsername] = useState('');
+    const [userName, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        if (id === "username") {
+        if (id === "userName") {
             setUsername(value);
         }
         if (id === "password") {
             setPassword(value);
         }
     };
-    const handleSubmit = (event) => {
-        const formData = new FormData();
+    const handleSubmit = async (event) => {
+      
 
-        formData.append("userName", username);
-        formData.append("password", password);
-        axios
+
+        await axios
             .post(
                 "http://localhost:8800/api/auth/registerManager",
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                },
+                {userName,password},
+
                 { withCredentials: true }
             )
             .then((res) => {
@@ -47,7 +44,7 @@ const AddManager = () => {
                 alert(res.data.message);
                 navigate("/listManagers");
             });
-        event.preventDefault();
+       event.preventDefault();
     };
     const cancel = () => {
         navigate("/listManagers");
@@ -67,7 +64,7 @@ const AddManager = () => {
         <>
             {(() => {
                 if (getUser().role == "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
+                    return <HeaderUser userName={getUser().userName} />;
                 } else {
                     return <Header />;
                 }
@@ -82,10 +79,10 @@ const AddManager = () => {
                             <br />
                             <label className={styles.txt}>Username</label>
                             <input
-                                id="username"
+                                id="userName"
                                 type="text"
                                 className={styles.input}
-                                value={username}
+                                value={userName}
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
