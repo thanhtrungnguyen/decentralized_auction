@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllUserController,  getUserByIdController } = require("../controllers/UserController.js");
+const { getAllUser,  getUserById } = require("../controllers/UserController.js");
 // const { deleteUser, findAllUser, findByUserID, updateUser } = require("'../controllers/user.js");
 const { verifyAdmin, verifyToken, verifySeller } = require("../utils/verifyToken.js");
 

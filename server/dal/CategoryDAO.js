@@ -1,6 +1,7 @@
 const conn = require('./connectSF')
 const createCategory = async(categoryName)=>{
-    await conn.sobject("Category__c").create(
+    var connection = await conn();
+    await connection.sobject("Category__c").create(
         {
             Name: categoryName,
         },
@@ -12,7 +13,8 @@ const createCategory = async(categoryName)=>{
     return category;
 }
 const getAllCategory  = async()=>{
-    await conn.sobject("Category_DAP__c").find({}, (err, ret) => {
+    var connection = await conn();
+    await connection.sobject("Category_DAP__c").find({}, (err, ret) => {
         if (err) console.error(err);
         category = ret;
     });

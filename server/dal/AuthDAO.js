@@ -3,7 +3,8 @@ const conn = require('./connectSF')
 const createContact = async (user, contact, role, filesImg) => {
     var contactId = null;
     var userId = await createUser(user);
-    await conn.sobject("Contact__c").create(
+    var connection = await conn();
+    await connection.sobject("Contact__c").create(
         {
             Name: contact.Name,
             First_Name__c: contact.First_Name__c,
@@ -38,7 +39,8 @@ const createAccount = async (user, contact, role, filesImg, account) => {
         var accountId = null;
         var userId = await createUser(user);
         var contactId = await createContact(user, contact, role, filesImg)
-        await conn.sobject("Account__c").create(
+        var connection = await conn();
+        await connection.sobject("Account__c").create(
             {
                 Name: account.Name,
                 //Company_Certificate__c: req.body.certificateCompany,
@@ -76,8 +78,9 @@ const createManager = async (user, role) => {
 const createUser = async (user) => {
     try {
         var userId = null;
+        var connection = await conn();
         // add new user
-        await conn.sobject("User__c").create(
+        await connection.sobject("User__c").create(
             {
                 Name: user.userName,
                 Password__c: user.password,
@@ -97,7 +100,8 @@ const createUser = async (user) => {
 }
 const addRoleForUser = async (role, userId) => {
     try {
-        await conn.sobject("Role__c").findOne(
+        var connection = await conn();
+        await connection.sobject("Role__c").findOne(
             {
                 Name: role,
             },
@@ -110,7 +114,7 @@ const addRoleForUser = async (role, userId) => {
                 }
             }
         );
-        await conn.sobject("Role_Right__c").create(
+        await connection.sobject("Role_Right__c").create(
             {
                 Role_Id__c: role,
                 User_DAP__c: userId,
@@ -128,7 +132,8 @@ const addRoleForUser = async (role, userId) => {
 }
 const addRepresentativeAccount = async (accountId, contactId, position) => {
     try {
-        await conn.sobject("Representative_Account_DAP__c").create(
+        var connection = await conn();
+        await connection.sobject("Representative_Account_DAP__c").create(
             {
                 Account_DAP__c: accountId,
                 Contact_DAP__c: contactId,
@@ -147,14 +152,14 @@ const addRepresentativeAccount = async (accountId, contactId, position) => {
 }
 const getUserByName = async (user) => {
     var findUser, role, data = null;
+    var connection = await conn();
 
-
-    await conn.sobject("User__c").findOne({ Name: user.userName }, async (err, ret) => {
+    await connection.sobject("User__c").findOne({ Name: user.userName }, async (err, ret) => {
         if (ret==null||err) {
             console.error(err);
         } else{
             findUser = ret;
-            await conn.query(`Select Role_Id__r.Name from Role_Right__c where User_DAP__r.Id = '${findUser.Id}'`, (err, result) => {
+            await connection.query(`Select Role_Id__r.Name from Role_Right__c where User_DAP__r.Id = '${findUser.Id}'`, (err, result) => {
                 if (ret==null||err) {
                     console.error(err);
                 }
@@ -173,11 +178,12 @@ const getUserByName = async (user) => {
 const getUserById = async (user) => {
     try {
         var findUser, role = null;
-        await conn.sobject("User__c").findOne({ Id: user.Id }, (err, ret) => {
+        var connection = await conn();
+        await connection.sobject("User__c").findOne({ Id: user.Id }, (err, ret) => {
             if (err) console.error(err);
             findUser = ret;
         });
-        await conn.query(`Select Role_Id__r.Name from Role_Right__c where User_DAP__r.Id = '${findUser.Id}'`, (err, result) => {
+        await connection.query(`Select Role_Id__r.Name from Role_Right__c where User_DAP__r.Id = '${findUser.Id}'`, (err, result) => {
             if (err) console.error(err);
             role = result.records[0].Role_Id__r.Name;
         })
@@ -188,7 +194,8 @@ const getUserById = async (user) => {
 }
 const changePassword = async (user, password) => {
     try {
-        await conn.sobject("User__c").update(
+        var connection = await conn();
+        await connection.sobject("User__c").update(
             {
                 Id: user.Id,
                 Password__c: password,
