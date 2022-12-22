@@ -93,7 +93,11 @@ const getAuctionDetailByID = async (auctionId, propertyId) => {
     return data;
 };
 
+const filterAuction = async(index,status,price)=>{
+    var list =await auctionDAO.filterAuction(index,status,price)
+    return list;
+}
 // exports.createRequestAuction = createRequestAuction;
 // exports.updateRejectAuction = updateRejectAuction
 
-module.exports = { createRequestAuction, updateRejectAuction, approveAuction, getAllAuction, getAuctionDetailByID };
+module.exports = { createRequestAuction, updateRejectAuction, approveAuction, getAllAuction, getAuctionDetailByID,filterAuction };

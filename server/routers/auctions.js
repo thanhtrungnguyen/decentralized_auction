@@ -7,6 +7,7 @@ const {
     uploadImage,
     approveAuction,
     rejectAuction,
+    filterAuction,
 } = require("../controllers/AuctionController.js");
 const { verifySeller } = require("../utils/verifyToken.js");
 
@@ -27,5 +28,7 @@ router.get("/auctiondetail/:auctionId/:propertyId", getAuctionDetailByID);
 // router.get("/auction")
 
 router.get("/images/:key", uploadImage);
+
+router.get("/filter/:index/:status/:price",filterAuction)
 
 module.exports = router;
