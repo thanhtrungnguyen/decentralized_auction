@@ -1,7 +1,32 @@
 import styles from "../../styleCss/stylesComponents/navbar.module.css";
 import { Outlet, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
+import { useEffect, useState } from "react";
+
 const NavBar = () => {
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
+    const [type, setType] = useState();
+    const [id, setId] = useState();
+    useEffect(() => {
+        if (getUser() != null) {
+            setType(getUser().type);
+            setId(getUser().id);
+        } else {
+            setType("CONTACT");
+        }
+    }, []);
     return (
         <>
             <div className={styles.container}>
@@ -20,9 +45,22 @@ const NavBar = () => {
                     <Link className={styles.link} to="/">
                         About us
                     </Link>
-                    <Link className={styles.link} to="/profile">
-                        Profile
-                    </Link>
+
+                    {(() => {
+                        if (type === "CONTACT") {
+                            return (
+                                <Link className={styles.link} to={`/profile/${id}`}>
+                                    Profile
+                                </Link>
+                            );
+                        } else {
+                            return (
+                                <Link className={styles.link} to={`/profileOrganization/${id}`}>
+                                    Profile
+                                </Link>
+                            );
+                        }
+                    })()}
                     <Link className={styles.link} to="/FakeAuctionDetail">
                         Fake AuctionDetail
                     </Link>
