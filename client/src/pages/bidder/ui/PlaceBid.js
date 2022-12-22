@@ -34,7 +34,7 @@ function PlaceBid({ auction }) {
         return "0";
     });
     const [transactionStatus, setTransactionStatus] = useState(() => {
-        return null;
+        return undefined;
     });
 
     const inputRef = useRef("0");
@@ -147,7 +147,7 @@ function PlaceBid({ auction }) {
     // };
 
     const handleErrorNotification = (tx) => {
-        console.log("handleErrorNotification " + tx);
+        console.log(tx);
         setTransactionStatus({ status: "Failed" });
         dispatch({
             type: "error",
@@ -209,7 +209,7 @@ function PlaceBid({ auction }) {
                         >
                             {isLoading || isFetching ? "Loading..." : "Place Bid"}
                         </button>
-                        {!transactionStatus ? <TransactionStatus transactionStatus={transactionStatus} /> : ""}
+                        <TransactionStatus transactionStatus={transactionStatus} />
                     </div>
                     <TransactionHistory />
                 </div>

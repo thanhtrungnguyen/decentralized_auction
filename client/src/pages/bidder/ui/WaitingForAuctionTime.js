@@ -7,7 +7,6 @@ const WaitingForAuctionTime = ({ auction }) => {
             <h2>WaitingForAuctionTime</h2>
             Auction start in:
             <p className={styles.txtNormal}>
-                Auction start in:
                 <Countdown date={auction.startAuctionTime * 1000} />
             </p>
         </div>
