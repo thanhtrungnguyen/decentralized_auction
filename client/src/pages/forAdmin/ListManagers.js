@@ -3,12 +3,10 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
-import React, { useEffect, useState } from "react";
-import { BsFillCheckSquareFill } from "react-icons/bs";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Popup from "reactjs-popup";
 import BanedManager from "../../components/popups/forAdmin/BanManager";
 import ActiveManager from "../../components/popups/forAdmin/ActiveManager";
@@ -20,8 +18,8 @@ import jwt from "jsonwebtoken";
 const ListForManagers = () => {
     const [page, setPage] = React.useState(1);
 
-    const [email, setEmail] = useState('');
-    const [status, setStatus] = useState('');
+    const [email, setEmail] = useState("");
+    const [status, setStatus] = useState("");
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/MANAGER/${page}`;
 
@@ -55,9 +53,9 @@ const ListForManagers = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-    const handleChangeStatus = (e)=>{
-        setStatus(e.target.value)
-    }
+    const handleChangeStatus = (e) => {
+        setStatus(e.target.value);
+    };
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -74,14 +72,14 @@ const ListForManagers = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "ADMIN") {
+                if (getUser().role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
                 }
             })()}
             <NavBar />
-            <form >
+            <form>
                 <div className={styles.container}>
                     <SideBarAdmin />
                     <div className={styles.content}>
@@ -109,13 +107,31 @@ const ListForManagers = () => {
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <button className={styles.bold} value='' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.bold}
+                                value=""
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
                             </button>
-                            <button className={styles.link} value='Activate' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.link}
+                                value="Activate"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Activate
                             </button>
-                            <button className={styles.link} value='Deactivate' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.link}
+                                value="Deactivate"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Deactivate
                             </button>
 
@@ -131,35 +147,40 @@ const ListForManagers = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {data.listUser.filter(user=>user.User_DAP__r.Name.includes(`${email}`)&&user.User_DAP__r.Status__c.includes(`${status}`)).map((item) => (
-                                    <tr>
-                                        <td className={styles.td}>{item.User_DAP__r.Name}</td>
-                                        <td className={styles.td}>{item.User_DAP__r.Status__c}</td>
-                                        <td className={styles.td}>
-                                            <Link className={styles.linkBlue} to={`/viewManager/${item.User_DAP__r.Id}`}>
-                                                View
-                                            </Link>
-                                            {(() => {
-                                                if (item.User_DAP__r.Status__c === "Activate") {
-                                                    return (
-                                                        <Popup
-                                                            trigger={<label className={styles.linkBlue}>Deactivate</label>}
-                                                            position="right center"
-                                                        >
-                                                            <BanedManager idBidder={item.User_DAP__r.Id} />
-                                                        </Popup>
-                                                    );
-                                                } else {
-                                                    return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                                            <ActiveManager idBidder={item.User_DAP__r.Id} />
-                                                        </Popup>
-                                                    );
-                                                }
-                                            })()}
-                                        </td>
-                                    </tr>
-                                ))}
+                                {data.listUser
+                                    .filter((user) => user.User_DAP__r.Name.includes(`${email}`) && user.User_DAP__r.Status__c.includes(`${status}`))
+                                    .map((item) => (
+                                        <tr>
+                                            <td className={styles.td}>{item.User_DAP__r.Name}</td>
+                                            <td className={styles.td}>{item.User_DAP__r.Status__c}</td>
+                                            <td className={styles.td}>
+                                                <Link className={styles.linkBlue} to={`/viewManager/${item.User_DAP__r.Id}`}>
+                                                    View
+                                                </Link>
+                                                {(() => {
+                                                    if (item.User_DAP__r.Status__c === "Activate") {
+                                                        return (
+                                                            <Popup
+                                                                trigger={<label className={styles.linkBlue}>Deactivate</label>}
+                                                                position="right center"
+                                                            >
+                                                                <BanedManager idBidder={item.User_DAP__r.Id} />
+                                                            </Popup>
+                                                        );
+                                                    } else {
+                                                        return (
+                                                            <Popup
+                                                                trigger={<label className={styles.linkBlue}>Activate</label>}
+                                                                position="right center"
+                                                            >
+                                                                <ActiveManager idBidder={item.User_DAP__r.Id} />
+                                                            </Popup>
+                                                        );
+                                                    }
+                                                })()}
+                                            </td>
+                                        </tr>
+                                    ))}
                             </table>
                             <div>
                                 <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />

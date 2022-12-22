@@ -161,6 +161,7 @@ const AddProperty = () => {
                                 <br />
                                 <br />
                                 <br />
+                                <br />
                                 <p className={styles.lable}>Property Video</p>
                                 <p className={styles.lable}>Property Name</p>
                                 <p className={styles.lable}>Category</p>

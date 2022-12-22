@@ -11,10 +11,11 @@ import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import FooterCopy from "../../components/footer/FooterCopy";
 
 const AddManager = () => {
-    const [userName, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
 
@@ -27,15 +28,19 @@ const AddManager = () => {
             setPassword(value);
         }
     };
-    const handleSubmit = async (event) => {
-      
+    const handleSubmit = (event) => {
+        const formData = new FormData();
 
-
-        await axios
+        formData.append("userName", username);
+        formData.append("password", password);
+        console.log(formData.get("userName"));
+        axios
             .post(
                 "http://localhost:8800/api/auth/registerManager",
-                {userName,password},
-
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                },
                 { withCredentials: true }
             )
             .then((res) => {
@@ -44,7 +49,7 @@ const AddManager = () => {
                 alert(res.data.message);
                 navigate("/listManagers");
             });
-       event.preventDefault();
+        event.preventDefault();
     };
     const cancel = () => {
         navigate("/listManagers");
@@ -105,6 +110,7 @@ const AddManager = () => {
                         </div>
                     </div>
                     <Footer />
+                    <FooterCopy />
                 </div>
             </form>
         </>

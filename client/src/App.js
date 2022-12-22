@@ -41,6 +41,9 @@ import FakeAuctionDetail from "./pages/bidder/FakeAuctionDetail";
 import AuctionDetailForManager from "./pages/forManager/AuctionDetailForManager";
 import ViewManager from "./pages/forAdmin/ViewManager";
 import ViewSeller from "./pages/forAdmin/ViewSeller";
+import Profile from "./pages/forBidder/Profile";
+import ProfileOrganization from "./pages/forBidder/ProfileOrganization";
+import EditProfile from "./pages/forBidder/EditProfile";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 
@@ -103,6 +106,12 @@ function App() {
                         <Route path="viewManager/:id" element={<ViewManager />} />
                         <Route path="viewSeller" element={<ViewSeller />} />
                         <Route path="viewSeller/:id" element={<ViewSeller />} />
+                        <Route path="profile/:id" element={<Profile />} />
+                        <Route path="profile" element={<Profile />} />
+                        <Route path="editProfile" element={<EditProfile />} />
+                        <Route path="editProfile/:id" element={<EditProfile />} />
+                        <Route path="profileOrganization" element={<ProfileOrganization />} />
+                        <Route path="profileOrganization/:id" element={<ProfileOrganization />} />
 
                         <Route path="FakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
 

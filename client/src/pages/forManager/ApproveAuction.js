@@ -54,7 +54,7 @@ const PropertyDetail = () => {
     var daySTView = parseInt(startViewPropertyTime.getUTCDate());
 
     const AprroveAuction = () => {
-        alert(name + registrationFee + timeRegistration + auctionTime);
+        // alert(name + registrationFee + timeRegistration + auctionTime);
         axios
             .put(
                 "http://localhost:8800/api/auction/approve/" + id,
