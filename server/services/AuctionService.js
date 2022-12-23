@@ -99,11 +99,17 @@ const getAuctionDetailByID = async (auctionId, propertyId) => {
     return data;
 };
 
-const updateStatusForAuction = async (auction,status)=>{
-    await auctionDAO.updateStatusForAuction(auction,status);
+const updateStatusForAuction = async (auctionId,status)=>{
+    await auctionDAO.updateStatusForAuction(auctionId,status);
 }
-
+const findStatusAuction = async(auctionId)=>{
+    const auction = await auctionDAO.findStatusAuction(auctionId);
+    return auction;
+}
+const updateStatusAuctionMongo = async(auctionId, status)=>{
+    await auctionDAO.updateStatusAuctionMongo(auctionId, status);
+}
 // exports.createRequestAuction = createRequestAuction;
 // exports.updateRejectAuction = updateRejectAuction
 
-module.exports = { createRequestAuction, updateRejectAuction, approveAuction, getAllAuction, getAuctionDetailByID, getAuctionForUpdateStatus, updateStatusForAuction };
+module.exports = { createRequestAuction, updateRejectAuction, approveAuction, getAllAuction, getAuctionDetailByID, getAuctionForUpdateStatus, updateStatusForAuction, findStatusAuction, updateStatusAuctionMongo };

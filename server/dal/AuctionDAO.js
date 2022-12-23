@@ -167,10 +167,10 @@ const getAuctionForUpdateStatus = async (auctionId)=>{
     return auction;
 }
 
-const updateStatusForAuction = async (auction,status)=>{
+const updateStatusForAuction = async (auctionId,status)=>{
     var connection = await conn();
     await connection.sobject("Auction__c").update({
-        Id: auction.Id,
+        Id: auctionId,
         Status__c: status,
     }, (err, ret) => {
         if (err || !ret.success) { return console.error(err); }
@@ -178,7 +178,7 @@ const updateStatusForAuction = async (auction,status)=>{
     })
 }
 const updateStatusAuctionMongo = async (auctionId, status)=>{
-    await AuctionStatus.findByIdAndUpdate({_id:auctionId},{status:status});
+    await AuctionStatus.findOneAndUpdate({auctionId:auctionId},{status:status});
 }
 const createStatusAuctionMongo = async (auctionId) =>{
     const newAuctionStatus = new AuctionStatus({
@@ -187,10 +187,14 @@ const createStatusAuctionMongo = async (auctionId) =>{
     })
     await newAuctionStatus.save();
 }
+const findStatusAuction = async (auctionId)=>{
+    const status = AuctionStatus.findOne({auctionId:auctionId});
+    return status;
+}
 
 
 // exports.createRequestAuction = createRequestAuction;
 // exports.updateRequestProperty = updateRequestProperty;
 // exports.updateRejectAuction = updateRejectAuction;
 // exports.updateRejectProperty = updateRejectProperty
-module.exports = { createRequestAuction, updateRequestProperty, updateRejectAuction, updateRejectProperty, updateApproveAuction, updateApproveProperty, findPropertyById, getAllAuction, getAuctionDetailByID, getAuctionForUpdateStatus, updateStatusForAuction, updateStatusAuctionMongo, createStatusAuctionMongo }
+module.exports = { createRequestAuction, updateRequestProperty, updateRejectAuction, updateRejectProperty, updateApproveAuction, updateApproveProperty, findPropertyById, getAllAuction, getAuctionDetailByID, getAuctionForUpdateStatus, updateStatusForAuction, updateStatusAuctionMongo, createStatusAuctionMongo, findStatusAuction, updateStatusAuctionMongo }
