@@ -61,23 +61,6 @@ const AuctionsListForManager = () => {
         }
     };
     const handleSubmit = (event) => {
-        // const formData = new FormData();
-
-        // formData.append("propertyName", propertyName);
-        // formData.append("category", category);
-
-        // axios
-        //     .get("http://localhost:8800/api/auction", formData, {
-        //         withCredentials: true,
-        //     })
-        //     .then((res) => {
-        //         console.log(res);
-        //         console.log(res.data);
-        //         alert(res.data.message);
-        //         setData(res.data);
-
-        //         navigate("/autionsListForManager");
-        //     });
         propertyName2 === '' ? setPropertyName(null):setPropertyName(propertyName2);
         setCategory(category2)
         setPage(1);
