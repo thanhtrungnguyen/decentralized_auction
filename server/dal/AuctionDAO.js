@@ -285,8 +285,4 @@ const sortAuction = async () => {
 // exports.updateRequestProperty = updateRequestProperty;
 // exports.updateRejectAuction = updateRejectAuction;
 // exports.updateRejectProperty = updateRejectProperty
-<<<<<<< HEAD
 module.exports = { createRequestAuction, updateRequestProperty, updateRejectAuction, updateRejectProperty, updateApproveAuction, updateApproveProperty, findPropertyById, getAllAuction, getAuctionDetailByID, getAuctionForUpdateStatus, updateStatusForAuction, updateStatusAuctionMongo, createStatusAuctionMongo, findStatusAuction, updateStatusAuctionMongo }
-=======
-module.exports = { createRequestAuction, updateRequestProperty, updateRejectAuction, updateRejectProperty, updateApproveAuction, updateApproveProperty, findPropertyById, getAllAuction, getAuctionDetailByID, getAuctionForUpdateStatus, updateStatusForAuction, updateStatusAuctionMongo, createStatusAuctionMongo,sortAuction }
->>>>>>> dbf44ee61b3d65af7d55cf5d50528358abdef546
