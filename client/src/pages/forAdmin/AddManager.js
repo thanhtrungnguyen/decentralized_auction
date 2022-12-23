@@ -14,7 +14,7 @@ import jwt from "jsonwebtoken";
 import FooterCopy from "../../components/footer/FooterCopy";
 
 const AddManager = () => {
-    const [username, setUsername] = useState("");
+    const [userName, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ const AddManager = () => {
     const handleSubmit = (event) => {
         const formData = new FormData();
 
-        formData.append("userName", username);
+        formData.append("userName", userName);
         formData.append("password", password);
         console.log(formData.get("userName"));
         axios

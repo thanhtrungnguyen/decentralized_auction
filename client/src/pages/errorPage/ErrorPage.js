@@ -2,6 +2,10 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import HeaderUser from "../../components/header/HeaderUser";
+import FooterCopy from "../../components/footer/FooterCopy";
+import PageName from "../../components/header/PageName";
+import "../../styleCss/error.css";
+
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 const ErrorPage = ({ error }) => {
@@ -26,10 +30,18 @@ const ErrorPage = ({ error }) => {
                 }
             })()}
             <NavBar />
+            <PageName pageName={"Error"} link={"/"} home={"homePage"} />
+
             {/* <h1>{error.code}</h1>
             <h2>{error.message}</h2> */}
-            <h3>ErrorPage</h3>
+            <img
+                className="imgg"
+                src="https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?w=2000"
+                alt="images"
+            />
+            <p className="oop">OOP!!! This page doesn't exist</p>
             <Footer />
+            <FooterCopy />
         </>
     );
 };

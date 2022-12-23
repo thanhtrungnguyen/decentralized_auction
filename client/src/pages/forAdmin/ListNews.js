@@ -20,8 +20,8 @@ import jwt from "jsonwebtoken";
 const ListNews = () => {
     const [page, setPage] = useState(1);
     const [title, setTitle] = useState("");
-    const [status, setStatus] = useState('');
-    const [searchData,setSearchData] = useState('');
+    const [status, setStatus] = useState("");
+    const [searchData, setSearchData] = useState("");
     const navigate = useNavigate();
     var baseURL = `http://localhost:8800/api/news/${page}/${status}`;
     // var totalURL = `http://localhost:8800/api/news/countNews`;
@@ -41,9 +41,13 @@ const ListNews = () => {
         formData.append("title", title);
         //var { data, loading, error } = useFetchPagination(baseURL, page);
         axios
-            .get("http://localhost:8800/api/news/search", {title}, {
-                withCredentials: true,
-            })
+            .get(
+                "http://localhost:8800/api/news/search",
+                { title },
+                {
+                    withCredentials: true,
+                }
+            )
             .then((res) => {
                 // console.log(res);
                 // console.log(res.data);
@@ -69,39 +73,39 @@ const ListNews = () => {
         return users;
     };
     const handleChangeStatus = (e) => {
-        setStatus(e.target.value)
+        setStatus(e.target.value);
         // data = data.listNews.filter(news => news.Status__c.includes(`${filter}`))
-    }
-    function search(data) {
-        return <>
-            {
-                data.listNews.filter(news => (news.Status__c.includes(`${status}`)))
-                .map((item) => (
-                    <tr>
-                        <td  className={styles.td}>{item.Name}</td>
-                        <td className={styles.td}>{Moment(item.LastModifiedDate).format("DD/MM/yyy - H:mm")}</td>
-                        <td className={styles.td}>{item.Status__c}</td>
-                        <td className={styles.td}>
-                            {(() => {
-                                if (item.Status__c === "Published") {
-                                    return (
-                                        <Popup trigger={<label className={styles.linkBlue}>Private</label>} position="right center">
-                                            <PrivateNews idNews={item.Id} />
-                                        </Popup>
-                                    );
-                                } else {
-                                    return (
-                                        <Popup trigger={<label className={styles.linkBlue}>Publish</label>} position="right center">
-                                            <PublishNews idNews={item.Id} />
-                                        </Popup>
-                                    );
-                                }
-                            })()}
-                        </td>
-                    </tr>
-                ))}
-        </>
-    }
+    };
+    // function search(data) {
+    //     return <>
+    //         {
+    //             data.listNews.filter(news => (news.Status__c.includes(`${status}`)))
+    //             .map((item) => (
+    //                 <tr>
+    //                     <td  className={styles.td}>{item.Name}</td>
+    //                     <td className={styles.td}>{Moment(item.LastModifiedDate).format("DD/MM/yyy - H:mm")}</td>
+    //                     <td className={styles.td}>{item.Status__c}</td>
+    //                     <td className={styles.td}>
+    //                         {(() => {
+    //                             if (item.Status__c === "Published") {
+    //                                 return (
+    //                                     <Popup trigger={<label className={styles.linkBlue}>Private</label>} position="right center">
+    //                                         <PrivateNews idNews={item.Id} />
+    //                                     </Popup>
+    //                                 );
+    //                             } else {
+    //                                 return (
+    //                                     <Popup trigger={<label className={styles.linkBlue}>Publish</label>} position="right center">
+    //                                         <PublishNews idNews={item.Id} />
+    //                                     </Popup>
+    //                                 );
+    //                             }
+    //                         })()}
+    //                     </td>
+    //                 </tr>
+    //             ))}
+    //     </>
+    // }
     return loading ? (
         <Loading />
     ) : (
@@ -128,7 +132,7 @@ const ListNews = () => {
                                     placeholder="Title"
                                     value={title}
                                     onChange={(e) => handleInputChange(e)}
-                                //required
+                                    //required
                                 ></input>
                             </div>
                             <br />
@@ -142,13 +146,31 @@ const ListNews = () => {
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <button className={styles.bold} value='' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.bold}
+                                value=""
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
                             </button>
-                            <button className={styles.link} value='Published' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.link}
+                                value="Published"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Published
                             </button>
-                            <button className={styles.link} value='Private' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.link}
+                                value="Private"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Private
                             </button>
 
@@ -165,7 +187,7 @@ const ListNews = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {search(data)}
+                                {/* {search(data)} */}
                             </table>
                             <div>
                                 <Pagination
