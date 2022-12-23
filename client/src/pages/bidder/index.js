@@ -50,6 +50,7 @@ const BidModal = ({ closeModal, auctionId, propertyId }) => {
 
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
+        if (auction == []) return "Loading";
         if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
         if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
         if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
@@ -61,6 +62,8 @@ const BidModal = ({ closeModal, auctionId, propertyId }) => {
 
     const renderCurrentState = () => {
         switch (auctionState()) {
+            case "Loading":
+                return <h2>Loading...</h2>;
             case "NotYetRegistrationTime":
                 return <NotYetRegistrationTime auction={auction} />;
             case "RegistrationTime":

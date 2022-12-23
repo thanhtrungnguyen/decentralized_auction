@@ -17,30 +17,24 @@ import { useFetch } from "../../../hook/useFetch";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function AuctionRegistration({ auction: auctionId }) {
-    const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
-    const [auction, setAuction] = useState([]);
-    console.log(auctionId);
-    useEffect(() => {
-        axios
-            .get(baseURL)
-            .then((res) => {
-                setAuction(res.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
-
+function AuctionRegistration({ auction }) {
     const { isWeb3Enabled, chainId: chainIdHex } = useMoralis();
     const chainId = parseInt(chainIdHex);
     console.log(chainId);
     // const chainId = 31337;
     const dispatch = useNotification();
-
+    const [transactionStatus, setTransactionStatus] = useState(() => {
+        return undefined;
+    });
     // const auctionContractAddress = chainId in contractAddresses ? contractAddresses[31337][0] : null;
     const auctionContractAddress = contractAddresses[chainId][0] ?? null;
     console.log(auctionContractAddress);
+    console.log(auction.registrationFee);
+    console.log(auction.depositAmount);
+    const amount =
+        auction.registrationFee != null && auction.depositAmount != null
+            ? ethers.utils.parseUnits(new Decimal(auction.registrationFee).plus(auction.depositAmount).toString(), "ether").toString()
+            : "0";
     const {
         runContractFunction: registerToBid,
         data,
@@ -51,7 +45,7 @@ function AuctionRegistration({ auction: auctionId }) {
         abi: auctionAbi,
         contractAddress: auctionContractAddress, // your contract address here
         functionName: "registerToBid",
-        msgValue: ethers.utils.parseUnits(new Decimal(auction.registrationFee).plus(auction.depositAmount).toString(), "ether").toString(),
+        msgValue: amount,
         params: { auctionId: auction.auctionId },
     });
     if (data) console.log(data.toString());
@@ -70,7 +64,11 @@ function AuctionRegistration({ auction: auctionId }) {
     const handleSuccess = async (tx) => {
         try {
             await tx.wait(1);
+            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
+            await tx.wait(1);
+
             // updateUIValues();
+            setTransactionStatus({ hash: tx.hash, status: "Completed" });
             handleSuccessNotification(tx);
         } catch (error) {
             console.log(error);
@@ -85,8 +83,12 @@ function AuctionRegistration({ auction: auctionId }) {
             icon: <BsCheckLg />,
         });
     };
-
+    const handleComplete = async (hash) => {
+        console.log(hash);
+        // setTransactionStatus({ hash: hash, status: "waitingForConfirmation" });
+    };
     const handleErrorNotification = () => {
+        setTransactionStatus({ status: "Failed" });
         dispatch({
             type: "error",
             title: "Registration Error",
@@ -119,7 +121,11 @@ function AuctionRegistration({ auction: auctionId }) {
                         <p className={styles.txtT}>Registration Fee: {auction.registrationFee} ETH</p>
                         <p className={styles.txtT}>Deposit Amount: {auction.depositAmount} ETH</p>
                         <p className={styles.txtT}>
-                            Total amount you must to pay:{new Decimal(auction.registrationFee).plus(auction.depositAmount).toString()} ETH
+                            Total amount you must to pay:
+                            {auction.registrationFee != null && auction.depositAmount != null
+                                ? new Decimal(auction.registrationFee).plus(auction.depositAmount).toString()
+                                : "0"}{" "}
+                            ETH
                         </p>
                         {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
                         {/* <label className={styles.mess}>message</label> */}
@@ -129,23 +135,15 @@ function AuctionRegistration({ auction: auctionId }) {
                                 await registerToBid({
                                     onSuccess: handleSuccess,
                                     onError: handleErrorNotification,
+                                    onComplete: handleComplete,
                                 })
                             }
                         >
                             {isLoading || isFetching ? <div>Loading...</div> : <div>Register for auction</div>}
                         </button>
-                        {/* <input
-                className={styles.btn}
-                type="submit"
-                value="Place bid"
-              ></input> */}
-                        {/* </form> */}
                     </div>
                 </div>
             </div>
-            {/* ) : (
-                <div>Please connect to a Wallet</div>
-            )} */}
         </div>
     );
 }
