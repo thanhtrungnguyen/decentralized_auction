@@ -12,63 +12,81 @@ import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { set } from "mongoose";
+import Loading from "../../components/loading/Loading";
 const AuctionsListForManager = () => {
     const [page, setPage] = React.useState(1);
-    const [cagetory, setCategory] = useState("Car");
+    const [category, setCategory] = useState(null);
+    const [category2, setCategory2] = useState(null);
     const [propertyName, setPropertyName] = useState(null);
+    const [propertyName2, setPropertyName2] = useState(null);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const [status, setStatus] = useState(null);
     const baseURL = "http://localhost:8800/api/auction/";
     const baseURLCategory = "http://localhost:8800/api/category/";
-    const baseURLAuction = "http://localhost:8800/api/auction/";
+    const baseURLAuction = `http://localhost:8800/api/auction/getAll/${page}/${propertyName}/${category}/${status}`;
     const [listCategory, setListCategory] = useState([]);
     const [listAuction, setListAuction] = useState([]);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
-        axios.get(baseURLCategory).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setListCategory(resp.data);
-        });
-    }, [baseURLCategory]);
+        const fetchData = async()=>{
+            setLoading(true);
+            await axios.get(baseURLCategory).then((resp) => {
 
-    useEffect(() => {
-        axios.get(baseURLAuction).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setListAuction(resp.data);
-        });
+                console.log(resp.data);
+                console.log("axios get");
+                setListCategory(resp.data);
+            });
+            await axios.get(baseURLAuction).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setListAuction(resp.data);
+            });
+            setLoading(false);
+        }
+       fetchData();
+        
     }, [baseURLAuction]);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        if (id === "cagetory") {
-            setCategory(value);
+        if (id === "category") {
+            setCategory2(value);
         }
         if (id === "propertyName") {
-            setPropertyName(value);
+            setPropertyName2(value);
         }
     };
     const handleSubmit = (event) => {
-        const formData = new FormData();
+        // const formData = new FormData();
 
-        formData.append("propertyName", propertyName);
-        formData.append("cagetory", cagetory);
+        // formData.append("propertyName", propertyName);
+        // formData.append("category", category);
 
-        axios
-            .get("http://localhost:8800/api/auction", formData, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-                setData(res.data);
+        // axios
+        //     .get("http://localhost:8800/api/auction", formData, {
+        //         withCredentials: true,
+        //     })
+        //     .then((res) => {
+        //         console.log(res);
+        //         console.log(res.data);
+        //         alert(res.data.message);
+        //         setData(res.data);
 
-                navigate("/autionsListForManager");
-            });
+        //         navigate("/autionsListForManager");
+        //     });
+        propertyName2 === '' ? setPropertyName(null):setPropertyName(propertyName2);
+        setCategory(category2)
+        setPage(1);
         event.preventDefault();
     };
+    const handleChangeStatus = (e)=>{
+        setStatus(e.target.value)
+        setPage(1);
+    }
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -83,7 +101,9 @@ const AuctionsListForManager = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
                 if (getUser().role == "MANAGER") {
@@ -105,50 +125,51 @@ const AuctionsListForManager = () => {
                                     className={styles.input}
                                     type="text"
                                     placeholder="Please input"
-                                    value={propertyName}
+                                    value={propertyName2}
                                     onChange={(e) => handleInputChange(e)}
-                                    required
+                                    //required
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
                             <select
                                 className={styles.select}
                                 onChange={(e) => handleInputChange(e)}
-                                id="cagetory"
+                                id="category"
                                 placeholder="Category"
-                                defaultValue="Car"
+                                //defaultValue="null"
                             >
+                                 <option value='null'>All</option>
                                 {listCategory.map((item) => (
-                                    <option value={item.Name}>{item.Name}</option>
+                                    <option value={item.Name} selected={item.Name===category2} >{item.Name}</option>
                                 ))}
                             </select>
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset"></input>
+                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e)=>setPropertyName2('')}></input>
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <Link className={styles.bold} to="/myProperty">
+                            <button className={styles.bold} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
                                 All
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button className={styles.link} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Request add
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button className={styles.link} value='Approved' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Approved
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button className={styles.link} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Upcoming
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button className={styles.link} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Bidding
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button className={styles.link} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Closed
-                            </Link>
+                            </button>
                             <hr />
-                            <p className={styles.txtBold}>69 Properties</p>
+                            <p className={styles.txtBold}>Total Auction: {listAuction.totalAuction}</p>
                             {/* <Link className={styles.btnAdd} to="/addProperty">
               Add a New Property
             </Link> */}
@@ -162,7 +183,7 @@ const AuctionsListForManager = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {listAuction.map((auction) => (
+                                {listAuction.listAuction.map((auction) => (
                                     <tr>
                                         <td className={styles.td}>{auction.Name}</td>
                                         <td className={styles.td}>{auction.Category_Id__r.Name}</td>
@@ -203,7 +224,7 @@ const AuctionsListForManager = () => {
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={Math.floor(listAuction.total / 10) + 1} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

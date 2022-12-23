@@ -21,7 +21,7 @@ router.put("/reject/:id", rejectAuction);
 
 router.put("/:id", verifySeller, updateAuction);
 
-router.get("/", getAllAuction);
+router.get("/getAll/:index/:name/:category/:status", getAllAuction);
 
 router.get("/auctiondetail/:auctionId/:propertyId", getAuctionDetailByID);
 

@@ -83,8 +83,8 @@ const approveAuction = async (auction) => {
     );
 };
 
-const getAllAuction = async () => {
-    var auctionList = await auctionDAO.getAllAuction();
+const getAllAuction = async (index,name,category,statusAuction) => {
+    var auctionList = await auctionDAO.getAllAuction(index,name,category,statusAuction);
     return auctionList;
 };
 

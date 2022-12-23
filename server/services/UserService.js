@@ -5,8 +5,8 @@ const getAllUser = async (role, index, status, name) => {
     try {
         status == 'null' ? status = '' : status;
         name == 'null' ? name = '' : name;
-        var list = await UserDAO.getAllUser(role, index, status, name);
-        return list;
+        var data = await UserDAO.getAllUser(role, index, status, name);
+        return data;
     } catch (error) {
 
     }

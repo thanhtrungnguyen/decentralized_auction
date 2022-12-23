@@ -13,12 +13,13 @@ const createCategory = async(categoryName)=>{
     return category;
 }
 const getAllCategory  = async()=>{
+    var categories;
     var connection = await conn();
     await connection.sobject("Category_DAP__c").find({}, (err, ret) => {
         if (err) console.error(err);
-        category = ret;
+        categories = ret;
     });
-    return category;
+    return categories;
 }
 
 module.exports = {createCategory,getAllCategory}

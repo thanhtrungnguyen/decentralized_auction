@@ -67,9 +67,13 @@ const updateAuction = async (req, res, next) => {
 };
 const getAllAuction = async (req, res, next) => {
     try {
-        var auctionlist = await auctionService.getAllAuction();
+        var index = req.params.index;
+        var name = req.params.name;
+        var category = req.params.category;
+        var statusAuction = req.params.status;
+        var auctionList = await auctionService.getAllAuction(index,name,category,statusAuction);
 
-        res.status(200).json(auctionlist);
+        res.status(200).json(auctionList);
     } catch (error) {
         next(error);
     }

@@ -1,4 +1,5 @@
 const PropertyDAO = require('../dal/PropertyDAO');
+const CategoryDAO = require('../dal/CategoryDAO');
 const { uploadFile } = require('../s3');
 const jwt = require("jsonwebtoken");
 const createProperty = async (token, files, viewPropertyTime, categoryName, property) => {
@@ -68,14 +69,15 @@ const updateProperty = async (token, files, viewPropertyTime, categoryName, prop
         console.error(error)
     }
 }
-const getPropertiesByUser = async (token) => {
+const getPropertiesByUser = async (token,index,status,category,nameProperty) => {
     var userId = null;
     jwt.verify(token, process.env.JWT, (err, user) => {
         if (err) return next(createError(403, "Token is not valid!"));
         userId = user.id;
     });
-    var properties = await PropertyDAO.findPropertiesByUser(userId);
-    return properties;
+    var data = await PropertyDAO.findPropertiesByUser(userId,index,status,category,nameProperty);
+    var categories = await CategoryDAO.getAllCategory()
+    return {data:data,categories:categories};
 }
 const getPropertiesByStatus = async(token,status)=>{
     var userId = null;
