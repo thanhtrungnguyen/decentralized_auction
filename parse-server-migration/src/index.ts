@@ -31,7 +31,8 @@ app.use(`/server`, parseServer.app);
 const httpServer = http.createServer(app);
 httpServer.listen(config.PORT, async () => {
   if (config.USE_STREAMS) {
-    const url = await ngrok.connect(config.PORT);
+    const authtoken = "2JDhe5wSlOqld7YnimZFhUSX0Cv_4sR1eTLp7Aku9rJF9HN6B"
+    const url = await ngrok.connect({ proto: 'http', addr: config.PORT, authtoken: authtoken });
     // eslint-disable-next-line no-console
     message = `Moralis Server is running on port ${config.PORT} and stream webhook url ${url}${config.STREAMS_WEBHOOK_URL}`
     const result = await sendEmail(message)

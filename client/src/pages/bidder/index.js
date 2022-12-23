@@ -1,46 +1,18 @@
 import React from "react";
 import styles from "../../styleCss/stylesComponents/placeABid.module.css";
-import ConfirmPayment from "./ui/ConfirmPayment";
-import { Outlet, Link } from "react-router-dom";
-// import { Button } from "@web3uikit/core"
-import { ConnectButton } from "web3uikit";
 import HeaderBid from "./components/HeaderBid";
-import { useMoralis, useWeb3Contract } from "react-moralis";
+import { useMoralis } from "react-moralis";
 import { useState, useEffect } from "react";
-import auctionAbi from "../../constants/contractAbi.json";
-import contractAddresses from "../../constants/contractAddress.json";
+
 import AuctionRegistration from "./ui/AuctionRegistration";
 import PlaceBid from "./ui/PlaceBid";
 import NotYetRegistrationTime from "./ui/NotYetRegistrationTime";
 import WaitingForAuctionTime from "./ui/WaitingForAuctionTime";
-import axios from "axios";
 
-const BidModal = ({ closeModal, auctionId, propertyId }) => {
-    const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
-    const [auction, setAuction] = useState([]);
+const BidModal = ({ closeModal, auction, propertyId }) => {
     const supportedChains = ["5"];
     const [hasMetamask, setHasMetamask] = useState(false);
-    const { enableWeb3, chainId, isWeb3Enabled } = useMoralis();
-    console.log(auction);
-    // const { runContractFunction, data, error, isFetching, isLoading } = useWeb3Contract({
-    //     abi: auctionAbi,
-    //     contractAddress: "0xe3417CF4716Ae7F66F063f03c38D0Bc27DED9AdC", // your contract address here
-    //     functionName: "getAuctionInformationById",
-    //     params: { auctionId: "89hg348e3d35gj" },
-    // });
-    // console.log(data);
-
-    console.log(auctionId);
-    useEffect(() => {
-        axios
-            .get(baseURL)
-            .then((res) => {
-                setAuction(res.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
+    const { chainId, isWeb3Enabled } = useMoralis();
 
     useEffect(() => {
         if (typeof window.ethereum !== "undefined") {
@@ -78,7 +50,7 @@ const BidModal = ({ closeModal, auctionId, propertyId }) => {
             case "AuctionEnded":
                 return <h2>Auction Ended</h2>;
             default:
-                return "Auction Not Found ";
+                return "Auction Not Found";
         }
     };
     return (

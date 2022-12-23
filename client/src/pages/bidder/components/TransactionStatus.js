@@ -19,11 +19,11 @@ function TransactionStatus({ transactionStatus }) {
             case "NoHash":
                 return <div>Transaction Failed</div>;
             case "Tx":
+                const hashString = `Tx: ${transactionStatus.hash.slice(0, 6)}...${transactionStatus.hash.slice(transactionStatus.hash.length - 4)}`;
+                const link = `${prefix}${transactionStatus.hash}`;
                 return (
                     <div>
-                        <Link to={`${prefix}${transactionStatus.hash}`}>{`Tx: ${transactionStatus.hash.slice(0, 6)}...${transactionStatus.hash.slice(
-                            transactionStatus.hash.length - 4
-                        )}`}</Link>
+                        <a href={link}>{hashString}</a>
                         <div>{`Status: ${transactionStatus.status}`}</div>
                     </div>
                 );
@@ -31,6 +31,7 @@ function TransactionStatus({ transactionStatus }) {
                 return <div></div>;
         }
     };
+
     return <div>{renderTransactionStatus()}</div>;
 }
 
