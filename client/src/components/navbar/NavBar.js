@@ -61,9 +61,7 @@ const NavBar = () => {
                             );
                         }
                     })()}
-                    <Link className={styles.link} to="/FakeAuctionDetail">
-                        Fake AuctionDetail
-                    </Link>
+
                     <div className={styles.flright}>
                         <input className={styles.ip} type="text"></input>
                         <BsSearch className={styles.icon} />

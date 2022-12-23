@@ -134,49 +134,6 @@ const Register = () => {
                 navigate("/login");
             });
         console.log(formData);
-        alert(
-            "information: " +
-                firstName +
-                " " +
-                lastName +
-                " " +
-                gender +
-                " " +
-                dateOfBirth +
-                " " +
-                email +
-                " " +
-                phone +
-                " " +
-                cityId +
-                " " +
-                selectedCity.label +
-                " " +
-                districtId +
-                " " +
-                " " +
-                wardId +
-                " " +
-                specificAddress +
-                " " +
-                cardNumber +
-                " " +
-                dateRangeCard +
-                " " +
-                cardGrantedPlace +
-                " " +
-                cardBack +
-                " " +
-                cardFront +
-                " " +
-                username +
-                " " +
-                password +
-                " " +
-                rePassword +
-                " " +
-                role
-        );
 
         event.preventDefault();
     };
