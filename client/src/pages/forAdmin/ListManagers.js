@@ -49,50 +49,48 @@ const ListForManagers = () => {
 
         //         navigate("/autionsListForManager");
         //     });
-        email2 == '' ? setEmail(null):setEmail(email2);
+        email2 == "" ? setEmail(null) : setEmail(email2);
         setPage(1);
         event.preventDefault();
     };
     const handleChange = (event, value) => {
         setPage(value);
     };
-    const handleChangeStatus = (e)=>{
-        setStatus(e.target.value)
+    const handleChangeStatus = (e) => {
+        setStatus(e.target.value);
         setPage(1);
-    }
-    function exportData(data){
-        return <>
-        {data.listUser.map((item) => (
-                                    <tr>
-                                        <td className={styles.td}>{item.User_DAP__r.Name}</td>
-                                        <td className={styles.td}>{item.User_DAP__r.Status__c}</td>
-                                        <td className={styles.td}>
-                                            <Link className={styles.linkBlue} to={`/viewManager/${item.User_DAP__r.Id}`}>
-                                                View
-                                            </Link>
-                                            {(() => {
-                                                if (item.User_DAP__r.Status__c === "Activate") {
-                                                    return (
-                                                        <Popup
-                                                            trigger={<label className={styles.linkBlue}>Deactivate</label>}
-                                                            position="right center"
-                                                        >
-                                                            <BanedManager idBidder={item.User_DAP__r.Id} />
-                                                        </Popup>
-                                                    );
-                                                } else {
-                                                    return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                                            <ActiveManager idBidder={item.User_DAP__r.Id} />
-                                                        </Popup>
-                                                    );
-                                                }
-                                            })()}
-                                        </td>
-                                    </tr>
-                                ))}
-        
-        </>
+    };
+    function exportData(data) {
+        return (
+            <>
+                {data.listUser.map((item) => (
+                    <tr>
+                        <td className={styles.td}>{item.User_DAP__r.Name}</td>
+                        <td className={styles.td}>{item.User_DAP__r.Status__c}</td>
+                        <td className={styles.td}>
+                            <Link className={styles.linkBlue} to={`/viewManager/${item.User_DAP__r.Id}`}>
+                                View
+                            </Link>
+                            {(() => {
+                                if (item.User_DAP__r.Status__c === "Activate") {
+                                    return (
+                                        <Popup trigger={<label className={styles.linkBlue}>Deactivate</label>} position="right center">
+                                            <BanedManager idBidder={item.User_DAP__r.Id} />
+                                        </Popup>
+                                    );
+                                } else {
+                                    return (
+                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
+                                            <ActiveManager idBidder={item.User_DAP__r.Id} />
+                                        </Popup>
+                                    );
+                                }
+                            })()}
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
     }
     const getUser = () => {
         var users = null;
@@ -145,7 +143,13 @@ const ListForManagers = () => {
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <button className={styles.bold} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.bold}
+                                value="null"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
                             </button>
                             <button

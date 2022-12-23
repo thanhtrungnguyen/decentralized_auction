@@ -1,29 +1,29 @@
-const UserService = require('../services/UserService')
+const UserService = require("../services/UserService");
 
-// get All 
+// get All
 const getAllUser = async (req, res, next) => {
     try {
         var role = req.params.role;
         var index = req.params.index;
         var status = req.params.status;
         var name = req.params.email;
-        var list =  await UserService.getAllUser(role,index,status,name)
+        var list = await UserService.getAllUser(role, index, status, name);
         res.status(200).json(list);
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
-// 
-const getUserById = async(req,res,next) =>{
+};
+//
+const getUserById = async (req, res, next) => {
     try {
         var userId = req.params.userId;
         var user = await UserService.getUserById(userId);
         res.status(200).json(user);
     } catch (error) {
-        next(error)
+        next(error);
     }
-} 
-const updateProfileBidder = async(req,res,next) =>{
+};
+const updateProfileBidder = async (req, res, next) => {
     try {
         var userId = req.params.userId;
         const files = req.files;
@@ -38,7 +38,7 @@ const updateProfileBidder = async(req,res,next) =>{
             Tax_Code_Granted_Place__c: req.body.taxCodeGrantedPlace,
             //Website__c:
             Position: req.body.position,
-        }
+        };
         const contact = {
             Name: req.body.firstName + " " + req.body.lastName,
             First_Name__c: req.body.firstName,
@@ -54,11 +54,11 @@ const updateProfileBidder = async(req,res,next) =>{
             Card_Number__c: req.body.cardNumber,
             Card_Granted_Date__c: req.body.dateRangeCard,
             Card_Granted_Place__c: req.body.cardGrantedPlace,
-        }
-        var isUpdate = await UserService.updateProfileBidder(userId,contact,account,files);
+        };
+        var isUpdate = await UserService.updateProfileBidder(userId, contact, account, files);
         res.status(200).json(isUpdate);
     } catch (error) {
-        next(error)
+        next(error);
     }
-} 
-module.exports = {getAllUser,getUserById,updateProfileBidder}
+};
+module.exports = { getAllUser, getUserById, updateProfileBidder };

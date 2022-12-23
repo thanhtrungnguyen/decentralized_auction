@@ -35,7 +35,7 @@ const BidModalButton = ({ auctionId, propertyId }) => {
                 >
                     Fucking Bid
                 </button>
-                {openModal && <BidModal closeModal={setOpenModal} auctionId={auctionId} propertyId={propertyId} />}
+                {openModal && <BidModal closeModal={setOpenModal} auction={auction} propertyId={propertyId} />}
             </div>
         </>
     );

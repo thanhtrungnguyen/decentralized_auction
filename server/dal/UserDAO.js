@@ -1,142 +1,155 @@
-const conn = require('./connectSF')
+const conn = require("./connectSF");
 
 const perPage = 10;
 
-
-const getAllUser = async (role, index,status,name) => {
-    var listUser, totalUser,total;
+const getAllUser = async (role, index, status, name) => {
+    var listUser, totalUser, total;
     var num = (parseInt(index) - 1) * perPage;
-    var query,queryCount = null; 
+    var query,
+        queryCount = null;
     var connection = await conn();
     try {
         // role Manager
         if (role === "MANAGER") {
             //get all manager
-            if(status == '' && name == ''){
-                query = `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where Role_Id__r.Name = '${role}' order by `
-                + `CreatedDate desc limit ${perPage} offset ${num}`;
-                queryCount = `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where Role_Id__r.Name = '${role}' order by `
-                + `CreatedDate desc`;
+            if (status == "" && name == "") {
+                query =
+                    `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where Role_Id__r.Name = '${role}' order by ` +
+                    `CreatedDate desc limit ${perPage} offset ${num}`;
+                queryCount =
+                    `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where Role_Id__r.Name = '${role}' order by ` +
+                    `CreatedDate desc`;
             }
             //get all manager with userName content name
-            else if(status == ''){
-                query = `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Name like '%${name}%' `
-                + `and Role_Id__r.Name = '${role}' order by CreatedDate desc limit ${perPage} offset ${num}`;
-                queryCount = `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Name like '%${name}%' `
-                + `and Role_Id__r.Name = '${role}' order by CreatedDate desc`;
+            else if (status == "") {
+                query =
+                    `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Name like '%${name}%' ` +
+                    `and Role_Id__r.Name = '${role}' order by CreatedDate desc limit ${perPage} offset ${num}`;
+                queryCount =
+                    `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Name like '%${name}%' ` +
+                    `and Role_Id__r.Name = '${role}' order by CreatedDate desc`;
             }
             //get all manager with status = status
-            else if(name == ''){
-                query = `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Status__c = '${status}' `
-                + `and Role_Id__r.Name = '${role}' order by CreatedDate desc limit ${perPage} offset ${num}`;
-                queryCount = `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Status__c = '${status}' `
-                + `and Role_Id__r.Name = '${role}' order by CreatedDate desc `;
+            else if (name == "") {
+                query =
+                    `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Status__c = '${status}' ` +
+                    `and Role_Id__r.Name = '${role}' order by CreatedDate desc limit ${perPage} offset ${num}`;
+                queryCount =
+                    `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Status__c = '${status}' ` +
+                    `and Role_Id__r.Name = '${role}' order by CreatedDate desc `;
             }
             //get all manager with userName content name and status = status
-            else{
-                query = `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Name like '%${name}%' `
-                + `and User_DAP__r.Status__c = '${status}' and Role_Id__r.Name = '${role}' order by CreatedDate desc limit ${perPage} offset ${num}`;
-                queryCount = `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Name like '%${name}%' `
-                + `and User_DAP__r.Status__c = '${status}' and Role_Id__r.Name = '${role}' order by CreatedDate desc `;
+            else {
+                query =
+                    `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Name like '%${name}%' ` +
+                    `and User_DAP__r.Status__c = '${status}' and Role_Id__r.Name = '${role}' order by CreatedDate desc limit ${perPage} offset ${num}`;
+                queryCount =
+                    `Select User_DAP__r.Id, User_DAP__r.Name, User_DAP__r.Status__c from Role_Right__c where User_DAP__r.Name like '%${name}%' ` +
+                    `and User_DAP__r.Status__c = '${status}' and Role_Id__r.Name = '${role}' order by CreatedDate desc `;
             }
             await connection.query(query, (err, result) => {
-                if (err) console.log(err)
-                listUser = result.records
-            })
+                if (err) console.log(err);
+                listUser = result.records;
+            });
             await connection.query(queryCount, (err, result) => {
-                if (err) console.log(err)
-                total = result.totalSize
-            })
+                if (err) console.log(err);
+                total = result.totalSize;
+            });
             await connection.query(`select id from Role_Right__c where Role_Id__r.Name = '${role}' `, (err, result) => {
-                if (err) console.log(err)
+                if (err) console.log(err);
                 totalUser = result.totalSize;
-            })
-        } 
+            });
+        }
 
         // role Bidder or Seller
         else {
             //get all Bidder or Seller
-            if(status == '' && name == ''){
-                query = `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN `
-                +`(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') order by CreatedDate desc limit ${perPage} offset ${num} `
-                
-                queryCount = `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN `
-                +`(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') order by CreatedDate desc `
+            if (status == "" && name == "") {
+                query =
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') order by CreatedDate desc limit ${perPage} offset ${num} `;
+
+                queryCount =
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') order by CreatedDate desc `;
             }
             //get all Bidder or Seller with userName content name
-            else if(status == ''){
-                query = `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN `
-                +`(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and `
-                +`(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc limit ${perPage} offset ${num} `
-                queryCount = `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN `
-                +`(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and `
-                +`(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc `
+            else if (status == "") {
+                query =
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and ` +
+                    `(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc limit ${perPage} offset ${num} `;
+                queryCount =
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and ` +
+                    `(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc `;
             }
             //get all Bidder or Seller with status = status
-            else if(name == ''){
-                query = `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN `
-                +`(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' `
-                +`order by CreatedDate desc limit ${perPage} offset ${num} `
-                queryCount = `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN `
-                +`(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' `
-                +`order by CreatedDate desc `
+            else if (name == "") {
+                query =
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' ` +
+                    `order by CreatedDate desc limit ${perPage} offset ${num} `;
+                queryCount =
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' ` +
+                    `order by CreatedDate desc `;
             }
             //get all Bidder or Seller with userName content name and status = status
-            else{
-                query = `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN `
-                +`(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' and `
-                +`(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc limit ${perPage} offset ${num} `
-                
-                queryCount = `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN `
-                +`(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' and `
-                +`(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc `
+            else {
+                query =
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' and ` +
+                    `(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc limit ${perPage} offset ${num} `;
+
+                queryCount =
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' and ` +
+                    `(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc `;
             }
             await connection.query(query, (err, result) => {
-                if (err) console.log(err)
-                listUser = result.records
-            })
+                if (err) console.log(err);
+                listUser = result.records;
+            });
             await connection.query(queryCount, (err, result) => {
-                if (err) console.log(err)
-                total = result.totalSize
-            })
+                if (err) console.log(err);
+                total = result.totalSize;
+            });
             await connection.query(`select id from Role_Right__c where Role_Id__r.Name = '${role}' `, (err, result) => {
-                if (err) console.log(err)
+                if (err) console.log(err);
                 totalUser = result.totalSize;
-            })
+            });
         }
-        return { listUser: listUser, total: total, totalUser:totalUser }
-    } catch (error) {
-
-    }
-}
+        return { listUser: listUser, total: total, totalUser: totalUser };
+    } catch (error) {}
+};
 const getUserById = async (userId) => {
     var connection = await conn();
     var role = await getUserRole(userId);
     var user = null;
-    if (role === 'MANAGER') {
-        await connection.sobject('User__c').find({ Id: userId }, (err, result) => {
-            if (err) console.err(err)
-            user = result
-        })
-    }
-    else {
-        await connection.sobject('Contact__c').find({User_Id__c: userId},(err,result)=>{
-            if (err) console.err(err)
-            user = result
-        })
+    if (role === "MANAGER") {
+        await connection.sobject("User__c").find({ Id: userId }, (err, result) => {
+            if (err) console.err(err);
+            user = result;
+        });
+    } else {
+        await connection.sobject("Contact__c").find({ User_Id__c: userId }, (err, result) => {
+            if (err) console.err(err);
+            user = result;
+        });
     }
     return user;
-}
+};
 const getUserRole = async (userId) => {
     var connection = await conn();
     var role = null;
     await connection.query(`select User_DAP__r.Id,Role_Id__r.Name from Role_Right__c where User_DAP__r.Id = '${userId}'`, (err, result) => {
-        if (err) console.log(err)
+        if (err) console.log(err);
         role = result.records[0].Role_Id__r.Name;
-    })
+    });
     return role;
-}
-const updateProfileBidder = async(userId,contact,account,filesImg) =>{
+};
+const updateProfileBidder = async (userId, contact, account, filesImg) => {
     var connection = await conn();
     await connection.sobject("Contact__c").update(
         {
@@ -158,7 +171,8 @@ const updateProfileBidder = async(userId,contact,account,filesImg) =>{
             Font_Side_Image__c: filesImg.result.key,
             Back_Side_Image__c: filesImg.result1.key,
             User_Id__c: userId,
-        }, (err, ret) => {
+        },
+        (err, ret) => {
             if (err || !ret.success) {
                 return console.error(err, ret);
             }
@@ -187,5 +201,5 @@ const updateProfileBidder = async(userId,contact,account,filesImg) =>{
             // console.log("Created account id : " + result.id);
         }
     );
-}
-module.exports = { getAllUser, getUserById,updateProfileBidder }
+};
+module.exports = { getAllUser, getUserById, updateProfileBidder };

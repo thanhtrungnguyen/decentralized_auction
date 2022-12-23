@@ -79,14 +79,14 @@ const getPlacedBidById = async (id) => {
             _id: 0,
             //     name: 0,
             //     logIndex: 0,
-            //     transactionHash: 0,
+            transactionHash: 1,
             //     address: 0,
             //     blockHash: 0,
-            //     blockTimestamp: 0,
+            blockTimestamp: 1,
             //     blockNumber: 0,
             //     confirmed: 0,
             //     chainId: 0,
-            //     _created_at: 0,
+            // _created_at: 1,
             //     _updated_at: 0,
         }
     );
