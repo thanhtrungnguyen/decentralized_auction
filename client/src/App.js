@@ -44,6 +44,8 @@ import ViewSeller from "./pages/forAdmin/ViewSeller";
 import Profile from "./pages/forBidder/Profile";
 import ProfileOrganization from "./pages/forBidder/ProfileOrganization";
 import EditProfile from "./pages/forBidder/EditProfile";
+import EditProfileOrganization from "./pages/forBidder/EditProfileOrganization";
+import AboutUs from "./pages/common/AboutUs";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 
@@ -112,6 +114,9 @@ function App() {
                         <Route path="editProfile/:id" element={<EditProfile />} />
                         <Route path="profileOrganization" element={<ProfileOrganization />} />
                         <Route path="profileOrganization/:id" element={<ProfileOrganization />} />
+                        <Route path="editProfileOrganization/:id" element={<EditProfileOrganization />} />
+                        <Route path="editProfileOrganization" element={<EditProfileOrganization />} />
+                        <Route path="aboutUs" element={<AboutUs />} />
 
                         <Route path="FakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
 

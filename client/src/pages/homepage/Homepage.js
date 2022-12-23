@@ -25,6 +25,9 @@ const HomePage = () => {
     };
     const [role, setRole] = useState();
     useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
         if (getUser() != null) {
             setRole(getUser().role);
             setLoading(false);
@@ -33,7 +36,6 @@ const HomePage = () => {
             setLoading(false);
         }
     }, []);
-    console.log(getUser());
     return loading ? (
         <Loading />
     ) : (

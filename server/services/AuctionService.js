@@ -84,8 +84,8 @@ const approveAuction = async (auction) => {
     await auctionDAO.createStatusAuctionMongo(auction.auctionId);
 };
 
-const getAllAuction = async () => {
-    var auctionList = await auctionDAO.getAllAuction();
+const getAllAuction = async (index,name,category,statusAuction) => {
+    var auctionList = await auctionDAO.getAllAuction(index,name,category,statusAuction);
     return auctionList;
 };
 
@@ -109,6 +109,18 @@ const findStatusAuction = async(auctionId)=>{
 const updateStatusAuctionMongo = async(auctionId, status)=>{
     await auctionDAO.updateStatusAuctionMongo(auctionId, status);
 }
+<<<<<<< HEAD
+=======
+
+const updateStatusForAuction = async (auction,status)=>{
+    await auctionDAO.updateStatusForAuction(auction,status);
+}
+
+const filterAuction = async(index,status,price)=>{
+    var list =await auctionDAO.filterAuction(index,status,price)
+    return list;
+}
+>>>>>>> dbf44ee61b3d65af7d55cf5d50528358abdef546
 // exports.createRequestAuction = createRequestAuction;
 // exports.updateRejectAuction = updateRejectAuction
 

@@ -14,9 +14,9 @@ import FooterCopy from "../../components/footer/FooterCopy";
 import { useNavigate } from "react-router-dom";
 import useLocationForm from "../register/useLocationForm";
 import Select from "react-select";
-import "../../styleCss/stylesPages/forBidder/Profile.css";
+import "../../styleCss/stylesPages/forBidder/ProfileOrganization.css";
 
-const EditProfile = () => {
+const EditProfileOrganization = () => {
     const { id, propertyId } = useParams();
     const baseURL = `http://localhost:8800/api/profile/${id}`;
     const { data, loading, error } = useFetch(baseURL);
@@ -27,6 +27,12 @@ const EditProfile = () => {
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
+    const [organizationName, setOrganizationName] = useState(null);
+    const [taxCode, setTaxCode] = useState(null);
+    const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null);
+    const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null);
+    const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null);
+    const [position, setPosition] = useState(null);
 
     const [firstName, setFirstName] = useState(null);
     const [lastName, setlastName] = useState(null);
@@ -42,6 +48,24 @@ const EditProfile = () => {
     const [cardBack, setCardBack] = useState(null);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
+        if (id === "organizationName") {
+            setOrganizationName(value);
+        }
+        if (id === "position") {
+            setPosition(value);
+        }
+        if (id === "taxCode") {
+            setTaxCode(value);
+        }
+        if (id === "taxCodeGrantedDate") {
+            setTaxCodeGrantedDate(value);
+        }
+        if (id === "taxCodeGrantedPlace") {
+            setTaxCodeGrantedPlace(value);
+        }
+        if (id === "specificAddressOrganization") {
+            setSpecificAddressOrganization(value);
+        }
         if (id === "firstName") {
             setFirstName(value);
         }
@@ -85,6 +109,13 @@ const EditProfile = () => {
         let wardId = selectedWard.value;
 
         const formData = new FormData();
+        formData.append("organizationName", organizationName);
+        formData.append("taxCode", taxCode);
+        formData.append("taxCodeGrantedDate", taxCodeGrantedDate);
+        formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace);
+        formData.append("specificAddressOrganization", specificAddressOrganization);
+        formData.append("position", position);
+
         formData.append("firstName", firstName);
         formData.append("lastName", lastName);
         formData.append("gender", gender);
@@ -137,7 +168,7 @@ const EditProfile = () => {
     };
 
     const Cancel = () => {
-        navigate(`/profile/${id}`);
+        navigate(`/profileOrganization/${id}`);
     };
     return (
         <>
@@ -154,7 +185,110 @@ const EditProfile = () => {
             <div className="con">
                 <form onSubmit={handleSubmit}>
                     <div className="container">
-                        <p className="title">Personal Information</p>
+                        <p className="title">Organization Information</p>
+                        <br />
+                        <br />
+                        <br />
+                        <p className="bold">Organization Information</p>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div className="row">
+                            <label className="label">Organization name</label>
+                            <input
+                                type="text"
+                                className="input"
+                                value={organizationName}
+                                onChange={(e) => handleInputChange(e)}
+                                id="organizationName"
+                                defaultValue={data.organizationName}
+                                required
+                            ></input>
+                        </div>
+                        <div className="row">
+                            <label className="label">Tax Code</label>
+                            <input
+                                type="text"
+                                className="input"
+                                defaultValue={data.taxCode}
+                                value={taxCode}
+                                onChange={(e) => handleInputChange(e)}
+                                id="taxCode"
+                                required
+                            ></input>
+                        </div>
+                        <div className="row">
+                            <label className="label">Tax Code Granted Date</label>
+                            <input
+                                type="text"
+                                className="input"
+                                defaultValue={data.taxCodeGrantedDate}
+                                value={taxCodeGrantedDate}
+                                onChange={(e) => handleInputChange(e)}
+                                id="taxCode"
+                                required
+                            ></input>
+                        </div>
+                        <div className="row">
+                            <label className="label">Tax Code Granted Place</label>
+                            <input
+                                type="text"
+                                className="input"
+                                defaultValue={data.taxCodeGrantedPlace}
+                                value={taxCodeGrantedPlace}
+                                onChange={(e) => handleInputChange(e)}
+                                id="taxCodeGrantedPlace"
+                                required
+                            ></input>
+                        </div>
+                        <div className="row">
+                            <label className="label">Specific Address</label>
+                            <input
+                                type="text"
+                                className="input"
+                                defaultValue={data.specificAddress}
+                                value={specificAddressOrganization}
+                                onChange={(e) => handleInputChange(e)}
+                                id="specificAddressOrganization"
+                                required
+                            ></input>
+                        </div>{" "}
+                        <div className="row">
+                            <label className="label">Position</label>
+                            <input
+                                type="text"
+                                className="input"
+                                defaultValue={data.specificAddress}
+                                id="position"
+                                value={position}
+                                onChange={(e) => handleInputChange(e)}
+                                required
+                            ></input>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
                         <br />
                         <br />
                         <br />
@@ -264,6 +398,8 @@ const EditProfile = () => {
                         <br />
                         <br />
                         <br />
+                        <br />
+                        <br />
                         <p className="bold">Address</p>
                         <br />
                         <br />
@@ -341,6 +477,8 @@ const EditProfile = () => {
                         <br />
                         <br />
                         <br />
+                        <br />
+                        <br />
                         <p className="bold">Identity/Citizen Card</p>
                         <br />
                         <br />
@@ -399,7 +537,6 @@ const EditProfile = () => {
                         <input className="ipImg2" id="cardBack" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
                         <br />
                         <br />
-
                         {cardFront && <img src={URL.createObjectURL(cardFront)} className="img" alt="Thumb" />}
                         {cardBack && <img src={URL.createObjectURL(cardBack)} className="img2" alt="Thumb" />}
                         <p className="bold">Account Information</p>
@@ -429,4 +566,4 @@ const EditProfile = () => {
         </>
     );
 };
-export default EditProfile;
+export default EditProfileOrganization;

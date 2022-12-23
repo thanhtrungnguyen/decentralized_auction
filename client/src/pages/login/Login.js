@@ -81,7 +81,16 @@ const Login = () => {
                             </p>
 
                             <input className={styles.btnSignIn} type="submit" value="Sign in" />
-                            <p className={styles.text}>Don’t have an Account?Create account </p>
+                            <p className={styles.text}>
+                                <Link to="/register" className={styles.text}>
+                                    Don’t have an Account?Create account{" "}
+                                </Link>
+                            </p>
+                            <p className={styles.text}>
+                                <Link to="/enterEmail" className={styles.text}>
+                                    Change password?
+                                </Link>
+                            </p>
                         </div>
                     </div>
                 </form>

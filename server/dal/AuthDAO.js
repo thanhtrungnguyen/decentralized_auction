@@ -28,7 +28,7 @@ const createContact = async (user, contact, role, filesImg) => {
                 return console.error(err, ret);
             }
             contactId = ret.id;
-            console.log("Created contact : " + ret);
+            //console.log("Created contact : " + ret);
         }
     );
     await addRoleForUser(role, userId);

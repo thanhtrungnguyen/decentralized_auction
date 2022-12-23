@@ -39,13 +39,13 @@ router.post(
 
 router.put("/:id", verifySeller, updateProperty);
 
-router.get("/:id", findPropertyByID);
+router.get("/getById/:id", findPropertyByID);
 
 router.get("/getListByStatus/:status", getListByStatus);
 
 router.get("/getListByName/:name/:status", filterProperty);
 
-router.get("/", verifySeller, getAllPropertyByUser);
+router.get("/getAll/:index/:status/:category/:name", verifySeller, getAllPropertyByUser);
 
 // router.get("/category/", getAllCate);
 
