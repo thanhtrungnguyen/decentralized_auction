@@ -1,0 +1,13 @@
+.imgg {
+    width: 800px;
+    height: 800px;
+    left: 50%;
+    margin-left: -400px;
+    position: relative;
+}
+.oop {
+    width: 100%;
+    text-align: center;
+    color: red;
+    font-size: 40px;
+}
