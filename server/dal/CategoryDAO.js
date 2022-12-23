@@ -13,7 +13,16 @@ const createCategory = async (categoryName) => {
     );
     return category;
 }
-const getAllCategory = async (index, status, name) => {
+const getAllCategory = async()=>{
+    var connection = await conn();
+    var categories;
+    await connection.query(`Select Name from Category_DAP__c order by Name`, (err, result) => {
+        if (err) console.log(err)
+        categories = result.records
+    })
+    return categories;
+}
+const getAllCate = async (index, status, name) => {
     var categories, total, totalCategory;
     var query, queryCount = ''
     var num = (parseInt(index) - 1) * perPage;
@@ -87,4 +96,4 @@ const changedStatus = async(id,status)=>{
     })
     return rs;
 }
-module.exports = { createCategory, getAllCategory,getCategoryById,updateCategory,changedStatus }
+module.exports = { createCategory, getAllCategory,getCategoryById,updateCategory,changedStatus,getAllCate }

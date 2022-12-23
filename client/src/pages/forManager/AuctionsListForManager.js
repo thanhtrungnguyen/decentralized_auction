@@ -35,7 +35,6 @@ const AuctionsListForManager = () => {
         const fetchData = async()=>{
             setLoading(true);
             await axios.get(baseURLCategory).then((resp) => {
-
                 console.log(resp.data);
                 console.log("axios get");
                 setListCategory(resp.data);
