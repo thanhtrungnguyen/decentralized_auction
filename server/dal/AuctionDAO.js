@@ -1,3 +1,4 @@
+const AuctionStatus = require('../models/AuctionStatus');
 const conn = require('./connectSF')
 
 const createRequestAuction = async (propertyId) => {
@@ -153,9 +154,43 @@ const getAuctionDetailByID = async (auctionId, propertyId) => {
     return auctionlist;
 }
 
+const getAuctionForUpdateStatus = async (auctionId)=>{
+    var connection = await conn();
+    var auction = null;
+    await connection.query("Select Id, Name, RegistrationFee__c, Due_Payment_Time__c, End_Auction_Time__c, Start_Aution_Time__c, Start_Registration_Time__c, End_Registration_Time__c, Property_DAP_Id__c, Status__c From Auction__c where Status__c in ('Approved','RegistrationTime','Bidding', 'UpcomingforBid', 'Closed') and Id = '"+auctionId+"'", function (err, result) {
+        if (err) { return console.error(err); }
+        console.log("total : " + result.totalSize);
+        console.log("fetched : " + result.records.length);
+        auction = result.records[0];
+    });
+
+    return auction;
+}
+
+const updateStatusForAuction = async (auction,status)=>{
+    var connection = await conn();
+    await connection.sobject("Auction__c").update({
+        Id: auction.Id,
+        Status__c: status,
+    }, (err, ret) => {
+        if (err || !ret.success) { return console.error(err); }
+
+    })
+}
+const updateStatusAuctionMongo = async (auctionId, status)=>{
+    await AuctionStatus.findByIdAndUpdate({_id:auctionId},{status:status});
+}
+const createStatusAuctionMongo = async (auctionId) =>{
+    const newAuctionStatus = new AuctionStatus({
+        auctionId:auctionId,
+        status:"Approved"
+    })
+    await newAuctionStatus.save();
+}
+
 
 // exports.createRequestAuction = createRequestAuction;
 // exports.updateRequestProperty = updateRequestProperty;
 // exports.updateRejectAuction = updateRejectAuction;
 // exports.updateRejectProperty = updateRejectProperty
-module.exports = { createRequestAuction, updateRequestProperty, updateRejectAuction, updateRejectProperty, updateApproveAuction, updateApproveProperty, findPropertyById, getAllAuction, getAuctionDetailByID }
+module.exports = { createRequestAuction, updateRequestProperty, updateRejectAuction, updateRejectProperty, updateApproveAuction, updateApproveProperty, findPropertyById, getAllAuction, getAuctionDetailByID, getAuctionForUpdateStatus, updateStatusForAuction, updateStatusAuctionMongo, createStatusAuctionMongo }
