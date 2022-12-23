@@ -53,15 +53,18 @@ const NavBar = () => {
                                     Profile
                                 </Link>
                             );
-                        } else if (type === "ACCOUNT") {
+                        }
+                        // if (type === "ACCOUNT")
+                        else {
                             return (
                                 <Link className={styles.link} to={`/profileOrganization/${id}`}>
                                     Profile
                                 </Link>
                             );
-                        } else {
-                            return <></>;
                         }
+                        //  else {
+                        //     return <></>;
+                        // }
                     })()}
 
                     <div className={styles.flright}>
