@@ -81,11 +81,17 @@ const approveAuction = async (auction) => {
         property.Start_Bid__c,
         property.Price_Step__c
     );
+    await auctionDAO.createStatusAuctionMongo(auction.auctionId);
 };
 
-const getAllAuction = async () => {
-    var auctionList = await auctionDAO.getAllAuction();
+const getAllAuction = async (index,name,category,statusAuction) => {
+    var auctionList = await auctionDAO.getAllAuction(index,name,category,statusAuction);
     return auctionList;
+};
+
+const getAuctionForUpdateStatus = async (auctionId) => {
+    var auction = await auctionDAO.getAuctionForUpdateStatus(auctionId);
+    return auction;
 };
 
 const getAuctionDetailByID = async (auctionId, propertyId) => {
@@ -93,7 +99,24 @@ const getAuctionDetailByID = async (auctionId, propertyId) => {
     return data;
 };
 
+const updateStatusForAuction = async (auctionId,status)=>{
+    await auctionDAO.updateStatusForAuction(auctionId,status);
+}
+const findStatusAuction = async(auctionId)=>{
+    const auction = await auctionDAO.findStatusAuction(auctionId);
+    return auction;
+}
+const updateStatusAuctionMongo = async(auctionId, status)=>{
+    await auctionDAO.updateStatusAuctionMongo(auctionId, status);
+}
+
+
+
+const filterAuction = async(index,status,price)=>{
+    var list =await auctionDAO.filterAuction(index,status,price)
+    return list;
+}
 // exports.createRequestAuction = createRequestAuction;
 // exports.updateRejectAuction = updateRejectAuction
 
-module.exports = { createRequestAuction, updateRejectAuction, approveAuction, getAllAuction, getAuctionDetailByID };
+module.exports = { createRequestAuction, updateRejectAuction, approveAuction, getAllAuction, getAuctionDetailByID, getAuctionForUpdateStatus, updateStatusForAuction, findStatusAuction, updateStatusAuctionMongo };

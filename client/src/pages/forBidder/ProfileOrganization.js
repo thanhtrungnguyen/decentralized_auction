@@ -1,4 +1,4 @@
-import "../../styleCss/stylesPages/forBidder/Profile.css";
+import "../../styleCss/stylesPages/forBidder/ProfileOrganization.css";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
@@ -34,7 +34,7 @@ const ProfileOrganization = () => {
         return users;
     };
     const handleClick = () => {
-        navigate(`/editProfile/${id}`);
+        navigate(`/editProfileOrganization/${id}`);
     };
     return loading ? (
         <Loading />
@@ -52,7 +52,62 @@ const ProfileOrganization = () => {
 
             <div className="con">
                 <div className="container">
-                    <p className="title">Personal Information</p>
+                    <p className="title">Organization Information</p>
+                    <br />
+                    <br />
+                    <br />
+                    <p className="bold">Organization Information</p>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div className="row">
+                        <label className="label">Organization name</label>
+                        <input type="text" className="input" value={data.organizationName} readOnly></input>
+                    </div>
+                    <div className="row">
+                        <label className="label">Tax Code</label>
+                        <input type="text" className="input" value={data.taxCode} readOnly></input>
+                    </div>
+                    <div className="row">
+                        <label className="label">Tax Code Granted Date</label>
+                        <input type="text" className="input" value={data.taxCodeGrantedDate} readOnly></input>
+                    </div>
+                    <div className="row">
+                        <label className="label">Tax Code Granted Place</label>
+                        <input type="text" className="input" value={data.taxCodeGrantedPlace} readOnly></input>
+                    </div>
+                    <div className="row">
+                        <label className="label">Specific Address</label>
+                        <input type="text" className="input" value={data.specificAddress} readOnly></input>
+                    </div>
+                    <div className="row">
+                        <label className="label">Position</label>
+                        <input type="text" className="input" value={data.position} readOnly></input>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
                     <br />
                     <br />
                     <br />

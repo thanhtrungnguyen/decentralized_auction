@@ -42,7 +42,7 @@ const NavBar = () => {
                     <Link className={styles.link} to="/news">
                         News
                     </Link>
-                    <Link className={styles.link} to="/">
+                    <Link className={styles.link} to="/aboutUs">
                         About us
                     </Link>
 
@@ -53,14 +53,20 @@ const NavBar = () => {
                                     Profile
                                 </Link>
                             );
-                        } else {
+                        }
+                        // if (type === "ACCOUNT")
+                        else {
                             return (
                                 <Link className={styles.link} to={`/profileOrganization/${id}`}>
                                     Profile
                                 </Link>
                             );
                         }
+                        //  else {
+                        //     return <></>;
+                        // }
                     })()}
+
                     <div className={styles.flright}>
                         <input className={styles.ip} type="text"></input>
                         <BsSearch className={styles.icon} />

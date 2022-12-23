@@ -11,21 +11,29 @@ import Pagination from "@mui/material/Pagination";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import io from "socket.io-client";
 const AuctionList = () => {
     const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-
+    const socket = io.connect("http://localhost:8800");
     const baseURL = "http://localhost:8800/api/auction/";
-
+    const [status, setStatus] = useState(0);
     useEffect(() => {
         axios.get(baseURL).then((resp) => {
             console.log(resp.data);
             console.log("axios get");
             setData(resp.data);
+            socket.off();
         });
-    }, [baseURL]);
+    }, [status]);
+    socket.on("data", (item) => {
+        if(item!=status){
+            setStatus(data);
+            console.log(item);           
+        }   
+    })
     const [page, setPage] = React.useState(1);
     const handleChange = (event, value) => {
         setPage(value);

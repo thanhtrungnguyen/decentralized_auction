@@ -5,7 +5,7 @@ const { createError } = require("./error.js");
 const BIDDER = "BIDDER";
 const SELLER = "SELLER";
 const ADMIN = "ADMIN";
-
+const MANAGER = 'MANAGER';
 //verify access_token
 const verifyToken = (req, res, next) => {
     const token = req.cookies.access_token;
@@ -39,6 +39,7 @@ const verifyAdmin = (req, res, next) => {
         }
     });
 };
+//check author Bidder
 const verifyBidder = (req, res, next) => {
     verifyToken(req, res, () => {
         if (req.user.role == BIDDER) {
@@ -48,4 +49,14 @@ const verifyBidder = (req, res, next) => {
         }
     });
 };
-module.exports = { verifyToken, verifySeller, verifyAdmin, verifyBidder };
+//check author Manager
+const verifyManager = (req, res, next) => {
+    verifyToken(req, res, () => {
+        if (req.user.role == MANAGER) {
+            next();
+        } else {
+            return next(createError(403, "you are not authorized!"));
+        }
+    });
+};
+module.exports = { verifyToken, verifySeller, verifyAdmin, verifyBidder,verifyManager };

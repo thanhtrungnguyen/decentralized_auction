@@ -44,6 +44,7 @@ const getHighestBidder = (id) => {
         });
         return highestBidder;
     });
+}
 };
 const getAllAuction = async () => {
     var listAuction = await ContractInteractionDAO.getAllAuction();

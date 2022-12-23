@@ -12,48 +12,47 @@ import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import Loading from "../../components/loading/Loading";
 const ManagerCategorys = () => {
     const [page, setPage] = React.useState(1);
     const [categoryName, setCategory] = useState(null);
+    const [categoryName2, setCategory2] = useState(null);
+    const [status, setStatus] = useState(null);
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    const baseURL = "http://localhost:8800/api/auction/";
+    const baseURL = `http://localhost:8800/api/category/getAll/${page}/${status}/${categoryName}`;
 
     useEffect(() => {
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setData(resp.data);
-        });
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setData(resp.data);
+            });
+            setLoading(false);
+        }
+        fetchData();
     }, [baseURL]);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "categoryName") {
-            setCategory(value);
+            setCategory2(value);
         }
     };
     const handleSubmit = (event) => {
-        const formData = new FormData();
-
-        formData.append("categoryName", categoryName);
-
-        axios
-            .get("http://localhost:8800/api/auction", formData, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-                setData(res.data);
-
-                navigate("/autionsListForManager");
-            });
+        categoryName2 === '' ? setCategory(null) : setCategory(categoryName2);
+        setPage(1)
         event.preventDefault();
     };
     const handleChange = (event, value) => {
         setPage(value);
     };
+    const handleChangeStatus = (e) => {
+        setStatus(e.target.value)
+        setPage(1);
+    }
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -65,7 +64,9 @@ const ManagerCategorys = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
                 if (getUser().role == "MANAGER") {
@@ -87,7 +88,7 @@ const ManagerCategorys = () => {
                                     className={styles.input}
                                     type="text"
                                     placeholder="Please input"
-                                    value={categoryName}
+                                    value={categoryName2}
                                     onChange={(e) => handleInputChange(e)}
                                     required
                                 ></input>
@@ -100,61 +101,54 @@ const ManagerCategorys = () => {
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset"></input>
+                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e)=>setCategory2('')}></input>
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <Link className={styles.bold} to="/managerCategorys">
+                            <button className={styles.bold} value='null' onClick={(e) => { handleChangeStatus(e) }}>
                                 All
-                            </Link>
+                            </button>
+                            <button className={styles.bold} value='Activate' onClick={(e) => { handleChangeStatus(e) }}>
+                                Activate
+                            </button>
+                            <button className={styles.bold} value='Deactivate' onClick={(e) => { handleChangeStatus(e) }}>
+                                Deactivate
+                            </button>
 
                             <hr />
-                            <p className={styles.txtBold}>69 Properties</p>
+                            <p className={styles.txtBold}>Total Property: {data.totalCategory}</p>
                             <Link className={styles.btnAdd} to="/addCategory">
                                 Add a New Category
                             </Link>
                             <br />
                             <table className={styles.table}>
                                 <tr>
-                                    <th className={styles.th}>Property Name</th>
-
+                                    <th className={styles.th}> Name</th>
+                                    <th className={styles.th}> Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {data.map((auction) => (
+                                {data.categories.map((item) => (
                                     <tr>
-                                        <td className={styles.td}>{auction.property.propertyName}</td>
-
+                                        <td className={styles.td}>{item.Name}</td>
+                                        <td className={styles.td}>{item.Status__c}</td>
                                         <td className={styles.td}>
-                                            <Link className={styles.linkBlue} to={`/categoryDetail/${auction._id}`}>
+                                            <Link className={styles.linkBlue} to={`/categoryDetail/${item.Id}`}>
                                                 View
                                             </Link>
-                                            <Link className={styles.linkBlue} to={`/editCategory/${auction._id}`}>
+                                            <Link className={styles.linkBlue} to={`/editCategory/${item.Id}`}>
                                                 Edit
                                             </Link>
-                                            <Link className={styles.linkBlue} to={`/deleteCategory/${auction._id}`}>
-                                                Delete
+
+                                            <Link className={styles.linkBlue} to={`/deleteCategory/${item.Id}`}>
+                                                {item.Status__c==='Activate'?'Activate':'Deactivate'}
                                             </Link>
                                         </td>
                                     </tr>
                                 ))}
-                                <tr>
-                                    <td className={styles.td}>Dianne Russell</td>
 
-                                    <td className={styles.td}>
-                                        <Link className={styles.linkBlue} to={`/categoryDetail`}>
-                                            View
-                                        </Link>
-                                        <Link className={styles.linkBlue} to={`/editCategory`}>
-                                            Edit
-                                        </Link>
-                                        <Link className={styles.linkBlue} to={`/deleteCategory`}>
-                                            Delete
-                                        </Link>
-                                    </td>
-                                </tr>
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

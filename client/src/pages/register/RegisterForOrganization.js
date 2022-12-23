@@ -168,47 +168,7 @@ const Register = () => {
                 alert(res.data.message);
                 navigate("/login");
             });
-        alert(
-            "information: " +
-                firstName +
-                " " +
-                lastName +
-                " " +
-                gender +
-                " " +
-                dateOfBirth +
-                " " +
-                email +
-                " " +
-                phone +
-                " " +
-                cityId +
-                " " +
-                districtId +
-                " " +
-                " " +
-                wardId +
-                " " +
-                specificAddress +
-                " " +
-                cardNumber +
-                " " +
-                dateRangeCard +
-                " " +
-                cardGrantedPlace +
-                " " +
-                cardBack.name +
-                " " +
-                cardFront.name +
-                " " +
-                userName +
-                " " +
-                password +
-                " " +
-                rePassword +
-                " " +
-                role
-        );
+
         event.preventDefault();
     };
 
@@ -260,6 +220,7 @@ const Register = () => {
                         value={taxCodeGrantedDate}
                         onChange={(e) => handleInputChange(e)}
                         id="taxCodeGrantedDate"
+                        required
                     ></input>
                     <input
                         className={styles.inputT}
