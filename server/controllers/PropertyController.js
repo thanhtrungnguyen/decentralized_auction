@@ -31,9 +31,13 @@ const createProperty = async (req, res, next) => {
 // get all property by user
 const getAllPropertyByUser = async (req, res, next) => {
     try {
-        const token = req.cookies.access_token;
-        var properties = await PropertyService.getPropertiesByUser(token);
-        res.status(200).json(properties);
+        var token = req.cookies.access_token;
+        var index = req.params.index;
+        var status = req.params.status;
+        var category = req.params.category;
+        var nameProperty = req.params.name;
+        var data = await PropertyService.getPropertiesByUser(token, index, status, category, nameProperty);
+        res.status(200).json(data);
     } catch (error) {
         next(error);
     }
@@ -78,10 +82,10 @@ const findPropertyByID = async (req, res, next) => {
 // get list property by status
 const getListByStatus = async (req, res, next) => {
     try {
-        
+
         const token = req.cookies.access_token;
         const status = req.params.status;
-        var properties = await PropertyService.getPropertiesByStatus(token,status)
+        var properties = await PropertyService.getPropertiesByStatus(token, status)
         res.status(200).json(properties);
     } catch (error) {
         next(error);
@@ -96,11 +100,11 @@ const filterProperty = async (req, res, next) => {
         const token = req.cookies.access_token;
         const propertyName = req.params.name;
         const propertyStatus = req.params.status;
-        var properties = await PropertyService.filterProperty(token,propertyName,propertyStatus);
+        var properties = await PropertyService.filterProperty(token, propertyName, propertyStatus);
         console.log(properties);
         res.status(200).json(properties);
     } catch (error) {
         next(error);
     }
 };
-module.exports = {findPropertyByID, updateProperty, getAllPropertyByUser, createProperty, getListByStatus, filterProperty };
+module.exports = { findPropertyByID, updateProperty, getAllPropertyByUser, createProperty, getListByStatus, filterProperty };

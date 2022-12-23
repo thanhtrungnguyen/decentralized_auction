@@ -2,6 +2,8 @@ const NewsDAO = require('../dal/NewsDAO');
 
 const getAll = async(index,status,title)=>{
     try {
+        status=='null'?status='':status;
+        title=='null'?title='':title;
        var list =  await NewsDAO.getAll(index,status,title);
        return list;
     } catch (error) {
@@ -17,7 +19,12 @@ const getByStatus = async(index,status)=>{
     }
 }
 const getById = async(newsId)=>{
-
+    var news = await NewsDAO.getById(newsId);
+    return news;
+}
+const sortNews = async(index,type)=>{
+    var news = await NewsDAO.sort(index,type);
+    return news;
 }
 const filter = async(title,index,status)=>{
     try {
@@ -52,4 +59,4 @@ const create = async(title,description)=>{
     }
 }
 
-module.exports = {getAll,getByStatus,filter,changeStatus,update,create,getById}
+module.exports = {getAll,getByStatus,filter,changeStatus,update,create,getById,sortNews}

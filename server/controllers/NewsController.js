@@ -70,7 +70,15 @@ const getByStatus = async (req, res, next) => {
 }
 
 const getNewsById = async(req,res,next)=>{
+    var newsId = req.params.id
+    var news = await NewsService.getById(newsId)
+    res.status(200).json(news);
+}
+const sortNews = async(req,res,next)=>{
+    var type = req.params.type
+    var index = req.params.index;
+    var listNews = await NewsService.sortNews(index,type)
     res.status(200).json(listNews);
 }
 
-module.exports = {changeStatusNews,createNews,updateNews,getAllNews,filterNews,getByStatus}
+module.exports = {changeStatusNews,createNews,updateNews,getAllNews,filterNews,getByStatus,getNewsById,sortNews}
