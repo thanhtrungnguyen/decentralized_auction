@@ -87,7 +87,7 @@ const AddManager = () => {
                                 id="userName"
                                 type="text"
                                 className={styles.input}
-                                value={username}
+                                value={userName}
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>

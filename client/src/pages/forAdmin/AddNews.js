@@ -1,77 +1,132 @@
-import React, { Component } from "react";
+import styles from "../../styleCss/stylesPages/forAdmin/AddNews.module.css";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBarAdmin";
+import Footer from "../../components/footer/Footer";
+import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
+import { Outlet, Link } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import HeaderUser from "../../components/header/HeaderUser";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
+import FooterCopy from "../../components/footer/FooterCopy";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+const AddNews = () => {
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
 
-const API_URL = "https://77em4-8080.sse.codesandbox.io";
-const UPLOAD_ENDPOINT = "upload_files";
+    const navigate = useNavigate();
 
-const AddNew = () => {
-  function uploadAdapter(loader) {
-    return {
-      upload: () => {
-        return new Promise((resolve, reject) => {
-          const body = new FormData();
-          loader.file.then((file) => {
-            body.append("files", file);
-            // let headers = new Headers();
-            // headers.append("Origin", "http://localhost:3000");
-            fetch(`${API_URL}/${UPLOAD_ENDPOINT}`, {
-              method: "post",
-              body: body,
-              mode: "no-cors",
-            })
-              .then((res) => res.json())
-              .then((res) => {
-                resolve({
-                  default: `${API_URL}/${res.filename}`,
-                });
-              })
-              .catch((err) => {
-                reject(err);
-              });
-          });
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        if (id === "title") {
+            setTitle(value);
+        }
+        if (id === "content") {
+            setContent(value);
+        }
+    };
+    const handleSubmit = (event) => {
+        const formData = new FormData();
+
+        formData.append("title", title);
+        formData.append("content", content);
+        console.log(formData.get("content"));
+        axios
+            .post(
+                "http://localhost:8800/api/addNews",
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                },
+                { withCredentials: true }
+            )
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert(res.data.message);
+                navigate("/listNews");
+            });
+        event.preventDefault();
+    };
+    const cancel = () => {
+        navigate("/listNews");
+    };
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
         });
-      },
+        return users;
     };
-  }
-  function uploadPlugin(editor) {
-    editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-      return uploadAdapter(loader);
-    };
-  }
+    return (
+        <>
+            {(() => {
+                if (getUser().role == "ADMIN") {
+                    return <HeaderUser userName={getUser().userName} />;
+                } else {
+                    return <Header />;
+                }
+            })()}
+            <NavBar />
+            <form onSubmit={handleSubmit}>
+                <div className={styles.container}>
+                    <SideBarAdmin />
+                    <div className={styles.content}>
+                        <p className={styles.title}>Add News</p>
+                        <label className={styles.label}>Title</label>
+                        <input id="title" className={styles.ip} type="text" value={title} onChange={(e) => handleInputChange(e)} required></input>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <label className={styles.label}>Content</label>
 
-  return (
-    <>
-      <div>AddNew</div>
-      <div className="App">
-        <CKEditor
-          editor={ClassicEditor}
-          data="<p>Hello from CKEditor 5!</p>"
-          onReady={(editor) => {
-            // You can store the "editor" and use when it is needed.
-            console.log("Editor is ready to use!", editor);
-          }}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-          }}
-          onBlur={(event, editor) => {
-            console.log("Blur.", editor);
-          }}
-          onFocus={(event, editor) => {
-            console.log("Focus.", editor);
-          }}
-          config={{
-            ckfinder: {
-              // Upload the images to the server using the CKFinder QuickUpload command.
-              uploadUrl:
-                "https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json",
-              mode: "no-cors",
-            },
-          }}
-        />
-      </div>
-    </>
-  );
+                        <div className={styles.ck}>
+                            <CKEditor
+                                editor={ClassicEditor}
+                                data={content}
+                                onReady={(editor) => {
+                                    // You can store the "editor" and use when it is needed.
+                                    console.log("Editor is ready to use!", editor);
+                                }}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    setContent(data);
+                                    console.log({ event, editor, data });
+                                    console.log(content);
+                                }}
+                                onBlur={(event, editor) => {
+                                    console.log("Blur.", editor);
+                                }}
+                                onFocus={(event, editor) => {
+                                    console.log("Focus.", editor);
+                                }}
+                                config={{
+                                    ckfinder: {
+                                        // Upload the images to the server using the CKFinder QuickUpload command.
+                                        uploadUrl:
+                                            "https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json",
+                                        mode: "no-cors",
+                                    },
+                                }}
+                            />
+                        </div>
+                        <input type="button" value="Cancel" className={styles.btnCancel} onClick={cancel}></input>
+                        <input type="submit" value="Add News" className={styles.btnSubmit}></input>
+                    </div>
+                    <Footer />
+                    <FooterCopy />
+                </div>
+            </form>
+        </>
+    );
 };
-export default AddNew;
+export default AddNews;
