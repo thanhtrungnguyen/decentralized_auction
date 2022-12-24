@@ -69,7 +69,7 @@ const AddNews = () => {
     return (
         <>
             {(() => {
-                if (getUser().role == "ADMIN") {
+                if (getUser().role === "ADMIN") {
                     return <HeaderUser userName={getUser().userName} />;
                 } else {
                     return <Header />;

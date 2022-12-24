@@ -5,10 +5,15 @@ import HeaderUser from "../../components/header/HeaderUser";
 import FooterCopy from "../../components/footer/FooterCopy";
 import PageName from "../../components/header/PageName";
 import "../../styleCss/stylesPages/common/AboutUs.css";
+import Loading from "../../components/loading/Loading";
 
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-const AboutUs = ({ error }) => {
+const AboutUs = () => {
+    const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState();
+
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -20,10 +25,24 @@ const AboutUs = ({ error }) => {
         });
         return users;
     };
-    return (
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+            setLoading(false);
+        } else {
+            setRole("");
+            setLoading(false);
+        }
+    }, []);
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "BIDDER" || getUser().role == "SELLER" || getUser().role == "MANAGER" || getUser().role == "ADMIN") {
+                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

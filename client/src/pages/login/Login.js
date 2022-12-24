@@ -22,26 +22,27 @@ const Login = () => {
             .post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true })
             .then((res) => {
                 console.log(res);
-                if (res.data.success == false) {
+                if (res.data.success === "false") {
                     alert(res.data.message);
                 } else {
-                    if (res.data.role == "BIDDER") {
+                    if (res.data.role === "BIDDER") {
                         navigate("/homePage");
                     }
-                    if (res.data.role == "ADMIN") {
+                    if (res.data.role === "ADMIN") {
                         navigate("/listManagers");
                     }
-                    if (res.data.role == "SELLER") {
+                    if (res.data.role === "SELLER") {
                         navigate("/myProperty");
                     }
-                    if (res.data.role == "MANAGER") {
+                    if (res.data.role === "MANAGER") {
                         navigate("/autionsListForManager");
                     }
                 }
 
-                // alert(res.data.message);
+                alert(res.data.message);
             })
             .catch((reason) => {
+                alert("Incorrect Username or Password!!!");
                 console.log(reason);
             });
     };
