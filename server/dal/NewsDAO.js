@@ -118,18 +118,20 @@ const getById = async (newsId) => {
 };
 const filter = async (title, index, status) => {
     try {
-        // var listNews, total, totalNews = null;
-        // var num = (parseInt(index) - 1) * perPage;
-        // await conn.query(`Select Id, Name,Status__c from News_DAP__c where Name like '%${title}%' And Status__c = '${status}' order by CreatedDate desc limit ${perPage} offset ${num}`, (err, result) => {
-        //     if (err) console.log(err)
-        //     listNews = result
-        // })
-        // await conn.query(`Select Id from News_DAP__c`, (err, result) => {
-        //     if (err) console.log(err)
-        //     total = result;
-        //     totalNews = total.totalSize;
-        // })
-        // return { listNews: listNews, totalNews: totalNews }
+        var connection = await conn();
+        var listNews, total, totalNews = null;
+        var num = (parseInt(index) - 1) * perPage;
+        await connection.query(`Select Id,Name,Start_Registration_Time__c,End_Registration_Time__c,Start_Aution_Time__c,End_Auction_Time__c,Due_Payment_Time__c,RegistrationFee__c,Status__c,Property_DAP_Id__r.Name,Property_DAP_Id__r.Category_Id__r.Name,Property_DAP_Id__r.Deposit_Amount__c,Property_DAP_Id__r.End_View_Property_Time__c from Auction__c
+        `, (err, result) => {
+            if (err) console.log(err)
+            listNews = result
+        })
+        await connection.query(`Select Id from News_DAP__c`, (err, result) => {
+            if (err) console.log(err)
+            total = result;
+            totalNews = total.totalSize;
+        })
+        return { listNews: listNews, totalNews: totalNews }
     } catch (error) {
         console.error(error);
     }
