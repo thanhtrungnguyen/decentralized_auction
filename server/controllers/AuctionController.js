@@ -78,6 +78,15 @@ const getAllAuction = async (req, res, next) => {
         next(error);
     }
 };
+const getAllAuctionBidder = async (req, res, next) => {
+    try {
+        var auctionlist = await auctionService.getAllAuctionBidder();
+
+        res.status(200).json(auctionlist);
+    } catch (error) {
+        next(error);
+    }
+};
 const getAuctionDetailByID = async (req, res, next) => {
     var auctionId = req.params.auctionId;
     var propertyId = req.params.propertyId;
@@ -116,4 +125,4 @@ const filterAuction = async(req,res,next)=>{
 //     }
 // }
 
-module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction,filterAuction };
+module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction,filterAuction,getAllAuctionBidder };

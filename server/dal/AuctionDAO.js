@@ -161,7 +161,22 @@ const getAllAuction = async (index, nameProperty, category, statusAuction) => {
     );
     return { listAuction: auctions, total: total, totalAuction: totalAuction };
 };
-
+const getAllAuctionBidder = async () => {
+    var connection = await conn();
+    var auctionlist = null;
+    await connection.query(
+        "Select Id, Name, Description__c, Category_Id__r.Name, Deposit_Amount__c, End_View_Property_Time__c, Place_View_Property__c, Price_Step__c, Start_Bid__c, Start_View_Property_Time__c, Status__c, User_Id__c, (Select Name From Properties_Media__r), (Select Id, Name, RegistrationFee__c, Due_Payment_Time__c, End_Auction_Time__c, Start_Aution_Time__c, Start_Registration_Time__c, End_Registration_Time__c, Property_DAP_Id__c, Status__c From Auctions1__r  ) From Property_DAP__c WHERE Id IN (SELECT Property_DAP_Id__c  FROM 	Auction__c  )",
+        function (err, result) {
+            if (err) {
+                return console.error(err);
+            }
+            console.log("total : " + result.totalSize);
+            console.log("fetched : " + result.records.length);
+            return auctionlist = result.records;
+        }
+    );
+    return auctionlist;
+}
 const getAuctionDetailByID = async (auctionId, propertyId) => {
     var connection = await conn();
     var auctionlist = null;
@@ -317,4 +332,5 @@ module.exports = {
     createStatusAuctionMongo,
     findStatusAuction,
     updateStatusAuctionMongo,
+    getAllAuctionBidder,
 };
