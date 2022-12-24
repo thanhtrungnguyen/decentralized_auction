@@ -246,7 +246,7 @@ const AuctionList = () => {
                         </div>
                     ))}
                     <div>
-                        <Pagination className={styles.pagi} count={Math.floor(data.total / 5) + 1} page={page} onChange={handleChange} />
+                        <Pagination className={styles.pagi} count={Math.floor(data.total / 5) + 1} page={page} onChange={handleChange} hidden={data.total===0}/>
                     </div>
                 </div>
             </section>
