@@ -68,7 +68,7 @@ app.use(require("./routers"));
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
     const errorMessage = err.message || "Something went wrong!";
-    res.status(err.status).json({
+    res.status(errorStatus).json({
         success: false,
         status: errorStatus,
         message: errorMessage,
