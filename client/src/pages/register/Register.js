@@ -162,6 +162,7 @@ const Register = () => {
                     <input
                         className={styles.inputT}
                         type="text"
+                        pattern="^\s*([^\s]\s*){0,20}$"
                         placeholder="First name"
                         value={firstName}
                         onChange={(e) => handleInputChange(e)}
@@ -172,6 +173,7 @@ const Register = () => {
                     <input
                         className={styles.inputT}
                         type="text"
+                        pattern="^\s*([^\s]\s*){0,20}$"
                         placeholder="Last name"
                         value={lastName}
                         onChange={(e) => handleInputChange(e)}
@@ -247,6 +249,7 @@ const Register = () => {
                     <input
                         className={styles.ipadd}
                         type="text"
+                        pattern="^\s*([^\s]\s*){0,200}$"
                         placeholder="Specific address"
                         value={specificAddress}
                         onChange={(e) => handleInputChange(e)}
@@ -256,6 +259,7 @@ const Register = () => {
                     <p className={styles.textRed}>Identity/Citizen card</p>
                     <input
                         type="text"
+                        pattern="\d{12}"
                         placeholder="Card number"
                         className={styles.ip3}
                         value={cardNumber}
@@ -266,6 +270,7 @@ const Register = () => {
                     <input type="date" className={styles.ip3} value={dateRangeCard} onChange={(e) => handleInputChange(e)} id="dateRangeCard"></input>
                     <input
                         type="text"
+                        pattern="^\s*([^\s]\s*){0,100}$"
                         placeholder="Card granted place"
                         className={styles.ip3}
                         value={cardGrantedPlace}
@@ -307,7 +312,7 @@ const Register = () => {
                     ></input>
                     <input
                         className={styles.inputEP}
-                        type="text"
+                        type="password"
                         value={password}
                         onChange={(e) => handleInputChange(e)}
                         id="password"

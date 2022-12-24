@@ -196,6 +196,7 @@ const Register = () => {
                     <input
                         className={styles.inputT}
                         type="text"
+                        pattern="^\s*([^\s]\s*){0,100}$"
                         placeholder="Organization name"
                         value={organizationName}
                         onChange={(e) => handleInputChange(e)}
@@ -294,8 +295,8 @@ const Register = () => {
                     ></input>
                     <input
                         className={styles.inputEP}
-                        type="number"
-                        // pattern="/(8|0)\d{9}/"
+                        type="text"
+                        pattern="[0]\d{9}"
                         placeholder="Phone number"
                         value={phone}
                         onChange={(e) => handleInputChange(e)}
@@ -354,6 +355,7 @@ const Register = () => {
                     <p className={styles.textRed}>Identity/Citizen card</p>
                     <input
                         type="text"
+                        pattern="\d{12}"
                         placeholder="Card number"
                         className={styles.ip3}
                         value={cardNumber}
