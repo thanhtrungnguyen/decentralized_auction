@@ -35,10 +35,10 @@ const getAllCate = async (index, status, name) => {
         queryCount = `Select Name from Category_DAP__c Where Name like '%${name}%' order by Name`
     } else if (name == 'null') {
         query = `Select Id,Name,Status__c from Category_DAP__c Where Status__c = '${status}' order by Name limit ${perPage} offset ${num}`;
-        queryCount = `Select Name from Category_DAP__cWhere Status__c = '${status}' order by Name`
+        queryCount = `Select Name from Category_DAP__c Where Status__c = '${status}' order by Name`
     } else {
         query = `Select Id,Name,Status__c from Category_DAP__c Where Status__c = '${status} and Name like '%${name}%' order by Name limit ${perPage} offset ${num}`;
-        queryCount = `Select Name from Category_DAP__cWhere Status__c = '${status}' and Name like '%${name}%' order by Name`
+        queryCount = `Select Name from Category_DAP__c Where Status__c = '${status}' and Name like '%${name}%' order by Name`
     }
 
     var connection = await conn();
