@@ -126,20 +126,31 @@ const getAllUser = async (role, index, status, name) => {
 const getUserById = async (userId) => {
     var connection = await conn();
     var role = await getUserRole(userId);
-    var user = null;
-    if (role === "MANAGER") {
-        await connection.sobject("User__c").find({ Id: userId }, (err, result) => {
-            if (err) console.err(err);
-            user = result;
-        });
-    } else {
-        await connection.sobject("Contact__c").find({ User_Id__c: userId }, (err, result) => {
-            if (err) console.err(err);
-            user = result;
-        });
+    var type,user,contact,account = null;
+    if (role === 'MANAGER') {
+        await connection.sobject('User__c').find({ Id: userId }, (err, result) => {
+            if (err) console.err(err)
+            user = result
+        })
     }
-    return user;
-};
+    else {
+        await connection.sobject('Contact__c').find({User_Id__c: userId},(err,result)=>{
+            if (err) console.err(err)
+            contact = result[0]
+        })
+        await connection.sobject('User__c').find({ Id: userId }, (err, result) => {
+            if (err) console.err(err)
+            type = result[0].Type__c;
+        })
+        if(type==='ACCOUNT'){
+            await connection.sobject('Account__c').find({User_Id__c: userId},(err,result)=>{
+                if (err) console.err(err)
+                account = result[0]
+            })
+        }
+    }
+    return {user:user,contact,account:account};
+}
 const getUserRole = async (userId) => {
     var connection = await conn();
     var role = null;
