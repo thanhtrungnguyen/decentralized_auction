@@ -78,7 +78,7 @@ const AuctionList = () => {
     ) : (
         <>
             {(() => {
-                if (role === "BIDDER") {
+                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

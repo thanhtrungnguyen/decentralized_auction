@@ -22,6 +22,7 @@ const AuctionDetail = () => {
     const { id, propertyId } = useParams();
     const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
     const { data, loading, error } = useFetch(baseURL);
+    const [role, setRole] = useState();
 
     console.log(data);
     console.log(loading);
@@ -36,7 +37,16 @@ const AuctionDetail = () => {
         });
         return users;
     };
+    useEffect(() => {
+        console.log(getUser());
 
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     // const [openModal, setOpenModal] = useState(() => {
     //     return false;
     // });
@@ -47,7 +57,7 @@ const AuctionDetail = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "BIDDER") {
+                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
