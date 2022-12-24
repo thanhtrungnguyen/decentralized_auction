@@ -4,7 +4,7 @@ import NavBar from "../../components/navbar/NavBar";
 import HeaderUser from "../../components/header/HeaderUser";
 import FooterCopy from "../../components/footer/FooterCopy";
 import PageName from "../../components/header/PageName";
-import "../../styleCss/error.css";
+import style from "../../styleCss/error.css";
 
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";

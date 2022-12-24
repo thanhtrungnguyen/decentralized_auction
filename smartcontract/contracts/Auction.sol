@@ -546,4 +546,15 @@ contract Auction {
     function getOwner() public view returns (address) {
         return i_owner;
     }
+
+    // function getWinnerOfAuction(string memory auctionId)external
+    //     view
+    //     isExistAuctionId(auctionId)
+    //     returns (BidInformation memory)
+    // {
+    //     if(getHighestBidOfAuction(auctionId)!=0){
+    //         return s_bidInformations[auctionId][getIndexOfHighestBidOfAuction(auctionId)]; 
+    //     }
+    //     if
+    // }
 }

@@ -3,28 +3,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BidModal from "../index";
 import axios from "axios";
+import { useFetchBidding } from "../../../hook/useFetch";
 
 const BidModalButton = ({ auctionId, propertyId }) => {
-    //     const { auctionId } = useParams() || "null";
     const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
 
     const [openModal, setOpenModal] = useState(() => {
         return false;
     });
 
-    const [auction, setAuction] = useState([]);
-
-    useEffect(() => {
-        axios
-            .get(baseURL)
-            .then((res) => {
-                setAuction(res.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
-
+    const { loading, data: auction, error } = useFetchBidding(baseURL);
     return (
         <>
             <div>
@@ -35,7 +23,7 @@ const BidModalButton = ({ auctionId, propertyId }) => {
                 >
                     Fucking Bid
                 </button>
-                {openModal && <BidModal closeModal={setOpenModal} auction={auction} propertyId={propertyId} />}
+                {openModal && <BidModal closeModal={setOpenModal} loading={loading} auction={auction} propertyId={propertyId} />}
             </div>
         </>
     );

@@ -17,49 +17,22 @@ import TransactionStatus from "../components/TransactionStatus";
 import BiddingProperty from "../components/BiddingProperty";
 import TransactionHistory from "../components/TransactionHistory";
 import AuctionResult from "./AuctionResult";
+import { useFetchBidding } from "../../../hook/useFetch";
+
 function PlaceBid({ auction }) {
-    const { auctionId } = useParams() || "null";
+    const { auctionId } = useParams() || auction.auctionId;
     const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}/placedBid`;
 
-    // const [openModal, setOpenModal] = useState(() => {
-    //     return false;
-    // });
-
-    const [placedBid, setPlacedBid] = useState(() => {
-        return [];
-    });
-    const [highestBid, setHighestBid] = useState(() => {
-        return "0";
-    });
-    const [inputBidAmount, setInputBidAmount] = useState(() => {
-        return "0";
-    });
-    const [transactionStatus, setTransactionStatus] = useState(() => {
-        return undefined;
-    });
-
-    const inputRef = useRef("0");
-
-    useEffect(() => {
-        axios
-            .get(baseURL)
-            .then((res) => {
-                setPlacedBid(res.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
+    const [highestBid, setHighestBid] = useState();
+    const [inputBidAmount, setInputBidAmount] = useState("0");
+    const [transactionStatus, setTransactionStatus] = useState();
+    const { loading, data: placedBid, error: error2 } = useFetchBidding(baseURL);
 
     const { isWeb3Enabled, chainId: chainIdHex } = useMoralis();
     const chainId = parseInt(chainIdHex);
-    // console.log(chainId);
-    // const chainId = 31337;
     const dispatch = useNotification();
 
-    // const auctionContractAddress = chainId in contractAddresses ? contractAddresses[31337][0] : null;
     const auctionContractAddress = contractAddresses[chainId][0] ?? null;
-    // console.log(auctionContractAddress);
 
     const [auctionInformation, setAuctionInformation] = useState(() => {
         return [];
@@ -92,8 +65,6 @@ function PlaceBid({ auction }) {
             bidAmount: ethers.utils.parseEther(inputBidAmount.toString() || "0").toString(),
         },
     });
-    if (data) console.log(data);
-    if (error) console.log(error);
 
     // const { runContractFunction: getAuctionInformationById } = useWeb3Contract({
     //     abi: auctionAbi,
@@ -114,8 +85,6 @@ function PlaceBid({ auction }) {
             console.log("handleSuccess " + tx.hash);
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
-
-            // updateUIValues();
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
 
             handleSuccessNotification();
@@ -125,7 +94,7 @@ function PlaceBid({ auction }) {
     };
     const handleComplete = async (hash) => {
         console.log(hash);
-        // setTransactionStatus({ hash: hash, status: "waitingForConfirmation" });
+        setTransactionStatus({ hash: hash, status: "waitingForConfirmation" });
     };
     const handleSuccessNotification = () => {
         dispatch({
