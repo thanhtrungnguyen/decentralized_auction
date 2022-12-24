@@ -76,7 +76,6 @@ module.exports = (app) => {
             var duePaymentTimeFN = new Date(0).setUTCSeconds(parseInt(auction._doc.duePaymentTime));
             var currentTime = new Date();
             console.log(currentTime-duePaymentTimeFN>0);
-            var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
             if (currentTime - timeStartRegistrationFN >= 0 && currentTime - timeEndRegistrationFN <= 0) {
                 var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
                 if (auctionget.status != "RegistrationTime") {
@@ -107,16 +106,15 @@ module.exports = (app) => {
             }
 
             if (currentTime - timeEndAuctionFN > 0 && currentTime - duePaymentTimeFN <= 0) {
-                
+                var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
                 console.log(auctionget.status);
-                if (auctionget.status == "Bidding") {
+                if (auctionget.status != "Closed") {
                     await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "Closed");
                     await AuctionService.updateStatusForAuction(auction._doc.auctionId, "Closed");
                     i=i+1;
                     io.emit('data', i);
                 }
             }
-            
         });
         // auctionlistUpdate.map(async (auction) => {
         //     // var currentTime = new Date();
