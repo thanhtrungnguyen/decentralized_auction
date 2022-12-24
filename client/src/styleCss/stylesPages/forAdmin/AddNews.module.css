@@ -1,0 +1,94 @@
+.container {
+    width: 100%;
+    height: 100%;
+    background: #d9d9d9;
+    position: absolute;
+}
+.content {
+    width: 1000px;
+    height: 756px;
+    left: 50%;
+    margin-left: -500px;
+    position: absolute;
+    margin-top: 50px;
+    background: #ffffff;
+}
+.title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 20px;
+    /* or 80% */
+
+    color: #000000;
+    margin-left: 20px;
+}
+.label {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    /* Gray/800 */
+    margin-left: 20px;
+    color: #3f3f3f;
+}
+.ip {
+    width: 800px;
+    height: 32px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-left: 40px;
+}
+.ck {
+    width: 800px;
+    height: 441px;
+    margin-left: 90px;
+
+    background: #ffffff;
+    border: 1px solid #d2d2d2;
+    position: absolute;
+}
+.btnCancel {
+    position: absolute;
+    width: 79px;
+    height: 36px;
+
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #3918d9;
+    background: #f7f5ff;
+    margin-left: 580px;
+    margin-top: 530px;
+    border: 1px solid #3918d9;
+    border-radius: 4px;
+}
+.btnSubmit {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
+
+    /* Gray_02/100 */
+    position: absolute;
+    width: 123px;
+    height: 36px;
+
+    margin-left: 680px;
+    margin-top: 530px;
+    background: #3918d9;
+    border-radius: 4px;
+    color: #ffffff;
+}

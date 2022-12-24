@@ -8,7 +8,7 @@ const ACCOUNT = "ACCOUNT";
 //register new Bidder
 const register = async (req, res, next) => {
     try {
-        const user = { userName: req.body.username, password: req.body.password };
+        const user = { userName: req.body.username, password: req.body.password,type:req.body.usertype };
         const role = req.body.role;
         const files = req.files;
         const contact = {

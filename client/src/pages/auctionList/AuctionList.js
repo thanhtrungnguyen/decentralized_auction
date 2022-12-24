@@ -12,6 +12,8 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import io from "socket.io-client";
+import Loading from "../../components/loading/Loading";
+
 const AuctionList = () => {
     const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState([]);
@@ -20,20 +22,29 @@ const AuctionList = () => {
     const socket = io.connect("http://localhost:8800");
     const baseURL = "http://localhost:8800/api/auction/";
     const [status, setStatus] = useState(0);
+    const [role, setRole] = useState();
+
     useEffect(() => {
+        setLoading(true);
         axios.get(baseURL).then((resp) => {
             console.log(resp.data);
             console.log("axios get");
             setData(resp.data);
             socket.off();
         });
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+        setLoading(false);
     }, [status]);
     socket.on("data", (item) => {
-        if(item!=status){
+        if (item != status) {
             setStatus(data);
-            console.log(item);           
-        }   
-    })
+            console.log(item);
+        }
+    });
     const [page, setPage] = React.useState(1);
     const handleChange = (event, value) => {
         setPage(value);
@@ -62,10 +73,12 @@ const AuctionList = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "BIDDER") {
+                if (role === "BIDDER") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -175,10 +188,10 @@ const AuctionList = () => {
                             <div>
                                 <p className={styles.txtBlueB}>{auction.Auctions1__r.records[0].Name}</p>
 
-                                <p className={styles.txtDes}>{auction.Property_Information__c}</p>
+                                <p className={styles.txtDes}>{auction.Auctions1__r.records[0].Status__c}</p>
 
                                 <div>
-                                    <p className={styles.txtBlueB}>Current auction</p>
+                                    <p className={styles.txtBlueB}>{auction.Property_Information__c}</p>
                                     <div>
                                         <label className={styles.txtBlueB}>Start Bid:</label>
                                         <label className={styles.txtBlueB}>{auction.Start_Bid__c}</label>

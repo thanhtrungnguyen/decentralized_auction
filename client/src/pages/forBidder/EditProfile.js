@@ -18,12 +18,11 @@ import "../../styleCss/stylesPages/forBidder/Profile.css";
 
 const EditProfile = () => {
     const { id, propertyId } = useParams();
-    const baseURL = `http://localhost:8800/api/profile/${id}`;
-    const { data, loading, error } = useFetch(baseURL);
+    const baseURL = `http://localhost:8800/api/user/${id}`;
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
     const navigate = useNavigate();
 
-    console.log(data);
-    console.log(loading);
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
@@ -40,6 +39,31 @@ const EditProfile = () => {
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setData(resp.data);
+            });
+
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
+    console.log(data);
+
+    const sCity = {
+        value: 278,
+        label: "An Giang",
+    };
+    const sDistrict = { value: 617, label: "Huyện Phú Tân" };
+    const sWard = {
+        value: 66,
+        label: "Xã Phú An",
+    };
+    console.log(selectedCity);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "firstName") {
@@ -139,7 +163,9 @@ const EditProfile = () => {
     const Cancel = () => {
         navigate(`/profile/${id}`);
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
                 if (getUser().role === "BIDDER") {
@@ -164,25 +190,25 @@ const EditProfile = () => {
                         <br />
                         <br />
                         <div className="row">
-                            <label className="label">Firstname</label>
+                            <label className="label">First Name</label>
                             <input
                                 type="text"
                                 className="input"
                                 value={firstName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="firstName"
-                                defaultValue={data.firstName}
+                                defaultValue={data.contact.First_Name__c}
                                 required
                             ></input>
                         </div>
                         <div className="row">
-                            <label className="label">Lastname</label>
+                            <label className="label">Last Name</label>
                             <input
                                 type="text"
                                 className="input"
                                 value={lastName}
                                 onChange={(e) => handleInputChange(e)}
-                                defaultValue={data.lastName}
+                                defaultValue={data.contact.Last_Name__c}
                                 id="lastName"
                                 required
                             ></input>
@@ -195,7 +221,7 @@ const EditProfile = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 placeholder="Gender"
                                 value={gender}
-                                defaultValue={data.gender}
+                                defaultValue={data.contact.Gender__c}
                                 required
                             >
                                 <option value="Male">Male</option>
@@ -208,7 +234,7 @@ const EditProfile = () => {
                             <input
                                 type="date"
                                 className="input"
-                                defaultValue={data.dateOfBirth}
+                                defaultValue={data.contact.Date_Of_Birth__c}
                                 value={dateOfBirth}
                                 onChange={(e) => handleInputChange(e)}
                                 id="dateOfBirth"
@@ -222,7 +248,7 @@ const EditProfile = () => {
                                 type="email"
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                                 value={email}
-                                defaultValue={data.email}
+                                defaultValue={data.contact.Phone__c}
                                 onChange={(e) => handleInputChange(e)}
                                 id="email"
                                 required
@@ -236,7 +262,7 @@ const EditProfile = () => {
                                 value={phone}
                                 onChange={(e) => handleInputChange(e)}
                                 id="phone"
-                                defaultValue={data.phone}
+                                defaultValue={data.contact.Phone__c}
                                 required
                             ></input>
                         </div>
@@ -274,12 +300,12 @@ const EditProfile = () => {
                             <Select
                                 className="input"
                                 name="cityId"
-                                key={`cityId_${selectedCity?.value}`}
+                                key={`cityId_${sCity?.value}`}
                                 isDisabled={cityOptions.length === 0}
                                 options={cityOptions}
                                 onChange={(option) => onCitySelect(option)}
                                 placeholder="Tỉnh/Thành"
-                                defaultValue={selectedCity}
+                                defaultValue={sCity}
                                 required
                             />
                         </div>
@@ -288,12 +314,12 @@ const EditProfile = () => {
                             <Select
                                 className="input"
                                 name="districtId"
-                                key={`districtId_${selectedDistrict?.value}`}
+                                key={`districtId_${sDistrict?.value}`}
                                 isDisabled={districtOptions.length === 0}
                                 options={districtOptions}
                                 onChange={(option) => onDistrictSelect(option)}
                                 placeholder="Quận/Huyện"
-                                defaultValue={selectedDistrict}
+                                defaultValue={sDistrict}
                                 required
                             />
                         </div>
@@ -302,12 +328,12 @@ const EditProfile = () => {
                             <Select
                                 className="input"
                                 name="wardId"
-                                key={`wardId_${selectedWard?.value}`}
+                                key={`wardId_${sWard?.value}`}
                                 isDisabled={wardOptions.length === 0}
                                 options={wardOptions}
                                 placeholder="Phường/Xã"
                                 onChange={(option) => onWardSelect(option)}
-                                defaultValue={selectedWard}
+                                defaultValue={sWard}
                                 required
                             />
                         </div>
@@ -319,7 +345,7 @@ const EditProfile = () => {
                                 value={specificAddress}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddress"
-                                defaultValue={data.specificAddress}
+                                defaultValue={data.contact.Address__c}
                                 required
                             ></input>
                         </div>
@@ -354,7 +380,7 @@ const EditProfile = () => {
                                 value={cardNumber}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardNumber"
-                                defaultValue={data.cardNumber}
+                                defaultValue={data.contact.Card_Number__c}
                                 required
                             ></input>
                         </div>
@@ -366,7 +392,7 @@ const EditProfile = () => {
                                 value={dateRangeCard}
                                 onChange={(e) => handleInputChange(e)}
                                 id="dateRangeCard"
-                                defaultValue={data.dateRangeCard}
+                                defaultValue={data.contact.Card_Granted_Date__c}
                                 required
                             ></input>
                         </div>
@@ -377,7 +403,7 @@ const EditProfile = () => {
                                 className="input"
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardGrantedPlace"
-                                defaultValue={data.cardGrantedPlace}
+                                defaultValue={data.contact.Card_Granted_Place__c}
                                 required
                             ></input>
                         </div>
@@ -399,10 +425,15 @@ const EditProfile = () => {
                         <input className="ipImg2" id="cardBack" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
                         <br />
                         <br />
-
-                        {cardFront && <img src={URL.createObjectURL(cardFront)} className="img" alt="Thumb" />}
-                        {cardBack && <img src={URL.createObjectURL(cardBack)} className="img2" alt="Thumb" />}
-                        <p className="bold">Account Information</p>
+                        {cardFront == null && (
+                            <img src={`http://localhost:8800/api/auction/images/${data.contact.Font_Side_Image__c}`} className="img" alt="Thumb" />
+                        )}
+                        {cardFront != null && <img src={URL.createObjectURL(cardFront)} className="img" alt="Thumb" />}
+                        {cardBack == null && (
+                            <img src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`} className="img2" alt="Thumb" />
+                        )}
+                        {cardBack != null && <img src={URL.createObjectURL(cardBack)} className="img2" alt="Thumb" />}
+                        {/* <p className="bold">Account Information</p>
                         <br />
                         <br />
                         <br />
@@ -414,7 +445,7 @@ const EditProfile = () => {
                         <div className="row">
                             <label className="label">Password</label>
                             <input type="password" className="input" readOnly></input>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="conBtn">
                         <button className="btnCancel" onClick={Cancel}>

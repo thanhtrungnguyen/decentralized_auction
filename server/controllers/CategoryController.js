@@ -17,7 +17,15 @@ const getAllCate = async (req, res, next) => {
         var index = req.params.index;
         var status = req.params.status;
         var name = req.params.name;
-        var data = await CategoryService.getAllCategory(index, status, name);
+        var data = await CategoryService.getAllCate(index, status, name);
+        res.status(200).json(data);
+    } catch (error) {
+        next(error);
+    }
+};
+const getAllCategory = async (req, res, next) => {
+    try {
+        var data = await CategoryService.getAllCategory();
         res.status(200).json(data);
     } catch (error) {
         next(error);
@@ -55,4 +63,4 @@ const changedStatus = async (req, res, next) => {
         next(error);
     }
 };
-module.exports = { createCate, getAllCate,updateCategory,changedStatus,getCategoryById }
+module.exports = { createCate, getAllCate,updateCategory,changedStatus,getCategoryById,getAllCategory }

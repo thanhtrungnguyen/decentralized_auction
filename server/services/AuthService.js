@@ -42,23 +42,23 @@ const createManager = async (user, role) => {
 const hashPassword = async (user) => {
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(user.password, salt);
-    return { userName: user.userName, password: hash }
+    return { userName: user.userName, password: hash, type: user.type }
 }
 const login = async (user) => {
-   
-        //Status__c: "Activate"
-        var findUser = await AuthDAO.getUserByName(user)
 
-        if (!findUser) return { user: null, error: '404', success: 'Failed', message: "User Not Found !!!" }
+    //Status__c: "Activate"
+    var findUser = await AuthDAO.getUserByName(user)
+
+    if (!findUser) return { user: null, error: '404', success: 'Failed', message: "User Not Found !!!" }
 
 
-        const isPasswordCorrect = await bcrypt.compare(user.password, findUser.password);
+    const isPasswordCorrect = await bcrypt.compare(user.password, findUser.password);
 
-        if (!isPasswordCorrect) return { user: null, error: '400', success: 'Failed', message: "Password incorrect !!!" }
+    if (!isPasswordCorrect) return { user: null, error: '400', success: 'Failed', message: "Password incorrect !!!" }
 
-        const token = jwt.sign({ id: findUser.Id, role: findUser.role, userName: findUser.userName }, process.env.JWT);
+    const token = jwt.sign({ id: findUser.Id, role: findUser.role, userName: findUser.userName, type: findUser.type }, process.env.JWT);
 
-        return { user: findUser, token: token };
+    return { user: findUser, token: token };
 
 
 }

@@ -69,7 +69,7 @@ const createAccount = async (user, contact, role, filesImg, account) => {
 const createManager = async (user, role) => {
     try {
         var userId = await createUser(user);
-        await addRoleForUser(role,userId);
+        await addRoleForUser(role, userId);
         return userId;
     } catch (error) {
         console.error(error)
@@ -84,6 +84,7 @@ const createUser = async (user) => {
             {
                 Name: user.userName,
                 Password__c: user.password,
+                Type__c: user.type,
                 Status__c: "Activate"
             }, (err, ret) => {
                 if (err || !ret.success) {
@@ -155,23 +156,23 @@ const getUserByName = async (user) => {
     var connection = await conn();
 
     await connection.sobject("User__c").findOne({ Name: user.userName }, async (err, ret) => {
-        if (ret==null||err) {
+        if (ret == null || err) {
             console.error(err);
-        } else{
+        } else {
             findUser = ret;
             await connection.query(`Select Role_Id__r.Name from Role_Right__c where User_DAP__r.Id = '${findUser.Id}'`, (err, result) => {
-                if (ret==null||err) {
+                if (ret == null || err) {
                     console.error(err);
                 }
                 role = result.records[0].Role_Id__r.Name;
-                
+
             })
-            data = { userName: findUser.Name, password: findUser.Password__c, role: role, status: findUser.Status__c, Id: findUser.Id };
+            data = { userName: findUser.Name, password: findUser.Password__c, role: role, status: findUser.Status__c, Id: findUser.Id, type: findUser.Type__c };
         }
-      
-       
+
+
     });
-    
+
     return data;
 
 }
@@ -209,4 +210,4 @@ const changePassword = async (user, password) => {
     }
 }
 
-module.exports = { createContact, createAccount, createManager, getUserByName, changePassword, getUserById , createUser}
+module.exports = { createContact, createAccount, createManager, getUserByName, changePassword, getUserById, createUser }

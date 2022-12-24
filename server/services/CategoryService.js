@@ -4,6 +4,10 @@ const createCategory = async(categoryName)=>{
     var category = await CategoryDAO.createCategory(categoryName);
     return category
 }
+const getAllCate = async(index,status,name)=>{
+    var data = CategoryDAO.getAllCate(index,status,name);
+    return data
+}
 const getAllCategory = async(index,status,name)=>{
     var data = CategoryDAO.getAllCategory(index,status,name);
     return data
@@ -21,4 +25,4 @@ const changedStatus = async(id,status)=>{
     return rs;
 }
 
-module.exports = {getAllCategory,createCategory,getCategoryById,updateCategory,changedStatus}
+module.exports = {getAllCategory,createCategory,getCategoryById,updateCategory,changedStatus,getAllCate}
