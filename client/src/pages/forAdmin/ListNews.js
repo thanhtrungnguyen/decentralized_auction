@@ -22,7 +22,7 @@ const ListNews = () => {
     const [title, setTitle] = useState(null);
     const [title2, setTitle2] = useState(null);
     const [status, setStatus] = useState(null);
-    const [searchData, setSearchData] = useState('');
+    const [searchData, setSearchData] = useState("");
     const navigate = useNavigate();
     var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
     // var totalURL = `http://localhost:8800/api/news/countNews`;
@@ -53,7 +53,7 @@ const ListNews = () => {
 
         //         navigate("/listNews");
         //     });
-        title2 === '' ? setTitle(null) : setTitle(title2);
+        title2 === "" ? setTitle(null) : setTitle(title2);
         setPage(1);
         event.preventDefault();
     };
@@ -72,39 +72,39 @@ const ListNews = () => {
         return users;
     };
     const handleChangeStatus = (e) => {
-        setStatus(e.target.value)
+        setStatus(e.target.value);
         setPage(1);
         // data = data.listNews.filter(news => news.Status__c.includes(`${filter}`))
-    }
+    };
     function search(data) {
-        return <>
-            {
-                data.listNews
-                    .map((item) => (
-                        <tr>
-                            <td className={styles.td}>{item.Name}</td>
-                            <td className={styles.td}>{Moment(item.LastModifiedDate).format("DD/MM/yyy - H:mm")}</td>
-                            <td className={styles.td}>{item.Status__c}</td>
-                            <td className={styles.td}>
-                                {(() => {
-                                    if (item.Status__c === "Published") {
-                                        return (
-                                            <Popup trigger={<label className={styles.linkBlue}>Private</label>} position="right center">
-                                                <PrivateNews idNews={item.Id} />
-                                            </Popup>
-                                        );
-                                    } else {
-                                        return (
-                                            <Popup trigger={<label className={styles.linkBlue}>Publish</label>} position="right center">
-                                                <PublishNews idNews={item.Id} />
-                                            </Popup>
-                                        );
-                                    }
-                                })()}
-                            </td>
-                        </tr>
-                    ))}
-        </>
+        return (
+            <>
+                {data.listNews.map((item) => (
+                    <tr>
+                        <td className={styles.td}>{item.Name}</td>
+                        <td className={styles.td}>{Moment(item.LastModifiedDate).format("DD/MM/yyy - H:mm")}</td>
+                        <td className={styles.td}>{item.Status__c}</td>
+                        <td className={styles.td}>
+                            {(() => {
+                                if (item.Status__c === "Published") {
+                                    return (
+                                        <Popup trigger={<label className={styles.linkBlue}>Private</label>} position="right center">
+                                            <PrivateNews idNews={item.Id} />
+                                        </Popup>
+                                    );
+                                } else {
+                                    return (
+                                        <Popup trigger={<label className={styles.linkBlue}>Publish</label>} position="right center">
+                                            <PublishNews idNews={item.Id} />
+                                        </Popup>
+                                    );
+                                }
+                            })()}
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
     }
     return loading ? (
         <Loading />
@@ -146,7 +146,13 @@ const ListNews = () => {
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <button className={styles.bold} value='null' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.bold}
+                                value="null"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
                             </button>
                             <button

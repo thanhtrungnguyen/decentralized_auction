@@ -16,6 +16,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import TransactionStatus from "../components/TransactionStatus";
 import BiddingProperty from "../components/BiddingProperty";
 import TransactionHistory from "../components/TransactionHistory";
+import AuctionResult from "./AuctionResult";
 function PlaceBid({ auction }) {
     const { auctionId } = useParams() || "null";
     const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}/placedBid`;
@@ -157,65 +158,74 @@ function PlaceBid({ auction }) {
             icon: <AiOutlineClose />,
         });
     };
-
-    return (
-        <div>
-            <div>
-                <p className={styles.txtBlack}>Place a Bid </p>
-                <p className={styles.txt}>You have selected:</p>
+    const renderer = ({ days, hours, minutes, seconds, completed }) => {
+        if (completed) {
+            return <AuctionResult auction={auction} />;
+        } else {
+            return (
                 <div>
-                    <div className={styles.info}>
-                        {/* <BiddingProperty auction={auction} />
+                    <div>
+                        <p className={styles.txtBlack}>Place a Bid </p>
+                        <p className={styles.txt}>You have selected:</p>
+                        <div>
+                            <div className={styles.info}>
+                                {/* <BiddingProperty auction={auction} />
                         <BiddingProperty auction={auction} property={property} /> */}
-                        <BiddingProperty />
-                        <p className={styles.txtM}>Starting bid:</p>
-                        <p className={styles.txtNormal}>{auction.startBid}</p>
-                        <p className={styles.txtM}>Current bid:</p>
-                        <p className={styles.txtNormal}>{highestBid} ETH</p>
-                        <p className={styles.txtM}>Auction ends in:</p>
-                        <p className={styles.txtNormal}>
-                            <Countdown date={auction.endAuctionTime * 1000} />
-                        </p>
-                    </div>
-                    <div className={styles.detail}>
-                        <p className={styles.title}>Place bid details:</p>
-                        <p className={styles.txtT}>Your bid must be at least 6969 ETH</p>
+                                <BiddingProperty />
+                                <p className={styles.txtM}>Starting bid:</p>
+                                <p className={styles.txtNormal}>{auction.startBid}</p>
+                                <p className={styles.txtM}>Current bid:</p>
+                                <p className={styles.txtNormal}>{highestBid} ETH</p>
+                                <p className={styles.txtM}>Auction ends in:</p>
+                                <p className={styles.txtNormal}>
+                                    <span>
+                                        {days}d {hours}h {minutes}m {seconds}s
+                                    </span>
+                                </p>
+                            </div>
+                            <div className={styles.detail}>
+                                <p className={styles.title}>Place bid details:</p>
+                                <p className={styles.txtT}>Your bid must be at least 6969 ETH</p>
 
-                        <input
-                            className={styles.input}
-                            type="number"
-                            value={inputBidAmount}
-                            validation={{
-                                max: "",
-                                min: 1,
-                            }}
-                            onChange={(event) => {
-                                setInputBidAmount(event.target.value);
-                            }}
-                        ></input>
-                        <label className={styles.mess}>Error message</label>
-                        <br />
-                        <button
-                            disabled={isLoading || isFetching}
-                            className={styles.btn}
-                            onClick={async () => {
-                                console.log(inputBidAmount);
-                                placeBid({
-                                    onError: handleErrorNotification,
-                                    onSuccess: handleSuccess,
-                                    onComplete: handleComplete,
-                                });
-                            }}
-                        >
-                            {isLoading || isFetching ? "Loading..." : "Place Bid"}
-                        </button>
-                        <TransactionStatus transactionStatus={transactionStatus} />
+                                <input
+                                    className={styles.input}
+                                    type="number"
+                                    value={inputBidAmount}
+                                    validation={{
+                                        max: "",
+                                        min: 1,
+                                    }}
+                                    onChange={(event) => {
+                                        setInputBidAmount(event.target.value);
+                                    }}
+                                ></input>
+                                <label className={styles.mess}>Error message</label>
+                                <br />
+                                <button
+                                    disabled={isLoading || isFetching}
+                                    className={styles.btn}
+                                    onClick={async () => {
+                                        console.log(inputBidAmount);
+                                        placeBid({
+                                            onError: handleErrorNotification,
+                                            onSuccess: handleSuccess,
+                                            onComplete: handleComplete,
+                                        });
+                                    }}
+                                >
+                                    {isLoading || isFetching ? "Loading..." : "Place Bid"}
+                                </button>
+                                <TransactionStatus transactionStatus={transactionStatus} />
+                            </div>
+                            <TransactionHistory auction={auction} />
+                        </div>
                     </div>
-                    <TransactionHistory />
                 </div>
-            </div>
-        </div>
-    );
+            );
+        }
+    };
+
+    return <Countdown date={auction.endAuctionTime * 1000} renderer={renderer} />;
 }
 
 export default PlaceBid;

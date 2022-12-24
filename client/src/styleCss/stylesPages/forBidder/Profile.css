@@ -3,6 +3,7 @@
     /* height: 150%; */
     position: absolute;
 }
+
 .container {
     width: 1150px;
     height: 1832px;
@@ -15,6 +16,7 @@
     margin-left: -575px;
     position: relative;
 }
+
 .title {
     font-family: "Inter";
     font-style: normal;
@@ -28,6 +30,7 @@
     margin-left: 20px;
     position: absolute;
 }
+
 .bold {
     font-family: "Inter";
     font-style: normal;
@@ -42,6 +45,7 @@
     position: absolute;
     margin-left: 20px;
 }
+
 .label {
     font-family: "Inter";
     font-style: normal;
@@ -54,6 +58,7 @@
 
     color: #3f3f3f;
 }
+
 .input {
     width: 578px;
     height: 37px;
@@ -63,22 +68,26 @@
     border-radius: 2px;
     margin-left: 60px;
 }
+
 .row {
     float: right;
     margin-right: 150px;
     margin-bottom: 40px;
 }
+
 .img {
     width: 300px;
     height: 200px;
     margin-left: 250px;
 }
+
 .img2 {
     width: 300px;
     height: 200px;
     float: right;
     margin-right: 250px;
 }
+
 .btn {
     width: 118px;
     height: 36px;
@@ -94,6 +103,7 @@
     margin-left: 50px;
     color: #ffffff;
 }
+
 .btnCancel {
     width: 79px;
     height: 36px;
@@ -109,13 +119,16 @@
     border: 1px solid #3918d9;
     border-radius: 4px;
 }
+
 .conBtn {
     margin-left: 70%;
 }
+
 .ipImg {
     position: absolute;
     margin-left: 300px;
 }
+
 .ipImg2 {
     position: absolute;
     margin-left: 700px;

@@ -1,62 +1,62 @@
-const NewsDAO = require('../dal/NewsDAO');
+const NewsDAO = require("../dal/NewsDAO");
 
-const getAll = async(index,status,title)=>{
+const getAll = async (index, status, title) => {
     try {
-        status=='null'?status='':status;
-        title=='null'?title='':title;
-       var list =  await NewsDAO.getAll(index,status,title);
-       return list;
+        status == "null" ? (status = "") : status;
+        title == "null" ? (title = "") : title;
+        var list = await NewsDAO.getAll(index, status, title);
+        return list;
     } catch (error) {
         console.error(error);
     }
-}
-const getByStatus = async(index,status)=>{
+};
+const getByStatus = async (index, status) => {
     try {
-        var list = await NewsDAO.getByStatus(index,status);
+        var list = await NewsDAO.getByStatus(index, status);
         return list;
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
-}
-const getById = async(newsId)=>{
+};
+const getById = async (newsId) => {
     var news = await NewsDAO.getById(newsId);
     return news;
-}
-const sortNews = async(index,type)=>{
-    var news = await NewsDAO.sort(index,type);
+};
+const sortNews = async (index, type) => {
+    var news = await NewsDAO.sort(index, type);
     return news;
-}
-const filter = async(title,index,status)=>{
+};
+const filter = async (title, index, status) => {
     try {
-        var list = await NewsDAO.filter(title,index,status);
+        var list = await NewsDAO.filter(title, index, status);
         return list;
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
-}
-const changeStatus = async(id,status)=>{
+};
+const changeStatus = async (id, status) => {
     try {
-        var changedStatus = await NewsDAO.changeStatus(id,status);
+        var changedStatus = await NewsDAO.changeStatus(id, status);
         return changedStatus;
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
-}
-const update = async(id,title,description,status)=>{
+};
+const update = async (id, title, description, status) => {
     try {
-        var updated = await NewsDAO.update(id,title,description,status);
+        var updated = await NewsDAO.update(id, title, description, status);
         return updated;
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
-}
-const create = async(title,description)=>{
+};
+const create = async (title, description) => {
     try {
-        var created = await NewsDAO.create(title,description);
+        var created = await NewsDAO.create(title, description);
         return created;
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
-}
+};
 
-module.exports = {getAll,getByStatus,filter,changeStatus,update,create,getById,sortNews}
+module.exports = { getAll, getByStatus, filter, changeStatus, update, create, getById, sortNews };

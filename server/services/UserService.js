@@ -3,23 +3,20 @@ const { uploadFile } = require("../s3");
 
 const getAllUser = async (role, index, status, name) => {
     try {
-        status == 'null' ? status = '' : status;
-        name == 'null' ? name = '' : name;
+        status == "null" ? (status = "") : status;
+        name == "null" ? (name = "") : name;
         var data = await UserDAO.getAllUser(role, index, status, name);
         return data;
-    } catch (error) {
-
-    }
-}
+    } catch (error) {}
+};
 
 const getUserById = async (userId) => {
     var user = await UserDAO.getUserById(userId);
-    return user
-}
+    return user;
+};
 const updateProfileBidder = async (userId, contact, account, files) => {
     const result = await uploadFile(files.cardFront[0]);
     const result1 = await uploadFile(files.cardBack[0]);
-    const filesImg = { result: result, result1: result1 }
-    
-}
-module.exports = { getAllUser, getUserById, updateProfileBidder }
+    const filesImg = { result: result, result1: result1 };
+};
+module.exports = { getAllUser, getUserById, updateProfileBidder };
