@@ -26,6 +26,7 @@ function PlaceBid({ auction }) {
     const [highestBid, setHighestBid] = useState();
     const [inputBidAmount, setInputBidAmount] = useState("0");
     const [transactionStatus, setTransactionStatus] = useState();
+
     const { loading, data: placedBid, error: error2 } = useFetchBidding(baseURL);
 
     const { isWeb3Enabled, chainId: chainIdHex } = useMoralis();
@@ -87,23 +88,20 @@ function PlaceBid({ auction }) {
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
 
-            handleSuccessNotification();
+            dispatch({
+                type: "success",
+                title: "Place Bid Notification",
+                message: "Place Bid Completed!",
+                position: "topR",
+                icon: <BsCheckLg />,
+            });
         } catch (error) {
             console.log(error);
         }
     };
     const handleComplete = async (hash) => {
         console.log(hash);
-        setTransactionStatus({ hash: hash, status: "waitingForConfirmation" });
-    };
-    const handleSuccessNotification = () => {
-        dispatch({
-            type: "success",
-            title: "Place Bid Notification",
-            message: "Place Bid Completed!",
-            position: "topR",
-            icon: <BsCheckLg />,
-        });
+        // setTransactionStatus({ hash: hash, status: "waitingForConfirmation" });
     };
 
     // const handleClick = async () => {
@@ -116,13 +114,14 @@ function PlaceBid({ auction }) {
     //     });
     // };
 
-    const handleErrorNotification = (tx) => {
+    const handleError = async (tx) => {
         console.log(tx);
-        setTransactionStatus({ status: "Failed" });
+        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
+        setTransactionStatus({ status: message });
         dispatch({
             type: "error",
             title: "Place Bid Error",
-            message: "Place Bid Failed!",
+            message: message,
             position: "topR",
             icon: <AiOutlineClose />,
         });
@@ -174,9 +173,8 @@ function PlaceBid({ auction }) {
                                     disabled={isLoading || isFetching}
                                     className={styles.btn}
                                     onClick={async () => {
-                                        console.log(inputBidAmount);
                                         placeBid({
-                                            onError: handleErrorNotification,
+                                            onError: handleError,
                                             onSuccess: handleSuccess,
                                             onComplete: handleComplete,
                                         });

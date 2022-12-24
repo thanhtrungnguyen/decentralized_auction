@@ -37,7 +37,6 @@ import BidderDetail from "./pages/forAdmin/BidderDetail";
 import ListNews from "./pages/forAdmin/ListNews";
 import AddNew from "./pages/forAdmin/AddNews";
 import EditNew from "./pages/forAdmin/EditNew";
-import FakeAuctionDetail from "./pages/bidder/FakeAuctionDetail";
 import AuctionDetailForManager from "./pages/forManager/AuctionDetailForManager";
 import ViewManager from "./pages/forAdmin/ViewManager";
 import ViewSeller from "./pages/forAdmin/ViewSeller";
@@ -117,8 +116,6 @@ function App() {
                         <Route path="editProfileOrganization/:id" element={<EditProfileOrganization />} />
                         <Route path="editProfileOrganization" element={<EditProfileOrganization />} />
                         <Route path="aboutUs" element={<AboutUs />} />
-
-                        <Route path="FakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
 
                         {/* test */}
                     </Routes>

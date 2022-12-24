@@ -46,15 +46,6 @@ app.use(express.json());
 connectSyncBlockchainDB();
 
 const upload = multer({ dest: "uploads/" });
-
-//connect salesforce
-
-// app.post("/webhook", (req, res) => {
-//     const webhook = req.body;
-//     console.log(webhook);
-//     res.status(200).json;
-// });
-
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/property", propertyRoute);

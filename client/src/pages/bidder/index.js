@@ -9,13 +9,12 @@ import PlaceBid from "./ui/PlaceBid";
 import NotYetRegistrationTime from "./ui/NotYetRegistrationTime";
 import WaitingForAuctionTime from "./ui/WaitingForAuctionTime";
 import Loading from "./components/Loader";
-import { SUPPORT_CHAIN, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../config/configuration";
+import { SUPPORT_CHAINS, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../config/configuration";
+import AuctionResult from "./ui/AuctionResult";
 
 const BidModal = ({ closeModal, loading, auction, propertyId }) => {
-    const supportedChains = ["5"];
     const [hasMetamask, setHasMetamask] = useState(false);
     const { chainId, isWeb3Enabled } = useMoralis();
-    console.log("CONTRACT_ADDRESS: " + CONTRACT_ADDRESS);
     useEffect(() => {
         if (typeof window.ethereum !== "undefined") {
             setHasMetamask(true);
@@ -48,7 +47,8 @@ const BidModal = ({ closeModal, loading, auction, propertyId }) => {
             case "AuctionTime":
                 return <PlaceBid auction={auction} property={propertyId} />;
             case "PaymentTime":
-                return <h2>PaymentTime</h2>;
+                // return <h2>PaymentTime</h2>;
+                return <AuctionResult auction={auction} />;
             case "AuctionEnded":
                 return <h2>Auction Ended</h2>;
             default:
@@ -62,7 +62,7 @@ const BidModal = ({ closeModal, loading, auction, propertyId }) => {
                 {hasMetamask ? (
                     isWeb3Enabled ? (
                         <div>
-                            {supportedChains.includes(parseInt(chainId).toString()) ? (
+                            {SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
                                 <div>{renderCurrentState()}</div>
                             ) : (
                                 <div>

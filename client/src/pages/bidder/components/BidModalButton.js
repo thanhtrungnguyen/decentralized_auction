@@ -13,6 +13,7 @@ const BidModalButton = ({ auctionId, propertyId }) => {
     });
 
     const { loading, data: auction, error } = useFetchBidding(baseURL);
+
     return (
         <>
             <div>
