@@ -4,6 +4,7 @@ const http = require("http");
 const jsforce = require("jsforce");
 const ContractInteractionService = require("./services/ContractInteractionService");
 const AuctionService = require("./services/AuctionService");
+const cron = require("node-cron");
 require("dotenv").config();
 
 // const SocketEvents = require("./constants/SocketEvents");
@@ -62,22 +63,27 @@ module.exports = (app) => {
         //     auctionLastest = auctionlist;
         // }
     });
-    setInterval(async () => {
-        var auctionlist = null;
+    var i = 0;
+    const taskRegistrationTime = cron.schedule('*/3 * * * * *', async () => {
+
+    
         var auctionlistUpdate = await ContractInteractionService.getAllAuction();
         auctionlistUpdate.map(async (auction) => {
             var timeStartRegistrationFN = new Date(0).setUTCSeconds(parseInt(auction._doc.startRegistrationTime));
             var timeEndRegistrationFN = new Date(0).setUTCSeconds(parseInt(auction._doc.endRegistrationTime));
             var timeStartAuctionFN = new Date(0).setUTCSeconds(parseInt(auction._doc.startAuctionTime));
             var timeEndAuctionFN = new Date(0).setUTCSeconds(parseInt(auction._doc.endAuctionTime));
-            var timeEndAuctionFN = new Date(0).setUTCSeconds(parseInt(auction._doc.duePaymentTime));
+            var duePaymentTimeFN = new Date(0).setUTCSeconds(parseInt(auction._doc.duePaymentTime));
             var currentTime = new Date();
-
+            console.log(currentTime-duePaymentTimeFN>0);
+            var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
             if (currentTime - timeStartRegistrationFN >= 0 && currentTime - timeEndRegistrationFN <= 0) {
                 var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
                 if (auctionget.status != "RegistrationTime") {
                     await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "RegistrationTime");
                     await AuctionService.updateStatusForAuction(auction._doc.auctionId, "RegistrationTime");
+                    i=i+1;
+                    io.emit('data', i);
                 }
             }
             if (currentTime - timeEndRegistrationFN > 0 && currentTime - timeStartAuctionFN < 0) {
@@ -85,6 +91,8 @@ module.exports = (app) => {
                 if (auctionget.status != "UpcomingforBid") {
                     await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "UpcomingforBid");
                     await AuctionService.updateStatusForAuction(auction._doc.auctionId, "UpcomingforBid");
+                    i=i+1;
+                    io.emit('data', i);
                 }
             }
 
@@ -93,16 +101,22 @@ module.exports = (app) => {
                 if (auctionget.status != "Bidding") {
                     await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "Bidding");
                     await AuctionService.updateStatusForAuction(auction._doc.auctionId, "Bidding");
+                    i=i+1;
+                    io.emit('data', i);
                 }
             }
 
             if (currentTime - timeEndAuctionFN > 0 && currentTime - duePaymentTimeFN <= 0) {
-                var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
-                if (auctionget.status != "Closed") {
+                
+                console.log(auctionget.status);
+                if (auctionget.status == "Bidding") {
                     await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "Closed");
                     await AuctionService.updateStatusForAuction(auction._doc.auctionId, "Closed");
+                    i=i+1;
+                    io.emit('data', i);
                 }
             }
+            
         });
         // auctionlistUpdate.map(async (auction) => {
         //     // var currentTime = new Date();
@@ -127,7 +141,8 @@ module.exports = (app) => {
         //     // var duePaymentTimeFN = new Date(duePaymentTimeVN);
 
         // });
-    }, 10000);
+    });
+    taskRegistrationTime.start();
 
     return server;
 };
