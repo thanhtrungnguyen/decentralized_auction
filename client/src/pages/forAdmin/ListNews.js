@@ -187,7 +187,7 @@ const ListNews = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {/* {search(data)} */}
+                                {search(data)}
                             </table>
                             <div>
                                 <Pagination
