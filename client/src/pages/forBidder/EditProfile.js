@@ -18,10 +18,23 @@ import "../../styleCss/stylesPages/forBidder/Profile.css";
 
 const EditProfile = () => {
     const { id, propertyId } = useParams();
-    const baseURL = `http://localhost:8800/api/profile/${id}`;
-    const { data, loading, error } = useFetch(baseURL);
+    const baseURL = `http://localhost:8800/api/user/${id}`;
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
     const navigate = useNavigate();
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setData(resp.data);
+            });
 
+            setLoading(false);
+        }
+        fetchData();
+    }, [baseURL]);
     console.log(data);
     console.log(loading);
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
@@ -139,7 +152,9 @@ const EditProfile = () => {
     const Cancel = () => {
         navigate(`/profile/${id}`);
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
                 if (getUser().role === "BIDDER") {
@@ -164,25 +179,25 @@ const EditProfile = () => {
                         <br />
                         <br />
                         <div className="row">
-                            <label className="label">Firstname</label>
+                            <label className="label">First Name</label>
                             <input
                                 type="text"
                                 className="input"
                                 value={firstName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="firstName"
-                                defaultValue={data.firstName}
+                                defaultValue={data.contact.First_Name__c}
                                 required
                             ></input>
                         </div>
                         <div className="row">
-                            <label className="label">Lastname</label>
+                            <label className="label">Last Name</label>
                             <input
                                 type="text"
                                 className="input"
                                 value={lastName}
                                 onChange={(e) => handleInputChange(e)}
-                                defaultValue={data.lastName}
+                                defaultValue={data.contact.Last_Name__c}
                                 id="lastName"
                                 required
                             ></input>
@@ -195,7 +210,7 @@ const EditProfile = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 placeholder="Gender"
                                 value={gender}
-                                defaultValue={data.gender}
+                                defaultValue={data.contact.Gender__c}
                                 required
                             >
                                 <option value="Male">Male</option>
@@ -208,7 +223,7 @@ const EditProfile = () => {
                             <input
                                 type="date"
                                 className="input"
-                                defaultValue={data.dateOfBirth}
+                                defaultValue={data.contact.Date_Of_Birth__c}
                                 value={dateOfBirth}
                                 onChange={(e) => handleInputChange(e)}
                                 id="dateOfBirth"
@@ -222,7 +237,7 @@ const EditProfile = () => {
                                 type="email"
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                                 value={email}
-                                defaultValue={data.email}
+                                defaultValue={data.contact.Phone__c}
                                 onChange={(e) => handleInputChange(e)}
                                 id="email"
                                 required
@@ -236,7 +251,7 @@ const EditProfile = () => {
                                 value={phone}
                                 onChange={(e) => handleInputChange(e)}
                                 id="phone"
-                                defaultValue={data.phone}
+                                defaultValue={data.contact.Phone__c}
                                 required
                             ></input>
                         </div>
@@ -279,7 +294,7 @@ const EditProfile = () => {
                                 options={cityOptions}
                                 onChange={(option) => onCitySelect(option)}
                                 placeholder="Tỉnh/Thành"
-                                defaultValue={selectedCity}
+                                defaultValue={data.contact.City__c}
                                 required
                             />
                         </div>
@@ -293,7 +308,7 @@ const EditProfile = () => {
                                 options={districtOptions}
                                 onChange={(option) => onDistrictSelect(option)}
                                 placeholder="Quận/Huyện"
-                                defaultValue={selectedDistrict}
+                                defaultValue={data.contact.District__c}
                                 required
                             />
                         </div>
@@ -307,7 +322,8 @@ const EditProfile = () => {
                                 options={wardOptions}
                                 placeholder="Phường/Xã"
                                 onChange={(option) => onWardSelect(option)}
-                                defaultValue={selectedWard}
+                                defaultValue={data.contact.Wards__c}
+                                selected={wardOptions === data.contact.Wards__c}
                                 required
                             />
                         </div>
@@ -319,7 +335,7 @@ const EditProfile = () => {
                                 value={specificAddress}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddress"
-                                defaultValue={data.specificAddress}
+                                defaultValue={data.contact.Address__c}
                                 required
                             ></input>
                         </div>
@@ -354,7 +370,7 @@ const EditProfile = () => {
                                 value={cardNumber}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardNumber"
-                                defaultValue={data.cardNumber}
+                                defaultValue={data.contact.Card_Number__c}
                                 required
                             ></input>
                         </div>
@@ -366,7 +382,7 @@ const EditProfile = () => {
                                 value={dateRangeCard}
                                 onChange={(e) => handleInputChange(e)}
                                 id="dateRangeCard"
-                                defaultValue={data.dateRangeCard}
+                                defaultValue={data.contact.Card_Granted_Date__c}
                                 required
                             ></input>
                         </div>
@@ -377,7 +393,7 @@ const EditProfile = () => {
                                 className="input"
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardGrantedPlace"
-                                defaultValue={data.cardGrantedPlace}
+                                defaultValue={data.contact.Card_Granted_Place__c}
                                 required
                             ></input>
                         </div>
@@ -402,7 +418,7 @@ const EditProfile = () => {
 
                         {cardFront && <img src={URL.createObjectURL(cardFront)} className="img" alt="Thumb" />}
                         {cardBack && <img src={URL.createObjectURL(cardBack)} className="img2" alt="Thumb" />}
-                        <p className="bold">Account Information</p>
+                        {/* <p className="bold">Account Information</p>
                         <br />
                         <br />
                         <br />
@@ -414,7 +430,7 @@ const EditProfile = () => {
                         <div className="row">
                             <label className="label">Password</label>
                             <input type="password" className="input" readOnly></input>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="conBtn">
                         <button className="btnCancel" onClick={Cancel}>

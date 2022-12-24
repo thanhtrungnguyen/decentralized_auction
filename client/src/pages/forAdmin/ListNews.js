@@ -19,11 +19,12 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 const ListNews = () => {
     const [page, setPage] = useState(1);
-    const [title, setTitle] = useState("");
-    const [status, setStatus] = useState("");
+    const [title, setTitle] = useState(null);
+    const [title2, setTitle2] = useState(null);
+    const [status, setStatus] = useState(null);
     const [searchData, setSearchData] = useState("");
     const navigate = useNavigate();
-    var baseURL = `http://localhost:8800/api/news/${page}/${status}`;
+    var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
     // var totalURL = `http://localhost:8800/api/news/countNews`;
 
     var { data, loading, error } = useFetchPagination(baseURL, page);
@@ -31,31 +32,29 @@ const ListNews = () => {
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "title") {
-            setTitle(value);
+            setTitle2(value);
         }
     };
 
     const handleSubmit = (event) => {
-        const formData = new FormData();
+        // const formData = new FormData();
 
-        formData.append("title", title);
-        //var { data, loading, error } = useFetchPagination(baseURL, page);
-        axios
-            .get(
-                "http://localhost:8800/api/news/search",
-                { title },
-                {
-                    withCredentials: true,
-                }
-            )
-            .then((res) => {
-                // console.log(res);
-                // console.log(res.data);
-                // alert(res.data.message);
-                setSearchData(res.data);
+        // formData.append("title", title);
+        // //var { data, loading, error } = useFetchPagination(baseURL, page);
+        // axios
+        //     .get("http://localhost:8800/api/news/search", {title}, {
+        //         withCredentials: true,
+        //     })
+        //     .then((res) => {
+        //         // console.log(res);
+        //         // console.log(res.data);
+        //         // alert(res.data.message);
+        //         setSearchData(res.data);
 
-                navigate("/listNews");
-            });
+        //         navigate("/listNews");
+        //     });
+        title2 === "" ? setTitle(null) : setTitle(title2);
+        setPage(1);
         event.preventDefault();
     };
     const handleChange = (event, page) => {
@@ -74,38 +73,39 @@ const ListNews = () => {
     };
     const handleChangeStatus = (e) => {
         setStatus(e.target.value);
+        setPage(1);
         // data = data.listNews.filter(news => news.Status__c.includes(`${filter}`))
     };
-    // function search(data) {
-    //     return <>
-    //         {
-    //             data.listNews.filter(news => (news.Status__c.includes(`${status}`)))
-    //             .map((item) => (
-    //                 <tr>
-    //                     <td  className={styles.td}>{item.Name}</td>
-    //                     <td className={styles.td}>{Moment(item.LastModifiedDate).format("DD/MM/yyy - H:mm")}</td>
-    //                     <td className={styles.td}>{item.Status__c}</td>
-    //                     <td className={styles.td}>
-    //                         {(() => {
-    //                             if (item.Status__c === "Published") {
-    //                                 return (
-    //                                     <Popup trigger={<label className={styles.linkBlue}>Private</label>} position="right center">
-    //                                         <PrivateNews idNews={item.Id} />
-    //                                     </Popup>
-    //                                 );
-    //                             } else {
-    //                                 return (
-    //                                     <Popup trigger={<label className={styles.linkBlue}>Publish</label>} position="right center">
-    //                                         <PublishNews idNews={item.Id} />
-    //                                     </Popup>
-    //                                 );
-    //                             }
-    //                         })()}
-    //                     </td>
-    //                 </tr>
-    //             ))}
-    //     </>
-    // }
+    function search(data) {
+        return (
+            <>
+                {data.listNews.map((item) => (
+                    <tr>
+                        <td className={styles.td}>{item.Name}</td>
+                        <td className={styles.td}>{Moment(item.LastModifiedDate).format("DD/MM/yyy - H:mm")}</td>
+                        <td className={styles.td}>{item.Status__c}</td>
+                        <td className={styles.td}>
+                            {(() => {
+                                if (item.Status__c === "Published") {
+                                    return (
+                                        <Popup trigger={<label className={styles.linkBlue}>Private</label>} position="right center">
+                                            <PrivateNews idNews={item.Id} />
+                                        </Popup>
+                                    );
+                                } else {
+                                    return (
+                                        <Popup trigger={<label className={styles.linkBlue}>Publish</label>} position="right center">
+                                            <PublishNews idNews={item.Id} />
+                                        </Popup>
+                                    );
+                                }
+                            })()}
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
+    }
     return loading ? (
         <Loading />
     ) : (
@@ -130,7 +130,7 @@ const ListNews = () => {
                                     className={styles.input}
                                     type="text"
                                     placeholder="Title"
-                                    value={title}
+                                    value={title2}
                                     onChange={(e) => handleInputChange(e)}
                                     //required
                                 ></input>
@@ -148,7 +148,7 @@ const ListNews = () => {
                             <hr className={styles.hr} />
                             <button
                                 className={styles.bold}
-                                value=""
+                                value="null"
                                 onClick={(e) => {
                                     handleChangeStatus(e);
                                 }}
@@ -193,7 +193,7 @@ const ListNews = () => {
                                 <Pagination
                                     className={styles.pagi}
                                     size="large"
-                                    count={Math.round(data.totalNews / 10)}
+                                    count={Math.floor(data.total / 10) + 1}
                                     page={page}
                                     onChange={handleChange}
                                 />

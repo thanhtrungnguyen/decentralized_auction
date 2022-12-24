@@ -13,34 +13,42 @@ import { Button } from "@mui/material";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import { useFetch } from "../../hook/useFetch";
+import { useFetch, useFetchPagination } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
 
 const MyProperty = () => {
     const [page, setPage] = React.useState(1);
-    const [category, setCategory] = useState("Car");
+    const [category, setCategory] = useState(null);
+    const [category2, setCategory2] = useState(null);
     const [propertyName, setPropertyName] = useState(null);
+    const [propertyName2, setPropertyName2] = useState(null);
+    const [status, setStatus] = useState(null);
     const [listCategory, setListCategory] = useState([]);
     const [listProperty, setListProperty] = useState([]);
-
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const baseURLCategory = "http://localhost:8800/api/category/";
-    const baseURLProperty = "http://localhost:8800/api/property/";
+    const baseURLProperty = `http://localhost:8800/api/property/getAll/${page}/${status}/${category}/${propertyName}`;
     const requestAuction = "http://localhost:8800/api/auction/request/";
+
     useEffect(() => {
-        axios.get(baseURLCategory).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setListCategory(resp.data);
-        });
-    }, [baseURLCategory]);
-    useEffect(() => {
-        axios.get(baseURLProperty, { withCredentials: true }).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setListProperty(resp.data);
-        });
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURLCategory).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setListCategory(resp.data);
+            });
+            await axios.get(baseURLProperty, { withCredentials: true }).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setListProperty(resp.data);
+            });
+            setLoading(false);
+        }
+        fetchData();
     }, [baseURLProperty]);
+
 
     const RequestAuction = (propertyId) => {
         axios.post(requestAuction + propertyId, { withCredentials: true }).then((resp) => {
@@ -55,33 +63,40 @@ const MyProperty = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
+    const handleChangeStatus = (e) => {
+        setStatus(e.target.value);
+        setPage(1);
+    }
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "category") {
-            setCategory(value);
+            setCategory2(value);
         }
         if (id === "propertyName") {
-            setPropertyName(value);
+            setPropertyName2(value);
         }
     };
     const handleSubmit = (event) => {
-        const formData = new FormData();
+        // const formData = new FormData();
 
-        formData.append("propertyName", propertyName);
-        formData.append("category", category);
+        // formData.append("propertyName", propertyName);
+        // formData.append("category", category);
 
-        axios
-            .get("http://localhost:8800/api/property", formData, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-                // setData(res.data);
+        // axios
+        //     .get("http://localhost:8800/api/property", formData, {
+        //         withCredentials: true,
+        //     })
+        //     .then((res) => {
+        //         console.log(res);
+        //         console.log(res.data);
+        //         alert(res.data.message);
+        //         // setData(res.data);
 
-                // navigate("/myProperty");
-            });
+        //         // navigate("/myProperty");
+        //     });
+        propertyName2 === '' ? setPropertyName(null) : setPropertyName(propertyName2);
+        setCategory(category2);
+        setPage(1);
         event.preventDefault();
     };
     const getUser = () => {
@@ -95,7 +110,9 @@ const MyProperty = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
                 if (getUser().role == "SELLER") {
@@ -118,9 +135,9 @@ const MyProperty = () => {
                                     className={styles.input}
                                     type="text"
                                     placeholder="Please input"
-                                    value={propertyName}
+                                    value={propertyName2}
                                     onChange={(e) => handleInputChange(e)}
-                                    required
+                                //required
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
@@ -129,30 +146,30 @@ const MyProperty = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="category"
                                 placeholder="Category"
-                                defaultValue="Car"
                             >
+                                <option value='null'>All</option>
                                 {listCategory.map((item) => (
-                                    <option value={item.Name}>{item.Name}</option>
+                                    <option value={item.Name} selected={item.Name===category2}>{item.Name}</option>
                                 ))}
                             </select>
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset"></input>
+                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e) => setPropertyName2('')}></input>
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <Link className={styles.bold} to="/myProperty">
+                            <button className={styles.bold} value='null' onClick={(e) => { handleChangeStatus(e) }}>
                                 All
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button className={styles.link} value='Biding' onClick={(e) => { handleChangeStatus(e) }}>
                                 Biding
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button className={styles.link} value='Closed' onClick={(e) => { handleChangeStatus(e) }}>
                                 Sold out
-                            </Link>
+                            </button>
                             <hr />
-                            <p className={styles.txtBold}>69 Properties</p>
+                            <p className={styles.txtBold}>Total Property: {listProperty.data.totalProperty}</p>
                             <Link className={styles.btnAdd} to="/addProperty">
                                 Add a New Property
                             </Link>
@@ -168,7 +185,7 @@ const MyProperty = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {listProperty.map((property) => (
+                                {listProperty.data.properties.map((property) => (
                                     <tr>
                                         <td className={styles.td}>
                                             <input type="checkbox"></input>
@@ -193,32 +210,9 @@ const MyProperty = () => {
                                         </td>
                                     </tr>
                                 ))}
-                                <tr>
-                                    <td className={styles.td}>
-                                        <input type="checkbox"></input>
-                                    </td>
-                                    <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>Real estate</td>
-                                    <td className={styles.td}>6969</td>
-                                    <td className={styles.td}>Tag</td>
-                                    <td className={styles.td}>
-                                        <Link className={styles.linkBlue} to="/propertyDetail">
-                                            View
-                                        </Link>
-                                        <Link className={styles.linkBlue} to="/editProperty/">
-                                            Edit
-                                        </Link>
-                                        <Link className={styles.linkBlue} to="/">
-                                            Delete
-                                        </Link>
-                                        <Link className={styles.linkBlue} to={`/editProperty/`}>
-                                            Request Add
-                                        </Link>
-                                    </td>
-                                </tr>
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={Math.floor(listProperty.data.total / 10) + 1} page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

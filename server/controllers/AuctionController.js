@@ -67,7 +67,20 @@ const updateAuction = async (req, res, next) => {
 };
 const getAllAuction = async (req, res, next) => {
     try {
-        var auctionlist = await auctionService.getAllAuction();
+        var index = req.params.index;
+        var name = req.params.name;
+        var category = req.params.category;
+        var statusAuction = req.params.status;
+        var auctionList = await auctionService.getAllAuction(index,name,category,statusAuction);
+
+        res.status(200).json(auctionList);
+    } catch (error) {
+        next(error);
+    }
+};
+const getAllAuctionBidder = async (req, res, next) => {
+    try {
+        var auctionlist = await auctionService.getAllAuctionBidder();
 
         res.status(200).json(auctionlist);
     } catch (error) {
@@ -92,6 +105,14 @@ const uploadImage = async (req, res, next) => {
 
     await readStream.pipe(res);
 };
+
+const filterAuction = async(req,res,next)=>{
+   var status = req.params.status;
+   var price = req.params.price;
+   var index = req.params.index;
+   var list = await auctionService.filterAuction(index,status,price);
+   res.status(200).json(list);
+}
 //add BidderAuction
 
 //  const addBidderAuction = async (req, res, next ) => {
@@ -104,4 +125,4 @@ const uploadImage = async (req, res, next) => {
 //     }
 // }
 
-module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction };
+module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction,filterAuction,getAllAuctionBidder };

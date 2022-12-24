@@ -7,6 +7,8 @@ const {
     uploadImage,
     approveAuction,
     rejectAuction,
+    filterAuction,
+    getAllAuctionBidder,
 } = require("../controllers/AuctionController.js");
 const { verifySeller } = require("../utils/verifyToken.js");
 
@@ -20,12 +22,16 @@ router.put("/reject/:id", rejectAuction);
 
 router.put("/:id", verifySeller, updateAuction);
 
-router.get("/", getAllAuction);
+router.get("/getAll/:index/:name/:category/:status", getAllAuction);
+
+router.get("/", getAllAuctionBidder);
 
 router.get("/auctiondetail/:auctionId/:propertyId", getAuctionDetailByID);
 
-// router.get("/auction")
+//router.get("/auction")
 
 router.get("/images/:key", uploadImage);
+
+router.get("/filter/:index/:status/:price",filterAuction)
 
 module.exports = router;

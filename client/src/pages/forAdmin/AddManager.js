@@ -37,10 +37,8 @@ const AddManager = () => {
         axios
             .post(
                 "http://localhost:8800/api/auth/registerManager",
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                },
+                { userName, password },
+
                 { withCredentials: true }
             )
             .then((res) => {

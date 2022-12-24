@@ -28,10 +28,6 @@ const app = express();
 // const http = createServer(app);
 const server = createSocket(app);
 
-
-
-
-
 //config library
 const PORT = 8800;
 

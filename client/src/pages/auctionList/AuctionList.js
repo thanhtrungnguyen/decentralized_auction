@@ -12,6 +12,7 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import io from "socket.io-client";
+
 const AuctionList = () => {
     const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState([]);
@@ -175,10 +176,10 @@ const AuctionList = () => {
                             <div>
                                 <p className={styles.txtBlueB}>{auction.Auctions1__r.records[0].Name}</p>
 
-                                <p className={styles.txtDes}>{auction.Property_Information__c}</p>
+                                <p className={styles.txtDes}>{auction.Auctions1__r.records[0].Status__c}</p>
 
                                 <div>
-                                    <p className={styles.txtBlueB}>Current auction</p>
+                                    <p className={styles.txtBlueB}>{auction.Property_Information__c}</p>
                                     <div>
                                         <label className={styles.txtBlueB}>Start Bid:</label>
                                         <label className={styles.txtBlueB}>{auction.Start_Bid__c}</label>
