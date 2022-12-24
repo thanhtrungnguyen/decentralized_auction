@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import io from "socket.io-client";
 import Loading from "../../components/loading/Loading";
-import Loading from "../../components/loading/Loading";
+
 
 const AuctionList = () => {
     const [page, setPage] = React.useState(1);
@@ -114,12 +114,9 @@ const AuctionList = () => {
     return loading ? (
         <Loading />
     ) : (
-    return loading ? (
-        <Loading />
-    ) : (
         <>
             {(() => {
-                if (role === "BIDDER") {
+                if (getUser().role === "BIDDER") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
