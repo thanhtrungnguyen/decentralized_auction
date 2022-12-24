@@ -32,6 +32,6 @@ router.get("/auctiondetail/:auctionId/:propertyId", getAuctionDetailByID);
 
 router.get("/images/:key", uploadImage);
 
-router.get("/filter/:index/:status/:price",filterAuction)
+router.get("/filter/:index/:status/:price/:sort/:name",filterAuction);
 
 module.exports = router;

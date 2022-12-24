@@ -111,11 +111,8 @@ const AddNews = () => {
                                 }}
                                 config={{
                                     ckfinder: {
-                                        // Upload the images to the server using the CKFinder QuickUpload command.
-                                        uploadUrl:
-                                            "https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json",
-                                        mode: "no-cors",
-                                    },
+                                        uploadUrl: 'https://ckeditor.com/apps/ckfinder/3.5.0/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+                                      },
                                 }}
                             />
                         </div>
