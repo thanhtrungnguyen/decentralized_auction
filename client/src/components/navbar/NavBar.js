@@ -17,14 +17,14 @@ const NavBar = () => {
         });
         return users;
     };
-    const [type, setType] = useState();
+    const [type, setType] = useState("");
     const [id, setId] = useState();
     useEffect(() => {
         if (getUser() != null) {
             setType(getUser().type);
             setId(getUser().id);
         } else {
-            setType("CONTACT");
+            setType("");
         }
     }, []);
     return (
@@ -53,18 +53,15 @@ const NavBar = () => {
                                     Profile
                                 </Link>
                             );
-                        }
-                        // if (type === "ACCOUNT")
-                        else {
+                        } else if (type === "ACCOUNT") {
                             return (
                                 <Link className={styles.link} to={`/profileOrganization/${id}`}>
                                     Profile
                                 </Link>
                             );
+                        } else {
+                            return <></>;
                         }
-                        //  else {
-                        //     return <></>;
-                        // }
                     })()}
 
                     <div className={styles.flright}>

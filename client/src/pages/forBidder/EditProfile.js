@@ -22,21 +22,7 @@ const EditProfile = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURL).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setData(resp.data);
-            });
 
-            setLoading(false);
-        }
-        fetchData();
-    }, [baseURL]);
-    console.log(data);
-    console.log(loading);
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
@@ -53,6 +39,31 @@ const EditProfile = () => {
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setData(resp.data);
+            });
+
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
+    console.log(data);
+
+    const sCity = {
+        value: 278,
+        label: "An Giang",
+    };
+    const sDistrict = { value: 617, label: "Huyện Phú Tân" };
+    const sWard = {
+        value: 66,
+        label: "Xã Phú An",
+    };
+    console.log(selectedCity);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "firstName") {
@@ -289,12 +300,12 @@ const EditProfile = () => {
                             <Select
                                 className="input"
                                 name="cityId"
-                                key={`cityId_${selectedCity?.value}`}
+                                key={`cityId_${sCity?.value}`}
                                 isDisabled={cityOptions.length === 0}
                                 options={cityOptions}
                                 onChange={(option) => onCitySelect(option)}
                                 placeholder="Tỉnh/Thành"
-                                defaultValue={data.contact.City__c}
+                                defaultValue={sCity}
                                 required
                             />
                         </div>
@@ -303,12 +314,12 @@ const EditProfile = () => {
                             <Select
                                 className="input"
                                 name="districtId"
-                                key={`districtId_${selectedDistrict?.value}`}
+                                key={`districtId_${sDistrict?.value}`}
                                 isDisabled={districtOptions.length === 0}
                                 options={districtOptions}
                                 onChange={(option) => onDistrictSelect(option)}
                                 placeholder="Quận/Huyện"
-                                defaultValue={data.contact.District__c}
+                                defaultValue={sDistrict}
                                 required
                             />
                         </div>
@@ -317,13 +328,12 @@ const EditProfile = () => {
                             <Select
                                 className="input"
                                 name="wardId"
-                                key={`wardId_${selectedWard?.value}`}
+                                key={`wardId_${sWard?.value}`}
                                 isDisabled={wardOptions.length === 0}
                                 options={wardOptions}
                                 placeholder="Phường/Xã"
                                 onChange={(option) => onWardSelect(option)}
-                                defaultValue={data.contact.Wards__c}
-                                selected={wardOptions === data.contact.Wards__c}
+                                defaultValue={sWard}
                                 required
                             />
                         </div>
@@ -415,9 +425,14 @@ const EditProfile = () => {
                         <input className="ipImg2" id="cardBack" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
                         <br />
                         <br />
-
-                        {cardFront && <img src={URL.createObjectURL(cardFront)} className="img" alt="Thumb" />}
-                        {cardBack && <img src={URL.createObjectURL(cardBack)} className="img2" alt="Thumb" />}
+                        {cardFront == null && (
+                            <img src={`http://localhost:8800/api/auction/images/${data.contact.Font_Side_Image__c}`} className="img" alt="Thumb" />
+                        )}
+                        {cardFront != null && <img src={URL.createObjectURL(cardFront)} className="img" alt="Thumb" />}
+                        {cardBack == null && (
+                            <img src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`} className="img2" alt="Thumb" />
+                        )}
+                        {cardBack != null && <img src={URL.createObjectURL(cardBack)} className="img2" alt="Thumb" />}
                         {/* <p className="bold">Account Information</p>
                         <br />
                         <br />
