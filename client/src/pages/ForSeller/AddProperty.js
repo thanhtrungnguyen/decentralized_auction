@@ -266,20 +266,18 @@ const AddProperty = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     required
                                 ></input>
-                                <div className={styles.date}>
-                                    <DatePicker
-                                        id="placeViewProperty"
-                                        // onChange={(e) => handleInputChange(e)}
-                                        onChange={setViewPropertyTime}
-                                        ClassName={styles.datePicker}
-                                        value={viewPropertyTime}
-                                        // onChange={setValue}
-                                        range
-                                        numberOfMonths={2}
-                                        format="MM/DD/YYYY HH:mm:ss"
-                                        plugins={[<TimePicker />]}
-                                    />
-                                </div>
+                                <DatePicker
+                                    id="placeViewProperty"
+                                    // onChange={(e) => handleInputChange(e)}
+                                    onChange={setViewPropertyTime}
+                                    ClassName={styles.datePicker}
+                                    value={viewPropertyTime}
+                                    // onChange={setValue}
+                                    range
+                                    numberOfMonths={2}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker />]}
+                                />
                                 <textarea
                                     id="propertyDescription"
                                     value={propertyDescription}

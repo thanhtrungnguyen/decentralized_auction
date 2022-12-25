@@ -222,22 +222,20 @@ const PropertyDetail = () => {
                                     required
                                     readonly
                                 ></input>
-                                <div className={styles.date}>
-                                    <DatePicker
-                                        id="placeViewProperty"
-                                        // onChange={(e) => handleInputChange(e)}
-                                        onChange={setViewPropertyTime}
-                                        ClassName={styles.datePicker}
-                                        value={viewPropertyTime}
-                                        //   value={data.property.viewPropertyTime}
-                                        // onChange={setValue}
-                                        range
-                                        numberOfMonths={2}
-                                        format="MM/DD/YYYY HH:mm:ss"
-                                        plugins={[<TimePicker />]}
-                                        readOnly
-                                    />
-                                </div>
+                                <DatePicker
+                                    id="placeViewProperty"
+                                    // onChange={(e) => handleInputChange(e)}
+                                    onChange={setViewPropertyTime}
+                                    ClassName={styles.datePicker}
+                                    value={viewPropertyTime}
+                                    //   value={data.property.viewPropertyTime}
+                                    // onChange={setValue}
+                                    range
+                                    numberOfMonths={2}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker />]}
+                                    readOnly
+                                />
                                 <textarea
                                     id="propertyDescription"
                                     // value={propertyDescription}
