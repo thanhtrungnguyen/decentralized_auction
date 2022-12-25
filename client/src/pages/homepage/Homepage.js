@@ -30,11 +30,10 @@ const HomePage = () => {
         // console.log(getUser().type);
         if (getUser() != null) {
             setRole(getUser().role);
-            setLoading(false);
         } else {
             setRole("");
-            setLoading(false);
         }
+        setLoading(false);
     }, []);
     return loading ? (
         <Loading />
