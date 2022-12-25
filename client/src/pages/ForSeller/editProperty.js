@@ -54,6 +54,9 @@ const EditProperty = () => {
     const baseURLProperty = `http://localhost:8800/api/property/${id}`;
     const { data, loading, error } = useFetch(baseURLProperty);
 
+
+    
+
     // useEffect(() => {
     //   axios.get(baseURLProperty).then((resp) => {
     //     console.log(resp.data);
