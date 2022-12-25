@@ -52,7 +52,7 @@ const ListBidders = () => {
     const handleChangeStatus = (e) => {
         setStatus(e.target.value);
         setPage(1);
-    }
+    };
     const handleSubmit = (event) => {
         // const formData = new FormData();
 
@@ -70,7 +70,7 @@ const ListBidders = () => {
 
         //         navigate("/listBidders");
         //     });
-        email2 == '' ? setEmail(null) : setEmail(email2);
+        email2 == "" ? setEmail(null) : setEmail(email2);
         setPage(1);
         event.preventDefault();
     };
@@ -114,7 +114,7 @@ const ListBidders = () => {
                                     placeholder="Email"
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
-                                // required
+                                    // required
                                 ></input>
                             </div>
                             <br />
@@ -128,13 +128,31 @@ const ListBidders = () => {
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <button className={styles.bold} value='null' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.bold}
+                                value="null"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
                             </button>
-                            <button className={styles.link} value='Activate' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.link}
+                                value="Activate"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Activate{" "}
                             </button>
-                            <button className={styles.link} value='Deactivate' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.link}
+                                value="Deactivate"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Deactivate
                             </button>
                             <hr />
@@ -154,7 +172,9 @@ const ListBidders = () => {
                                         <td className={styles.td}>{item.Name}</td>
                                         <td className={styles.td}>{item.Email__c}</td>
                                         <td className={styles.td}>{item.Phone__c}</td>
-                                        <td className={styles.td} style={item.User_Id__r.Status__c === 'Activate' ? {} : { color: "red" }} >{item.User_Id__r.Status__c}</td>
+                                        <td className={styles.td} style={item.User_Id__r.Status__c === "Activate" ? {} : { color: "red" }}>
+                                            {item.User_Id__r.Status__c}
+                                        </td>
                                         <td className={styles.td}>
                                             <Link className={styles.linkBlue} to={`/bidderDetail/${item.User_Id__c}`}>
                                                 View
@@ -163,7 +183,11 @@ const ListBidders = () => {
                                                 if (item.User_Id__r.Status__c === "Activate") {
                                                     return (
                                                         <Popup
-                                                            trigger={<label style={{ color: "red" }} className={styles.linkBlue}>Deactivate</label>}
+                                                            trigger={
+                                                                <label style={{ color: "red" }} className={styles.linkBlue}>
+                                                                    Deactivate
+                                                                </label>
+                                                            }
                                                             position="right center"
                                                         >
                                                             <BanedBidder idBidder={item.User_Id__c} />
