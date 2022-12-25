@@ -42,6 +42,19 @@ const AuctionList = () => {
     //         socket.off();
     //     });
     // }, [status]);
+    const [role, setRole] = useState();
+
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -50,6 +63,11 @@ const AuctionList = () => {
                 console.log("axios get");
                 setData(resp.data);
             });
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
             setLoading(false);
         };
         fetchData();
@@ -93,17 +111,7 @@ const AuctionList = () => {
     //     };
     //     fetchData();
     //   },[]);
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     return loading ? (
         <Loading />
     ) : (

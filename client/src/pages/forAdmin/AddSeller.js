@@ -1,4 +1,4 @@
-import styles from "../../styleCss/stylesPages/forAdmin/addManager.module.css";
+import styles from "../../styleCss/stylesPages/forAdmin/addSeller.module.css";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
