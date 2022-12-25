@@ -57,13 +57,12 @@ const ViewManager = () => {
                             <label className={styles.title}>Manager Account Information</label>
                             <br />
                             <label className={styles.txt}>Username</label>
-                            <label>{data.username}</label>
-                            <label></label>
+                            <label className={styles.lb}>{data.username}dddd</label>
                             <br />
                             <br />
                             <br />
                             <label className={styles.txt}>Password</label>
-                            <label>{data.password}</label>
+                            <label className={styles.lb}>{data.password}dddd</label>
                             <br />
                             <br />
                             <input type="button" value="Return" className={styles.btnCancel} onClick={cancel}></input>
