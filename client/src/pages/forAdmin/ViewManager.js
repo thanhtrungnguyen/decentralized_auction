@@ -18,7 +18,7 @@ import { useParams } from "react-router-dom";
 const ViewManager = () => {
     const { id } = useParams();
 
-    const baseURL = `http://localhost:8800/api/admin/managerdetail/${id}`;
+    const baseURL = `http://localhost:8800/api/user/${id}`;
 
     const navigate = useNavigate();
     const { data, loading, error } = useFetch(baseURL);
@@ -57,16 +57,16 @@ const ViewManager = () => {
                             <label className={styles.title}>Manager Account Information</label>
                             <br />
                             <label className={styles.txt}>Username</label>
-                            <label>{data.username}</label>
+                            <label>{data.user[0].Name}</label>
                             <label></label>
                             <br />
                             <br />
                             <br />
                             <label className={styles.txt}>Password</label>
-                            <label>{data.password}</label>
+                            <label>{data.user[0].Password__c}</label>
                             <br />
                             <br />
-                            <input type="button" value="Return" className={styles.btnCancel} onClick={cancel}></input>
+                            <input type="button" value="Back" className={styles.btnCancel} onClick={cancel}></input>
                         </div>
                     </div>
                     <Footer />

@@ -10,7 +10,7 @@ const ActiveManager = ({ idManager }) => {
     const handleSubmit = (event) => {
         console.log(idManager);
         axios
-            .put("http://localhost:8800/api/activeManager", idManager, {
+            .put(`http://localhost:8800/api/user/changeStatus/${idManager}`, idManager, {
                 withCredentials: true,
             })
             .then((res) => {

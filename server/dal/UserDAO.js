@@ -121,12 +121,12 @@ const getAllUser = async (role, index, status, name) => {
             });
         }
         return { listUser: listUser, total: total, totalUser: totalUser };
-    } catch (error) {}
+    } catch (error) { }
 };
 const getUserById = async (userId) => {
     var connection = await conn();
     var role = await getUserRole(userId);
-    var type,user,contact,account = null;
+    var type, user, contact, account = null;
     if (role === 'MANAGER') {
         await connection.sobject('User__c').find({ Id: userId }, (err, result) => {
             if (err) console.err(err)
@@ -134,7 +134,11 @@ const getUserById = async (userId) => {
         })
     }
     else {
-        await connection.sobject('Contact__c').find({User_Id__c: userId},(err,result)=>{
+        await connection.sobject('User__c').find({ Id: userId }, (err, result) => {
+            if (err) console.err(err)
+            user = result[0]
+        })
+        await connection.sobject('Contact__c').find({ User_Id__c: userId }, (err, result) => {
             if (err) console.err(err)
             contact = result[0]
         })
@@ -142,14 +146,14 @@ const getUserById = async (userId) => {
             if (err) console.err(err)
             type = result[0].Type__c;
         })
-        if(type==='ACCOUNT'){
-            await connection.sobject('Account__c').find({User_Id__c: userId},(err,result)=>{
+        if (type === 'ACCOUNT') {
+            await connection.sobject('Account__c').find({ User_Id__c: userId }, (err, result) => {
                 if (err) console.err(err)
                 account = result[0]
             })
         }
     }
-    return {user:user,contact,account:account};
+    return { user: user, contact: contact, account: account };
 }
 const getUserRole = async (userId) => {
     var connection = await conn();
@@ -213,4 +217,19 @@ const updateProfileBidder = async (userId, contact, account, filesImg) => {
         }
     );
 };
-module.exports = { getAllUser, getUserById, updateProfileBidder };
+const changeStatus = async (userId) => {
+    var connection = await conn();
+    var findUser = await getUserById(userId);
+    var status = 'Activate';
+    status === findUser.user.Status__c ? status = 'Deactivate' : status = status;
+    var isChange = false;
+    await connection.sobject('User__c').update({
+        Id: userId,
+        Status__c: status
+    }, (err, result) => {
+        if (err) console.error(err);
+        if(result) isChange=true;
+    })
+    return isChange
+}
+module.exports = { getAllUser, getUserById, updateProfileBidder,changeStatus };

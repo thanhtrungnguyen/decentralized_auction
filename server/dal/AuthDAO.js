@@ -37,8 +37,8 @@ const createContact = async (user, contact, role, filesImg) => {
 const createAccount = async (user, contact, role, filesImg, account) => {
     try {
         var accountId = null;
-        var userId = await createUser(user);
         var contactId = await createContact(user, contact, role, filesImg)
+        var findUser  =await getUserByName(user)
         var connection = await conn();
         await connection.sobject("Account__c").create(
             {
@@ -51,7 +51,7 @@ const createAccount = async (user, contact, role, filesImg, account) => {
                 Tax_Code_Granted_Date__c: account.Tax_Code_Granted_Date__c,
                 Tax_Code_Granted_Place__c: account.Tax_Code_Granted_Place__c,
                 //Website__c:
-                User_Id__c: userId,
+                User_Id__c: findUser.Id,
                 Contact_DAP__c: contactId,
             },
             (err, result) => {
