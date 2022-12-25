@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllUser, getUserById, updateProfileBidder } = require("../controllers/UserController.js");
+const { getAllUser, getUserById, updateProfileBidder, changedStatus } = require("../controllers/UserController.js");
 // const { deleteUser, findAllUser, findByUserID, updateUser } = require("'../controllers/user.js");
 const { verifyAdmin, verifyToken, verifySeller } = require("../utils/verifyToken.js");
 
@@ -22,5 +22,7 @@ router.get("/getAll/:role/:index/:status/:email", getAllUser);
 router.get("/:userId", getUserById);
 
 router.put("/:id", updateProfileBidder);
+
+router.put("/changeStatus/:userId",changedStatus );
 
 module.exports = router;

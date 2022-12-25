@@ -19,4 +19,8 @@ const updateProfileBidder = async (userId, contact, account, files) => {
     const result1 = await uploadFile(files.cardBack[0]);
     const filesImg = { result: result, result1: result1 };
 };
-module.exports = { getAllUser, getUserById, updateProfileBidder };
+const changedStatus = async(userId)=>{
+    const isChange = await UserDAO.changeStatus(userId);
+    return isChange;
+}
+module.exports = { getAllUser, getUserById, updateProfileBidder,changedStatus };

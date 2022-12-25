@@ -104,7 +104,7 @@ const forgotPassword = async (user) => {
 }
 const resetPassword = async (user, password1, password2, token) => {
     try {
-        var findUser = await AuthDAO.getUserByName(user);
+        var findUser = await AuthDAO.getUserById(user);
         const secret = process.env.JWT + findUser.password;
 
         const payload = jwt.verify(token, secret);

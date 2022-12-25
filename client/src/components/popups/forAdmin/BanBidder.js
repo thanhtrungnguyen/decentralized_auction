@@ -10,7 +10,7 @@ const BanedBidder = ({ idBidder }) => {
     const handleSubmit = (event) => {
         console.log(idBidder);
         axios
-            .put("http://localhost:8800/api/banedBidder", idBidder, {
+            .put(`http://localhost:8800/api/user/changeStatus/${idBidder}`, idBidder, {
                 withCredentials: true,
             })
             .then((res) => {

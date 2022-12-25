@@ -61,4 +61,13 @@ const updateProfileBidder = async (req, res, next) => {
         next(error);
     }
 };
-module.exports = { getAllUser, getUserById, updateProfileBidder };
+const changedStatus = async (req, res, next) => {
+    try {
+        var userId = req.params.userId;
+        var isChange = await UserService.changedStatus(userId);
+        res.status(200).json(isChange);
+    } catch (error) {
+        next(error);
+    }
+};
+module.exports = { getAllUser, getUserById, updateProfileBidder,changedStatus };

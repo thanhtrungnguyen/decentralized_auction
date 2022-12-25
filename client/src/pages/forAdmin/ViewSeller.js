@@ -17,12 +17,25 @@ import { useParams } from "react-router-dom";
 
 const ViewSeller = () => {
     const { id } = useParams();
-
-    const baseURL = `http://localhost:8800/api/admin/sellerdetail/${id}`;
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const baseURL = `http://localhost:8800/api/user/${id}`;
 
     const navigate = useNavigate();
-    const { data, loading, error } = useFetch(baseURL);
-
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const res = await axios.get(baseURL);
+                setData(res.data);
+            } catch (error) {
+                setError(error);
+            }
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
     const cancel = () => {
         navigate("/listSellers");
     };
@@ -78,7 +91,7 @@ const ViewSeller = () => {
                             <p className={styles.txt}>Card number</p>
                             <p className={styles.txt}>Card granted date</p>
                             <p className={styles.txt}>Card granted place</p>
-                            <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
+                            <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data.contact.Font_Side_Image__c}`} alt="images" />
                             {/* <img
               className={styles.img}
               src={`http://localhost:8800/api/auction/images/${data.cardFront}`}
@@ -92,59 +105,59 @@ const ViewSeller = () => {
                             <p className={styles.title}>.</p>
 
                             <p className={styles.bold}>.</p>
-                            <p className={styles.txtR}>Pro</p>
-                            {/* <p className={styles.txtR}>${data.firstName}</p> */}
-                            <p className={styles.txtR}>123</p>
-                            {/* <p className={styles.txtR}>${data.taxCode}</p> */}
-                            <p className={styles.txtR}>02/06/2023</p>
-                            {/* <p className={styles.txtR}>${data.firstName}</p> */}
-                            <p className={styles.txtR}>Ha Noi</p>
-                            {/* <p className={styles.txtR}>${data.firstName}</p> */}
-                            <p className={styles.txtR}>Ha Noi</p>
-                            {/* <p className={styles.txtR}>${data.firstName}</p> */}
+                  
+                            <p className={styles.txtR}>{data.account.Name}</p>
+                  
+                            <p className={styles.txtR}>{data.account.Tax_Code__c}</p>
+                    
+                            <p className={styles.txtR}>{data.account.Tax_Code_Granted_Date__c}</p>
+                    
+                            <p className={styles.txtR}>{data.account.Tax_Code_Granted_Place__c}</p>
+                  
+                            <p className={styles.txtR}>{data.account.Specific_Address__c}</p>
                             <p className={styles.bold}>.</p>
 
-                            <p className={styles.txtR}>Tesfaye</p>
-                            {/* <p className={styles.txtR}>${data.firstName}</p> */}
-                            <p className={styles.txtR}>Wanjala</p>
-                            {/* <p className={styles.txtR}>${data.lastName}</p> */}
-                            <p className={styles.txtR}>Male</p>
-                            {/* <p className={styles.txtR}>${data.gender}</p> */}
+                           
+                            <p className={styles.txtR}>{data.contact.First_Name__c}</p>
+                      
+                            <p className={styles.txtR}>{data.contact.Last_Name__c}</p>
+                     
+                            <p className={styles.txtR}>{data.contact.Gender__c}</p>
 
-                            <p className={styles.txtR}>22/02/2000</p>
-                            {/* <p className={styles.txtR}>${data.dateOfBirth}</p> */}
+                         
+                            <p className={styles.txtR}>{data.contact.Date_Of_Birth__c}</p>
 
-                            <p className={styles.txtR}>tarreau@gmail.com</p>
-                            {/* <p className={styles.txtR}>${data.email}</p> */}
+                        
+                            <p className={styles.txtR}>{data.contact.Email__c}</p>
 
-                            <p className={styles.txtR}>012345678</p>
-                            {/* <p className={styles.txtR}>${data.phone}</p> */}
-
-                            <p className={styles.bold}>.</p>
-
-                            <p className={styles.txtR}>Hanoi</p>
-                            {/* <p className={styles.txtR}>${data.city}</p> */}
-
-                            <p className={styles.txtR}>Thach That</p>
-                            {/* <p className={styles.txtR}>${data.district}</p> */}
-
-                            <p className={styles.txtR}>Thach Hoa</p>
-                            {/* <p className={styles.txtR}>${data.wards}</p> */}
-
-                            <p className={styles.txtR}>Thach Hoa - Thach That - Hanoi</p>
-                            {/* <p className={styles.txtR}>${data.specificAddress}</p> */}
+                      
+                            <p className={styles.txtR}>{data.contact.Phone__c}</p>
 
                             <p className={styles.bold}>.</p>
-                            <p className={styles.txtR}>34723987492308</p>
-                            {/* <p className={styles.txtR}>${data.cardNumber}</p> */}
 
-                            <p className={styles.txtR}>10/10/2020</p>
-                            {/* <p className={styles.txtR}>${data.cardGrantedDate}</p> */}
+                    
+                            <p className={styles.txtR}>{data.contact.City__c}</p>
 
-                            <p className={styles.txtR}>Hanoi</p>
-                            {/* <p className={styles.txtR}>${data.cardGrantedPlace}</p> */}
+                  
+                            <p className={styles.txtR}>{data.contact.District__c}</p>
 
-                            <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
+                     
+                            <p className={styles.txtR}>{data.contact.Wards__c}</p>
+
+                        
+                            <p className={styles.txtR}>{data.contact.Address__c}</p>
+
+                            <p className={styles.bold}>.</p>
+                          
+                            <p className={styles.txtR}>{data.contact.Card_Number__c}</p>
+
+                          
+                            <p className={styles.txtR}>{data.contact.Card_Granted_Date__c}</p>
+
+                         
+                            <p className={styles.txtR}>{data.contact.Card_Granted_Place__c}</p>
+
+                            <img className={styles.img2} src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`} alt="images" />
                             {/* <img
               className={styles.img2}
               src={`http://localhost:8800/api/auction/images/${data.cardBack}`}
@@ -156,6 +169,7 @@ const ViewSeller = () => {
 
                             <p className={styles.txtR}>**********</p>
                             {/* <p className={styles.txtR}>${data.password}</p> */}
+                            <input type="button" value="Back" className={styles.btnCancel} onClick={cancel}></input>
                         </div>
                     </div>
                     <Footer />

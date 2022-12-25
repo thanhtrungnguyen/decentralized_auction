@@ -66,7 +66,7 @@ const ListForManagers = () => {
                 {data.listUser.map((item) => (
                     <tr>
                         <td className={styles.td}>{item.User_DAP__r.Name}</td>
-                        <td className={styles.td}>{item.User_DAP__r.Status__c}</td>
+                        <td className={styles.td} style={item.User_DAP__r.Status__c === 'Activate' ? {} : { color: "red" }}>{item.User_DAP__r.Status__c}</td>
                         <td className={styles.td}>
                             <Link className={styles.linkBlue} to={`/viewManager/${item.User_DAP__r.Id}`}>
                                 View
@@ -74,14 +74,14 @@ const ListForManagers = () => {
                             {(() => {
                                 if (item.User_DAP__r.Status__c === "Activate") {
                                     return (
-                                        <Popup trigger={<label className={styles.linkBlue}>Deactivate</label>} position="right center">
-                                            <BanedManager idBidder={item.User_DAP__r.Id} />
+                                        <Popup trigger={<label style={{ color: "red" }} className={styles.linkBlue}>Deactivate</label>} position="right center">
+                                            <BanedManager idManager={item.User_DAP__r.Id} />
                                         </Popup>
                                     );
                                 } else {
                                     return (
                                         <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                            <ActiveManager idBidder={item.User_DAP__r.Id} />
+                                            <ActiveManager idManager={item.User_DAP__r.Id} />
                                         </Popup>
                                     );
                                 }
