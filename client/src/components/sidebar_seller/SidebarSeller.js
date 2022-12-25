@@ -11,6 +11,7 @@ const SidebarSeller = () => {
                     My Properties
                 </Link>
                 <br />
+                <br />
                 <Link to="/addProperty" className={styles.txt}>
                     Add New Property
                 </Link>{" "}

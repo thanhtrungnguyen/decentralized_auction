@@ -56,12 +56,15 @@ const MyProperty = () => {
     }, [baseURLProperty]);
 
     const RequestAuction = (propertyId) => {
+        setLoading(true);
         axios.post(requestAuction + propertyId, { withCredentials: true }).then((resp) => {
             console.log(resp.data);
             console.log("axios get");
             setListProperty(resp.data);
         });
 
+        setLoading(false);
+        window.location.reload(false);
         alert(propertyId);
     };
 
@@ -221,12 +224,12 @@ const MyProperty = () => {
                                             <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
                                                 Edit
                                             </Link>
-                                            <Link className={styles.linkBlue} to="/">
+                                            <Link className={styles.linkBlue} to={`/deleteProperty/${property.Id}`}>
                                                 Delete
                                             </Link>
-                                            <Button className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
+                                            <label className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
                                                 Request Add
-                                            </Button>
+                                            </label>
                                         </td>
                                     </tr>
                                 ))}
