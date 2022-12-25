@@ -81,7 +81,9 @@ const AddProperty = () => {
             setViewPropertyTime(value);
         }
     };
-
+    const Cancel = () => {
+        navigate("/myProperty");
+    };
     const handleSubmit = (event) => {
         const formData = new FormData();
         formData.append("propertyImage1", propertyImage1);
@@ -326,7 +328,7 @@ const AddProperty = () => {
               type="button"
               value="Save as Draft"
             ></input> */}
-                        <input className={styles.btnCancel} type="button" value="Cancel"></input>
+                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
                     </div>
 
                     <Footer />
