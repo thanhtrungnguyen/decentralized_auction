@@ -16,8 +16,8 @@ const BanedManager = ({ idManager }) => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
-                navigate("/listManagers");
+                //navigate("/listBidders");
+                window.location.reload(false);
             });
         setExpanded(false);
 

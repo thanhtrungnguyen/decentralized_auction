@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import { useFetch } from "../../../hook/useFetch";
 const BanedBidder = ({ idBidder }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
-
+    const [loading,setLoading] = useState(true);
     const handleSubmit = (event) => {
         console.log(idBidder);
+        setLoading(true);
         axios
             .put(`http://localhost:8800/api/user/changeStatus/${idBidder}`, idBidder, {
                 withCredentials: true,
@@ -16,11 +18,12 @@ const BanedBidder = ({ idBidder }) => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
-                navigate("/listBidders");
+                
+                //navigate("/listBidders");
+                window.location.reload(false);
             });
+           
         setExpanded(false);
-
         event.preventDefault();
     };
     const handCancel = () => {

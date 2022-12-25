@@ -20,7 +20,8 @@ import jwt from "jsonwebtoken";
 import { color } from "@mui/system";
 const ListBidders = () => {
     const [page, setPage] = React.useState(1);
-
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState(null);
     const [email2, setEmail2] = useState(null);
     const [status, setStatus] = useState(null);
@@ -28,8 +29,20 @@ const ListBidders = () => {
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/getAll/BIDDER/${page}/${status}/${email}`;
 
-    const { data, loading, error } = useFetchPagination(baseURL, page);
-
+    //const { data, loading, error } = useFetchPagination(baseURL, page);
+    useEffect(() => {
+        const fetchData = async()=>{
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setData(resp.data);
+            });
+            setLoading(false);
+        }
+       fetchData();
+        
+    }, [baseURL]);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "email") {
@@ -158,7 +171,7 @@ const ListBidders = () => {
                                                     );
                                                 } else {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
+                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label> } position="right center">
                                                             <ActiveBidder idBidder={item.User_Id__c} />
                                                         </Popup>
                                                     );

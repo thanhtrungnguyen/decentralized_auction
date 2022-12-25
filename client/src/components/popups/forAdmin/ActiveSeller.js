@@ -16,8 +16,8 @@ const ActiveSeller = ({ idSeller }) => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
-                navigate("/listSellers");
+                //navigate("/listBidders");
+                window.location.reload(false);
             });
         setExpanded(false);
 
