@@ -1,25 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import { Outlet, Link } from "react-router-dom";
-import { Button, ConnectButton, useNotification } from "web3uikit";
-import { useMoralis, useWeb3Contract, useApiContract } from "react-moralis";
-import HeaderBid from "../components/HeaderBid";
-import auctionAbi from "../../../constants/contractAbi.json";
-import contractAddresses from "../../../constants/contractAddress.json";
-import Moralis from "moralis";
+import { useNotification } from "web3uikit";
+import { useWeb3Contract } from "react-moralis";
 import { ethers } from "ethers";
 import Countdown from "react-countdown";
 import Decimal from "decimal.js";
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import BiddingProperty from "../components/BiddingProperty";
-import { useFetch } from "../../../hook/useFetch";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import WaitingForAuctionTime from "./WaitingForAuctionTime";
 import TransactionStatus from "../components/TransactionStatus";
 import ClosedAuction from "./ClosedAuction";
-import { SUPPORT_CHAINS, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
+
 const Payment = ({ auction, highestBid }) => {
     const dispatch = useNotification();
     const [transactionStatus, setTransactionStatus] = useState();
@@ -40,15 +32,6 @@ const Payment = ({ auction, highestBid }) => {
     });
     if (error) console.log(error);
     console.log();
-    // const { runContractFunction: getAuctionInformationById } = useWeb3Contract({
-    //     abi: auctionAbi,
-    //     contractAddress: auctionContractAddress,
-    //     functionName: "getAuctionInformationById",
-    //     params: { auctionId: "12a" },
-    // });
-    // const updateUIValues = async () => {
-    //     const auctionInformation = await getAuctionInformationById();
-    // };
 
     const handleSuccess = async (tx) => {
         try {

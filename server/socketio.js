@@ -7,38 +7,8 @@ const AuctionService = require("./services/AuctionService");
 const cron = require("node-cron");
 require("dotenv").config();
 
-// const SocketEvents = require("./constants/SocketEvents");
 
 module.exports = (app) => {
-    // const io = socketio(http, {
-    //     cors: {
-    //         origin: "http://localhost:3000",
-    //         methods: ["GET", "POST", "PUT"],
-    //     },
-    // });
-
-    // let interval;
-
-    // io.on("SocketEvents.CONNECT", (socket) => {
-    //     console.log("New client connected");
-    //     if (interval) {
-    //         clearInterval(interval);
-    //     }
-    //     interval = setInterval(() => getApiAndEmit(socket), 1000);
-    //     socket.on("disconnect", () => {
-    //         console.log("Client disconnected");
-    //         clearInterval(interval);
-    //     });
-    // });
-    // const getApiAndEmit = (socket) => {
-    //     const response = new Date();
-    //     const auction = getAllAuction();
-    //     console.log(auction);
-    //     // Emitting a new message. Will be consumed by the client
-    //     socket.emit("FromAPI", response);
-    // };
-
-    // return io;
 
     const server = http.createServer(app);
     const io = new Server(server, {

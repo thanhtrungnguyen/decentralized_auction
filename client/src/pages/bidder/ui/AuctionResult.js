@@ -27,14 +27,8 @@ const AuctionResult = ({ auction }) => {
     const [highestBid, setHighestBid] = useState();
     const [transactionStatus, setTransactionStatus] = useState();
     const [goPayment, setGoPayment] = useState(false);
-    const [showConfirmation, setShowConfirmation] = useState(() => {
-        // if ((auction.endAuctionTime + 360) * 1000 < Date.now()) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
-        return true;
-    });
+    const [showConfirmation, setShowConfirmation] = useState(true);
+
     const { runContractFunction: getBidInformationByAuctionId } = useWeb3Contract({
         abi: CONTRACT_ABI,
         contractAddress: CONTRACT_ADDRESS,
@@ -130,9 +124,41 @@ const AuctionResult = ({ auction }) => {
         });
     };
 
+    const Confirmation = () => {
+        {
+            rank == 1 ? (
+                <>
+                    <p className={styles.txtT}>Do you agree with this result?</p>
+                    <button
+                        className={styles.btn}
+                        onClick={() => {
+                            setGoPayment(true);
+                        }}
+                    >
+                        Accept
+                    </button>
+                    <button
+                        disabled={isLoading || isFetching}
+                        className={styles.btn}
+                        onClick={async () => {
+                            cancelAuctionResult({
+                                onError: handleError,
+                                onSuccess: handleSuccess,
+                                onComplete: handleComplete,
+                            });
+                        }}
+                    >
+                        {isLoading || isFetching ? "Loading..." : "Cancel"}
+                    </button>
+                </>
+            ) : (
+                <>Here</>
+            );
+        }
+    };
+
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            setShowConfirmation(false);
             return <ClosedAuction />;
         } else {
             return (
@@ -145,8 +171,6 @@ const AuctionResult = ({ auction }) => {
                                 {/* <BiddingProperty auction={auction} />
                         <BiddingProperty auction={auction} property={property} /> */}
                                 <BiddingProperty />
-                                <p className={styles.txtM}>Starting bid:</p>
-                                <p className={styles.txtNormal}>{auction.startBid}</p>
                                 <p className={styles.txtM}>Current bid:</p>
                                 <p className={styles.txtNormal}>{highestBid} ETH</p>
                                 <p className={styles.txtM}>Auction ends in:</p>
@@ -159,7 +183,46 @@ const AuctionResult = ({ auction }) => {
                             <div className={styles.detail}>
                                 <p className={styles.title}>Result:</p>
                                 <p className={styles.txtT}>Your place: {rank}</p>
-                                <ConfirmAuctionResult auction={auction} rank={rank} showConfirmation={showConfirmation} highestBid={highestBid} />
+                                {rank == 1 ? (
+                                    showConfirmation ? (
+                                        <>
+                                            <p className={styles.txtT}>Do you agree with this result?</p>
+                                            <button
+                                                className={styles.btn}
+                                                onClick={() => {
+                                                    setGoPayment(true);
+                                                }}
+                                            >
+                                                Accept
+                                            </button>
+                                            <button
+                                                disabled={isLoading || isFetching}
+                                                className={styles.btn}
+                                                onClick={async () => {
+                                                    cancelAuctionResult({
+                                                        onError: handleError,
+                                                        onSuccess: handleSuccess,
+                                                        onComplete: handleComplete,
+                                                    });
+                                                }}
+                                            >
+                                                {isLoading || isFetching ? "Loading..." : "Cancel"}
+                                            </button>
+                                            <TransactionStatus transactionStatus={transactionStatus} />
+                                        </>
+                                    ) : (
+                                        <button
+                                            className={styles.btn}
+                                            onClick={() => {
+                                                // <Navigate to="/payment" />;
+                                            }}
+                                        >
+                                            Go To Payment
+                                        </button>
+                                    )
+                                ) : (
+                                    ""
+                                )}
                             </div>
                         </div>
                     </div>
@@ -167,15 +230,13 @@ const AuctionResult = ({ auction }) => {
             );
         }
     };
-
-    //auction.duePaymentTime * 1000
     return (
         <>
             {goPayment ? (
                 <Payment auction={auction} highestBid={highestBid} />
             ) : (
                 <>
-                    <Countdown date={Date.now() + 8000} renderer={renderer} />
+                    <Countdown date={auction.duePaymentTime * 1000} renderer={renderer} />
                 </>
             )}
         </>

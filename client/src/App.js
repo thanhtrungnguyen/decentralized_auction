@@ -45,6 +45,7 @@ import ProfileOrganization from "./pages/forBidder/ProfileOrganization";
 import EditProfile from "./pages/forBidder/EditProfile";
 import EditProfileOrganization from "./pages/forBidder/EditProfileOrganization";
 import AboutUs from "./pages/common/AboutUs";
+import ConfirmPayment from "./pages/bidder/ui/ConfirmPayment";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 
@@ -116,8 +117,7 @@ function App() {
                         <Route path="editProfileOrganization/:id" element={<EditProfileOrganization />} />
                         <Route path="editProfileOrganization" element={<EditProfileOrganization />} />
                         <Route path="aboutUs" element={<AboutUs />} />
-
-                        {/* test */}
+                        <Route path="payment/:id" element={<ConfirmPayment />} />
                     </Routes>
                 </BrowserRouter>
             </NotificationProvider>

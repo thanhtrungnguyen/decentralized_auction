@@ -4,7 +4,7 @@ import { useFetchBidding } from "../../../hook/useFetch";
 import auctionAbi from "../../../constants/contractAbi.json";
 import contractAddresses from "../../../constants/contractAddress.json";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, Navigate } from "react-router-dom";
 import { Button, Input, ConnectButton, useNotification } from "web3uikit";
 import { ethers } from "ethers";
 import Countdown from "react-countdown";
@@ -103,7 +103,7 @@ export const ConfirmAuctionResult = ({ auction, rank, showConfirmation, highestB
                     <button
                         className={styles.btn}
                         onClick={() => {
-                            setGoPayment(true);
+                            <Navigate to="/payment" />;
                         }}
                     >
                         Go To Payment
