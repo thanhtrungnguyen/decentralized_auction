@@ -58,7 +58,7 @@ const register = async (req, res, next) => {
 //register new Seller
 const registerSeller = async (req, res, next) => {
     try {
-        const user = { userName: req.body.username, password: req.body.password };
+        const user = { userName: req.body.userName, password: req.body.password,type:'ACCOUNT' };
         const role = SELLER;
         const files = req.files;
         const contact = {

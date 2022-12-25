@@ -170,7 +170,7 @@ const ListSellers = () => {
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) } page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

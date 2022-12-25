@@ -287,7 +287,7 @@ const AuctionList = () => {
                     <div>
                         <Pagination
                             className={styles.pagi}
-                            count={Math.floor(data.total / 5) + 1}
+                            count={(data.total % 5) > 0 ? (Math.floor(data.total / 5) + 1) : (data.total/5) }
                             page={page}
                             onChange={handleChange}
                             hidden={data.total === 0}

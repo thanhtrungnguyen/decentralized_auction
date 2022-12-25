@@ -152,7 +152,7 @@ const ManagerCategorys = () => {
                                 {data.categories.map((item) => (
                                     <tr>
                                         <td className={styles.td}>{item.Name}</td>
-                                        <td className={styles.td}>{item.Status__c}</td>
+                                        <td className={styles.td} style={item.Status__c === 'Activate' ? {} : { color: "red" }}>{item.Status__c}</td>
                                         <td className={styles.td}>
                                             <Link className={styles.linkBlue} to={`/editCategory/${item.Id}`}>
                                                 Edit
@@ -188,7 +188,7 @@ const ManagerCategorys = () => {
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) } page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

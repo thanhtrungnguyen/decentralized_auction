@@ -234,7 +234,7 @@ const MyProperty = () => {
                             <div>
                                 <Pagination
                                     className={styles.pagi}
-                                    count={Math.floor(listProperty.data.total / 10) + 1}
+                                    count={(listProperty.data.total % 10) > 0 ? (Math.floor(listProperty.data.total / 10) + 1) : (listProperty.data.total/10) }
                                     page={page}
                                     onChange={handleChange}
                                 />

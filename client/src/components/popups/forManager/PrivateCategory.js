@@ -10,14 +10,14 @@ const PrivateCategory = ({ idCategory }) => {
     const handleSubmit = (event) => {
         console.log(idCategory);
         axios
-            .put("http://localhost:8800/api/privateCategory", idCategory, {
+            .put(`http://localhost:8800/api/category/changeStatus/${idCategory}`, idCategory, {
                 withCredentials: true,
             })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
-                navigate("/managerCategorys");
+                //navigate("/listBidders");
+                window.location.reload(false);
             });
         setExpanded(false);
 

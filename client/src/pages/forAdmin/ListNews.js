@@ -196,7 +196,7 @@ const ListNews = () => {
                                 <Pagination
                                     className={styles.pagi}
                                     size="large"
-                                    count={Math.floor(data.total / 10) + 1}
+                                    count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) }
                                     page={page}
                                     onChange={handleChange}
                                 />

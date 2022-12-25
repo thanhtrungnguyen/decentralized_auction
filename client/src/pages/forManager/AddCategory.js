@@ -12,7 +12,7 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 const AddCategory = () => {
-    const [cagetoryName, setCategoryName] = useState(null);
+    const [categoryName, setCategoryName] = useState(null);
     const navigate = useNavigate();
     const baseURL = "http://localhost:8800/api/property/";
     const handleInputChange = (e) => {
@@ -23,13 +23,13 @@ const AddCategory = () => {
     };
     const handleSubmit = (event) => {
         axios
-            .post("http://localhost:8800/api/cagetory", cagetoryName, {
+            .post(`http://localhost:8800/api/category`, {categoryName:categoryName}, {
                 withCredentials: true,
             })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
+                alert('Add Category Successful');
                 navigate("/managerCategorys");
             });
         event.preventDefault();
@@ -66,7 +66,7 @@ const AddCategory = () => {
                             id="categoryName"
                             type="text"
                             placeholder="Enter category name"
-                            value={cagetoryName}
+                            value={categoryName}
                             onChange={(e) => handleInputChange(e)}
                             className={styles.input}
                             required
@@ -74,7 +74,7 @@ const AddCategory = () => {
                     </div>
                     <div className={styles.btn}>
                         <input type="button" value="Cancel" className={styles.btnCancel}></input>{" "}
-                        <input type="submit" value="Save" className={styles.btnSave}></input>
+                        <input type="submit" value="Save" className={styles.btnSave} disabled={categoryName===null?true:false}></input>
                     </div>
                     <Footer />
                 </div>
