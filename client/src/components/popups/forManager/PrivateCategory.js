@@ -3,21 +3,21 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-const ActiveBidder = ({ idBidder }) => {
+const PrivateCategory = ({ idCategory }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
 
     const handleSubmit = (event) => {
-        console.log(idBidder);
+        console.log(idCategory);
         axios
-            .put("http://localhost:8800/api/activeSeller", idBidder, {
+            .put("http://localhost:8800/api/privateCategory", idCategory, {
                 withCredentials: true,
             })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
                 alert(res.data.message);
-                navigate("/listBidders");
+                navigate("/managerCategorys");
             });
         setExpanded(false);
 
@@ -31,9 +31,9 @@ const ActiveBidder = ({ idBidder }) => {
             {expanded ? (
                 <div className={styles.container}>
                     <form onSubmit={handleSubmit}>
-                        <label className={styles.title}>Active Bidder</label>
+                        <label className={styles.title}>Private Category</label>
                         <br />
-                        <label className={styles.txt}>Are you sure about active this bidder?</label>
+                        <label className={styles.txt}>Are you sure about private this Category?</label>
                         <br />
 
                         <input type="submit" value="OK" className={styles.btnOK}></input>
@@ -44,4 +44,4 @@ const ActiveBidder = ({ idBidder }) => {
         </>
     );
 };
-export default ActiveBidder;
+export default PrivateCategory;

@@ -19,6 +19,8 @@ const BanedManager = ({ idManager }) => {
                 alert(res.data.message);
                 navigate("/listManagers");
             });
+        setExpanded(false);
+
         event.preventDefault();
     };
     const handCancel = () => {

@@ -33,6 +33,9 @@ const EditCategory = () => {
             setCategoryName(value);
         }
     };
+    const Cancel = (e) => {
+        navigate("/managerCategorys");
+    };
     const handleSubmit = (event) => {
         axios
             .put("http://localhost:8800/api/cagetory", cagetoryName, {
@@ -85,7 +88,7 @@ const EditCategory = () => {
                         ></input>
                     </div>
                     <div className={styles.btn}>
-                        <input type="button" value="Cancel" className={styles.btnCancel}></input>{" "}
+                        <input type="button" value="Cancel" className={styles.btnCancel} onClick={Cancel}></input>{" "}
                         <input type="submit" value="Save" className={styles.btnSave}></input>
                     </div>
                     <Footer />

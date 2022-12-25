@@ -19,6 +19,8 @@ const ActiveSeller = ({ idSeller }) => {
                 alert(res.data.message);
                 navigate("/listSellers");
             });
+        setExpanded(false);
+
         event.preventDefault();
     };
     const handCancel = () => {

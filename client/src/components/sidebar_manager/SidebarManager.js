@@ -16,6 +16,7 @@ const SidebarSeller = () => {
                     Category
                 </Link>{" "}
                 <br />
+                <br />
                 <Link to="/addCategory" className={styles.txt}>
                     Add New Category
                 </Link>{" "}

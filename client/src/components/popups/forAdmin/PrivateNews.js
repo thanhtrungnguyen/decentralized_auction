@@ -19,6 +19,8 @@ const PrivateNews = ({ idNews }) => {
                 alert(res.data.message);
                 navigate("/listNews");
             });
+        setExpanded(false);
+
         event.preventDefault();
     };
     const handCancel = () => {

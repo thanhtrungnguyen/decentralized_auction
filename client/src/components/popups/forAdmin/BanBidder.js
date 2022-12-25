@@ -19,6 +19,8 @@ const BanedBidder = ({ idBidder }) => {
                 alert(res.data.message);
                 navigate("/listBidders");
             });
+        setExpanded(false);
+
         event.preventDefault();
     };
     const handCancel = () => {

@@ -13,6 +13,10 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
+import Popup from "reactjs-popup";
+import ActiveCategory from "../../components/popups/forManager/ActiveCategory";
+import PrivateCategory from "../../components/popups/forManager/PrivateCategory";
+
 const ManagerCategorys = () => {
     const [page, setPage] = React.useState(1);
     const [categoryName, setCategory] = useState(null);
@@ -32,7 +36,7 @@ const ManagerCategorys = () => {
                 setData(resp.data);
             });
             setLoading(false);
-        }
+        };
         fetchData();
     }, [baseURL]);
     const handleInputChange = (e) => {
@@ -42,17 +46,17 @@ const ManagerCategorys = () => {
         }
     };
     const handleSubmit = (event) => {
-        categoryName2 === '' ? setCategory(null) : setCategory(categoryName2);
-        setPage(1)
+        categoryName2 === "" ? setCategory(null) : setCategory(categoryName2);
+        setPage(1);
         event.preventDefault();
     };
     const handleChange = (event, value) => {
         setPage(value);
     };
     const handleChangeStatus = (e) => {
-        setStatus(e.target.value)
+        setStatus(e.target.value);
         setPage(1);
-    }
+    };
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -101,17 +105,35 @@ const ManagerCategorys = () => {
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e)=>setCategory2('')}></input>
+                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e) => setCategory2("")}></input>
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <button className={styles.bold} value='null' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.bold}
+                                value="null"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
                             </button>
-                            <button className={styles.bold} value='Activate' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.bold}
+                                value="Activate"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Activate
                             </button>
-                            <button className={styles.bold} value='Deactivate' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.bold}
+                                value="Deactivate"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Deactivate
                             </button>
 
@@ -132,20 +154,38 @@ const ManagerCategorys = () => {
                                         <td className={styles.td}>{item.Name}</td>
                                         <td className={styles.td}>{item.Status__c}</td>
                                         <td className={styles.td}>
-                                            <Link className={styles.linkBlue} to={`/categoryDetail/${item.Id}`}>
-                                                View
-                                            </Link>
                                             <Link className={styles.linkBlue} to={`/editCategory/${item.Id}`}>
                                                 Edit
                                             </Link>
 
-                                            <Link className={styles.linkBlue} to={`/deleteCategory/${item.Id}`}>
-                                                {item.Status__c==='Activate'?'Activate':'Deactivate'}
-                                            </Link>
+                                            {/* <Link className={styles.linkBlue} to={`/deleteCategory/${item.Id}`}>
+                                                {item.Status__c === "Activate" ? "Activate" : "Deactivate"}
+                                            </Link> */}
+                                            {(() => {
+                                                if (item.Status__c === "Activate") {
+                                                    return (
+                                                        <Popup
+                                                            trigger={
+                                                                <label style={{ color: "red" }} className={styles.linkBlue}>
+                                                                    Deactivate
+                                                                </label>
+                                                            }
+                                                            position="right center"
+                                                        >
+                                                            <PrivateCategory idCategory={item.Id} />
+                                                        </Popup>
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
+                                                            <ActiveCategory idCategory={item.Id} />
+                                                        </Popup>
+                                                    );
+                                                }
+                                            })()}
                                         </td>
                                     </tr>
                                 ))}
-
                             </table>
                             <div>
                                 <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />

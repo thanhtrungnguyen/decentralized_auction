@@ -38,8 +38,6 @@ const Login = () => {
                         navigate("/autionsListForManager");
                     }
                 }
-
-                alert(res.data.message);
             })
             .catch((reason) => {
                 alert("Incorrect Username or Password!!!");
