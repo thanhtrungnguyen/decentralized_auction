@@ -26,6 +26,7 @@ const AuctionsListForManager = () => {
     const baseURL = "http://localhost:8800/api/auction/";
     const baseURLCategory = "http://localhost:8800/api/category/";
     const baseURLAuction = `http://localhost:8800/api/auction/getAll/${page}/${propertyName}/${category}/${status}`;
+   // const baseURL = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
     const [listCategory, setListCategory] = useState([]);
     const [listAuction, setListAuction] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -135,19 +136,19 @@ const AuctionsListForManager = () => {
                             <button className={styles.bold} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
                                 All
                             </button>
-                            <button className={styles.link} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button className={styles.link} value='Request' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Request add
                             </button>
                             <button className={styles.link} value='Approved' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Approved
                             </button>
-                            <button className={styles.link} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button className={styles.link} value='UpcomingforBid' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Upcoming
                             </button>
-                            <button className={styles.link} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button className={styles.link} value='Bidding' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Bidding
                             </button>
-                            <button className={styles.link} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button className={styles.link} value='Closed' onClick={(e)=>{handleChangeStatus(e)}}>
                                 Closed
                             </button>
                             <hr />
