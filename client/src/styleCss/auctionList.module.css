@@ -36,7 +36,7 @@
 }
 
 .select {
-    width: 96px;
+    width: 200px;
     height: 28px;
     font-family: "Lato";
     font-style: normal;
@@ -44,6 +44,7 @@
     font-size: 12px;
     line-height: 18px;
     /* identical to box height, or 150% */
+    border: 1px solid #bcbddb;
 
     /* sub text color */
 
