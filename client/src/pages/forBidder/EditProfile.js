@@ -206,6 +206,7 @@ const EditProfile = () => {
                             <label className="label">First Name</label>
                             <input
                                 type="text"
+                                pattern="[a-zA-Z]{1,50}"
                                 className="input"
                                 value={firstName}
                                 onChange={(e) => handleInputChange(e)}
@@ -218,6 +219,7 @@ const EditProfile = () => {
                             <label className="label">Last Name</label>
                             <input
                                 type="text"
+                                pattern="[a-zA-Z]{1,50}"
                                 className="input"
                                 value={lastName}
                                 onChange={(e) => handleInputChange(e)}
@@ -270,7 +272,8 @@ const EditProfile = () => {
                         <div className="row">
                             <label className="label">Phone number</label>
                             <input
-                                type="number"
+                                type="text"
+                                pattern="[0]\d{9}"
                                 className="input"
                                 value={phone}
                                 onChange={(e) => handleInputChange(e)}
@@ -354,6 +357,7 @@ const EditProfile = () => {
                             <label className="label">Specific address</label>
                             <input
                                 type="text"
+                                pattern="^\s*([^\s]\s*){0,300}$"
                                 className="input"
                                 value={specificAddress}
                                 onChange={(e) => handleInputChange(e)}
@@ -389,6 +393,7 @@ const EditProfile = () => {
                             <label className="label">Card number</label>
                             <input
                                 type="text"
+                                pattern="\d{12}"
                                 className="input"
                                 value={cardNumber}
                                 onChange={(e) => handleInputChange(e)}
@@ -413,6 +418,7 @@ const EditProfile = () => {
                             <label className="label">Card granted place</label>
                             <input
                                 type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
                                 className="input"
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardGrantedPlace"

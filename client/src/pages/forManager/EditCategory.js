@@ -83,6 +83,7 @@ const EditCategory = () => {
                         <label className={styles.txt}>Category Name</label>
                         <input
                             type="text"
+                            pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){0,10}$"
                             placeholder="Enter category name"
                             value={categoryName}
                             onChange={(e) => setCategoryName(e.target.value)}
