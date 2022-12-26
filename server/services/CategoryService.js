@@ -20,8 +20,8 @@ const updateCategory = async(id,name,status)=>{
     var rs = await CategoryDAO.updateCategory(id,name,status);
     return rs;
 }
-const changedStatus = async(id,status)=>{
-    var rs = await CategoryDAO.changedStatus(id,status);
+const changedStatus = async(id)=>{
+    var rs = await CategoryDAO.changedStatus(id);
     return rs;
 }
 

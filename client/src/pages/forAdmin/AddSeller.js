@@ -1,4 +1,4 @@
-import styles from "../../styleCss/stylesPages/forAdmin/addManager.module.css";
+import styles from "../../styleCss/stylesPages/forAdmin/addSeller.module.css";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
@@ -35,7 +35,7 @@ const AddSeller = () => {
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
-    const [username, setUsername] = useState(null);
+    const [userName, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
     const [position, setPosition] = useState(null);
@@ -98,7 +98,7 @@ const AddSeller = () => {
         if (id === "cardBack") {
             setCardBack(e.target.files[0]);
         }
-        if (id === "username") {
+        if (id === "userName") {
             setUsername(value);
         }
         if (id === "password") {
@@ -147,13 +147,13 @@ const AddSeller = () => {
         formData.append("cardGrantedPlace", cardGrantedPlace);
         formData.append("cardFront", cardFront);
         formData.append("cardBack", cardBack);
-        formData.append("username", username);
+        formData.append("userName", userName);
         formData.append("password", password);
         formData.append("role", role);
         formData.append("usertype", usertype);
 
         axios
-            .post("http://localhost:8800/api/addSeller", formData, {
+            .post("http://localhost:8800/api/auth/registerSeller", formData, {
                 withCredentials: true,
             })
             .then((res) => {
@@ -302,6 +302,7 @@ const AddSeller = () => {
                                 value={phone}
                                 onChange={(e) => handleInputChange(e)}
                                 id="phone"
+                                maxLength={10}
                                 required
                             ></input>
                             <input
@@ -403,7 +404,7 @@ const AddSeller = () => {
                                 className={styles.inputEP}
                                 type="email"
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                                value={username}
+                                value={userName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="userName"
                                 placeholder="Username"

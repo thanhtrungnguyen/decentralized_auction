@@ -1,10 +1,10 @@
 const express = require("express");
-const { getAllUser, getUserById, updateProfileBidder } = require("../controllers/UserController.js");
+const { getAllUser, getUserById, updateProfileBidder, changedStatus } = require("../controllers/UserController.js");
 // const { deleteUser, findAllUser, findByUserID, updateUser } = require("'../controllers/user.js");
 const { verifyAdmin, verifyToken, verifySeller } = require("../utils/verifyToken.js");
-
+const multer = require("multer");
 const router = express.Router();
-
+const upload = multer({ dest: "uploads/" });
 router.get("/checkauthentication", verifyToken, (req, res, next) => {
     res.send("hello user, you are logged in");
 });
@@ -21,6 +21,17 @@ router.get("/getAll/:role/:index/:status/:email", getAllUser);
 
 router.get("/:userId", getUserById);
 
-router.put("/:id", updateProfileBidder);
+router.put("/updateProfile/:id",upload.fields([
+    {
+        name: "cardFront",
+        maxCount: 1,
+    },
+    {
+        name: "cardBack",
+        maxCount: 1,
+    },
+]), updateProfileBidder);
+
+router.put("/changeStatus/:userId",changedStatus );
 
 module.exports = router;

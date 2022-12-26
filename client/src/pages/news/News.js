@@ -6,8 +6,13 @@ import styles from "../../styleCss/stylesPages/news.module.css";
 import { BsPencil, BsCalendar3, BsSearch } from "react-icons/bs";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import Loading from "../../components/loading/Loading";
 import jwt from "jsonwebtoken";
 const News = () => {
+    const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState();
+
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -19,10 +24,24 @@ const News = () => {
         });
         return users;
     };
-    return (
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+            setLoading(false);
+        } else {
+            setRole("");
+            setLoading(false);
+        }
+    }, []);
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "BIDDER") {
+                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

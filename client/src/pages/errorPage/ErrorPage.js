@@ -5,6 +5,8 @@ import HeaderUser from "../../components/header/HeaderUser";
 import FooterCopy from "../../components/footer/FooterCopy";
 import PageName from "../../components/header/PageName";
 import "../../styleCss/error.css";
+import { useEffect, useState } from "react";
+import Loading from "../../components/loading/Loading";
 
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -20,10 +22,27 @@ const ErrorPage = ({ error }) => {
         });
         return users;
     };
-    return (
+    const [role, setRole] = useState();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+            setLoading(false);
+        } else {
+            setRole("");
+            setLoading(false);
+        }
+    }, []);
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "BIDDER" || getUser().role == "SELLER" || getUser().role == "MANAGER" || getUser().role == "ADMIN") {
+                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

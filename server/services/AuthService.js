@@ -7,11 +7,16 @@ const { sendMail } = require("../utils/mailer.js");
 
 const createContact = async (user, contact, role, files) => {
     try {
-        const result = await uploadFile(files.cardFront[0]);
-        const result1 = await uploadFile(files.cardBack[0]);
-        const filesImg = { result: result, result1: result1 }
-        var userHashPassword = await hashPassword(user)
-        var contactId = await AuthDAO.createContact(userHashPassword, contact, role, filesImg)
+        var data = await AuthDAO.getUserByName(userName)
+        if (data.userName == null || data.userName == undefined) {
+            const result = await uploadFile(files.cardFront[0]);
+            const result1 = await uploadFile(files.cardBack[0]);
+            const filesImg = { result: result, result1: result1 }
+            var userHashPassword = await hashPassword(user)
+            var contactId = await AuthDAO.createContact(userHashPassword, contact, role, filesImg)
+        }else{
+          return  {user: null, error: '404', success: 'Failed', message: "User Is Exist !!!"} 
+        }
         return contactId;
     } catch (error) {
         console.error(error)
@@ -19,11 +24,16 @@ const createContact = async (user, contact, role, files) => {
 }
 const createAccount = async (user, contact, role, files, account) => {
     try {
-        const result = await uploadFile(files.cardFront[0]);
-        const result1 = await uploadFile(files.cardBack[0]);
-        const filesImg = { result: result, result1: result1 }
-        var userHashPassword = await hashPassword(user)
-        var accountId = await AuthDAO.createAccount(userHashPassword, contact, role, filesImg, account)
+
+        var data = await AuthDAO.getUserByName(userName)
+        if (data.userName == null || data.userName == undefined) {
+            const result = await uploadFile(files.cardFront[0]);
+            const result1 = await uploadFile(files.cardBack[0]);
+            const filesImg = { result: result, result1: result1 }
+            var userHashPassword = await hashPassword(user)
+            var accountId = await AuthDAO.createAccount(userHashPassword, contact, role, filesImg, account)
+        }
+
         return accountId;
     } catch (error) {
         console.error(error)
@@ -104,7 +114,7 @@ const forgotPassword = async (user) => {
 }
 const resetPassword = async (user, password1, password2, token) => {
     try {
-        var findUser = await AuthDAO.getUserByName(user);
+        var findUser = await AuthDAO.getUserById(user);
         const secret = process.env.JWT + findUser.password;
 
         const payload = jwt.verify(token, secret);

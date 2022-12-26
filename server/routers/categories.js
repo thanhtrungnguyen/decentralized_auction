@@ -10,7 +10,7 @@ router.get("/getAll/:index/:status/:name", getAllCate);
 
 router.get("/", getAllCategory);
 
-router.get("/getById/:id",verifyManager,getCategoryById);
+router.get("/getById/:id",getCategoryById);
 
 router.put("/update/:id",updateCategory);
 

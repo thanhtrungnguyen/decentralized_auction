@@ -7,39 +7,7 @@ const AuctionService = require("./services/AuctionService");
 const cron = require("node-cron");
 require("dotenv").config();
 
-// const SocketEvents = require("./constants/SocketEvents");
-
 module.exports = (app) => {
-    // const io = socketio(http, {
-    //     cors: {
-    //         origin: "http://localhost:3000",
-    //         methods: ["GET", "POST", "PUT"],
-    //     },
-    // });
-
-    // let interval;
-
-    // io.on("SocketEvents.CONNECT", (socket) => {
-    //     console.log("New client connected");
-    //     if (interval) {
-    //         clearInterval(interval);
-    //     }
-    //     interval = setInterval(() => getApiAndEmit(socket), 1000);
-    //     socket.on("disconnect", () => {
-    //         console.log("Client disconnected");
-    //         clearInterval(interval);
-    //     });
-    // });
-    // const getApiAndEmit = (socket) => {
-    //     const response = new Date();
-    //     const auction = getAllAuction();
-    //     console.log(auction);
-    //     // Emitting a new message. Will be consumed by the client
-    //     socket.emit("FromAPI", response);
-    // };
-
-    // return io;
-
     const server = http.createServer(app);
     const io = new Server(server, {
         cors: {
@@ -64,9 +32,7 @@ module.exports = (app) => {
         // }
     });
     var i = 0;
-    const taskRegistrationTime = cron.schedule('*/3 * * * * *', async () => {
-
-    
+    const taskRegistrationTime = cron.schedule("*/3 * * * * *", async () => {
         var auctionlistUpdate = await ContractInteractionService.getAllAuction();
         auctionlistUpdate.map(async (auction) => {
             var timeStartRegistrationFN = new Date(0).setUTCSeconds(parseInt(auction._doc.startRegistrationTime));
@@ -75,15 +41,14 @@ module.exports = (app) => {
             var timeEndAuctionFN = new Date(0).setUTCSeconds(parseInt(auction._doc.endAuctionTime));
             var duePaymentTimeFN = new Date(0).setUTCSeconds(parseInt(auction._doc.duePaymentTime));
             var currentTime = new Date();
-            console.log(currentTime-duePaymentTimeFN>0);
-            var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
+            //console.log(currentTime-duePaymentTimeFN>0);
             if (currentTime - timeStartRegistrationFN >= 0 && currentTime - timeEndRegistrationFN <= 0) {
                 var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
                 if (auctionget.status != "RegistrationTime") {
                     await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "RegistrationTime");
                     await AuctionService.updateStatusForAuction(auction._doc.auctionId, "RegistrationTime");
-                    i=i+1;
-                    io.emit('data', i);
+                    i = i + 1;
+                    io.emit("data", i);
                 }
             }
             if (currentTime - timeEndRegistrationFN > 0 && currentTime - timeStartAuctionFN < 0) {
@@ -91,8 +56,8 @@ module.exports = (app) => {
                 if (auctionget.status != "UpcomingforBid") {
                     await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "UpcomingforBid");
                     await AuctionService.updateStatusForAuction(auction._doc.auctionId, "UpcomingforBid");
-                    i=i+1;
-                    io.emit('data', i);
+                    i = i + 1;
+                    io.emit("data", i);
                 }
             }
 
@@ -101,22 +66,21 @@ module.exports = (app) => {
                 if (auctionget.status != "Bidding") {
                     await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "Bidding");
                     await AuctionService.updateStatusForAuction(auction._doc.auctionId, "Bidding");
-                    i=i+1;
-                    io.emit('data', i);
+                    i = i + 1;
+                    io.emit("data", i);
                 }
             }
 
             if (currentTime - timeEndAuctionFN > 0 && currentTime - duePaymentTimeFN <= 0) {
-                
-                console.log(auctionget.status);
-                if (auctionget.status == "Bidding") {
+                var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
+                //console.log(auctionget.status);
+                if (auctionget.status != "Closed") {
                     await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "Closed");
                     await AuctionService.updateStatusForAuction(auction._doc.auctionId, "Closed");
-                    i=i+1;
-                    io.emit('data', i);
+                    i = i + 1;
+                    io.emit("data", i);
                 }
             }
-            
         });
         // auctionlistUpdate.map(async (auction) => {
         //     // var currentTime = new Date();

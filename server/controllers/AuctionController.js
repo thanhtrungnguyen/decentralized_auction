@@ -110,7 +110,9 @@ const filterAuction = async(req,res,next)=>{
    var status = req.params.status;
    var price = req.params.price;
    var index = req.params.index;
-   var list = await auctionService.filterAuction(index,status,price);
+   var sort = req.params.sort;
+   var name = req.params.name;
+   var list = await auctionService.filterAuction(index, status, price, sort, name);
    res.status(200).json(list);
 }
 //add BidderAuction

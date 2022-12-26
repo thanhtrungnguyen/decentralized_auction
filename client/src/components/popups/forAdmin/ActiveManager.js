@@ -10,15 +10,17 @@ const ActiveManager = ({ idManager }) => {
     const handleSubmit = (event) => {
         console.log(idManager);
         axios
-            .put("http://localhost:8800/api/activeManager", idManager, {
+            .put(`http://localhost:8800/api/user/changeStatus/${idManager}`, idManager, {
                 withCredentials: true,
             })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
-                navigate("/listManagers");
+               //navigate("/listBidders");
+               window.location.reload(false);
             });
+        setExpanded(false);
+
         event.preventDefault();
     };
     const handCancel = () => {

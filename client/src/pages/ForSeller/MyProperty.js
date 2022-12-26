@@ -30,6 +30,7 @@ const MyProperty = () => {
     const baseURLCategory = "http://localhost:8800/api/category/";
     const baseURLProperty = `http://localhost:8800/api/property/getAll/${page}/${status}/${category}/${propertyName}`;
     const requestAuction = "http://localhost:8800/api/auction/request/";
+    const [role, setRole] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,19 +45,26 @@ const MyProperty = () => {
                 console.log("axios get");
                 setListProperty(resp.data);
             });
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
             setLoading(false);
-        }
+        };
         fetchData();
     }, [baseURLProperty]);
 
-
     const RequestAuction = (propertyId) => {
+        setLoading(true);
         axios.post(requestAuction + propertyId, { withCredentials: true }).then((resp) => {
             console.log(resp.data);
             console.log("axios get");
             setListProperty(resp.data);
         });
 
+        setLoading(false);
+        window.location.reload(false);
         alert(propertyId);
     };
 
@@ -66,7 +74,7 @@ const MyProperty = () => {
     const handleChangeStatus = (e) => {
         setStatus(e.target.value);
         setPage(1);
-    }
+    };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "category") {
@@ -94,7 +102,7 @@ const MyProperty = () => {
 
         //         // navigate("/myProperty");
         //     });
-        propertyName2 === '' ? setPropertyName(null) : setPropertyName(propertyName2);
+        propertyName2 === "" ? setPropertyName(null) : setPropertyName(propertyName2);
         setCategory(category2);
         setPage(1);
         event.preventDefault();
@@ -115,7 +123,7 @@ const MyProperty = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "SELLER") {
+                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -137,35 +145,50 @@ const MyProperty = () => {
                                     placeholder="Please input"
                                     value={propertyName2}
                                     onChange={(e) => handleInputChange(e)}
-                                //required
+                                    //required
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
-                            <select
-                                className={styles.select}
-                                onChange={(e) => handleInputChange(e)}
-                                id="category"
-                                placeholder="Category"
-                            >
-                                <option value='null'>All</option>
+                            <select className={styles.select} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category">
+                                <option value="null">All</option>
                                 {listCategory.map((item) => (
-                                    <option value={item.Name} selected={item.Name===category2}>{item.Name}</option>
+                                    <option value={item.Name} selected={item.Name === category2}>
+                                        {item.Name}
+                                    </option>
                                 ))}
                             </select>
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e) => setPropertyName2('')}></input>
+                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e) => setPropertyName2("")}></input>
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <button className={styles.bold} value='null' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.bold}
+                                value="null"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
                             </button>
-                            <button className={styles.link} value='Biding' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.link}
+                                value="Biding"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Biding
                             </button>
-                            <button className={styles.link} value='Closed' onClick={(e) => { handleChangeStatus(e) }}>
+                            <button
+                                className={styles.link}
+                                value="Closed"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Sold out
                             </button>
                             <hr />
@@ -201,18 +224,23 @@ const MyProperty = () => {
                                             <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
                                                 Edit
                                             </Link>
-                                            <Link className={styles.linkBlue} to="/">
+                                            <Link className={styles.linkBlue} to={`/deleteProperty/${property.Id}`}>
                                                 Delete
                                             </Link>
-                                            <Button className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
+                                            <label className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
                                                 Request Add
-                                            </Button>
+                                            </label>
                                         </td>
                                     </tr>
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={Math.floor(listProperty.data.total / 10) + 1} page={page} onChange={handleChange} />
+                                <Pagination
+                                    className={styles.pagi}
+                                    count={(listProperty.data.total % 10) > 0 ? (Math.floor(listProperty.data.total / 10) + 1) : (listProperty.data.total/10) }
+                                    page={page}
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                     </div>

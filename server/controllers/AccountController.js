@@ -20,7 +20,7 @@ const getAllAccount = async (req, res, next) => {
             console.log("Connection failed with salesforce");
         }
     } catch (error) {
-        next(error);
+        next(error); 
     }
 };
 

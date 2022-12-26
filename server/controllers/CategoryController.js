@@ -3,7 +3,7 @@ const CategoryService = require('../services/CategoryService')
 
 // create category
 const createCate = async (req, res, next) => {
-    var categoryName = req.body.name;
+    var categoryName = req.body.categoryName;
     try {
         var category = await CategoryService.createCategory(categoryName);
         res.status(200).json(category);
@@ -45,7 +45,7 @@ const getCategoryById = async (req, res, next) => {
 const updateCategory = async (req, res, next) => {
     try {
         var id = req.params.id;
-        var name = req.body.name;
+        var name = req.body.categoryName;
         var status = req.body.status;
         var data = await CategoryService.updateCategory(id, name, status);
         res.status(200).json(data);
@@ -56,8 +56,8 @@ const updateCategory = async (req, res, next) => {
 const changedStatus = async (req, res, next) => {
     try {
         var id = req.params.id;
-        var status = req.body.status;
-        var data = await CategoryService.changedStatus(id, status);
+        //var status = req.body.status;
+        var data = await CategoryService.changedStatus(id);
         res.status(200).json(data);
     } catch (error) {
         next(error);

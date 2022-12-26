@@ -15,6 +15,8 @@ import { useParams } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import Loading from "../../components/loading/Loading";
+
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -24,13 +26,22 @@ const PropertyDetail = () => {
 
     const baseURL = `http://localhost:8800/api/property/${id}`;
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState();
 
     useEffect(() => {
+        setLoading(true);
         axios.get(baseURL).then((resp) => {
             console.log(resp.data);
             console.log("axios get");
             setData(resp.data);
         });
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+        setLoading(false);
     }, [baseURL]);
 
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
@@ -45,10 +56,12 @@ const PropertyDetail = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "SELLER") {
+                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -209,22 +222,20 @@ const PropertyDetail = () => {
                                     required
                                     readonly
                                 ></input>
-                                <div className={styles.date}>
-                                    <DatePicker
-                                        id="placeViewProperty"
-                                        // onChange={(e) => handleInputChange(e)}
-                                        onChange={setViewPropertyTime}
-                                        ClassName={styles.datePicker}
-                                        value={viewPropertyTime}
-                                        //   value={data.property.viewPropertyTime}
-                                        // onChange={setValue}
-                                        range
-                                        numberOfMonths={2}
-                                        format="MM/DD/YYYY HH:mm:ss"
-                                        plugins={[<TimePicker />]}
-                                        readOnly
-                                    />
-                                </div>
+                                <DatePicker
+                                    id="placeViewProperty"
+                                    // onChange={(e) => handleInputChange(e)}
+                                    onChange={setViewPropertyTime}
+                                    ClassName={styles.datePicker}
+                                    value={viewPropertyTime}
+                                    //   value={data.property.viewPropertyTime}
+                                    // onChange={setValue}
+                                    range
+                                    numberOfMonths={2}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker />]}
+                                    readOnly
+                                />
                                 <textarea
                                     id="propertyDescription"
                                     // value={propertyDescription}

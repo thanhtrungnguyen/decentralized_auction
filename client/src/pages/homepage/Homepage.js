@@ -30,18 +30,17 @@ const HomePage = () => {
         // console.log(getUser().type);
         if (getUser() != null) {
             setRole(getUser().role);
-            setLoading(false);
         } else {
             setRole("");
-            setLoading(false);
         }
+        setLoading(false);
     }, []);
     return loading ? (
         <Loading />
     ) : (
         <>
             {(() => {
-                if (role === "BIDDER") {
+                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -65,7 +64,7 @@ const HomePage = () => {
                         </Link>
                     </div>
                     <div className={styles.col2}>
-                        <img className={styles.img} src="https://vnn-imgs-f.vgcloud.vn/2020/03/26/10/bo-suu-tap-do-co-2.jpg" alt="images" />
+                        <img className={styles.img} src="https://antique.vn/wp-content/uploads/2021/03/IMG_20210223_162255-scaled.jpg" alt="images" />
                     </div>
                 </div>
                 <div className={styles.featured}>
@@ -76,7 +75,7 @@ const HomePage = () => {
                                 <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                 <p className={styles.txtImg}>Mens Fashion Wear</p>
                                 <p className={styles.txtImgS}>Starting price : $43.00</p>
-                                <Link className={styles.btnF} to="/">
+                                <Link className={styles.btnF} to="/auctionList">
                                     Auction Now
                                 </Link>
                             </div>
@@ -84,7 +83,7 @@ const HomePage = () => {
                                 <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                 <p className={styles.txtImg}>Mens Fashion Wear</p>
                                 <p className={styles.txtImgS}>Starting price : $43.00</p>
-                                <Link className={styles.btnF} to="/">
+                                <Link className={styles.btnF} to="/auctionList">
                                     Auction Now
                                 </Link>
                             </div>
@@ -92,7 +91,7 @@ const HomePage = () => {
                                 <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                 <p className={styles.txtImg}>Mens Fashion Wear</p>
                                 <p className={styles.txtImgS}>Starting price : $43.00</p>
-                                <Link className={styles.btnF} to="/">
+                                <Link className={styles.btnF} to="/auctionList">
                                     Auction Now
                                 </Link>
                             </div>
@@ -100,7 +99,7 @@ const HomePage = () => {
                                 <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                 <p className={styles.txtImg}>Mens Fashion Wear</p>
                                 <p className={styles.txtImgS}>Starting price : $43.00</p>
-                                <Link className={styles.btnF} to="/">
+                                <Link className={styles.btnF} to="/auctionList">
                                     Auction Now
                                 </Link>
                             </div>
@@ -109,7 +108,7 @@ const HomePage = () => {
                 </div>
                 <div className={styles.banner2}>
                     <div className={styles.colL}>
-                        <img className={styles.imgB} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
+                        <img className={styles.imgB} src="https://baodanang.vn/dataimages/202007/original/images1569003_12_1.jpg" alt="images" />
                     </div>
                     <div className={styles.colR}>
                         <p className={styles.titleBule}>
@@ -120,7 +119,7 @@ const HomePage = () => {
                         <p className={styles.txtN}>- Reinforced with double wood dowels, glue, screw - nails corner blocks and machine nails </p>
                         <p className={styles.txtN}>- Arms, backs and seats are structurally reinforced </p>
                         <br />
-                        <Link className={styles.btnF} to="/">
+                        <Link className={styles.btnF} to="/auctionList">
                             Auction Now
                         </Link>
                     </div>
@@ -135,7 +134,7 @@ const HomePage = () => {
                                 <p className={styles.txtImgS}>
                                     More off this less hello samlande lied much over tightly circa horse taped mightly
                                 </p>{" "}
-                                <Link className={styles.Link} to="/">
+                                <Link className={styles.Link} to="/news">
                                     Read more{" "}
                                 </Link>
                             </div>
@@ -145,7 +144,7 @@ const HomePage = () => {
                                 <p className={styles.txtImgS}>
                                     More off this less hello samlande lied much over tightly circa horse taped mightly
                                 </p>{" "}
-                                <Link className={styles.Link} to="/">
+                                <Link className={styles.Link} to="/news">
                                     Read more{" "}
                                 </Link>
                             </div>
@@ -155,7 +154,7 @@ const HomePage = () => {
                                 <p className={styles.txtImgS}>
                                     More off this less hello samlande lied much over tightly circa horse taped mightly
                                 </p>{" "}
-                                <Link className={styles.Link} to="/">
+                                <Link className={styles.Link} to="/news">
                                     Read more{" "}
                                 </Link>
                             </div>
@@ -163,7 +162,7 @@ const HomePage = () => {
                                 <img className={styles.img2} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                                 <p className={styles.txtImg}>Top esssential Trends in 2022</p>
                                 <p className={styles.txtImgS}>More off this less hello samlande lied much over tightly circa horse taped mightly</p>
-                                <Link className={styles.Link} to="/">
+                                <Link className={styles.Link} to="/news">
                                     Read more
                                 </Link>
                             </div>

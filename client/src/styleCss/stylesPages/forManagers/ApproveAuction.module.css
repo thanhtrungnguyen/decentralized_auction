@@ -117,6 +117,8 @@
 }
 
 .datePicker {
+    width: 100%;
+
     width: 748px;
     background: #ffffff;
 
@@ -130,12 +132,7 @@
 
 .date {
     width: 748px;
-    /* background: #ffffff;
 
-  border: 1px solid #8a8fb9;
-
-  box-shadow: 0px 0px 0px 3.2px rgba(32, 162, 232, 0.25);
-  border-radius: 4px; */
     margin: 16px 0px 16px 0px;
     margin-left: -260px;
     text-align: center;

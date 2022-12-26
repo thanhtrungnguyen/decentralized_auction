@@ -2,9 +2,10 @@ const conn = require("./connectSF");
 const perPage = 10;
 const createCategory = async (categoryName) => {
     var connection = await conn();
-    await connection.sobject("Category__c").create(
+    await connection.sobject("Category_DAP__c").create(
         {
             Name: categoryName,
+            Status__c: 'Activate'
         },
         (err, ret) => {
             if (err) console.error(err);
@@ -86,9 +87,12 @@ const updateCategory = async (id, name, status) => {
     );
     return rs;
 };
-const changedStatus = async (id, status) => {
+const changedStatus = async (id) => {
     var connection = await conn();
     var rs;
+    var status = 'Activate';
+    var findCategory = await getCategoryById(id);
+    status === findCategory.records[0].Status__c ? status = 'Deactivate' : status
     await connection.sobject("Category_DAP__c").update(
         {
             Id: id,

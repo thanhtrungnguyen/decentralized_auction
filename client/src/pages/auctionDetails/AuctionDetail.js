@@ -22,6 +22,7 @@ const AuctionDetail = () => {
     const { id, propertyId } = useParams();
     const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
     const { data, loading, error } = useFetch(baseURL);
+    const [role, setRole] = useState();
 
     console.log(data);
     console.log(loading);
@@ -36,7 +37,16 @@ const AuctionDetail = () => {
         });
         return users;
     };
+    useEffect(() => {
+        console.log(getUser());
 
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     // const [openModal, setOpenModal] = useState(() => {
     //     return false;
     // });
@@ -47,7 +57,7 @@ const AuctionDetail = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "BIDDER") {
+                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -64,11 +74,11 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            {/* <img
+                            <img
                                 className={styles.img}
                                 src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
                                 alt="images"
-                            /> */}
+                            />
                         </div>
                         <div className={styles.row}>
                             {/* <img
@@ -76,11 +86,11 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            {/* <img
+                            <img
                                 className={styles.img}
                                 src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
                                 alt="images"
-                            /> */}
+                            />
                         </div>
                         <div className={styles.row}>
                             {/* <img
@@ -88,11 +98,11 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            {/* <img
+                            <img
                                 className={styles.img}
                                 src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
                                 alt="images"
-                            /> */}
+                            />
                         </div>
                     </div>
                     {/* </div> */}

@@ -142,7 +142,7 @@ const ListSellers = () => {
                                         <td className={styles.td}>{item.Name}</td>
                                         <td className={styles.td}>{item.Email__c}</td>
                                         <td className={styles.td}>{item.Phone__c}</td>
-                                        <td className={styles.td}>{item.User_Id__r.Status__c}</td>
+                                        <td className={styles.td} style={item.User_Id__r.Status__c === 'Activate' ? {} : { color: "red" }}>{item.User_Id__r.Status__c}</td>
                                         <td className={styles.td}>
                                             <Link className={styles.linkBlue} to={`/viewSeller/${item.User_Id__c}`}>
                                                 View
@@ -154,13 +154,13 @@ const ListSellers = () => {
                                                             trigger={<label className={styles.linkBlue} style={{color: "red"}}>Deactivate</label>}
                                                             position="right center"
                                                         >
-                                                            <BanedSeller idBidder={item.User_Id__c} />
+                                                            <BanedSeller idSeller={item.User_Id__c} />
                                                         </Popup>
                                                     );
                                                 } else {
                                                     return (
                                                         <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                                            <ActiveSeller idBidder={item.User_Id__c} />
+                                                            <ActiveSeller idSeller={item.User_Id__c} />
                                                         </Popup>
                                                     );
                                                 }
@@ -170,7 +170,7 @@ const ListSellers = () => {
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />
+                                <Pagination className={styles.pagi} count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) } page={page} onChange={handleChange} />
                             </div>
                         </div>
                     </div>

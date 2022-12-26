@@ -270,25 +270,25 @@ const AuctionDetailForManager = () => {
                                     required
                                     readonly
                                 ></input>
-                                <div className={styles.date}>
-                                    <DatePicker
-                                        id="placeViewProperty"
-                                        // onChange={(e) => handleInputChange(e)}
-                                        // onChange={setViewPropertyTime}
-                                        ClassName={styles.datePicker}
-                                        value={[
-                                            new Date(new Date(data.Start_View_Property_Time__c).toUTCString()),
-                                            new Date(new Date(data.End_View_Property_Time__c).toUTCString()),
-                                        ]}
-                                        //   value={data.property.viewPropertyTime}
-                                        // onChange={setValue}
-                                        range
-                                        numberOfMonths={2}
-                                        format="MM/DD/YYYY HH:mm:ss"
-                                        plugins={[<TimePicker />]}
-                                        readOnly
-                                    />
-                                </div>
+                                {/* <div className={styles.date}> */}
+                                <DatePicker
+                                    id="placeViewProperty"
+                                    // onChange={(e) => handleInputChange(e)}
+                                    // onChange={setViewPropertyTime}
+                                    ClassName={styles.datePicker}
+                                    value={[
+                                        new Date(new Date(data.Start_View_Property_Time__c).toUTCString()),
+                                        new Date(new Date(data.End_View_Property_Time__c).toUTCString()),
+                                    ]}
+                                    //   value={data.property.viewPropertyTime}
+                                    // onChange={setValue}
+                                    range
+                                    numberOfMonths={2}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker />]}
+                                    readOnly
+                                />
+                                {/* </div> */}
                                 <textarea
                                     id="propertyDescription"
                                     // value={propertyDescription}
@@ -334,43 +334,43 @@ const AuctionDetailForManager = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
-                            <div className={styles.date}>
-                                <DatePicker
-                                    id="timeRegistration"
-                                    // onChange={(e) => handleInputChange(e)}
-                                    onChange={setTimeRegistration}
-                                    ClassName={styles.datePicker}
-                                    value={timeRegistration}
-                                    //   value={data.property.viewPropertyTime}
-                                    // onChange={setValue}
-                                    range
-                                    numberOfMonths={2}
-                                    format="MM/DD/YYYY HH:mm:ss"
-                                    plugins={[<TimePicker />]}
-                                />
-                            </div>
+                            {/* <div className={styles.date}> */}
+                            <DatePicker
+                                id="timeRegistration"
+                                // onChange={(e) => handleInputChange(e)}
+                                onChange={setTimeRegistration}
+                                ClassName={styles.datePicker}
+                                value={timeRegistration}
+                                //   value={data.property.viewPropertyTime}
+                                // onChange={setValue}
+                                range
+                                numberOfMonths={2}
+                                format="MM/DD/YYYY HH:mm:ss"
+                                plugins={[<TimePicker />]}
+                            />
+                            {/* </div> */}
                             <br />
-                            <div className={styles.date}>
-                                <DatePicker
-                                    id="auctionTime"
-                                    // onChange={(e) => handleInputChange(e)}
-                                    onChange={setAuctionTime}
-                                    ClassName={styles.datePicker}
-                                    value={auctionTime}
-                                    //   value={data.property.viewPropertyTime}
-                                    // onChange={setValue}
-                                    range
-                                    numberOfMonths={2}
-                                    format="MM/DD/YYYY HH:mm:ss"
-                                    plugins={[<TimePicker />]}
-                                />
-                            </div>
+                            {/* <div className={styles.date}> */}
+                            <DatePicker
+                                id="auctionTime"
+                                // onChange={(e) => handleInputChange(e)}
+                                onChange={setAuctionTime}
+                                ClassName={styles.datePicker}
+                                value={auctionTime}
+                                //   value={data.property.viewPropertyTime}
+                                // onChange={setValue}
+                                range
+                                numberOfMonths={2}
+                                format="MM/DD/YYYY HH:mm:ss"
+                                plugins={[<TimePicker />]}
+                            />
+                            {/* </div> */}
                         </div>
                     </div>
                     <div className={styles.btn2}>
                         {/* <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input> */}
 
-                        <Popup
+                        {/* <Popup
                             visible={show}
                             trigger={<input className={styles.btnSave2} type="button" value="Save and Publish"></input>}
                             position="right center"
@@ -387,9 +387,9 @@ const AuctionDetailForManager = () => {
                                 <input className={styles.btnCancel} type="button" value="Cancel" onClick={onClick}></input>
                                 <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input>
                             </div>
-                        </Popup>
+                        </Popup> */}
                         {/* <input className={styles.btnDraft} type="button" value="Reject Request Add" onClick={() => RejectAuction()}></input> */}
-                        <Popup trigger={<input className={styles.btnDraft} type="button" value="Reject Request Add"></input>} position="right center">
+                        {/* <Popup trigger={<input className={styles.btnDraft} type="button" value="Reject Request Add"></input>} position="right center">
                             <div className={styles.popup}>
                                 <label className={styles.title}>Reject Request Add this auction</label>
                                 <br />
@@ -402,7 +402,7 @@ const AuctionDetailForManager = () => {
                                 <input className={styles.btnCancel} type="button" value="Cancel" onClick={onClick}></input>
                                 <input className={styles.btnSave2} type="button" value="Reject Request Add" onClick={() => RejectAuction()}></input>
                             </div>
-                        </Popup>
+                        </Popup> */}
 
                         <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
                     </div>{" "}

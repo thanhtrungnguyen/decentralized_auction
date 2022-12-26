@@ -7,7 +7,7 @@ const getAllUser = async (role, index, status, name) => {
         name == "null" ? (name = "") : name;
         var data = await UserDAO.getAllUser(role, index, status, name);
         return data;
-    } catch (error) {}
+    } catch (error) { }
 };
 
 const getUserById = async (userId) => {
@@ -15,8 +15,19 @@ const getUserById = async (userId) => {
     return user;
 };
 const updateProfileBidder = async (userId, contact, account, files) => {
-    const result = await uploadFile(files.cardFront[0]);
-    const result1 = await uploadFile(files.cardBack[0]);
+    var result = null;
+    var result1 = null;
+    if (files != null) {
+        if (files.cardFront !== undefined) { result = await uploadFile(files.cardFront[0]); }
+        if (files.cardBack !== undefined) { result1 = await uploadFile(files.cardBack[0]); }
+
+    }
     const filesImg = { result: result, result1: result1 };
+    const isUpdate = await UserDAO.updateProfileBidder(userId, contact, account, filesImg);
+    return isUpdate;
 };
-module.exports = { getAllUser, getUserById, updateProfileBidder };
+const changedStatus = async (userId) => {
+    const isChange = await UserDAO.changeStatus(userId);
+    return isChange;
+}
+module.exports = { getAllUser, getUserById, updateProfileBidder, changedStatus };

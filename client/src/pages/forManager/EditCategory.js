@@ -12,36 +12,41 @@ import { useParams } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import Loading from "../../components/loading/Loading";
 const EditCategory = () => {
-    const [cagetoryName, setCategoryName] = useState(null);
+    const [categoryName, setCategoryName] = useState(null);
     const navigate = useNavigate();
     const { id } = useParams();
     const [data, setData] = useState([]);
-
-    const baseURL = "http://localhost:8800/api/property/${id}";
+    const [loading, setLoading] = useState(true);
+    const baseURL = `http://localhost:8800/api/category/getById/${id}`;
     useEffect(() => {
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setData(resp.data);
-        });
+        const fetchData = async()=>{
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setData(resp.data);
+            });
+            setLoading(false);
+        }
+       fetchData();
+        
     }, [baseURL]);
 
-    const handleInputChange = (e) => {
-        const { id, value } = e.target;
-        if (id === "propertyImage") {
-            setCategoryName(value);
-        }
+    
+    const Cancel = (e) => {
+        navigate("/managerCategorys");
     };
     const handleSubmit = (event) => {
         axios
-            .put("http://localhost:8800/api/cagetory", cagetoryName, {
+            .put(`http://localhost:8800/api/category/update/${id}`, {categoryName:categoryName}, {
                 withCredentials: true,
             })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
+                alert('Update Successful');
                 navigate("/managerCategorys");
             });
         event.preventDefault();
@@ -57,7 +62,9 @@ const EditCategory = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {" "}
             {(() => {
@@ -77,16 +84,16 @@ const EditCategory = () => {
                         <input
                             type="text"
                             placeholder="Enter category name"
-                            value={cagetoryName}
-                            onChange={(e) => handleInputChange(e)}
+                            value={categoryName}
+                            onChange={(e) => setCategoryName(e.target.value)}
                             className={styles.input}
-                            defaultValue={data.cagetoryName}
+                            defaultValue={data.records[0].Name}
                             required
                         ></input>
                     </div>
                     <div className={styles.btn}>
-                        <input type="button" value="Cancel" className={styles.btnCancel}></input>{" "}
-                        <input type="submit" value="Save" className={styles.btnSave}></input>
+                        <input type="button" value="Cancel" className={styles.btnCancel} onClick={Cancel}></input>{" "}
+                        <input type="submit" value="Save" className={styles.btnSave} disabled={(categoryName)===null?true:false} ></input>
                     </div>
                     <Footer />
                 </div>

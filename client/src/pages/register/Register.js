@@ -145,7 +145,9 @@ const Register = () => {
             <div className={styles.container}>
                 <form onSubmit={handleSubmit}>
                     <p className={styles.textCreate}>Create your DAP account</p>
-                    <p className={styles.textAd}>Already have an account? Login</p>
+                    <Link to="/login" className={styles.textAd}>
+                        Already have an account? Login
+                    </Link>
                     <br />
                     <div className={styles.divImg}>
                         <BsFillPersonFill className={styles.icon} />

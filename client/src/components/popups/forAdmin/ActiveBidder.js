@@ -6,19 +6,22 @@ import axios from "axios";
 const ActiveBidder = ({ idBidder }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
-
+    
     const handleSubmit = (event) => {
         console.log(idBidder);
+        
         axios
-            .put("http://localhost:8800/api/activeSeller", idBidder, {
+            .put(`http://localhost:8800/api/user/changeStatus/${idBidder}`, idBidder, {
                 withCredentials: true,
             })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
-                navigate("/listBidders");
+                //navigate("/listBidders");
+                window.location.reload(false);
             });
+        setExpanded(false);
+
         event.preventDefault();
     };
     const handCancel = () => {

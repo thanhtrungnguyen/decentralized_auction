@@ -100,6 +100,9 @@ const ListNews = () => {
                                     );
                                 }
                             })()}
+                            <Link className={styles.linkBlue} to={`/editNews/${item.Id}`}>
+                                Edit
+                            </Link>
                         </td>
                     </tr>
                 ))}
@@ -187,13 +190,13 @@ const ListNews = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {/* {search(data)} */}
+                                {search(data)}
                             </table>
                             <div>
                                 <Pagination
                                     className={styles.pagi}
                                     size="large"
-                                    count={Math.floor(data.total / 10) + 1}
+                                    count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) }
                                     page={page}
                                     onChange={handleChange}
                                 />

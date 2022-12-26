@@ -17,6 +17,7 @@ import Popup from "reactjs-popup";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import "../../styleCss/stylesPages/forManagers/Approve.css";
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -24,6 +25,7 @@ const PropertyDetail = () => {
     // ]);
     const { id, propertyId } = useParams();
     const [show, setShow] = useState(false);
+    const [show2, setShow2] = useState(false);
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
     const [registrationFee, setRegistrationFee] = useState(null);
@@ -39,6 +41,21 @@ const PropertyDetail = () => {
         console.log(show);
 
         setShow(false);
+    };
+
+    const onTrue = () => {
+        setShow(true);
+        console.log(show);
+    };
+    const onClick2 = () => {
+        console.log(show);
+
+        setShow2(false);
+    };
+
+    const onTrue2 = () => {
+        setShow2(true);
+        console.log(show);
     };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -108,6 +125,7 @@ const PropertyDetail = () => {
         });
         return users;
     };
+
     return loading ? (
         "loading please wait"
     ) : (
@@ -130,6 +148,7 @@ const PropertyDetail = () => {
                             <div className={styles.col1}>
                                 <p className={styles.lable}>Property Image</p>
                                 <p className={styles.lable}>Property Video</p>
+                                <br />
                                 <br />
                                 <br />
                                 <br />
@@ -274,29 +293,29 @@ const PropertyDetail = () => {
                                     required
                                     readonly
                                 ></input>
-                                <div className={styles.date}>
-                                    <DatePicker
-                                        id="placeViewProperty"
-                                        // onChange={(e) => handleInputChange(e)}
-                                        // onChange={setViewPropertyTime}
-                                        ClassName={styles.datePicker}
-                                        value={[
-                                            new Date(data.Start_View_Property_Time__c).setTime(
-                                                new Date(data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-                                            ),
-                                            new Date(data.End_View_Property_Time__c).setTime(
-                                                new Date(data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-                                            ),
-                                        ]}
-                                        //   value={data.property.viewPropertyTime}
-                                        // onChange={setValue}
-                                        range
-                                        numberOfMonths={2}
-                                        format="MM/DD/YYYY HH:mm:ss"
-                                        plugins={[<TimePicker />]}
-                                        readOnly
-                                    />
-                                </div>
+                                {/* <div className={styles.date}> */}
+                                <DatePicker
+                                    wrapperClassName={styles.datePicker}
+                                    id="placeViewProperty"
+                                    // onChange={(e) => handleInputChange(e)}
+                                    // onChange={setViewPropertyTime}
+                                    value={[
+                                        new Date(data.Start_View_Property_Time__c).setTime(
+                                            new Date(data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
+                                        ),
+                                        new Date(data.End_View_Property_Time__c).setTime(
+                                            new Date(data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
+                                        ),
+                                    ]}
+                                    //   value={data.property.viewPropertyTime}
+                                    // onChange={setValue}
+                                    range
+                                    numberOfMonths={2}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker />]}
+                                    readOnly
+                                />
+                                {/* </div> */}
                                 <textarea
                                     id="propertyDescription"
                                     // value={propertyDescription}
@@ -343,55 +362,47 @@ const PropertyDetail = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
-                            <div className={styles.date}>
-                                <DatePicker
-                                    id="timeRegistration"
-                                    // onChange={(e) => handleInputChange(e)}
-                                    onChange={setTimeRegistration}
-                                    ClassName={styles.datePicker}
-                                    value={timeRegistration}
-                                    //   value={data.property.viewPropertyTime}
-                                    // onChange={setValue}
-                                    range
-                                    numberOfMonths={2}
-                                    format="MM/DD/YYYY HH:mm:ss"
-                                    plugins={[<TimePicker />]}
-                                />
-                            </div>
+                            {/* <div className={styles.date}> */}
+                            <DatePicker
+                                id="timeRegistration"
+                                // onChange={(e) => handleInputChange(e)}
+                                onChange={setTimeRegistration}
+                                ClassName={styles.datePicker}
+                                value={timeRegistration}
+                                //   value={data.property.viewPropertyTime}
+                                // onChange={setValue}
+                                range
+                                numberOfMonths={2}
+                                format="MM/DD/YYYY HH:mm:ss"
+                                plugins={[<TimePicker />]}
+                            />
+                            {/* </div> */}
                             <br />
-                            <div className={styles.date}>
-                                <DatePicker
-                                    id="auctionTime"
-                                    // onChange={(e) => handleInputChange(e)}
-                                    onChange={setAuctionTime}
-                                    ClassName={styles.datePicker}
-                                    value={auctionTime}
-                                    //   value={data.property.viewPropertyTime}
-                                    // onChange={setValue}
-                                    range
-                                    numberOfMonths={2}
-                                    format="MM/DD/YYYY HH:mm:ss"
-                                    plugins={[<TimePicker />]}
-                                />
-                            </div>
-                            <div className={styles.date}>
-                                <DatePicker
-                                    selected={paymentTime}
-                                    onChange={setPaymentTime}
-                                    format="MM/DD/YYYY HH:mm:ss"
-                                    plugins={[<TimePicker />]}
-                                />
-                            </div>
+                            {/* <div className={styles.date}> */}
+                            <DatePicker
+                                id="auctionTime"
+                                // onChange={(e) => handleInputChange(e)}
+                                onChange={setAuctionTime}
+                                ClassName={styles.datePicker}
+                                value={auctionTime}
+                                //   value={data.property.viewPropertyTime}
+                                // onChange={setValue}
+                                range
+                                numberOfMonths={2}
+                                format="MM/DD/YYYY HH:mm:ss"
+                                plugins={[<TimePicker />]}
+                            />
+                            {/* </div> */}
+                            {/* <div className={styles.date}> */}
+                            <DatePicker selected={paymentTime} onChange={setPaymentTime} format="MM/DD/YYYY HH:mm:ss" plugins={[<TimePicker />]} />
+                            {/* </div> */}
                         </div>
                     </div>
                     <div className={styles.btn2}>
                         {/* <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input> */}
 
-                        <Popup
-                            visible={show}
-                            trigger={<input className={styles.btnSave2} type="button" value="Save and Publish"></input>}
-                            position="right center"
-                        >
+                        <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={onTrue2}></input>
+                        {show2 && (
                             <div className={styles.popup}>
                                 <label className={styles.title}>Save and Publish this auction</label>
                                 <br />
@@ -401,12 +412,13 @@ const PropertyDetail = () => {
                                 <br />
                                 <br />
                                 <br />
-                                <input className={styles.btnCancel} type="button" value="Cancel" onClick={onClick}></input>
+                                <input className={styles.btnCancel} type="button" value="Cancel" onClick={onClick2}></input>
                                 <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input>
                             </div>
-                        </Popup>
-                        {/* <input className={styles.btnDraft} type="button" value="Reject Request Add" onClick={() => RejectAuction()}></input> */}
-                        <Popup trigger={<input className={styles.btnDraft} type="button" value="Reject Request Add"></input>} position="right center">
+                        )}
+
+                        <input className={styles.btnDraft} type="button" value="Reject Request Add" onClick={onTrue}></input>
+                        {show && (
                             <div className={styles.popup}>
                                 <label className={styles.title}>Reject Request Add this auction</label>
                                 <br />
@@ -419,7 +431,7 @@ const PropertyDetail = () => {
                                 <input className={styles.btnCancel} type="button" value="Cancel" onClick={onClick}></input>
                                 <input className={styles.btnSave2} type="button" value="Reject Request Add" onClick={() => RejectAuction()}></input>
                             </div>
-                        </Popup>
+                        )}
 
                         <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
                     </div>{" "}

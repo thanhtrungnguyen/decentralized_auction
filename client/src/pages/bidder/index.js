@@ -8,12 +8,13 @@ import AuctionRegistration from "./ui/AuctionRegistration";
 import PlaceBid from "./ui/PlaceBid";
 import NotYetRegistrationTime from "./ui/NotYetRegistrationTime";
 import WaitingForAuctionTime from "./ui/WaitingForAuctionTime";
+import Loading from "./components/Loader";
+import { SUPPORT_CHAINS, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../config/configuration";
+import AuctionResult from "./ui/AuctionResult";
 
-const BidModal = ({ closeModal, auction, propertyId }) => {
-    const supportedChains = ["5"];
+const BidModal = ({ closeModal, loading, auction, propertyId }) => {
     const [hasMetamask, setHasMetamask] = useState(false);
     const { chainId, isWeb3Enabled } = useMoralis();
-
     useEffect(() => {
         if (typeof window.ethereum !== "undefined") {
             setHasMetamask(true);
@@ -22,20 +23,22 @@ const BidModal = ({ closeModal, auction, propertyId }) => {
 
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
-        if (auction == []) return "Loading";
-        if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
-        if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
-        if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
-        if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
-        if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
-        if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
+        if (auction) {
+            if (loading) return "Loading";
+            if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
+            if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
+            if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
+            if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
+            if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
+            if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
+        }
         return null;
     };
 
     const renderCurrentState = () => {
         switch (auctionState()) {
             case "Loading":
-                return <h2>Loading...</h2>;
+                return <Loading />;
             case "NotYetRegistrationTime":
                 return <NotYetRegistrationTime auction={auction} />;
             case "RegistrationTime":
@@ -46,7 +49,8 @@ const BidModal = ({ closeModal, auction, propertyId }) => {
             case "AuctionTime":
                 return <PlaceBid auction={auction} property={propertyId} />;
             case "PaymentTime":
-                return <h2>PaymentTime</h2>;
+                // return <h2>PaymentTime</h2>;
+                return <AuctionResult auction={auction} />;
             case "AuctionEnded":
                 return <h2>Auction Ended</h2>;
             default:
@@ -56,21 +60,26 @@ const BidModal = ({ closeModal, auction, propertyId }) => {
     return (
         <div className={styles.container}>
             <HeaderBid closeModal={closeModal} />
-            <div>{hasMetamask ? isWeb3Enabled ? <p></p> : <p></p> : "Please install Metamask"}</div>
-            {isWeb3Enabled ? (
-                <div>
-                    {supportedChains.includes(parseInt(chainId).toString()) ? (
-                        <div>{renderCurrentState()}</div>
-                    ) : (
+            <div>
+                {hasMetamask ? (
+                    isWeb3Enabled ? (
                         <div>
-                            <h1>Unsupported Chain ID</h1>
-                            <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
+                            {SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
+                                <div>{renderCurrentState()}</div>
+                            ) : (
+                                <div>
+                                    <h1>Unsupported Chain ID</h1>
+                                    <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-            ) : (
-                <div>Please connect to a Wallet</div>
-            )}
+                    ) : (
+                        <p>Please connect to a Wallet</p>
+                    )
+                ) : (
+                    <p>Please install Metamask</p>
+                )}
+            </div>
         </div>
     );
 };

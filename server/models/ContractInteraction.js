@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const logsSchema = new mongoose.Schema({
     //Logs information
     _id: { type: String },
     name: { type: String },
@@ -33,6 +33,6 @@ const userSchema = new mongoose.Schema({
     //
 });
 
-let ContractInteraction = mongoose.model("ContractInteraction", userSchema, "AuctionLogs");
+let ContractInteraction = mongoose.model("ContractInteraction", logsSchema, "AuctionLogs");
 
 module.exports = ContractInteraction;

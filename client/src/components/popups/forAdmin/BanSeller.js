@@ -10,15 +10,17 @@ const BanedSeller = ({ idSeller }) => {
     const handleSubmit = (event) => {
         console.log(idSeller);
         axios
-            .put("http://localhost:8800/api/banedSeller", idSeller, {
+            .put(`http://localhost:8800/api/user/changeStatus/${idSeller}`, idSeller, {
                 withCredentials: true,
             })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
-                navigate("/listSellers");
+                //navigate("/listBidders");
+                window.location.reload(false);
             });
+        setExpanded(false);
+
         event.preventDefault();
     };
     const handCancel = () => {

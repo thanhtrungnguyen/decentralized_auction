@@ -42,18 +42,16 @@ export const useFetchAuction = (url) => {
             setLoading(true);
             try {
                 const res = await axios.get(url);
-                if(count == 0){
+                if (count == 0) {
                     setData(res.data);
                 }
-                
             } catch (error) {
                 setError(error);
             }
-            if(count == 0){
+            if (count == 0) {
                 setLoading(false);
                 window.stop();
             }
-            
         };
         fetchData();
     }, []);
@@ -100,4 +98,29 @@ export const useFetchPagination = (url, page) => {
         setLoading(false);
     };
     return { data, loading, error, reFetch };
+};
+
+export const useFetchBidding = (url) => {
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState();
+    const [error, setError] = useState();
+
+    useEffect(() => {
+        const controller = new AbortController();
+        setLoading(true);
+        axios
+            .get(url, { signal: controller.signal })
+            .then((res) => {
+                setData(res.data);
+            })
+            .catch((err) => setError(err))
+            .finally(() => {
+                setLoading(false);
+            });
+        return () => {
+            controller.abort();
+        };
+    }, [url]);
+
+    return { loading, data, error };
 };

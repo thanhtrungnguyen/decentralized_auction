@@ -37,7 +37,6 @@ import BidderDetail from "./pages/forAdmin/BidderDetail";
 import ListNews from "./pages/forAdmin/ListNews";
 import AddNew from "./pages/forAdmin/AddNews";
 import EditNew from "./pages/forAdmin/EditNew";
-import FakeAuctionDetail from "./pages/bidder/FakeAuctionDetail";
 import AuctionDetailForManager from "./pages/forManager/AuctionDetailForManager";
 import ViewManager from "./pages/forAdmin/ViewManager";
 import ViewSeller from "./pages/forAdmin/ViewSeller";
@@ -46,6 +45,7 @@ import ProfileOrganization from "./pages/forBidder/ProfileOrganization";
 import EditProfile from "./pages/forBidder/EditProfile";
 import EditProfileOrganization from "./pages/forBidder/EditProfileOrganization";
 import AboutUs from "./pages/common/AboutUs";
+import ConfirmPayment from "./pages/bidder/ui/ConfirmPayment";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 
@@ -99,8 +99,8 @@ function App() {
                         <Route path="listBidders" element={<ListBidders />} />
                         <Route path="bidderDetail" element={<BidderDetail />} />
                         <Route path="bidderDetail/:id" element={<BidderDetail />} />
-                        <Route path="editNew/:id" element={<EditNew />} />
-                        <Route path="editNew" element={<EditNew />} />
+                        <Route path="editNews/:id" element={<EditNew />} />
+                        <Route path="editNews" element={<EditNew />} />
                         <Route path="addNew" element={<AddNew />} />
                         <Route path="listNews/:index" element={<ListNews />} />
                         <Route path="listNews" element={<ListNews />} />
@@ -117,10 +117,7 @@ function App() {
                         <Route path="editProfileOrganization/:id" element={<EditProfileOrganization />} />
                         <Route path="editProfileOrganization" element={<EditProfileOrganization />} />
                         <Route path="aboutUs" element={<AboutUs />} />
-
-                        <Route path="FakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
-
-                        {/* test */}
+                        <Route path="payment/:id" element={<ConfirmPayment />} />
                     </Routes>
                 </BrowserRouter>
             </NotificationProvider>
