@@ -190,7 +190,7 @@ const EditProfile = () => {
 
             <div className="con">
                 <form onSubmit={handleSubmit}>
-                    <div className="container">
+                    <div className="containers">
                         <p className="title">Personal Information</p>
                         <br />
                         <br />
