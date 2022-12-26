@@ -14,7 +14,16 @@
     position: relative;
     /* background: #d9d9d9; */
 }
-
+.b {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 20px;
+    /* or 80% */
+    margin-left: 20px;
+    color: #000000;
+}
 .floatLeft {
     float: left;
 }
@@ -225,4 +234,38 @@
 .icon {
     width: 20px;
     height: 20px;
+}
+.full {
+    width: 100%;
+}
+.left {
+    width: 50%;
+    float: left;
+}
+.right {
+    width: 50%;
+    float: right;
+}
+.labelL {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    /* or 150% */
+
+    /* Gray/800 */
+    float: right;
+    margin-right: 40px;
+    color: #3f3f3f;
+}
+.lablelR {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+
+    margin-right: 40px;
+    color: #3f3f3f;
 }

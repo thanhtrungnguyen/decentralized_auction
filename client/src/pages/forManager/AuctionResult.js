@@ -86,7 +86,7 @@ const AuctionResult = () => {
                             Registration Information
                         </label>
                         <label
-                            className={styles.bold}
+                            className={styles.link}
                             onClick={(e) => {
                                 onClick(e);
                             }}
@@ -94,40 +94,57 @@ const AuctionResult = () => {
                             Place Bids Log
                         </label>
                         <label
-                            className={styles.link}
+                            className={styles.bold}
                             onClick={(e) => {
                                 result(e);
                             }}
                         >
                             Auction Result
                         </label>
-
                         <hr />
-                        <p className={styles.txtBold}>Auction Time End in: {data.AuctionTime}</p>
-                        <h2>Place Bids Log</h2>
-                        <table className={styles.table}>
-                            <tr>
-                                <th className={styles.th}>Username</th>
-                                <th className={styles.th}>Wallet</th>
-                                <th className={styles.th}>Tx Hash</th>
-                                <th className={styles.th}>Bid Amount</th>
-                                <th className={styles.th}>Placed at</th>
-                                <th className={styles.th}>Status</th>
-                            </tr>
-                            {data.map((Bids) => (
-                                <tr>
-                                    <td className={styles.td}>{Bids.Username}</td>
-                                    <td className={styles.td}>{Bids.Wallet}</td>
-
-                                    <td className={styles.td}>{Bids.TxHash}</td>
-                                    <td className={styles.td}>{Bids.BidAmount}</td>
-                                    <td className={styles.td}>{new Date(Bids.PlaceAt).toUTCString().split("GMT")[0]}</td>
-                                    <td className={styles.td}>{Bids.Status}</td>
-                                </tr>
-                            ))}
-                        </table>
+                        <p className={styles.b}>Place Bids Log</p>
+                        <p className={styles.txtBold}>Payment Time End in: {data.PaymentTime}</p>
+                        <br />
                         <div>
-                            <Pagination className={styles.pagi} count={Math.floor(data.total / 10) + 1} page={page} onChange={handleChange} />
+                            <div className={styles.left}>
+                                <label className={styles.labelL}>Winner</label>
+                            </div>
+                            <div className={styles.right}>
+                                <label className={styles.lablelR}>{data.userName}</label>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div>
+                            <div className={styles.left}>
+                                <label className={styles.labelL}>Bid Amount</label>
+                            </div>
+                            <div className={styles.right}>
+                                <label className={styles.lablelR}>{data.BidAmount}</label>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div>
+                            <div className={styles.left}>
+                                <label className={styles.labelL}>Status</label>
+                            </div>
+                            <div className={styles.right}>
+                                <label className={styles.lablelR}>{data.Status}</label>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div>
+                            <div className={styles.left}>
+                                <label className={styles.labelL}>Payment</label>
+                            </div>
+                            <div className={styles.right}>
+                                <label className={styles.lablelR}>{data.Payment}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
