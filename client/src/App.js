@@ -47,6 +47,8 @@ import EditProfileOrganization from "./pages/forBidder/EditProfileOrganization";
 import AboutUs from "./pages/common/AboutUs";
 import ConfirmPayment from "./pages/bidder/ui/ConfirmPayment";
 import ChangePassword from "./pages/common/ChangePassword";
+import ViewBiddingForManager from "./pages/forManager/ViewBiddingForManager";
+import ViewRegistrationForManager from "./pages/forManager/ViewRegistrationForManager";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 
@@ -121,6 +123,8 @@ function App() {
                         <Route path="payment/:id" element={<ConfirmPayment />} />
                         <Route path="changePassword/:id" element={<ChangePassword />} />
                         <Route path="changePassword" element={<ChangePassword />} />
+                        <Route path="viewBiddingForManager/:id/:propertyId" element={<ViewBiddingForManager />} />
+                        <Route path="viewRegistrationForManager/:id/:propertyId" element={<ViewRegistrationForManager />} />
                     </Routes>
                 </BrowserRouter>
             </NotificationProvider>

@@ -235,6 +235,14 @@ const AuctionsListForManager = () => {
                                             >
                                                 View
                                             </Link>
+
+                                            <Link
+                                                className={styles.linkBlue}
+                                                to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
+                                            >
+                                                Process
+                                            </Link>
+
                                             {auction.Auctions1__r.records[0].Status__c == "Request" && (
                                                 <Link
                                                     className={styles.linkBlue}

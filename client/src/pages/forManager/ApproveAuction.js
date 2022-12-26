@@ -18,6 +18,8 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import "../../styleCss/stylesPages/forManagers/Approve.css";
+import Loading from "../../components/loading/Loading";
+
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -127,7 +129,7 @@ const PropertyDetail = () => {
     };
 
     return loading ? (
-        "loading please wait"
+        <Loading />
     ) : (
         <>
             {(() => {

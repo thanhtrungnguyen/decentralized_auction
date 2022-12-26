@@ -17,6 +17,8 @@ import Popup from "reactjs-popup";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import Loading from "../../components/loading/Loading";
+
 const AuctionDetailForManager = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -105,7 +107,7 @@ const AuctionDetailForManager = () => {
         return users;
     };
     return loading ? (
-        "loading please wait"
+        <Loading />
     ) : (
         <>
             {(() => {
