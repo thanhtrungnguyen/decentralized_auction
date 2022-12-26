@@ -35,38 +35,58 @@ const EditProperty = () => {
     const [priceStep, setPriceStep] = useState(null);
     const [placeViewProperty, setPlaceViewProperty] = useState(null);
     // const [startBid, setStartBid] = useState(null);
-    const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
-
+    const [viewPropertyTime, setViewPropertyTime] = useState(null);
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [property, setProperty] = useState([]);
+    const[status,setStatus] =  useState(null);
     const { id } = useParams();
 
     const navigate = useNavigate();
     const baseURLCategory = `http://localhost:8800/api/category`;
 
     useEffect(() => {
-        axios.get(baseURLCategory).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setlistCategory(resp.data);
-        });
+        const fetchData = async()=>{
+            setLoading(true);
+            await axios.get(baseURLCategory).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                
+                setlistCategory(resp.data);
+            });
+            await axios.get(baseURLProperty).then((resp) => {
+                console.log(resp.data);
+                setPropertyName(resp.data.Name);
+                setCategory(resp.data.Category_Id__r.Name);
+                setPropertyVideo(resp.data.Properties_Media__r.records[3].Name);
+                setPropertyDescription(resp.data.Description__c);
+                setStartBid(resp.data.Start_Bid__c);
+                setDeposit(resp.data.Deposit_Amount__c);
+                setPriceStep(resp.data.Price_Step__c);
+                setPlaceViewProperty(resp.data.Place_View_Property__c);
+                setStatus(resp.data.Status__c)
+                setViewPropertyTime([
+                    new Date(resp.data.Start_View_Property_Time__c).setTime(
+                        new Date(resp.data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
+                    ),
+                    new Date(resp.data.End_View_Property_Time__c).setTime(
+                        new Date(resp.data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
+                    ),
+                ])
+                setData(resp.data);
+              });
+              setLoading(false);
+        }
+        fetchData();
     }, [baseURLCategory]);
 
-    const baseURLProperty = `http://localhost:8800/api/property/${id}`;
-    const { data, loading, error } = useFetch(baseURLProperty);
-
+    const baseURLProperty = `http://localhost:8800/api/property/getById/${id}`;
+ 
 
     
 
-    // useEffect(() => {
-    //   axios.get(baseURLProperty).then((resp) => {
-    //     console.log(resp.data);
-    //     console.log("axios get");
-    //     setProperty(resp.data);
-    //     setPropertyImage1(property.Properties_Media__r.records[0].Name);
-    //     setPropertyImage2(property.Properties_Media__r.records[1].Name);
-    //     setPropertyImage3(property.Properties_Media__r.records[2].Name);
-    //   });
-    // }, [baseURLProperty]);
+
+
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -126,6 +146,8 @@ const EditProperty = () => {
         formData.append("deposit", deposit);
         formData.append("priceStep", priceStep);
         formData.append("placeViewProperty", placeViewProperty);
+        formData.append('_method', 'PUT');
+        formData.append('status', status);
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
         axios
@@ -198,21 +220,21 @@ const EditProperty = () => {
                                     id="propertyImage1"
                                     onChange={(e) => handleInputChange(e)}
                                     type="file"
-                                    required
+                                    
                                 ></input>
                                 <input
                                     className={styles.inputImg}
                                     id="propertyImage2"
                                     onChange={(e) => handleInputChange(e)}
                                     type="file"
-                                    required
+                                    
                                 ></input>
                                 <input
                                     className={styles.inputImg}
                                     id="propertyImage3"
                                     onChange={(e) => handleInputChange(e)}
                                     type="file"
-                                    required
+                                    
                                 ></input>
                                 <div className={styles.conImg}>
                                     {propertyImage1 == null && (
@@ -248,7 +270,7 @@ const EditProperty = () => {
                                     id="propertyVideo"
                                     onChange={(e) => handleInputChange(e)}
                                     required
-                                    //   defaultValue={data.property.propertyVideo}
+                                    defaultValue={data.Properties_Media__r.records[3].Name}
                                 ></input>
                                 <input
                                     id="propertyName"
@@ -257,7 +279,7 @@ const EditProperty = () => {
                                     className={styles.inputText}
                                     value={propertyName}
                                     onChange={(e) => handleInputChange(e)}
-                                    //   defaultValue={data.property.propertyName}
+                                    defaultValue={data.Name}
                                     required
                                 ></input>
                                 <select
@@ -265,7 +287,7 @@ const EditProperty = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="category"
                                     placeholder="Category"
-                                    // defaultValue={data.property.category}
+                                    defaultValue={data.Category_Id__r.Name}
                                 >
                                     {listCategory.map((item) => (
                                         <option value={item.Name}>{item.Name}</option>
@@ -278,7 +300,7 @@ const EditProperty = () => {
                                     className={styles.inputText}
                                     value={startBid}
                                     onChange={(e) => handleInputChange(e)}
-                                    // defaultValue={data.property.startBid}
+                                    defaultValue={data.Start_Bid__c}
                                     required
                                 ></input>
                                 <input
@@ -288,7 +310,7 @@ const EditProperty = () => {
                                     className={styles.inputText}
                                     value={deposit}
                                     onChange={(e) => handleInputChange(e)}
-                                    // defaultValue={data.property.deposit}
+                                    defaultValue={data.Deposit_Amount__c}
                                     required
                                 ></input>
                                 <input
@@ -298,7 +320,7 @@ const EditProperty = () => {
                                     className={styles.inputText}
                                     value={priceStep}
                                     onChange={(e) => handleInputChange(e)}
-                                    // defaultValue={data.property.priceStep}
+                                    defaultValue={data.Price_Step__c}
                                     required
                                 ></input>
                                 <input
@@ -308,7 +330,7 @@ const EditProperty = () => {
                                     className={styles.inputText}
                                     value={placeViewProperty}
                                     onChange={(e) => handleInputChange(e)}
-                                    // defaultValue={data.property.placeViewProperty}
+                                    defaultValue={data.Place_View_Property__c}
                                     required
                                 ></input>
                                 <DatePicker
@@ -329,7 +351,7 @@ const EditProperty = () => {
                                     value={propertyDescription}
                                     className={styles.textarea}
                                     onChange={(e) => handleInputChange(e)}
-                                    // defaultValue={data.property.propertyDescription}
+                                    defaultValue={data.Description__c}
                                     required
                                 ></textarea>
                             </div>

@@ -125,6 +125,27 @@ const findPropertiesByUser = async (userId, index, status, category, namePropert
     );
     return { properties: properties, total: total, totalProperty: totalProperty };
 };
+const updatePropertyMedia = async (keyold,propertyId,keyupdate)=>{
+    try {
+        var connection = await conn();
+
+        await connection
+            .sobject("Property_Media__c")
+            .find({ Name: keyold, Property_DAP_Id__c:propertyId })
+            .update(
+                {
+                    Name: keyupdate,
+
+                },
+                (err, result) => {
+                    if (err) console.error(err);
+                }
+            );
+        return propertyId;
+    } catch (error) {
+        console.error(error);
+    }
+}
 const updateProperty = async (categoryName, property, startViewPropertyTime, endViewPropertyTime, userId) => {
     try {
         var connection = await conn();
@@ -190,4 +211,5 @@ module.exports = {
     updateProperty,
     findPropertiesByStatus,
     filterProperty,
+    updatePropertyMedia
 };
