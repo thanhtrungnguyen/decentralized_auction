@@ -270,7 +270,15 @@ const AuctionList = () => {
                             <div>
                                 <p className={styles.txtBlueB}>{auction.Auctions1__r.records[0].Name}</p>
 
-                                <p className={styles.txtDes}>{auction.Auctions1__r.records[0].Status__c}</p>
+                                <p className={styles.txtDes}>
+                                    {auction.Auctions1__r.records[0].Status__c === 'Approved'?'Upcoming for Registration Time':
+                                    auction.Auctions1__r.records[0].Status__c === 'RegistrationTime'?'Registration Time':
+                                    auction.Auctions1__r.records[0].Status__c === 'UpcomingforBid'?'Upcoming for Auction time':
+                                    auction.Auctions1__r.records[0].Status__c === 'Bidding'?'Auction time':
+                                    auction.Auctions1__r.records[0].Status__c === 'Closed'?'Auction Ended':
+                                    'Auction Ended'
+                                    }
+                                    </p>
 
                                 <div>
                                     <p className={styles.txtBlueB}>{auction.Property_Information__c}</p>
