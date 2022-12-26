@@ -215,6 +215,7 @@ const AddProperty = () => {
                                 <input
                                     id="propertyName"
                                     type="text"
+                                    pattern="^\s*([^\s]\s*){0,100}$"
                                     placeholder="Enter Property Name"
                                     className={styles.inputText}
                                     value={propertyName}
@@ -234,7 +235,8 @@ const AddProperty = () => {
                                 </select>
                                 <input
                                     id="startBid"
-                                    type="number"
+                                    type="text"
+                                    pattern="^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$"
                                     placeholder="Enter Start Bid"
                                     className={styles.inputText}
                                     value={startBid}
@@ -244,6 +246,7 @@ const AddProperty = () => {
                                 <input
                                     id="deposit"
                                     type="text"
+                                    pattern="^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$"
                                     placeholder="Enter Deposit"
                                     className={styles.inputText}
                                     value={deposit}
@@ -253,6 +256,7 @@ const AddProperty = () => {
                                 <input
                                     id="priceStep"
                                     type="number"
+                                    pattern="^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$"
                                     placeholder="Enter Price Step"
                                     className={styles.inputText}
                                     value={priceStep}
@@ -262,6 +266,7 @@ const AddProperty = () => {
                                 <input
                                     id="placeViewProperty"
                                     type="text"
+                                    pattern="^\s*([^\s]\s*){0,100}$"
                                     placeholder="Enter Place View Property"
                                     className={styles.inputText}
                                     value={placeViewProperty}
@@ -282,6 +287,7 @@ const AddProperty = () => {
                                 />
                                 <textarea
                                     id="propertyDescription"
+                                    pattern="^\s*([^\s]\s*){0,}$"
                                     value={propertyDescription}
                                     className={styles.textarea}
                                     onChange={(e) => handleInputChange(e)}

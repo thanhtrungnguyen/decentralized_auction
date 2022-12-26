@@ -84,6 +84,7 @@ const AddManager = () => {
                             <input
                                 id="userName"
                                 type="text"
+                                pattern="[a-zA-Z]{1,50}"
                                 className={styles.input}
                                 value={userName}
                                 onChange={(e) => handleInputChange(e)}
@@ -96,7 +97,8 @@ const AddManager = () => {
                             <label className={styles.txt}>Password</label>
                             <input
                                 id="password"
-                                type="text"
+                                type="password"
+                                pattern="^\s*(?:\S\s*){8,}$"
                                 className={styles.input}
                                 value={password}
                                 onChange={(e) => handleInputChange(e)}
