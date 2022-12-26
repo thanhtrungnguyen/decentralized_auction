@@ -26,6 +26,10 @@ const register = async (req, res, next) => {
             Card_Number__c: req.body.cardNumber,
             Card_Granted_Date__c: req.body.dateRangeCard,
             Card_Granted_Place__c: req.body.cardGrantedPlace,
+            District_Id__c: req.body.districtId,
+            Wards_Id__c: req.body.wardId,
+            City_Id__c: req.body.cityId,
+
         }
         const account = {
             Name: req.body.organizationName,
@@ -42,7 +46,6 @@ const register = async (req, res, next) => {
         if (req.body.usertype === CONTACT) {
             //add contact
             var newContact = await AuthService.createContact(user, contact, role, files)
-
         }
         if (req.body.usertype === ACCOUNT) {
             //add new account
@@ -76,6 +79,9 @@ const registerSeller = async (req, res, next) => {
             Card_Number__c: req.body.cardNumber,
             Card_Granted_Date__c: req.body.dateRangeCard,
             Card_Granted_Place__c: req.body.cardGrantedPlace,
+            District_Id__c: req.body.districtId,
+            Wards_Id__c: req.body.wardId,
+            City_Id__c: req.body.cityId,
         }
         const account = {
             Name: req.body.organizationName,

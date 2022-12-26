@@ -18,15 +18,16 @@ import "../../styleCss/stylesPages/forBidder/ProfileOrganization.css";
 
 const EditProfileOrganization = () => {
     const { id, propertyId } = useParams();
-    const baseURL = `http://localhost:8800/api/profile/${id}`;
-    const { data, loading, error } = useFetch(baseURL);
+    const baseURL = `http://localhost:8800/api/user/${id}`;
+    //const { data, loading, error } = useFetch(baseURL);
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
     const navigate = useNavigate();
 
-    console.log(data);
-    console.log(loading);
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
+
     const [organizationName, setOrganizationName] = useState(null);
     const [taxCode, setTaxCode] = useState(null);
     const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null);
@@ -35,17 +36,48 @@ const EditProfileOrganization = () => {
     const [position, setPosition] = useState(null);
 
     const [firstName, setFirstName] = useState(null);
-    const [lastName, setlastName] = useState(null);
-    const [gender, setgender] = useState("Male");
-    const [dateOfBirth, setdateOfBirth] = useState(null);
+    const [lastName, setLastName] = useState(null);
+    const [gender, setGender] = useState("Male");
+    const [dateOfBirth, setDateOfBirth] = useState(null);
     const [email, setEmail] = useState(null);
     const [phone, setPhone] = useState(null);
     const [specificAddress, setSpecificAddress] = useState(null);
-    const [cardNumber, setcardNumber] = useState(null);
-    const [dateRangeCard, setdateRangeCard] = useState(null);
+    const [cardNumber, setCardNumber] = useState(null);
+    const [dateRangeCard, setDateRangeCard] = useState(null);
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setFirstName(resp.data.contact.First_Name__c)
+                setLastName(resp.data.contact.Last_Name__c)
+                setGender(resp.data.contact.Gender__c)
+                setDateOfBirth(resp.data.contact.Date_Of_Birth__c)
+                setEmail(resp.data.contact.Email__c)
+                setPhone(resp.data.contact.Phone__c)
+                setSpecificAddress(resp.data.contact.Address__c)
+                setCardNumber(resp.data.contact.Card_Number__c)
+                setCardGrantedPlace(resp.data.contact.Card_Granted_Place__c)
+                setDateRangeCard(resp.data.contact.Card_Granted_Date__c)
+
+                setOrganizationName(resp.data.account.Name)
+                setTaxCode(resp.data.account.Tax_Code__c)
+                setTaxCodeGrantedDate(resp.data.account.Tax_Code_Granted_Date__c)
+                setTaxCodeGrantedPlace(resp.data.account.Tax_Code_Granted_Place__c)
+                setSpecificAddressOrganization(resp.data.account.Specific_Address__c)
+                setPosition(resp.data.account.Name)
+
+                setData(resp.data);
+            });
+
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {
@@ -70,13 +102,13 @@ const EditProfileOrganization = () => {
             setFirstName(value);
         }
         if (id === "lastName") {
-            setlastName(value);
+            setLastName(value);
         }
         if (id === "gender") {
-            setgender(value);
+            setGender(value);
         }
         if (id === "dateOfBirth") {
-            setdateOfBirth(value);
+            setDateOfBirth(value);
         }
         if (id === "email") {
             setEmail(value);
@@ -88,10 +120,10 @@ const EditProfileOrganization = () => {
             setSpecificAddress(value);
         }
         if (id === "cardNumber") {
-            setcardNumber(value);
+            setCardNumber(value);
         }
         if (id === "dateRangeCard") {
-            setdateRangeCard(value);
+            setDateRangeCard(value);
         }
         if (id === "cardGrantedPlace") {
             setCardGrantedPlace(value);
@@ -136,14 +168,11 @@ const EditProfileOrganization = () => {
         formData.append("cardBack", cardBack);
 
         axios
-            .put(
-                "http://localhost:8800/api/editProfile",
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                },
-                { withCredentials: true }
-            )
+        .put(
+            `http://localhost:8800/api/user/updateProfile/${id}`,
+            formData,
+            { withCredentials: true }
+        )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -170,7 +199,9 @@ const EditProfileOrganization = () => {
     const Cancel = () => {
         navigate(`/profileOrganization/${id}`);
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
                 if (getUser().role === "BIDDER") {
@@ -514,6 +545,7 @@ const EditProfileOrganization = () => {
                                 type="text"
                                 className="input"
                                 onChange={(e) => handleInputChange(e)}
+                                value={cardGrantedPlace}
                                 id="cardGrantedPlace"
                                 defaultValue={data.cardGrantedPlace}
                                 required
@@ -533,13 +565,19 @@ const EditProfileOrganization = () => {
                         <br />
                         <br />
                         <br />
-                        <input className="ipImg" id="cardFront" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
-                        <input className="ipImg2" id="cardBack" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
+                        <input className="ipImg" id="cardFront" type="file" accept="image/*" onChange={(e) => handleInputChange(e)}  />
+                        <input className="ipImg2" id="cardBack" type="file" accept="image/*" onChange={(e) => handleInputChange(e)}  />
                         <br />
                         <br />
-                        {cardFront && <img src={URL.createObjectURL(cardFront)} className="img" alt="Thumb" />}
-                        {cardBack && <img src={URL.createObjectURL(cardBack)} className="img2" alt="Thumb" />}
-                        <p className="bold">Account Information</p>
+                        {cardFront == null && (
+                            <img src={`http://localhost:8800/api/auction/images/${data.contact.Font_Side_Image__c}`} className="img" alt="Thumb" />
+                        )}
+                        {cardFront != null && <img src={URL.createObjectURL(cardFront)} className="img" alt="Thumb" />}
+                        {cardBack == null && (
+                            <img src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`} className="img2" alt="Thumb" />
+                        )}
+                        {cardBack != null && <img src={URL.createObjectURL(cardBack)} className="img2" alt="Thumb" />}
+                        {/* <p className="bold">Account Information</p>
                         <br />
                         <br />
                         <br />
@@ -551,7 +589,7 @@ const EditProfileOrganization = () => {
                         <div className="row">
                             <label className="label">Password</label>
                             <input type="password" className="input" readOnly></input>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="conBtn">
                         <button className="btnCancel" onClick={Cancel}>
