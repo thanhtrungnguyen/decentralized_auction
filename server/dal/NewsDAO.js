@@ -155,34 +155,40 @@ const changeStatus = async (id, status) => {
         console.error(error);
     }
 };
-const update = async (id, title, description, status) => {
+const update = async (id, title, content, filesImg) => {
     try {
+        var isUpdate = false
         var connection = await conn();
-        var updated = await connection
+        var news = {
+            Id: id,
+            Name: title,
+            Content__c: content,
+            
+        }
+        if (filesImg.result !== null) {
+            news.Avatar__c = filesImg.result.key
+        }
+        await connection
             .sobject("News_DAP__c")
-            .find({ Id: id })
-            .update(
-                {
-                    Name: title,
-                    Description__c: description,
-                    Status__c: status,
-                },
+            .update(news,
                 (err, result) => {
                     if (err) console.log(err);
+                    if (result.success) isUpdate=true;
                 }
             );
-        return updated;
+        return isUpdate;
     } catch (error) {
         console.error(error);
     }
 };
-const create = async (title, description) => {
+const create = async (title, content,filesImg) => {
     try {
         var connection = await conn();
         var created = await connection.sobject("News_DAP__c").create(
             {
                 Name: title,
-                Description__c: description,
+                Content__c: content,
+                Avatar__c: filesImg.result.key,
                 Status__c: "Published",
             },
             (err, result) => {

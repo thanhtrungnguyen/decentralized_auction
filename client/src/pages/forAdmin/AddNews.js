@@ -42,7 +42,7 @@ const AddNews = () => {
         console.log(formData.get("content"));
         axios
             .post(
-                "http://localhost:8800/api/addNews",
+                "http://localhost:8800/api/news/createNews",
                 formData,
                 {
                     headers: { "Content-Type": "multipart/form-data" },
