@@ -85,11 +85,6 @@ const Login = () => {
                                     Don’t have an Account?Create account{" "}
                                 </Link>
                             </p>
-                            <p className={styles.text}>
-                                <Link to="/enterEmail" className={styles.text}>
-                                    Change password?
-                                </Link>
-                            </p>
                         </div>
                     </div>
                 </form>

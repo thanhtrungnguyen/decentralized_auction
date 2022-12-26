@@ -4,7 +4,7 @@
     position: absolute;
 }
 
-.container {
+.containers {
     width: 1150px;
     height: 1832px;
 
@@ -119,9 +119,23 @@
     border: 1px solid #3918d9;
     border-radius: 4px;
 }
+.btnChange {
+    width: 119px;
+    height: 36px;
 
+    background: #f7f5ff;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #3918d9;
+    border: 1px solid #3918d9;
+    border-radius: 4px;
+}
 .conBtn {
-    margin-left: 70%;
+    margin-left: 50%;
 }
 
 .ipImg {

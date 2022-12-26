@@ -36,6 +36,9 @@ const Profile = () => {
     const handleClick = () => {
         navigate(`/editProfile/${id}`);
     };
+    const ChangePassword = () => {
+        navigate(`/changePassword/${id}`);
+    };
     return loading ? (
         <Loading />
     ) : (
@@ -51,7 +54,7 @@ const Profile = () => {
             <PageName pageName={"Profile"} link={`profile/${id}`} home={"homePage"} />
 
             <div className="con">
-                <div className="container">
+                <div className="containers">
                     <p className="title">Personal Information</p>
                     <br />
                     <br />
@@ -64,7 +67,7 @@ const Profile = () => {
 
                     <div className="row">
                         <label className="label">First Name</label>
-                        <input type="text" className="input" value={data.contact.First_Name__c} ></input>
+                        <input type="text" className="input" value={data.contact.First_Name__c}></input>
                     </div>
                     <div className="row">
                         <label className="label">Last Name</label>
@@ -186,6 +189,9 @@ const Profile = () => {
                     </div> */}
                 </div>
                 <div className="conBtn">
+                    <button className="btnChange" onClick={ChangePassword}>
+                        Change Password
+                    </button>
                     <button className="btn" onClick={handleClick}>
                         Edit Profile
                     </button>
