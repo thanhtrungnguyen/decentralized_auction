@@ -144,7 +144,12 @@ const changePassword = async (req, res, next) => {
         var oldPassword = req.body.oldPassword
         var newPassword = req.body.newPassword
         var isChange = await AuthService.changePassword(user, oldPassword, newPassword);
-        if (isChange) res.status(200).send("Changed successful !!!");
+        if (!isChange) {
+            res.status(400).send("Invalid old password !!!");
+        }else{
+            res.status(200).send("Changed successful !!!");
+        }
+        
     } catch (error) {
         next(error);
     }

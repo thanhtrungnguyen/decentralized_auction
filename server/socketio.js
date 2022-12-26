@@ -106,7 +106,7 @@ module.exports = (app) => {
 
         // });
     });
-    taskRegistrationTime.start();
+    //taskRegistrationTime.start();
 
     return server;
 };
