@@ -39,20 +39,6 @@ const EditProfile = () => {
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURL).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setData(resp.data);
-            });
-
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURL]);
-    console.log(data);
 
     const sCity = {
         value: 278,
@@ -64,6 +50,24 @@ const EditProfile = () => {
         label: "Xã Phú An",
     };
     console.log(selectedCity);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setData(resp.data);
+
+                // onCitySelect(sCity);
+                // onDistrictSelect(sDistrict);
+                // onWardSelect(sWard);
+            });
+
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
+    console.log(data);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "firstName") {
