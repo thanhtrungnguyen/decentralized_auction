@@ -9,13 +9,15 @@ const NotYetRegistrationTime = ({ auction }) => {
         } else {
             return (
                 <>
-                    <h2>NotYetRegistrationTime</h2>
-                    Registration start in:
-                    <p className={styles.txtNormal}>
-                        <span>
-                            {days}d {hours}h {minutes}m {seconds}s
-                        </span>
-                    </p>
+                    <div className={styles.wait}>
+                        <h2>Not Yet Registration Time</h2>
+                        Registration start in:
+                        <p className={styles.title}>
+                            <span className={styles.title}>
+                                {days}d {hours}h {minutes}m {seconds}s
+                            </span>
+                        </p>
+                    </div>
                 </>
             );
         }

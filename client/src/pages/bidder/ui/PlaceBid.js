@@ -207,6 +207,7 @@ function PlaceBid({ auction }) {
                         <label className={styles.mess}>Error message</label>
                         <br />
                         <button
+                            className={styles.btnClose}
                             disabled={isLoadingPlaceBid || isFetchingPlaceBid}
                             onClick={async () => {
                                 placeBid({
@@ -218,6 +219,7 @@ function PlaceBid({ auction }) {
                             {isLoadingPlaceBid || isFetchingPlaceBid ? "Loading..." : "Place Bid"}
                         </button>
                         <button
+                            className={styles.btnClose}
                             disabled={isLoadingRetractBid || isFetchingRetractBid}
                             onClick={async () => {
                                 retractBid({
@@ -234,12 +236,12 @@ function PlaceBid({ auction }) {
             case "RETRACT":
                 return (
                     <>
-                        <p>You have retracted bid</p>
+                        <p className={styles.title}>You have retracted bid</p>
                         <TransactionStatus transactionStatus={transactionStatus} />
                     </>
                 );
             case "NOT_REGISTERED":
-                return <>You haven't registered the auction</>;
+                return <p className={styles.title}>You haven't registered the auction</p>;
             default:
                 return <>???</>;
         }

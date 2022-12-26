@@ -1,7 +1,7 @@
 .container {
     position: fixed;
     width: 1000px;
-    height: 600px;
+    height: 650px;
     left: 50%;
     margin-left: -500px;
     top: 50%;
@@ -10,6 +10,7 @@
     border: 1px solid #9da0ae;
     box-shadow: 0px 0px 25px 10px #f6f4fd;
     border-radius: 20px;
+    z-index: 100;
 }
 .txtBlack {
     font-family: "Josefin Sans";
@@ -20,6 +21,9 @@
     /* identical to box height, or 72% */
     margin-left: 30px;
     color: #000000;
+}
+.con {
+    display: flex;
 }
 .txt {
     font-family: "B612";
@@ -42,9 +46,15 @@
     margin-left: 50px;
     float: left;
 }
+.wait {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 100px;
+}
 .detail {
     width: 439px;
-    height: 230px;
+    height: 280px;
     background: #ffffff;
     border: 1px solid #9da0ae;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -151,10 +161,6 @@
     left: 1025px;
     top: 900px;
 
-    /* Primary/Main
-
-4C34C2
-*/
     margin-left: 15px;
 
     background: #4c34c2;
@@ -164,19 +170,35 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
-    /* identical to box height, or 143% */
-
-    /* Gray_02/100 */
 
     color: #ffffff;
-
-    /* Inside auto layout */
 
     flex: none;
     order: 0;
     flex-grow: 0;
 }
+.btnClose {
+    width: 82px;
+    height: 36px;
+    left: 1025px;
+    top: 900px;
 
+    margin-left: 15px;
+
+    background: #4c34c2;
+    border-radius: 4px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #ffffff;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
 .transactions {
     width: 439px;
     height: 200px;
@@ -187,6 +209,7 @@
     float: right;
     margin-right: 50px;
     margin-top: 20px;
+    overflow: scroll;
     /* display: none; */
 }
 .left {
@@ -199,12 +222,12 @@
 }
 .col1 {
     width: 80%;
-    height: 100%;
+    /* height: 100%; */
     float: left;
 }
 .col2 {
     width: 20%;
-    height: 100%;
+    /* height: 100%; */
     float: right;
 }
 .tran {
@@ -218,4 +241,8 @@
 
     color: #000000;
     margin-left: 10px;
+}
+.connect {
+    float: right;
+    display: flex;
 }

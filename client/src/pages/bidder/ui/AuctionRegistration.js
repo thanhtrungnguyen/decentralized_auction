@@ -162,7 +162,7 @@ function AuctionRegistration({ auction }) {
                                         </button>
                                     </>
                                 ) : (
-                                    <>You have Registered The Auction</>
+                                    <p className={styles.title}>You have Registered The Auction</p>
                                 )}
 
                                 <TransactionStatus transactionStatus={transactionStatus} />

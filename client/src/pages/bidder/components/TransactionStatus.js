@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 
 function TransactionStatus({ transactionStatus }) {
     const prefix = "https://goerli.etherscan.io/tx/";
@@ -23,8 +24,13 @@ function TransactionStatus({ transactionStatus }) {
                 const link = `${prefix}${transactionStatus.hash}`;
                 return (
                     <div>
-                        <a href={link}>{hashString}</a>
-                        <div>{`Status: ${transactionStatus.status}`}</div>
+                        <br />
+
+                        <a className={styles.txt} href={link}>
+                            {hashString}
+                        </a>
+                        <br />
+                        <div className={styles.txt}>{`Status: ${transactionStatus.status}`}</div>
                     </div>
                 );
             default:

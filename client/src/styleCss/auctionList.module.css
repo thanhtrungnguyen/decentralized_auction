@@ -69,6 +69,7 @@
 
 .floatRight {
     float: right;
+    display: flex;
 }
 
 .sidebar {

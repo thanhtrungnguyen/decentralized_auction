@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import BidModal from "../index";
 import axios from "axios";
 import { useFetchBidding } from "../../../hook/useFetch";
+import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 
 const BidModalButton = ({ auctionId, propertyId }) => {
     const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
@@ -18,6 +19,7 @@ const BidModalButton = ({ auctionId, propertyId }) => {
         <>
             <div>
                 <button
+                    className={styles.btn}
                     onClick={() => {
                         setOpenModal(true);
                     }}
