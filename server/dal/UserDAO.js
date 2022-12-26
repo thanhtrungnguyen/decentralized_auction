@@ -165,57 +165,85 @@ const getUserRole = async (userId) => {
     return role;
 };
 const updateProfileBidder = async (userId, contact, account, filesImg) => {
+    var isUpdate = false;
+    var type,contactId,accountId;
     var connection = await conn();
-    await connection.sobject("Contact__c").update(
-        {
-            User_Id__c: userId,
-            Name: contact.Name,
-            First_Name__c: contact.First_Name__c,
-            Last_Name__c: contact.Last_Name__c,
-            Gender__c: contact.Gender__c,
-            Email__c: contact.Email__c,
-            Date_Of_Birth__c: contact.Date_Of_Birth__c,
-            Phone__c: contact.Phone__c,
-            Wards__c: contact.Wards__c,
-            City__c: contact.City__c,
-            District__c: contact.District__c,
-            Address__c: contact.Address__c,
-            Card_Number__c: contact.Card_Number__c,
-            Card_Granted_Date__c: contact.Card_Granted_Date__c,
-            Card_Granted_Place__c: contact.Card_Granted_Place__c,
-            Font_Side_Image__c: filesImg.result.key,
-            Back_Side_Image__c: filesImg.result1.key,
-            User_Id__c: userId,
-        },
+   
+    
+    await connection.sobject("Contact__c").find({ User_Id__c: userId }, (err, result) => {
+        if (err) console.error(err)
+        contactId = result[0].Id
+    })
+    
+    var profile = {
+        Id:contactId,
+        //User_Id__c: userId,
+        Name: contact.Name,
+        First_Name__c: contact.First_Name__c,
+        Last_Name__c: contact.Last_Name__c,
+        Gender__c: contact.Gender__c,
+        Email__c: contact.Email__c,
+        Date_Of_Birth__c: contact.Date_Of_Birth__c,
+        Phone__c: contact.Phone__c,
+        Wards__c: contact.Wards__c,
+        City__c: contact.City__c,
+        District__c: contact.District__c,
+        Address__c: contact.Address__c,
+        Card_Number__c: contact.Card_Number__c,
+        Card_Granted_Date__c: contact.Card_Granted_Date__c,
+        Card_Granted_Place__c: contact.Card_Granted_Place__c,
+        // Font_Side_Image__c: filesImg.result.key,
+        // Back_Side_Image__c: filesImg.result1.key,
+        // User_Id__c: userId,
+    }
+    if (filesImg.result !== null) {
+        profile.Font_Side_Image__c = filesImg.result.key
+    }
+    if (filesImg.result1 !== null) {
+        profile.Font_Side_Image__c = filesImg.result1.key
+    }
+    await connection.sobject("Contact__c").update(profile,
         (err, ret) => {
             if (err || !ret.success) {
                 return console.error(err, ret);
             }
-            // contactId = ret.id;
-            //console.log("Created contact : " + ret);
+            if (ret) isUpdate = true;
         }
     );
-    await connection.sobject("Account__c").update(
-        {
-            User_Id__c: userId,
-            Name: account.Name,
-            //Company_Certificate__c: req.body.certificateCompany,
-            //Employees__c:
-            //Phone__c:
-            Specific_Address__c: account.Specific_Address__c,
-            Tax_Code__c: account.Tax_Code__c,
-            Tax_Code_Granted_Date__c: account.Tax_Code_Granted_Date__c,
-            Tax_Code_Granted_Place__c: account.Tax_Code_Granted_Place__c,
-            //Website__c:
-            User_Id__c: userId,
-            Contact_DAP__c: contactId,
-        },
-        (err, result) => {
-            if (err) return console.error(err);
-            accountId = result.id;
-            // console.log("Created account id : " + result.id);
-        }
-    );
+    await connection.sobject("User__c").find({ Id: userId }, (err, result) => {
+        if (err) console.error(err)
+        type = result[0].Type__c
+    })
+    if (type === 'ACCOUNT') {
+        await connection.sobject("Account__c").find({ User_Id__c: userId }, (err, result) => {
+            if (err) console.error(err)
+            accountId = result[0].Id
+        })
+        await connection.sobject("Account__c").update(
+            {
+                Id:accountId,
+                User_Id__c: userId,
+                Name: account.Name,
+                //Company_Certificate__c: req.body.certificateCompany,
+                //Employees__c:
+                //Phone__c:
+                Specific_Address__c: account.Specific_Address__c,
+                Tax_Code__c: account.Tax_Code__c,
+                Tax_Code_Granted_Date__c: account.Tax_Code_Granted_Date__c,
+                Tax_Code_Granted_Place__c: account.Tax_Code_Granted_Place__c,
+                //Website__c:
+                User_Id__c: userId,
+                Contact_DAP__c: contactId,
+            },
+            (err, result) => {
+                if (err) return console.error(err);
+                accountId = result.id;
+                // console.log("Created account id : " + result.id);
+            }
+        );
+    }
+
+    return isUpdate
 };
 const changeStatus = async (userId) => {
     var connection = await conn();
@@ -228,8 +256,8 @@ const changeStatus = async (userId) => {
         Status__c: status
     }, (err, result) => {
         if (err) console.error(err);
-        if(result) isChange=true;
+        if (result) isChange = true;
     })
     return isChange
 }
-module.exports = { getAllUser, getUserById, updateProfileBidder,changeStatus };
+module.exports = { getAllUser, getUserById, updateProfileBidder, changeStatus };

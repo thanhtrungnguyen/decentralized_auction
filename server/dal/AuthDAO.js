@@ -4,6 +4,7 @@ const createContact = async (user, contact, role, filesImg) => {
     var contactId = null;
     var userId = await createUser(user);
     var connection = await conn();
+    
     await connection.sobject("Contact__c").create(
         {
             Name: contact.Name,
@@ -16,6 +17,9 @@ const createContact = async (user, contact, role, filesImg) => {
             Wards__c: contact.Wards__c,
             City__c: contact.City__c,
             District__c: contact.District__c,
+            District_Id__c: contact.District_Id__c,
+            Wards_Id__c: contact.Wards_Id__c,
+            City_Id__c: contact.City_Id__c,
             Address__c: contact.Address__c,
             Card_Number__c: contact.Card_Number__c,
             Card_Granted_Date__c: contact.Card_Granted_Date__c,

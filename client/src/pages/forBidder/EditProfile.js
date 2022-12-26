@@ -26,25 +26,35 @@ const EditProfile = () => {
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
-
     const [firstName, setFirstName] = useState(null);
-    const [lastName, setlastName] = useState(null);
-    const [gender, setgender] = useState("Male");
-    const [dateOfBirth, setdateOfBirth] = useState(null);
+    const [lastName, setLastName] = useState(null);
+    const [gender, setGender] = useState("Male");
+    const [dateOfBirth, setDateOfBirth] = useState(null);
     const [email, setEmail] = useState(null);
     const [phone, setPhone] = useState(null);
     const [specificAddress, setSpecificAddress] = useState(null);
-    const [cardNumber, setcardNumber] = useState(null);
-    const [dateRangeCard, setdateRangeCard] = useState(null);
+    const [cardNumber, setCardNumber] = useState(null);
+    const [dateRangeCard, setDateRangeCard] = useState(null);
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
+   
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
                 console.log(resp.data);
                 console.log("axios get");
+                setFirstName(resp.data.contact.First_Name__c)
+                setLastName(resp.data.contact.Last_Name__c)
+                setGender(resp.data.contact.Gender__c)
+                setDateOfBirth(resp.data.contact.Date_Of_Birth__c)
+                setEmail(resp.data.contact.Email__c)
+                setPhone(resp.data.contact.Phone__c)
+                setSpecificAddress(resp.data.contact.Address__c)
+                setCardNumber(resp.data.contact.Card_Number__c)
+                setCardGrantedPlace(resp.data.contact.Card_Granted_Place__c)
+                setDateRangeCard(resp.data.contact.Card_Granted_Date__c)
                 setData(resp.data);
             });
 
@@ -52,16 +62,21 @@ const EditProfile = () => {
         };
         fetchData();
     }, [baseURL]);
+   
     console.log(data);
-
+    // const city_Id = data.contact.City_Id__c
+    // const city_name = data.contact.City__c
     const sCity = {
-        value: 278,
-        label: "An Giang",
+        // value: city_Id,
+        // label: city_name,
     };
-    const sDistrict = { value: 617, label: "Huyện Phú Tân" };
+    const sDistrict = {
+        // value: `${data.contact.District_Id__c}`,
+        // label: `${data.contact.District__c}`
+    };
     const sWard = {
-        value: 66,
-        label: "Xã Phú An",
+        // value: `${data.contact.Wards_Id__c}`,
+        // label: `${data.contact.Wards__c}`,
     };
     console.log(selectedCity);
     const handleInputChange = (e) => {
@@ -70,13 +85,13 @@ const EditProfile = () => {
             setFirstName(value);
         }
         if (id === "lastName") {
-            setlastName(value);
+            setLastName(value);
         }
         if (id === "gender") {
-            setgender(value);
+            setGender(value);
         }
         if (id === "dateOfBirth") {
-            setdateOfBirth(value);
+            setDateOfBirth(value);
         }
         if (id === "email") {
             setEmail(value);
@@ -88,10 +103,10 @@ const EditProfile = () => {
             setSpecificAddress(value);
         }
         if (id === "cardNumber") {
-            setcardNumber(value);
+            setCardNumber(value);
         }
         if (id === "dateRangeCard") {
-            setdateRangeCard(value);
+            setDateRangeCard(value);
         }
         if (id === "cardGrantedPlace") {
             setCardGrantedPlace(value);
@@ -127,21 +142,19 @@ const EditProfile = () => {
         formData.append("cardGrantedPlace", cardGrantedPlace);
         formData.append("cardFront", cardFront);
         formData.append("cardBack", cardBack);
-
+       // formData.append('_method', 'PUT')
+        console.log(selectedDistrict)  
         axios
             .put(
-                "http://localhost:8800/api/editProfile",
+                `http://localhost:8800/api/user/updateProfile/${id}`,
                 formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                },
                 { withCredentials: true }
             )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
-                navigate(`profile/${id}`);
+                alert('Update Successful');
+                navigate(`/profile/${id}`);
             });
         console.log(formData);
 
@@ -197,7 +210,7 @@ const EditProfile = () => {
                                 value={firstName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="firstName"
-                                defaultValue={data.contact.First_Name__c}
+                               // defaultValue={data.contact.First_Name__c}
                                 required
                             ></input>
                         </div>
@@ -248,7 +261,7 @@ const EditProfile = () => {
                                 type="email"
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                                 value={email}
-                                defaultValue={data.contact.Phone__c}
+                                defaultValue={data.contact.Email__c}
                                 onChange={(e) => handleInputChange(e)}
                                 id="email"
                                 required
@@ -305,7 +318,7 @@ const EditProfile = () => {
                                 options={cityOptions}
                                 onChange={(option) => onCitySelect(option)}
                                 placeholder="Tỉnh/Thành"
-                                defaultValue={sCity}
+                                defaultValue={{value:data.contact.City_Id__c,label:data.contact.City__c}}
                                 required
                             />
                         </div>
@@ -319,7 +332,7 @@ const EditProfile = () => {
                                 options={districtOptions}
                                 onChange={(option) => onDistrictSelect(option)}
                                 placeholder="Quận/Huyện"
-                                defaultValue={sDistrict}
+                                defaultValue={{value:data.contact.District_Id__c,label:data.contact.District__c}}
                                 required
                             />
                         </div>
@@ -333,7 +346,7 @@ const EditProfile = () => {
                                 options={wardOptions}
                                 placeholder="Phường/Xã"
                                 onChange={(option) => onWardSelect(option)}
-                                defaultValue={sWard}
+                                defaultValue={{value:data.contact.Wards_Id__c,label:data.contact.Wards__c}}
                                 required
                             />
                         </div>
@@ -421,8 +434,8 @@ const EditProfile = () => {
                         <br />
                         <br />
                         <br />
-                        <input className="ipImg" id="cardFront" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
-                        <input className="ipImg2" id="cardBack" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
+                        <input className="ipImg" id="cardFront" type="file" accept="image/*" onChange={(e) => handleInputChange(e)}  />
+                        <input className="ipImg2" id="cardBack" type="file" accept="image/*" onChange={(e) => handleInputChange(e)}  />
                         <br />
                         <br />
                         {cardFront == null && (
