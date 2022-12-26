@@ -63,16 +63,14 @@ const BidModal = ({ closeModal, loading, auction, propertyId }) => {
             <div>
                 {hasMetamask ? (
                     isWeb3Enabled ? (
-                        <div>
-                            {SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
-                                <div>{renderCurrentState()}</div>
-                            ) : (
-                                <div>
-                                    <h1>Unsupported Chain ID</h1>
-                                    <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
-                                </div>
-                            )}
-                        </div>
+                        SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
+                            <div>{renderCurrentState()}</div>
+                        ) : (
+                            <div>
+                                <h1>Unsupported Chain ID</h1>
+                                <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
+                            </div>
+                        )
                     ) : (
                         <p>Please connect to a Wallet</p>
                     )
