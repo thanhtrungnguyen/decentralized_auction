@@ -69,6 +69,7 @@
 
 .floatRight {
     float: right;
+    display: flex;
 }
 
 .sidebar {
@@ -126,6 +127,7 @@
     height: 200px;
     float: left;
     margin: 15px;
+    border: 1px solid bisque;
 }
 
 .txtBlueB {

@@ -340,7 +340,10 @@ const AuctionDetailForManager = () => {
                                 // onChange={(e) => handleInputChange(e)}
                                 onChange={setTimeRegistration}
                                 ClassName={styles.datePicker}
-                                value={timeRegistration}
+                                value={[
+                                    new Date(new Date(data.Auctions1__r.records[0].Start_Registration_Time__c).toUTCString()),
+                                    new Date(new Date(data.Auctions1__r.records[0].End_Registration_Time__c).toUTCString()),
+                                ]}
                                 //   value={data.property.viewPropertyTime}
                                 // onChange={setValue}
                                 range

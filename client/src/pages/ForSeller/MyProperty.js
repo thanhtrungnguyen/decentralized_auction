@@ -145,7 +145,7 @@ const MyProperty = () => {
                                     placeholder="Please input"
                                     value={propertyName2}
                                     onChange={(e) => handleInputChange(e)}
-                                    //required
+                                //required
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
@@ -221,7 +221,9 @@ const MyProperty = () => {
                                             <Link className={styles.linkBlue} to={`/propertyDetail/${property.Id}`}>
                                                 View
                                             </Link>
-                                            <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
+                                            {
+                                                property.Status__c !== "Created" || property.Status__c !== "Rejected" || property.Status__c !== "Fail" &&
+                                             <><Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
                                                 Edit
                                             </Link>
                                             <Link className={styles.linkBlue} to={`/deleteProperty/${property.Id}`}>
@@ -230,6 +232,9 @@ const MyProperty = () => {
                                             <label className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
                                                 Request Add
                                             </label>
+                                            </>
+                                            }
+
                                         </td>
                                     </tr>
                                 ))}
@@ -237,7 +242,7 @@ const MyProperty = () => {
                             <div>
                                 <Pagination
                                     className={styles.pagi}
-                                    count={(listProperty.data.total % 10) > 0 ? (Math.floor(listProperty.data.total / 10) + 1) : (listProperty.data.total/10) }
+                                    count={(listProperty.data.total % 10) > 0 ? (Math.floor(listProperty.data.total / 10) + 1) : (listProperty.data.total / 10)}
                                     page={page}
                                     onChange={handleChange}
                                 />

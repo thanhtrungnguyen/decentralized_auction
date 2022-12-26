@@ -11,14 +11,18 @@ const HeaderBid = ({ closeModal }) => {
 
     return (
         <div>
-            <ConnectButton moralisAuth={false} />
-            <button
-                onClick={() => {
-                    closeModal(false);
-                }}
-            >
-                Close
-            </button>
+            <div className={styles.connect}>
+                <ConnectButton moralisAuth={false} />
+
+                <button
+                    className={styles.btnClose}
+                    onClick={() => {
+                        closeModal(false);
+                    }}
+                >
+                    Close
+                </button>
+            </div>
         </div>
     );
 };

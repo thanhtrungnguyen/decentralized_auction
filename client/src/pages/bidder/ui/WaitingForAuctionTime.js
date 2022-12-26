@@ -9,13 +9,15 @@ const WaitingForAuctionTime = ({ auction }) => {
         } else {
             return (
                 <>
-                    <h2>WaitingForAuctionTime</h2>
-                    Auction start in:
-                    <p className={styles.txtNormal}>
-                        <span>
-                            {days}d {hours}h {minutes}m {seconds}s
-                        </span>
-                    </p>
+                    <div className={styles.wait}>
+                        <h2>Waiting For Auction Time</h2>
+                        Auction start in:
+                        <p className={styles.title}>
+                            <span className={styles.title}>
+                                {days}d {hours}h {minutes}m {seconds}s
+                            </span>
+                        </p>
+                    </div>
                 </>
             );
         }
