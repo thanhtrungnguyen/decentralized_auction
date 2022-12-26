@@ -63,11 +63,6 @@ const approveAuction = async (auction) => {
         End_Auction_Time__c: endAuctionTimeFN,
         Due_Payment_Time__c: paymentTimeFN,
     };
-
-    await auctionDAO.updateApproveAuction(auctionApprove);
-
-    await auctionDAO.updateApproveProperty(auction.propertyId);
-
     property = await auctionDAO.findPropertyById(auction.propertyId);
 
     await callContractFunction.createAuction(
@@ -83,6 +78,12 @@ const approveAuction = async (auction) => {
         property.Price_Step__c
     );
     await auctionDAO.createStatusAuctionMongo(auction.auctionId);
+
+    await auctionDAO.updateApproveAuction(auctionApprove);
+
+    await auctionDAO.updateApproveProperty(auction.propertyId);
+
+    
 };
 
 const getAllAuction = async (index, name, category, statusAuction) => {
