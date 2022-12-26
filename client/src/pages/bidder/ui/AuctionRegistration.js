@@ -144,7 +144,7 @@ function AuctionRegistration({ auction }) {
                                             Total amount you must to pay:
                                             {auction.registrationFee != null && auction.depositAmount != null
                                                 ? new Decimal(auction.registrationFee).plus(auction.depositAmount).toString()
-                                                : "0"}{" "}
+                                                : "0"}
                                             ETH
                                         </p>
                                         <button
