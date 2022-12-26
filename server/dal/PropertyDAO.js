@@ -170,7 +170,7 @@ const updateProperty = async (categoryName, property, startViewPropertyTime, end
                 },
                 (err, result) => {
                     if (err) console.error(err);
-                    propertyId = result.Id;
+                    propertyId = result[0].id;
                 }
             );
         return propertyId;
