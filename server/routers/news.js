@@ -10,11 +10,22 @@ const {
     getNewsById,
     sortNews,
 } = require("../controllers/NewsController.js");
+const multer = require("multer");
 const router = express.Router();
+const upload = multer({ dest: "uploads/" });
+router.post("/createNews",upload.fields([
+    {
+        name: "avatar",
+        maxCount: 1,
+    }])
+    , createNews);
 
-router.post("/createNews", createNews);
-
-router.put("/updateNews/:id", updateNews);
+router.put("/updateNews/:id",upload.fields([
+    {
+        name: "avatar",
+        maxCount: 1,
+    }]),
+     updateNews);
 
 router.put("/changeStatusNews/:id", changeStatusNews);
 

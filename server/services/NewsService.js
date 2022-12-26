@@ -42,17 +42,24 @@ const changeStatus = async (id, status) => {
         console.error(error);
     }
 };
-const update = async (id, title, description, status) => {
+const update = async (id, title, content,files) => {
     try {
-        var updated = await NewsDAO.update(id, title, description, status);
+        var result = null;
+        if (files != null) {
+            if (files.avatar !== undefined) { result = await uploadFile(files.avatar[0]); }    
+        }
+        const filesImg = { result: result };
+        var updated = await NewsDAO.update(id, title, content, filesImg);
         return updated;
     } catch (error) {
         console.error(error);
     }
 };
-const create = async (title, description) => {
+const create = async (title, content, files) => {
     try {
-        var created = await NewsDAO.create(title, description);
+        var result = await uploadFile(files.avatar[0])
+        const filesImg = { result: result };
+        var created = await NewsDAO.create(title, content, filesImg);
         return created;
     } catch (error) {
         console.error(error);

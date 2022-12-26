@@ -3,21 +3,26 @@ const NewsService = require("../services/NewsService");
 const createNews = async (req, res, next) => {
     try {
         var title = req.body.title;
-        var description = req.body.description;
-        var created = await NewsService.create(title, description);
+        var files = req.files; 
+        var content = req.body.content;
+        var created = await NewsService.create(title, content,files);
         if (created) res.status(200).send("News has been created.");
     } catch (error) {
         next(error);
     }
 };
 // Update News
+function isEmptyObject(obj){
+    return JSON.stringify(obj) === '{}';
+}
 const updateNews = async (req, res, next) => {
     try {
         var id = req.params.id;
         var title = req.body.title;
-        var description = req.body.description;
-        var status = req.body.status;
-        var updated = await NewsService.update(id, title, description, status);
+        var content = req.body.content;
+        var files = req.files;
+        isEmptyObject(files)?files = null : files =  req.files;
+        var updated = await NewsService.update(id, title, content,files);
         if (updated) res.status(200).send("News has been updated.");
     } catch (error) {
         next(error);
