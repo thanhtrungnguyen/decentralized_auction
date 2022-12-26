@@ -26,14 +26,13 @@ const AuctionsListForManager = () => {
     const baseURL = "http://localhost:8800/api/auction/";
     const baseURLCategory = "http://localhost:8800/api/category/";
     const baseURLAuction = `http://localhost:8800/api/auction/getAll/${page}/${propertyName}/${category}/${status}`;
-   // const baseURL = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
+    // const baseURL = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
     const [listCategory, setListCategory] = useState([]);
     const [listAuction, setListAuction] = useState([]);
     const [loading, setLoading] = useState(true);
 
-
     useEffect(() => {
-        const fetchData = async()=>{
+        const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURLCategory).then((resp) => {
                 console.log(resp.data);
@@ -46,9 +45,8 @@ const AuctionsListForManager = () => {
                 setListAuction(resp.data);
             });
             setLoading(false);
-        }
-       fetchData();
-        
+        };
+        fetchData();
     }, [baseURLAuction]);
 
     const handleInputChange = (e) => {
@@ -61,15 +59,15 @@ const AuctionsListForManager = () => {
         }
     };
     const handleSubmit = (event) => {
-        propertyName2 === '' ? setPropertyName(null):setPropertyName(propertyName2);
-        setCategory(category2)
+        propertyName2 === "" ? setPropertyName(null) : setPropertyName(propertyName2);
+        setCategory(category2);
         setPage(1);
         event.preventDefault();
     };
-    const handleChangeStatus = (e)=>{
-        setStatus(e.target.value)
+    const handleChangeStatus = (e) => {
+        setStatus(e.target.value);
         setPage(1);
-    }
+    };
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -102,7 +100,7 @@ const AuctionsListForManager = () => {
                     <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
-                                <p className={styles.title}>Property Name</p>
+                                <p className={styles.title}>Auction Name</p>
                                 <input
                                     id="propertyName"
                                     className={styles.input}
@@ -121,34 +119,72 @@ const AuctionsListForManager = () => {
                                 placeholder="Category"
                                 //defaultValue="null"
                             >
-                                 <option value='null'>All</option>
+                                <option value="null">All</option>
                                 {listCategory.map((item) => (
-                                    <option value={item.Name} selected={item.Name===category2} >{item.Name}</option>
+                                    <option value={item.Name} selected={item.Name === category2}>
+                                        {item.Name}
+                                    </option>
                                 ))}
                             </select>
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e)=>setPropertyName2('')}></input>
+                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e) => setPropertyName2("")}></input>
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <button className={styles.bold} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.bold}
+                                value="null"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
                             </button>
-                            <button className={styles.link} value='Request' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.link}
+                                value="Request"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Request add
                             </button>
-                            <button className={styles.link} value='Approved' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.link}
+                                value="Approved"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Approved
                             </button>
-                            <button className={styles.link} value='UpcomingforBid' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.link}
+                                value="UpcomingforBid"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Upcoming
                             </button>
-                            <button className={styles.link} value='Bidding' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.link}
+                                value="Bidding"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Bidding
                             </button>
-                            <button className={styles.link} value='Closed' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.link}
+                                value="Closed"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Closed
                             </button>
                             <hr />
@@ -159,6 +195,7 @@ const AuctionsListForManager = () => {
                             <br />
                             <table className={styles.table}>
                                 <tr>
+                                    <th className={styles.th}>Auction Name</th>
                                     <th className={styles.th}>Property Name</th>
                                     <th className={styles.th}>Category Name</th>
                                     <th className={styles.th}>Registration Time</th>
@@ -168,21 +205,25 @@ const AuctionsListForManager = () => {
                                 </tr>
                                 {listAuction.listAuction.map((auction) => (
                                     <tr>
+                                        <td className={styles.td}>{auction.Auctions1__r.records[0].Name}</td>
                                         <td className={styles.td}>{auction.Name}</td>
+
                                         <td className={styles.td}>{auction.Category_Id__r.Name}</td>
                                         <td className={styles.td}>
                                             {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
                                             {auction.Auctions1__r.records[0].Status__c != "Request" &&
-                                                
-                                                "From "+    new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c).toUTCString().split("GMT")[0] 
-                                                 +  
-                                                 "To " +   new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
+                                                "From " +
+                                                    new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c)
+                                                        .toUTCString()
+                                                        .split("GMT")[0] +
+                                                    "To " +
+                                                    new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
                                         <td className={styles.td}>
                                             {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
                                             {auction.Auctions1__r.records[0].Status__c != "Request" &&
                                                 "From " +
-                                                new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
+                                                    new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
                                                     " To " +
                                                     new Date(auction.Auctions1__r.records[0].End_Auction_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
@@ -194,20 +235,25 @@ const AuctionsListForManager = () => {
                                             >
                                                 View
                                             </Link>
-                                            {auction.Auctions1__r.records[0].Status__c == "Request" && 
-                                            <Link
-                                                className={styles.linkBlue}
-                                                to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
-                                            >
-                                                Approve
-                                            </Link>}
-                                            
+                                            {auction.Auctions1__r.records[0].Status__c == "Request" && (
+                                                <Link
+                                                    className={styles.linkBlue}
+                                                    to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
+                                                >
+                                                    Approve
+                                                </Link>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={Math.floor(listAuction.total / 10) + 1} page={page} onChange={handleChange} />
+                                <Pagination
+                                    className={styles.pagi}
+                                    count={Math.floor(listAuction.total / 10) + 1}
+                                    page={page}
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                     </div>
