@@ -6,8 +6,8 @@ const cookieParser = require("cookie-parser");
 const connectSyncBlockchainDB = require("./databases/connectSyncBlockchainBD");
 const http = require("http");
 // const { Server } = require("socket.io");
-const { createServer } = require("http");
-
+// const { createServer } = require("http");
+const { CONTRACT_ADDRESS } = require("./config/SmartContract");
 const multer = require("multer");
 
 const createSocket = require("./socketio");
@@ -18,7 +18,6 @@ const auctionRoute = require("./routers/auctions.js");
 const propertyRoute = require("./routers/properties.js");
 const categoryRoute = require("./routers/categories.js");
 const newsRoute = require("./routers/news.js");
-const { address } = require("./services/callContractFunction");
 
 console.log("Starting...");
 
@@ -46,15 +45,6 @@ app.use(express.json());
 connectSyncBlockchainDB();
 
 const upload = multer({ dest: "uploads/" });
-
-//connect salesforce
-
-// app.post("/webhook", (req, res) => {
-//     const webhook = req.body;
-//     console.log(webhook);
-//     res.status(200).json;
-// });
-
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/property", propertyRoute);
@@ -76,7 +66,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-console.log(`Contract address: ${address}`);
+console.log(`Contract address: ${CONTRACT_ADDRESS}`);
 
 server.listen(PORT, () => {
     // connect();

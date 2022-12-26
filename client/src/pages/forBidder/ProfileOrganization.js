@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const ProfileOrganization = () => {
     const { id } = useParams();
-    const baseURL = `http://localhost:8800/api/profile/${id}`;
+    const baseURL = `http://localhost:8800/api/user/${id}`;
     const { data, loading, error } = useFetch(baseURL);
     const navigate = useNavigate();
 
@@ -63,27 +63,27 @@ const ProfileOrganization = () => {
                     <br />
                     <div className="row">
                         <label className="label">Organization name</label>
-                        <input type="text" className="input" value={data.organizationName} readOnly></input>
+                        <input type="text" className="input" value={data.account.Name} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Tax Code</label>
-                        <input type="text" className="input" value={data.taxCode} readOnly></input>
+                        <input type="text" className="input" value={data.account.Tax_Code__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Tax Code Granted Date</label>
-                        <input type="text" className="input" value={data.taxCodeGrantedDate} readOnly></input>
+                        <input type="text" className="input" value={data.account.Tax_Code_Granted_Date__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Tax Code Granted Place</label>
-                        <input type="text" className="input" value={data.taxCodeGrantedPlace} readOnly></input>
+                        <input type="text" className="input" value={data.account.Tax_Code_Granted_Place__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Specific Address</label>
-                        <input type="text" className="input" value={data.specificAddress} readOnly></input>
+                        <input type="text" className="input" value={data.account.Specific_Address__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Position</label>
-                        <input type="text" className="input" value={data.position} readOnly></input>
+                        <input type="text" className="input" value={data.account.Name} readOnly></input>
                     </div>
                     <br />
                     <br />
@@ -118,24 +118,28 @@ const ProfileOrganization = () => {
                     <br />
 
                     <div className="row">
-                        <label className="label">Firstname</label>
-                        <input type="text" className="input" value={data.firstName} readOnly></input>
+                        <label className="label">First Name</label>
+                        <input type="text" className="input" value={data.contact.First_Name__c} ></input>
                     </div>
                     <div className="row">
-                        <label className="label">Lastname</label>
-                        <input type="text" className="input" value={data.lastName} readOnly></input>
+                        <label className="label">Last Name</label>
+                        <input type="text" className="input" value={data.contact.Last_Name__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Gender</label>
-                        <input type="text" className="input" value={data.gender} readOnly></input>
+                        <input type="text" className="input" value={data.contact.Gender__c} readOnly></input>
                     </div>
                     <div className="row">
-                        <label className="label">Date of birth</label>
-                        <input type="text" className="input" value={data.dateOfBirth} readOnly></input>
+                        <label className="label">Date Of Birth</label>
+                        <input type="text" className="input" value={data.contact.Date_Of_Birth__c} readOnly></input>
+                    </div>
+                    <div className="row">
+                        <label className="label">Email</label>
+                        <input type="text" className="input" value={data.contact.Email__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Phone number</label>
-                        <input type="text" className="input" value={data.phoneNumber} readOnly></input>
+                        <input type="text" className="input" value={data.contact.Phone__c} readOnly></input>
                     </div>
                     <br />
                     <br />
@@ -169,19 +173,19 @@ const ProfileOrganization = () => {
                     <br />
                     <div className="row">
                         <label className="label">Province/City</label>
-                        <input type="text" className="input" value={data.city} readOnly></input>
+                        <input type="text" className="input" value={data.contact.City__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">District</label>
-                        <input type="text" className="input" value={data.district} readOnly></input>
+                        <input type="text" className="input" value={data.contact.District__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Wards</label>
-                        <input type="text" className="input" value={data.wards} readOnly></input>
+                        <input type="text" className="input" value={data.contact.Wards__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Specific address</label>
-                        <input type="text" className="input" value={data.specificAddress} readOnly></input>
+                        <input type="text" className="input" value={data.contact.Address__c} readOnly></input>
                     </div>
                     <br />
                     <br />
@@ -209,20 +213,20 @@ const ProfileOrganization = () => {
                     <br />
                     <div className="row">
                         <label className="label">Card number</label>
-                        <input type="text" className="input" value={data.CardNumber} readOnly></input>
+                        <input type="text" className="input" value={data.contact.Card_Number__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Card granted date</label>
-                        <input type="text" className="input" value={data.cardGrantedDate} readOnly></input>
+                        <input type="text" className="input" value={data.contact.Card_Granted_Date__c} readOnly></input>
                     </div>
                     <div className="row">
                         <label className="label">Card granted place</label>
-                        <input type="text" className="input" value={data.cardGrantedPlace} readOnly></input>
+                        <input type="text" className="input" value={data.contact.Card_Granted_Place__c} readOnly></input>
                     </div>
 
-                    <img className="img" src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
-                    <img className="img2" src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
-                    <p className="bold">Account Information</p>
+                    <img className="img" src={`http://localhost:8800/api/auction/images/${data.contact.Font_Side_Image__c}`} alt="images" />
+                    <img className="img2" src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`} alt="images" />
+                    {/* <p className="bold">Account Information</p>
                     <br />
                     <br />
                     <br />
@@ -234,7 +238,7 @@ const ProfileOrganization = () => {
                     <div className="row">
                         <label className="label">Password</label>
                         <input type="password" className="input" value={data.password} readOnly></input>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="conBtn">
                     <button className="btn" onClick={handleClick}>

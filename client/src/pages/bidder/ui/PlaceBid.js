@@ -17,74 +17,76 @@ import TransactionStatus from "../components/TransactionStatus";
 import BiddingProperty from "../components/BiddingProperty";
 import TransactionHistory from "../components/TransactionHistory";
 import AuctionResult from "./AuctionResult";
+import { useFetchBidding } from "../../../hook/useFetch";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
+import Loader from "../components/Loader";
+import Decimal from "decimal.js";
+
 function PlaceBid({ auction }) {
-    const { auctionId } = useParams() || "null";
-    const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}/placedBid`;
-
-    // const [openModal, setOpenModal] = useState(() => {
-    //     return false;
-    // });
-
-    const [placedBid, setPlacedBid] = useState(() => {
-        return [];
-    });
-    const [highestBid, setHighestBid] = useState(() => {
-        return "0";
-    });
-    const [inputBidAmount, setInputBidAmount] = useState(() => {
-        return "0";
-    });
-    const [transactionStatus, setTransactionStatus] = useState(() => {
-        return undefined;
-    });
-
-    const inputRef = useRef("0");
+    const baseURLPlacedBid = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/placedBid`;
+    const baseURLRegistered = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
+    const { loading: loadingPlacedBid, data: placedBid, error: errorPlacedBid } = useFetchBidding(baseURLPlacedBid);
+    const { loading: loadingRegistered, data: registered, error: errorRegistered } = useFetchBidding(baseURLRegistered);
+    const dispatch = useNotification();
+    const [highestBid, setHighestBid] = useState(0);
+    const [inputBidAmount, setInputBidAmount] = useState("0");
+    const [transactionStatus, setTransactionStatus] = useState();
+    const { account, isWeb3Enabled } = useMoralis();
+    const [isRegisteredBidder, setRegisteredBidder] = useState(false);
+    const [minBidAmount, setMinBidAmount] = useState();
 
     useEffect(() => {
-        axios
-            .get(baseURL)
-            .then((res) => {
-                setPlacedBid(res.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
+        if (isWeb3Enabled) {
+            updateUI();
+        }
+    }, [isWeb3Enabled, account, transactionStatus, transactionStatus, loadingPlacedBid, loadingRegistered, registered]);
 
-    const { isWeb3Enabled, chainId: chainIdHex } = useMoralis();
-    const chainId = parseInt(chainIdHex);
-    // console.log(chainId);
-    // const chainId = 31337;
-    const dispatch = useNotification();
-
-    // const auctionContractAddress = chainId in contractAddresses ? contractAddresses[31337][0] : null;
-    const auctionContractAddress = contractAddresses[chainId][0] ?? null;
-    // console.log(auctionContractAddress);
-
-    const [auctionInformation, setAuctionInformation] = useState(() => {
-        return [];
-    });
+    const checkRegisteredBidder = () => {
+        let isRegistered = false;
+        registered?.forEach((element) => {
+            if (element.bidder == account.toLowerCase()) {
+                isRegistered = true;
+            }
+        });
+        return isRegistered;
+    };
+    // const checkRetractedBidder=()=>{
+    //     registered?.forEach((element) => {
+    //         if (element.bidder == account.toLowerCase()) {
+    //             setRegisteredBidder(true);
+    //         }
+    //     });
+    // }
 
     const getHighestBid = () => {
-        const highest = 0;
-        placedBid.forEach((element) => {
+        let highest = 0;
+        placedBid?.forEach((element) => {
             if (element.bidAmount > highest) {
                 highest = element.bidAmount;
             }
         });
         setHighestBid(highest);
     };
-    // getHighestBid();
-
+    const updateUI = async () => {
+        getHighestBid();
+        setRegisteredBidder(checkRegisteredBidder);
+        setMinBidAmount(() => {
+            if (highestBid != 0 && auction.priceStep != null) {
+                if (highestBid == 0) return auction.startBid;
+                if (highestBid > 0) return new Decimal(highestBid).plus(auction.priceStep).toString();
+            }
+            return "0";
+        });
+    };
     const {
         runContractFunction: placeBid,
-        data,
-        error,
-        isFetching,
-        isLoading,
+        data: dataPlaceBid,
+        error: errorPlaceBid,
+        isFetching: isFetchingPlaceBid,
+        isLoading: isLoadingPlaceBid,
     } = useWeb3Contract({
-        abi: auctionAbi,
-        contractAddress: auctionContractAddress, // your contract address here
+        abi: CONTRACT_ABI,
+        contractAddress: CONTRACT_ADDRESS, // your contract address here
         functionName: "placeBid",
         msgValue: "0",
         params: {
@@ -92,72 +94,157 @@ function PlaceBid({ auction }) {
             bidAmount: ethers.utils.parseEther(inputBidAmount.toString() || "0").toString(),
         },
     });
-    if (data) console.log(data);
-    if (error) console.log(error);
+    // console.log(dataPlaceBid);
 
-    // const { runContractFunction: getAuctionInformationById } = useWeb3Contract({
-    //     abi: auctionAbi,
-    //     contractAddress: auctionContractAddress,
-    //     functionName: "getAuctionInformationById",
-    //     params: { auctionId: "12a" },
-    // });
-    // const updateUIValues = async () => {
-    //     const auctionInformation = await getAuctionInformationById();
-    // };
-    useEffect(() => {
-        if (isWeb3Enabled) {
-            // updateUIValues();
-        }
-    }, [isWeb3Enabled]);
-    const handleSuccess = async (tx) => {
+    const {
+        runContractFunction: retractBid,
+        data: dataRetractBid,
+        error: errorRetractBid,
+        isFetching: isFetchingRetractBid,
+        isLoading: isLoadingRetractBid,
+    } = useWeb3Contract({
+        abi: CONTRACT_ABI,
+        contractAddress: CONTRACT_ADDRESS, // your contract address here
+        functionName: "retractBid",
+        msgValue: "0",
+        params: {
+            auctionId: auction.auctionId,
+        },
+    });
+
+    //============================================================================================
+    const placeBidHandleSuccess = async (tx) => {
         try {
-            console.log("handleSuccess " + tx.hash);
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
-
-            // updateUIValues();
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
-
-            handleSuccessNotification();
+            dispatch({
+                type: "success",
+                title: "Place Bid Notification",
+                message: "Place Bid Completed!",
+                position: "topR",
+                icon: <BsCheckLg />,
+            });
         } catch (error) {
             console.log(error);
         }
     };
-    const handleComplete = async (hash) => {
-        console.log(hash);
-        // setTransactionStatus({ hash: hash, status: "waitingForConfirmation" });
-    };
-    const handleSuccessNotification = () => {
-        dispatch({
-            type: "success",
-            title: "Place Bid Notification",
-            message: "Place Bid Completed!",
-            position: "topR",
-            icon: <BsCheckLg />,
-        });
-    };
 
-    // const handleClick = async () => {
-    //     await setInputBidAmount(inputRef.current.value);
-    //     console.log(inputBidAmount);
-    //     await placeBid({
-    //         onError: handleErrorNotification,
-    //         onSuccess: handleSuccess,
-    //         onComplete: handleComplete,
-    //     });
-    // };
-
-    const handleErrorNotification = (tx) => {
+    const placeBidHandleError = async (tx) => {
         console.log(tx);
-        setTransactionStatus({ status: "Failed" });
+        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
+        setTransactionStatus({ status: message });
         dispatch({
             type: "error",
             title: "Place Bid Error",
-            message: "Place Bid Failed!",
+            message: message,
             position: "topR",
             icon: <AiOutlineClose />,
         });
     };
+
+    const retractBidHandleSuccess = async (tx) => {
+        try {
+            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
+            await tx.wait(1);
+            setTransactionStatus({ hash: tx.hash, status: "Completed" });
+
+            dispatch({
+                type: "success",
+                title: "retractBid Notification",
+                message: "retractBid Completed!",
+                position: "topR",
+                icon: <BsCheckLg />,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const retractBidHandleError = async (tx) => {
+        console.log(tx);
+        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
+        setTransactionStatus({ status: message });
+        dispatch({
+            type: "error",
+            title: "Place Bid Error",
+            message: message,
+            position: "topR",
+            icon: <AiOutlineClose />,
+        });
+    };
+    //============================================================================================
+    const getBidderState = () => {
+        // console.log("first");
+        if (loadingRegistered || loadingPlacedBid) return "LOADING";
+        if (isRegisteredBidder) return "BIDDING";
+        if (!isRegisteredBidder) return "NOT_REGISTERED";
+
+        return null;
+    };
+
+    const renderCurrentBidderState = () => {
+        switch (getBidderState()) {
+            case "LOADING":
+                return <Loader />;
+            case "BIDDING":
+                return (
+                    <>
+                        <p className={styles.title}>Place bid details:</p>
+                        <p className={styles.txtT}>Your bid must be at least {minBidAmount} ETH</p>
+                        <input
+                            className={styles.input}
+                            type="number"
+                            value={inputBidAmount}
+                            validation={{
+                                max: "",
+                                min: 1,
+                            }}
+                            onChange={(event) => {
+                                setInputBidAmount(event.target.value);
+                            }}
+                        ></input>
+                        <label className={styles.mess}>Error message</label>
+                        <br />
+                        <button
+                            disabled={isLoadingPlaceBid || isFetchingPlaceBid}
+                            onClick={async () => {
+                                placeBid({
+                                    onError: placeBidHandleError,
+                                    onSuccess: placeBidHandleSuccess,
+                                });
+                            }}
+                        >
+                            {isLoadingPlaceBid || isFetchingPlaceBid ? "Loading..." : "Place Bid"}
+                        </button>
+                        <button
+                            disabled={isLoadingRetractBid || isFetchingRetractBid}
+                            onClick={async () => {
+                                retractBid({
+                                    onError: retractBidHandleError,
+                                    onSuccess: retractBidHandleSuccess,
+                                });
+                            }}
+                        >
+                            {isLoadingRetractBid || isFetchingRetractBid ? "Loading..." : "Retract Bid"}
+                        </button>
+                        <TransactionStatus transactionStatus={transactionStatus} />
+                    </>
+                );
+            case "RETRACT":
+                return (
+                    <>
+                        <p>You have retracted bid</p>
+                        <TransactionStatus transactionStatus={transactionStatus} />
+                    </>
+                );
+            case "NOT_REGISTERED":
+                return <>You haven't registered the auction</>;
+            default:
+                return <>???</>;
+        }
+    };
+
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
             return <AuctionResult auction={auction} />;
@@ -172,10 +259,19 @@ function PlaceBid({ auction }) {
                                 {/* <BiddingProperty auction={auction} />
                         <BiddingProperty auction={auction} property={property} /> */}
                                 <BiddingProperty />
-                                <p className={styles.txtM}>Starting bid:</p>
-                                <p className={styles.txtNormal}>{auction.startBid}</p>
-                                <p className={styles.txtM}>Current bid:</p>
-                                <p className={styles.txtNormal}>{highestBid} ETH</p>
+                                {highestBid != 0 ? (
+                                    <>
+                                        <p className={styles.txtM}>Starting bid:</p>
+                                        <p className={styles.txtNormal}>{auction.startBid}</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p className={styles.txtM}>Current bid:</p>
+                                        <p className={styles.txtNormal}>{highestBid} ETH</p>
+                                    </>
+                                )}
+                                <p className={styles.txtM}>Price step:</p>
+                                <p className={styles.txtNormal}>{auction.priceStep} ETH</p>
                                 <p className={styles.txtM}>Auction ends in:</p>
                                 <p className={styles.txtNormal}>
                                     <span>
@@ -183,40 +279,7 @@ function PlaceBid({ auction }) {
                                     </span>
                                 </p>
                             </div>
-                            <div className={styles.detail}>
-                                <p className={styles.title}>Place bid details:</p>
-                                <p className={styles.txtT}>Your bid must be at least 6969 ETH</p>
-
-                                <input
-                                    className={styles.input}
-                                    type="number"
-                                    value={inputBidAmount}
-                                    validation={{
-                                        max: "",
-                                        min: 1,
-                                    }}
-                                    onChange={(event) => {
-                                        setInputBidAmount(event.target.value);
-                                    }}
-                                ></input>
-                                <label className={styles.mess}>Error message</label>
-                                <br />
-                                <button
-                                    disabled={isLoading || isFetching}
-                                    className={styles.btn}
-                                    onClick={async () => {
-                                        console.log(inputBidAmount);
-                                        placeBid({
-                                            onError: handleErrorNotification,
-                                            onSuccess: handleSuccess,
-                                            onComplete: handleComplete,
-                                        });
-                                    }}
-                                >
-                                    {isLoading || isFetching ? "Loading..." : "Place Bid"}
-                                </button>
-                                <TransactionStatus transactionStatus={transactionStatus} />
-                            </div>
+                            <div className={styles.detail}>{renderCurrentBidderState()}</div>
                             <TransactionHistory auction={auction} />
                         </div>
                     </div>

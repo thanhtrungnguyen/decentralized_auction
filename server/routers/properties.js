@@ -37,7 +37,20 @@ router.post(
     createProperty
 );
 
-router.put("/:id", verifySeller, updateProperty);
+router.put("/:id", verifySeller,  upload.fields([
+    {
+        name: "propertyImage1",
+        maxCount: 1,
+    },
+    {
+        name: "propertyImage2",
+        maxCount: 1,
+    },
+    {
+        name: "propertyImage3",
+        maxCount: 1,
+    },
+]), updateProperty);
 
 router.get("/getById/:id", findPropertyByID);
 

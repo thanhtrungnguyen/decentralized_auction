@@ -1,71 +1,80 @@
 import React from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import { Outlet, Link } from "react-router-dom";
-import { Button, ConnectButton, useNotification } from "web3uikit";
-import { useMoralis, useWeb3Contract, useApiContract } from "react-moralis";
-import HeaderBid from "../components/HeaderBid";
-import auctionAbi from "../../../constants/contractAbi.json";
-import contractAddresses from "../../../constants/contractAddress.json";
-import Moralis from "moralis";
+import { useNotification } from "web3uikit";
+import { useMoralis, useWeb3Contract } from "react-moralis";
 import { ethers } from "ethers";
 import Countdown from "react-countdown";
 import Decimal from "decimal.js";
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import BiddingProperty from "../components/BiddingProperty";
-import { useFetch } from "../../../hook/useFetch";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import WaitingForAuctionTime from "./WaitingForAuctionTime";
 import TransactionStatus from "../components/TransactionStatus";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
+import { useFetchBidding } from "../../../hook/useFetch";
+import Loader from "../components/Loader";
 
 function AuctionRegistration({ auction }) {
-    const { isWeb3Enabled, chainId: chainIdHex } = useMoralis();
-    const chainId = parseInt(chainIdHex);
-    console.log(chainId);
-    // const chainId = 31337;
+    const { account, isWeb3Enabled } = useMoralis();
     const dispatch = useNotification();
-    const [transactionStatus, setTransactionStatus] = useState(() => {
-        return undefined;
-    });
-    // const auctionContractAddress = chainId in contractAddresses ? contractAddresses[31337][0] : null;
-    const auctionContractAddress = contractAddresses[chainId][0] ?? null;
+    // const [bidInformation, setBidInformation] = useState();
+    const [transactionStatus, setTransactionStatus] = useState();
+    const [isRegisteredBidder, setRegisteredBidder] = useState(false);
+    const [isLoadingInfo, setLoadingInfo] = useState(true);
+    const baseURL = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
+    const { loading, data: registeredBid, error } = useFetchBidding(baseURL);
+    useEffect(() => {
+        if (isWeb3Enabled) {
+            updateUI();
+        }
+    }, [isWeb3Enabled, account, isRegisteredBidder, loading, registeredBid]);
 
     const amount =
         auction.registrationFee != null && auction.depositAmount != null
             ? ethers.utils.parseUnits(new Decimal(auction.registrationFee).plus(auction.depositAmount).toString(), "ether").toString()
             : "0";
+
     const {
         runContractFunction: registerToBid,
         data,
-        error,
+        error: errorRegisterToBid,
         isFetching,
         isLoading,
     } = useWeb3Contract({
-        abi: auctionAbi,
-        contractAddress: auctionContractAddress, // your contract address here
+        abi: CONTRACT_ABI,
+        contractAddress: CONTRACT_ADDRESS,
         functionName: "registerToBid",
         msgValue: amount,
         params: { auctionId: auction.auctionId },
     });
-    if (error) console.log(error);
-    console.log();
-    // const { runContractFunction: getAuctionInformationById } = useWeb3Contract({
-    //     abi: auctionAbi,
-    //     contractAddress: auctionContractAddress,
-    //     functionName: "getAuctionInformationById",
-    //     params: { auctionId: "12a" },
-    // });
-    // const updateUIValues = async () => {
-    //     const auctionInformation = await getAuctionInformationById();
-    // };
+    const updateUI = async () => {
+        // setBidInformation(await getBidInformationByAuctionId());
 
+        await checkRegisteredBidder();
+        setLoadingInfo(false);
+    };
+
+    const checkRegisteredBidder = async () => {
+        await registeredBid?.forEach((element) => {
+            console.log(element);
+            if (element.bidder.toUpperCase() === account.toUpperCase()) {
+                setRegisteredBidder(true);
+            }
+        });
+        // setRegisteredBidder(false);
+    };
+
+    if (error) console.log(error);
+    console.log("Loading: " + loading);
+    console.log(registeredBid);
+    console.log(isRegisteredBidder);
     const handleSuccess = async (tx) => {
         try {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
-
-            // updateUIValues();
+            setRegisteredBidder(true);
+            updateUI();
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
             handleSuccessNotification(tx);
         } catch (error) {
@@ -124,27 +133,38 @@ function AuctionRegistration({ auction }) {
                                 <p className={styles.title}>Registration details:</p>
                                 <p className={styles.txtT}>Registration Fee: {auction.registrationFee} ETH</p>
                                 <p className={styles.txtT}>Deposit Amount: {auction.depositAmount} ETH</p>
-                                <p className={styles.txtT}>
-                                    Total amount you must to pay:
-                                    {auction.registrationFee != null && auction.depositAmount != null
-                                        ? new Decimal(auction.registrationFee).plus(auction.depositAmount).toString()
-                                        : "0"}{" "}
-                                    ETH
-                                </p>
+
                                 {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
                                 {/* <label className={styles.mess}>message</label> */}
-                                <button
-                                    className={styles.btn}
-                                    onClick={async () =>
-                                        await registerToBid({
-                                            onSuccess: handleSuccess,
-                                            onError: handleErrorNotification,
-                                            onComplete: handleComplete,
-                                        })
-                                    }
-                                >
-                                    {isLoading || isFetching ? <div>Loading...</div> : <div>Register for auction</div>}
-                                </button>
+                                {isLoadingInfo ? (
+                                    <Loader />
+                                ) : !isRegisteredBidder ? (
+                                    <>
+                                        <p className={styles.txtT}>
+                                            Total amount you must to pay:
+                                            {auction.registrationFee != null && auction.depositAmount != null
+                                                ? new Decimal(auction.registrationFee).plus(auction.depositAmount).toString()
+                                                : "0"}{" "}
+                                            ETH
+                                        </p>
+                                        <button
+                                            disabled={isRegisteredBidder || isLoading || isFetching}
+                                            className={styles.btn}
+                                            onClick={async () =>
+                                                await registerToBid({
+                                                    onSuccess: handleSuccess,
+                                                    onError: handleErrorNotification,
+                                                    onComplete: handleComplete,
+                                                })
+                                            }
+                                        >
+                                            {isLoading || isFetching ? <div>Loading...</div> : <div>Register for auction</div>}
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>You have Registered The Auction</>
+                                )}
+
                                 <TransactionStatus transactionStatus={transactionStatus} />
                             </div>
                         </div>
