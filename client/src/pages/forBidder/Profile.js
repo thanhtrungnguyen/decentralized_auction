@@ -79,6 +79,10 @@ const Profile = () => {
                         <input type="text" className="input" value={data.contact.Date_Of_Birth__c} readOnly></input>
                     </div>
                     <div className="row">
+                        <label className="label">Email</label>
+                        <input type="text" className="input" value={data.contact.Email__c} readOnly></input>
+                    </div>
+                    <div className="row">
                         <label className="label">Phone number</label>
                         <input type="text" className="input" value={data.contact.Phone__c} readOnly></input>
                     </div>

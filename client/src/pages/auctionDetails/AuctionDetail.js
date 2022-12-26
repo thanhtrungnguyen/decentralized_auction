@@ -74,11 +74,11 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            {/* <img
+                            <img
                                 className={styles.img}
                                 src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
                                 alt="images"
-                            /> */}
+                            />
                         </div>
                         <div className={styles.row}>
                             {/* <img
@@ -86,11 +86,11 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            {/* <img
+                            <img
                                 className={styles.img}
                                 src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
                                 alt="images"
-                            /> */}
+                            />
                         </div>
                         <div className={styles.row}>
                             {/* <img
@@ -98,11 +98,11 @@ const AuctionDetail = () => {
               src="https://www.w3schools.com/html/pic_trulli.jpg"
               alt="images"
             /> */}
-                            {/* <img
+                            <img
                                 className={styles.img}
                                 src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
                                 alt="images"
-                            /> */}
+                            />
                         </div>
                     </div>
                     {/* </div> */}
