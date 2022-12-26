@@ -22,7 +22,7 @@ const BidModalButton = ({ auctionId, propertyId }) => {
                         setOpenModal(true);
                     }}
                 >
-                    Fucking Bid
+                    {loading ? "Loading" : "Go to Auction"}
                 </button>
                 {openModal && <BidModal closeModal={setOpenModal} loading={loading} auction={auction} propertyId={propertyId} />}
             </div>

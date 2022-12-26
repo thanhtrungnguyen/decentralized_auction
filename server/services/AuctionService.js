@@ -1,4 +1,5 @@
 const auctionDAO = require("../dal/auctionDAO");
+
 const callContractFunction = require("./callContractFunction");
 
 const createRequestAuction = async (propertyId) => {
@@ -84,8 +85,8 @@ const approveAuction = async (auction) => {
     await auctionDAO.createStatusAuctionMongo(auction.auctionId);
 };
 
-const getAllAuction = async (index,name,category,statusAuction) => {
-    var auctionList = await auctionDAO.getAllAuction(index,name,category,statusAuction);
+const getAllAuction = async (index, name, category, statusAuction) => {
+    var auctionList = await auctionDAO.getAllAuction(index, name, category, statusAuction);
     return auctionList;
 };
 const getAllAuctionBidder = async () => {
@@ -102,24 +103,33 @@ const getAuctionDetailByID = async (auctionId, propertyId) => {
     return data;
 };
 
-const updateStatusForAuction = async (auctionId,status)=>{
-    await auctionDAO.updateStatusForAuction(auctionId,status);
-}
-const findStatusAuction = async(auctionId)=>{
+const updateStatusForAuction = async (auctionId, status) => {
+    await auctionDAO.updateStatusForAuction(auctionId, status);
+};
+const findStatusAuction = async (auctionId) => {
     const auction = await auctionDAO.findStatusAuction(auctionId);
     return auction;
-}
-const updateStatusAuctionMongo = async(auctionId, status)=>{
+};
+const updateStatusAuctionMongo = async (auctionId, status) => {
     await auctionDAO.updateStatusAuctionMongo(auctionId, status);
-}
+};
 
-
-
-const filterAuction = async(index,status,price)=>{
-    var list =await auctionDAO.filterAuction(index,status,price)
+const filterAuction = async (index, status, price) => {
+    var list = await auctionDAO.filterAuction(index, status, price);
     return list;
-}
+};
 // exports.createRequestAuction = createRequestAuction;
 // exports.updateRejectAuction = updateRejectAuction
 
-module.exports = { createRequestAuction, updateRejectAuction, approveAuction, getAllAuction, getAuctionDetailByID, getAuctionForUpdateStatus, updateStatusForAuction, findStatusAuction, updateStatusAuctionMongo,getAllAuctionBidder };
+module.exports = {
+    createRequestAuction,
+    updateRejectAuction,
+    approveAuction,
+    getAllAuction,
+    getAuctionDetailByID,
+    getAuctionForUpdateStatus,
+    updateStatusForAuction,
+    findStatusAuction,
+    updateStatusAuctionMongo,
+    getAllAuctionBidder,
+};

@@ -23,13 +23,15 @@ const BidModal = ({ closeModal, loading, auction, propertyId }) => {
 
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
-        if (loading) return "Loading";
-        if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
-        if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
-        if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
-        if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
-        if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
-        if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
+        if (auction) {
+            if (loading) return "Loading";
+            if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
+            if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
+            if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
+            if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
+            if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
+            if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
+        }
         return null;
     };
 
