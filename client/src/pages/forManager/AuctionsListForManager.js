@@ -172,18 +172,18 @@ const AuctionsListForManager = () => {
                                         <td className={styles.td}>
                                             {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
                                             {auction.Auctions1__r.records[0].Status__c != "Request" &&
-                                                "From " +
-                                                    auction.Auctions1__r.records[0].Start_Registration_Time__c +
-                                                    " To " +
-                                                    auction.Auctions1__r.records[0].End_Registration_Time__c}
+                                                
+                                                "From "+    new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c).toUTCString().split("GMT")[0] 
+                                                 +  
+                                                 "To " +   new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
                                         <td className={styles.td}>
                                             {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
                                             {auction.Auctions1__r.records[0].Status__c != "Request" &&
                                                 "From " +
-                                                    auction.Auctions1__r.records[0].Start_Aution_Time__c +
+                                                new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
                                                     " To " +
-                                                    auction.Auctions1__r.records[0].End_Auction_Time__c}
+                                                    new Date(auction.Auctions1__r.records[0].End_Auction_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
                                         <td className={styles.td}>{auction.Auctions1__r.records[0].Status__c}</td>
                                         <td className={styles.td}>
@@ -193,7 +193,7 @@ const AuctionsListForManager = () => {
                                             >
                                                 View
                                             </Link>
-                                            {auction.Auctions1__r.records[0].Status__c != "Approved" && 
+                                            {auction.Auctions1__r.records[0].Status__c == "Request" && 
                                             <Link
                                                 className={styles.linkBlue}
                                                 to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
