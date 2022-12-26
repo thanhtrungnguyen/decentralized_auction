@@ -439,6 +439,7 @@ contract Auction {
         isExistAuctionId(auctionId)
         isAuctionTime(auctionId)
         isRegisteredBidder(auctionId)
+        isStateBidding(auctionId)
     {
         s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState.RETRACT;
         s_proceeds += s_auctionInformations[auctionId].depositAmount;

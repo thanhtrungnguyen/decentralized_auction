@@ -3,24 +3,17 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
-import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import DatePicker, { DateObject } from "react-multi-date-picker";
-import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 const EditProperty = () => {
-    // const [date, setDate] = useState([
-    //   new DateObject().setDay(15),
-    //   new DateObject().add(1, "month").setDay(15),
-    // ]);
     const [propertyImage1, setPropertyImage1] = useState(null);
     const [propertyImage2, setPropertyImage2] = useState(null);
     const [propertyImage3, setPropertyImage3] = useState(null);
@@ -39,19 +32,19 @@ const EditProperty = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [property, setProperty] = useState([]);
-    const[status,setStatus] =  useState(null);
+    const [status, setStatus] = useState(null);
     const { id } = useParams();
 
     const navigate = useNavigate();
     const baseURLCategory = `http://localhost:8800/api/category`;
 
     useEffect(() => {
-        const fetchData = async()=>{
+        const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURLCategory).then((resp) => {
                 console.log(resp.data);
                 console.log("axios get");
-                
+
                 setlistCategory(resp.data);
             });
             await axios.get(baseURLProperty).then((resp) => {
@@ -64,7 +57,7 @@ const EditProperty = () => {
                 setDeposit(resp.data.Deposit_Amount__c);
                 setPriceStep(resp.data.Price_Step__c);
                 setPlaceViewProperty(resp.data.Place_View_Property__c);
-                setStatus(resp.data.Status__c)
+                setStatus(resp.data.Status__c);
                 setViewPropertyTime([
                     new Date(resp.data.Start_View_Property_Time__c).setTime(
                         new Date(resp.data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
@@ -72,21 +65,15 @@ const EditProperty = () => {
                     new Date(resp.data.End_View_Property_Time__c).setTime(
                         new Date(resp.data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
                     ),
-                ])
+                ]);
                 setData(resp.data);
-              });
-              setLoading(false);
-        }
+            });
+            setLoading(false);
+        };
         fetchData();
     }, [baseURLCategory]);
 
     const baseURLProperty = `http://localhost:8800/api/property/getById/${id}`;
- 
-
-    
-
-
-
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -146,8 +133,8 @@ const EditProperty = () => {
         formData.append("deposit", deposit);
         formData.append("priceStep", priceStep);
         formData.append("placeViewProperty", placeViewProperty);
-        formData.append('_method', 'PUT');
-        formData.append('status', status);
+        formData.append("_method", "PUT");
+        formData.append("status", status);
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
         axios
@@ -215,27 +202,9 @@ const EditProperty = () => {
                                 <p className={styles.lable}>Property Description</p>
                             </div>
                             <div className={styles.col2}>
-                                <input
-                                    className={styles.inputImg}
-                                    id="propertyImage1"
-                                    onChange={(e) => handleInputChange(e)}
-                                    type="file"
-                                    
-                                ></input>
-                                <input
-                                    className={styles.inputImg}
-                                    id="propertyImage2"
-                                    onChange={(e) => handleInputChange(e)}
-                                    type="file"
-                                    
-                                ></input>
-                                <input
-                                    className={styles.inputImg}
-                                    id="propertyImage3"
-                                    onChange={(e) => handleInputChange(e)}
-                                    type="file"
-                                    
-                                ></input>
+                                <input className={styles.inputImg} id="propertyImage1" onChange={(e) => handleInputChange(e)} type="file"></input>
+                                <input className={styles.inputImg} id="propertyImage2" onChange={(e) => handleInputChange(e)} type="file"></input>
+                                <input className={styles.inputImg} id="propertyImage3" onChange={(e) => handleInputChange(e)} type="file"></input>
                                 <div className={styles.conImg}>
                                     {propertyImage1 == null && (
                                         <img
