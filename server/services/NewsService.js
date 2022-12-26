@@ -1,4 +1,5 @@
 const NewsDAO = require("../dal/NewsDAO");
+const { uploadFile } = require("../s3");
 
 const getAll = async (index, status, title) => {
     try {

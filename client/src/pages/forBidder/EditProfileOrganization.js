@@ -229,6 +229,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Organization name</label>
                             <input
                                 type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
                                 className="input"
                                 value={organizationName}
                                 onChange={(e) => handleInputChange(e)}
@@ -241,6 +242,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Tax Code</label>
                             <input
                                 type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
                                 className="input"
                                 defaultValue={data.taxCode}
                                 value={taxCode}
@@ -265,6 +267,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Tax Code Granted Place</label>
                             <input
                                 type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
                                 className="input"
                                 defaultValue={data.taxCodeGrantedPlace}
                                 value={taxCodeGrantedPlace}
@@ -277,6 +280,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Specific Address</label>
                             <input
                                 type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
                                 className="input"
                                 defaultValue={data.specificAddress}
                                 value={specificAddressOrganization}
@@ -289,6 +293,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Position</label>
                             <input
                                 type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
                                 className="input"
                                 defaultValue={data.specificAddress}
                                 id="position"
@@ -332,6 +337,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Firstname</label>
                             <input
                                 type="text"
+                                pattern="[a-zA-Z]{1,50}"
                                 className="input"
                                 value={firstName}
                                 onChange={(e) => handleInputChange(e)}
@@ -344,6 +350,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Lastname</label>
                             <input
                                 type="text"
+                                pattern="[a-zA-Z]{1,50}"
                                 className="input"
                                 value={lastName}
                                 onChange={(e) => handleInputChange(e)}
@@ -396,7 +403,8 @@ const EditProfileOrganization = () => {
                         <div className="row">
                             <label className="label">Phone number</label>
                             <input
-                                type="number"
+                                type="text"
+                                pattern="[0]\d{9}"
                                 className="input"
                                 value={phone}
                                 onChange={(e) => handleInputChange(e)}
@@ -482,6 +490,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Specific address</label>
                             <input
                                 type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
                                 className="input"
                                 value={specificAddress}
                                 onChange={(e) => handleInputChange(e)}
@@ -519,6 +528,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Card number</label>
                             <input
                                 type="text"
+                                pattern="\d{12}"
                                 className="input"
                                 value={cardNumber}
                                 onChange={(e) => handleInputChange(e)}
@@ -543,6 +553,7 @@ const EditProfileOrganization = () => {
                             <label className="label">Card granted place</label>
                             <input
                                 type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
                                 className="input"
                                 onChange={(e) => handleInputChange(e)}
                                 value={cardGrantedPlace}
