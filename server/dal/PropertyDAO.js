@@ -83,28 +83,28 @@ const findPropertiesByUser = async (userId, index, status, category, namePropert
         queryCount = null;
 
     if (status == "null" && category == "null" && nameProperty == "null") {
-        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' limit ${perPage} offset ${num} `;
+        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' order by CreatedDate desc limit ${perPage} offset ${num} `;
         queryCount = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' `;
     } else if (status == "null" && category == "null") {
-        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Name like '%${nameProperty}%' limit ${perPage} offset ${num} `;
+        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Name like '%${nameProperty}%' order by CreatedDate desc limit ${perPage} offset ${num} `;
         queryCount = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Name like '%${nameProperty}%' `;
     } else if (status == "null" && nameProperty == "null") {
-        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' limit ${perPage} offset ${num} `;
+        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' order by CreatedDate desc limit ${perPage} offset ${num} `;
         queryCount = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' `;
     } else if (category == "null" && nameProperty == "null") {
-        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Status__c = '${status}' limit ${perPage} offset ${num} `;
+        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Status__c = '${status}' order by CreatedDate desc limit ${perPage} offset ${num} `;
         queryCount = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Status__c = '${status}' `;
     } else if (status == "null") {
-        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' and Name like '%${nameProperty}%' limit ${perPage} offset ${num} `;
+        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' and Name like '%${nameProperty}%' order by CreatedDate desc limit ${perPage} offset ${num} `;
         queryCount = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' and Name like '%${nameProperty}%' `;
     } else if (category == "null") {
-        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Status__c = '${status}' and Name like '%${nameProperty}%' limit ${perPage} offset ${num} `;
+        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Status__c = '${status}' and Name like '%${nameProperty}%' order by CreatedDate desc limit ${perPage} offset ${num} `;
         queryCount = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Status__c = '${status}' and Name like '%${nameProperty}%' `;
     } else if (nameProperty == "null") {
-        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' and Status__c = '${status}' limit ${perPage} offset ${num} `;
+        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' and Status__c = '${status}' order by CreatedDate desc limit ${perPage} offset ${num} `;
         queryCount = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' and Status__c = '${status}' `;
     } else {
-        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' and Status__c = '${status}' and Name like '%${nameProperty}%' limit ${perPage} offset ${num} `;
+        query = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' and Status__c = '${status}' and Name like '%${nameProperty}%' order by CreatedDate desc limit ${perPage} offset ${num} `;
         queryCount = `Select Id, Name,Status__c, Category_Id__r.Name,Start_Bid__c from Property_DAP__c where User_Id__c = '${userId}' and Category_Id__r.Name = '${category}' and Status__c = '${status}' and Name like '%${nameProperty}%' `;
     }
 

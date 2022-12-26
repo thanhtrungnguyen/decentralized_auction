@@ -39,7 +39,7 @@ const AddNews = () => {
         formData.append("title", title);
         formData.append("content", content);
         formData.append("avatar", avatar);
-        console.log(formData.get("content"));
+        //console.log(formData.get("content"));
         axios
             .post(
                 "http://localhost:8800/api/news/createNews",
