@@ -107,6 +107,8 @@ module.exports = (app) => {
         // });
     });
     taskRegistrationTime.start();
-
+    const transaction = cron.schedule("*/3 * * * * *", async () => {
+        
+    });
     return server;
 };

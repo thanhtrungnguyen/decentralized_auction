@@ -18,7 +18,6 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
-
 const AuctionDetailForManager = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -106,8 +105,14 @@ const AuctionDetailForManager = () => {
         });
         return users;
     };
+    const convertDateTime = (time)=>{
+        var startRegistrationTime = new Date(time);
+        var startRegistrationTimeVN = startRegistrationTime.setTime(startRegistrationTime.getTime() - 7 * 60 * 60 * 1000);
+        
+        return new Date( new Date(startRegistrationTimeVN).toUTCString());
+    }
     return loading ? (
-        <Loading />
+        <Loading/>
     ) : (
         <>
             {(() => {
@@ -279,8 +284,8 @@ const AuctionDetailForManager = () => {
                                     // onChange={setViewPropertyTime}
                                     ClassName={styles.datePicker}
                                     value={[
-                                        new Date(new Date(data.Start_View_Property_Time__c).toUTCString()),
-                                        new Date(new Date(data.End_View_Property_Time__c).toUTCString()),
+                                        convertDateTime(data.Start_View_Property_Time__c),
+                                        convertDateTime(data.End_View_Property_Time__c),
                                     ]}
                                     //   value={data.property.viewPropertyTime}
                                     // onChange={setValue}
@@ -321,7 +326,7 @@ const AuctionDetailForManager = () => {
                                 className={styles.inputText}
                                 // value={priceStep}
                                 // value={data.property.priceStep}
-                                value={name}
+                                value={data.Auctions1__r.records[0].Name}
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
@@ -332,7 +337,7 @@ const AuctionDetailForManager = () => {
                                 className={styles.inputText}
                                 // value={priceStep}
                                 // value={data.property.priceStep}
-                                value={registrationFee}
+                                value={data.Auctions1__r.records[0].RegistrationFee__c}
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
@@ -343,8 +348,8 @@ const AuctionDetailForManager = () => {
                                 onChange={setTimeRegistration}
                                 ClassName={styles.datePicker}
                                 value={[
-                                    new Date(new Date(data.Auctions1__r.records[0].Start_Registration_Time__c).toUTCString()),
-                                    new Date(new Date(data.Auctions1__r.records[0].End_Registration_Time__c).toUTCString()),
+                                    convertDateTime(data.Auctions1__r.records[0].Start_Registration_Time__c),
+                                    convertDateTime(data.Auctions1__r.records[0].End_Registration_Time__c)
                                 ]}
                                 //   value={data.property.viewPropertyTime}
                                 // onChange={setValue}
@@ -361,7 +366,10 @@ const AuctionDetailForManager = () => {
                                 // onChange={(e) => handleInputChange(e)}
                                 onChange={setAuctionTime}
                                 ClassName={styles.datePicker}
-                                value={auctionTime}
+                                value={[
+                                    convertDateTime(data.Auctions1__r.records[0].Start_Aution_Time__c),
+                                    convertDateTime(data.Auctions1__r.records[0].End_Auction_Time__c),
+                                ]}
                                 //   value={data.property.viewPropertyTime}
                                 // onChange={setValue}
                                 range

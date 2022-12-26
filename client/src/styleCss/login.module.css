@@ -9,7 +9,15 @@
     margin-bottom: 100px;
     margin-top: 30px;
 }
-
+i {
+    /* position: absolute; */
+    top: 38%;
+    right: 16%;
+  }
+  i:hover {
+    color: #00fcb6;
+    cursor: pointer;
+  }
 .group2 {
     position: absolute;
     width: 433px;

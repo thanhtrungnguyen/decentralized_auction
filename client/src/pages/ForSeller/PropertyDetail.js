@@ -24,24 +24,27 @@ const PropertyDetail = () => {
     // ]);
     const { id } = useParams();
 
-    const baseURL = `http://localhost:8800/api/property/${id}`;
+    const baseURL = `http://localhost:8800/api/property/getById/${id}`;
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
 
     useEffect(() => {
-        setLoading(true);
-        axios.get(baseURL).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setData(resp.data);
-        });
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
+        const fetchData = async()=>{
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setData(resp.data);
+            });
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+            setLoading(false);
         }
-        setLoading(false);
+       fetchData();
     }, [baseURL]);
 
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
