@@ -1,17 +1,22 @@
 .container {
     width: 100%;
-    height: 230%;
+    height: 240%;
     background: #d9d9d9;
     position: absolute;
 }
 .content {
     width: 1200px;
-    height: 2000px;
+    height: 2100px;
     left: 50%;
     margin-left: -500px;
     position: absolute;
     margin-top: 50px;
     background: #ffffff;
+}
+.image {
+    width: 400px;
+    height: 200px;
+    margin-left: 110px;
 }
 .title {
     font-family: "Inter";
@@ -44,6 +49,9 @@
 
     border: 1px solid #e0e0e0;
     border-radius: 4px;
+    margin-left: 40px;
+}
+.file {
     margin-left: 40px;
 }
 .ck {

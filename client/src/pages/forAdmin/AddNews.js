@@ -17,6 +17,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const AddNews = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [avatar, setAvatar] = useState(null);
 
     const navigate = useNavigate();
 
@@ -28,12 +29,16 @@ const AddNews = () => {
         if (id === "content") {
             setContent(value);
         }
+        if (id === "avatar") {
+            setAvatar(e.target.files[0]);
+        }
     };
     const handleSubmit = (event) => {
         const formData = new FormData();
 
         formData.append("title", title);
         formData.append("content", content);
+        formData.append("avatar", avatar);
         console.log(formData.get("content"));
         axios
             .post(
@@ -87,6 +92,13 @@ const AddNews = () => {
                         <br />
                         <br />
                         <br />
+                        <label className={styles.label}>Avatar</label>
+                        <input className={styles.file} id="avatar" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
+                        {avatar && <img src={URL.createObjectURL(avatar)} className={styles.image} alt="Thumb" />}
+                        <br />
+                        <br />
+                        <br />
+                        <br />
                         <label className={styles.label}>Content</label>
 
                         <div className={styles.ck}>
@@ -111,8 +123,9 @@ const AddNews = () => {
                                 }}
                                 config={{
                                     ckfinder: {
-                                        uploadUrl: 'https://ckeditor.com/apps/ckfinder/3.5.0/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
-                                      },
+                                        uploadUrl:
+                                            "https://ckeditor.com/apps/ckfinder/3.5.0/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json",
+                                    },
                                 }}
                             />
                         </div>
