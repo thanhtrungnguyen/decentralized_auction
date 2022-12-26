@@ -261,7 +261,11 @@ const AuctionList = () => {
                     {data.auctionlist.map((auction) => (
                         <div className={styles.product}>
                             <div>
-                                <img className={styles.img} src="https://image.thanhnien.vn/w1024/Uploaded/2022/ywfsm/2019_09_07/10_xfvb.jpg" />
+                                <img
+                                    src={`http://localhost:8800/api/auction/images/${auction.Properties_Media__r.records[0].Name}`}
+                                    className={styles.img}
+                                    alt="Thumb"
+                                />
                             </div>
                             <div>
                                 <p className={styles.txtBlueB}>{auction.Auctions1__r.records[0].Name}</p>
@@ -287,7 +291,7 @@ const AuctionList = () => {
                     <div>
                         <Pagination
                             className={styles.pagi}
-                            count={(data.total % 5) > 0 ? (Math.floor(data.total / 5) + 1) : (data.total/5) }
+                            count={(data.total % 5) > 0 ? (Math.floor(data.total / 5) + 1) : (data.total / 5)}
                             page={page}
                             onChange={handleChange}
                             hidden={data.total === 0}
