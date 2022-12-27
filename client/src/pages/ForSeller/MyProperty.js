@@ -175,21 +175,30 @@ const MyProperty = () => {
                             </button>
                             <button
                                 className={styles.link}
-                                value="Biding"
+                                value="Request"
                                 onClick={(e) => {
                                     handleChangeStatus(e);
                                 }}
                             >
-                                Biding
+                                Request
                             </button>
                             <button
                                 className={styles.link}
-                                value="Closed"
+                                value="Approved"
                                 onClick={(e) => {
                                     handleChangeStatus(e);
                                 }}
                             >
-                                Sold out
+                                Approved
+                            </button>
+                            <button
+                                className={styles.link}
+                                value="Reject"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
+                                Reject
                             </button>
                             <hr />
                             <p className={styles.txtBold}>Total Property: {listProperty.data.totalProperty}</p>
