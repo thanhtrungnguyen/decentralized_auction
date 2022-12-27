@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBar";
+import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
+import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
@@ -16,7 +17,7 @@ import Loading from "../../components/loading/Loading";
 import { useFetch } from "../../hook/useFetch";
 import createDOMPurify from "dompurify";
 // import { JSDOM } from "jsdom";
-const ViewNews = () => {
+const ViewNewsForAdmin = () => {
     // const window = new JSDOM("").window;
     const DOMPurify = createDOMPurify();
 
@@ -89,6 +90,8 @@ const ViewNews = () => {
                 }
             })()}
             <NavBar />
+            <SideBarAdmin />
+
             <div className={styles.box}>
                 <h1>{data.Name}</h1>
                 <br />
@@ -103,4 +106,4 @@ const ViewNews = () => {
     );
 };
 
-export default ViewNews;
+export default ViewNewsForAdmin;

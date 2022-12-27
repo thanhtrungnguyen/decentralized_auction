@@ -54,7 +54,7 @@ const News = () => {
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit facilisis quis auctor pretium ipsum, eu rutrum. Condimentum
                             eu malesuada vitae ultrices in in neque, porta dignissim. Adipiscing purus, cursus vulputate id id dictum at.
                         </div> */}
-                        <Link className={styles.link} to="/">
+                        <Link className={styles.link} to={`/viewNews/${item.Id}`}>
                             Read More
                         </Link>
                     </div>
