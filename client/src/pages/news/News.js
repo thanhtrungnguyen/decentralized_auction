@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
@@ -6,21 +6,21 @@ import styles from "../../styleCss/stylesPages/news.module.css";
 import { BsPencil, BsCalendar3, BsSearch } from "react-icons/bs";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loading from "../../components/loading/Loading";
 import jwt from "jsonwebtoken";
 import { useFetchPagination } from "../../hook/useFetch";
 import moment from "moment";
 import { Pagination } from "@mui/material";
 const News = () => {
-    const [role, setRole] = useState();
+    const [role] = useState();
     const [page, setPage] = useState(1);
     const [title, setTitle] = useState(null);
     const [title2, setTitle2] = useState(null);
-    const [status, setStatus] = useState('Published');
+    const [status] = useState('Published');
 
     var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
-    var { data, loading, error } = useFetchPagination(baseURL, page);
+    var { data, loading } = useFetchPagination(baseURL, page);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -78,7 +78,7 @@ const News = () => {
     ) : (
         <>
             {(() => {
-                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

@@ -3,22 +3,22 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
-import { Outlet, Link } from "react-router-dom";
-import Pagination from "@mui/material/Pagination";
+// import { Outlet, Link } from "react-router-dom";
+// import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import { BsFillCheckSquareFill } from "react-icons/bs";
+// import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import { set } from "mongoose";
+// import { set } from "mongoose";
 import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
 
 const AuctionResult = () => {
-    const [page, setPage] = React.useState(1);
-    const { id, propertyId } = useParams();
+    const [page] = React.useState(1);
+    const { id } = useParams();
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/auction/${page}/${id}`;
@@ -55,9 +55,9 @@ const AuctionResult = () => {
     const Registration = () => {
         navigate(`/viewRegistrationForManager/${id}`);
     };
-    const handleChange = (event, value) => {
-        setPage(value);
-    };
+    // const handleChange = (event, value) => {
+    //     setPage(value);
+    // };
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");

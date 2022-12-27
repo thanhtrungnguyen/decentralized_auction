@@ -3,10 +3,10 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import { BsFillCheckSquareFill } from "react-icons/bs";
+// import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
@@ -24,7 +24,7 @@ const ManagerCategorys = () => {
     const [status, setStatus] = useState(null);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/category/getAll/${page}/${status}/${categoryName}`;
     const [role, setRole] = useState();
 

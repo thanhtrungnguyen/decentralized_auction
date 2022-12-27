@@ -4,9 +4,9 @@ import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/auctionList.module.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
-import Popup from "reactjs-popup";
-import PlaceABid from "../../components/popups/PlaceABid";
+import { Link } from "react-router-dom";
+// import Popup from "reactjs-popup";
+// import PlaceABid from "../../components/popups/PlaceABid";
 import Pagination from "@mui/material/Pagination";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -16,10 +16,10 @@ import Loading from "../../components/loading/Loading";
 
 const AuctionList = () => {
     const [page, setPage] = React.useState(1);
-    const [buttonPopup, setButtonPopup] = useState(false);
+    // const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    // const [error, setError] = useState(false);
     const socket = io.connect("http://localhost:8800");
     //const baseURL = "http://localhost:8800/api/auction/";
     const [status, setStatus] = useState(null);
@@ -123,7 +123,7 @@ const AuctionList = () => {
     ) :  (
         <>
             {(() => {
-                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

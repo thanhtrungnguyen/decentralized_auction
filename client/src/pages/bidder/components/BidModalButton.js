@@ -1,8 +1,8 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+// import { useParams } from "react-router-dom";
 import BidModal from "../index";
-import axios from "axios";
+// import axios from "axios";
 import { useFetchBidding } from "../../../hook/useFetch";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 
@@ -13,7 +13,7 @@ const BidModalButton = ({ auctionId, propertyId }) => {
         return false;
     });
 
-    const { loading, data: auction, error } = useFetchBidding(baseURL);
+    const { loading, data: auction } = useFetchBidding(baseURL);
 
     return (
         <>

@@ -3,17 +3,17 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
-import { Outlet, Link } from "react-router-dom";
+// import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
-import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+// import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
-import Popup from "reactjs-popup";
+// import Popup from "reactjs-popup";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -40,7 +40,7 @@ const PropertyDetail = () => {
 
     const [paymentTime, setPaymentTime] = useState(new Date());
 
-    const { data, loading, error } = useFetch(baseURL);
+    const { data, loading } = useFetch(baseURL);
     const onClick = () => {
         console.log(show);
 
@@ -72,7 +72,7 @@ const PropertyDetail = () => {
     };
     var startviewTime = data.End_View_Property_Time__c || "";
     var startViewPropertyTime = new Date(startviewTime.split(",")[0]);
-    var daySTView = parseInt(startViewPropertyTime.getUTCDate());
+    // var daySTView = parseInt(startViewPropertyTime.getUTCDate());
 
     const AprroveAuction = () => {
         // alert(name + registrationFee + timeRegistration + auctionTime);

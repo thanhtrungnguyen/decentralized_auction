@@ -3,8 +3,8 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
-import { Outlet, Link } from "react-router-dom";
-import Pagination from "@mui/material/Pagination";
+// import { Outlet, Link } from "react-router-dom";
+// import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ const AddCategory = () => {
     }, []);
     const [categoryName, setCategoryName] = useState(null);
     const navigate = useNavigate();
-    const baseURL = "http://localhost:8800/api/property/";
+    // const baseURL = "http://localhost:8800/api/property/";
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "categoryName") {

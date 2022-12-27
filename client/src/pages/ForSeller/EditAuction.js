@@ -1,12 +1,12 @@
 import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarSeller";
-import Footer from "../../components/footer/Footer";
+// import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
-import { Outlet, Link } from "react-router-dom";
+// import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
-import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+// import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

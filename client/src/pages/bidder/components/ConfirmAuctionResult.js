@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useMoralis, useWeb3Contract, useApiContract } from "react-moralis";
-import { useFetchBidding } from "../../../hook/useFetch";
-import auctionAbi from "../../../constants/contractAbi.json";
-import contractAddresses from "../../../constants/contractAddress.json";
+import React, { useState } from "react";
+import { useWeb3Contract } from "react-moralis";
+// import { useFetchBidding } from "../../../hook/useFetch";
+// import auctionAbi from "../../../constants/contractAbi.json";
+// import contractAddresses from "../../../constants/contractAddress.json";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import { Outlet, Link, Navigate } from "react-router-dom";
-import { Button, Input, ConnectButton, useNotification } from "web3uikit";
-import { ethers } from "ethers";
-import Countdown from "react-countdown";
+import { Navigate } from "react-router-dom";
+import { useNotification } from "web3uikit";
+// import { ethers } from "ethers";
+// import Countdown from "react-countdown";
 import TransactionStatus from "./TransactionStatus";
-import BiddingProperty from "../components/BiddingProperty";
-import TransactionHistory from "../components/TransactionHistory";
+// import BiddingProperty from "../components/BiddingProperty";
+// import TransactionHistory from "../components/TransactionHistory";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
-import Payment from "../ui/Payment";
-import { SUPPORT_CHAINS, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
-import { parseEther } from "../../../utils/ethereumUnitConverter";
-import ClosedAuction from "../ui/ClosedAuction";
+// import Payment from "../ui/Payment";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
+// import { parseEther } from "../../../utils/ethereumUnitConverter";
+// import ClosedAuction from "../ui/ClosedAuction";
 export const ConfirmAuctionResult = ({ auction, rank, showConfirmation, highestBid }) => {
-    const { account, isWeb3Enabled } = useMoralis();
+    // const { account, isWeb3Enabled } = useMoralis();
     const dispatch = useNotification();
     const [transactionStatus, setTransactionStatus] = useState();
-    const [goPayment, setGoPayment] = useState(false);
+    const [ setGoPayment] = useState(false);
 
     const {
         runContractFunction: cancelAuctionResult,
@@ -59,7 +59,7 @@ export const ConfirmAuctionResult = ({ auction, rank, showConfirmation, highestB
     };
     const handleError = async (tx) => {
         console.log(tx);
-        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
+        const message = tx.code === 4001 ? "User denied transaction signature." : "Failed";
         setTransactionStatus({ status: tx.data.message });
         dispatch({
             type: "error",
@@ -72,7 +72,7 @@ export const ConfirmAuctionResult = ({ auction, rank, showConfirmation, highestB
 
     return (
         <div>
-            {rank == 1 ? (
+            {rank === 1 ? (
                 showConfirmation ? (
                     <>
                         <p className={styles.txtT}>Do you agree with this result?</p>

@@ -3,10 +3,10 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
-import { Outlet, Link } from "react-router-dom";
+// import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
-import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+// import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -37,7 +37,7 @@ const AddProperty = () => {
 
     const navigate = useNavigate();
     const baseURL = "http://localhost:8800/api/category/";
-    const { data, loading, error } = useFetch(baseURL);
+    const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
     useEffect(() => {
         console.log(getUser());
@@ -124,14 +124,14 @@ const AddProperty = () => {
 
         event.preventDefault();
     };
-    const [selectedImage, setSelectedImage] = useState();
+    // const [selectedImage, setSelectedImage] = useState();
 
     // This function will be triggered when the file field change
-    const imageChange = (e) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setSelectedImage(e.target.files[0]);
-        }
-    };
+    // const imageChange = (e) => {
+    //     if (e.target.files && e.target.files.length > 0) {
+    //         setSelectedImage(e.target.files[0]);
+    //     }
+    // };
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");

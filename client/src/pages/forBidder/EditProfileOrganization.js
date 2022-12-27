@@ -7,7 +7,7 @@ import Loading from "../../components/loading/Loading";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hook/useFetch";
+// import { useFetch } from "../../hook/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
 import PageName from "../../components/header/PageName";
 import FooterCopy from "../../components/footer/FooterCopy";
@@ -17,7 +17,7 @@ import Select from "react-select";
 import "../../styleCss/stylesPages/forBidder/ProfileOrganization.css";
 
 const EditProfileOrganization = () => {
-    const { id, propertyId } = useParams();
+    const { id } = useParams();
     const baseURL = `http://localhost:8800/api/user/${id}`;
     //const { data, loading, error } = useFetch(baseURL);
     const [loading, setLoading] = useState(true);

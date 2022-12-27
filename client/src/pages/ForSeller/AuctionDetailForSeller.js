@@ -3,7 +3,7 @@ import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/stylesPages/forSellers/AuctionDetailForSeller.module.css";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
@@ -16,7 +16,7 @@ import Loading from "../../components/loading/Loading";
 const AuctionDetailForSeller = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/auction/auctiondetailForSeller/${id}`;
-    const { data, loading, error } = useFetch(baseURL);
+    const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
     useEffect(() => {
         console.log(getUser());

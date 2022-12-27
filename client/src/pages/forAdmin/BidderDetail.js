@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 const BidderDetail = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/user/${id}`;
-    const { data, loading, error } = useFetch(baseURL);
+    const { data, loading } = useFetch(baseURL);
     const navigate = useNavigate();
     const cancel = () => {
         navigate("/listBidders");

@@ -3,17 +3,17 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import { useFetch, useFetchPagination } from "../../hook/useFetch";
+// import { useFetch, useFetchPagination } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
 
 const MyProperty = () => {
@@ -26,7 +26,7 @@ const MyProperty = () => {
     const [listCategory, setListCategory] = useState([]);
     const [listProperty, setListProperty] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const baseURLCategory = "http://localhost:8800/api/category/";
     const baseURLProperty = `http://localhost:8800/api/property/getAll/${page}/${status}/${category}/${propertyName}`;
     const requestAuction = "http://localhost:8800/api/auction/request/";
@@ -123,7 +123,7 @@ const MyProperty = () => {
     ) : (
         <>
             {(() => {
-                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -231,7 +231,7 @@ const MyProperty = () => {
                                                 View
                                             </Link>
                                             {
-                                                property.Status__c == "Created"  &&
+                                                property.Status__c === "Created"  &&
                                              <><Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
                                                 Edit
                                             </Link>
@@ -245,7 +245,7 @@ const MyProperty = () => {
                                             }
                                         
                                             {
-                                                property.Status__c == "Rejected"  &&
+                                                property.Status__c === "Rejected"  &&
                                              <><Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
                                                 Edit
                                             </Link>
@@ -258,7 +258,7 @@ const MyProperty = () => {
                                             </>
                                             }
                                             {
-                                                property.Status__c == "Fail"  &&
+                                                property.Status__c === "Fail"  &&
                                              <><Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
                                                 Edit
                                             </Link>

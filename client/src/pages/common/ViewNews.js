@@ -1,4 +1,4 @@
-import styles from "../../styleCss/login.module.css";
+// import styles from "../../styleCss/login.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,7 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import { useParams } from "react-router-dom";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import FooterCopy from "../../components/footer/FooterCopy";
@@ -19,8 +19,8 @@ const ViewNews = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/news/getById/${id}`;
     // const { data, loading, error } = useFetch(baseURL);
-    const navigate = useNavigate();
-    const { data, loading, error } = useFetch(baseURL);
+    // const navigate = useNavigate();
+    const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
 
     //const [match, setMatch] = useState(null);

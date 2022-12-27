@@ -3,12 +3,12 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SidebarAdmin from "../../components/sidebar_admin/SidebarAdmin";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import { BsFillCheckSquareFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import { BsFillCheckSquareFill } from "react-icons/bs";
+// import { useNavigate } from "react-router-dom";
+// import axios from "axios";
 import Popup from "reactjs-popup";
 import BanedSeller from "../../components/popups/forAdmin/BanSeller";
 import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
@@ -24,10 +24,10 @@ const ListSellers = () => {
     const [email, setEmail] = useState(null);
     const [email2, setEmail2] = useState(null);
     const [status, setStatus] = useState(null);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/getAll/SELLER/${page}/${status}/${email}`;
 
-    const { data, loading, error } = useFetchPagination(baseURL, page);
+    const { data, loading } = useFetchPagination(baseURL, page);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -52,7 +52,7 @@ const ListSellers = () => {
 
         //         navigate("/listSellers");
         //     });
-        email2 == "" ? setEmail(null) : setEmail(email2);
+        email2 === "" ? setEmail(null) : setEmail(email2);
         setPage(1);
         event.preventDefault();
     };

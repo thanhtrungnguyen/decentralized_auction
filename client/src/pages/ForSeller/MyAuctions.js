@@ -3,16 +3,16 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import { BsFillCheckSquareFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+// import { BsFillCheckSquareFill } from "react-icons/bs";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import { useFetch } from "../../hook/useFetch";
+// import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
 
 const MyAuctions = () => {
@@ -25,8 +25,8 @@ const MyAuctions = () => {
     const [status, setStatus] = useState(null);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    const navigate = useNavigate();
-    const baseURL = "http://localhost:8800/api/myAuctions/";
+    // const navigate = useNavigate();
+    // const baseURL = "http://localhost:8800/api/myAuctions/";
     // const { data, loading, error } = useFetch(baseURL);
     const baseURLCategory = "http://localhost:8800/api/category/";
     const baseURLAuction = `http://localhost:8800/api/auction/getAuctionForSeller/${page}/${propertyName}/${category}/${status}`;
@@ -221,8 +221,8 @@ const MyAuctions = () => {
 
                                         <td className={styles.td}>{auction.Category_Id__r.Name}</td>
                                         <td className={styles.td}>
-                                            {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
-                                            {auction.Auctions1__r.records[0].Status__c != "Request" &&
+                                            {auction.Auctions1__r.records[0].Status__c === "Request" && `__`}
+                                            {auction.Auctions1__r.records[0].Status__c !== "Request" &&
                                                 "From " +
                                                     new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c)
                                                         .toUTCString()
@@ -231,8 +231,8 @@ const MyAuctions = () => {
                                                     new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
                                         <td className={styles.td}>
-                                            {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
-                                            {auction.Auctions1__r.records[0].Status__c != "Request" &&
+                                            {auction.Auctions1__r.records[0].Status__c === "Request" && `__`}
+                                            {auction.Auctions1__r.records[0].Status__c !== "Request" &&
                                                 "From " +
                                                     new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
                                                     " To " +
@@ -254,7 +254,7 @@ const MyAuctions = () => {
                                                 Process
                                             </Link>
 
-                                            {auction.Auctions1__r.records[0].Status__c == "Request" && (
+                                            {auction.Auctions1__r.records[0].Status__c === "Request" && (
                                                 <Link
                                                     className={styles.linkBlue}
                                                     to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}

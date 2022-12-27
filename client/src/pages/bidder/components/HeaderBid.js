@@ -1,9 +1,9 @@
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
 import React from "react";
 import { ConnectButton } from "web3uikit";
-import { AiOutlineClose } from "react-icons/ai";
+// import { AiOutlineClose } from "react-icons/ai";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import { useMoralis, useWeb3Contract, useApiContract } from "react-moralis";
+import { useMoralis } from "react-moralis";
 
 const HeaderBid = ({ closeModal }) => {
     const { account } = useMoralis();

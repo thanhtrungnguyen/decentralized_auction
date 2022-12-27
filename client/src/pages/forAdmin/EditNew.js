@@ -3,8 +3,8 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
-import { Outlet, Link } from "react-router-dom";
-import Pagination from "@mui/material/Pagination";
+// import { Outlet, Link } from "react-router-dom";
+// import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -22,7 +22,7 @@ const EditNew = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/editNews/${id}`;
     const [role, setRole] = useState();
-    const { data, loading, error } = useFetch(baseURL);
+    const { data, loading } = useFetch(baseURL);
     const [content, setContent] = useState(null);
     const [title, setTitle] = useState(null);
     const [avatar, setAvatar] = useState(null);
@@ -96,7 +96,7 @@ const EditNew = () => {
     ) : (
         <>
             {(() => {
-                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser userName={getUser().userName} />;
                 } else {
                     return <Header />;
