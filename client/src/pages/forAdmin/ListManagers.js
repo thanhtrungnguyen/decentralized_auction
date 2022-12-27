@@ -5,7 +5,7 @@ import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import BanedManager from "../../components/popups/forAdmin/BanManager";
@@ -23,6 +23,7 @@ const ListForManagers = () => {
     const [status, setStatus] = useState(null);
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/getAll/MANAGER/${page}/${status}/${email}`;
+    const [role, setRole] = useState();
 
     const { data, loading, error } = useFetchPagination(baseURL, page);
 
@@ -66,7 +67,9 @@ const ListForManagers = () => {
                 {data.listUser.map((item) => (
                     <tr>
                         <td className={styles.td}>{item.User_DAP__r.Name}</td>
-                        <td className={styles.td} style={item.User_DAP__r.Status__c === 'Activate' ? {} : { color: "red" }}>{item.User_DAP__r.Status__c}</td>
+                        <td className={styles.td} style={item.User_DAP__r.Status__c === "Activate" ? {} : { color: "red" }}>
+                            {item.User_DAP__r.Status__c}
+                        </td>
                         <td className={styles.td}>
                             <Link className={styles.linkBlue} to={`/viewManager/${item.User_DAP__r.Id}`}>
                                 View
@@ -74,7 +77,14 @@ const ListForManagers = () => {
                             {(() => {
                                 if (item.User_DAP__r.Status__c === "Activate") {
                                     return (
-                                        <Popup trigger={<label style={{ color: "red" }} className={styles.linkBlue}>Deactivate</label>} position="right center">
+                                        <Popup
+                                            trigger={
+                                                <label style={{ color: "red" }} className={styles.linkBlue}>
+                                                    Deactivate
+                                                </label>
+                                            }
+                                            position="right center"
+                                        >
                                             <BanedManager idManager={item.User_DAP__r.Id} />
                                         </Popup>
                                     );
@@ -103,12 +113,22 @@ const ListForManagers = () => {
         });
         return users;
     };
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     return loading ? (
         <Loading />
     ) : (
         <>
             {(() => {
-                if (getUser().role === "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -185,8 +205,13 @@ const ListForManagers = () => {
                                 </tr>
                                 {exportData(data)}
                             </table>
-                            <div> 
-                                <Pagination className={styles.pagi} count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) } page={page} onChange={handleChange} />
+                            <div>
+                                <Pagination
+                                    className={styles.pagi}
+                                    count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                    page={page}
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                     </div>

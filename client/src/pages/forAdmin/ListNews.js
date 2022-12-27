@@ -5,7 +5,7 @@ import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Link, useParams } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Moment from "moment";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -24,6 +24,8 @@ const ListNews = () => {
     const [status, setStatus] = useState(null);
     const [searchData, setSearchData] = useState("");
     const navigate = useNavigate();
+    const [role, setRole] = useState();
+
     var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
     // var totalURL = `http://localhost:8800/api/news/countNews`;
 
@@ -109,12 +111,22 @@ const ListNews = () => {
             </>
         );
     }
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     return loading ? (
         <Loading />
     ) : (
         <>
             {(() => {
-                if (getUser().role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -196,7 +208,7 @@ const ListNews = () => {
                                 <Pagination
                                     className={styles.pagi}
                                     size="large"
-                                    count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) }
+                                    count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
                                     page={page}
                                     onChange={handleChange}
                                 />

@@ -13,6 +13,8 @@ import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import Loading from "../../components/loading/Loading";
+
 const EditAuction = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -26,7 +28,19 @@ const EditAuction = () => {
     const [startBid, setStartBid] = useState(null);
     const [biddingPreiod, setBiddingPreiod] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
     const navigate = useNavigate();
+    const [role, setRole] = useState();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        console.log(getUser());
 
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+        setLoading(false);
+    }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "propertyImage") {
@@ -87,10 +101,12 @@ const EditAuction = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "SELLER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

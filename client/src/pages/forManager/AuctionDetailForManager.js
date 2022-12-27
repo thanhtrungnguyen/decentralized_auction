@@ -30,6 +30,7 @@ const AuctionDetailForManager = () => {
     const [registrationFee, setRegistrationFee] = useState(null);
     const [name, setName] = useState(null);
     const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
+    const [role, setRole] = useState();
 
     const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
@@ -105,18 +106,28 @@ const AuctionDetailForManager = () => {
         });
         return users;
     };
-    const convertDateTime = (time)=>{
+    const convertDateTime = (time) => {
         var startRegistrationTime = new Date(time);
         var startRegistrationTimeVN = startRegistrationTime.setTime(startRegistrationTime.getTime() - 7 * 60 * 60 * 1000);
-        
-        return new Date( new Date(startRegistrationTimeVN).toUTCString());
-    }
+
+        return new Date(new Date(startRegistrationTimeVN).toUTCString());
+    };
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     return loading ? (
-        <Loading/>
+        <Loading />
     ) : (
         <>
             {(() => {
-                if (getUser().role == "MANAGER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -283,10 +294,7 @@ const AuctionDetailForManager = () => {
                                     // onChange={(e) => handleInputChange(e)}
                                     // onChange={setViewPropertyTime}
                                     ClassName={styles.datePicker}
-                                    value={[
-                                        convertDateTime(data.Start_View_Property_Time__c),
-                                        convertDateTime(data.End_View_Property_Time__c),
-                                    ]}
+                                    value={[convertDateTime(data.Start_View_Property_Time__c), convertDateTime(data.End_View_Property_Time__c)]}
                                     //   value={data.property.viewPropertyTime}
                                     // onChange={setValue}
                                     range
@@ -349,7 +357,7 @@ const AuctionDetailForManager = () => {
                                 ClassName={styles.datePicker}
                                 value={[
                                     convertDateTime(data.Auctions1__r.records[0].Start_Registration_Time__c),
-                                    convertDateTime(data.Auctions1__r.records[0].End_Registration_Time__c)
+                                    convertDateTime(data.Auctions1__r.records[0].End_Registration_Time__c),
                                 ]}
                                 //   value={data.property.viewPropertyTime}
                                 // onChange={setValue}

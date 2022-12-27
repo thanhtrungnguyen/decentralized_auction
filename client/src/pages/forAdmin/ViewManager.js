@@ -37,12 +37,23 @@ const ViewManager = () => {
         });
         return users;
     };
+    const [role, setRole] = useState();
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     return loading ? (
         <Loading />
     ) : (
         <>
             {(() => {
-                if (getUser().role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

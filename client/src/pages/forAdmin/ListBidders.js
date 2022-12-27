@@ -28,20 +28,28 @@ const ListBidders = () => {
     //const [filter,setFilter] = useState("");
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/getAll/BIDDER/${page}/${status}/${email}`;
+    const [role, setRole] = useState();
 
     //const { data, loading, error } = useFetchPagination(baseURL, page);
     useEffect(() => {
-        const fetchData = async()=>{
+        const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
                 console.log(resp.data);
                 console.log("axios get");
                 setData(resp.data);
             });
+
+            // console.log(getUser().type);
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
             setLoading(false);
-        }
-       fetchData();
-        
+        };
+        fetchData();
     }, [baseURL]);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -93,7 +101,7 @@ const ListBidders = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -195,7 +203,7 @@ const ListBidders = () => {
                                                     );
                                                 } else {
                                                     return (
-                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label> } position="right center">
+                                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
                                                             <ActiveBidder idBidder={item.User_Id__c} />
                                                         </Popup>
                                                     );
@@ -206,7 +214,12 @@ const ListBidders = () => {
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) } page={page} onChange={handleChange} />
+                                <Pagination
+                                    className={styles.pagi}
+                                    count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                    page={page}
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                     </div>

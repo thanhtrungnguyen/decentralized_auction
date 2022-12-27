@@ -23,6 +23,7 @@ const EditProfileOrganization = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const [role, setRole] = useState();
 
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
 
@@ -53,26 +54,32 @@ const EditProfileOrganization = () => {
             await axios.get(baseURL).then((resp) => {
                 console.log(resp.data);
                 console.log("axios get");
-                setFirstName(resp.data.contact.First_Name__c)
-                setLastName(resp.data.contact.Last_Name__c)
-                setGender(resp.data.contact.Gender__c)
-                setDateOfBirth(resp.data.contact.Date_Of_Birth__c)
-                setEmail(resp.data.contact.Email__c)
-                setPhone(resp.data.contact.Phone__c)
-                setSpecificAddress(resp.data.contact.Address__c)
-                setCardNumber(resp.data.contact.Card_Number__c)
-                setCardGrantedPlace(resp.data.contact.Card_Granted_Place__c)
-                setDateRangeCard(resp.data.contact.Card_Granted_Date__c)
+                setFirstName(resp.data.contact.First_Name__c);
+                setLastName(resp.data.contact.Last_Name__c);
+                setGender(resp.data.contact.Gender__c);
+                setDateOfBirth(resp.data.contact.Date_Of_Birth__c);
+                setEmail(resp.data.contact.Email__c);
+                setPhone(resp.data.contact.Phone__c);
+                setSpecificAddress(resp.data.contact.Address__c);
+                setCardNumber(resp.data.contact.Card_Number__c);
+                setCardGrantedPlace(resp.data.contact.Card_Granted_Place__c);
+                setDateRangeCard(resp.data.contact.Card_Granted_Date__c);
 
-                setOrganizationName(resp.data.account.Name)
-                setTaxCode(resp.data.account.Tax_Code__c)
-                setTaxCodeGrantedDate(resp.data.account.Tax_Code_Granted_Date__c)
-                setTaxCodeGrantedPlace(resp.data.account.Tax_Code_Granted_Place__c)
-                setSpecificAddressOrganization(resp.data.account.Specific_Address__c)
-                setPosition(resp.data.account.Name)
+                setOrganizationName(resp.data.account.Name);
+                setTaxCode(resp.data.account.Tax_Code__c);
+                setTaxCodeGrantedDate(resp.data.account.Tax_Code_Granted_Date__c);
+                setTaxCodeGrantedPlace(resp.data.account.Tax_Code_Granted_Place__c);
+                setSpecificAddressOrganization(resp.data.account.Specific_Address__c);
+                setPosition(resp.data.account.Name);
 
                 setData(resp.data);
             });
+
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
 
             setLoading(false);
         };
@@ -167,18 +174,12 @@ const EditProfileOrganization = () => {
         formData.append("cardFront", cardFront);
         formData.append("cardBack", cardBack);
 
-        axios
-        .put(
-            `http://localhost:8800/api/user/updateProfile/${id}`,
-            formData,
-            { withCredentials: true }
-        )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-                navigate(`profile/${id}`);
-            });
+        axios.put(`http://localhost:8800/api/user/updateProfile/${id}`, formData, { withCredentials: true }).then((res) => {
+            console.log(res);
+            console.log(res.data);
+            alert(res.data.message);
+            navigate(`profile/${id}`);
+        });
         console.log(formData);
 
         event.preventDefault();
@@ -204,7 +205,7 @@ const EditProfileOrganization = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role === "BIDDER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -576,8 +577,8 @@ const EditProfileOrganization = () => {
                         <br />
                         <br />
                         <br />
-                        <input className="ipImg" id="cardFront" type="file" accept="image/*" onChange={(e) => handleInputChange(e)}  />
-                        <input className="ipImg2" id="cardBack" type="file" accept="image/*" onChange={(e) => handleInputChange(e)}  />
+                        <input className="ipImg" id="cardFront" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} />
+                        <input className="ipImg2" id="cardBack" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} />
                         <br />
                         <br />
                         {cardFront == null && (

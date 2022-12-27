@@ -19,11 +19,21 @@ const MyAuctions = () => {
     const [page, setPage] = React.useState(1);
     const [cagetory, setCategory] = useState("Car");
     const [propertyName, setPropertyName] = useState(null);
+    const [role, setRole] = useState();
 
     const navigate = useNavigate();
     const baseURL = "http://localhost:8800/api/myAuctions/";
     const { data, loading, error } = useFetch(baseURL);
+    useEffect(() => {
+        console.log(getUser());
 
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "cagetory") {
@@ -71,7 +81,7 @@ const MyAuctions = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "SELLER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

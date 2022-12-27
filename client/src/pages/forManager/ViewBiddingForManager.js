@@ -24,6 +24,7 @@ const ViewBiddingForManager = () => {
     const baseURL = `http://localhost:8800/api/auction/${page}/${id}`;
 
     const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,6 +35,13 @@ const ViewBiddingForManager = () => {
                 console.log("axios get");
                 setData(resp.data);
             });
+
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
             setLoading(false);
         };
         fetchData();
@@ -66,7 +74,7 @@ const ViewBiddingForManager = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "MANAGER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

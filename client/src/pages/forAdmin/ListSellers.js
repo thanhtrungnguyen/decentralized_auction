@@ -19,6 +19,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 const ListSellers = () => {
     const [page, setPage] = React.useState(1);
+    const [role, setRole] = useState();
 
     const [email, setEmail] = useState(null);
     const [email2, setEmail2] = useState(null);
@@ -51,16 +52,16 @@ const ListSellers = () => {
 
         //         navigate("/listSellers");
         //     });
-        email2 == '' ? setEmail(null) : setEmail(email2);
+        email2 == "" ? setEmail(null) : setEmail(email2);
         setPage(1);
         event.preventDefault();
     };
     const handleChange = (event, value) => {
         setPage(value);
     };
-    const handleChangeStatus = (e)=>{
-        setStatus(e.target.value)
-    }
+    const handleChangeStatus = (e) => {
+        setStatus(e.target.value);
+    };
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -72,13 +73,23 @@ const ListSellers = () => {
         });
         return users;
     };
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     return loading ? (
         <Loading />
     ) : (
         <>
             {console.log(data)}
             {(() => {
-                if (getUser().role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -99,7 +110,7 @@ const ListSellers = () => {
                                     placeholder="Email"
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
-                                   // required
+                                    // required
                                 ></input>
                             </div>
                             <br />
@@ -113,13 +124,31 @@ const ListSellers = () => {
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <button className={styles.bold} value='null' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.bold}
+                                value="null"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
                             </button>
-                            <button className={styles.link} value='Activate' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.link}
+                                value="Activate"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Activate
                             </button>
-                            <button className={styles.link} value='Deactivate' onClick={(e)=>{handleChangeStatus(e)}}>
+                            <button
+                                className={styles.link}
+                                value="Deactivate"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Deactivate
                             </button>
 
@@ -142,7 +171,9 @@ const ListSellers = () => {
                                         <td className={styles.td}>{item.Name}</td>
                                         <td className={styles.td}>{item.Email__c}</td>
                                         <td className={styles.td}>{item.Phone__c}</td>
-                                        <td className={styles.td} style={item.User_Id__r.Status__c === 'Activate' ? {} : { color: "red" }}>{item.User_Id__r.Status__c}</td>
+                                        <td className={styles.td} style={item.User_Id__r.Status__c === "Activate" ? {} : { color: "red" }}>
+                                            {item.User_Id__r.Status__c}
+                                        </td>
                                         <td className={styles.td}>
                                             <Link className={styles.linkBlue} to={`/viewSeller/${item.User_Id__c}`}>
                                                 View
@@ -151,7 +182,11 @@ const ListSellers = () => {
                                                 if (item.User_Id__r.Status__c === "Activate") {
                                                     return (
                                                         <Popup
-                                                            trigger={<label className={styles.linkBlue} style={{color: "red"}}>Deactivate</label>}
+                                                            trigger={
+                                                                <label className={styles.linkBlue} style={{ color: "red" }}>
+                                                                    Deactivate
+                                                                </label>
+                                                            }
                                                             position="right center"
                                                         >
                                                             <BanedSeller idSeller={item.User_Id__c} />
@@ -170,7 +205,12 @@ const ListSellers = () => {
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) } page={page} onChange={handleChange} />
+                                <Pagination
+                                    className={styles.pagi}
+                                    count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                    page={page}
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                     </div>

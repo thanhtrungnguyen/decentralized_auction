@@ -11,10 +11,23 @@ import ReactPlayer from "react-player";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import Loading from "../../components/loading/Loading";
+
 const AuctionDetailForSeller = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/auction/auctiondetailForSeller/${id}`;
     const { data, loading, error } = useFetch(baseURL);
+    const [role, setRole] = useState();
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     console.log(data);
     console.log(loading);
     const getUser = () => {
@@ -29,11 +42,11 @@ const AuctionDetailForSeller = () => {
         return users;
     };
     return loading ? (
-        "loading please wait"
+        <Loading />
     ) : (
         <>
             {(() => {
-                if (getUser().role == "SELLER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

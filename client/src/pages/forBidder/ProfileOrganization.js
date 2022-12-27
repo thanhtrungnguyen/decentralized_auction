@@ -19,7 +19,17 @@ const ProfileOrganization = () => {
     const baseURL = `http://localhost:8800/api/user/${id}`;
     const { data, loading, error } = useFetch(baseURL);
     const navigate = useNavigate();
+    const [role, setRole] = useState();
+    useEffect(() => {
+        console.log(getUser());
 
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     console.log(data);
     console.log(loading);
     const getUser = () => {
@@ -41,7 +51,7 @@ const ProfileOrganization = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role === "BIDDER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -119,7 +129,7 @@ const ProfileOrganization = () => {
 
                     <div className="row">
                         <label className="label">First Name</label>
-                        <input type="text" className="input" value={data.contact.First_Name__c} ></input>
+                        <input type="text" className="input" value={data.contact.First_Name__c}></input>
                     </div>
                     <div className="row">
                         <label className="label">Last Name</label>

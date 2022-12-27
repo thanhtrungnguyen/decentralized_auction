@@ -25,6 +25,8 @@ const PropertyDetail = () => {
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
+    const [role, setRole] = useState();
+
     const { id, propertyId } = useParams();
     const [show, setShow] = useState(false);
     const [show2, setShow2] = useState(false);
@@ -127,13 +129,22 @@ const PropertyDetail = () => {
         });
         return users;
     };
+    useEffect(() => {
+        console.log(getUser());
 
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     return loading ? (
         <Loading />
     ) : (
         <>
             {(() => {
-                if (getUser().role == "MANAGER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
