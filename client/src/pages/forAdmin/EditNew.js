@@ -20,7 +20,7 @@ import Loading from "../../components/loading/Loading";
 
 const EditNew = () => {
     const { id } = useParams();
-    const baseURL = `http://localhost:8800/api/editNews/${id}`;
+    const baseURL = `http://localhost:8800/api/news/getById/${id}`;
     const [role, setRole] = useState();
     const { data, loading, error } = useFetch(baseURL);
     const [content, setContent] = useState(null);

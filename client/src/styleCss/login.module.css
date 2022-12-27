@@ -50,7 +50,13 @@ i:hover {
     color: #9096b2;
     text-decoration: none;
 }
-
+.box {
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-bottom: 10%;
+    margin-top: 5%;
+}
 .btnSignIn {
     width: 432px;
     height: 47px;
