@@ -7,14 +7,31 @@ import { useFetchBidding } from "../../../hook/useFetch";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 
 const BidModalButton = ({ auctionId, propertyId }) => {
-    const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
-
     const [openModal, setOpenModal] = useState(() => {
         return false;
     });
-
-    const { loading, data: auction, error } = useFetchBidding(baseURL);
-
+    const [auction, setAuction] = useState();
+    const [auctionRegistration, setAuctionRegistration] = useState();
+    const fetchData = async () => {
+        const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
+        const auctionRegistrationURL = `http://localhost:8800/api/auctionInformation/${auctionId}/auctionRegistration`;
+        const getAuction = await axios.get(baseURL);
+        const getAuctionRegistration = await axios.get(auctionRegistrationURL);
+        await axios.all([getAuction, getAuctionRegistration]).then(
+            axios.spread((...allData) => {
+                console.log(allData);
+                setAuction(allData[0].data);
+                setAuctionRegistration(allData[1].data);
+            })
+        );
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
+    console.log(auction);
+    console.log(auctionRegistration);
+    // console.log("Auction Log", auction ? auction.auctionId );
+    // console.log("Auction Registration", auctionRegistration ? auctionRegistration.auctionId );
     return (
         <>
             <div>
@@ -24,9 +41,11 @@ const BidModalButton = ({ auctionId, propertyId }) => {
                         setOpenModal(true);
                     }}
                 >
-                    {loading ? "Loading" : "Go to Auction"}
+                    {"Go to Auction"}
                 </button>
-                {openModal && <BidModal closeModal={setOpenModal} loading={loading} auction={auction} propertyId={propertyId} />}
+                {openModal && (
+                    <BidModal closeModal={setOpenModal} auction={auction} auctionRegistration={auctionRegistration} propertyId={propertyId} />
+                )}
             </div>
         </>
     );

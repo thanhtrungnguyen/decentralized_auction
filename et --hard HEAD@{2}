@@ -1,0 +1,222 @@
+[33m7c6378d[m[33m ([m[1;36mHEAD[m[33m)[m HEAD@{0}: rebase (continue): update contract
+[33mde8e687[m HEAD@{1}: rebase (continue): fix
+[33m2975148[m HEAD@{2}: rebase (continue): .
+[33m722be0b[m HEAD@{3}: rebase (continue): update contract
+[33mb718f0d[m HEAD@{4}: rebase (pick): fix
+[33m0f7a6ae[m HEAD@{5}: rebase (pick): fix
+[33m96e6496[m HEAD@{6}: rebase (pick): fix
+[33m7b75086[m HEAD@{7}: rebase (pick): .
+[33m251aec7[m HEAD@{8}: rebase (pick): update contract
+[33me358c0f[m[33m ([m[1;31morigin/develop[m[33m, [m[1;31morigin/congtm3[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{9}: rebase (start): checkout develop
+[33md7d8a5a[m[33m ([m[1;32mtrungnt4[m[33m)[m HEAD@{10}: checkout: moving from develop to trungnt4
+[33me358c0f[m[33m ([m[1;31morigin/develop[m[33m, [m[1;31morigin/congtm3[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{11}: pull --rebase: Fast-forward
+[33mfbdc794[m[33m ([m[1;31morigin/thuyenna3[m[33m)[m HEAD@{12}: checkout: moving from trungnt4 to develop
+[33md7d8a5a[m[33m ([m[1;32mtrungnt4[m[33m)[m HEAD@{13}: commit: fix
+[33me10a622[m[33m ([m[1;31morigin/trungnt4[m[33m)[m HEAD@{14}: commit (merge): Merge branch 'trungnt4' of https://github.com/thanhtrung-nguyen/decentralized_auction into trungnt4
+[33m37aca65[m HEAD@{15}: rebase (continue) (finish): returning to refs/heads/trungnt4
+[33m37aca65[m HEAD@{16}: rebase (continue) (pick): fix
+[33m600eacf[m HEAD@{17}: rebase (continue): fix
+[33m1b1d35b[m HEAD@{18}: rebase (continue) (pick): fix
+[33mc6b0932[m HEAD@{19}: rebase (continue) (pick): .
+[33m9ea9975[m HEAD@{20}: rebase (continue): update contract
+[33mfbdc794[m[33m ([m[1;31morigin/thuyenna3[m[33m)[m HEAD@{21}: rebase (start): checkout develop
+[33m8d19640[m HEAD@{22}: checkout: moving from develop to trungnt4
+[33mfbdc794[m[33m ([m[1;31morigin/thuyenna3[m[33m)[m HEAD@{23}: pull --rebase: Fast-forward
+[33m61aa7c8[m[33m ([m[1;31morigin/longns[m[33m)[m HEAD@{24}: checkout: moving from trungnt4 to develop
+[33m8d19640[m HEAD@{25}: commit: fix
+[33m54a9af6[m HEAD@{26}: commit: fix
+[33m7e26dde[m HEAD@{27}: commit (merge): Merge branch 'trungnt4' of https://github.com/thanhtrung-nguyen/decentralized_auction into trungnt4
+[33m5ce72ed[m HEAD@{28}: rebase (continue) (finish): returning to refs/heads/trungnt4
+[33m5ce72ed[m HEAD@{29}: rebase (continue): fix
+[33m9c4bac0[m HEAD@{30}: rebase (pick): .
+[33m7f19ccd[m HEAD@{31}: rebase (pick): update contract
+[33m61aa7c8[m[33m ([m[1;31morigin/longns[m[33m)[m HEAD@{32}: rebase (start): checkout develop
+[33m281f225[m HEAD@{33}: checkout: moving from develop to trungnt4
+[33m61aa7c8[m[33m ([m[1;31morigin/longns[m[33m)[m HEAD@{34}: pull --rebase: Fast-forward
+[33mae07ed8[m HEAD@{35}: checkout: moving from trungnt4 to develop
+[33m281f225[m HEAD@{36}: commit: fix
+[33m471e60d[m HEAD@{37}: checkout: moving from develop to trungnt4
+[33mae07ed8[m HEAD@{38}: checkout: moving from trungnt4 to develop
+[33m471e60d[m HEAD@{39}: checkout: moving from develop to trungnt4
+[33mae07ed8[m HEAD@{40}: checkout: moving from trungnt4 to develop
+[33m471e60d[m HEAD@{41}: checkout: moving from develop to trungnt4
+[33mae07ed8[m HEAD@{42}: checkout: moving from trungnt4 to develop
+[33m471e60d[m HEAD@{43}: pull --tags origin trungnt4: Merge made by the 'ort' strategy.
+[33m47cb76c[m HEAD@{44}: rebase (continue) (finish): returning to refs/heads/trungnt4
+[33m47cb76c[m HEAD@{45}: rebase (continue): .
+[33m8de4072[m HEAD@{46}: rebase (pick): update contract
+[33mae07ed8[m HEAD@{47}: rebase (start): checkout develop
+[33m8448ffc[m HEAD@{48}: checkout: moving from develop to trungnt4
+[33mae07ed8[m HEAD@{49}: pull --rebase: Fast-forward
+[33m02eb152[m HEAD@{50}: checkout: moving from trungnt4 to develop
+[33m8448ffc[m HEAD@{51}: commit: .
+[33mb2ad102[m HEAD@{52}: checkout: moving from develop to trungnt4
+[33m02eb152[m HEAD@{53}: checkout: moving from trungnt4 to develop
+[33mb2ad102[m HEAD@{54}: rebase (finish): returning to refs/heads/trungnt4
+[33mb2ad102[m HEAD@{55}: rebase (pick): update contract
+[33m02eb152[m HEAD@{56}: rebase (start): checkout develop
+[33mefbcc1c[m HEAD@{57}: checkout: moving from develop to trungnt4
+[33m02eb152[m HEAD@{58}: pull --rebase: Fast-forward
+[33m4bb4abe[m HEAD@{59}: checkout: moving from trungnt4 to develop
+[33mefbcc1c[m HEAD@{60}: rebase (finish): returning to refs/heads/trungnt4
+[33mefbcc1c[m HEAD@{61}: rebase (pick): update contract
+[33m4bb4abe[m HEAD@{62}: rebase (start): checkout develop
+[33m6daa183[m HEAD@{63}: checkout: moving from develop to trungnt4
+[33m4bb4abe[m HEAD@{64}: pull --rebase: Fast-forward
+[33m291bc86[m HEAD@{65}: checkout: moving from trungnt4 to develop
+[33m6daa183[m HEAD@{66}: commit: update contract
+[33m291bc86[m HEAD@{67}: rebase (finish): returning to refs/heads/trungnt4
+[33m291bc86[m HEAD@{68}: rebase (start): checkout develop
+[33mf8e60d4[m HEAD@{69}: checkout: moving from develop to trungnt4
+[33m291bc86[m HEAD@{70}: pull --rebase: Fast-forward
+[33mf8e60d4[m HEAD@{71}: checkout: moving from trungnt4 to develop
+[33mf8e60d4[m HEAD@{72}: rebase (finish): returning to refs/heads/trungnt4
+[33mf8e60d4[m HEAD@{73}: rebase (start): checkout develop
+[33mf97e6bc[m HEAD@{74}: checkout: moving from develop to trungnt4
+[33mf8e60d4[m HEAD@{75}: commit (merge): Merge branch 'trungnt4' into develop
+[33mc9baf3b[m HEAD@{76}: pull --tags origin develop: Fast-forward
+[33m31c93e7[m HEAD@{77}: checkout: moving from trungnt4 to develop
+[33mf97e6bc[m HEAD@{78}: commit: update contract
+[33m9a61bed[m HEAD@{79}: commit: update smartcontract, bid feature
+[33m98d74d9[m HEAD@{80}: commit: update bidding
+[33m074db50[m HEAD@{81}: rebase (finish): returning to refs/heads/trungnt4
+[33m074db50[m HEAD@{82}: rebase (pick): update bid feature
+[33m31c93e7[m HEAD@{83}: rebase (start): checkout develop
+[33m15a5b1f[m HEAD@{84}: checkout: moving from develop to trungnt4
+[33m31c93e7[m HEAD@{85}: pull --rebase: Fast-forward
+[33m3995780[m HEAD@{86}: checkout: moving from trungnt4 to develop
+[33m15a5b1f[m HEAD@{87}: checkout: moving from develop to trungnt4
+[33m3995780[m HEAD@{88}: checkout: moving from trungnt4 to develop
+[33m15a5b1f[m HEAD@{89}: rebase (finish): returning to refs/heads/trungnt4
+[33m15a5b1f[m HEAD@{90}: rebase (pick): update bid feature
+[33m3995780[m HEAD@{91}: rebase (start): checkout develop
+[33mb9c4c97[m HEAD@{92}: checkout: moving from develop to trungnt4
+[33m3995780[m HEAD@{93}: pull --rebase: Fast-forward
+[33m49b0099[m HEAD@{94}: checkout: moving from trungnt4 to develop
+[33mb9c4c97[m HEAD@{95}: pull --tags origin trungnt4: Merge made by the 'ort' strategy.
+[33m79ed4f3[m HEAD@{96}: rebase (finish): returning to refs/heads/trungnt4
+[33m79ed4f3[m HEAD@{97}: rebase (pick): update bid feature
+[33m49b0099[m HEAD@{98}: rebase (start): checkout develop
+[33mc2c9e25[m HEAD@{99}: checkout: moving from develop to trungnt4
+[33m49b0099[m HEAD@{100}: pull: Fast-forward
+[33mff098f3[m HEAD@{101}: checkout: moving from trungnt4 to develop
+[33mc2c9e25[m HEAD@{102}: checkout: moving from develop to trungnt4
+[33mff098f3[m HEAD@{103}: checkout: moving from trungnt4 to develop
+[33mc2c9e25[m HEAD@{104}: commit: update bid feature
+[33mff098f3[m HEAD@{105}: rebase (finish): returning to refs/heads/trungnt4
+[33mff098f3[m HEAD@{106}: rebase (start): checkout develop
+[33m688f999[m HEAD@{107}: checkout: moving from develop to trungnt4
+[33mff098f3[m HEAD@{108}: commit: git ignore bullshit stuff
+[33mf052f70[m HEAD@{109}: commit: git ignore bullshit stuff
+[33m134d7ec[m HEAD@{110}: commit: git ignore bullshit stuff
+[33m87d41b1[m HEAD@{111}: commit: add gitignore bullshit folder
+[33mfc69d8a[m HEAD@{112}: commit (merge): Merge branch 'develop' of https://github.com/thanhtrung-nguyen/decentralized_auction into develop
+[33m0ddc3f1[m HEAD@{113}: rebase (continue) (finish): returning to refs/heads/develop
+[33m0ddc3f1[m HEAD@{114}: rebase (continue) (pick): fix
+[33m3348155[m HEAD@{115}: rebase (continue): cm
+[33m5fb7dd9[m HEAD@{116}: rebase (continue): add PageName, Profile
+[33m33b25aa[m HEAD@{117}: rebase (continue): commit
+[33ma6246b8[m HEAD@{118}: rebase (continue) (pick): refactor conn
+[33mc6051e5[m HEAD@{119}: rebase (continue): refactor
+[33mcdd7372[m HEAD@{120}: rebase (continue): getAllAuction mongoose
+[33m8567e7e[m HEAD@{121}: rebase (continue) (pick): add test, socket.io
+[33macd447c[m HEAD@{122}: rebase (continue) (pick): change variable
+[33m277cff7[m HEAD@{123}: rebase (continue): split smart contract and server, update bid feature
+[33m5c17c16[m HEAD@{124}: rebase (pick): split smart contract and server, update bid feature
+[33m7c0b620[m HEAD@{125}: rebase (pick): split smart contract and server, update bid feature
+[33m688f999[m HEAD@{126}: rebase (start): checkout trungnt4
+[33mca411ca[m HEAD@{127}: checkout: moving from trungnt4 to develop
+[33m688f999[m HEAD@{128}: commit: update bid feature
+[33m62c3977[m HEAD@{129}: checkout: moving from develop to trungnt4
+[33mca411ca[m HEAD@{130}: commit: fix
+[33me769bcf[m HEAD@{131}: pull --tags origin develop: Merge made by the 'ort' strategy.
+[33me1de5e3[m HEAD@{132}: merge trungnt4: Merge made by the 'ort' strategy.
+[33m7c89292[m HEAD@{133}: checkout: moving from trungnt4 to develop
+[33m62c3977[m HEAD@{134}: commit: fix auciton
+[33md30edfb[m HEAD@{135}: checkout: moving from develop to trungnt4
+[33m7c89292[m HEAD@{136}: pull --tags origin develop: Merge made by the 'ort' strategy.
+[33m44e07ea[m HEAD@{137}: rebase (finish): returning to refs/heads/develop
+[33m44e07ea[m HEAD@{138}: rebase (pick): split smart contract and server, update bid feature
+[33m3f3084a[m HEAD@{139}: rebase (pick): split smart contract and server, update bid feature
+[33md30edfb[m HEAD@{140}: rebase (start): checkout trungnt4
+[33medf74d8[m HEAD@{141}: checkout: moving from trungnt4 to develop
+[33md30edfb[m HEAD@{142}: commit: fix auction frontend
+[33meca969f[m HEAD@{143}: commit: fix
+[33m67d9207[m HEAD@{144}: checkout: moving from develop to trungnt4
+[33medf74d8[m HEAD@{145}: commit: split smart contract and server, update bid feature
+[33m8d78238[m HEAD@{146}: merge trungnt4: Merge made by the 'ort' strategy.
+[33ma3df262[m HEAD@{147}: checkout: moving from trungnt4 to develop
+[33m67d9207[m HEAD@{148}: commit: split smart contract and server, update bid feature
+[33m046840b[m HEAD@{149}: commit: split smart contract and server, update bid feature
+[33m8f538ec[m HEAD@{150}: commit: split smart contract and server, update bid feature
+[33m7e4f8a6[m HEAD@{151}: checkout: moving from develop to trungnt4
+[33ma3df262[m HEAD@{152}: commit: split smart contract and server, update bid feature
+[33md721eae[m HEAD@{153}: commit: delete uploads files
+[33m90fb47c[m HEAD@{154}: checkout: moving from develop to develop
+[33m90fb47c[m HEAD@{155}: checkout: moving from develop to develop
+[33m90fb47c[m HEAD@{156}: checkout: moving from trungnt4 to develop
+[33m7e4f8a6[m HEAD@{157}: checkout: moving from develop to trungnt4
+[33m90fb47c[m HEAD@{158}: checkout: moving from trungnt4 to develop
+[33m7e4f8a6[m HEAD@{159}: commit: split smart contract and server, update bid feature
+[33mf47bb5b[m HEAD@{160}: commit (merge): Merge branch 'trungnt4' of https://github.com/thanhtrung-nguyen/decentralized_auction into trungnt4
+[33m911aa77[m HEAD@{161}: checkout: moving from develop to trungnt4
+[33m90fb47c[m HEAD@{162}: checkout: moving from trungnt4 to develop
+[33m911aa77[m HEAD@{163}: rebase (continue) (finish): returning to refs/heads/trungnt4
+[33m911aa77[m HEAD@{164}: rebase (continue): split smart contract and server, update bid feature
+[33m90fb47c[m HEAD@{165}: rebase (start): checkout develop
+[33mdd7e1f4[m HEAD@{166}: checkout: moving from trungnt to trungnt4
+[33m0e245f5[m[33m ([m[1;31morigin/trungnt[m[33m, [m[1;32mtrungnt[m[33m)[m HEAD@{167}: checkout: moving from develop to trungnt
+[33m90fb47c[m HEAD@{168}: rebase (continue) (finish): returning to refs/heads/develop
+[33m90fb47c[m HEAD@{169}: rebase (continue) (pick): split smart contract and server, update bid feature
+[33m7d274a1[m HEAD@{170}: rebase (continue) (pick): split smart contract and server, update bid feature
+[33m5fc81aa[m HEAD@{171}: rebase (continue): update bid feature
+[33mcc7d074[m HEAD@{172}: pull --rebase (pick): split smart contract and server, update bid feature
+[33m4668fa8[m HEAD@{173}: pull --rebase (pick): split smart contract and server, update bid feature
+[33m88ec31a[m HEAD@{174}: pull --rebase (pick): update bid feature
+[33m82007d4[m HEAD@{175}: pull --rebase (start): checkout 82007d463551572864c495f0b642284a83b50fe1
+[33mdd7e1f4[m HEAD@{176}: rebase (finish): returning to refs/heads/develop
+[33mdd7e1f4[m HEAD@{177}: rebase (start): checkout trungnt4
+[33macc2dae[m HEAD@{178}: checkout: moving from trungnt4 to develop
+[33mdd7e1f4[m HEAD@{179}: pull --rebase (finish): returning to refs/heads/trungnt4
+[33mdd7e1f4[m HEAD@{180}: pull --rebase (pick): fix datetime auction
+[33m51bcde1[m HEAD@{181}: pull --rebase (start): checkout 51bcde1d6cd129520bb7c7265bb32ea8ab78de76
+[33m1b80694[m HEAD@{182}: merge origin/develop: Merge made by the 'ort' strategy.
+[33m51bcde1[m HEAD@{183}: commit: split smart contract and server, update bid feature
+[33m9a70b94[m HEAD@{184}: commit: split smart contract and server, update bid feature
+[33m0431f17[m HEAD@{185}: commit (merge): split smart contract and server, update bid feature
+[33me5a66fa[m HEAD@{186}: commit: split smart contract and server, update bid feature
+[33mdfcd107[m HEAD@{187}: commit: split smart contract and server, update bid feature
+[33m227ae9a[m HEAD@{188}: rebase (continue) (finish): returning to refs/heads/trungnt4
+[33m227ae9a[m HEAD@{189}: rebase (continue): update bid feature
+[33macc2dae[m HEAD@{190}: rebase (start): checkout develop
+[33m490b38d[m HEAD@{191}: checkout: moving from develop to trungnt4
+[33macc2dae[m HEAD@{192}: pull --rebase: Fast-forward
+[33ma1ee8d8[m HEAD@{193}: checkout: moving from trungnt4 to develop
+[33m490b38d[m HEAD@{194}: commit: update bid feature
+[33ma1ee8d8[m HEAD@{195}: rebase (finish): returning to refs/heads/trungnt4
+[33ma1ee8d8[m HEAD@{196}: rebase (start): checkout develop
+[33m68da1be[m HEAD@{197}: checkout: moving from develop to trungnt4
+[33ma1ee8d8[m HEAD@{198}: checkout: moving from trungnt4 to develop
+[33m68da1be[m HEAD@{199}: checkout: moving from develop to trungnt4
+[33ma1ee8d8[m HEAD@{200}: commit: Contract interaction
+[33m6a9f615[m HEAD@{201}: commit: contract interaction
+[33mbea588a[m HEAD@{202}: commit (merge): Merge branch 'develop' of https://github.com/thanhtrung-nguyen/decentralized_auction into develop
+[33m68da1be[m HEAD@{203}: merge origin/trungnt4: Fast-forward
+[33m3c95212[m HEAD@{204}: checkout: moving from trungnt4 to develop
+[33m68da1be[m HEAD@{205}: commit: update smartcontract, blockchain forntend, contract interaction
+[33m06d19c1[m HEAD@{206}: commit: update smartcontract, blockchain forntend, contract interaction
+[33m799de15[m HEAD@{207}: commit: Contract interaction
+[33m85f5c8e[m HEAD@{208}: checkout: moving from longnshe141175 to trungnt4
+[33mcb01c0a[m[33m ([m[1;31morigin/longnshe141175[m[33m, [m[1;31morigin/develop_3[m[33m, [m[1;32mlongnshe141175[m[33m)[m HEAD@{209}: checkout: moving from long1 to longnshe141175
+[33md047eae[m[33m ([m[1;31morigin/long1[m[33m, [m[1;32mlong1[m[33m)[m HEAD@{210}: checkout: moving from longns to long1
+[33m3e3541e[m[33m ([m[1;32mlongns[m[33m)[m HEAD@{211}: checkout: moving from develop to longns
+[33m3c95212[m HEAD@{212}: checkout: moving from develop to develop
+[33m3c95212[m HEAD@{213}: checkout: moving from trungnt4 to develop
+[33m85f5c8e[m HEAD@{214}: commit: fix
+[33m102b4f7[m HEAD@{215}: commit: fix
+[33mb599688[m HEAD@{216}: commit: Parse Ether
+[33m02abc84[m HEAD@{217}: commit: fix smart contract auctionId
+[33me301b3b[m HEAD@{218}: commit: update contract auctionId
+[33m3c95212[m HEAD@{219}: rebase (finish): returning to refs/heads/trungnt4
+[33m3c95212[m HEAD@{220}: rebase (start): checkout develop
+[33ma18e5e6[m HEAD@{221}: checkout: moving f
