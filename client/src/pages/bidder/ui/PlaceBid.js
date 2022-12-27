@@ -16,7 +16,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import TransactionStatus from "../components/TransactionStatus";
 import BiddingProperty from "../components/BiddingProperty";
 import TransactionHistory from "../components/TransactionHistory";
-import AuctionResult from "./AuctionResult";
+import AuctionResult from "./auctionResult/AuctionResult";
 import { useFetchBidding } from "../../../hook/useFetch";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
 import Loader from "../components/Loader";
