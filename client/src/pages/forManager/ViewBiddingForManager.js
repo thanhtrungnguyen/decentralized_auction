@@ -136,7 +136,7 @@ const ViewBiddingForManager = () => {
                             {data.map((Bids) => (
                                 <tr>
                                     <td className={styles.td}></td>
-                                    <td className={styles.td}>{Bids.address}</td>
+                                    <td className={styles.td}>{Bids.bidder}</td>
 
                                     <td className={styles.td}>{Bids.transactionHash}</td>
                                     <td className={styles.td}>{Bids.bidAmount}</td>

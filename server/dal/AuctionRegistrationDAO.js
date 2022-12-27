@@ -10,7 +10,13 @@ const createAuctionRegistration = async (dataAuctionRegistration) => {
     const create = await auctionRegistration.save();
 };
 
+const findUserbyWallet = async (wallet) =>{
+    const user = await AuctionRegistration.findOne({ auctionId : wallet });
+    return user;
+}
+
 module.exports = {
     findByAuctionId: findAuctionRegistrationByAuctionId,
     create: createAuctionRegistration,
+    findUserbyWallet:findUserbyWallet
 };

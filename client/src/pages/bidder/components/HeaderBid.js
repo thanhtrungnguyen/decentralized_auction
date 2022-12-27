@@ -7,13 +7,11 @@ import { useMoralis, useWeb3Contract, useApiContract } from "react-moralis";
 
 const HeaderBid = ({ closeModal }) => {
     const { account } = useMoralis();
-    console.log(account);
 
     return (
         <div>
             <div className={styles.connect}>
                 <ConnectButton moralisAuth={false} />
-
                 <button
                     className={styles.btnClose}
                     onClick={() => {

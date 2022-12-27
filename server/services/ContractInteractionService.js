@@ -1,19 +1,17 @@
+const AuctionRegistrationDAO = require("../dal/AuctionRegistrationDAO");
 const ContractInteractionDAO = require("../dal/ContractInteractionDAO");
 const { parseEther } = require("../utils/ethereumUnitConverter");
 const { getTime } = require("../utils/timeConverter");
 
 const getAuctionInformationById = (id) => {
     return ContractInteractionDAO.getAuctionInformationById(id).then((data) => {
-        // data[0].startRegistrationTime = getTime(data[0].startRegistrationTime);
-        // data[0].endRegistrationTime = getTime(data[0].endRegistrationTime);
-        // data[0].startAuctionTime = getTime(data[0].startAuctionTime);
-        // data[0].endAuctionTime = getTime(data[0].endAuctionTime);
-        // data[0].duePaymentTime = getTime(data[0].duePaymentTime);
-        data[0].registrationFee = parseEther(data[0].registrationFee);
-        data[0].depositAmount = parseEther(data[0].depositAmount);
-        data[0].startBid = parseEther(data[0].startBid);
-        data[0].priceStep = parseEther(data[0].priceStep);
-        return data[0];
+        if (data) {
+            data.registrationFee = parseEther(data.registrationFee);
+            data.depositAmount = parseEther(data.depositAmount);
+            data.startBid = parseEther(data.startBid);
+            data.priceStep = parseEther(data.priceStep);
+        }
+        return data;
     });
 };
 
@@ -53,8 +51,13 @@ const getAllAuction = async () => {
 
 const getAuctionBiddingById = async (auctionId)=>{
     var auction = await ContractInteractionDAO.getBiddingByAuctionId(auctionId);
+    auction.map(async (item) =>{
+    //  const registration =  await AuctionRegistrationDAO.findUserbyWallet(item.bidder);
+     item.bidAmount = parseEther(item.bidAmount);
+    })
     return auction;
 }
+
 const CountBidding = async () => {
     const bid = await ContractInteractionDAO.CountBidding();
     return bid;
