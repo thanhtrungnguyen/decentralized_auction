@@ -187,6 +187,9 @@ const ListBidders = () => {
                                             <Link className={styles.linkBlue} to={`/bidderDetail/${item.User_Id__c}`}>
                                                 View
                                             </Link>
+                                            <Link className={styles.linkBlue} to={`/bidderOrganizationDetail/${item.User_Id__c}`}>
+                                                V
+                                            </Link>
                                             {(() => {
                                                 if (item.User_Id__r.Status__c === "Activate") {
                                                     return (
