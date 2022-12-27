@@ -23,17 +23,21 @@ const EditNew = () => {
     const baseURL = `http://localhost:8800/api/editNews/${id}`;
     const [role, setRole] = useState();
     const { data, loading, error } = useFetch(baseURL);
-    const [content, setContent] = useState(data.content);
-    const [title, setTitle] = useState(data.title);
+    const [content, setContent] = useState(null);
+    const [title, setTitle] = useState(null);
+    const [avatar, setAvatar] = useState(null);
 
     console.log(data);
     useEffect(() => {
+        setTitle(data.title);
+        setContent(data.content);
         if (getUser() != null) {
             setRole(getUser().role);
         } else {
             setRole("");
         }
     }, []);
+
     const navigate = useNavigate();
     const getUser = () => {
         var users = null;
@@ -54,15 +58,20 @@ const EditNew = () => {
         if (id === "content") {
             setContent(value);
         }
+        if (id === "avatar") {
+            setAvatar(e.target.files[0]);
+        }
     };
     const handleSubmit = (event) => {
         const formData = new FormData();
 
         formData.append("title", title);
         formData.append("content", content);
+        formData.append("avatar", avatar);
+
         console.log(formData.get("content"));
         axios
-            .post(
+            .put(
                 "http://localhost:8800/api/editNews",
                 formData,
                 {
@@ -98,9 +107,25 @@ const EditNew = () => {
                 <div className={styles.container}>
                     <SideBarAdmin />
                     <div className={styles.content}>
-                        <p className={styles.title}>Add News</p>
+                        <p className={styles.title}>Edit News</p>
                         <label className={styles.label}>Title</label>
                         <input id="title" className={styles.ip} type="text" value={title} onChange={(e) => handleInputChange(e)} required></input>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <label className={styles.label}>Avatar</label>
+                        <input className={styles.file} id="avatar" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
+                        {avatar != null && <img src={URL.createObjectURL(avatar)} className={styles.image} alt="Thumb" />}
+
+                        {/* {avatar == null && (
+                            <img
+                                src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
+                                className={styles.image}
+                                alt="Thumb"
+                            />
+                        )} */}
+
                         <br />
                         <br />
                         <br />

@@ -50,6 +50,7 @@ import ChangePassword from "./pages/common/ChangePassword";
 import ViewBiddingForManager from "./pages/forManager/ViewBiddingForManager";
 import ViewRegistrationForManager from "./pages/forManager/ViewRegistrationForManager";
 import AuctionResult from "./pages/forManager/AuctionResult";
+import ViewNews from "./pages/common/ViewNews";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 
@@ -126,7 +127,8 @@ function App() {
                         <Route path="changePassword" element={<ChangePassword />} />
                         <Route path="viewBiddingForManager/:id" element={<ViewBiddingForManager />} />
                         <Route path="viewRegistrationForManager/:id" element={<ViewRegistrationForManager />} />
-                        <Route path="viewAuctionResultForManager/:id/" element={<AuctionResult />} />
+                        <Route path="viewAuctionResultForManager/:id" element={<AuctionResult />} />
+                        <Route path="viewNews/:id" element={<ViewNews />} />
                     </Routes>
                 </BrowserRouter>
             </NotificationProvider>
