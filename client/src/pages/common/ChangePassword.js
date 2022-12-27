@@ -27,10 +27,18 @@ const ChangePassword = () => {
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
     const [message, setMessage] = useState(null);
-    const [passwordShown, setPasswordShown] = useState(false);
+    const [passwordShown1, setPasswordShown1] = useState(false);
+    const [passwordShown2, setPasswordShown2] = useState(false);
+    const [passwordShown3, setPasswordShown3] = useState(false);
     //const [match, setMatch] = useState(null);
-    const togglePasswordVisibility = () => {
-        setPasswordShown(passwordShown ? false : true);
+    const toggleOldPasswordVisibility = () => {
+        setPasswordShown1(passwordShown1 ? false : true);
+      };
+      const toggleNewPasswordVisibility = () => {
+        setPasswordShown2(passwordShown2 ? false : true);
+      };
+      const toggleRePasswordVisibility = () => {
+        setPasswordShown3(passwordShown3 ? false : true);
       };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -46,9 +54,6 @@ const ChangePassword = () => {
     };
     const handleSubmit = async (event) => {
         const formData = new FormData();
-
-
-
         if (rePassword !== password) {
             setMessage("Please enter match the password");
         } else {
@@ -101,39 +106,39 @@ const ChangePassword = () => {
                             <div className={'styles.pass-wrapper'}>
                             <input
                                 id="oldPassword"
-                                type={passwordShown ? "text" : "password"}
+                                type={passwordShown1 ? "text" : "password"}
                                 className={styles.textField}
                                 placeholder="Enter Old Password"
                                 value={oldPassword}
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
-                            <i onClick={togglePasswordVisibility}>{eye}</i>
+                            <i id="oldPassword" onClick={toggleOldPasswordVisibility}>{eye}</i>
                             </div>
                             <div className={'styles.pass-wrapper'}>
                             <input
                                 id="password"
-                                type={passwordShown ? "text" : "password"}
+                                type={passwordShown2 ? "text" : "password"}
                                 className={styles.textField}
                                 placeholder="Enter New Password"
                                 value={password}
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
-                            <i onClick={togglePasswordVisibility}>{eye}</i>
+                            <i id="password" onClick={toggleNewPasswordVisibility}>{eye}</i>
                             </div>
                             
                             <div className={'styles.pass-wrapper'}>
                             <input
                                 id="rePassword"
-                                type={passwordShown ? "text" : "password"}
+                                type={passwordShown3 ? "text" : "password"}
                                 className={styles.textField}
                                 placeholder="Re-Enter New Password"
                                 value={rePassword}
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
-                            <i onClick={togglePasswordVisibility}>{eye}</i>
+                            <i id="rePassword" onClick={toggleRePasswordVisibility}>{eye}</i>
                             </div>
                             <label style={{ color: 'red' }}>{message}</label>
                             <br />

@@ -13,10 +13,23 @@ import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
 import { Outlet, Link } from "react-router-dom";
 
 import ReactDOM from "react-dom/client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon icon={faEye} />;
 // axios.defaults.withCredentials = true;
 const Register = () => {
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const navigate = useNavigate();
+    const [message, setMessage] = useState(null);
+    const [passwordShown1, setPasswordShown1] = useState(false);
+    const [passwordShown2, setPasswordShown2] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordShown1(passwordShown1 ? false : true);
+      };
+      const toggleRePasswordVisibility = () => {
+        setPasswordShown2(passwordShown2 ? false : true);
+      };
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
 
@@ -117,8 +130,10 @@ const Register = () => {
         formData.append("password", password);
         formData.append("role", role);
         formData.append("usertype", usertype);
-
-        axios
+        if (rePassword !== password) {
+            setMessage("Please enter match the password");
+        }else{
+            axios
             .post(
                 "http://localhost:8800/api/auth/register",
                 formData,
@@ -133,7 +148,8 @@ const Register = () => {
                 alert(res.data.message);
                 navigate("/login");
             });
-        console.log(formData);
+        }
+        
 
         event.preventDefault();
     };
@@ -312,9 +328,10 @@ const Register = () => {
                         placeholder="Username"
                         required
                     ></input>
+                    <div>
                     <input
                         className={styles.inputEP}
-                        type="password"
+                        type={passwordShown1 ? "text" : "password"}
                         pattern="^\s*(?:\S\s*){8,}$"
                         value={password}
                         onChange={(e) => handleInputChange(e)}
@@ -322,15 +339,22 @@ const Register = () => {
                         placeholder="Password"
                         required
                     ></input>
-                    <input
-                        className={styles.inputEP}
-                        type="password"
-                        value={rePassword}
-                        onChange={(e) => handleInputChange(e)}
-                        id="rePassword"
-                        placeholder="Re-eneter the password"
-                        required
-                    ></input>
+                    <i  onClick={togglePasswordVisibility}>{eye}</i>
+                    </div>
+                    
+                    <div>
+                        <input
+                            className={styles.inputEP}
+                            type={passwordShown2 ? "text" : "password"}
+                            value={rePassword}
+                            onChange={(e) => handleInputChange(e)}
+                            id="rePassword"
+                            placeholder="Re-eneter the password"
+                            required
+                        ></input>
+                     <i  onClick={toggleRePasswordVisibility}>{eye}</i>
+                    </div>
+                    <label style={{ color: 'red' }}>{message}</label>
                     <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>
                 </form>
             </div>
