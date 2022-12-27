@@ -108,7 +108,7 @@ const AuctionsListForManager = () => {
                                     placeholder="Please input"
                                     value={propertyName2}
                                     onChange={(e) => handleInputChange(e)}
-                                    //required
+                                //required
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
@@ -117,7 +117,7 @@ const AuctionsListForManager = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="category"
                                 placeholder="Category"
-                                //defaultValue="null"
+                            //defaultValue="null"
                             >
                                 <option value="null">All</option>
                                 {listCategory.map((item) => (
@@ -213,19 +213,19 @@ const AuctionsListForManager = () => {
                                             {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
                                             {auction.Auctions1__r.records[0].Status__c != "Request" &&
                                                 "From " +
-                                                    new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c)
-                                                        .toUTCString()
-                                                        .split("GMT")[0] +
-                                                    "To " +
-                                                    new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
+                                                new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c)
+                                                    .toUTCString()
+                                                    .split("GMT")[0] +
+                                                "To " +
+                                                new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
                                         <td className={styles.td}>
                                             {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
                                             {auction.Auctions1__r.records[0].Status__c != "Request" &&
                                                 "From " +
-                                                    new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
-                                                    " To " +
-                                                    new Date(auction.Auctions1__r.records[0].End_Auction_Time__c).toUTCString().split("GMT")[0]}
+                                                new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
+                                                " To " +
+                                                new Date(auction.Auctions1__r.records[0].End_Auction_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
                                         <td className={styles.td}>{auction.Auctions1__r.records[0].Status__c}</td>
                                         <td className={styles.td}>
@@ -235,14 +235,61 @@ const AuctionsListForManager = () => {
                                             >
                                                 View
                                             </Link>
+                                            {auction.Auctions1__r.records[0].Status__c == "Bidding" && (
 
-                                            <Link
-                                                className={styles.linkBlue}
-                                                to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
-                                            >
-                                                Process
-                                            </Link>
+                                                <Link
+                                                    className={styles.linkBlue}
+                                                    to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
+                                                >
+                                                    Process
+                                                </Link>
+                                            )}
+                                            {auction.Auctions1__r.records[0].Status__c == "UpcomingforBid" && (
 
+                                                <Link
+                                                    className={styles.linkBlue}
+                                                    to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
+                                                >
+                                                    Process
+                                                </Link>
+                                            )}
+                                            
+                                            {auction.Auctions1__r.records[0].Status__c == "RegistrationTime" && (
+
+                                                <Link
+                                                    className={styles.linkBlue}
+                                                    to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
+                                                >
+                                                    Process
+                                                </Link>
+                                            )}
+                                            {auction.Auctions1__r.records[0].Status__c == "Closed" && (
+
+                                                <Link
+                                                    className={styles.linkBlue}
+                                                    to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
+                                                >
+                                                    Process
+                                                </Link>
+                                            )}
+                                            {auction.Auctions1__r.records[0].Status__c == "Success" && (
+
+                                                <Link
+                                                    className={styles.linkBlue}
+                                                    to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
+                                                >
+                                                    Process
+                                                </Link>
+                                            )}
+                                            {auction.Auctions1__r.records[0].Status__c == "Fail" && (
+
+                                                <Link
+                                                    className={styles.linkBlue}
+                                                    to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
+                                                >
+                                                    Process
+                                                </Link>
+                                            )}
                                             {auction.Auctions1__r.records[0].Status__c == "Request" && (
                                                 <Link
                                                     className={styles.linkBlue}

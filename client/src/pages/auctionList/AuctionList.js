@@ -29,6 +29,7 @@ const AuctionList = () => {
     const [name2, setName2] = useState(null);
     const [checkedState, setCheckedState] = useState([false, false, false]);
     const baseURLAuction = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
+    const [change,setChange] = useState(null);
     const statusList = [
         { name: "Auction Upcoming", value: 2 },
         { name: "Auction Bidding", value: 3 },
@@ -62,6 +63,7 @@ const AuctionList = () => {
                 console.log(resp.data);
                 console.log("axios get");
                 setData(resp.data);
+                socket.off();
             });
             if (getUser() != null) {
                 setRole(getUser().role);
@@ -71,10 +73,10 @@ const AuctionList = () => {
             setLoading(false);
         };
         fetchData();
-    }, [baseURLAuction]);
+    }, [change]);
     socket.on("data", (item) => {
-        if (item != status) {
-            setStatus(data);
+        if (item != change) {
+            setChange(item);
             console.log(item);
         }
     });

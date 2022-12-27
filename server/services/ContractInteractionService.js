@@ -51,4 +51,16 @@ const getAllAuction = async () => {
     return listAuction;
 };
 
-module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getHighestBidder, getAllAuction };
+const getAuctionBiddingById = async (auctionId)=>{
+    var auction = await ContractInteractionDAO.getBiddingByAuctionId(auctionId);
+    return auction;
+}
+const CountBidding = async () => {
+    const bid = await ContractInteractionDAO.CountBidding();
+    return bid;
+};
+// const getAuctionBiddingById = async () => {
+//     var listAuction = await ContractInteractionDAO.getPlacedBidById();
+//     return listAuction;
+// };
+module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getHighestBidder, getAllAuction, getAuctionBiddingById, CountBidding };

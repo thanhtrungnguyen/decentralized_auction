@@ -123,8 +123,8 @@ function App() {
                         <Route path="payment/:id" element={<ConfirmPayment />} />
                         <Route path="changePassword/:id" element={<ChangePassword />} />
                         <Route path="changePassword" element={<ChangePassword />} />
-                        <Route path="viewBiddingForManager/:id/:propertyId" element={<ViewBiddingForManager />} />
-                        <Route path="viewRegistrationForManager/:id/:propertyId" element={<ViewRegistrationForManager />} />
+                        <Route path="viewBiddingForManager/:id" element={<ViewBiddingForManager />} />
+                        <Route path="viewRegistrationForManager/:id" element={<ViewRegistrationForManager />} />
                     </Routes>
                 </BrowserRouter>
             </NotificationProvider>
