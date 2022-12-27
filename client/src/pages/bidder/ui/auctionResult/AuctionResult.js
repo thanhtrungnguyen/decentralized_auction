@@ -19,17 +19,14 @@ import { parseEther } from "../../../../utils/ethereumUnitConverter";
 import ClosedAuction from "../ClosedAuction";
 import { ConfirmAuctionResult } from "../../components/ConfirmAuctionResult";
 import { getNativeBalanceOfBidder } from "../../nativeBalance";
-
+import ResultForFirstBidder from "./ResultForFirstBidder";
+import ResultForSecondBidder from "./ResultForSecondBidder";
+import ResultForOtherBidders from "./ResultForOtherBidders";
 const AuctionResult = ({ auction }) => {
     const { account, isWeb3Enabled } = useMoralis();
-
-    const dispatch = useNotification();
     const [rank, setRank] = useState();
     const [bidInformation, setBidInformation] = useState();
     const [highestBid, setHighestBid] = useState();
-    const [transactionStatus, setTransactionStatus] = useState();
-    const [goPayment, setGoPayment] = useState(false);
-    const [showConfirmation, setShowConfirmation] = useState(false);
 
     const { runContractFunction: getBidInformationByAuctionId } = useWeb3Contract({
         abi: CONTRACT_ABI,
@@ -43,19 +40,6 @@ const AuctionResult = ({ auction }) => {
         functionName: "getHighestBidOfAuction",
         params: { auctionId: auction.auctionId },
     });
-    const {
-        runContractFunction: cancelAuctionResult,
-        data,
-        error,
-        isFetching,
-        isLoading,
-    } = useWeb3Contract({
-        abi: CONTRACT_ABI,
-        contractAddress: CONTRACT_ADDRESS,
-        functionName: "cancelAuctionResult",
-        msgValue: "0",
-        params: { auctionId: auction.auctionId },
-    });
 
     const updateUI = async () => {
         setBidInformation(await getBidInformationByAuctionId());
@@ -65,7 +49,6 @@ const AuctionResult = ({ auction }) => {
         console.log(highest);
         const bidInformationOfBidder = await getBidInformationOfBidder();
         setRank(await getRankOfBidder());
-        // console.log(await getNativeBalanceOfBidder(account));
     };
 
     useEffect(() => {
@@ -109,119 +92,40 @@ const AuctionResult = ({ auction }) => {
         return rank;
     };
 
-    const handleSuccess = async (tx) => {
-        try {
-            console.log("handleSuccess " + tx.hash);
-            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
-            await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
-
-            dispatch({
-                type: "success",
-                title: "Place Bid Notification",
-                message: "Place Bid Completed!",
-                position: "topR",
-                icon: <BsCheckLg />,
-            });
-        } catch (error) {
-            console.log(error);
+    const renderTopBidder = () => {
+        switch (rank) {
+            case 1:
+                return <ResultForFirstBidder auction={auction} highestBid={highestBid} />;
+            case 2:
+                return <ResultForSecondBidder />;
+            case 0:
+                return <>Retracted Bid</>;
+            default:
+                return <ResultForOtherBidders />;
         }
     };
-    const handleError = async (tx) => {
-        console.log(tx);
-        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
-        setTransactionStatus({ status: tx.data.message });
-        dispatch({
-            type: "error",
-            title: "Cancel Error",
-            message: tx.data.message,
-            position: "topR",
-            icon: <AiOutlineClose />,
-        });
-    };
 
-    const renderer = ({ days, hours, minutes, seconds, completed }) => {
-        if (completed) {
-            return <ClosedAuction />;
-        } else {
-            return (
+    return (
+        <div>
+            <div>
+                <p className={styles.txtBlack}>Auction Result </p>
+                <p className={styles.txt}>Your Auction has ended:</p>
                 <div>
-                    <div>
-                        <p className={styles.txtBlack}>Auction Result </p>
-                        <p className={styles.txt}>Your Auction has ended:</p>
-                        <div>
-                            <div className={styles.info}>
-                                {/* <BiddingProperty auction={auction} />
+                    <div className={styles.info}>
+                        {/* <BiddingProperty auction={auction} />
                         <BiddingProperty auction={auction} property={property} /> */}
-                                <BiddingProperty />
-                                <p className={styles.txtM}>Current bid:</p>
-                                <p className={styles.txtNormal}>{highestBid} ETH</p>
-                                <p className={styles.txtM}>Auction ends in:</p>
-                                <p className={styles.txtNormal}>
-                                    <span>
-                                        {days}d {hours}h {minutes}m {seconds}s
-                                    </span>
-                                </p>
-                            </div>
-                            <div className={styles.detail}>
-                                <p className={styles.title}>Result:</p>
-                                <p className={styles.txtT}>Your place: {rank}</p>
-                                {rank == 1 ? (
-                                    showConfirmation ? (
-                                        <>
-                                            <p className={styles.txtT}>Do you agree with this result?</p>
-                                            <button
-                                                className={styles.btn}
-                                                onClick={() => {
-                                                    setGoPayment(true);
-                                                }}
-                                            >
-                                                Accept
-                                            </button>
-                                            <button
-                                                disabled={isLoading || isFetching}
-                                                className={styles.btn}
-                                                onClick={async () => {
-                                                    cancelAuctionResult({
-                                                        onError: handleError,
-                                                        onSuccess: handleSuccess,
-                                                    });
-                                                }}
-                                            >
-                                                {isLoading || isFetching ? "Loading..." : "Cancel"}
-                                            </button>
-                                            <TransactionStatus transactionStatus={transactionStatus} />
-                                        </>
-                                    ) : (
-                                        <button
-                                            className={styles.btn}
-                                            onClick={() => {
-                                                setGoPayment(true);
-                                            }}
-                                        >
-                                            Go To Payment
-                                        </button>
-                                    )
-                                ) : (
-                                    ""
-                                )}
-                            </div>
-                        </div>
+                        <BiddingProperty />
+                        <p className={styles.txtM}>Current bid:</p>
+                        <p className={styles.txtNormal}>{highestBid} ETH</p>
+                    </div>
+                    <div className={styles.detail}>
+                        <p className={styles.title}>Result:</p>
+                        <p className={styles.txtT}>Your place: {rank}</p>
+                        {renderTopBidder()}
                     </div>
                 </div>
-            );
-        }
-    };
-    return (
-        <>
-            {goPayment ? (
-                <Payment auction={auction} highestBid={highestBid} />
-            ) : (
-                <>
-                    <Countdown date={auction.duePaymentTime * 1000} renderer={renderer} />
-                </>
-            )}
-        </>
+            </div>
+        </div>
     );
 };
 

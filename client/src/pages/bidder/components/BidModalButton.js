@@ -7,17 +7,31 @@ import { useFetchBidding } from "../../../hook/useFetch";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 
 const BidModalButton = ({ auctionId, propertyId }) => {
-    const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
-    const auctionRegistrationURL = `http://localhost:8800/api/auctionInformation/${auctionId}/auctionRegistration`;
     const [openModal, setOpenModal] = useState(() => {
         return false;
     });
-
-    const { loading, data: auction, error1 } = useFetchBidding(baseURL);
-    const { loading: loadingAuctionRegistration, data: auctionRegistration, error2 } = useFetchBidding(auctionRegistrationURL);
-
-    console.log("Auction Log", auction ? auction.auctionId : `Not Found Auction Log: ${error1}`);
-    console.log("Auction Registration", auctionRegistration ? auctionRegistration.auctionId : `Not Found Auction Registration: ${error2}`);
+    const [auction, setAuction] = useState();
+    const [auctionRegistration, setAuctionRegistration] = useState();
+    const fetchData = async () => {
+        const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
+        const auctionRegistrationURL = `http://localhost:8800/api/auctionInformation/${auctionId}/auctionRegistration`;
+        const getAuction = await axios.get(baseURL);
+        const getAuctionRegistration = await axios.get(auctionRegistrationURL);
+        await axios.all([getAuction, getAuctionRegistration]).then(
+            axios.spread((...allData) => {
+                console.log(allData);
+                setAuction(allData[0].data);
+                setAuctionRegistration(allData[1].data);
+            })
+        );
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
+    console.log(auction);
+    console.log(auctionRegistration);
+    // console.log("Auction Log", auction ? auction.auctionId );
+    // console.log("Auction Registration", auctionRegistration ? auctionRegistration.auctionId );
     return (
         <>
             <div>
@@ -27,16 +41,10 @@ const BidModalButton = ({ auctionId, propertyId }) => {
                         setOpenModal(true);
                     }}
                 >
-                    {loading || loadingAuctionRegistration ? "Loading" : "Go to Auction"}
+                    {"Go to Auction"}
                 </button>
                 {openModal && (
-                    <BidModal
-                        closeModal={setOpenModal}
-                        loading={loading}
-                        auction={auction}
-                        auctionRegistration={auctionRegistration}
-                        propertyId={propertyId}
-                    />
+                    <BidModal closeModal={setOpenModal} auction={auction} auctionRegistration={auctionRegistration} propertyId={propertyId} />
                 )}
             </div>
         </>

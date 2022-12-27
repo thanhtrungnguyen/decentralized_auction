@@ -15,7 +15,7 @@ import { useFetchBidding } from "../../hook/useFetch";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
-const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyId }) => {
+const BidModal = ({ closeModal, auction, auctionRegistration, propertyId }) => {
     const { chainId, isWeb3Enabled, account } = useMoralis();
     const [hasMetamask, setHasMetamask] = useState(false);
     useEffect(() => {
@@ -46,7 +46,7 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
         const currentTimestamp = Math.floor(Date.now() / 1000);
         const registeredWallet = checkUserRegistered();
         console.log(checkUserRegistered());
-        if (loading) return "Loading";
+        // if (loading) return "Loading";
         if (auction.length == 0) return "AuctionNotFound";
         if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
         if (registeredWallet != null && registeredWallet != account) {
