@@ -32,6 +32,7 @@ const News = () => {
     const handleSubmit = (event) => {
         title2 === "" ? setTitle(null) : setTitle(title2);
         setPage(1);
+        console.log(title2)
         event.preventDefault();
     };
 
@@ -103,7 +104,7 @@ const News = () => {
                         <p className={styles.txtSearch}>Search</p>
                         <div className={styles.conS}>
                             <input
-                                id="Title News"
+                                id="title"
                                 className={styles.input}
                                 type="text"
                                 placeholder="Title"
@@ -111,7 +112,8 @@ const News = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 //required
                             ></input>
-                            <BsSearch className={styles.icon2} />
+                            {/* <input type="submit" className="btn" value="Search"></input> */}
+                            <BsSearch className={styles.icon2} onClick={handleSubmit} />
                         </div>
                     </form>
 
