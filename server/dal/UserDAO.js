@@ -130,7 +130,7 @@ const getUserById = async (userId) => {
     if (role === 'MANAGER') {
         await connection.sobject('User__c').find({ Id: userId }, (err, result) => {
             if (err) console.err(err)
-            user = result
+            user = result[0]
         })
     }
     else {

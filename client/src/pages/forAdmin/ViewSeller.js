@@ -110,9 +110,9 @@ const ViewSeller = () => {
               src={`http://localhost:8800/api/auction/images/${data.cardFront}`}
               alt="images"
             /> */}
-                            <p className={styles.bold}>Account Information</p>
+                            {/* <p className={styles.bold}>Account Information</p>
                             <p className={styles.txt}>Username</p>
-                            <p className={styles.txt}>Password</p>
+                            <p className={styles.txt}>Password</p> */}
                         </div>
                         <div className={styles.right}>
                             <p className={styles.title}>.</p>
@@ -171,10 +171,11 @@ const ViewSeller = () => {
               alt="images"
             /> */}
                             <p className={styles.bold}>.</p>
-                            <p className={styles.txtR}>wanjala</p>
+                            {/* <p className={styles.txtR}>wanjala</p> */}
                             {/* <p className={styles.txtR}>${data.username}</p> */}
-
-                            <p className={styles.txtR}>**********</p>
+                            <br/>
+                            <br/>
+                            {/* <p className={styles.txtR}>**********</p> */}
                             {/* <p className={styles.txtR}>${data.password}</p> */}
                             <input type="button" value="Back" className={styles.btnCancel} onClick={cancel}></input>
                         </div>
