@@ -221,21 +221,46 @@ const MyProperty = () => {
                                             <Link className={styles.linkBlue} to={`/propertyDetail/${property.Id}`}>
                                                 View
                                             </Link>
-                                            {property.Status__c === "Created" ||
-                                                property.Status__c === "Rejected" ||
-                                                (property.Status__c === "Created" && (
-                                                    <>
-                                                        <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
-                                                            Edit
-                                                        </Link>
-                                                        <Link className={styles.linkBlue} to={`/deleteProperty/${property.Id}`}>
-                                                            Delete
-                                                        </Link>
-                                                        <label className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
-                                                            Request Add
-                                                        </label>
-                                                    </>
-                                                ))}
+                                            {property.Status__c == "Created" && (
+                                                <>
+                                                    <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
+                                                        Edit
+                                                    </Link>
+                                                    <Link className={styles.linkBlue} to={`/deleteProperty/${property.Id}`}>
+                                                        Delete
+                                                    </Link>
+                                                    <label className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
+                                                        Request Add
+                                                    </label>
+                                                </>
+                                            )}
+
+                                            {property.Status__c == "Rejected" && (
+                                                <>
+                                                    <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
+                                                        Edit
+                                                    </Link>
+                                                    <Link className={styles.linkBlue} to={`/deleteProperty/${property.Id}`}>
+                                                        Delete
+                                                    </Link>
+                                                    <label className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
+                                                        Request Add
+                                                    </label>
+                                                </>
+                                            )}
+                                            {property.Status__c == "Fail" && (
+                                                <>
+                                                    <Link className={styles.linkBlue} to={`/editProperty/${property.Id}`}>
+                                                        Edit
+                                                    </Link>
+                                                    <Link className={styles.linkBlue} to={`/deleteProperty/${property.Id}`}>
+                                                        Delete
+                                                    </Link>
+                                                    <label className={styles.linkBlue} onClick={() => RequestAuction(`${property.Id}`)}>
+                                                        Request Add
+                                                    </label>
+                                                </>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
