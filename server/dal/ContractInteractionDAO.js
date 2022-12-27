@@ -122,8 +122,7 @@ const getBiddingByAuctionId = async (id) => {
 };
 const getAllAuction = async () => {
     var auction = null;
-    auction = await ContractInteraction.find({ name: "CreatedAuction" });
-
+    auction = await ContractInteraction.find({ name: "CreatedAuction"});   
     return auction;
 };
 

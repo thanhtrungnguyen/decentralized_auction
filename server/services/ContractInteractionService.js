@@ -1,3 +1,4 @@
+const AuctionRegistrationDAO = require("../dal/AuctionRegistrationDAO");
 const ContractInteractionDAO = require("../dal/ContractInteractionDAO");
 const { parseEther } = require("../utils/ethereumUnitConverter");
 const { getTime } = require("../utils/timeConverter");
@@ -50,8 +51,13 @@ const getAllAuction = async () => {
 
 const getAuctionBiddingById = async (auctionId)=>{
     var auction = await ContractInteractionDAO.getBiddingByAuctionId(auctionId);
+    auction.map(async (item) =>{
+    //  const registration =  await AuctionRegistrationDAO.findUserbyWallet(item.bidder);
+     item.bidAmount = parseEther(item.bidAmount);
+    })
     return auction;
 }
+
 const CountBidding = async () => {
     const bid = await ContractInteractionDAO.CountBidding();
     return bid;
