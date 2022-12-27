@@ -102,7 +102,7 @@ const ListNews = () => {
                                     );
                                 }
                             })()}
-                            <Link className={styles.linkBlue} to={`/viewNews/${item.Id}`}>
+                            <Link className={styles.linkBlue} to={`/viewNewsForAdmin/${item.Id}`}>
                                 View
                             </Link>
                             <Link className={styles.linkBlue} to={`/editNews/${item.Id}`}>
