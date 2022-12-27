@@ -99,6 +99,10 @@ const AuctionList = () => {
         }, null);
         setStatus(total);
     };
+    const handleSort = (e) => {
+        setSort(e.target.value)
+        setPage(1)
+    }
 
     //   useEffect(()=>{
     //     const fetchData = async ()=>{
@@ -131,7 +135,7 @@ const AuctionList = () => {
                 <label className={styles.txtTitle}>Artwork & Upcoming Auction</label>
                 <div className={styles.floatRight}>
                     <label className={styles.txtBlue}>Sort by:</label>
-                    <select id="language" className={styles.select} onChange={(e) => setSort(e.target.value)}>
+                    <select id="language" className={styles.select} onChange={(e) => handleSort(e)}>
                         <option value="1" selected={sort === "1"}>
                             All
                         </option>
@@ -272,7 +276,15 @@ const AuctionList = () => {
                             <div>
                                 <p className={styles.txtBlueB}>{auction.Auctions1__r.records[0].Name}</p>
 
-                                <p className={styles.txtDes}>{auction.Auctions1__r.records[0].Status__c}</p>
+                                <p className={styles.txtDes}>
+                                    {auction.Auctions1__r.records[0].Status__c === 'Approved' ? 'Upcoming for Registration Time' :
+                                        auction.Auctions1__r.records[0].Status__c === 'RegistrationTime' ? 'Registration Time' :
+                                            auction.Auctions1__r.records[0].Status__c === 'UpcomingforBid' ? 'Upcoming for Auction time' :
+                                                auction.Auctions1__r.records[0].Status__c === 'Bidding' ? 'Auction time' :
+                                                    auction.Auctions1__r.records[0].Status__c === 'Closed' ? 'Auction Ended' :
+                                                        'Auction Ended'
+                                    }
+                                </p>
 
                                 <div>
                                     <p className={styles.txtBlueB}>{auction.Property_Information__c}</p>

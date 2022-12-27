@@ -1,7 +1,7 @@
 const auctionDAO = require("../dal/auctionDAO");
-
 const callContractFunction = require("./callContractFunction");
-
+const jwt = require("jsonwebtoken");
+const { createError } = require('../utils/error');
 const createRequestAuction = async (propertyId) => {
     try {
         await auctionDAO.createRequestAuction(propertyId);
@@ -90,6 +90,16 @@ const getAllAuction = async (index, name, category, statusAuction) => {
     var auctionList = await auctionDAO.getAllAuction(index, name, category, statusAuction);
     return auctionList;
 };
+const getAuctionForSeller = async (token,index, name, category, statusAuction) => {
+    var userId = null;
+    jwt.verify(token, process.env.JWT, (err, user) => {
+        if (err) return next(createError(403, "Token is not valid!"));
+        userId = user.id;
+    });
+    var data = await auctionDAO.getAuctionForSeller(userId,index, name, category, statusAuction);
+
+    return data;
+};
 const getAllAuctionBidder = async () => {
     var auctionList = await auctionDAO.getAllAuctionBidder();
     return auctionList;
@@ -133,4 +143,5 @@ module.exports = {
     updateStatusAuctionMongo,
     getAllAuctionBidder,
     filterAuction,
+    getAuctionForSeller
 };

@@ -6,30 +6,47 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import { useParams } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon icon={faEye} />;
 const NewPassword = () => {
     const { userId, token } = useParams();
 
     const navigate = useNavigate();
-
+    const [message, setMessage] = useState(null);
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
 
-    const handleSubmit = async (event) => {
-        navigate(`/login`);
+    const [passwordShown1, setPasswordShown1] = useState(false);
+    const [passwordShown2, setPasswordShown2] = useState(false);
 
+    const togglePasswordVisibility = () => {
+        setPasswordShown1(passwordShown1 ? false : true);
+    };
+    const toggleRePasswordVisibility = () => {
+        setPasswordShown2(passwordShown2 ? false : true);
+    };
+
+    const handleSubmit = async (event) => {
+        if (rePassword !== password) {
+            setMessage("Please enter match the password");
+        } else {
+            await axios
+                .post(
+                    "http://localhost:8800/api/auth/reset-password",
+                    { password1: password, password2: rePassword, userId: userId, token: token },
+                    { withCredentials: true }
+                )
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    // alert(res.data.message);
+                    navigate(`/login`);
+                });
+                
+        }
+       
         event.preventDefault();
-        axios
-            .post(
-                "http://localhost:8800/api/auth/reset-password",
-                { password1: password, password2: rePassword, userId: userId, token: token },
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                // alert(res.data.message);
-            });
     };
 
     return (
@@ -42,22 +59,30 @@ const NewPassword = () => {
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Forgot Password</p>
                             <p className={styles.text}>Please enter code chagne password we send your email </p>
-                            <input
-                                type="password"
-                                className={styles.textField}
-                                placeholder="Enter New Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            ></input>
-                            <input
-                                type="password"
-                                className={styles.textField}
-                                placeholder="Re-Enter New Password"
-                                value={rePassword}
-                                onChange={(e) => setRePassword(e.target.value)}
-                                required
-                            ></input>
+                            <div>
+                                <input
+                                    type={passwordShown1 ? "text" : "password"}
+                                    className={styles.textField}
+                                    placeholder="Enter New Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                ></input>
+                                <i onClick={togglePasswordVisibility}>{eye}</i>
+                            </div>
+                            <div>
+                                <input
+                                    type={passwordShown2 ? "text" : "password"}
+                                    className={styles.textField}
+                                    placeholder="Re-Enter New Password"
+                                    value={rePassword}
+                                    onChange={(e) => setRePassword(e.target.value)}
+                                    required
+                                ></input>
+                                <i onClick={toggleRePasswordVisibility}>{eye}</i>
+                            </div>
+                            <label style={{ color: 'red' }}>{message}</label>
+
                             <br />
                             <br />
                             <br />

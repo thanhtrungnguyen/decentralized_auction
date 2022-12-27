@@ -17,41 +17,56 @@ import Loading from "../../components/loading/Loading";
 
 const MyAuctions = () => {
     const [page, setPage] = React.useState(1);
-    const [cagetory, setCategory] = useState("Car");
+    const [category, setCategory] = useState(null);
+    const [category2, setCategory2] = useState(null);
     const [propertyName, setPropertyName] = useState(null);
-
+    const [propertyName2, setPropertyName2] = useState(null);
+    const [status, setStatus] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const baseURL = "http://localhost:8800/api/myAuctions/";
-    const { data, loading, error } = useFetch(baseURL);
-
+    const baseURLCategory = "http://localhost:8800/api/category/";
+    const baseURLAuction = `http://localhost:8800/api/auction/getAuctionForSeller/${page}/${propertyName}/${category}/${status}`;
+    //const { data, loading, error } = useFetch(baseURL);
+    const [listCategory, setListCategory] = useState([]);
+    const [listAuction, setListAuction] = useState([]);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        if (id === "cagetory") {
-            setCategory(value);
+        if (id === "category") {
+            setCategory2(value);
         }
         if (id === "propertyName") {
-            setPropertyName(value);
+            setPropertyName2(value);
         }
     };
-    const handleSubmit = (event) => {
-        const formData = new FormData();
-
-        formData.append("propertyName", propertyName);
-        formData.append("cagetory", cagetory);
-
-        axios
-            .get("http://localhost:8800/api/auction", formData, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-
-                navigate("/myProperty");
+    const handleChangeStatus = (e) => {
+        setStatus(e.target.value);
+        setPage(1);
+    };
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURLCategory).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setListCategory(resp.data);
             });
+            await axios.get(baseURLAuction,{ withCredentials: true }).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setListAuction(resp.data);
+            });
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURLAuction]);
+    const handleSubmit = (event) => {
+        propertyName2 === "" ? setPropertyName(null) : setPropertyName(propertyName2);
+        setCategory(category2);
+        setPage(1);
         event.preventDefault();
     };
+    
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -84,99 +99,168 @@ const MyAuctions = () => {
                     <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
-                                <p className={styles.title}>Property Name</p>
+                                <p className={styles.title}>Auction Name</p>
                                 <input
                                     id="propertyName"
                                     className={styles.input}
                                     type="text"
                                     placeholder="Please input"
-                                    value={propertyName}
+                                    value={propertyName2}
                                     onChange={(e) => handleInputChange(e)}
-                                    required
+                                    
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
-                            {/* <select
+                            <select
                                 className={styles.select}
                                 onChange={(e) => handleInputChange(e)}
-                                id="cagetory"
+                                id="category"
                                 placeholder="Category"
-                                defaultValue="Car"
+                                //defaultValue="null"
                             >
-                                {data.map((property) => (
-                                    <option value={property.category}>{property.category}</option>
+                                <option value="null">All</option>
+                                {listCategory.map((item) => (
+                                    <option value={item.Name} selected={item.Name === category2}>
+                                        {item.Name}
+                                    </option>
                                 ))}
-                            </select> */}
+                            </select>
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset"></input>
+                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e) => setPropertyName2("")}></input>
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <Link className={styles.bold} to="/myProperty">
+                            <button
+                                className={styles.bold}
+                                value="null"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 All
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button
+                                className={styles.link}
+                                value="Request"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Request add
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button
+                                className={styles.link}
+                                value="Approved"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Approved
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button
+                                className={styles.link}
+                                value="UpcomingforBid"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Upcoming
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button
+                                className={styles.link}
+                                value="Bidding"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Bidding
-                            </Link>
-                            <Link className={styles.link} to="/">
+                            </button>
+                            <button
+                                className={styles.link}
+                                value="Closed"
+                                onClick={(e) => {
+                                    handleChangeStatus(e);
+                                }}
+                            >
                                 Closed
-                            </Link>
+                            </button>
                             <hr />
-                            <p className={styles.txtBold}>69 Properties</p>
+                            <p className={styles.txtBold}>Total Auction: {listAuction.totalAuction}</p>
                             {/* <Link className={styles.btnAdd} to="/addProperty">
               Add a New Property
             </Link> */}
                             <br />
                             <table className={styles.table}>
-                                <tr>
+                            <tr>
+                                    <th className={styles.th}>Auction Name</th>
                                     <th className={styles.th}>Property Name</th>
+                                    <th className={styles.th}>Category Name</th>
                                     <th className={styles.th}>Registration Time</th>
                                     <th className={styles.th}>Auction Time</th>
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {data.map((auction) => (
+                                {listAuction.listAuction.map((auction) => (
                                     <tr>
+                                        <td className={styles.td}>{auction.Auctions1__r.records[0].Name}</td>
+                                        <td className={styles.td}>{auction.Name}</td>
+
+                                        <td className={styles.td}>{auction.Category_Id__r.Name}</td>
                                         <td className={styles.td}>
-                                            <input type="checkbox"></input>
+                                            {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
+                                            {auction.Auctions1__r.records[0].Status__c != "Request" &&
+                                                "From " +
+                                                    new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c)
+                                                        .toUTCString()
+                                                        .split("GMT")[0] +
+                                                    "To " +
+                                                    new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
-                                        <td className={styles.td}>{auction.property.propertyName}</td>
-                                        <td className={styles.td}>{auction.property.category}</td>
-                                        <td className={styles.td}>{auction.property.registrationTime}</td>
-                                        <td className={styles.td}>{auction.auctionTime}</td>
-                                        <td className={styles.td}>{auction.auctionStatus}</td>
                                         <td className={styles.td}>
-                                            <Link className={styles.linkBlue} to={`/autitoDetailForSeller/${auction._id}`}>
+                                            {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
+                                            {auction.Auctions1__r.records[0].Status__c != "Request" &&
+                                                "From " +
+                                                    new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
+                                                    " To " +
+                                                    new Date(auction.Auctions1__r.records[0].End_Auction_Time__c).toUTCString().split("GMT")[0]}
+                                        </td>
+                                        <td className={styles.td}>{auction.Auctions1__r.records[0].Status__c}</td>
+                                        <td className={styles.td}>
+                                            <Link
+                                                className={styles.linkBlue}
+                                                to={`/auctionDetailForManager/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
+                                            >
                                                 View
                                             </Link>
+
+                                            <Link
+                                                className={styles.linkBlue}
+                                                to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
+                                            >
+                                                Process
+                                            </Link>
+
+                                            {auction.Auctions1__r.records[0].Status__c == "Request" && (
+                                                <Link
+                                                    className={styles.linkBlue}
+                                                    to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}
+                                                >
+                                                    Approve
+                                                </Link>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
-                                <tr>
-                                    <td className={styles.td}>Dianne Russell</td>
-                                    <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
-                                    <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
-                                    <td className={styles.td}>Bidding</td>
-                                    <td className={styles.td}>
-                                        <Link className={styles.linkBlue} to="/autitoDetailForSeller">
-                                            View
-                                        </Link>
-                                    </td>
-                                </tr>
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={10} page={page} onChange={handleChange} />
+                            <Pagination
+                                    className={styles.pagi}
+                                    count={Math.floor(listAuction.total / 10) + 1}
+                                    page={page}
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                     </div>

@@ -9,6 +9,7 @@ const {
     rejectAuction,
     filterAuction,
     getAllAuctionBidder,
+    getAuctionForSeller,
     getAuctionBiddingById,
 } = require("../controllers/AuctionController.js");
 const { verifySeller } = require("../utils/verifyToken.js");
@@ -24,6 +25,8 @@ router.put("/reject/:id", rejectAuction);
 router.put("/:id", verifySeller, updateAuction);
 
 router.get("/getAll/:index/:name/:category/:status", getAllAuction);
+
+router.get("/getAuctionForSeller/:index/:name/:category/:status", getAuctionForSeller);
 
 router.get("/", getAllAuctionBidder);
 
