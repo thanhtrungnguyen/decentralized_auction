@@ -47,13 +47,13 @@ const AuctionResult = () => {
         fetchData();
     }, [baseURL]);
     const onClick = () => {
-        navigate(`/viewBiddingForManager/${id}/${propertyId}`);
+        navigate(`/viewBiddingForManager/${id}`);
     };
     const result = () => {
-        navigate(`/viewAuctionResultForManager/${id}/${propertyId}`);
+        navigate(`/viewAuctionResultForManager/${id}`);
     };
     const Registration = () => {
-        navigate(`/viewRegistrationForManager/${id}/${propertyId}`);
+        navigate(`/viewRegistrationForManager/${id}`);
     };
     const handleChange = (event, value) => {
         setPage(value);

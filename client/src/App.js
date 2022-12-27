@@ -126,7 +126,7 @@ function App() {
                         <Route path="changePassword" element={<ChangePassword />} />
                         <Route path="viewBiddingForManager/:id" element={<ViewBiddingForManager />} />
                         <Route path="viewRegistrationForManager/:id" element={<ViewRegistrationForManager />} />
-                        <Route path="viewAuctionResultForManager/:id/:propertyId" element={<AuctionResult />} />
+                        <Route path="viewAuctionResultForManager/:id/" element={<AuctionResult />} />
                     </Routes>
                 </BrowserRouter>
             </NotificationProvider>

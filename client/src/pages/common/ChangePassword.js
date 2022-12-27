@@ -138,7 +138,7 @@ const ChangePassword = () => {
                                     {eye}
                                 </i>
                             </div>
-                            <div className={"styles.pass-wrapper"}>
+                            <div className={styles.hide}>
                                 <input
                                     id="password"
                                     type={passwordShown2 ? "text" : "password"}
@@ -153,7 +153,7 @@ const ChangePassword = () => {
                                 </i>
                             </div>
 
-                            <div className={"styles.pass-wrapper"}>
+                            <div className={styles.hide}>
                                 <input
                                     id="rePassword"
                                     type={passwordShown3 ? "text" : "password"}
