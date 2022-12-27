@@ -18,11 +18,38 @@ import { useFetch } from "../../hook/useFetch";
 const ViewNews = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/news/getById/${id}`;
-    // const { data, loading, error } = useFetch(baseURL);
     const navigate = useNavigate();
-    const { data, loading, error } = useFetch(baseURL);
-    const [role, setRole] = useState();
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+    const [content, setContent] = useState(null);
+    const [title, setTitle] = useState(null);
+    const [avatar, setAvatar] = useState(null);
 
+    const [role, setRole] = useState();
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                setTitle(resp.data.Name);
+                setContent(resp.data.Content__c);
+                setData(resp.data)
+                // console.log(resp.data);
+                // console.log("axios get");
+                // onCitySelect(sCity);
+                // onDistrictSelect(sDistrict);
+                // onWardSelect(sWard);
+            });
+
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
     //const [match, setMatch] = useState(null);
     const getUser = () => {
         var users = null;
@@ -58,7 +85,7 @@ const ViewNews = () => {
                 }
             })()}
             <NavBar />
-            <div>{data.content}</div>
+            <div>{data.Content__c}</div>
             <Footer />
             <FooterCopy />
         </>
