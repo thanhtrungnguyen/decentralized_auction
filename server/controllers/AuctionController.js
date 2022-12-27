@@ -149,4 +149,4 @@ const getAuctionBiddingById = async(req,res,next)=>{
 //     }
 // }
 
-module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction,filterAuction,getAllAuctionBidder,getAuctionBiddingById };
+module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction,filterAuction,getAllAuctionBidder,getAuctionBiddingById,getAuctionForSeller };
