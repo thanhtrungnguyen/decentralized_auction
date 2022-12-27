@@ -3,7 +3,7 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import Loading from "../../components/loading/Loading";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";

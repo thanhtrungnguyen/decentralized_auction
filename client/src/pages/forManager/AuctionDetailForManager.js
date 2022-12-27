@@ -3,17 +3,17 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
-import { Outlet, Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+// import { Outlet, Link } from "react-router-dom";
+import React, { useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
-import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+// import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
-import axios from "axios";
+// import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
-import Popup from "reactjs-popup";
+// import Popup from "reactjs-popup";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -23,7 +23,7 @@ const AuctionDetailForManager = () => {
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
     const { id, propertyId } = useParams();
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
     const [registrationFee, setRegistrationFee] = useState(null);
@@ -32,12 +32,12 @@ const AuctionDetailForManager = () => {
 
     const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const { data, loading, error } = useFetch(baseURL);
-    const onClick = () => {
-        console.log(show);
+    const { data, loading} = useFetch(baseURL);
+    // const onClick = () => {
+    //     console.log(show);
 
-        setShow(false);
-    };
+    //     setShow(false);s
+    // };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "registrationFee") {
@@ -47,49 +47,49 @@ const AuctionDetailForManager = () => {
             setName(value);
         }
     };
-    var startviewTime = data.End_View_Property_Time__c || "";
-    var startViewPropertyTime = new Date(startviewTime.split(",")[0]);
-    var daySTView = parseInt(startViewPropertyTime.getUTCDate());
+    // var startviewTime = data.End_View_Property_Time__c || "";
+    // var startViewPropertyTime = new Date(startviewTime.split(",")[0]);
+    // var daySTView = parseInt(startViewPropertyTime.getUTCDate());
 
-    const AprroveAuction = () => {
-        alert(name + registrationFee + timeRegistration + auctionTime);
-        axios
-            .put(
-                "http://localhost:8800/api/auction/approve/" + id,
-                {
-                    registrationFee: registrationFee,
-                    timeRegistration: timeRegistration,
-                    auctionTime: auctionTime,
-                    name: name,
-                    propertyId: propertyId,
-                },
-                {
-                    withCredentials: true,
-                }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-            });
-    };
-    const RejectAuction = () => {
-        axios
-            .put(
-                "http://localhost:8800/api/auction/reject/" + id,
-                {
-                    propertyId: propertyId,
-                },
-                {
-                    withCredentials: true,
-                }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-            });
-    };
+    // const AprroveAuction = () => {
+    //     alert(name + registrationFee + timeRegistration + auctionTime);
+    //     axios
+    //         .put(
+    //             "http://localhost:8800/api/auction/approve/" + id,
+    //             {
+    //                 registrationFee: registrationFee,
+    //                 timeRegistration: timeRegistration,
+    //                 auctionTime: auctionTime,
+    //                 name: name,
+    //                 propertyId: propertyId,
+    //             },
+    //             {
+    //                 withCredentials: true,
+    //             }
+    //         )
+    //         .then((res) => {
+    //             console.log(res);
+    //             console.log(res.data);
+    //             alert(res.data.message);
+    //         });
+    // };
+    // const RejectAuction = () => {
+    //     axios
+    //         .put(
+    //             "http://localhost:8800/api/auction/reject/" + id,
+    //             {
+    //                 propertyId: propertyId,
+    //             },
+    //             {
+    //                 withCredentials: true,
+    //             }
+    //         )
+    //         .then((res) => {
+    //             console.log(res);
+    //             console.log(res.data);
+    //             alert(res.data.message);
+    //         });
+    // };
     const Cancel = () => {
         navigate("/autionsListForManager");
     };
@@ -109,7 +109,7 @@ const AuctionDetailForManager = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "MANAGER") {
+                if (getUser().role === "MANAGER") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
