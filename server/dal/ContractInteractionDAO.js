@@ -120,20 +120,17 @@ const getBiddingByAuctionId = async (id) => {
     );
     return bid;
 };
-const getAllAuction = async()=>{
+const getAllAuction = async () => {
     var auction = null;
     auction = await ContractInteraction.find({ name: "CreatedAuction" });
 
     return auction;
 };
 
-}
 const CountBidding = async () => {
-    const bid = await ContractInteraction.find(
-        {
-            name: { $in: ["PlacedBid", "RetractedBid"] },
-           
-        }).count();
+    const bid = await ContractInteraction.find({
+        name: { $in: ["PlacedBid", "RetractedBid"] },
+    }).count();
     return bid;
 };
 // const getAuctionBiddingById = async(auctionId)=>{
