@@ -14,11 +14,25 @@ import jwt from "jsonwebtoken";
 import FooterCopy from "../../components/footer/FooterCopy";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Loading from "../../components/loading/Loading";
+
 const AddNews = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [avatar, setAvatar] = useState(null);
+    const [role, setRole] = useState();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        console.log(getUser());
 
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+        setLoading(false);
+    }, []);
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -71,10 +85,12 @@ const AddNews = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role === "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser userName={getUser().userName} />;
                 } else {
                     return <Header />;

@@ -1,5 +1,5 @@
 import styles from "../../styleCss/login.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
@@ -12,7 +12,7 @@ import jwt from "jsonwebtoken";
 import FooterCopy from "../../components/footer/FooterCopy";
 import HeaderUser from "../../components/header/HeaderUser";
 // import { useFetch } from "../../hook/useFetch";
-// import Loading from "../../components/loading/Loading";
+import Loading from "../../components/loading/Loading";
 // import bcrypt from "bcryptjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
@@ -27,19 +27,43 @@ const ChangePassword = () => {
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
     const [message, setMessage] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState();
     const [passwordShown1, setPasswordShown1] = useState(false);
     const [passwordShown2, setPasswordShown2] = useState(false);
     const [passwordShown3, setPasswordShown3] = useState(false);
     //const [match, setMatch] = useState(null);
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+        setLoading(false);
+    }, []);
     const toggleOldPasswordVisibility = () => {
         setPasswordShown1(passwordShown1 ? false : true);
-      };
-      const toggleNewPasswordVisibility = () => {
+    };
+    const toggleNewPasswordVisibility = () => {
         setPasswordShown2(passwordShown2 ? false : true);
-      };
-      const toggleRePasswordVisibility = () => {
+    };
+    const toggleRePasswordVisibility = () => {
         setPasswordShown3(passwordShown3 ? false : true);
-      };
+    };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "oldPassword") {
@@ -54,44 +78,41 @@ const ChangePassword = () => {
     };
     const handleSubmit = async (event) => {
         const formData = new FormData();
+
         if (rePassword !== password) {
             setMessage("Please enter match the password");
         } else {
-
-            await axios.put('http://localhost:8800/api/auth/changePassword', {
-                'oldPassword': oldPassword,
-                'newPassword': password,
-                'rePassword': rePassword,
-                'userName': getUser().userName
-            }, { withCredentials: true })
-            .then((res) => {
-                // console.log(res);
-                // console.log(res.data);
-                alert(res.data);
-                navigate(`/homePage`);
-            }).catch((error)=>{
-                alert(error.response.data);
-                navigate(`/changePassword/${id}`);
-            });
+            await axios
+                .put(
+                    "http://localhost:8800/api/auth/changePassword",
+                    {
+                        oldPassword: oldPassword,
+                        newPassword: password,
+                        rePassword: rePassword,
+                        userName: getUser().userName,
+                    },
+                    { withCredentials: true }
+                )
+                .then((res) => {
+                    // console.log(res);
+                    // console.log(res.data);
+                    alert(res.data);
+                    navigate(`/homePage`);
+                })
+                .catch((error) => {
+                    alert(error.response.data);
+                    navigate(`/changePassword/${id}`);
+                });
             event.preventDefault();
-            
         }
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-    return (
+
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role === "BIDDER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser userName={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -103,44 +124,50 @@ const ChangePassword = () => {
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Change Password</p>
-                            <div className={'styles.pass-wrapper'}>
-                            <input
-                                id="oldPassword"
-                                type={passwordShown1 ? "text" : "password"}
-                                className={styles.textField}
-                                placeholder="Enter Old Password"
-                                value={oldPassword}
-                                onChange={(e) => handleInputChange(e)}
-                                required
-                            ></input>
-                            <i id="oldPassword" onClick={toggleOldPasswordVisibility}>{eye}</i>
+                            <div className={styles.hide}>
+                                <input
+                                    id="oldPassword"
+                                    type={passwordShown1 ? "text" : "password"}
+                                    className={styles.textField}
+                                    placeholder="Enter Old Password"
+                                    value={oldPassword}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
+                                <i className={styles.ce} onClick={toggleOldPasswordVisibility}>
+                                    {eye}
+                                </i>
                             </div>
-                            <div className={'styles.pass-wrapper'}>
-                            <input
-                                id="password"
-                                type={passwordShown2 ? "text" : "password"}
-                                className={styles.textField}
-                                placeholder="Enter New Password"
-                                value={password}
-                                onChange={(e) => handleInputChange(e)}
-                                required
-                            ></input>
-                            <i id="password" onClick={toggleNewPasswordVisibility}>{eye}</i>
+                            <div className={"styles.pass-wrapper"}>
+                                <input
+                                    id="password"
+                                    type={passwordShown2 ? "text" : "password"}
+                                    className={styles.textField}
+                                    placeholder="Enter New Password"
+                                    value={password}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
+                                <i className={styles.ce} onClick={toggleNewPasswordVisibility}>
+                                    {eye}
+                                </i>
                             </div>
-                            
-                            <div className={'styles.pass-wrapper'}>
-                            <input
-                                id="rePassword"
-                                type={passwordShown3 ? "text" : "password"}
-                                className={styles.textField}
-                                placeholder="Re-Enter New Password"
-                                value={rePassword}
-                                onChange={(e) => handleInputChange(e)}
-                                required
-                            ></input>
-                            <i id="rePassword" onClick={toggleRePasswordVisibility}>{eye}</i>
+
+                            <div className={"styles.pass-wrapper"}>
+                                <input
+                                    id="rePassword"
+                                    type={passwordShown3 ? "text" : "password"}
+                                    className={styles.textField}
+                                    placeholder="Re-Enter New Password"
+                                    value={rePassword}
+                                    onChange={(e) => handleInputChange(e)}
+                                    required
+                                ></input>
+                                <i className={styles.ce} onClick={toggleRePasswordVisibility}>
+                                    {eye}
+                                </i>
                             </div>
-                            <label style={{ color: 'red' }}>{message}</label>
+                            <label style={{ color: "red" }}>{message}</label>
                             <br />
                             <br />
                             <br />

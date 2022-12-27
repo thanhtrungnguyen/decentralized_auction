@@ -9,6 +9,8 @@ import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { useEffect, useState } from "react";
+
 const BidderDetail = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/user/${id}`;
@@ -28,12 +30,24 @@ const BidderDetail = () => {
         });
         return users;
     };
+    const [role, setRole] = useState();
+
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     return loading ? (
         <Loading />
     ) : (
         <>
             {(() => {
-                if (getUser().role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -61,7 +75,11 @@ const BidderDetail = () => {
                         <p className={styles.txt}>Card number</p>
                         <p className={styles.txt}>Card granted date</p>
                         <p className={styles.txt}>Card granted place</p>
-                        <img className={styles.img} src={`http://localhost:8800/api/auction/images/${data.contact.Font_Side_Image__c}`} alt="images" />
+                        <img
+                            className={styles.img}
+                            src={`http://localhost:8800/api/auction/images/${data.contact.Font_Side_Image__c}`}
+                            alt="images"
+                        />
                         {/* <img
               className={styles.img}
               src={`http://localhost:8800/api/auction/images/${data.cardFront}`}
@@ -75,9 +93,9 @@ const BidderDetail = () => {
                         <p className={styles.title}>.</p>
 
                         <p className={styles.bold}>.</p>
-                        
+
                         <p className={styles.txtR}>{data.contact.First_Name__c}</p>
-                  
+
                         <p className={styles.txtR}>{data.contact.Last_Name__c}</p>
                         <p className={styles.txtR}>{data.contact.Gender__c}</p>
 
@@ -104,7 +122,11 @@ const BidderDetail = () => {
 
                         <p className={styles.txtR}>{data.contact.Card_Granted_Place__c}</p>
 
-                        <img className={styles.img2} src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`} alt="images" />
+                        <img
+                            className={styles.img2}
+                            src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`}
+                            alt="images"
+                        />
                         {/* <img
               className={styles.img2}
               src={`http://localhost:8800/api/auction/images/${data.contact.cardBack}`}

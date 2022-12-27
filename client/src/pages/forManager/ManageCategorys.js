@@ -26,6 +26,7 @@ const ManagerCategorys = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/category/getAll/${page}/${status}/${categoryName}`;
+    const [role, setRole] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,6 +36,13 @@ const ManagerCategorys = () => {
                 console.log("axios get");
                 setData(resp.data);
             });
+
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
             setLoading(false);
         };
         fetchData();
@@ -73,7 +81,7 @@ const ManagerCategorys = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "MANAGER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -152,7 +160,9 @@ const ManagerCategorys = () => {
                                 {data.categories.map((item) => (
                                     <tr>
                                         <td className={styles.td}>{item.Name}</td>
-                                        <td className={styles.td} style={item.Status__c === 'Activate' ? {} : { color: "red" }}>{item.Status__c}</td>
+                                        <td className={styles.td} style={item.Status__c === "Activate" ? {} : { color: "red" }}>
+                                            {item.Status__c}
+                                        </td>
                                         <td className={styles.td}>
                                             <Link className={styles.linkBlue} to={`/editCategory/${item.Id}`}>
                                                 Edit
@@ -188,7 +198,12 @@ const ManagerCategorys = () => {
                                 ))}
                             </table>
                             <div>
-                                <Pagination className={styles.pagi} count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) } page={page} onChange={handleChange} />
+                                <Pagination
+                                    className={styles.pagi}
+                                    count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                    page={page}
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                     </div>

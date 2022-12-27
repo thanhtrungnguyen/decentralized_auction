@@ -24,6 +24,7 @@ const EditProfile = () => {
     const navigate = useNavigate();
 
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
+    const [role, setRole] = useState();
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
     const [firstName, setFirstName] = useState(null);
@@ -61,6 +62,12 @@ const EditProfile = () => {
                 // onDistrictSelect(sDistrict);
                 // onWardSelect(sWard);
             });
+
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
 
             setLoading(false);
         };
@@ -179,7 +186,7 @@ const EditProfile = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role === "BIDDER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

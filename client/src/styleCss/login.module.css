@@ -13,18 +13,24 @@ i {
     /* position: absolute; */
     top: 38%;
     right: 16%;
-  }
-  i:hover {
+}
+.ce {
+    margin-top: 30px;
+    margin-left: 10px;
+}
+i:hover {
     color: #00fcb6;
     cursor: pointer;
-  }
+}
 .group2 {
     position: absolute;
     width: 433px;
     height: 374px;
     margin: 50px;
 }
-
+.hide {
+    display: flex;
+}
 .textField {
     box-sizing: border-box;
     width: 432px;

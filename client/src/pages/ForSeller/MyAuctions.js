@@ -20,16 +20,29 @@ const MyAuctions = () => {
     const [category, setCategory] = useState(null);
     const [category2, setCategory2] = useState(null);
     const [propertyName, setPropertyName] = useState(null);
+    const [role, setRole] = useState();
     const [propertyName2, setPropertyName2] = useState(null);
     const [status, setStatus] = useState(null);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const baseURL = "http://localhost:8800/api/myAuctions/";
+    // const { data, loading, error } = useFetch(baseURL);
     const baseURLCategory = "http://localhost:8800/api/category/";
     const baseURLAuction = `http://localhost:8800/api/auction/getAuctionForSeller/${page}/${propertyName}/${category}/${status}`;
     //const { data, loading, error } = useFetch(baseURL);
     const [listCategory, setListCategory] = useState([]);
     const [listAuction, setListAuction] = useState([]);
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "category") {
@@ -51,7 +64,7 @@ const MyAuctions = () => {
                 console.log("axios get");
                 setListCategory(resp.data);
             });
-            await axios.get(baseURLAuction,{ withCredentials: true }).then((resp) => {
+            await axios.get(baseURLAuction, { withCredentials: true }).then((resp) => {
                 console.log(resp.data);
                 console.log("axios get");
                 setListAuction(resp.data);
@@ -66,7 +79,7 @@ const MyAuctions = () => {
         setPage(1);
         event.preventDefault();
     };
-    
+
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -86,7 +99,7 @@ const MyAuctions = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "SELLER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -107,7 +120,6 @@ const MyAuctions = () => {
                                     placeholder="Please input"
                                     value={propertyName2}
                                     onChange={(e) => handleInputChange(e)}
-                                    
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
@@ -193,7 +205,7 @@ const MyAuctions = () => {
             </Link> */}
                             <br />
                             <table className={styles.table}>
-                            <tr>
+                                <tr>
                                     <th className={styles.th}>Auction Name</th>
                                     <th className={styles.th}>Property Name</th>
                                     <th className={styles.th}>Category Name</th>
@@ -255,7 +267,7 @@ const MyAuctions = () => {
                                 ))}
                             </table>
                             <div>
-                            <Pagination
+                                <Pagination
                                     className={styles.pagi}
                                     count={Math.floor(listAuction.total / 10) + 1}
                                     page={page}

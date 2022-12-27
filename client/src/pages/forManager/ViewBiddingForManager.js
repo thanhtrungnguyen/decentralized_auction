@@ -24,8 +24,9 @@ const ViewBiddingForManager = () => {
     const baseURL = `http://localhost:8800/api/auction/getAllBidding/${id}`;
     const socket = io.connect("http://localhost:8800");
     const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState();
     const [status, setStatus] = useState(null);
-    
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -35,6 +36,13 @@ const ViewBiddingForManager = () => {
                 console.log("axios get");
                 setData(resp.data);
             });
+
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
             setLoading(false);
         };
         fetchData();
@@ -68,16 +76,16 @@ const ViewBiddingForManager = () => {
         });
         return users;
     };
-    const  getDate = (dates)=>{
-        var date = new Date(new Date(0).setUTCSeconds(dates)) ;
+    const getDate = (dates) => {
+        var date = new Date(new Date(0).setUTCSeconds(dates));
         return date.toLocaleString();
-    }
+    };
     return loading ? (
         <Loading />
     ) : (
         <>
             {(() => {
-                if (getUser().role == "MANAGER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -133,13 +141,11 @@ const ViewBiddingForManager = () => {
                                     <td className={styles.td}>{Bids.transactionHash}</td>
                                     <td className={styles.td}>{Bids.bidAmount}</td>
                                     <td className={styles.td}>{getDate(Bids.blockTimestamp)}</td>
-                                    
-                                    <td className={styles.td}>{
-                                       Bids.name == "PlacedBid" && "Bidding" 
-                                    }
-                                    {
-                                       Bids.name == "RetractedBid" && "RetractedBid" 
-                                    }</td>
+
+                                    <td className={styles.td}>
+                                        {Bids.name == "PlacedBid" && "Bidding"}
+                                        {Bids.name == "RetractedBid" && "RetractedBid"}
+                                    </td>
                                 </tr>
                             ))}
                         </table>

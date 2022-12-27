@@ -38,7 +38,17 @@ const AddProperty = () => {
     const navigate = useNavigate();
     const baseURL = "http://localhost:8800/api/category/";
     const { data, loading, error } = useFetch(baseURL);
+    const [role, setRole] = useState();
+    useEffect(() => {
+        console.log(getUser());
 
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+    }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "propertyImage1") {
@@ -138,7 +148,7 @@ const AddProperty = () => {
     ) : (
         <>
             {(() => {
-                if (getUser().role == "SELLER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

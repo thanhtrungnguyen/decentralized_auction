@@ -12,13 +12,26 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import FooterCopy from "../../components/footer/FooterCopy";
+import Loading from "../../components/loading/Loading";
 
 const AddManager = () => {
     const [userName, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [role, setRole] = useState();
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
+    useEffect(() => {
+        console.log(getUser());
 
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+        setLoading(false);
+    }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "userName") {
@@ -63,10 +76,12 @@ const AddManager = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser userName={getUser().userName} />;
                 } else {
                     return <Header />;

@@ -19,34 +19,45 @@ const EditCategory = () => {
     const { id } = useParams();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState();
+
     const baseURL = `http://localhost:8800/api/category/getById/${id}`;
     useEffect(() => {
-        const fetchData = async()=>{
+        const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
                 console.log(resp.data);
                 console.log("axios get");
                 setData(resp.data);
             });
+
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
             setLoading(false);
-        }
-       fetchData();
-        
+        };
+        fetchData();
     }, [baseURL]);
 
-    
     const Cancel = (e) => {
         navigate("/managerCategorys");
     };
     const handleSubmit = (event) => {
         axios
-            .put(`http://localhost:8800/api/category/update/${id}`, {categoryName:categoryName}, {
-                withCredentials: true,
-            })
+            .put(
+                `http://localhost:8800/api/category/update/${id}`,
+                { categoryName: categoryName },
+                {
+                    withCredentials: true,
+                }
+            )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert('Update Successful');
+                alert("Update Successful");
                 navigate("/managerCategorys");
             });
         event.preventDefault();
@@ -68,7 +79,7 @@ const EditCategory = () => {
         <>
             {" "}
             {(() => {
-                if (getUser().role == "MANAGER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -94,7 +105,7 @@ const EditCategory = () => {
                     </div>
                     <div className={styles.btn}>
                         <input type="button" value="Cancel" className={styles.btnCancel} onClick={Cancel}></input>{" "}
-                        <input type="submit" value="Save" className={styles.btnSave} disabled={(categoryName)===null?true:false} ></input>
+                        <input type="submit" value="Save" className={styles.btnSave} disabled={categoryName === null ? true : false}></input>
                     </div>
                     <Footer />
                 </div>

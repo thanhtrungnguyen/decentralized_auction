@@ -11,10 +11,13 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Select from "react-select";
 import useLocationForm from "../register/useLocationForm";
+import Loading from "../../components/loading/Loading";
 
 const AddSeller = () => {
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const navigate = useNavigate();
+    const [ro, setRo] = useState();
+    const [loading, setLoading] = useState(true);
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
 
@@ -178,10 +181,23 @@ const AddSeller = () => {
         });
         return users;
     };
-    return (
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRo(getUser().role);
+        } else {
+            setRo("");
+        }
+        setLoading(false);
+    }, []);
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {(() => {
-                if (getUser().role == "ADMIN") {
+                if (ro === "BIDDER" || ro === "SELLER" || ro === "MANAGER" || ro === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

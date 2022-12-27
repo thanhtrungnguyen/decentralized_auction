@@ -11,7 +11,22 @@ import { useNavigate } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import Loading from "../../components/loading/Loading";
+
 const AddCategory = () => {
+    const [role, setRole] = useState();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        console.log(getUser());
+
+        // console.log(getUser().type);
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+        setLoading(false);
+    }, []);
     const [categoryName, setCategoryName] = useState(null);
     const navigate = useNavigate();
     const baseURL = "http://localhost:8800/api/property/";
@@ -23,13 +38,17 @@ const AddCategory = () => {
     };
     const handleSubmit = (event) => {
         axios
-            .post(`http://localhost:8800/api/category`, {categoryName:categoryName}, {
-                withCredentials: true,
-            })
+            .post(
+                `http://localhost:8800/api/category`,
+                { categoryName: categoryName },
+                {
+                    withCredentials: true,
+                }
+            )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert('Add Category Successful');
+                alert("Add Category Successful");
                 navigate("/managerCategorys");
             });
         event.preventDefault();
@@ -45,11 +64,13 @@ const AddCategory = () => {
         });
         return users;
     };
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <>
             {" "}
             {(() => {
-                if (getUser().role == "MANAGER") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -75,7 +96,7 @@ const AddCategory = () => {
                     </div>
                     <div className={styles.btn}>
                         <input type="button" value="Cancel" className={styles.btnCancel}></input>{" "}
-                        <input type="submit" value="Save" className={styles.btnSave} disabled={categoryName===null?true:false}></input>
+                        <input type="submit" value="Save" className={styles.btnSave} disabled={categoryName === null ? true : false}></input>
                     </div>
                     <Footer />
                 </div>
