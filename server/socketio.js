@@ -31,6 +31,11 @@ module.exports = (app) => {
         //     auctionLastest = auctionlist;
         // }
     });
+    io.on("error", (err) => {
+        console.log("Caught flash policy server socket error: ");
+        console.log(err.stack);
+    });
+
     var i = 0;
     const taskRegistrationTime = cron.schedule("*/3 * * * * *", async () => {
         var auctionlistUpdate = await ContractInteractionService.getAllAuction();

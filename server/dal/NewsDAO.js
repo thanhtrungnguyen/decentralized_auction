@@ -10,14 +10,14 @@ const getAll = async (index, status, title) => {
         var num = (parseInt(index) - 1) * perPage;
         if (status == "" && title == "") {
             await connection.query(
-                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c order by CreatedDate desc limit ${perPage} offset ${num} `,
+                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate,Avatar__c from News_DAP__c order by CreatedDate desc limit ${perPage} offset ${num} `,
                 (err, result) => {
                     if (err) console.log(err);
                     listNews = result.records;
                 }
             );
             await connection.query(
-                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c order by CreatedDate desc `,
+                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate,Avatar__c from News_DAP__c order by CreatedDate desc `,
                 (err, result) => {
                     if (err) console.log(err);
                     total = result.totalSize;
@@ -25,14 +25,14 @@ const getAll = async (index, status, title) => {
             );
         } else if (status == "") {
             await connection.query(
-                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c where Name like '%${title}%' order by CreatedDate desc  limit ${perPage} offset ${num} `,
+                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate,Avatar__c from News_DAP__c where Name like '%${title}%' order by CreatedDate desc  limit ${perPage} offset ${num} `,
                 (err, result) => {
                     if (err) console.log(err);
                     listNews = result.records;
                 }
             );
             await connection.query(
-                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c where Name like '%${title}%' order by CreatedDate desc  `,
+                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate,Avatar__c from News_DAP__c where Name like '%${title}%' order by CreatedDate desc  `,
                 (err, result) => {
                     if (err) console.log(err);
                     total = result.totalSize;
@@ -40,14 +40,14 @@ const getAll = async (index, status, title) => {
             );
         } else if (title == "") {
             await connection.query(
-                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c where Status__c = '${status}' order by CreatedDate desc  limit ${perPage} offset ${num} `,
+                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate,Avatar__c from News_DAP__c where Status__c = '${status}' order by CreatedDate desc  limit ${perPage} offset ${num} `,
                 (err, result) => {
                     if (err) console.log(err);
                     listNews = result.records;
                 }
             );
             await connection.query(
-                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c where Status__c = '${status}' order by CreatedDate desc `,
+                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate,Avatar__c from News_DAP__c where Status__c = '${status}' order by CreatedDate desc `,
                 (err, result) => {
                     if (err) console.log(err);
                     total = result.totalSize;
@@ -55,14 +55,14 @@ const getAll = async (index, status, title) => {
             );
         } else {
             await connection.query(
-                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c where Status__c = '${status}' and Name like '%${title}%' order by CreatedDate desc  limit ${perPage} offset ${num} `,
+                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate,Avatar__c from News_DAP__c where Status__c = '${status}' and Name like '%${title}%' order by CreatedDate desc  limit ${perPage} offset ${num} `,
                 (err, result) => {
                     if (err) console.log(err);
                     listNews = result.records;
                 }
             );
             await connection.query(
-                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate from News_DAP__c where Status__c = '${status}' and Name like '%${title}%' order by CreatedDate desc `,
+                `Select Id, Name,Status__c, CreatedDate,LastModifiedDate,Avatar__c from News_DAP__c where Status__c = '${status}' and Name like '%${title}%' order by CreatedDate desc `,
                 (err, result) => {
                     if (err) console.log(err);
                     total = result.totalSize;

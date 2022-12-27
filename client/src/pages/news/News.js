@@ -9,10 +9,59 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import Loading from "../../components/loading/Loading";
 import jwt from "jsonwebtoken";
+import { useFetchPagination } from "../../hook/useFetch";
+import moment from "moment";
+import { Pagination } from "@mui/material";
 const News = () => {
-    const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
+    const [page, setPage] = useState(1);
+    const [title, setTitle] = useState(null);
+    const [title2, setTitle2] = useState(null);
+    const [status, setStatus] = useState('Published');
 
+    var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
+    var { data, loading, error } = useFetchPagination(baseURL, page);
+
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        if (id === "title") {
+            setTitle2(value);
+        }
+    };
+
+    const handleSubmit = (event) => {
+        title2 === "" ? setTitle(null) : setTitle(title2);
+        setPage(1);
+        event.preventDefault();
+    };
+
+    const handleChange = (event, page) => {
+        setPage(page);
+    };
+
+    function exportData(data) {
+        return (
+            <>
+                {data.listNews.map((item) => (
+                    <div className={styles.content}>
+                        <img className={styles.img} src={`http://localhost:8800/api/auction/images/${item.Avatar__c}`} alt="Img" />
+                        <BsPencil className={(styles.icon, styles.colorPink)} />
+                        <label className={styles.lable}>{item.Id}</label>
+                        <BsCalendar3 className={(styles.icon, styles.colorYellow)} />
+                        <label className={styles.lable}>{moment(`${item.CreatedDate}`).format("MMM Do YY")} </label>
+                        <div className={styles.title}>{item.Name}</div>
+                        {/* <div className={styles.des}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit facilisis quis auctor pretium ipsum, eu rutrum. Condimentum
+                            eu malesuada vitae ultrices in in neque, porta dignissim. Adipiscing purus, cursus vulputate id id dictum at.
+                        </div> */}
+                        <Link className={styles.link} to="/">
+                            Read More
+                        </Link>
+                    </div>
+                ))}
+            </>
+        );
+    }
     const getUser = () => {
         var users = null;
         const token = Cookies.get("access_token");
@@ -24,18 +73,6 @@ const News = () => {
         });
         return users;
     };
-    useEffect(() => {
-        console.log(getUser());
-
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-            setLoading(false);
-        } else {
-            setRole("");
-            setLoading(false);
-        }
-    }, []);
     return loading ? (
         <Loading />
     ) : (
@@ -50,71 +87,39 @@ const News = () => {
             <NavBar />
             <div className={styles.container}>
                 <div className={styles.col1}>
-                    <div className={styles.content}>
-                        <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
-                        <BsPencil className={(styles.icon, styles.colorPink)} />
-                        <label className={styles.lable}>Surf Auxion</label>
-                        <BsCalendar3 className={(styles.icon, styles.colorYellow)} />
-                        <label className={styles.lable}>Aug 09 2020</label>
-                        <div className={styles.title}>Mauris at orci non vulputate diam tincidunt nec.</div>
-                        <div className={styles.des}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit facilisis quis auctor pretium ipsum, eu rutrum. Condimentum
-                            eu malesuada vitae ultrices in in neque, porta dignissim. Adipiscing purus, cursus vulputate id id dictum at.
-                        </div>
-                        <Link className={styles.link} to="/">
-                            Read More
-                        </Link>
-                    </div>
-                    <div className={styles.content}>
-                        <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
-                        <BsPencil className={(styles.icon, styles.colorPink)} />
-                        <label className={styles.lable}>Surf Auxion</label>
-                        <BsCalendar3 className={(styles.icon, styles.colorYellow)} />
-                        <label className={styles.lable}>Aug 09 2020</label>
-                        <div className={styles.title}>Mauris at orci non vulputate diam tincidunt nec.</div>
-                        <div className={styles.des}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit facilisis quis auctor pretium ipsum, eu rutrum. Condimentum
-                            eu malesuada vitae ultrices in in neque, porta dignissim. Adipiscing purus, cursus vulputate id id dictum at.
-                        </div>
-                        <Link className={styles.link} to="/">
-                            Read More
-                        </Link>
-                    </div>
-                    <div className={styles.content}>
-                        <img className={styles.img} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
-                        <BsPencil className={(styles.icon, styles.colorPink)} />
-                        <label className={styles.lable}>Surf Auxion</label>
-                        <BsCalendar3 className={(styles.icon, styles.colorYellow)} />
-                        <label className={styles.lable}>Aug 09 2020</label>
-                        <div className={styles.title}>Mauris at orci non vulputate diam tincidunt nec.</div>
-                        <div className={styles.des}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit facilisis quis auctor pretium ipsum, eu rutrum. Condimentum
-                            eu malesuada vitae ultrices in in neque, porta dignissim. Adipiscing purus, cursus vulputate id id dictum at.
-                        </div>
-                        <Link className={styles.link} to="/">
-                            Read More
-                        </Link>
-                    </div>
+                    {exportData(data)}
                     <div className={styles.pagination}>
-                        <Link href="#">&laquo;</Link>
-                        <Link href="#">1</Link>
-                        <Link href="#">2</Link>
-                        <Link href="#">3</Link>
-                        <Link href="#">4</Link>
-                        <Link href="#">5</Link>
-                        <Link href="#">6</Link>
-                        <Link href="#">&raquo;</Link>
+                    
+                                <Pagination
+                                    className={styles.pagi}
+                                    size="large"
+                                    count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) }
+                                    page={page}
+                                    onChange={handleChange}
+                                />
+                            
                     </div>
                 </div>
                 <div className={styles.col2}>
-                    <p className={styles.txtSearch}>Search</p>
-                    <div className={styles.conS}>
-                        <input className={styles.input} type="text" placeholder="Search For Posts"></input>
-                        <BsSearch className={styles.icon2} />
-                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <p className={styles.txtSearch}>Search</p>
+                        <div className={styles.conS}>
+                            <input
+                                id="Title News"
+                                className={styles.input}
+                                type="text"
+                                placeholder="Title"
+                                value={title2}
+                                onChange={(e) => handleInputChange(e)}
+                            //required
+                            ></input>
+                            <BsSearch className={styles.icon2} />
+                        </div>
+                    </form>
+
                     <br />
                     <br />
-                    <p className={styles.txtSearch}>Recent Post</p>
+                    {/* <p className={styles.txtSearch}>Recent Post</p>
                     <div className={styles.post}>
                         <img className={styles.imgSmall} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                         <p className={styles.txtRecent}>It is a long established fact</p>
@@ -134,7 +139,7 @@ const News = () => {
                         <img className={styles.imgSmall} src="https://www.w3schools.com/html/pic_trulli.jpg" alt="images" />
                         <p className={styles.txtRecent}>It is a long established fact</p>
                         <p className={styles.txtTime}>Aug 09 2020</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <Footer />

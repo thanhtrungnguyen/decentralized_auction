@@ -31,12 +31,12 @@ router.put("/changeStatusNews/:id", changeStatusNews);
 
 router.get("/getAll/:index/:status/:title", getAllNews);
 
-router.get("/search", filterNews);
+// router.get("/search", filterNews);
 
-router.get("/:status/:index", getByStatus);
+// router.get("/:status/:index", getByStatus);
 
-router.get("/:id", getNewsById);
+router.get("/getById/:id", getNewsById);
 
-router.get("/sort/:index/:type", sortNews);
+// router.get("/sort/:index/:type", sortNews);
 
 module.exports = router;
