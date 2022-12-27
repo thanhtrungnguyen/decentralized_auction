@@ -122,7 +122,7 @@ const ListBidders = () => {
                                     placeholder="Email"
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
-                                    // required
+                                // required
                                 ></input>
                             </div>
                             <br />
@@ -184,12 +184,13 @@ const ListBidders = () => {
                                             {item.User_Id__r.Status__c}
                                         </td>
                                         <td className={styles.td}>
-                                            <Link className={styles.linkBlue} to={`/bidderDetail/${item.User_Id__c}`}>
-                                                View
-                                            </Link>
-                                            <Link className={styles.linkBlue} to={`/bidderOrganizationDetail/${item.User_Id__c}`}>
-                                                V
-                                            </Link>
+                                            {item.User_Id__r.Type__c === 'CONTACT' ?
+                                                <Link className={styles.linkBlue} to={`/bidderDetail/${item.User_Id__c}`}>
+                                                    View
+                                                </Link> :
+                                                <Link className={styles.linkBlue} to={`/bidderOrganizationDetail/${item.User_Id__c}`}>
+                                                    View
+                                                </Link>}
                                             {(() => {
                                                 if (item.User_Id__r.Status__c === "Activate") {
                                                     return (

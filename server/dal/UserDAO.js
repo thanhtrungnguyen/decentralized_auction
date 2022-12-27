@@ -66,44 +66,44 @@ const getAllUser = async (role, index, status, name) => {
             //get all Bidder or Seller
             if (status == "" && name == "") {
                 query =
-                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c,User_Id__r.Type__c from Contact__c Where User_Id__c IN ` +
                     `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') order by CreatedDate desc limit ${perPage} offset ${num} `;
 
                 queryCount =
-                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c,User_Id__r.Type__c from Contact__c Where User_Id__c IN ` +
                     `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') order by CreatedDate desc `;
             }
             //get all Bidder or Seller with userName content name
             else if (status == "") {
                 query =
-                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c,User_Id__r.Type__c from Contact__c Where User_Id__c IN ` +
                     `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and ` +
                     `(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc limit ${perPage} offset ${num} `;
                 queryCount =
-                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c,User_Id__r.Type__c from Contact__c Where User_Id__c IN ` +
                     `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and ` +
                     `(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc `;
             }
             //get all Bidder or Seller with status = status
             else if (name == "") {
                 query =
-                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c,User_Id__r.Type__c from Contact__c Where User_Id__c IN ` +
                     `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' ` +
                     `order by CreatedDate desc limit ${perPage} offset ${num} `;
                 queryCount =
-                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c,User_Id__r.Type__c from Contact__c Where User_Id__c IN ` +
                     `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' ` +
                     `order by CreatedDate desc `;
             }
             //get all Bidder or Seller with userName content name and status = status
             else {
                 query =
-                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c,User_Id__r.Type__c from Contact__c Where User_Id__c IN ` +
                     `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' and ` +
                     `(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc limit ${perPage} offset ${num} `;
 
                 queryCount =
-                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c from Contact__c Where User_Id__c IN ` +
+                    `Select User_Id__c, Name, Phone__c,Email__c,User_Id__r.Status__c,User_Id__r.Type__c from Contact__c Where User_Id__c IN ` +
                     `(select User_DAP__c from Role_Right__c where Role_Id__r.Name = '${role}') and User_Id__r.Status__c = '${status}' and ` +
                     `(Email__c like '%${name}%' or Name like '%${name}%') order by CreatedDate desc `;
             }
@@ -126,7 +126,7 @@ const getAllUser = async (role, index, status, name) => {
 const getUserById = async (userId) => {
     var connection = await conn();
     var role = await getUserRole(userId);
-    var type, user, contact, account = null;
+    var type, user, contact, account,position = null;
     if (role === 'MANAGER') {
         await connection.sobject('User__c').find({ Id: userId }, (err, result) => {
             if (err) console.err(err)
@@ -151,9 +151,13 @@ const getUserById = async (userId) => {
                 if (err) console.err(err)
                 account = result[0]
             })
+            await connection.sobject('Representative_Account_DAP__c').find({ Account_DAP__c: account.Id }, (err, result) => {
+                if (err) console.err(err)
+                position = result[0].Name
+            })
         }
     }
-    return { user: user, contact: contact, account: account };
+    return { user: user, contact: contact, account: account,position:position };
 }
 const getUserRole = async (userId) => {
     var connection = await conn();

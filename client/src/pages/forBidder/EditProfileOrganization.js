@@ -70,7 +70,7 @@ const EditProfileOrganization = () => {
                 setTaxCodeGrantedDate(resp.data.account.Tax_Code_Granted_Date__c);
                 setTaxCodeGrantedPlace(resp.data.account.Tax_Code_Granted_Place__c);
                 setSpecificAddressOrganization(resp.data.account.Specific_Address__c);
-                setPosition(resp.data.account.Name);
+                setPosition(resp.data.position);
 
                 setData(resp.data);
             });

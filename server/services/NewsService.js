@@ -1,11 +1,11 @@
 const NewsDAO = require("../dal/NewsDAO");
 const { uploadFile } = require("../s3");
 
-const getAll = async (index, status, title) => {
+const getAll = async (index, status, title,perPage) => {
     try {
         status == "null" ? (status = "") : status;
         title == "null" ? (title = "") : title;
-        var list = await NewsDAO.getAll(index, status, title);
+        var list = await NewsDAO.getAll(index, status, title,perPage);
         return list;
     } catch (error) {
         console.error(error);

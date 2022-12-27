@@ -18,8 +18,8 @@ const News = () => {
     const [title, setTitle] = useState(null);
     const [title2, setTitle2] = useState(null);
     const [status, setStatus] = useState("Published");
-
-    var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
+    const perPage = 5;
+    var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}/${perPage}`;
     var { data, loading } = useFetchPagination(baseURL, page);
 
     const handleInputChange = (e) => {

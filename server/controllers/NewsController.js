@@ -43,7 +43,8 @@ const getAllNews = async (req, res, next) => {
         var index = req.params.index;
         var status = req.params.status;
         var title = req.params.title;
-        var list = await NewsService.getAll(index, status, title);
+        var perPage = req.params.perPage;
+        var list = await NewsService.getAll(index, status, title,perPage);
         res.status(200).json(list);
     } catch (error) {
         next(error);
