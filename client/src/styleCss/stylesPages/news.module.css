@@ -2,6 +2,7 @@
     width: 70%;
     height: 100%;
     float: left;
+    display: grid;
 }
 .col2 {
     width: 30%;
@@ -14,6 +15,7 @@
     height: 100%;
     float: right;
     padding: 50px;
+    margin-left: 20%;
 }
 .conS {
     width: 320px;
@@ -159,7 +161,10 @@
 }
 .pagination {
     display: inline-block;
+
     float: right;
+    margin-left: 20%;
+    margin-bottom: 50px;
 }
 
 .pagination a {
