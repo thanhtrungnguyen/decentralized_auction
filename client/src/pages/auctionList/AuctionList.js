@@ -73,9 +73,9 @@ const AuctionList = () => {
             setLoading(false);
         };
         fetchData();
-    }, [change]);
+    }, [change,baseURLAuction]);
     socket.on("data", (item) => {
-        if (item != change) {
+        if (item !== change) {
             setChange(item);
             console.log(item);
         }
@@ -120,7 +120,7 @@ const AuctionList = () => {
 
     return loading ? (
         <Loading />
-    ) : (
+    ) :  (
         <>
             {(() => {
                 if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
