@@ -20,23 +20,49 @@ import Loading from "../../components/loading/Loading";
 
 const EditNew = () => {
     const { id } = useParams();
-    const baseURL = `http://localhost:8800/api/editNews/${id}`;
+    const baseURL = `http://localhost:8800/api/news/getById/${id}`;
     const [role, setRole] = useState();
-    const { data, loading } = useFetch(baseURL);
+    //const { data, loading, error } = useFetch(baseURL);
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
     const [content, setContent] = useState(null);
     const [title, setTitle] = useState(null);
     const [avatar, setAvatar] = useState(null);
 
     console.log(data);
     useEffect(() => {
-        setTitle(data.title);
-        setContent(data.content);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                setTitle(resp.data.Name);
+                setContent(resp.data.Content__c);
+                setData(resp.data)
+                // console.log(resp.data);
+                // console.log("axios get");
+                // onCitySelect(sCity);
+                // onDistrictSelect(sDistrict);
+                // onWardSelect(sWard);
+            });
+
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
+    // useEffect(() => {
+    //     setTitle(data.title);
+    //     setContent(data.content);
+    //     if (getUser() != null) {
+    //         setRole(getUser().role);
+    //     } else {
+    //         setRole("");
+    //     }
+    // }, []);
 
     const navigate = useNavigate();
     const getUser = () => {
@@ -72,17 +98,14 @@ const EditNew = () => {
         console.log(formData.get("content"));
         axios
             .put(
-                "http://localhost:8800/api/editNews",
+                `http://localhost:8800/api/news/updateNews/${id}`,
                 formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                },
                 { withCredentials: true }
             )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
+                alert(res.data);
                 navigate("/listNews");
             });
         event.preventDefault();
@@ -115,16 +138,16 @@ const EditNew = () => {
                         <br />
                         <br />
                         <label className={styles.label}>Avatar</label>
-                        <input className={styles.file} id="avatar" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} required />
+                        <input className={styles.file} id="avatar" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} />
                         {avatar != null && <img src={URL.createObjectURL(avatar)} className={styles.image} alt="Thumb" />}
 
-                        {/* {avatar == null && (
+                        {avatar == null && (
                             <img
-                                src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
+                                src={`http://localhost:8800/api/auction/images/${data.Avatar__c}`}
                                 className={styles.image}
                                 alt="Thumb"
                             />
-                        )} */}
+                        )}
 
                         <br />
                         <br />

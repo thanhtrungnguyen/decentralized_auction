@@ -14,6 +14,9 @@ import TransactionStatus from "../components/TransactionStatus";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
 import { useFetchBidding } from "../../../hook/useFetch";
 import Loader from "../components/Loader";
+import axios from "axios";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 
 function AuctionRegistration({ auction }) {
     const { account, isWeb3Enabled } = useMoralis();
@@ -50,14 +53,14 @@ function AuctionRegistration({ auction }) {
     });
     const updateUI = async () => {
         // setBidInformation(await getBidInformationByAuctionId());
-
         await checkRegisteredBidder();
         setLoadingInfo(false);
+        // setRegisteredBidder(true);
     };
 
     const checkRegisteredBidder = async () => {
-        await registeredBid?.forEach((element) => {
-            console.log(element);
+        if (!registeredBid) return;
+        await registeredBid.forEach((element) => {
             if (element.bidder.toUpperCase() === account.toUpperCase()) {
                 setRegisteredBidder(true);
             }
@@ -65,17 +68,38 @@ function AuctionRegistration({ auction }) {
         // setRegisteredBidder(false);
     };
 
-    if (error) console.log(error);
-    console.log("Loading: " + loading);
-    console.log(registeredBid);
-    console.log(isRegisteredBidder);
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
+    const createAuctionRegistration = () => {
+        const postUrl = "http://localhost:8800/api/auctionInformation/auctionRegistration";
+        const auctionRegistration = { auctionId: auction.auctionId, bidderId: getUser().id, wallet: account };
+        axios
+            .post(postUrl, auctionRegistration)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     const handleSuccess = async (tx) => {
         try {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
-            setRegisteredBidder(true);
-            updateUI();
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            updateUI();
+            setRegisteredBidder(true);
+            createAuctionRegistration();
             handleSuccessNotification(tx);
         } catch (error) {
             console.log(error);
@@ -89,10 +113,6 @@ function AuctionRegistration({ auction }) {
             position: "topR",
             icon: <BsCheckLg />,
         });
-    };
-    const handleComplete = async (hash) => {
-        console.log(hash);
-        // setTransactionStatus({ hash: hash, status: "waitingForConfirmation" });
     };
     const handleErrorNotification = () => {
         setTransactionStatus({ status: "Failed" });
@@ -144,7 +164,7 @@ function AuctionRegistration({ auction }) {
                                             Total amount you must to pay:
                                             {auction.registrationFee != null && auction.depositAmount != null
                                                 ? new Decimal(auction.registrationFee).plus(auction.depositAmount).toString()
-                                                : "0"}{" "}
+                                                : "0"}
                                             ETH
                                         </p>
                                         <button
@@ -154,7 +174,6 @@ function AuctionRegistration({ auction }) {
                                                 await registerToBid({
                                                     onSuccess: handleSuccess,
                                                     onError: handleErrorNotification,
-                                                    onComplete: handleComplete,
                                                 })
                                             }
                                         >
