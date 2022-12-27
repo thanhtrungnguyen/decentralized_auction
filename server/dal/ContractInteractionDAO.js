@@ -2,7 +2,6 @@ const ContractInteraction = require("../models/ContractInteraction");
 
 const getAuctionInformationById = async (id) => {
     const auction = await ContractInteraction.findOne(
-    const auction = await ContractInteraction.findOne(
         {
             name: "CreatedAuction",
             auctionId: id,
@@ -121,12 +120,11 @@ const getBiddingByAuctionId = async (id) => {
     );
     return bid;
 };
-const getAllAuction = async()=>{
+const getAllAuction = async () => {
     var auction = null;
     auction = await ContractInteraction.find({ name: "CreatedAuction" });
 
     return auction;
+};
 
-}
-
-module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getAllAuction};
+module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getAllAuction, getBiddingByAuctionId };
