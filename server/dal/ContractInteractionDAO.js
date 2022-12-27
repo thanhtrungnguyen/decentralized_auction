@@ -92,6 +92,34 @@ const getPlacedBidById = async (id) => {
     );
     return bid;
 };
+const getBiddingByAuctionId = async (id) => {
+    const bid = await ContractInteraction.find(
+        {
+            name: { $in: ["PlacedBid", "RetractedBid"] },
+            auctionId: id,
+        },
+        {
+            auctionId: 1,
+            bidder: 1,
+            bidAmount: 1,
+            bidderState: 1,
+
+            _id: 0,
+            name: 1,
+            //     logIndex: 0,
+            transactionHash: 1,
+            address: 1,
+            //     blockHash: 0,
+            blockTimestamp: 1,
+            //     blockNumber: 0,
+            //     confirmed: 0,
+            //     chainId: 0,
+            // _created_at: 1,
+            //     _updated_at: 0,
+        }
+    );
+    return bid;
+};
 const getAllAuction = async()=>{
     var auction = null;
     auction = await ContractInteraction.find({ name: "CreatedAuction"});
@@ -99,5 +127,20 @@ const getAllAuction = async()=>{
     return auction;
 
 }
+const CountBidding = async () => {
+    const bid = await ContractInteraction.find(
+        {
+            name: { $in: ["PlacedBid", "RetractedBid"] },
+           
+        }).count();
+    return bid;
+};
+// const getAuctionBiddingById = async(auctionId)=>{
+//     var auction = null;
+//     auction = await ContractInteraction.find({ auctionId:auctionId , name: "PlacedBid"});
 
-module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getAllAuction};
+//     return auction;
+
+// }
+
+module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getAllAuction, getBiddingByAuctionId, CountBidding };

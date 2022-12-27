@@ -9,6 +9,7 @@ const {
     rejectAuction,
     filterAuction,
     getAllAuctionBidder,
+    getAuctionBiddingById,
 } = require("../controllers/AuctionController.js");
 const { verifySeller } = require("../utils/verifyToken.js");
 
@@ -29,6 +30,7 @@ router.get("/", getAllAuctionBidder);
 router.get("/auctiondetail/:auctionId/:propertyId", getAuctionDetailByID);
 
 //router.get("/auction")
+router.get("/getAllBidding/:id", getAuctionBiddingById);
 
 router.get("/images/:key", uploadImage);
 

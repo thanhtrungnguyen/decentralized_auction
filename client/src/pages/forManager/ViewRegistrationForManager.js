@@ -21,7 +21,7 @@ const ViewRegistrationForManager = () => {
     const { id, propertyId } = useParams();
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:8800/api/auction/${page}/${id}`;
+    const baseURL = `http://localhost:8800/api/auction/getAllBidding/${id}`;
 
     const [loading, setLoading] = useState(true);
 
@@ -39,13 +39,13 @@ const ViewRegistrationForManager = () => {
         fetchData();
     }, [baseURL]);
     const onClick = () => {
-        navigate(`/viewBiddingForManager/${id}/${propertyId}`);
+        navigate(`/viewBiddingForManager/${id}`);
     };
     const result = () => {
-        navigate(`/viewAuctionResultForManager/${id}/${propertyId}`);
+        navigate(`/viewAuctionResultForManager/${id}`);
     };
     const Registration = () => {
-        navigate(`/viewRegistrationForManager/${id}/${propertyId}`);
+        navigate(`/viewRegistrationForManager/${id}`);
     };
     const handleChange = (event, value) => {
         setPage(value);
@@ -103,8 +103,8 @@ const ViewRegistrationForManager = () => {
                         </label>
 
                         <hr />
-                        <p className={styles.txtBold}>Registration Time End in: {data.RegistrationTime}</p>
-                        <p className={styles.txtBold}>Total Registered Bidders: {data.totalRegistration}</p>
+                        <p className={styles.txtBold}>Registration Time End in:</p>
+                        <p className={styles.txtBold}>Total Registered Bidders: </p>
 
                         <br />
                         <table className={styles.table}>
@@ -116,11 +116,11 @@ const ViewRegistrationForManager = () => {
                             </tr>
                             {data.map((auction) => (
                                 <tr>
-                                    <td className={styles.td}>{auction.Username}</td>
-                                    <td className={styles.td}>{auction.Wallet}</td>
+                                    <td className={styles.td}></td>
+                                    <td className={styles.td}>{auction.address}</td>
 
-                                    <td className={styles.td}>{auction.RegistrationHash}</td>
-                                    <td className={styles.td}>{new Date(auction.RegisteredAt).toUTCString().split("GMT")[0]}</td>
+                                    <td className={styles.td}>{auction.transactionHash}</td>
+                                    <td className={styles.td}>{new Date(auction.blockTimestamp).toUTCString()}</td>
                                 </tr>
                             ))}
                         </table>

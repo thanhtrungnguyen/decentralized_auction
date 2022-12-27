@@ -1,8 +1,9 @@
 const { getFileStream } = require("../s3.js");
 const jsforce = require("jsforce");
-const { createAuction } = require("../services/callContractFunction.js");
+const ContractInteractionService = require("../services/ContractInteractionService.js");
 const auctionService = require("../services/AuctionService.js");
 const { createError } = require("../utils/error.js");
+
 const conn = new jsforce.Connection({
     loginUrl: process.env.SF_LOGIN_URL,
 });
@@ -115,6 +116,13 @@ const filterAuction = async(req,res,next)=>{
    var list = await auctionService.filterAuction(index, status, price, sort, name);
    res.status(200).json(list);
 }
+
+const getAuctionBiddingById = async(req,res,next)=>{
+    var auctionId = req.params.id;
+    var auction = await ContractInteractionService.getAuctionBiddingById(auctionId);
+    res.status(200).json(auction);
+
+}
 //add BidderAuction
 
 //  const addBidderAuction = async (req, res, next ) => {
@@ -127,4 +135,4 @@ const filterAuction = async(req,res,next)=>{
 //     }
 // }
 
-module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction,filterAuction,getAllAuctionBidder };
+module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction,filterAuction,getAllAuctionBidder ,getAuctionBiddingById};
