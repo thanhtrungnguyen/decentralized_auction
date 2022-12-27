@@ -69,13 +69,6 @@ const EditProperty = () => {
                 ]);
                 setData(resp.data);
             });
-
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
-
             setLoading(false);
         };
         fetchData();
