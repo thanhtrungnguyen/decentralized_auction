@@ -15,7 +15,7 @@ import FooterCopy from "../../components/footer/FooterCopy";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hook/useFetch";
+//import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
 
 const EditNew = () => {

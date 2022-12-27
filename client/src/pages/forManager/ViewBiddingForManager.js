@@ -46,7 +46,7 @@ const ViewBiddingForManager = () => {
             setLoading(false);
         };
         fetchData();
-    }, [status]);
+    }, [status,baseURL]);
     socket.on("count", (item) => {
         if (item !== status) {
             setStatus(data);

@@ -13,7 +13,7 @@ import FooterCopy from "../../components/footer/FooterCopy";
 import HeaderUser from "../../components/header/HeaderUser";
 // import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
-import { useFetch } from "../../hook/useFetch";
+//import { useFetch } from "../../hook/useFetch";
 
 const ViewNews = () => {
     const { id } = useParams();
