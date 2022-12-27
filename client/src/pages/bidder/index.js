@@ -10,32 +10,63 @@ import NotYetRegistrationTime from "./ui/NotYetRegistrationTime";
 import WaitingForAuctionTime from "./ui/WaitingForAuctionTime";
 import Loading from "./components/Loader";
 import { SUPPORT_CHAINS, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../config/configuration";
-import AuctionResult from "./ui/AuctionResult";
+import AuctionResult from "./ui/auctionResult/AuctionResult";
+import { useFetchBidding } from "../../hook/useFetch";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 
-const BidModal = ({ closeModal, loading, auction, propertyId }) => {
+const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyId }) => {
+    const { chainId, isWeb3Enabled, account } = useMoralis();
     const [hasMetamask, setHasMetamask] = useState(false);
-    const { chainId, isWeb3Enabled } = useMoralis();
     useEffect(() => {
         if (typeof window.ethereum !== "undefined") {
             setHasMetamask(true);
         }
-    });
-
+    }, [isWeb3Enabled, account]);
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
+    const checkUserRegistered = () => {
+        if (auctionRegistration.length == 0) return null;
+        auctionRegistration.forEach((element) => {
+            if (element.bidderId == getUser().id) {
+                return element.wallet;
+            }
+        });
+    };
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
-        if (auction) {
-            if (loading) return "Loading";
-            if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
-            if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
-            if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
-            if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
-            if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
-            if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
+        const registeredWallet = checkUserRegistered();
+        console.log(checkUserRegistered());
+        if (loading) return "Loading";
+        if (auction.length == 0) return "AuctionNotFound";
+        if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
+        if (registeredWallet != null && registeredWallet != account) {
+            return "RegisteredWithOtherWallet";
+        }
+        if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
+        if (auction.endRegistrationTime < currentTimestamp) {
+            if (registeredWallet == account) {
+                if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
+                if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
+                if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
+                if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
+            }
+            return "NotRegistered";
         }
         return null;
     };
 
     const renderCurrentState = () => {
+        console.log("State: " + auctionState());
         switch (auctionState()) {
             case "Loading":
                 return <Loading />;
@@ -53,10 +84,27 @@ const BidModal = ({ closeModal, loading, auction, propertyId }) => {
                 return <AuctionResult auction={auction} />;
             case "AuctionEnded":
                 return <h2>Auction Ended</h2>;
-            default:
+            case "NotRegistered":
+                return (
+                    <>
+                        <h1>Bidders only</h1>
+                        <p>Registration Time has ended</p>
+                    </>
+                );
+            case "RegisteredWithOtherWallet":
+                return (
+                    <div>
+                        <h1>You have registered the auction with other account</h1>
+                        <strong>{checkUserRegistered()}</strong>
+                    </div>
+                );
+            case "AuctionNotFound":
                 return "Auction Not Found";
+            default:
+                return "???????";
         }
     };
+    console.log("checkUserRegistered()", checkUserRegistered());
     return (
         <div className={styles.container}>
             <HeaderBid closeModal={closeModal} />
