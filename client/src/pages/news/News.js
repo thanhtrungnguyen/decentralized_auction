@@ -17,7 +17,7 @@ const News = () => {
     const [page, setPage] = useState(1);
     const [title, setTitle] = useState(null);
     const [title2, setTitle2] = useState(null);
-    const [status] = useState('Published');
+    const [status, setStatus] = useState("Published");
 
     var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
     var { data, loading } = useFetchPagination(baseURL, page);
@@ -89,15 +89,13 @@ const News = () => {
                 <div className={styles.col1}>
                     {exportData(data)}
                     <div className={styles.pagination}>
-                    
-                                <Pagination
-                                    className={styles.pagi}
-                                    size="large"
-                                    count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) }
-                                    page={page}
-                                    onChange={handleChange}
-                                />
-                            
+                        <Pagination
+                            className={styles.pagi}
+                            size="large"
+                            count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                            page={page}
+                            onChange={handleChange}
+                        />
                     </div>
                 </div>
                 <div className={styles.col2}>
@@ -111,7 +109,7 @@ const News = () => {
                                 placeholder="Title"
                                 value={title2}
                                 onChange={(e) => handleInputChange(e)}
-                            //required
+                                //required
                             ></input>
                             <BsSearch className={styles.icon2} />
                         </div>
