@@ -22,11 +22,17 @@ import { getNativeBalanceOfBidder } from "../../nativeBalance";
 import ResultForFirstBidder from "./ResultForFirstBidder";
 import ResultForSecondBidder from "./ResultForSecondBidder";
 import ResultForOtherBidders from "./ResultForOtherBidders";
+
 const AuctionResult = ({ auction }) => {
     const { account, isWeb3Enabled } = useMoralis();
+
+    const dispatch = useNotification();
     const [rank, setRank] = useState();
     const [bidInformation, setBidInformation] = useState();
     const [highestBid, setHighestBid] = useState();
+    const [transactionStatus, setTransactionStatus] = useState();
+    const [goPayment, setGoPayment] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     const { runContractFunction: getBidInformationByAuctionId } = useWeb3Contract({
         abi: CONTRACT_ABI,
@@ -47,8 +53,9 @@ const AuctionResult = ({ auction }) => {
         const highest = parseFloat(ethers.utils.formatUnits(await getHighestBidOfAuction(), "ether"));
         setHighestBid(highest);
         console.log(highest);
-        const bidInformationOfBidder = await getBidInformationOfBidder();
-        setRank(await getRankOfBidder());
+
+        // setRank(await getRankOfBidder());
+        // console.log(await getNativeBalanceOfBidder(account));
     };
 
     useEffect(() => {
@@ -58,7 +65,7 @@ const AuctionResult = ({ auction }) => {
     }, [isWeb3Enabled, account, rank]);
 
     const getBidInformationOfBidder = () => {
-        bidInformation?.forEach((element) => {
+        bidInformation?.map((element) => {
             if (element.bidder.toUpperCase() === account.toUpperCase()) {
                 return {
                     bidder: account,
@@ -69,42 +76,52 @@ const AuctionResult = ({ auction }) => {
         });
     };
 
-    const getRankOfBidder = () => {
-        let bidAmount = 0;
-        bidInformation?.forEach((element) => {
-            if (element.bidder.toUpperCase() === account.toUpperCase()) {
-                bidAmount = parseFloat(ethers.utils.formatUnits(element.bidAmount, "ether"));
-            }
-        });
+    // const getRankOfBidder = () => {
+    //     let bidAmount = 0;
+    //     bidInformation?.map((element) => {
+    //         if (element.bidder.toUpperCase() === account.toUpperCase()) {
+    //             bidAmount = parseFloat(ethers.utils.formatUnits(element.bidAmount, "ether"));
+    //         }
+    //     });
 
-        if (bidAmount == 0) {
-            console.log("Rank: 0");
-            return 0;
-        }
-        let rank = 1;
-        bidInformation?.forEach((element) => {
-            const amount = parseFloat(ethers.utils.formatUnits(element.bidAmount, "ether"));
-            if (amount > bidAmount) {
-                rank++;
-            }
-        });
-        console.log("Rank: " + rank);
-        return rank;
-    };
+    //     bidInformation?.map((element) => {
+    //         if (element.bidder.toUpperCase() === account.toUpperCase()) {
+    //             bidAmount = parseFloat(ethers.utils.formatUnits(element.bidAmount, "ether"));
+    //         }
+    //     });
+    //     let rank = 1;
+    //     bidInformation?.map((element) => {
+    //         const amount = parseFloat(ethers.utils.formatUnits(element.bidAmount, "ether"));
+    //         if (amount > bidAmount) {
+    //             rank++;
+    //         }
+    //     });
+    //     console.log("Rank: " + rank);
+    //     return rank;
+    // };
 
-    const renderTopBidder = () => {
-        switch (rank) {
-            case 1:
-                return <ResultForFirstBidder auction={auction} highestBid={highestBid} />;
-            case 2:
-                return <ResultForSecondBidder />;
-            case 0:
-                return <>Retracted Bid</>;
-            default:
-                return <ResultForOtherBidders />;
-        }
-    };
+    // const renderTopBidder = () => {
+    //     switch (rank) {
+    //         case 1:
+    //             return <ResultForFirstBidder auction={auction} highestBid={highestBid} />;
+    //         case 2:
+    //             return <ResultForSecondBidder />;
+    //         case 0:
+    //             return <>Retracted Bid</>;
+    //         default:
+    //             return <ResultForOtherBidders />;
+    //     }
+    // };
 
+    // const renderer = ({ days, hours, minutes, seconds, completed }) => {
+    //     if (completed) {
+    //         return <ClosedAuction />;
+    //     } else {
+    //         return (
+
+    //         );
+    //     }
+    // };
     return (
         <div>
             <div>
@@ -114,16 +131,16 @@ const AuctionResult = ({ auction }) => {
                     <div className={styles.info}>
                         {/* <BiddingProperty auction={auction} />
                         <BiddingProperty auction={auction} property={property} /> */}
-                        <BiddingProperty />
-                        <p className={styles.txtM}>Current bid:</p>
-                        <p className={styles.txtNormal}>{highestBid} ETH</p>
-                    </div>
-                    <div className={styles.detail}>
-                        <p className={styles.title}>Result:</p>
-                        <p className={styles.txtT}>Your place: {rank}</p>
-                        {renderTopBidder()}
                     </div>
                 </div>
+                <BiddingProperty />
+                <p className={styles.txtM}>Current bid:</p>
+                <p className={styles.txtNormal}>{highestBid} ETH</p>
+            </div>
+            <div className={styles.detail}>
+                <p className={styles.title}>Result:</p>
+                <p className={styles.txtT}>Your place: {rank}</p>
+                {/* {renderTopBidder()} */}
             </div>
         </div>
     );

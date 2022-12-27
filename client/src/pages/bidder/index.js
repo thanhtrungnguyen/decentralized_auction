@@ -36,7 +36,7 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
     };
     const checkUserRegistered = () => {
         if (auctionRegistration.length == 0) return null;
-        auctionRegistration.forEach((element) => {
+        auctionRegistration.map((element) => {
             if (element.bidderId == getUser().id) {
                 return element.wallet;
             }
