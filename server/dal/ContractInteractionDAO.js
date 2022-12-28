@@ -125,5 +125,13 @@ const getAllAuction = async () => {
     auction = await ContractInteraction.find({ name: "CreatedAuction"});   
     return auction;
 };
+const CountBidding = async () => {
+    const bid = await ContractInteraction.find(
+        {
+            name: { $in: ["PlacedBid", "RetractedBid"] },
+           
+        }).count();
+    return bid;
+};
 
-module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getAllAuction, getBiddingByAuctionId };
+module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getAllAuction, getBiddingByAuctionId, CountBidding };

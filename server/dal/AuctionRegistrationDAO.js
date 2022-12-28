@@ -11,7 +11,7 @@ const createAuctionRegistration = async (dataAuctionRegistration) => {
 };
 
 const findUserbyWallet = async (wallet) =>{
-    const user = await AuctionRegistration.findOne({ auctionId : wallet });
+    const user = await AuctionRegistration.findOne({ wallet : wallet });
     return user;
 }
 
