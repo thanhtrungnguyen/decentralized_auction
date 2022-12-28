@@ -96,11 +96,11 @@ const ChangePassword = () => {
                 .then((res) => {
                     // console.log(res);
                     // console.log(res.data);
-                    alert(res.data);
+                    alert("Change password successfully!!!");
                     navigate(`/homePage`);
                 })
                 .catch((error) => {
-                    alert(error.response.data);
+                    alert("Change password Failure!!!");
                     navigate(`/changePassword/${id}`);
                 });
             event.preventDefault();

@@ -66,7 +66,7 @@ const AddNews = () => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
+                alert("Add new successfully!!!");
                 navigate("/listNews");
             });
         event.preventDefault();

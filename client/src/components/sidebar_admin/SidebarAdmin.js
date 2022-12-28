@@ -26,11 +26,11 @@ const SidebarAdmin = () => {
                 <Link to="/listNews" className={styles.txt}>
                     News
                 </Link>{" "}
-                <br />
+                {/* <br />
                 <p className={styles.title}>Data</p>
                 <Link to="/dashboard" className={styles.txt}>
                     Dashboard
-                </Link>{" "}
+                </Link>{" "} */}
                 <br />
             </div>
         </>

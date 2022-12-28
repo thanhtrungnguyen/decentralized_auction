@@ -159,7 +159,7 @@ const EditProperty = () => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
+                alert("Edit property successfully!!!");
                 navigate("/myProperty");
             });
 

@@ -162,7 +162,7 @@ const AddSeller = () => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
+                alert("Add seller successfully!!!");
                 navigate("/listSellers");
             });
         event.preventDefault();

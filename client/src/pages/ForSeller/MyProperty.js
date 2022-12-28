@@ -209,9 +209,6 @@ const MyProperty = () => {
                             <br />
                             <table className={styles.table}>
                                 <tr>
-                                    <th className={styles.th}>
-                                        <BsFillCheckSquareFill className={styles.icon} />
-                                    </th>
                                     <th className={styles.th}>Property Name</th>
                                     <th className={styles.th}>Category</th>
                                     <th className={styles.th}>Start bid</th>
@@ -220,9 +217,6 @@ const MyProperty = () => {
                                 </tr>
                                 {listProperty.data.properties.map((property) => (
                                     <tr>
-                                        <td className={styles.td}>
-                                            <input type="checkbox"></input>
-                                        </td>
                                         <td className={styles.td}>{property.Name}</td>
                                         <td className={styles.td}>{property.Category_Id__r.Name}</td>
                                         <td className={styles.td}>{property.Start_Bid__c}</td>
@@ -281,9 +275,9 @@ const MyProperty = () => {
                                     count={
                                         listProperty.data.total % 10 > 0 ? Math.floor(listProperty.data.total / 10) + 1 : listProperty.data.total / 10
                                     }
-                                    count={
-                                        listProperty.data.total % 10 > 0 ? Math.floor(listProperty.data.total / 10) + 1 : listProperty.data.total / 10
-                                    }
+                                    // count={
+                                    //     listProperty.data.total % 10 > 0 ? Math.floor(listProperty.data.total / 10) + 1 : listProperty.data.total / 10
+                                    // }
                                     page={page}
                                     onChange={handleChange}
                                 />

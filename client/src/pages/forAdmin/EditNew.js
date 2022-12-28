@@ -36,7 +36,7 @@ const EditNew = () => {
             await axios.get(baseURL).then((resp) => {
                 setTitle(resp.data.Name);
                 setContent(resp.data.Content__c);
-                setData(resp.data)
+                setData(resp.data);
                 // console.log(resp.data);
                 // console.log("axios get");
                 // onCitySelect(sCity);
@@ -96,18 +96,12 @@ const EditNew = () => {
         formData.append("avatar", avatar);
 
         console.log(formData.get("content"));
-        axios
-            .put(
-                `http://localhost:8800/api/news/updateNews/${id}`,
-                formData,
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data);
-                navigate("/listNews");
-            });
+        axios.put(`http://localhost:8800/api/news/updateNews/${id}`, formData, { withCredentials: true }).then((res) => {
+            console.log(res);
+            console.log(res.data);
+            alert("Edit new successfully!!!");
+            navigate("/listNews");
+        });
         event.preventDefault();
     };
     const cancel = () => {
@@ -142,11 +136,7 @@ const EditNew = () => {
                         {avatar != null && <img src={URL.createObjectURL(avatar)} className={styles.image} alt="Thumb" />}
 
                         {avatar == null && (
-                            <img
-                                src={`http://localhost:8800/api/auction/images/${data.Avatar__c}`}
-                                className={styles.image}
-                                alt="Thumb"
-                            />
+                            <img src={`http://localhost:8800/api/auction/images/${data.Avatar__c}`} className={styles.image} alt="Thumb" />
                         )}
 
                         <br />

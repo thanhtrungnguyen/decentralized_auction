@@ -177,7 +177,7 @@ const EditProfileOrganization = () => {
         axios.put(`http://localhost:8800/api/user/updateProfile/${id}`, formData, { withCredentials: true }).then((res) => {
             console.log(res);
             console.log(res.data);
-            alert(res.data.message);
+            alert("Edit profile successfully!!!");
             navigate(`profile/${id}`);
         });
         console.log(formData);

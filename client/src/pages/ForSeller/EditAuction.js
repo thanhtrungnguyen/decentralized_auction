@@ -80,7 +80,7 @@ const EditAuction = () => {
         axios.put("http://localhost:8800/api/EditAuction", formData).then((res) => {
             console.log(res);
             console.log(res.data);
-            alert(res.data.message);
+            alert("Edit Auction successfully!!!");
             navigate("/myAuctions");
         });
         console.log(formData);

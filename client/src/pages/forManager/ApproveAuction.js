@@ -94,7 +94,7 @@ const PropertyDetail = () => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
+                alert("Approve Auction successfully!!!");
                 navigate("/autionsListForManager");
             });
     };

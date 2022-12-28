@@ -57,7 +57,7 @@ const AddManager = () => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
+                alert("Add manager successfully!!!");
                 navigate("/listManagers");
             });
         event.preventDefault();

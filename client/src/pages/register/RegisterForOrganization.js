@@ -21,10 +21,10 @@ const Register = () => {
 
     const togglePasswordVisibility = () => {
         setPasswordShown1(passwordShown1 ? false : true);
-      };
-      const toggleRePasswordVisibility = () => {
+    };
+    const toggleRePasswordVisibility = () => {
         setPasswordShown2(passwordShown2 ? false : true);
-      };
+    };
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
 
@@ -168,24 +168,23 @@ const Register = () => {
         formData.append("usertype", usertype);
         if (rePassword !== password) {
             setMessage("Please enter match the password");
-        }else{
+        } else {
             axios
-            .post(
-                "http://localhost:8800/api/auth/register",
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                },
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-                navigate("/login");
-            });
+                .post(
+                    "http://localhost:8800/api/auth/register",
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    },
+                    { withCredentials: true }
+                )
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    alert("Register successfully!!!");
+                    navigate("/login");
+                });
         }
-        
 
         event.preventDefault();
     };
@@ -432,19 +431,18 @@ const Register = () => {
                         required
                     ></input>
                     <div>
-                    <input
-                        className={styles.inputEP}
-                        type={passwordShown1 ? "text" : "password"}
-                        pattern="^\s*(?:\S\s*){8,}$"
-                        value={password}
-                        onChange={(e) => handleInputChange(e)}
-                        id="password"
-                        placeholder="Password"
-                        required
-                    ></input>
-                    <i  onClick={togglePasswordVisibility}>{eye}</i>
+                        <input
+                            className={styles.inputEP}
+                            type={passwordShown1 ? "text" : "password"}
+                            pattern="^\s*(?:\S\s*){8,}$"
+                            value={password}
+                            onChange={(e) => handleInputChange(e)}
+                            id="password"
+                            placeholder="Password"
+                            required
+                        ></input>
+                        <i onClick={togglePasswordVisibility}>{eye}</i>
                     </div>
-                    
                     <div>
                         <input
                             className={styles.inputEP}
@@ -455,9 +453,9 @@ const Register = () => {
                             placeholder="Re-eneter the password"
                             required
                         ></input>
-                     <i  onClick={toggleRePasswordVisibility}>{eye}</i>
+                        <i onClick={toggleRePasswordVisibility}>{eye}</i>
                     </div>
-                    <label style={{ color: 'red' }}>{message}</label>
+                    <label style={{ color: "red" }}>{message}</label>
                     <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>
                 </form>
             </div>

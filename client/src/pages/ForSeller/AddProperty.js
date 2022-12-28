@@ -118,7 +118,7 @@ const AddProperty = () => {
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
+                alert("Add property successfully!!!");
                 navigate("/myProperty");
             });
 
