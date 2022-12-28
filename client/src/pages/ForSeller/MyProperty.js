@@ -146,6 +146,7 @@ const MyProperty = () => {
                                     value={propertyName2}
                                     onChange={(e) => handleInputChange(e)}
                                     //required
+                                    //required
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
@@ -277,6 +278,9 @@ const MyProperty = () => {
                             <div>
                                 <Pagination
                                     className={styles.pagi}
+                                    count={
+                                        listProperty.data.total % 10 > 0 ? Math.floor(listProperty.data.total / 10) + 1 : listProperty.data.total / 10
+                                    }
                                     count={
                                         listProperty.data.total % 10 > 0 ? Math.floor(listProperty.data.total / 10) + 1 : listProperty.data.total / 10
                                     }

@@ -22,96 +22,100 @@ import { getNativeBalanceOfBidder } from "../../nativeBalance";
 import ResultForFirstBidder from "./ResultForFirstBidder";
 import ResultForSecondBidder from "./ResultForSecondBidder";
 import ResultForOtherBidders from "./ResultForOtherBidders";
+import SecondWaitForFirst from "./SecondWaitForFirst";
 
 const AuctionResult = ({ auction }) => {
     const { account, isWeb3Enabled } = useMoralis();
-
-    const dispatch = useNotification();
     const [rank, setRank] = useState();
     const [bidInformation, setBidInformation] = useState();
     const [highestBid, setHighestBid] = useState();
-    const [transactionStatus, setTransactionStatus] = useState();
-    const [goPayment, setGoPayment] = useState(false);
-    const [showConfirmation, setShowConfirmation] = useState(false);
-
-    const { runContractFunction: getBidInformationByAuctionId } = useWeb3Contract({
-        abi: CONTRACT_ABI,
-        contractAddress: CONTRACT_ADDRESS,
-        functionName: "getBidInformationByAuctionId",
-        params: { auctionId: auction.auctionId },
+    const [accountBidInformation, setAccountBidInformation] = useState();
+    const { runContractFunction: returnedBidInformation } = useWeb3Contract({
+        params: {
+            abi: CONTRACT_ABI,
+            contractAddress: CONTRACT_ADDRESS,
+            functionName: "getBidInformationByAuctionId",
+            params: { auctionId: auction.auctionId },
+        },
+        onError: (error) => console.log(error),
     });
-    const { runContractFunction: getHighestBidOfAuction } = useWeb3Contract({
-        abi: CONTRACT_ABI,
-        contractAddress: CONTRACT_ADDRESS,
-        functionName: "getHighestBidOfAuction",
-        params: { auctionId: auction.auctionId },
-    });
-
-    const updateUI = async () => {
-        setBidInformation(await getBidInformationByAuctionId());
-        console.log(bidInformation);
-        const highest = parseFloat(ethers.utils.formatUnits(await getHighestBidOfAuction(), "ether"));
-        setHighestBid(highest);
-        console.log(highest);
-
-        // setRank(await getRankOfBidder());
-        // console.log(await getNativeBalanceOfBidder(account));
-    };
+    async function setup() {
+        if (returnedBidInformation) {
+            setBidInformation(returnedBidInformation);
+        }
+        returnedBidInformationOfBidder();
+        getRankOfBidder();
+    }
 
     useEffect(() => {
         if (isWeb3Enabled) {
-            updateUI();
+            setup();
         }
-    }, [isWeb3Enabled, account, rank]);
+    }, [isWeb3Enabled, account]);
 
-    const getBidInformationOfBidder = () => {
+    const returnedBidInformationOfBidder = () => {
         bidInformation?.map((element) => {
             if (element.bidder.toUpperCase() === account.toUpperCase()) {
-                return {
+                setAccountBidInformation({
                     bidder: account,
                     bidAmount: parseFloat(ethers.utils.formatUnits(element.bidAmount, "ether")),
                     bidderState: element.bidderState,
-                };
+                });
             }
         });
     };
+    const getRankOfBidder = () => {
+        let rank = 1;
+        if (bidInformation.length == 0) return "NoBidder";
+        if (accountBidInformation.bidderState == 0) {
+            if (accountBidInformation.bidAmount == 0) rank = -1;
+            bidInformation.map((element) => {
+                if (element.bidderState == 0 && element.bidAmount > accountBidInformation.bidAmount) {
+                    rank++;
+                }
+            });
+        }
+        setRank(rank);
+    };
+    const returnedState = () => {
+        if (accountBidInformation) {
+            if (accountBidInformation.bidderState == 0) {
+                return rank;
+            }
+            if (accountBidInformation.bidderState == 1) return "RETRACT";
+            if (accountBidInformation.bidderState == 2) return "CANCEL";
+            if (accountBidInformation.bidderState == 3) return "WITHDRAW";
+            if (accountBidInformation.bidderState == 4) return "PAYMENT";
+        }
+    };
 
-    // const getRankOfBidder = () => {
-    //     let bidAmount = 0;
-    //     bidInformation?.map((element) => {
-    //         if (element.bidder.toUpperCase() === account.toUpperCase()) {
-    //             bidAmount = parseFloat(ethers.utils.formatUnits(element.bidAmount, "ether"));
-    //         }
-    //     });
+    console.log(accountBidInformation);
 
-    //     bidInformation?.map((element) => {
-    //         if (element.bidder.toUpperCase() === account.toUpperCase()) {
-    //             bidAmount = parseFloat(ethers.utils.formatUnits(element.bidAmount, "ether"));
-    //         }
-    //     });
-    //     let rank = 1;
-    //     bidInformation?.map((element) => {
-    //         const amount = parseFloat(ethers.utils.formatUnits(element.bidAmount, "ether"));
-    //         if (amount > bidAmount) {
-    //             rank++;
-    //         }
-    //     });
-    //     console.log("Rank: " + rank);
-    //     return rank;
-    // };
-
-    // const renderTopBidder = () => {
-    //     switch (rank) {
-    //         case 1:
-    //             return <ResultForFirstBidder auction={auction} highestBid={highestBid} />;
-    //         case 2:
-    //             return <ResultForSecondBidder />;
-    //         case 0:
-    //             return <>Retracted Bid</>;
-    //         default:
-    //             return <ResultForOtherBidders />;
-    //     }
-    // };
+    const renderTopBidder = () => {
+        console.log("returnedState: ", returnedState);
+        switch (returnedState) {
+            case "RETRACT":
+                return <>RETRACT</>;
+            case "CANCEL":
+                return <>CANCEL</>;
+            case "WITHDRAW":
+                return <>WITHDRAW</>;
+            case "PAYMENT":
+                return <>PAYMENT</>;
+            case -1:
+                return <>No Rank - Bidder wasn't placed bid</>;
+            case 1:
+                return <ResultForFirstBidder auction={auction} highestBid={highestBid} rank={rank} />;
+            case 2:
+                return <SecondWaitForFirst auction={auction} highestBid={highestBid} rank={rank} />;
+            case 0:
+                return <>Retracted Bid</>;
+            case "NoBidder":
+                return <>NoBidder </>;
+            default:
+                return <ResultForOtherBidders auction={auction} highestBid={highestBid} rank={rank} />;
+        }
+    };
 
     // const renderer = ({ days, hours, minutes, seconds, completed }) => {
     //     if (completed) {
@@ -127,21 +131,17 @@ const AuctionResult = ({ auction }) => {
             <div>
                 <p className={styles.txtBlack}>Auction Result </p>
                 <p className={styles.txt}>Your Auction has ended:</p>
-                <div>
-                    <div className={styles.info}>
-                        {/* <BiddingProperty auction={auction} />
+                <div className={styles.info}>
+                    {/* <BiddingProperty auction={auction} />
                         <BiddingProperty auction={auction} property={property} /> */}
-                    </div>
+                    <BiddingProperty />
+                    <p className={styles.txtM}>Current bid:</p>
+                    <p className={styles.txtNormal}>{highestBid} ETH</p>
+                    <p className={styles.txtM}>Your bid:</p>
+                    <p className={styles.txtNormal}>{highestBid} ETH</p>
                 </div>
-                <BiddingProperty />
-                <p className={styles.txtM}>Current bid:</p>
-                <p className={styles.txtNormal}>{highestBid} ETH</p>
             </div>
-            <div className={styles.detail}>
-                <p className={styles.title}>Result:</p>
-                <p className={styles.txtT}>Your place: {rank}</p>
-                {/* {renderTopBidder()} */}
-            </div>
+            <div className={styles.detail}>{renderTopBidder()}</div>
         </div>
     );
 };

@@ -54,10 +54,6 @@ const Payment = ({ auction, highestBid }) => {
             icon: <BsCheckLg />,
         });
     };
-    const handleComplete = async (hash) => {
-        console.log(hash);
-        // setTransactionStatus({ hash: hash, status: "waitingForConfirmation" });
-    };
     const handleErrorNotification = () => {
         setTransactionStatus({ status: "Failed" });
         dispatch({
@@ -74,53 +70,33 @@ const Payment = ({ auction, highestBid }) => {
             return <ClosedAuction auction={auction} />;
         } else {
             return (
-                <div>
-                    <div>
-                        <p className={styles.txtBlack}>Payment</p>
-                        <p className={styles.txt}>You're paying for:</p>\
-                        <div>
-                            <div className={styles.info}>
-                                {/* <BiddingProperty auction={auction} property={property} /> */}
-                                <BiddingProperty />
-                                <p className={styles.txtM}>Your bid:</p>
-                                <p className={styles.txtNormal}>{highestBid}</p>
-                                {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
-                                <p className={styles.txtM}>Time for payment ends in:</p>
-                                <p className={styles.txtNormal}>
-                                    <span>
-                                        {days}d {hours}h {minutes}m {seconds}s
-                                    </span>
-                                </p>
-                            </div>
-                            <div className={styles.detail}>
-                                {/* <form> */}
-                                <p className={styles.title}>Payment:</p>
-                                <p className={styles.txtT}>Deposit Paid: {auction.depositAmount} ETH</p>
-                                <p className={styles.txtT}>Your Bid: {highestBid} ETH</p>
-                                <p className={styles.txtT}>
-                                    Total amount you must to pay:
-                                    {amount}
-                                    ETH
-                                </p>
-                                {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
-                                {/* <label className={styles.mess}>message</label> */}
-                                <button
-                                    className={styles.btn}
-                                    onClick={async () =>
-                                        await payment({
-                                            onSuccess: handleSuccess,
-                                            onError: handleErrorNotification,
-                                            onComplete: handleComplete,
-                                        })
-                                    }
-                                >
-                                    {isLoading || isFetching ? <div>Loading...</div> : <div>Send Payment</div>}
-                                </button>
-                                <TransactionStatus transactionStatus={transactionStatus} />
-                            </div>
-                        </div>
+                <>
+                    <div className={styles.detail}>
+                        {/* <form> */}
+                        <p className={styles.title}>Payment:</p>
+                        <p className={styles.txtT}>Deposit Paid: {auction.depositAmount} ETH</p>
+                        <p className={styles.txtT}>Your Bid: {highestBid} ETH</p>
+                        <p className={styles.txtT}>
+                            Total amount you must to pay:
+                            {amount}
+                            ETH
+                        </p>
+                        {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
+                        {/* <label className={styles.mess}>message</label> */}
+                        <button
+                            className={styles.btn}
+                            onClick={async () =>
+                                await payment({
+                                    onSuccess: handleSuccess,
+                                    onError: handleErrorNotification,
+                                })
+                            }
+                        >
+                            {isLoading || isFetching ? <div>Loading...</div> : <div>Send Payment</div>}
+                        </button>
+                        <TransactionStatus transactionStatus={transactionStatus} />
                     </div>
-                </div>
+                </>
             );
         }
     };
