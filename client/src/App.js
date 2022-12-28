@@ -51,6 +51,8 @@ import ViewBiddingForManager from "./pages/forManager/ViewBiddingForManager";
 import ViewRegistrationForManager from "./pages/forManager/ViewRegistrationForManager";
 import AuctionResult from "./pages/forManager/AuctionResult";
 import ViewNews from "./pages/common/ViewNews";
+import ViewNewsForAdmin from "./pages/forAdmin/ViewNewsForAdmin";
+import BidderOrganizationDetail from "./pages/forAdmin/BidderOrganizationDetail";
 // import axios from "axios";
 // axios.defaults.withCredentials = true;
 
@@ -129,6 +131,8 @@ function App() {
                         <Route path="viewRegistrationForManager/:id" element={<ViewRegistrationForManager />} />
                         <Route path="viewAuctionResultForManager/:id" element={<AuctionResult />} />
                         <Route path="viewNews/:id" element={<ViewNews />} />
+                        <Route path="viewNewsForAdmin/:id" element={<ViewNewsForAdmin />} />
+                        <Route path="bidderOrganizationDetail/:id" element={<BidderOrganizationDetail />} />
                     </Routes>
                 </BrowserRouter>
             </NotificationProvider>

@@ -4,7 +4,7 @@ import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -43,7 +43,7 @@ const AddSeller = () => {
     const [rePassword, setRePassword] = useState(null);
     const [position, setPosition] = useState(null);
     const [role, setRole] = useState("SELLER");
-    const [usertype, setUsertype] = useState("ACCOUNT");
+    const [usertype] = useState("ACCOUNT");
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {

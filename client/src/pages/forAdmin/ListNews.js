@@ -3,12 +3,12 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import Moment from "moment";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import Popup from "reactjs-popup";
 import PublishNews from "../../components/popups/forAdmin/PublishNews";
 import PrivateNews from "../../components/popups/forAdmin/PrivateNews";
@@ -22,14 +22,14 @@ const ListNews = () => {
     const [title, setTitle] = useState(null);
     const [title2, setTitle2] = useState(null);
     const [status, setStatus] = useState(null);
-    const [searchData, setSearchData] = useState("");
-    const navigate = useNavigate();
+    // const [searchData, setSearchData] = useState("");
+    // const navigate = useNavigate();
     const [role, setRole] = useState();
 
     var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
     // var totalURL = `http://localhost:8800/api/news/countNews`;
 
-    var { data, loading, error } = useFetchPagination(baseURL, page);
+    var { data, loading } = useFetchPagination(baseURL, page);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -102,7 +102,7 @@ const ListNews = () => {
                                     );
                                 }
                             })()}
-                            <Link className={styles.linkBlue} to={`/viewNews/${item.Id}`}>
+                            <Link className={styles.linkBlue} to={`/viewNewsForAdmin/${item.Id}`}>
                                 View
                             </Link>
                             <Link className={styles.linkBlue} to={`/editNews/${item.Id}`}>

@@ -3,8 +3,8 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
-import { Outlet, Link } from "react-router-dom";
-import Pagination from "@mui/material/Pagination";
+// import { Outlet, Link } from "react-router-dom";
+// import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,14 +12,14 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
-import { useFetch } from "../../hook/useFetch";
+// import { useFetch } from "../../hook/useFetch";
 import { useParams } from "react-router-dom";
 
 const ViewSeller = () => {
     const { id } = useParams();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [setError] = useState(false);
     const baseURL = `http://localhost:8800/api/user/${id}`;
     const [role, setRole] = useState();
 
@@ -110,9 +110,9 @@ const ViewSeller = () => {
               src={`http://localhost:8800/api/auction/images/${data.cardFront}`}
               alt="images"
             /> */}
-                            <p className={styles.bold}>Account Information</p>
+                            {/* <p className={styles.bold}>Account Information</p>
                             <p className={styles.txt}>Username</p>
-                            <p className={styles.txt}>Password</p>
+                            <p className={styles.txt}>Password</p> */}
                         </div>
                         <div className={styles.right}>
                             <p className={styles.title}>.</p>
@@ -171,10 +171,11 @@ const ViewSeller = () => {
               alt="images"
             /> */}
                             <p className={styles.bold}>.</p>
-                            <p className={styles.txtR}>wanjala</p>
+                            {/* <p className={styles.txtR}>wanjala</p> */}
                             {/* <p className={styles.txtR}>${data.username}</p> */}
-
-                            <p className={styles.txtR}>**********</p>
+                            <br/>
+                            <br/>
+                            {/* <p className={styles.txtR}>**********</p> */}
                             {/* <p className={styles.txtR}>${data.password}</p> */}
                             <input type="button" value="Back" className={styles.btnCancel} onClick={cancel}></input>
                         </div>

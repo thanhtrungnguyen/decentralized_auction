@@ -81,7 +81,7 @@ function AuctionRegistration({ auction }) {
     };
     const createAuctionRegistration = () => {
         const postUrl = "http://localhost:8800/api/auctionInformation/auctionRegistration";
-        const auctionRegistration = { auctionId: auction.auctionId, bidderId: getUser().id, wallet: account };
+        const auctionRegistration = { auctionId: auction.auctionId, bidderId: getUser().userName, wallet: account };
         axios
             .post(postUrl, auctionRegistration)
             .then((res) => {

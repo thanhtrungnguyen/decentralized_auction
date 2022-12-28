@@ -35,12 +35,13 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
         return users;
     };
     const checkUserRegistered = () => {
-        let wallet
+        let wallet;
         auctionRegistration.map((element) => {
             if (element.bidderId == getUser().id) {
-                wallet= element.wallet;
+                wallet = element.wallet;
             }
-        });return wallet
+        });
+        return wallet;
     };
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);

@@ -3,18 +3,9 @@ const jsforce = require("jsforce");
 const ContractInteractionService = require("../services/ContractInteractionService.js");
 const auctionService = require("../services/AuctionService.js");
 const { createError } = require("../utils/error.js");
+const { findByAuctionId, findRegisterByAuctionId } = require("../services/AuctionRegistrationService.js");
 
-const conn = new jsforce.Connection({
-    loginUrl: process.env.SF_LOGIN_URL,
-});
 
-conn.login(process.env.SF_USERNAME, process.env.SF_PASSWORD + process.env.SF_TOKEN, (err, res) => {
-    if (err) {
-        console.error(err);
-    } else {
-        //  console.log(res.id);
-    }
-});
 
 const createAuctionRequest = async (req, res, next) => {
     await auctionService.createRequestAuction(req.params.id);
@@ -137,6 +128,12 @@ const getAuctionBiddingById = async(req,res,next)=>{
     res.status(200).json(auction);
 
 }
+const getAllRegisterByAuctionId = async(req,res,next) =>{
+    var auctionId = req.params.id;
+    var regists = await findRegisterByAuctionId(auctionId);
+    
+    res.status(200).json(regists);
+}
 //add BidderAuction
 
 //  const addBidderAuction = async (req, res, next ) => {
@@ -149,4 +146,4 @@ const getAuctionBiddingById = async(req,res,next)=>{
 //     }
 // }
 
-module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction,filterAuction,getAllAuctionBidder,getAuctionBiddingById,getAuctionForSeller };
+module.exports = { uploadImage, getAuctionDetailByID, getAllAuction, rejectAuction, approveAuction, createAuctionRequest, updateAuction,filterAuction,getAllAuctionBidder,getAuctionBiddingById,getAuctionForSeller, getAllRegisterByAuctionId };

@@ -77,7 +77,7 @@ const ChangePassword = () => {
         }
     };
     const handleSubmit = async (event) => {
-        const formData = new FormData();
+        // const formData = new FormData();
 
         if (rePassword !== password) {
             setMessage("Please enter match the password");

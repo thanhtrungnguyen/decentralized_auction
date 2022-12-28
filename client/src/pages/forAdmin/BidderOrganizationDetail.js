@@ -11,10 +11,10 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 
-const BidderDetail = () => {
+const BidderOrganizationDetail = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/user/${id}`;
-    const { data, loading } = useFetch(baseURL);
+    const { data, loading, error } = useFetch(baseURL);
     const navigate = useNavigate();
     const cancel = () => {
         navigate("/listBidders");
@@ -54,11 +54,18 @@ const BidderDetail = () => {
                 }
             })()}{" "}
             <NavBar />
-            <div className={styles.container}>
+            <div className={styles.container2}>
                 <SideBarAdmin />
-                <div className={styles.content}>
+                <div className={styles.content2}>
                     <div className={styles.left}>
-                        <p className={styles.title}>Personal Information</p>
+                        <p className={styles.title}>Organization Information</p>
+                        <p className={styles.bold}>Organization Information</p>
+                        <p className={styles.txt}>Tax Code</p>
+                        <p className={styles.txt}>Tax Code Granted Date</p>
+                        <p className={styles.txt}>Tax Code Granted Place</p>
+                        <p className={styles.txt}>Specific Address</p>
+                        <p className={styles.txt}>Position</p>
+
                         <p className={styles.bold}>Basic Information</p>
                         <p className={styles.txt}>First Name</p>
                         <p className={styles.txt}>Last Name</p>
@@ -92,6 +99,15 @@ const BidderDetail = () => {
                     <div className={styles.right}>
                         <p className={styles.title}>.</p>
 
+                        <p className={styles.bold}>.</p>
+                        <p className={styles.txtR}>{data.contact.Last_Name__c}</p>
+                        <p className={styles.txtR}>{data.contact.Gender__c}</p>
+
+                        <p className={styles.txtR}>{data.contact.Date_Of_Birth__c}</p>
+
+                        <p className={styles.txtR}>{data.contact.Email__c}</p>
+
+                        <p className={styles.txtR}>{data.contact.Phone__c}</p>
                         <p className={styles.bold}>.</p>
 
                         <p className={styles.txtR}>{data.contact.First_Name__c}</p>
@@ -146,4 +162,4 @@ const BidderDetail = () => {
         </>
     );
 };
-export default BidderDetail;
+export default BidderOrganizationDetail;

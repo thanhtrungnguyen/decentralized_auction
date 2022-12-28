@@ -3,12 +3,12 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SidebarSeller from "../../components/sidebar_seller/SidebarSeller";
-import { Outlet, Link } from "react-router-dom";
+// import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
-import Ft from "react-multi-date-picker/plugins/range_picker_footer";
+// import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -64,7 +64,7 @@ const PropertyDetail = () => {
     ) : (
         <>
             {(() => {
-                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;

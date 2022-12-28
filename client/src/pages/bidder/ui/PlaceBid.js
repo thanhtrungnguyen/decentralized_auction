@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import { Outlet, Link } from "react-router-dom";
-import { Button, Input, ConnectButton, useNotification } from "web3uikit";
+// import { Outlet, Link } from "react-router-dom";
+import { useNotification } from "web3uikit";
 import { useMoralis, useWeb3Contract, useApiContract } from "react-moralis";
-import HeaderBid from "../components/HeaderBid";
-import auctionAbi from "../../../constants/contractAbi.json";
-import contractAddresses from "../../../constants/contractAddress.json";
-import Moralis from "moralis";
+// import HeaderBid from "../components/HeaderBid";
+// import auctionAbi from "../../../constants/contractAbi.json";
+// import contractAddresses from "../../../constants/contractAddress.json";
+// import Moralis from "moralis";
 import { ethers } from "ethers";
 import Countdown from "react-countdown";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+// import { useParams } from "react-router-dom";
+// import axios from "axios";
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import TransactionStatus from "../components/TransactionStatus";
@@ -21,7 +21,7 @@ import { useFetchBidding } from "../../../hook/useFetch";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
 import Loader from "../components/Loader";
 import Decimal from "decimal.js";
-
+import io from "socket.io-client";
 function PlaceBid({ auction }) {
     const baseURLPlacedBid = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/placedBid`;
     const baseURLRegistered = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
@@ -34,12 +34,13 @@ function PlaceBid({ auction }) {
     const { account, isWeb3Enabled } = useMoralis();
     const [isRegisteredBidder, setRegisteredBidder] = useState(false);
     const [minBidAmount, setMinBidAmount] = useState();
-
+    const [status, setStatus] = useState(null);
+    const socket = io.connect("http://localhost:8800");
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUI();
         }
-    }, [isWeb3Enabled, account, transactionStatus, transactionStatus, loadingPlacedBid, loadingRegistered, registered]);
+    }, [isWeb3Enabled, account, transactionStatus, transactionStatus, loadingPlacedBid, loadingRegistered, registered, highestBid]);
 
     const checkRegisteredBidder = () => {
         let isRegistered = false;
@@ -57,10 +58,16 @@ function PlaceBid({ auction }) {
     //         }
     //     });
     // }
-
+    socket.on("count", (item) => {
+        if (item != status) {
+            setStatus(item);
+            getHighestBid();
+            console.log(item);
+        }
+    });
     const getHighestBid = () => {
         let highest = 0;
-        placedBid?.forEach((element) => {
+        placedBid.map((element) => {
             if (element.bidAmount > highest) {
                 highest = element.bidAmount;
             }

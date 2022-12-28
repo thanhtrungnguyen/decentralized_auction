@@ -133,7 +133,7 @@ const AuctionDetail = () => {
                             loop={true}
                             muted={true}
                             playsinline={true}
-                            onReady={true}
+                            // onReady={true}
                             width="85%"
                             height="90%"
                         />

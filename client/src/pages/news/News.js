@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
@@ -6,21 +6,21 @@ import styles from "../../styleCss/stylesPages/news.module.css";
 import { BsPencil, BsCalendar3, BsSearch } from "react-icons/bs";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loading from "../../components/loading/Loading";
 import jwt from "jsonwebtoken";
 import { useFetchPagination } from "../../hook/useFetch";
 import moment from "moment";
 import { Pagination } from "@mui/material";
 const News = () => {
-    const [role, setRole] = useState();
+    const [role] = useState();
     const [page, setPage] = useState(1);
     const [title, setTitle] = useState(null);
     const [title2, setTitle2] = useState(null);
-    const [status, setStatus] = useState('Published');
+    const [status, setStatus] = useState("Published");
 
     var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
-    var { data, loading, error } = useFetchPagination(baseURL, page);
+    var { data, loading } = useFetchPagination(baseURL, page);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -32,6 +32,7 @@ const News = () => {
     const handleSubmit = (event) => {
         title2 === "" ? setTitle(null) : setTitle(title2);
         setPage(1);
+        console.log(title2)
         event.preventDefault();
     };
 
@@ -54,7 +55,7 @@ const News = () => {
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit facilisis quis auctor pretium ipsum, eu rutrum. Condimentum
                             eu malesuada vitae ultrices in in neque, porta dignissim. Adipiscing purus, cursus vulputate id id dictum at.
                         </div> */}
-                        <Link className={styles.link} to="/">
+                        <Link className={styles.link} to={`/viewNews/${item.Id}`}>
                             Read More
                         </Link>
                     </div>
@@ -78,7 +79,7 @@ const News = () => {
     ) : (
         <>
             {(() => {
-                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -89,15 +90,13 @@ const News = () => {
                 <div className={styles.col1}>
                     {exportData(data)}
                     <div className={styles.pagination}>
-                    
-                                <Pagination
-                                    className={styles.pagi}
-                                    size="large"
-                                    count={(data.total % 10) > 0 ? (Math.floor(data.total / 10) + 1) : (data.total/10) }
-                                    page={page}
-                                    onChange={handleChange}
-                                />
-                            
+                        <Pagination
+                            className={styles.pagi}
+                            size="large"
+                            count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                            page={page}
+                            onChange={handleChange}
+                        />
                     </div>
                 </div>
                 <div className={styles.col2}>
@@ -105,15 +104,16 @@ const News = () => {
                         <p className={styles.txtSearch}>Search</p>
                         <div className={styles.conS}>
                             <input
-                                id="Title News"
+                                id="title"
                                 className={styles.input}
                                 type="text"
                                 placeholder="Title"
                                 value={title2}
                                 onChange={(e) => handleInputChange(e)}
-                            //required
+                                //required
                             ></input>
-                            <BsSearch className={styles.icon2} />
+                            {/* <input type="submit" className="btn" value="Search"></input> */}
+                            <BsSearch className={styles.icon2} onClick={handleSubmit} />
                         </div>
                     </form>
 

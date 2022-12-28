@@ -3,16 +3,16 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import { BsFillCheckSquareFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+// import { BsFillCheckSquareFill } from "react-icons/bs";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import { set } from "mongoose";
+// import { set } from "mongoose";
 import Loading from "../../components/loading/Loading";
 const AuctionsListForManager = () => {
     const [page, setPage] = React.useState(1);
@@ -20,10 +20,10 @@ const AuctionsListForManager = () => {
     const [category2, setCategory2] = useState(null);
     const [propertyName, setPropertyName] = useState(null);
     const [propertyName2, setPropertyName2] = useState(null);
-    const [data, setData] = useState([]);
-    const navigate = useNavigate();
+    // const [data, setData] = useState([]);
+    // const navigate = useNavigate();
     const [status, setStatus] = useState(null);
-    const baseURL = "http://localhost:8800/api/auction/";
+    // const baseURL = "http://localhost:8800/api/auction/";
     const baseURLCategory = "http://localhost:8800/api/category/";
     const baseURLAuction = `http://localhost:8800/api/auction/getAll/${page}/${propertyName}/${category}/${status}`;
     // const baseURL = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
@@ -218,8 +218,8 @@ const AuctionsListForManager = () => {
 
                                         <td className={styles.td}>{auction.Category_Id__r.Name}</td>
                                         <td className={styles.td}>
-                                            {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
-                                            {auction.Auctions1__r.records[0].Status__c != "Request" &&
+                                            {auction.Auctions1__r.records[0].Status__c === "Request" && `__`}
+                                            {auction.Auctions1__r.records[0].Status__c !== "Request" &&
                                                 "From " +
                                                 new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c)
                                                     .toUTCString()
@@ -228,8 +228,8 @@ const AuctionsListForManager = () => {
                                                 new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
                                         <td className={styles.td}>
-                                            {auction.Auctions1__r.records[0].Status__c == "Request" && `__`}
-                                            {auction.Auctions1__r.records[0].Status__c != "Request" &&
+                                            {auction.Auctions1__r.records[0].Status__c === "Request" && `__`}
+                                            {auction.Auctions1__r.records[0].Status__c !== "Request" &&
                                                 "From " +
                                                 new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
                                                 " To " +
@@ -243,7 +243,7 @@ const AuctionsListForManager = () => {
                                             >
                                                 View
                                             </Link>
-                                            {auction.Auctions1__r.records[0].Status__c == "Bidding" && (
+                                            {auction.Auctions1__r.records[0].Status__c === "Bidding" && (
 
                                                 <Link
                                                     className={styles.linkBlue}
@@ -252,7 +252,7 @@ const AuctionsListForManager = () => {
                                                     Process
                                                 </Link>
                                             )}
-                                            {auction.Auctions1__r.records[0].Status__c == "UpcomingforBid" && (
+                                            {auction.Auctions1__r.records[0].Status__c === "UpcomingforBid" && (
 
                                                 <Link
                                                     className={styles.linkBlue}
@@ -262,7 +262,7 @@ const AuctionsListForManager = () => {
                                                 </Link>
                                             )}
                                             
-                                            {auction.Auctions1__r.records[0].Status__c == "RegistrationTime" && (
+                                            {auction.Auctions1__r.records[0].Status__c === "RegistrationTime" && (
 
                                                 <Link
                                                     className={styles.linkBlue}
@@ -271,7 +271,7 @@ const AuctionsListForManager = () => {
                                                     Process
                                                 </Link>
                                             )}
-                                            {auction.Auctions1__r.records[0].Status__c == "Closed" && (
+                                            {auction.Auctions1__r.records[0].Status__c === "Closed" && (
 
                                                 <Link
                                                     className={styles.linkBlue}
@@ -280,7 +280,7 @@ const AuctionsListForManager = () => {
                                                     Process
                                                 </Link>
                                             )}
-                                            {auction.Auctions1__r.records[0].Status__c == "Success" && (
+                                            {auction.Auctions1__r.records[0].Status__c === "Success" && (
 
                                                 <Link
                                                     className={styles.linkBlue}
@@ -289,7 +289,7 @@ const AuctionsListForManager = () => {
                                                     Process
                                                 </Link>
                                             )}
-                                            {auction.Auctions1__r.records[0].Status__c == "Fail" && (
+                                            {auction.Auctions1__r.records[0].Status__c === "Fail" && (
 
                                                 <Link
                                                     className={styles.linkBlue}
@@ -298,7 +298,7 @@ const AuctionsListForManager = () => {
                                                     Process
                                                 </Link>
                                             )}
-                                            {auction.Auctions1__r.records[0].Status__c == "Request" && (
+                                            {auction.Auctions1__r.records[0].Status__c === "Request" && (
                                                 <Link
                                                     className={styles.linkBlue}
                                                     to={`/approveAuction/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}

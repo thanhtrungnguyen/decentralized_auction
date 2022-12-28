@@ -3,17 +3,24 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
+import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import DatePicker from "react-multi-date-picker";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 const EditProperty = () => {
+    // const [date, setDate] = useState([
+    //   new DateObject().setDay(15),
+    //   new DateObject().add(1, "month").setDay(15),
+    // ]);
     const [propertyImage1, setPropertyImage1] = useState(null);
     const [propertyImage2, setPropertyImage2] = useState(null);
     const [propertyImage3, setPropertyImage3] = useState(null);
@@ -69,6 +76,13 @@ const EditProperty = () => {
                 ]);
                 setData(resp.data);
             });
+
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
             setLoading(false);
         };
         fetchData();

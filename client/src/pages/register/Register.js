@@ -1,5 +1,5 @@
 import styles from "../../styleCss/register.module.css";
-import Dropdown from "react-dropdown";
+// import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import useLocationForm from "./useLocationForm";
 import Select from "react-select";
@@ -10,9 +10,9 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import ReactDOM from "react-dom/client";
+// import ReactDOM from "react-dom/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
@@ -48,8 +48,8 @@ const Register = () => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
-    const [role, setRole] = useState("BIDDER");
-    const [usertype, setUsertype] = useState("CONTACT");
+    const [role] = useState("BIDDER");
+    const [usertype] = useState("CONTACT");
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;

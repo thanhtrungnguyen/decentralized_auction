@@ -3,21 +3,21 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import { BsFillCheckSquareFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+// import { BsFillCheckSquareFill } from "react-icons/bs";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import BanedBidder from "../../components/popups/forAdmin/BanBidder";
 import ActiveBidder from "../../components/popups/forAdmin/ActiveBidder";
-import { useFetchPagination } from "../../hook/useFetch";
+// import { useFetchPagination } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import { color } from "@mui/system";
+// import { color } from "@mui/system";
 const ListBidders = () => {
     const [page, setPage] = React.useState(1);
     const [data, setData] = useState([]);
@@ -26,7 +26,7 @@ const ListBidders = () => {
     const [email2, setEmail2] = useState(null);
     const [status, setStatus] = useState(null);
     //const [filter,setFilter] = useState("");
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/user/getAll/BIDDER/${page}/${status}/${email}`;
     const [role, setRole] = useState();
 
@@ -78,7 +78,7 @@ const ListBidders = () => {
 
         //         navigate("/listBidders");
         //     });
-        email2 == "" ? setEmail(null) : setEmail(email2);
+        email2 === "" ? setEmail(null) : setEmail(email2);
         setPage(1);
         event.preventDefault();
     };
@@ -186,6 +186,9 @@ const ListBidders = () => {
                                         <td className={styles.td}>
                                             <Link className={styles.linkBlue} to={`/bidderDetail/${item.User_Id__c}`}>
                                                 View
+                                            </Link>
+                                            <Link className={styles.linkBlue} to={`/bidderOrganizationDetail/${item.User_Id__c}`}>
+                                                V
                                             </Link>
                                             {(() => {
                                                 if (item.User_Id__r.Status__c === "Activate") {
