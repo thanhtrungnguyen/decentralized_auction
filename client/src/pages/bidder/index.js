@@ -54,12 +54,12 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
         }
         if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
         if (auction.endRegistrationTime < currentTimestamp) {
-            if (registeredWallet == account) {
-                if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
-                if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
-                if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
-                if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
-            }
+            // if (registeredWallet == account) {
+            if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
+            if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
+            if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
+            if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
+            // }
             return "NotRegistered";
         }
         return null;

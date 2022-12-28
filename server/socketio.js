@@ -115,7 +115,7 @@ module.exports = (app) => {
     var j = 0;
     const transaction = cron.schedule("*/3 * * * * *", async () => {
         var bid = await ContractInteractionService.CountBidding();
-        if(bid!=j){
+        if (bid != j) {
             io.emit("count", j);
             j = bid;
         }

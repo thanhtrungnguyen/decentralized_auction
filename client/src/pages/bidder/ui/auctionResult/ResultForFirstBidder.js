@@ -20,11 +20,11 @@ import ClosedAuction from "../ClosedAuction";
 import { ConfirmAuctionResult } from "../../components/ConfirmAuctionResult";
 import { getNativeBalanceOfBidder } from "../../nativeBalance";
 
-const ResultForFirstBidder = ({ auction, highestBid }) => {
+const ResultForFirstBidder = ({ auction, highestBid, rank }) => {
     const dispatch = useNotification();
     const [transactionStatus, setTransactionStatus] = useState();
-    const [goPayment, setGoPayment] = useState(false);
-    const [showConfirmation, setShowConfirmation] = useState();
+    const [goPayment, setGoPayment] = useState();
+    const [showConfirmation, setShowConfirmation] = useState(true);
     const {
         runContractFunction: cancelAuctionResult,
         data,
@@ -70,67 +70,54 @@ const ResultForFirstBidder = ({ auction, highestBid }) => {
     };
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
+            setShowConfirmation(false);
             return <ClosedAuction />;
         } else {
             return (
                 <div>
                     <div>
-                        <p className={styles.txtBlack}>Auction Result </p>
-                        <p className={styles.txt}>Your Auction has ended:</p>
-                        <div>
-                            <div className={styles.info}>
-                                {/* <BiddingProperty auction={auction} />
-				<BiddingProperty auction={auction} property={property} /> */}
-                                <BiddingProperty />
-                                <p className={styles.txtM}>Current bid:</p>
-                                <p className={styles.txtNormal}>{highestBid} ETH</p>
-                                <p className={styles.txtM}>Auction ends in:</p>
+                        {showConfirmation ? (
+                            <>
+                                <p className={styles.title}>Result:</p>
+                                <p className={styles.txtT}>Your place: {rank}</p>
+                                <p className={styles.txtT}>Do you agree with this result?</p>
                                 <p className={styles.txtNormal}>
                                     <span>
                                         {days}d {hours}h {minutes}m {seconds}s
                                     </span>
                                 </p>
-                            </div>
-                            <div className={styles.detail}>
-                                <p className={styles.title}>Result:</p>
-                                <p className={styles.txtT}>Your place: 1</p>
-                                {showConfirmation ? (
-                                    <>
-                                        <p className={styles.txtT}>Do you agree with this result?</p>
-                                        <button
-                                            className={styles.btn}
-                                            onClick={() => {
-                                                setGoPayment(true);
-                                            }}
-                                        >
-                                            Accept
-                                        </button>
-                                        <button
-                                            disabled={isLoading || isFetching}
-                                            className={styles.btn}
-                                            onClick={async () => {
-                                                cancelAuctionResult({
-                                                    onError: handleError,
-                                                    onSuccess: handleSuccess,
-                                                });
-                                            }}
-                                        >
-                                            {isLoading || isFetching ? "Loading..." : "Cancel"}
-                                        </button>
-                                        <TransactionStatus transactionStatus={transactionStatus} />
-                                    </>
-                                ) : (
-                                    <button
-                                        className={styles.btn}
-                                        onClick={() => {
-                                            setGoPayment(true);
-                                        }}
-                                    >
-                                        Go To Payment
-                                    </button>
-                                )}
-                            </div>
-                        </div>
+                                <button
+                                    className={styles.btn}
+                                    onClick={() => {
+                                        setGoPayment(true);
+                                    }}
+                                >
+                                    Accept
+                                </button>
+                                <button
+                                    disabled={isLoading || isFetching}
+                                    className={styles.btn}
+                                    onClick={async () => {
+                                        cancelAuctionResult({
+                                            onError: handleError,
+                                            onSuccess: handleSuccess,
+                                        });
+                                    }}
+                                >
+                                    {isLoading || isFetching ? "Loading..." : "Cancel"}
+                                </button>
+                                <TransactionStatus transactionStatus={transactionStatus} />
+                            </>
+                        ) : (
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    setGoPayment(true);
+                                }}
+                            >
+                                Go To Payment
+                            </button>
+                        )}
                     </div>
                 </div>
             );
@@ -142,7 +129,7 @@ const ResultForFirstBidder = ({ auction, highestBid }) => {
                 <Payment auction={auction} highestBid={highestBid} />
             ) : (
                 <>
-                    <Countdown date={auction.duePaymentTime * 1000} renderer={renderer} />
+                    <Countdown date={Date.now() + 5000} renderer={renderer} />
                 </>
             )}
         </>

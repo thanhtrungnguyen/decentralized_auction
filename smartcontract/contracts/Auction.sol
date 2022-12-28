@@ -91,6 +91,7 @@ contract Auction {
     event CanceledAuctionResult(string auctionId, address bidder, BidderState bidderState);
     event Paidback(string auctionId, address bidder);
     event ClosedAuctionSucessfully(string auctionId, address bidder, uint256 paidAmount);
+    event Withdraw(string auctionId, address bidder);
 
     mapping(string => AuctionInformation) private s_auctionInformations;
     mapping(string => BidInformation[]) private s_bidInformations;
@@ -270,16 +271,10 @@ contract Auction {
 
     modifier isWinnerOfAuction(string memory auctionId) {
         if (
-            (s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount !=
-                s_bidInformations[auctionId][getIndexOfFirstOfAuction(auctionId)].bidAmount &&
-                s_bidInformations[auctionId][getIndexOfFirstOfAuction(auctionId)].bidderState ==
-                BidderState.BIDING) ||
-            (s_bidInformations[auctionId][getIndexOfFirstOfAuction(auctionId)].bidderState !=
-                BidderState.BIDING &&
-                s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount !=
-                s_bidInformations[auctionId][getIndexOfSecondOfAuction(auctionId)].bidAmount &&
-                s_bidInformations[auctionId][getIndexOfFirstOfAuction(auctionId)].bidderState ==
-                BidderState.BIDING)
+            s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState !=
+            BidderState.BIDING ||
+            s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount !=
+            getHighestBidOfAuction(auctionId)
         ) {
             revert Auction__NotWinnerOfAuction();
         }
@@ -297,7 +292,12 @@ contract Auction {
     modifier isWithdrawDeposit(string memory auctionId) {
         if (
             s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState ==
-            BidderState.WITHDRAW
+            BidderState.WITHDRAW ||
+            s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState ==
+            BidderState.CANCEL ||
+            s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState ==
+            BidderState.RETRACT ||
+            s_bidInformations[auctionId][getIndexOfFirstOfAuction(auctionId)].bidder == msg.sender
         ) {
             revert Auction__WithdrawDeposit();
         }
@@ -484,8 +484,11 @@ contract Auction {
 
     function withdrawDeposit(string memory auctionId) external isWithdrawDeposit(auctionId) {
         uint256 value = s_auctionInformations[auctionId].depositAmount;
+        s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState
+            .WITHDRAW;
         (bool success, ) = payable(msg.sender).call{value: value}("");
         require(success, "Transfer failed");
+        emit Withdraw(auctionId, msg.sender);
     }
 
     function payment(string memory auctionId)
