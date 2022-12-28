@@ -36,7 +36,7 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
     };
     const checkUserRegistered = () => {
         let wallet;
-        auctionRegistration.map((element) => {
+        auctionRegistration?.map((element) => {
             if (element.bidderId == getUser().id) {
                 wallet = element.wallet;
             }
@@ -48,7 +48,7 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
         const registeredWallet = checkUserRegistered();
         console.log(checkUserRegistered());
         if (loading) return "Loading";
-        if (auction.length == 0) return "AuctionNotFound";
+        if (!auction) return "AuctionNotFound";
         if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
         if (registeredWallet != null && registeredWallet != account) {
             return "RegisteredWithOtherWallet";
