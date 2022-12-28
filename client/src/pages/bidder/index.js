@@ -35,12 +35,13 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
         return users;
     };
     const checkUserRegistered = () => {
-        let wallet
+        let wallet;
         auctionRegistration.map((element) => {
             if (element.bidderId == getUser().id) {
-                wallet= element.wallet;
+                wallet = element.wallet;
             }
-        });return wallet
+        });
+        return wallet;
     };
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
@@ -55,10 +56,10 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
         if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
         if (auction.endRegistrationTime < currentTimestamp) {
             // if (registeredWallet == account) {
-                if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
-                if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
-                if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
-                if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
+            if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
+            if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
+            if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
+            if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
             // }
             return "NotRegistered";
         }
