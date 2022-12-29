@@ -34,6 +34,23 @@ const getRegisteredToBidById = async (req, res) => {
     }
 };
 
+const getLogsByAuctionId = async (req, res) => {
+    if (req.params.auctionId) {
+        const id = req.params.auctionId;
+        ContractInteractionService.getLogsByAuctionId(id)
+            .then((data) => {
+                if (!data) {
+                    res.status(404).send({ message: `Not found auction with id ${id}` });
+                } else {
+                    res.status(200).send(data);
+                }
+            })
+            .catch((error) => {
+                res.status(500).send({ message: `Error retrieving auction with ${id} - Error: ${error}` });
+            });
+    }
+};
+
 const getPlacedBidById = async (req, res) => {
     if (req.params.auctionId) {
         const id = req.params.auctionId;
@@ -81,4 +98,11 @@ const createAuctionRegistration = async (req, res) => {
     AuctionRegistrationService.createAuctionRegistration(auctionRegistration);
 };
 
-module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, findByAuctionId, createAuctionRegistration };
+module.exports = {
+    getAuctionInformationById,
+    getRegisteredToBidById,
+    getPlacedBidById,
+    findByAuctionId,
+    createAuctionRegistration,
+    getLogsByAuctionId,
+};

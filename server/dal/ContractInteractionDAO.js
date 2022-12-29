@@ -122,16 +122,29 @@ const getBiddingByAuctionId = async (id) => {
 };
 const getAllAuction = async () => {
     var auction = null;
-    auction = await ContractInteraction.find({ name: "CreatedAuction"});   
+    auction = await ContractInteraction.find({ name: "CreatedAuction" });
     return auction;
 };
 const CountBidding = async () => {
-    const bid = await ContractInteraction.find(
-        {
-            name: { $in: ["PlacedBid", "RetractedBid"] },
-           
-        }).count();
+    const bid = await ContractInteraction.find({
+        name: { $in: ["PlacedBid", "RetractedBid"] },
+    }).count();
     return bid;
 };
 
-module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getAllAuction, getBiddingByAuctionId, CountBidding };
+const getLogsByAuctionId = async (id) => {
+    const logs = await ContractInteraction.find({
+        auctionId: id,
+    });
+    return logs;
+};
+
+module.exports = {
+    getAuctionInformationById,
+    getRegisteredToBidById,
+    getPlacedBidById,
+    getAllAuction,
+    getBiddingByAuctionId,
+    CountBidding,
+    getLogsByAuctionId,
+};

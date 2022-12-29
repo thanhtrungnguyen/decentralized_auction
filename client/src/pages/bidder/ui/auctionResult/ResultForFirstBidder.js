@@ -20,11 +20,12 @@ import ClosedAuction from "../ClosedAuction";
 import { ConfirmAuctionResult } from "../../components/ConfirmAuctionResult";
 import { getNativeBalanceOfBidder } from "../../nativeBalance";
 
-const ResultForFirstBidder = ({ auction, highestBid, rank }) => {
+const ResultForFirstBidder = ({ auction, highestBid, rank, accountBidInformation }) => {
     const dispatch = useNotification();
     const [transactionStatus, setTransactionStatus] = useState();
     const [goPayment, setGoPayment] = useState();
     const [showConfirmation, setShowConfirmation] = useState(true);
+
     const {
         runContractFunction: cancelAuctionResult,
         data,
@@ -126,7 +127,7 @@ const ResultForFirstBidder = ({ auction, highestBid, rank }) => {
     return (
         <>
             {goPayment ? (
-                <Payment auction={auction} highestBid={highestBid} />
+                <Payment auction={auction} />
             ) : (
                 <>
                     <Countdown date={Date.now() + 5000} renderer={renderer} />

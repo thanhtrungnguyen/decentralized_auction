@@ -90,7 +90,7 @@ contract Auction {
     event ClosedAuction(string auctionId);
     event CanceledAuctionResult(string auctionId, address bidder, BidderState bidderState);
     event Paidback(string auctionId, address bidder);
-    event ClosedAuctionSucessfully(string auctionId, address bidder, uint256 paidAmount);
+    event ClosedAuctionSuccessful(string auctionId, address bidder, uint256 paidAmount);
     event Withdraw(string auctionId, address bidder);
 
     mapping(string => AuctionInformation) private s_auctionInformations;
@@ -500,7 +500,7 @@ contract Auction {
         s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState.PAYMENT;
         s_proceeds += s_auctionInformations[auctionId].depositAmount;
         s_proceeds += msg.value;
-        emit ClosedAuctionSucessfully(auctionId, msg.sender, msg.value);
+        emit ClosedAuctionSuccessful(auctionId, msg.sender, msg.value);
     }
 
     function getHighestBidOfAuction(string memory auctionId) public view returns (uint256) {

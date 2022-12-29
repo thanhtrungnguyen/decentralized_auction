@@ -8,4 +8,4 @@ const convertWeiToEther = (wei) => {
     return ethers.utils.formatEther(wei).toString();
 };
 
-export default { parseWei: convertEtherToWei, parseEther: convertWeiToEther };
+export { convertEtherToWei as parseWei, convertWeiToEther as parseEther };

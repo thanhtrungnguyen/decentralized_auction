@@ -45,7 +45,7 @@ function PlaceBid({ auction }) {
 
     const checkRegisteredBidder = () => {
         let isRegistered = false;
-        registered?.forEach((element) => {
+        registered?.map((element) => {
             if (element.bidder == account.toLowerCase()) {
                 isRegistered = true;
             }
@@ -190,6 +190,7 @@ function PlaceBid({ auction }) {
     //============================================================================================
     const getBidderState = () => {
         // console.log("first");
+        return "BIDDING";
         if (loadingRegistered || loadingPlacedBid) return "LOADING";
         if (isRegisteredBidder) return "BIDDING";
         if (!isRegisteredBidder) return "NOT_REGISTERED";
