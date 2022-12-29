@@ -34,13 +34,14 @@ function PlaceBid({ auction }) {
     const { account, isWeb3Enabled } = useMoralis();
     const [isRegisteredBidder, setRegisteredBidder] = useState(false);
     const [minBidAmount, setMinBidAmount] = useState();
-    const [status, setStatus] = useState(null);
+    const [status, setStatus] = useState(false);
     const socket = io.connect("http://localhost:8800");
     useEffect(() => {
         if (isWeb3Enabled) {
+
             updateUI();
         }
-    }, [isWeb3Enabled, account, transactionStatus, transactionStatus, loadingPlacedBid, loadingRegistered, registered, highestBid]);
+    }, [isWeb3Enabled, account, loadingPlacedBid, loadingRegistered, registered, highestBid]);
 
     const checkRegisteredBidder = () => {
         let isRegistered = false;
@@ -51,6 +52,16 @@ function PlaceBid({ auction }) {
         });
         return isRegistered;
     };
+
+    socket.on("receive_message", (data) => {
+        if(auction.auctionId==data.auction){
+            setHighestBid(data.highest)
+        }
+       
+        // setMessageReceived(data.message);
+    });
+
+ 
     // const checkRetractedBidder=()=>{
     //     registered?.forEach((element) => {
     //         if (element.bidder == account.toLowerCase()) {
@@ -58,30 +69,25 @@ function PlaceBid({ auction }) {
     //         }
     //     });
     // }
-    socket.on("count", (item) => {
-        if (item != status) {
-            setStatus(item);
-            getHighestBid();
-            console.log(item);
-        }
-    });
-    const getHighestBid = () => {
-        let highest = 0;
-        placedBid.map((element) => {
-            if (element.bidAmount > highest) {
-                highest = element.bidAmount;
-            }
-        });
-        setHighestBid(highest);
-    };
+ 
+    // const getHighestBid = () => {
+    //     let highest = 0;
+    //     placedBid?.map((element) => {
+    //         if (element.bidAmount > highest) {
+    //             highest = element.bidAmount;
+    //         }
+    //     });
+    //     setHighestBid(highest);
+    // };
     const updateUI = async () => {
-        getHighestBid();
+        // getHighestBid();
         setRegisteredBidder(checkRegisteredBidder);
         setMinBidAmount(() => {
             if (highestBid != 0 && auction.priceStep != null) {
-                if (highestBid == 0) return auction.startBid;
+                
                 if (highestBid > 0) return new Decimal(highestBid).plus(auction.priceStep).toString();
             }
+            if (highestBid == 0) return auction.startBid;
             return "0";
         });
     };
@@ -125,6 +131,8 @@ function PlaceBid({ auction }) {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            socket.emit("join_room", auction.auctionId);
+            socket.emit("send_message", {message: "message", auctionId: auction.auctionId });
             dispatch({
                 type: "success",
                 title: "Place Bid Notification",
@@ -154,8 +162,7 @@ function PlaceBid({ auction }) {
         try {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
-
+            setTransactionStatus({ hash: tx.hash, status: "Completed" });         
             dispatch({
                 type: "success",
                 title: "retractBid Notification",
