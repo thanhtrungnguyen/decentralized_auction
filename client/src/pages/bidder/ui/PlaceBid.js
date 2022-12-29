@@ -25,8 +25,8 @@ import io from "socket.io-client";
 function PlaceBid({ auction }) {
     const baseURLPlacedBid = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/placedBid`;
     const baseURLRegistered = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
-    const { loading: loadingPlacedBid, data: placedBid, error: errorPlacedBid } = useFetchBidding(baseURLPlacedBid,auction.auctionId);
-    const { loading: loadingRegistered, data: registered, error: errorRegistered } = useFetchBidding(baseURLRegistered,auction.auctionId);
+    const { loading: loadingPlacedBid, data: placedBid, error: errorPlacedBid } = useFetchBidding(baseURLPlacedBid, auction.auctionId);
+    const { loading: loadingRegistered, data: registered, error: errorRegistered } = useFetchBidding(baseURLRegistered, auction.auctionId);
     const dispatch = useNotification();
     const [highestBid, setHighestBid] = useState(0);
     const [inputBidAmount, setInputBidAmount] = useState("0");
@@ -38,7 +38,6 @@ function PlaceBid({ auction }) {
     const socket = io.connect("http://localhost:8800");
     useEffect(() => {
         if (isWeb3Enabled) {
-
             updateUI();
         }
     }, [isWeb3Enabled, account, loadingPlacedBid, loadingRegistered, registered, highestBid]);
@@ -54,14 +53,13 @@ function PlaceBid({ auction }) {
     };
 
     socket.on("receive_message", (data) => {
-        if(auction.auctionId==data.auction){
-            setHighestBid(data.highest)
+        if (auction.auctionId == data.auction) {
+            setHighestBid(data.highest);
         }
-       
+
         // setMessageReceived(data.message);
     });
 
-    
     // const checkRetractedBidder=()=>{
     //     registered?.forEach((element) => {
     //         if (element.bidder == account.toLowerCase()) {
@@ -69,7 +67,7 @@ function PlaceBid({ auction }) {
     //         }
     //     });
     // }
- 
+
     // const getHighestBid = () => {
     //     let highest = 0;
     //     placedBid?.map((element) => {
@@ -84,7 +82,6 @@ function PlaceBid({ auction }) {
         setRegisteredBidder(checkRegisteredBidder);
         setMinBidAmount(() => {
             if (highestBid != 0 && auction.priceStep != null) {
-                
                 if (highestBid > 0) return new Decimal(highestBid).plus(auction.priceStep).toString();
             }
             if (highestBid == 0) return auction.startBid;
@@ -132,7 +129,7 @@ function PlaceBid({ auction }) {
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
             socket.emit("join_room", auction.auctionId);
-            socket.emit("send_message", {message: "message", auctionId: auction.auctionId });
+            socket.emit("send_message", { message: "message", auctionId: auction.auctionId });
             dispatch({
                 type: "success",
                 title: "Place Bid Notification",
@@ -162,7 +159,7 @@ function PlaceBid({ auction }) {
         try {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });         
+            setTransactionStatus({ hash: tx.hash, status: "Completed" });
             dispatch({
                 type: "success",
                 title: "retractBid Notification",
