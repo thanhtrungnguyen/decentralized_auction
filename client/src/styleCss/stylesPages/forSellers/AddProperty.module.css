@@ -6,7 +6,10 @@
     width: 100%;
     height: 150%;
 }
+.l{
+    display: block;
 
+}
 .info {
     width: 1174px;
     height: 1300px;

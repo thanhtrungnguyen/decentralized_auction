@@ -16,7 +16,7 @@ import ResultForOtherBidders from "./ResultForOtherBidders";
 import SecondWaitForFirst from "./SecondWaitForFirst";
 import axios from "axios";
 
-const AuctionResult = ({ auction }) => {
+const AuctionResult = ({ auction, propertyObject }) => {
     const { account, isWeb3Enabled } = useMoralis();
     const [rank, setRank] = useState();
     const [bidInformation, setBidInformation] = useState();
@@ -114,7 +114,7 @@ const AuctionResult = ({ auction }) => {
                 <div className={styles.info}>
                     {/* <BiddingProperty auction={auction} />
                         <BiddingProperty auction={auction} property={property} /> */}
-                    <BiddingProperty />
+                    <BiddingProperty propertyObject={propertyObject} />
                     {/* <p className={styles.txtM}>Current bid:</p>
                     <p className={styles.txtNormal}>{highestBid} ETH</p>
                     <p className={styles.txtM}>Your bid:</p>

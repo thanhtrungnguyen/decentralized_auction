@@ -216,7 +216,7 @@ function PlaceBid({ auction, propertyObject }) {
                                 setInputBidAmount(event.target.value);
                             }}
                         ></input>
-                        <label className={styles.mess}>Error message</label>
+                        {/* <label className={styles.mess}>Error message</label> */}
                         <br />
                         <button
                             className={styles.btnClose}
@@ -261,7 +261,7 @@ function PlaceBid({ auction, propertyObject }) {
 
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            return <AuctionResult auction={auction} />;
+            return <AuctionResult auction={auction} propertyObject={propertyObject} />;
         } else {
             return (
                 <div>
@@ -294,7 +294,7 @@ function PlaceBid({ auction, propertyObject }) {
                                 </p>
                             </div>
                             <div className={styles.detail}>{renderCurrentBidderState()}</div>
-                            <TransactionHistory auction={auction} />
+                            {/* <TransactionHistory auction={auction} /> */}
                         </div>
                     </div>
                 </div>

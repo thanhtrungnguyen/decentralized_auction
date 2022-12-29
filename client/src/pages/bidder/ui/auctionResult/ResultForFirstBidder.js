@@ -125,7 +125,7 @@ const ResultForFirstBidder = ({ auction, highestBid, rank, accountBidInformation
         }
     };
     console.log(auction.endAuctionTime + 360000);
-    return <>{goPayment ? <Payment auction={auction} /> : <Countdown date={auction.endAuctionTime + 360000} renderer={renderer} />}</>;
+    return <>{goPayment ? <Payment auction={auction} /> : <Countdown date={auction.endAuctionTime * 1000 + 360000} renderer={renderer} />}</>;
 };
 
 export default ResultForFirstBidder;

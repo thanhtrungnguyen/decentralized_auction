@@ -21,6 +21,8 @@ const AddProperty = () => {
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
+    const [depositMessage, setDepositMessage] = useState(".");
+    const [priceStepMessage, setPriceStepMessage] = useState(".");
     const [propertyImage1, setPropertyImage1] = useState(null);
     const [propertyImage2, setPropertyImage2] = useState(null);
     const [propertyImage3, setPropertyImage3] = useState(null);
@@ -76,7 +78,10 @@ const AddProperty = () => {
             setStartBid(value);
         }
         if (id === "deposit") {
+
             setDeposit(value);
+            //setDepositMessage("")
+
         }
         if (id === "priceStep") {
             setPriceStep(value);
@@ -111,16 +116,31 @@ const AddProperty = () => {
         console.log(formData);
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
-        axios
-            .post("http://localhost:8800/api/property", formData, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert("Add property successfully!!!");
-                navigate("/myProperty");
-            });
+        if (startBid * 0.1 > deposit && startBid * 0.05 > priceStep) {
+            axios
+                .post("http://localhost:8800/api/property", formData, {
+                    withCredentials: true,
+                })
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    alert("Add property successfully!!!");
+                    navigate("/myProperty");
+                });
+        }
+        else if(startBid * 0.1 < deposit){
+            setDepositMessage("Please enter Deposit less than 10% Start Bid")
+            setPriceStepMessage(".")
+
+        }else if(startBid * 0.1 < priceStep) {
+            setPriceStepMessage("Please enter Step Price less than 10% Start Bid")
+            setDepositMessage(".")
+
+        }else{
+            setPriceStepMessage(".")
+            setDepositMessage(".")
+        }
+
 
         event.preventDefault();
     };
@@ -179,7 +199,11 @@ const AddProperty = () => {
                                 <p className={styles.lable}>Category</p>
                                 <p className={styles.lable}>Start Bid</p>
                                 <p className={styles.lable}>Deposit</p>
+                                <br></br>
+                                <label>.</label>
                                 <p className={styles.lable}>Price Step</p>
+                                <br></br>
+                                <label>.</label>
                                 <p className={styles.lable}>Place View Property</p>
                                 <p className={styles.lable}>View Property Time</p>
                                 <p className={styles.lable}>Property Description</p>
@@ -263,6 +287,9 @@ const AddProperty = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     required
                                 ></input>
+                                <br/>
+                                <label className={styles.l}  style={{ color: "red" }}>{depositMessage} .</label>
+                                
                                 <input
                                     id="priceStep"
                                     type="number"
@@ -273,6 +300,8 @@ const AddProperty = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     required
                                 ></input>
+                                <br/>
+                                <label className={styles.l}  style={{ color: "red" }}>{priceStepMessage}.</label>
                                 <input
                                     id="placeViewProperty"
                                     type="text"
