@@ -15,7 +15,7 @@ import { useFetchBidding } from "../../hook/useFetch";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
-const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyId }) => {
+const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyId, propertyObject }) => {
     const { chainId, isWeb3Enabled, account } = useMoralis();
     const [hasMetamask, setHasMetamask] = useState(false);
     useEffect(() => {
@@ -75,11 +75,11 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
                 return <NotYetRegistrationTime auction={auction} />;
             case "RegistrationTime":
                 // return <AuctionRegistration auction={auction} property={property} />;
-                return <AuctionRegistration auction={auction} />;
+                return <AuctionRegistration auction={auction} propertyObject={propertyObject} />;
             case "WaitingAuctionTime":
                 return <WaitingForAuctionTime auction={auction} />;
             case "AuctionTime":
-                return <PlaceBid auction={auction} property={propertyId} />;
+                return <PlaceBid auction={auction} property={propertyId} propertyObject={propertyObject} />;
             case "PaymentTime":
                 // return <h2>PaymentTime</h2>;
                 return <AuctionResult auction={auction} />;

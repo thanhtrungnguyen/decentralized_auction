@@ -7,7 +7,7 @@ import axios from "axios";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-const BidModalButton = ({ auctionId, propertyId }) => {
+const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     const [openModal, setOpenModal] = useState(() => {
         return false;
     });
@@ -72,7 +72,13 @@ const BidModalButton = ({ auctionId, propertyId }) => {
                 })()}
 
                 {openModal && (
-                    <BidModal closeModal={setOpenModal} auction={auction} auctionRegistration={auctionRegistration} propertyId={propertyId} />
+                    <BidModal
+                        closeModal={setOpenModal}
+                        auction={auction}
+                        auctionRegistration={auctionRegistration}
+                        propertyId={propertyId}
+                        propertyObject={propertyObject}
+                    />
                 )}
             </div>
         </>

@@ -174,7 +174,7 @@ const AuctionDetail = () => {
 
                     </Popup> */}
 
-                    <BidModalButton auctionId={id} propertyId={propertyId} />
+                    <BidModalButton auctionId={id} propertyId={propertyId} propertyObject={data} />
                 </div>
             </div>
             <br />
