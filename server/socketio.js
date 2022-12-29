@@ -21,25 +21,23 @@ module.exports = (app) => {
     if (interval) {
         clearInterval(interval);
     }
-    io.on("connection",  (socket) => {
+    io.on("connection", (socket) => {
         // socket.on("disconnect", function () {});
-        
-        socket.on("send_message",async (data) => {
+
+        socket.on("send_message", async (data) => {
             let highest = 0;
             await ContractInteractionService.getPlacedBidById(data.auctionId)
                 .then(async (item) => {
-                    
                     item?.map((element) => {
                         if (element.bidAmount > highest) {
                             highest = element.bidAmount;
                         }
                     });
-                    
                 })
                 .catch((error) => {
                     console.error(error);
                 });
-            socket.emit("receive_message", { auction: data.auctionId ,highest:highest});
+            socket.emit("receive_message", { auction: data.auctionId, highest: highest });
         });
 
         // auctionlist = await AuctionService.getAllAuction();
@@ -94,42 +92,41 @@ module.exports = (app) => {
                 }
             }
 
-    //         if (currentTime - timeEndAuctionFN > 0 && currentTime - duePaymentTimeFN <= 0) {
-    //             var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
-    //             //console.log(auctionget.status);
-    //             if (auctionget.status != "Closed") {
-    //                 await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "Closed");
-    //                 await AuctionService.updateStatusForAuction(auction._doc.auctionId, "Closed");
-    //                 i = i + 1;
-    //                 io.emit("data", i);
-    //             }
-    //         }
-    //     });
-    //     // auctionlistUpdate.map(async (auction) => {
-    //     //     // var currentTime = new Date();
-    //     //     // var timeStartAuction = auction.Start_Aution_Time__c || '';
-    //     //     // var timeStartAuctionVN = timeStartAuction.split('+')[0] + '+07:00';
-    //     //     // var timeStartAuctionFN = new Date(timeStartAuctionVN);
+            //         if (currentTime - timeEndAuctionFN > 0 && currentTime - duePaymentTimeFN <= 0) {
+            //             var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
+            //             //console.log(auctionget.status);
+            //             if (auctionget.status != "Closed") {
+            //                 await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "Closed");
+            //                 await AuctionService.updateStatusForAuction(auction._doc.auctionId, "Closed");
+            //                 i = i + 1;
+            //                 io.emit("data", i);
+            //             }
+            //         }
+            //     });
+            //     // auctionlistUpdate.map(async (auction) => {
+            //     //     // var currentTime = new Date();
+            //     //     // var timeStartAuction = auction.Start_Aution_Time__c || '';
+            //     //     // var timeStartAuctionVN = timeStartAuction.split('+')[0] + '+07:00';
+            //     //     // var timeStartAuctionFN = new Date(timeStartAuctionVN);
 
-        //     // var timeEndAuction = auction.End_Auction_Time__c || '';
-        //     // var timeEndAuctionVN = timeEndAuction.split('+')[0] + '+07:00';
-        //     // var timeEndAuctionFN = new Date(timeEndAuctionVN);
+            //     // var timeEndAuction = auction.End_Auction_Time__c || '';
+            //     // var timeEndAuctionVN = timeEndAuction.split('+')[0] + '+07:00';
+            //     // var timeEndAuctionFN = new Date(timeEndAuctionVN);
 
-        //     // var timeStartRegistration = auction.Start_Registration_Time__c || '';
-        //     // var timeStartRegistrationVN = timeStartRegistration.split('+')[0] + '+07:00';
-        //     // var timeStartRegistrationFN = new Date(timeStartRegistrationVN);
+            //     // var timeStartRegistration = auction.Start_Registration_Time__c || '';
+            //     // var timeStartRegistrationVN = timeStartRegistration.split('+')[0] + '+07:00';
+            //     // var timeStartRegistrationFN = new Date(timeStartRegistrationVN);
 
-        //     // var timeEndRegistration = auction.End_Registration_Time__c || '';
-        //     // var timeEndRegistrationVN = timeEndRegistration.split('+')[0] + '+07:00';
-        //     // var timeEndRegistrationFN = new Date(timeEndRegistrationVN);
+            //     // var timeEndRegistration = auction.End_Registration_Time__c || '';
+            //     // var timeEndRegistrationVN = timeEndRegistration.split('+')[0] + '+07:00';
+            //     // var timeEndRegistrationFN = new Date(timeEndRegistrationVN);
 
-        //     // var duePaymentTime = auction.Due_Payment_Time__c || '';
-        //     // var duePaymentTimeVN = duePaymentTime.split('+')[0] + '+07:00';
-        //     // var duePaymentTimeFN = new Date(duePaymentTimeVN);
-
+            //     // var duePaymentTime = auction.Due_Payment_Time__c || '';
+            //     // var duePaymentTimeVN = duePaymentTime.split('+')[0] + '+07:00';
+            //     // var duePaymentTimeFN = new Date(duePaymentTimeVN);
         });
     });
-    taskRegistrationTime.start();
+    // taskRegistrationTime.start();
     var j = 0;
     const transaction = cron.schedule("*/3 * * * * *", async () => {
         var bid = await ContractInteractionService.CountBidding();
@@ -139,6 +136,6 @@ module.exports = (app) => {
             j = bid;
         }
     });
-    transaction.start();
+    // transaction.start();
     return server;
 };

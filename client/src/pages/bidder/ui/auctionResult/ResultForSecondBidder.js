@@ -79,7 +79,7 @@ const ResultForSecondBidder = ({ auction, highestBid, rank }) => {
                         {showConfirmation ? (
                             <>
                                 <p className={styles.title}>Result:</p>
-                                <p className={styles.txtT}>Your place: {rank}</p>
+                                <p className={styles.txtT}>Your place: 2</p>
                                 <p className={styles.txtT}>Do you agree with this result?</p>
                                 <p className={styles.txtNormal}>
                                     <span>
@@ -123,7 +123,15 @@ const ResultForSecondBidder = ({ auction, highestBid, rank }) => {
             );
         }
     };
-    return <>{goPayment ? <Payment auction={auction} highestBid={highestBid} /> : <Countdown date={Date.now() + 5000} renderer={renderer} />}</>;
+    return (
+        <>
+            {goPayment ? (
+                <Payment auction={auction} highestBid={highestBid} />
+            ) : (
+                <Countdown date={auction.endAuctionTime + 360000 * 2} renderer={renderer} />
+            )}
+        </>
+    );
 };
 
 export default ResultForSecondBidder;

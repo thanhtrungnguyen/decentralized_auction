@@ -42,7 +42,7 @@ const SecondWaitForFirst = ({ auction, highestBid, rank, accountBidInformation }
             );
         }
     };
-    return <Countdown date={Date.now() + 1000000} renderer={renderer} />;
+    return <Countdown date={auction.endAuctionTime + 360000} renderer={renderer} />;
 };
 
 export default SecondWaitForFirst;

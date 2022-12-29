@@ -115,10 +115,10 @@ const AuctionResult = ({ auction }) => {
                     {/* <BiddingProperty auction={auction} />
                         <BiddingProperty auction={auction} property={property} /> */}
                     <BiddingProperty />
-                    <p className={styles.txtM}>Current bid:</p>
+                    {/* <p className={styles.txtM}>Current bid:</p>
                     <p className={styles.txtNormal}>{highestBid} ETH</p>
                     <p className={styles.txtM}>Your bid:</p>
-                    <p className={styles.txtNormal}>{highestBid} ETH</p>
+                    <p className={styles.txtNormal}>{highestBid} ETH</p> */}
                 </div>
             </div>
             <div className={styles.detail}>{renderTopBidder()}</div>
