@@ -132,13 +132,13 @@ const AddProperty = () => {
             setDepositMessage("Please enter Deposit less than 10% Start Bid")
             setPriceStepMessage(".")
 
-        }else if(startBid * 0.05 < priceStep) {
+        }else if(startBid * 0.1 < priceStep) {
             setPriceStepMessage("Please enter Step Price less than 10% Start Bid")
             setDepositMessage(".")
 
         }else{
-            setPriceStepMessage("Please enter Step Price less than 10% Start Bid")
-            setDepositMessage("Please enter Deposit less than 10% Start Bid")
+            setPriceStepMessage(".")
+            setDepositMessage(".")
         }
 
 

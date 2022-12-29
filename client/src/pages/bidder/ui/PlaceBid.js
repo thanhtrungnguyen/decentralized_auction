@@ -216,7 +216,7 @@ function PlaceBid({ auction, propertyObject }) {
                                 setInputBidAmount(event.target.value);
                             }}
                         ></input>
-                        <label className={styles.mess}>Error message</label>
+                        {/* <label className={styles.mess}>Error message</label> */}
                         <br />
                         <button
                             className={styles.btnClose}
