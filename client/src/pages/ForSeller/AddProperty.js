@@ -34,7 +34,7 @@ const AddProperty = () => {
     const [placeViewProperty, setPlaceViewProperty] = useState(null);
     // const [startBid, setStartBid] = useState(null);
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
-
+  
     const navigate = useNavigate();
     const baseURL = "http://localhost:8800/api/category/";
     const { data, loading } = useFetch(baseURL);
