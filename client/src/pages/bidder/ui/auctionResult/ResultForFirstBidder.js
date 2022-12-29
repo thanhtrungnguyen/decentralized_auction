@@ -80,7 +80,7 @@ const ResultForFirstBidder = ({ auction, highestBid, rank, accountBidInformation
                         {showConfirmation ? (
                             <>
                                 <p className={styles.title}>Result:</p>
-                                <p className={styles.txtT}>Your place: {rank}</p>
+                                <p className={styles.txtT}>Your place: 1</p>
                                 <p className={styles.txtT}>Do you agree with this result?</p>
                                 <p className={styles.txtNormal}>
                                     <span>
@@ -124,17 +124,8 @@ const ResultForFirstBidder = ({ auction, highestBid, rank, accountBidInformation
             );
         }
     };
-    return (
-        <>
-            {goPayment ? (
-                <Payment auction={auction} />
-            ) : (
-                <>
-                    <Countdown date={Date.now() + 5000} renderer={renderer} />
-                </>
-            )}
-        </>
-    );
+    console.log(auction.endAuctionTime + 360000);
+    return <>{goPayment ? <Payment auction={auction} /> : <Countdown date={auction.endAuctionTime + 360000} renderer={renderer} />}</>;
 };
 
 export default ResultForFirstBidder;

@@ -57,7 +57,7 @@ const AuctionDetail = () => {
     ) : (
         <>
             {(() => {
-                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
+                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
@@ -174,7 +174,7 @@ const AuctionDetail = () => {
 
                     </Popup> */}
 
-                    <BidModalButton auctionId={id} propertyId={propertyId} />
+                    <BidModalButton auctionId={id} propertyId={propertyId} propertyObject={data} />
                 </div>
             </div>
             <br />

@@ -5,11 +5,14 @@ import BidModal from "../index";
 import axios from "axios";
 //import { useFetchBidding } from "../../../hook/useFetch";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-
-const BidModalButton = ({ auctionId, propertyId }) => {
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
+const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     const [openModal, setOpenModal] = useState(() => {
         return false;
     });
+    const [role, setRole] = useState();
+
     const [auction, setAuction] = useState();
     const [auctionRegistration, setAuctionRegistration] = useState();
     const fetchData = async () => {
@@ -25,7 +28,23 @@ const BidModalButton = ({ auctionId, propertyId }) => {
             })
         );
     };
+    const getUser = () => {
+        var users = null;
+        const token = Cookies.get("access_token");
+        if (!token) {
+            console.log("Not authenticated");
+        }
+        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+            users = user;
+        });
+        return users;
+    };
     useEffect(() => {
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
         fetchData();
     }, []);
     console.log(auction);
@@ -35,16 +54,31 @@ const BidModalButton = ({ auctionId, propertyId }) => {
     return (
         <>
             <div>
-                <button
-                    className={styles.btn}
-                    onClick={() => {
-                        setOpenModal(true);
-                    }}
-                >
-                    {"Go to Auction"}
-                </button>
+                {(() => {
+                    if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
+                        return (
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    setOpenModal(true);
+                                }}
+                            >
+                                {"Go to Auction"}
+                            </button>
+                        );
+                    } else {
+                        return <p>Please login</p>;
+                    }
+                })()}
+
                 {openModal && (
-                    <BidModal closeModal={setOpenModal} auction={auction} auctionRegistration={auctionRegistration} propertyId={propertyId} />
+                    <BidModal
+                        closeModal={setOpenModal}
+                        auction={auction}
+                        auctionRegistration={auctionRegistration}
+                        propertyId={propertyId}
+                        propertyObject={propertyObject}
+                    />
                 )}
             </div>
         </>

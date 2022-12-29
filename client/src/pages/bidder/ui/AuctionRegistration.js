@@ -18,7 +18,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
-function AuctionRegistration({ auction }) {
+function AuctionRegistration({ auction, propertyObject }) {
     const { account, isWeb3Enabled } = useMoralis();
     const dispatch = useNotification();
     // const [bidInformation, setBidInformation] = useState();
@@ -127,7 +127,7 @@ function AuctionRegistration({ auction }) {
 
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            return <WaitingForAuctionTime auction={auction} />;
+            return <WaitingForAuctionTime auction={auction} propertyObject={propertyObject} />;
         } else {
             return (
                 <div>
@@ -137,7 +137,7 @@ function AuctionRegistration({ auction }) {
                         <div>
                             <div className={styles.info}>
                                 {/* <BiddingProperty auction={auction} property={property} /> */}
-                                <BiddingProperty />
+                                <BiddingProperty propertyObject={propertyObject} />
                                 <p className={styles.txtM}>Starting bid:</p>
                                 <p className={styles.txtNormal}>{auction.startBid}</p>
                                 {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
