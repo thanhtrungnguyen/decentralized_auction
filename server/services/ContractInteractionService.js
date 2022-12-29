@@ -50,34 +50,47 @@ const getAllAuction = async () => {
     return listAuction;
 };
 
-const getAuctionBiddingById = async (auctionId)=>{
+const getAuctionBiddingById = async (auctionId) => {
     var auction = await ContractInteractionDAO.getBiddingByAuctionId(auctionId);
     var auctionsFN = [];
     await Promise.all(
-        auction.map(async (item) =>{
+        auction.map(async (item) => {
             var auction = item._doc;
-             const registration =  await AuctionRegistrationDAO.findUserbyWallet(item.bidder);
-             const user = await UserDAO.getUserById(registration.bidderId);
-             if(registration==null){
-                 auction.bidderId = "___"
-             }else{
-                 auction.bidderId = user.user.Name;
-             }
-             
-             auction.bidAmount = parseEther(item.bidAmount);
-             auctionsFN.push(auction);
-         })
-    )
-     
-    return  auctionsFN;
-}
+            const registration = await AuctionRegistrationDAO.findUserbyWallet(item.bidder);
+            const user = await UserDAO.getUserById(registration.bidderId);
+            if (registration == null) {
+                auction.bidderId = "___";
+            } else {
+                auction.bidderId = user.user.Name;
+            }
+
+            auction.bidAmount = parseEther(item.bidAmount);
+            auctionsFN.push(auction);
+        })
+    );
+
+    return auctionsFN;
+};
 
 const CountBidding = async () => {
     const bid = await ContractInteractionDAO.CountBidding();
     return bid;
 };
+
+const getLogsByAuctionId = async (id) => {
+    return await ContractInteractionDAO.getLogsByAuctionId(id);
+};
 // const getAuctionBiddingById = async () => {
 //     var listAuction = await ContractInteractionDAO.getPlacedBidById();
 //     return listAuction;
 // };
-module.exports = { getAuctionInformationById, getRegisteredToBidById, getPlacedBidById, getHighestBidder, getAllAuction, getAuctionBiddingById, CountBidding };
+module.exports = {
+    getAuctionInformationById,
+    getRegisteredToBidById,
+    getPlacedBidById,
+    getHighestBidder,
+    getAllAuction,
+    getAuctionBiddingById,
+    CountBidding,
+    getLogsByAuctionId,
+};

@@ -23,10 +23,10 @@ import ResultForFirstBidder from "./ResultForFirstBidder";
 import ResultForSecondBidder from "./ResultForSecondBidder";
 import ResultForOtherBidders from "./ResultForOtherBidders";
 
-const SecondWaitForFirst = ({ auction, highestBid, rank }) => {
+const SecondWaitForFirst = ({ auction, highestBid, rank, accountBidInformation }) => {
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            return <ResultForSecondBidder auction={auction} highestBid={highestBid} rank={rank} />;
+            return <ResultForSecondBidder auction={auction} highestBid={highestBid} rank={rank} accountBidInformation={accountBidInformation} />;
         } else {
             return (
                 <div>

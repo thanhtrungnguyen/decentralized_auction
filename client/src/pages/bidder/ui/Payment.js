@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import { useNotification } from "web3uikit";
-import { useWeb3Contract } from "react-moralis";
+import { useMoralis, useWeb3Contract } from "react-moralis";
 import { ethers } from "ethers";
 import Countdown from "react-countdown";
 import Decimal from "decimal.js";
@@ -11,12 +11,20 @@ import BiddingProperty from "../components/BiddingProperty";
 import TransactionStatus from "../components/TransactionStatus";
 import ClosedAuction from "./ClosedAuction";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
-
+import { parseWei, parseEther } from "../../../utils/ethereumUnitConverter";
 const Payment = ({ auction, highestBid }) => {
     const dispatch = useNotification();
+    const { account, isWeb3Enabled } = useMoralis();
     const [transactionStatus, setTransactionStatus] = useState();
-
-    const amount = auction.depositAmount != null && highestBid != null ? new Decimal(highestBid).minus(auction.depositAmount).toString() : "0";
+    const [bidAmount, setBidAmount] = useState(0);
+    const { runContractFunction: getHighestBidOfAuction } = useWeb3Contract({
+        abi: CONTRACT_ABI,
+        contractAddress: CONTRACT_ADDRESS, // your contract address here
+        functionName: "getHighestBidOfAuction",
+        params: { auctionId: auction.auctionId },
+    });
+    const amount = auction.depositAmount != null && bidAmount != "0" ? new Decimal(bidAmount).minus(auction.depositAmount).toString() : "0";
+    console.log(amount);
     const {
         runContractFunction: payment,
         data,
@@ -27,11 +35,21 @@ const Payment = ({ auction, highestBid }) => {
         abi: CONTRACT_ABI,
         contractAddress: CONTRACT_ADDRESS, // your contract address here
         functionName: "payment",
-        msgValue: ethers.utils.parseUnits(amount, "ether").toString(),
+        msgValue: parseWei(amount),
         params: { auctionId: auction.auctionId },
     });
     if (error) console.log(error);
     console.log();
+    async function updateData() {
+        const amount = await getHighestBidOfAuction();
+        console.log(parseEther(amount));
+        setBidAmount(typeof amount == "object" ? parseEther(amount) : "0");
+    }
+    useEffect(() => {
+        if (isWeb3Enabled) {
+            updateData();
+        }
+    }, [isWeb3Enabled, account, bidAmount]);
 
     const handleSuccess = async (tx) => {
         try {
@@ -75,7 +93,7 @@ const Payment = ({ auction, highestBid }) => {
                         {/* <form> */}
                         <p className={styles.title}>Payment:</p>
                         <p className={styles.txtT}>Deposit Paid: {auction.depositAmount} ETH</p>
-                        <p className={styles.txtT}>Your Bid: {highestBid} ETH</p>
+                        <p className={styles.txtT}>Your Bid: {bidAmount} ETH</p>
                         <p className={styles.txtT}>
                             Total amount you must to pay:
                             {amount}

@@ -37,16 +37,16 @@ createAuction = async (
     }
 };
 
-const auctionId = "894v6ydd8";
-const startRegistrationTime = getEpoch("December 28, 2022 21:33:19");
-const endRegistrationTime = getEpoch("December 28, 2022 21:34:00");
-const startAuctionTime = getEpoch("December 28, 2022 21:34:10");
-const endAuctionTime = getEpoch("December 28, 2022 21:40:00");
+const auctionId = "dferge";
+const startRegistrationTime = getEpoch("December 29, 2022 09:28:19");
+const endRegistrationTime = getEpoch("December 29, 2022 09:30:00");
+const startAuctionTime = getEpoch("December 29, 2022 09:30:10");
+const endAuctionTime = getEpoch("December 29, 2022 09:33:00");
 const duePaymentTime = getEpoch("December 31, 2022 21:59:00");
-const registrationFee = parseWei(0.0001);
-const depositAmount = parseWei(0.02);
-const startBid = parseWei(0.05);
-const priceStep = parseWei(0.0001);
+const registrationFee = parseWei(0.00001);
+const depositAmount = parseWei(0.002);
+const startBid = parseWei(0.005);
+const priceStep = parseWei(0.00001);
 // console.log(
 //     startRegistrationTime,
 //     endRegistrationTime,
