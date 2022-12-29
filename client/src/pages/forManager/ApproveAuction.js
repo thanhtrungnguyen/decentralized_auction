@@ -42,7 +42,7 @@ const PropertyDetail = () => {
 
     const { data, loading } = useFetch(baseURL);
     const onClick = () => {
-        console.log(show);
+        //console.log(show);
 
         setShow(false);
     };
@@ -92,8 +92,8 @@ const PropertyDetail = () => {
                 }
             )
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
+                // console.log(res);
+                // console.log(res.data);
                 alert("Approve Auction successfully!!!");
                 navigate("/autionsListForManager");
             });

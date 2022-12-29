@@ -112,7 +112,7 @@ export const useFetchBidding = (url, auctionId) => {
     useEffect(() => {
         const controller = new AbortController();
         setLoading(true);
-       
+        socket.emit("send_message", {message: "message", auctionId: auctionId });
         axios
             .get(url, { signal: controller.signal })
             .then((res) => {

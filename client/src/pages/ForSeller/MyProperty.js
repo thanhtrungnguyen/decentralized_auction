@@ -65,7 +65,7 @@ const MyProperty = () => {
 
         setLoading(false);
         window.location.reload(false);
-        alert(propertyId);
+        alert("Request add successful");
     };
 
     const handleChange = (event, value) => {
