@@ -99,7 +99,7 @@
 }
 .col {
     /* position: absolute; */
-    width: 25%;
+    width: 20%;
     height: 100%;
     display: table-cell;
 }
@@ -131,7 +131,7 @@
 }
 .img2 {
     width: 85%;
-    height: 95%;
+    height: 85%;
     margin-left: 5%;
 }
 .btnF {

@@ -1,7 +1,7 @@
 const conn = require("./connectSF");
-const perPage = 10;
 
-const getAll = async (index, status, title) => {
+
+const getAll = async (index, status, title,perPage) => {
     try {
         var connection = await conn();
         var listNews,

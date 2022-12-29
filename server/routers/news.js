@@ -29,7 +29,7 @@ router.put("/updateNews/:id",upload.fields([
 
 router.put("/changeStatusNews/:id", changeStatusNews);
 
-router.get("/getAll/:index/:status/:title", getAllNews);
+router.get("/getAll/:index/:status/:title/:perPage", getAllNews);
 
 // router.get("/search", filterNews);
 

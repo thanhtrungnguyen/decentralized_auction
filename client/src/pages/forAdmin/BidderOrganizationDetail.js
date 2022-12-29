@@ -60,6 +60,7 @@ const BidderOrganizationDetail = () => {
                     <div className={styles.left}>
                         <p className={styles.title}>Organization Information</p>
                         <p className={styles.bold}>Organization Information</p>
+                        <p className={styles.txt}>Organization Name</p>
                         <p className={styles.txt}>Tax Code</p>
                         <p className={styles.txt}>Tax Code Granted Date</p>
                         <p className={styles.txt}>Tax Code Granted Place</p>
@@ -92,22 +93,23 @@ const BidderOrganizationDetail = () => {
               src={`http://localhost:8800/api/auction/images/${data.cardFront}`}
               alt="images"
             /> */}
-                        <p className={styles.bold}>Account Information</p>
+                        {/* <p className={styles.bold}>Account Information</p>
                         <p className={styles.txt}>Username</p>
-                        <p className={styles.txt}>Password</p>
+                        <p className={styles.txt}>Password</p> */}
                     </div>
                     <div className={styles.right}>
                         <p className={styles.title}>.</p>
 
                         <p className={styles.bold}>.</p>
-                        <p className={styles.txtR}>{data.contact.Last_Name__c}</p>
-                        <p className={styles.txtR}>{data.contact.Gender__c}</p>
+                        <p className={styles.txtR}>{data.account.Name}</p>
+                        <p className={styles.txtR}>{data.account.Tax_Code__c}</p>
 
-                        <p className={styles.txtR}>{data.contact.Date_Of_Birth__c}</p>
+                        <p className={styles.txtR}>{data.account.Tax_Code_Granted_Date__c}</p>
 
-                        <p className={styles.txtR}>{data.contact.Email__c}</p>
+                        <p className={styles.txtR}>{data.account.Tax_Code_Granted_Place__c}</p>
 
-                        <p className={styles.txtR}>{data.contact.Phone__c}</p>
+                        <p className={styles.txtR}>{data.account.Specific_Address__c}</p>
+                        <p className={styles.txtR}>{data.position}</p>
                         <p className={styles.bold}>.</p>
 
                         <p className={styles.txtR}>{data.contact.First_Name__c}</p>
@@ -149,10 +151,10 @@ const BidderOrganizationDetail = () => {
               alt="images"
             /> */}
                         <p className={styles.bold}>.</p>
-                        <p className={styles.txtR}>wanjala</p>
+                        {/* <p className={styles.txtR}>wanjala</p> */}
                         {/* <p className={styles.txtR}>${data.contact.username}</p> */}
 
-                        <p className={styles.txtR}>**********</p>
+                        {/* <p className={styles.txtR}>**********</p> */}
                         {/* <p className={styles.txtR}>${data.contact.password}</p> */}
                         <input type="button" value="Back" className={styles.btnCancel} onClick={cancel}></input>
                     </div>

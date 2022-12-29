@@ -46,6 +46,9 @@ const ProfileOrganization = () => {
     const handleClick = () => {
         navigate(`/editProfileOrganization/${id}`);
     };
+    const Cancel = () => {
+        navigate(`/homePage`);
+    };
     return loading ? (
         <Loading />
     ) : (
@@ -93,7 +96,7 @@ const ProfileOrganization = () => {
                     </div>
                     <div className="row">
                         <label className="label">Position</label>
-                        <input type="text" className="input" value={data.account.Name} readOnly></input>
+                        <input type="text" className="input" value={data.position} readOnly></input>
                     </div>
                     <br />
                     <br />
@@ -251,6 +254,9 @@ const ProfileOrganization = () => {
                     </div> */}
                 </div>
                 <div className="conBtn">
+                <button className="btnCancel" onClick={Cancel}>
+                            Cancel
+                        </button>
                     <button className="btn" onClick={handleClick}>
                         Edit Profile
                     </button>

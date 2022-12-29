@@ -26,7 +26,8 @@ const ListNews = () => {
     // const navigate = useNavigate();
     const [role, setRole] = useState();
 
-    var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}`;
+    const perPage = 10;
+    var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}/${perPage}`;
     // var totalURL = `http://localhost:8800/api/news/countNews`;
 
     var { data, loading } = useFetchPagination(baseURL, page);
