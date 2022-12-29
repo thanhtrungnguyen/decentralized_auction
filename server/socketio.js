@@ -21,11 +21,13 @@ module.exports = (app) => {
     if (interval) {
         clearInterval(interval);
     }
+    var auctionIdlocal;
     io.on("connection",  (socket) => {
         // socket.on("disconnect", function () {});
         
         socket.on("send_message",async (data) => {
             let highest = 0;
+            auctionIdlocal =  data.auctionId;
             await ContractInteractionService.getPlacedBidById(data.auctionId)
                 .then(async (item) => {
                     
@@ -39,7 +41,7 @@ module.exports = (app) => {
                 .catch((error) => {
                     console.error(error);
                 });
-            socket.emit("receive_message", { auction: data.auctionId ,highest:highest});
+            io.emit("receive_message", { auction: data.auctionId ,highest:highest});
         });
 
         // auctionlist = await AuctionService.getAllAuction();
@@ -131,13 +133,22 @@ module.exports = (app) => {
     });
     taskRegistrationTime.start();
     var j = 0;
-    const transaction = cron.schedule("*/3 * * * * *", async () => {
-        var bid = await ContractInteractionService.CountBidding();
-
-        if (bid != j) {
-            io.emit("count", j);
-            j = bid;
-        }
+    const transaction = cron.schedule("*/1 * * * * *", async () => {
+        let highest = 0;
+        await ContractInteractionService.getPlacedBidById(auctionIdlocal)
+                .then(async (item) => {
+                    
+                    item?.map((element) => {
+                        if (element.bidAmount > highest) {
+                            highest = element.bidAmount;
+                        }
+                    });
+                    io.emit("receive_message", { auction: auctionIdlocal ,highest:highest});
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+            
     });
     transaction.start();
     return server;

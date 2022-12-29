@@ -25,8 +25,8 @@ import io from "socket.io-client";
 function PlaceBid({ auction }) {
     const baseURLPlacedBid = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/placedBid`;
     const baseURLRegistered = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
-    const { loading: loadingPlacedBid, data: placedBid, error: errorPlacedBid } = useFetchBidding(baseURLPlacedBid);
-    const { loading: loadingRegistered, data: registered, error: errorRegistered } = useFetchBidding(baseURLRegistered);
+    const { loading: loadingPlacedBid, data: placedBid, error: errorPlacedBid } = useFetchBidding(baseURLPlacedBid,auction.auctionId);
+    const { loading: loadingRegistered, data: registered, error: errorRegistered } = useFetchBidding(baseURLRegistered,auction.auctionId);
     const dispatch = useNotification();
     const [highestBid, setHighestBid] = useState(0);
     const [inputBidAmount, setInputBidAmount] = useState("0");
@@ -61,7 +61,7 @@ function PlaceBid({ auction }) {
         // setMessageReceived(data.message);
     });
 
- 
+    
     // const checkRetractedBidder=()=>{
     //     registered?.forEach((element) => {
     //         if (element.bidder == account.toLowerCase()) {

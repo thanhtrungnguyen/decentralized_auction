@@ -62,7 +62,7 @@ function App() {
         <MoralisProvider initializeOnMount={false}>
             <NotificationProvider>
                 <BrowserRouter>
-                    <Routes>
+                    <Routes> 
                         <Route index element={<Homepage />} />
                         <Route path="login" element={<Login />} />
                         <Route path="homePage/:username" element={<Homepage />} />
