@@ -52,7 +52,7 @@ const HomePage = () => {
     }, [baseURLAuction]);
     function exportAuction(data) {
         return <>
-            {data.auctionlist.map((auction) => (
+            {/* {data.auctionlist.map((auction) => (
                 <div className={styles.col}>
                     <img className={styles.img2} src={`http://localhost:8800/api/auction/images/${auction.Properties_Media__r.records[0].Name}`} alt="images" />
                     <p className={styles.txtImg}>{auction.Auctions1__r.records[0].Name}</p>
@@ -61,22 +61,24 @@ const HomePage = () => {
                         Auction Now
                     </Link>
                 </div>
-            ))}
+            ))} */}
 
         </>
     }
     function exportNews(data) {
         return <>
-            {data.listNews.map((item) => (
+            {
+            data.listNews.map((item) => (
                 <div className={styles.col}>
-                    <img className={styles.img2} src={`http://localhost:8800/api/auction/images/${item.Avatar__c}`} alt="images" />
+                    {/* <img className={styles.img2} src={`http://localhost:8800/api/auction/images/${item.Avatar__c}`} alt="images" />
                     <p className={styles.txtImg}>{item.Name}</p>
                     {/* <p className={styles.txtImgS}>More off this less hello samlande lied much over tightly circa horse taped mightly</p> */}
                     <Link className={styles.Link} to={`/viewNews/${item.Id}`}>
                         Read more
-                    </Link>
+                    </Link> 
                 </div>
-            ))}
+            ))
+            }
 
         </>
     }
