@@ -21,8 +21,26 @@ module.exports = (app) => {
     if (interval) {
         clearInterval(interval);
     }
-    io.on("connection", async (socket) => {
-        socket.on("disconnect", function () {});
+    io.on("connection",  (socket) => {
+        // socket.on("disconnect", function () {});
+        
+        socket.on("send_message",async (data) => {
+            let highest = 0;
+            await ContractInteractionService.getPlacedBidById(data.auctionId)
+                .then(async (item) => {
+                    
+                    item?.map((element) => {
+                        if (element.bidAmount > highest) {
+                            highest = element.bidAmount;
+                        }
+                    });
+                    
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+            socket.emit("receive_message", { auction: data.auctionId ,highest:highest});
+        });
 
         // auctionlist = await AuctionService.getAllAuction();
 

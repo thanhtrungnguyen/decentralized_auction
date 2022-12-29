@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import io from "socket.io-client";
+
+
+const socket = io.connect("http://localhost:8800");
 export const useFetch = (url) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -100,7 +104,7 @@ export const useFetchPagination = (url, page) => {
     return { data, loading, error, reFetch };
 };
 
-export const useFetchBidding = (url) => {
+export const useFetchBidding = (url, auctionId) => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState();
     const [error, setError] = useState();
@@ -108,6 +112,7 @@ export const useFetchBidding = (url) => {
     useEffect(() => {
         const controller = new AbortController();
         setLoading(true);
+       
         axios
             .get(url, { signal: controller.signal })
             .then((res) => {
