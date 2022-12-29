@@ -128,7 +128,7 @@ const ResultForSecondBidder = ({ auction, highestBid, rank }) => {
             {goPayment ? (
                 <Payment auction={auction} highestBid={highestBid} />
             ) : (
-                <Countdown date={auction.endAuctionTime + 360000 * 2} renderer={renderer} />
+                <Countdown date={auction.endAuctionTime * 1000 + 360000 * 2} renderer={renderer} />
             )}
         </>
     );
