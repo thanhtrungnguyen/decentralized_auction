@@ -46,9 +46,9 @@ const NavBar = () => {
                         About us
                     </Link>
 
-                    <Link className={styles.link} to="/fakeAuctionDetail">
+                    {/* <Link className={styles.link} to="/fakeAuctionDetail">
                         FakeAuctionDetail
-                    </Link>
+                    </Link> */}
 
                     {(() => {
                         if (type === "CONTACT") {
