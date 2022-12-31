@@ -4,7 +4,7 @@ import { getAllProperties, getPropertyById, createProperty, updateProperty, dele
 export const getAllPropertiesHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllProperties()
     .then((properties) => {
-      res.status(200).json(properties);
+      res.status(200).json({ properties });
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -15,7 +15,7 @@ export const getPropertyByIdHandler = async (req: Request, res: Response, next: 
   const propertyId = req.params.propertyId;
   return await getPropertyById({ propertyId })
     .then((property) => {
-      res.status(200).json(property);
+      res.status(200).json({ property });
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -27,10 +27,10 @@ export const createPropertyHandler = async (req: Request, res: Response, next: N
   console.log(property);
   return await createProperty(property)
     .then((property) => {
-      res.status(201).json(property);
+      res.status(201).json({ property });
     })
     .catch((error) => {
-      res.status(500).json(error);
+      res.status(500).json({ error });
     });
 };
 
@@ -44,7 +44,7 @@ export const updatePropertyHandler = async (req: Request, res: Response, next: N
   return await updateProperty({ propertyId }, update, { new: true })
     .then((property) => {
       console.log(property);
-      res.status(200).json(property);
+      res.status(201).json({ property });
     })
     .catch((error) => {
       res.status(500).json({ error });
