@@ -128,7 +128,7 @@ module.exports = (app) => {
     //         //     // var duePaymentTimeFN = new Date(duePaymentTimeVN);
     //     });
     // });
-    // taskRegistrationTime.start();
+    taskRegistrationTime.start();
     var j = 0;
     const transaction = cron.schedule("*/1 * * * * *", async () => {
         let highest = 0;
