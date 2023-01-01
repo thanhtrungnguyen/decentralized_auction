@@ -10,6 +10,7 @@ const app = express();
 mongoose.set('strictQuery', false);
 mongoose
   .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
+  .then()
   .then(() => {
     logger.info('Connected to MongoDB');
     StartServer();

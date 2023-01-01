@@ -13,6 +13,7 @@ export const getAllPropertiesHandler = async (req: Request, res: Response, next:
 
 export const getPropertyByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const propertyId = req.params.propertyId;
+  console.log(propertyId);
   return await getPropertyById({ propertyId })
     .then((property) => {
       res.status(200).json({ property });
@@ -24,7 +25,6 @@ export const getPropertyByIdHandler = async (req: Request, res: Response, next: 
 
 export const createPropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const property = req.body;
-  console.log(property);
   return await createProperty(property)
     .then((property) => {
       res.status(201).json({ property });
@@ -37,6 +37,7 @@ export const createPropertyHandler = async (req: Request, res: Response, next: N
 export const updatePropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const propertyId = req.params.propertyId;
   const update = req.body;
+  console.log(update);
   const property = await getPropertyById({ propertyId });
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
