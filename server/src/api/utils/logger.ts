@@ -10,8 +10,8 @@ const logger = pino(
         ignore: 'pid,hostname'
       }
     }
-  },
-  pino.destination(`${__dirname}/logger.log`)
+  }
+  // pino.destination(`${__dirname}/logger.log`)
 );
 
 export default logger;
