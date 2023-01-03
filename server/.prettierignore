@@ -1,13 +1,7 @@
+build
 node_modules
-artifacts
-cache
-coverage*
-gasReporterOutput.json
 package.json
-img
+package-lock.json
+tsconfig.json
 .env
-.*
 README.md
-coverage.json
-deployments
-.next
