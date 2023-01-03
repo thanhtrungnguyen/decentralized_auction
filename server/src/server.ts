@@ -1,16 +1,17 @@
 import express from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import logger from './api/utils/logger';
 import { config } from './config/config';
 import routes from './api/routes';
+import swaggerDocs from './api/utils/swagger';
 
 const app = express();
 
 mongoose.set('strictQuery', false);
 mongoose
   .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
-  .then()
   .then(() => {
     logger.info('Connected to MongoDB');
     StartServer();
@@ -30,25 +31,22 @@ const StartServer = () => {
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    if (req.method == 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-      return res.status(200).json({});
-    }
-    next();
-  });
+  app.use(cors());
 
   app.use('/api', routes);
+
+  swaggerDocs(app, config.server.port);
 
   app.use((req, res, next) => {
     const error = new Error('Not found');
     logger.error(error);
     res.status(404).json({
+      name: error.name,
       message: error.message
     });
   });
-  http.createServer(app).listen(config.server.port, () => logger.info(`Server is running on port ${config.server.port}`));
+
+  http.createServer(app).listen(config.server.port, async () => {
+    logger.info(`Server is running at http://localhost:${config.server.port}`);
+  });
 };
