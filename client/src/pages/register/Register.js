@@ -11,7 +11,7 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
+import FooterCopy from "../../components/footer/FooterCopy";
 // import ReactDOM from "react-dom/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
@@ -357,6 +357,7 @@ const Register = () => {
                 </form>
             </div>
             <Footer />
+            <FooterCopy />
         </>
     );
 };

@@ -5,7 +5,6 @@ const PageName = ({ home, pageName, link }) => {
     return (
         <>
             <div className={styles.header}>
-                <p className={styles.pageName}>{pageName}</p>
                 <div className={styles.Link}>
                     <Link className={styles.txt} to={`/${home}`}>
                         Home
