@@ -10,6 +10,7 @@ const CLUSTER_NAME = process.env.CLUSTER_NAME || 'cluster0.42nd0b2.mongodb.net';
 const MONGO_URL = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${CLUSTER_NAME}/${MONGO_DATABASE_NAME}`;
 
 const SERVER_PORT = process.env.SERVER_PORT ? Number(process.env.SERVER_PORT) : 4000;
+const CLIENT_ADDRESS = process.env.CLIENT ? process.env.CLIENT : 'http://localhost:3000';
 
 // const SUPPORT_CHAINS = ["5"];
 const CHAIN_ID = '5';
@@ -25,6 +26,9 @@ export const config = {
   },
   server: {
     port: SERVER_PORT
+  },
+  client: {
+    address: CLIENT_ADDRESS
   },
   contract: {
     address: CONTRACT_ADDRESS,

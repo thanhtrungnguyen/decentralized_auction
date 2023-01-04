@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import crypto from 'crypto';
+import { IUserDocument } from './User';
 
 export interface IOrganization {
   name: string;
@@ -7,7 +8,7 @@ export interface IOrganization {
   taxCodeGrantedDate: string;
   taxCodeGrantedPlace: string;
   address: string;
-  user: string;
+  user: IUserDocument['_id'];
 }
 
 export interface IOrganizationDocument extends IOrganization, Document {
@@ -17,7 +18,6 @@ export interface IOrganizationDocument extends IOrganization, Document {
 
 const organizationSchema: Schema = new Schema(
   {
-    organizationId: { type: String, required: true, unique: true, default: crypto.randomUUID() },
     name: { type: String, required: true },
     taxCodeGrantedDate: { type: String, required: true },
     taxCodeGrantedPlace: { type: String, required: true },

@@ -1,9 +1,11 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import crypto from 'crypto';
+import { IIndividualDocument } from './Individual';
+import { IOrganizationDocument } from './Organization';
 
 export interface IRepresentative {
-  individual: string;
-  organization: string;
+  individual: IIndividualDocument['_id'];
+  organization: IOrganizationDocument['_id'];
   position: string;
 }
 
@@ -21,6 +23,6 @@ const representativeSchema: Schema = new Schema(
   { timestamps: true, versionKey: false }
 );
 
-const Representative = mongoose.model<IRepresentativeDocument>('Representative', representativeSchema);
+const Representative = mongoose.model<IRepresentativeDocument>('Representative', representativeSchema, 'Representative');
 
 export default Representative;

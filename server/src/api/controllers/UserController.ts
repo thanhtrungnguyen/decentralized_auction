@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from '../services/UserService';
+import { getAllUsers, findUser, createUser, updateUser, deleteUser } from '../services/UserService';
 
 export const getAllUsersHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllUsers()
@@ -13,7 +13,7 @@ export const getAllUsersHandler = async (req: Request, res: Response, next: Next
 
 export const getUserByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
-  return await getUserById({ userId })
+  return await findUser({ userId })
     .then((user) => {
       res.status(200).json({ user });
     })
@@ -23,12 +23,16 @@ export const getUserByIdHandler = async (req: Request, res: Response, next: Next
 };
 
 export const createUserHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const user = req.body;
-  return await createUser(user)
-    .then((user) => {
+  const createUserData = req.body;
+  const user = await findUser({ username: createUserData.username });
+  if (user) {
+    return res.status(400).json({ message: 'Username has been exist!' });
+  }
+  return await createUser(createUserData)
+    .then((user: any) => {
       res.status(201).json({ user });
     })
-    .catch((error) => {
+    .catch((error: any) => {
       res.status(500).json({ error });
     });
 };
@@ -36,7 +40,7 @@ export const createUserHandler = async (req: Request, res: Response, next: NextF
 export const updateUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
   const update = req.body;
-  const user = await getUserById({ userId });
+  const user = await findUser({ userId });
   if (!user) {
     return res.status(404).json({ message: "User isn't found" });
   }
@@ -51,7 +55,7 @@ export const updateUserHandler = async (req: Request, res: Response, next: NextF
 
 export const deleteUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
-  const user = await getUserById({ userId });
+  const user = await findUser({ userId });
   if (!user) {
     return res.status(404).json({ message: "User isn't found" });
   }

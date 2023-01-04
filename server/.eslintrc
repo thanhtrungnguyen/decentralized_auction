@@ -4,7 +4,6 @@
   "rules": {
     // turn on errors for missing imports
     "import/no-unresolved": "error",
-
     "prettier/prettier": "error",
     "no-unused-vars": "warn",
     "no-console": "off",

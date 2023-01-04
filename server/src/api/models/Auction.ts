@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import crypto from 'crypto';
+import { IUserDocument } from './User';
 
 export interface IAuction {
   name: string;
@@ -13,7 +14,7 @@ export interface IAuction {
   startBid: Date;
   priceStep: Date;
   status: string;
-  idUser: string;
+  user: IUserDocument['_id'];
 }
 
 export interface IAuctionDocument extends IAuction, Document {
@@ -23,7 +24,6 @@ export interface IAuctionDocument extends IAuction, Document {
 
 const auctionSchema: Schema = new Schema(
   {
-    auctionId: { type: String, required: true, unique: true, default: crypto.randomUUID() },
     name: { type: String, required: true },
     description: { type: String, required: true },
     status: { type: String, required: true },
@@ -38,6 +38,6 @@ const auctionSchema: Schema = new Schema(
   { timestamps: true, versionKey: false }
 );
 
-const Auction = mongoose.model<IAuctionDocument>('Auction', auctionSchema);
+const Auction = mongoose.model<IAuctionDocument>('Auction', auctionSchema, 'Auction');
 
 export default Auction;

@@ -6,14 +6,16 @@ import logger from './api/utils/logger';
 import { config } from './config/config';
 import routes from './api/routes';
 import swaggerDocs from './api/utils/swagger';
+import connectMongo from './api/utils/connectMongo';
 
 const app = express();
 
-mongoose.set('strictQuery', false);
-mongoose
-  .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
+// mongoose.set('strictQuery', false);
+// mongoose
+//   .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
+//   .then()
+connectMongo()
   .then(() => {
-    logger.info('Connected to MongoDB');
     StartServer();
   })
   .catch((error) => {
@@ -29,9 +31,15 @@ const StartServer = () => {
     next();
   });
 
+  app.use(
+    cors({
+      origin: config.client.address,
+      methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+      credentials: true
+    })
+  );
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-  app.use(cors());
 
   app.use('/api', routes);
 

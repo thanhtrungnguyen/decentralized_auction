@@ -1,7 +1,8 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { IPropertyDocument } from './Property';
 
 export interface IPropertyMedia {
-  property: string;
+  property: IPropertyDocument['_id'];
   mediaUrl: string;
 }
 

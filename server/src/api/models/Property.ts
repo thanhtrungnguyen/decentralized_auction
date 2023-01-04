@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import crypto from 'crypto';
+import { IUserDocument } from './User';
 
 export interface IProperty {
   name: string;
@@ -12,7 +13,7 @@ export interface IProperty {
   startViewPropertyTime: Date;
   endViewPropertyTime: Date;
   idCategory: string;
-  idUser: string;
+  user: IUserDocument['_id'];
 }
 
 export interface IPropertyDocument extends IProperty, Document {
@@ -22,7 +23,6 @@ export interface IPropertyDocument extends IProperty, Document {
 
 const propertySchema: Schema = new Schema(
   {
-    propertyId: { type: String, required: true, unique: true, default: crypto.randomUUID() },
     name: { type: String, required: true },
     description: { type: String, required: true },
     status: { type: String, required: true },
@@ -33,7 +33,7 @@ const propertySchema: Schema = new Schema(
     startViewPropertyTime: { type: Date, required: true },
     endViewPropertyTime: { type: Date, required: true },
     category: { type: Schema.Types.ObjectId, required: true, ref: 'Category' },
-    idUser: { type: String, required: true }
+    user: { type: Schema.Types.ObjectId, required: true, ref: 'User' }
   },
   { timestamps: true, versionKey: false }
 );

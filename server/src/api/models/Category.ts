@@ -13,7 +13,6 @@ export interface ICategoryDocument extends ICategory, Document {
 
 const categorySchema: Schema = new Schema(
   {
-    categoryId: { type: String, required: true, unique: true, default: crypto.randomUUID() },
     name: { type: String, required: true },
     status: { type: String, required: true }
   },

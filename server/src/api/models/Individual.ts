@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import crypto from 'crypto';
+import { IUserDocument } from './User';
 
 export interface IIndividual {
   firstName: string;
@@ -16,7 +17,7 @@ export interface IIndividual {
   cardGrantedPlace: string;
   frontSideImage: string;
   backSideImage: string;
-  user: string;
+  user: IUserDocument['_id'];
 }
 
 export interface IIndividualDocument extends IIndividual, Document {
@@ -26,7 +27,6 @@ export interface IIndividualDocument extends IIndividual, Document {
 
 const individualSchema: Schema = new Schema(
   {
-    individualId: { type: String, required: true, unique: true, default: crypto.randomUUID() },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     phone: { type: String, required: true },
