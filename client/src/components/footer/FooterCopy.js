@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <>
             <div className="footer">
-                <label className="txt">©Webecy - All Rights Reserved</label>
+                <label className="txt">@CopyRight - All Rights Reserved</label>
                 <div className="LinkIcon">
                     <a className="icon" href={"https://www.facebook.com/DecentralizedAuctionPlatform"}>
                         <BsFacebook />

@@ -1,71 +1,55 @@
 .header {
     width: 100%;
     height: 44px;
-    background: #2f1ac4;
+    background: #ffffff;
     position: relative;
 }
-
+hr {
+    background: #fafafb;
+    margin: 0;
+    padding: 0;
+}
 .select {
-    font-family: "Josefin Sans";
+    font-family: "Poppins";
     font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 16px;
-    /* identical to box height */
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
 
-    color: #f1f1f1;
-    background: #2f1ac4;
-    margin-left: 67%;
+    color: #262626;
+    background: #ffffff;
+    /* margin-left: 67%; */
     margin-top: 9px;
     position: relative;
+    float: right;
 }
 
 .link {
-    font-family: "Josefin Sans";
+    font-family: "Poppins";
     font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 16px;
-    /* identical to box height */
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    margin-top: 7px;
 
-    color: #f1f1f1;
+    color: #262626;
+    float: right;
     text-decoration: none;
-    margin-left: 30px;
+    margin-right: 240px;
     position: relative;
 }
 
-.txt {
-    font-family: "Josefin Sans";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 16px;
-    /* identical to box height */
-
-    color: #f1f1f1;
-    margin-left: 80px;
-    margin-right: 10px;
-    margin-top: 9px;
-    position: relative;
+.left {
+    height: 100%;
+    width: 100%;
+    /* float: right; */
 }
-
 .icon {
-    width: 30px;
-    height: 30px;
-    /* background: #ffffff; */
-    margin-left: 30px;
-    margin-top: 6px;
-
-    color: #ffffff;
-    position: absolute;
-}
-.icon2 {
-    width: 30px;
-    height: 30px;
-    /* background: #ffffff; */
-    margin-left: 70px;
-    margin-top: 6px;
-
-    color: #ffffff;
-    position: absolute;
+    position: relative;
+    float: right;
+    margin-top: 7px;
+    margin-left: 50px;
+    margin-right: 10px;
+    width: 26px;
+    height: 26px;
 }

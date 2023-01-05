@@ -16,6 +16,7 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Loading from "../../components/loading/Loading";
 import BidModal from "../bidder/index";
 import BidModalButton from "../bidder/components/BidModalButton";
+import PageName from "../../components/header/PageName";
 
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
@@ -64,16 +65,12 @@ const AuctionDetail = () => {
                 }
             })()}
             <NavBar />
-            <div className={styles.container}>
+            <PageName pageName={"Auction Detail"} link={"auctionDetail"} home={"homePage"} />
+
+            {/* <div className={styles.container}>
                 <div className={styles.col1}>
-                    {/* <div className={styles.col1}> */}
                     <div className={styles.col3}>
                         <div className={styles.row}>
-                            {/* <img
-              className={styles.img}
-              src="https://www.w3schools.com/html/pic_trulli.jpg"
-              alt="images"
-            /> */}
                             <img
                                 className={styles.img}
                                 src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
@@ -81,11 +78,6 @@ const AuctionDetail = () => {
                             />
                         </div>
                         <div className={styles.row}>
-                            {/* <img
-              className={styles.img}
-              src="https://www.w3schools.com/html/pic_trulli.jpg"
-              alt="images"
-            /> */}
                             <img
                                 className={styles.img}
                                 src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
@@ -93,11 +85,6 @@ const AuctionDetail = () => {
                             />
                         </div>
                         <div className={styles.row}>
-                            {/* <img
-              className={styles.img}
-              src="https://www.w3schools.com/html/pic_trulli.jpg"
-              alt="images"
-            /> */}
                             <img
                                 className={styles.img}
                                 src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
@@ -105,26 +92,8 @@ const AuctionDetail = () => {
                             />
                         </div>
                     </div>
-                    {/* </div> */}
-                    {/* <div className={styles.col2}> */}
-                    {/* <div className={styles.conI}> */}
-                    {/* <img
-            className={styles.img}
-            src="https://www.w3schools.com/html/pic_trulli.jpg"
-            alt="images"
-          /> */}
+
                     <div className={styles.col4}>
-                        {/* <img
-              className={styles.img2}
-              src={`${data.MediaURL[2]}`}
-              alt="images"
-            /> */}
-                        {/* <ReactPlayer
-              className={styles.video}
-              url="youtube.com/watch?v=LuQ2YQ87ucw"
-              width="85%"
-              height="90%"
-            /> */}
                         <ReactPlayer
                             className={styles.video}
                             url={`${data.Properties_Media__r.records[3].Name}`}
@@ -137,17 +106,7 @@ const AuctionDetail = () => {
                             width="85%"
                             height="90%"
                         />
-                        {/* <Player
-              playsInline
-              className={styles.video}
-              poster={`${data.MediaURL[1]}`}
-              ="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
-              width="85%"
-              height="90%"
-            /> */}
                     </div>
-                    {/* </div> */}
-                    {/* </div> */}
                 </div>
                 <div className={styles.col2}>
                     <p className={styles.title}>{data.Name}</p>
@@ -168,11 +127,6 @@ const AuctionDetail = () => {
                         Auction End Time :{" "}
                         {new Date(new Date(data.Auctions1__r.records[0].End_Auction_Time__c).getTime() - 7 * 60 * 60 * 1000).toLocaleString()}
                     </p>
-                    {/* </div> */}
-                    {/* <Popup trigger={<button className={styles.btn}>Place Bid</button>} position="right center">
-                        <PlaceABid sendAuction={data} />
-
-                    </Popup> */}
 
                     <BidModalButton auctionId={id} propertyId={propertyId} propertyObject={data} />
                 </div>
@@ -208,7 +162,7 @@ const AuctionDetail = () => {
                         <p className={styles.txtImgS}>Starting price : $43.00</p>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <Footer />
         </>
     );

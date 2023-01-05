@@ -13,7 +13,10 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import io from "socket.io-client";
 import Loading from "../../components/loading/Loading";
-
+import PageName from "../../components/header/PageName";
+import { AiOutlineSearch, AiOutlineFieldTime } from "react-icons/ai";
+import MultiRangeSlider from "multi-range-slider-react";
+import "./styles.css";
 const AuctionList = () => {
     const [page, setPage] = React.useState(1);
     // const [buttonPopup, setButtonPopup] = useState(false);
@@ -29,12 +32,18 @@ const AuctionList = () => {
     const [name2, setName2] = useState(null);
     const [checkedState, setCheckedState] = useState([false, false, false]);
     const baseURLAuction = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
-    const [change,setChange] = useState(null);
+    const [change, setChange] = useState(null);
     const statusList = [
         { name: "Auction Upcoming", value: 2 },
         { name: "Auction Bidding", value: 3 },
         { name: "Auction Closed", value: 4 },
     ];
+    const [minValue, set_minValue] = useState(25);
+    const [maxValue, set_maxValue] = useState(75);
+    const handleInput = (e) => {
+        set_minValue(e.minValue);
+        set_maxValue(e.maxValue);
+    };
     // useEffect(() => {
     //     axios.get(baseURL).then((resp) => {
     //         console.log(resp.data);
@@ -73,7 +82,7 @@ const AuctionList = () => {
             setLoading(false);
         };
         fetchData();
-    }, [change,baseURLAuction]);
+    }, [change, baseURLAuction]);
     socket.on("data", (item) => {
         if (item !== change) {
             setChange(item);
@@ -100,9 +109,9 @@ const AuctionList = () => {
         setStatus(total);
     };
     const handleSort = (e) => {
-        setSort(e.target.value)
-        setPage(1)
-    }
+        setSort(e.target.value);
+        setPage(1);
+    };
 
     //   useEffect(()=>{
     //     const fetchData = async ()=>{
@@ -118,9 +127,9 @@ const AuctionList = () => {
     //     fetchData();
     //   },[]);
 
-    return loading ? (
+    return !loading ? (
         <Loading />
-    ) :  (
+    ) : (
         <>
             {(() => {
                 if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
@@ -130,8 +139,301 @@ const AuctionList = () => {
                 }
             })()}
             <NavBar />
+            <PageName pageName={"Auction List"} link={"auctionList"} home={"homePage"} />
 
-            <div className={styles.nav}>
+            <div className={styles.container}>
+                <div className={styles.nav}>
+                    <div className={styles.conSearch}>
+                        <input className={styles.ip} type="text" placeholder="Enter keyword"></input>
+                        <AiOutlineSearch className={styles.icon} />
+                    </div>
+                    <div className={styles.category}>
+                        <p className={styles.title}>Category</p>
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                    </div>
+                    <div className={styles.category}>
+                        <p className={styles.title}>Start Bid</p>
+                        <p className={styles.label}>
+                            Ranger: {minValue}ETH - {maxValue}ETH
+                        </p>
+                        <MultiRangeSlider
+                            className={styles.m}
+                            min={0}
+                            max={100}
+                            step={5}
+                            minValue={minValue}
+                            maxValue={maxValue}
+                            onInput={(e) => {
+                                handleInput(e);
+                            }}
+                        />
+                        <br />
+                    </div>
+                    <div className={styles.category}>
+                        <p className={styles.title}>Status</p>
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                        <label className={styles.label}>Nike</label>
+                        <label className={styles.num}>2</label>
+                        <br />
+                        <br />
+                    </div>
+                    <div className={styles.category}>
+                        <button className={styles.btn}>Apply</button>
+                    </div>
+                </div>
+                <div className={styles.content}>
+                    <div className={styles.info}>
+                        <label className={styles.label2}>13 Items</label>
+                        <label className={styles.label3}>Sort By</label>
+                        <select className={styles.select} onChange={(e) => handleSort(e)}>
+                            <option value="1" selected={sort === "1"}>
+                                All
+                            </option>
+                            <option value="2" selected={sort === "2"}>
+                                Start Bid Ascending
+                            </option>
+                            <option value="3" selected={sort === "3"}>
+                                Start Bid Descending
+                            </option>
+                            <option value="3" selected={sort === "4"}>
+                                Registration Time Ascending
+                            </option>
+                            <option value="3" selected={sort === "5"}>
+                                Registration Time Descending
+                            </option>
+                            <option value="3" selected={sort === "6"}>
+                                Newest
+                            </option>
+                        </select>
+                    </div>
+                    <div className={styles.auctions}>
+                        <div className={styles.auction}>
+                            <img
+                                className={styles.img}
+                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                            />
+                            <p className={styles.name}>Auction Name</p>
+                            <p className={styles.price}>299,43 ETH</p>
+                            <br />
+                            <br />
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <br />
+                            <br />
+                            <br />
+                            <button className={styles.btnDetail}>Detail</button>
+                        </div>
+                        <div className={styles.auction}>
+                            <img
+                                className={styles.img}
+                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                            />
+                            <p className={styles.name}>Auction Name</p>
+                            <p className={styles.price}>299,43 ETH</p>
+                            <br />
+                            <br />
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <br />
+                            <br />
+                            <br />
+                            <button className={styles.btnDetail}>Detail</button>
+                        </div>
+                        <div className={styles.auction}>
+                            <img
+                                className={styles.img}
+                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                            />
+                            <p className={styles.name}>Auction Name</p>
+                            <p className={styles.price}>299,43 ETH</p>
+                            <br />
+                            <br />
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <br />
+                            <br />
+                            <br />
+                            <button className={styles.btnDetail}>Detail</button>
+                        </div>
+                        <div className={styles.auction}>
+                            <img
+                                className={styles.img}
+                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                            />
+                            <p className={styles.name}>Auction Name</p>
+                            <p className={styles.price}>299,43 ETH</p>
+                            <br />
+                            <br />
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <br />
+                            <br />
+                            <br />
+                            <button className={styles.btnDetail}>Detail</button>
+                        </div>
+                        <div className={styles.auction}>
+                            <img
+                                className={styles.img}
+                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                            />
+                            <p className={styles.name}>Auction Name</p>
+                            <p className={styles.price}>299,43 ETH</p>
+                            <br />
+                            <br />
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <br />
+                            <br />
+                            <br />
+                            <button className={styles.btnDetail}>Detail</button>
+                        </div>
+                        <div className={styles.auction}>
+                            <img
+                                className={styles.img}
+                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                            />
+                            <p className={styles.name}>Auction Name</p>
+                            <p className={styles.price}>299,43 ETH</p>
+                            <br />
+                            <br />
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <br />
+                            <br />
+                            <br />
+                            <button className={styles.btnDetail}>Detail</button>
+                        </div>
+                        <div className={styles.auction}>
+                            <img
+                                className={styles.img}
+                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                            />
+                            <p className={styles.name}>Auction Name</p>
+                            <p className={styles.price}>299,43 ETH</p>
+                            <br />
+                            <br />
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <br />
+                            <br />
+                            <br />
+                            <button className={styles.btnDetail}>Detail</button>
+                        </div>
+                        <div className={styles.auction}>
+                            <img
+                                className={styles.img}
+                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                            />
+                            <p className={styles.name}>Auction Name</p>
+                            <p className={styles.price}>299,43 ETH</p>
+                            <br />
+                            <br />
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <p className={styles.time}>
+                                <AiOutlineFieldTime className={styles.i} />
+                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
+                            </p>
+                            <br />
+                            <br />
+                            <br />
+                            <button className={styles.btnDetail}>Detail</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* <div className={styles.nav}>
                 <label className={styles.txtTitle}>Artwork & Upcoming Auction</label>
                 <div className={styles.floatRight}>
                     <label className={styles.txtBlue}>Sort by:</label>
@@ -312,7 +614,8 @@ const AuctionList = () => {
                         />
                     </div>
                 </div>
-            </section>
+            </section> */}
+
             <Footer />
         </>
     );

@@ -4,73 +4,29 @@ import { BsSearch } from "react-icons/bs";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
-
+import img from "../../imgs/logo.png";
 const NavBar = () => {
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-    const [type, setType] = useState("");
-    const [id, setId] = useState();
-    useEffect(() => {
-        if (getUser() != null) {
-            setType(getUser().type);
-            setId(getUser().id);
-        } else {
-            setType("");
-        }
-    }, []);
     return (
         <>
             <div className={styles.container}>
                 <div className={styles.navbar}>
+                    <img className={styles.logo} src={img} />
                     <label className={styles.dap}>DAP</label>
-                    <Link className={styles.home} to="/">
-                        Home
-                    </Link>
 
-                    <Link className={styles.link} to="/auctionList">
-                        Auctions
-                    </Link>
-                    <Link className={styles.link} to="/news">
-                        News
-                    </Link>
-                    <Link className={styles.link} to="/aboutUs">
-                        About us
-                    </Link>
+                    <div className={styles.right}>
+                        <Link className={styles.home} to="/homePage">
+                            HOME
+                        </Link>
 
-                    {/* <Link className={styles.link} to="/fakeAuctionDetail">
-                        FakeAuctionDetail
-                    </Link> */}
-
-                    {(() => {
-                        if (type === "CONTACT") {
-                            return (
-                                <Link className={styles.link} to={`/profile/${id}`}>
-                                    Profile
-                                </Link>
-                            );
-                        } else if (type === "ACCOUNT") {
-                            return (
-                                <Link className={styles.link} to={`/profileOrganization/${id}`}>
-                                    Profile
-                                </Link>
-                            );
-                        } else {
-                            return <></>;
-                        }
-                    })()}
-
-                    <div className={styles.flright}>
-                        <input className={styles.ip} type="text"></input>
-                        <BsSearch className={styles.icon} />
+                        <Link className={styles.link} to="/auctionList">
+                            AUCTIONS
+                        </Link>
+                        <Link className={styles.link} to="/news">
+                            NEWS
+                        </Link>
+                        <Link className={styles.link} to="/aboutUs">
+                            ABOUT US
+                        </Link>
                     </div>
                 </div>
             </div>

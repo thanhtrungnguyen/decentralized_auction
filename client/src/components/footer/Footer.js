@@ -29,6 +29,7 @@ const Footer = () => {
                     <p className={styles.txt}>?????</p>
                 </div>
             </div>
+            <hr />
         </>
     );
 };

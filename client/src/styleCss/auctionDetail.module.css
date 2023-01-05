@@ -1,4 +1,4 @@
-.container {
+/* .container {
     position: relative;
     width: 1100px;
     height: 509px;
@@ -21,31 +21,24 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
-    /* identical to box height, or 143% */
-
-    /* Gray_02/100 */
-
-    color: #ffffff;
+    /color: #ffffff;
 }
 .col1 {
     position: absolute;
     width: 50%;
     height: 100%;
     float: left;
-    /* display: table-cell; */
 }
 .col3 {
     position: absolute;
     width: 30%;
     height: 100%;
     float: left;
-    /* display: table-cell; */
 }
 .col2 {
     width: 50%;
     height: 100%;
-    /* display: table-cell; */
-    /* padding: 1rem; */
+
     padding: 10px;
     float: right;
     position: relative;
@@ -53,8 +46,7 @@
 .col4 {
     width: 70%;
     height: 100%;
-    /* display: table-cell; */
-    /* padding: 1rem; */
+
     padding: 10px;
     float: right;
     position: relative;
@@ -91,11 +83,8 @@
     font-weight: 400;
     font-size: 24px;
     line-height: 24px;
-    /* identical to box height */
 
     text-decoration-line: underline;
-
-    /* Text */
 
     color: #151875;
 }
@@ -105,9 +94,6 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 20px;
-    /* identical to box height */
-
-    /* sale tage coloe */
 
     color: #3f509e;
 
@@ -142,7 +128,6 @@
     position: absolute;
 }
 .col {
-    /* position: absolute; */
     width: 25%;
     height: 100%;
     display: table-cell;
@@ -163,10 +148,10 @@
     margin-left: 5%;
 }
 .img:hover {
-    transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    transform: scale(1.2);
 }
 .img2:hover {
-    transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    transform: scale(1.2);
 }
 .title {
     font-family: "Josefin Sans";
@@ -180,14 +165,12 @@
     position: relative;
     width: 700px;
     height: 400px;
-    /* left: 50%;
-  margin-left: -350px; */
+
     font-family: "Josefin Sans";
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 29px;
-    /* or 181% */
 
     color: #000000;
 }
@@ -197,11 +180,8 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 29px;
-    /* identical to box height, or 181% */
 
     text-transform: capitalize;
-
-    /* Text */
 
     color: #151875;
 }
@@ -212,7 +192,6 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 28px;
-    /* or 175% */
 
     color: #9295aa;
 }
@@ -222,9 +201,6 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 16px;
-    /* identical to box height */
-
-    /* Text */
 
     color: #151875;
     margin: 10%;
@@ -235,10 +211,7 @@
     font-weight: 400;
     font-size: 13px;
     line-height: 13px;
-    /* identical to box height */
-
-    /* Text */
 
     color: #151875;
     margin: 10%;
-}
+} */

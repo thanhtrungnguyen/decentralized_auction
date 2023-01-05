@@ -62,7 +62,7 @@ function App() {
         <MoralisProvider initializeOnMount={false}>
             <NotificationProvider>
                 <BrowserRouter>
-                    <Routes> 
+                    <Routes>
                         <Route index element={<Homepage />} />
                         <Route path="login" element={<Login />} />
                         <Route path="homePage/:username" element={<Homepage />} />
@@ -70,6 +70,7 @@ function App() {
                         <Route path="register" element={<Register />} />
                         <Route path="registerForO" element={<RegisterForO />} />
                         <Route path="auctionDetail/:id/:propertyId" element={<AuctionDetail />} />
+                        <Route path="auctionDetail" element={<AuctionDetail />} />
                         <Route path="auctionList" element={<AuctionList />} />
                         <Route path="*" element={<ErrorPage />} />
                         <Route path="placeABid" element={<PlaceABid />} />
