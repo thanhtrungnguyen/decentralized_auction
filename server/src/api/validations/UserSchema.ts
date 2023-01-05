@@ -7,5 +7,11 @@ export const UserSchema = {
     password: Joi.string().trim().required()
     //     status: Joi.string().trim().required()
     //     role: Joi.string().trim().required()
+  }).unknown(),
+  login: Joi.object<IUser>({
+    username: Joi.string().trim().required(),
+    password: Joi.string().trim().required()
+    //     status: Joi.string().trim().required()
+    //     role: Joi.string().trim().required()
   }).unknown()
 };

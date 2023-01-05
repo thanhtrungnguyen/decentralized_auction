@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-const authUser = (req: Request, res: Response, next: NextFunction) => {
+const requireUser = (req: Request, res: Response, next: NextFunction) => {
   if (res.locals.user == null) {
     return res.sendStatus(403);
   }
@@ -16,4 +16,4 @@ const authUser = (req: Request, res: Response, next: NextFunction) => {
 //   };
 // };
 
-export {  authUser };
+export { requireUser };
