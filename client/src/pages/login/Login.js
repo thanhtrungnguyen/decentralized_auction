@@ -155,6 +155,7 @@ const Login = () => {
                         <img
                             className={styles.img}
                             src="https://assets.theedgemarkets.com/CC8_PropertiesAuction_TEM1360_20210309141323_theedgemarkets.jpg?s4zjV1d2tX8f3s3TAw4hfjvyDyJM21mP"
+                            alt="img"
                         />
                     </div>
                 </form>
