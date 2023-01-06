@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get('/individuals', getAllIndividualsHandler);
 router.get('/:individualId', getIndividualByIdHandler);
-router.post('/create', validateResource(IndividualSchema.create), validateResource(UserSchema.create), createIndividualHandler);
+router.post('/create', validateResource(IndividualSchema.create), validateResource(UserSchema.createBidder), createIndividualHandler);
 router.patch('/update/:individualId', updateIndividualHandler);
 router.delete('/delete/:individualId', deleteIndividualHandler);
 

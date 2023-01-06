@@ -14,7 +14,7 @@ export interface ICategoryDocument extends ICategory, Document {
 const categorySchema: Schema = new Schema(
   {
     name: { type: String, required: true },
-    status: { type: Boolean, required: true }
+    status: { type: Boolean, required: true, default: true }
   },
   { timestamps: true, versionKey: false }
 );
