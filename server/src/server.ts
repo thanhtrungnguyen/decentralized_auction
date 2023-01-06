@@ -1,6 +1,5 @@
 import express from 'express';
 import http from 'http';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import logger from './api/utils/logger';
 import { config } from './config/config';
@@ -10,19 +9,15 @@ import connectMongo from './api/utils/connectMongo';
 
 const app = express();
 
-// mongoose.set('strictQuery', false);
-// mongoose
-//   .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
-//   .then()
 connectMongo()
   .then(() => {
-    StartServer();
+    startServer();
   })
   .catch((error) => {
     logger.error(error);
   });
 
-const StartServer = () => {
+const startServer = () => {
   app.use((req, res, next) => {
     logger.info(`Incoming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
     res.on('finish', () => {
@@ -38,6 +33,7 @@ const StartServer = () => {
       credentials: true
     })
   );
+
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
