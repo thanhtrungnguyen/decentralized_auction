@@ -17,14 +17,23 @@ import Loading from "../../components/loading/Loading";
 import BidModal from "../bidder/index";
 import BidModalButton from "../bidder/components/BidModalButton";
 import PageName from "../../components/header/PageName";
-
+import FooterCopy from "../../components/footer/FooterCopy";
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
     const { id, propertyId } = useParams();
     const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
     const { data, loading, error } = useFetch(baseURL);
     const [role, setRole] = useState();
-
+    let img1 = "https://unboxph3a1e0.zapwp.com/q:intelligent/r:0/wp:1/w:1/u:https://unbox.ph/wp-content/uploads/2011/09/Nike-Air-Mag-3-1200x742.jpeg";
+    let img2 = "https://footwearnews.com/wp-content/uploads/2017/10/nike-mag-heritage-auctions7.jpg?w=700&h=437&crop=1";
+    let img3 = "https://myshoes.vn/image/catalog/blog/25.12/giay-nike-air-mag.jpg";
+    const [img, setImg] = useState(img1);
+    const setShow = (e) => {
+        const { id, value } = e.target;
+        if (id === "img1") setImg(img1);
+        if (id === "img2") setImg(img2);
+        if (id === "img3") setImg(img3);
+    };
     console.log(data);
     console.log(loading);
     const getUser = () => {
@@ -67,6 +76,94 @@ const AuctionDetail = () => {
             <NavBar />
             <PageName pageName={"Auction Detail"} link={"auctionDetail"} home={"homePage"} />
 
+            <div className={styles.container}>
+                <div className={styles.con}>
+                    <div className={styles.info}>
+                        <div className={styles.media}>
+                            <img src={img} alt="thumb" className={styles.show}></img>
+                            <div className={styles.choose}>
+                                <img id="img1" src={img1} alt="thumb" className={styles.img} onClick={(e) => setShow(e)}></img>
+                                <img id="img2" src={img2} alt="thumb" className={styles.img} onClick={(e) => setShow(e)}></img>
+                                <img id="img3" src={img3} className={styles.img} alt="thumb" onClick={(e) => setShow(e)}></img>
+                            </div>
+                        </div>
+                        <div className={styles.content}>
+                            <p className={styles.title}>Nike Airmax 270 React</p>
+                            <br />
+                            <br />
+                            <hr className={styles.hr} />
+                            <p className={styles.price}>299,43 ETH</p>
+                            <p className={styles.time}>Start Registration Time : 09:00:00 - 31/12/2022</p>
+                            <p className={styles.time}>End Registration Time : 09:00:00 - 31/12/2022</p>
+                            <p className={styles.time}> Auction Start Time : 09:00:00 - 31/12/2022</p>
+                            <p className={styles.time}> Auction End Time : 09:00:00 - 31/12/2022</p>
+                            <br />
+                            <br />
+                            <br />
+                            <hr className={styles.hr} />
+                            <br />
+                            <br />
+
+                            <button className={styles.btn}>Place Bid</button>
+                        </div>
+                    </div>
+                    <div className={styles.video}>
+                        <ReactPlayer
+                            className={styles.video}
+                            url="https://www.youtube.com/watch?v=NimGxU4Qnhk"
+                            playing={true}
+                            controls={true}
+                            loop={true}
+                            muted={true}
+                            playsinline={true}
+                            // onReady={true}
+                            width="85%"
+                            height="90%"
+                        />
+                    </div>
+                </div>
+                <div className={styles.des}>
+                    <br />
+                    <p className={styles.price}>Description</p>
+                    <hr />
+                    <p className={styles.text}>
+                        air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and scrunched the
+                        sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one of my favorites.air
+                        max are always very comfortable fit, clean and just perfect in every way. just the box was too small and scrunched the
+                        sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one of my favorites.air
+                        max are always very comfortable fit, clean and just perfect in every way. just the box was too small and
+                    </p>
+                </div>
+                <p className={styles.related}>RELATED AUCTIONS</p>
+                <div className={styles.auctions}>
+                    <div className={styles.auction}>
+                        <img id="img1" src={img1} alt="thumb" className={styles.image} onClick={(e) => setShow(e)}></img>
+                        <p className={styles.t}>Nike Air Max 270 React</p>
+                        <p className={styles.price2}>299,43 ETH</p>
+                        <button className={styles.btn2}>Place Bid</button>
+                    </div>
+                    <div className={styles.auction}>
+                        <img id="img1" src={img2} alt="thumb" className={styles.image} onClick={(e) => setShow(e)}></img>
+                        <p className={styles.t}>Nike Air Max 270 React</p>
+                        <p className={styles.price2}>299,43 ETH</p>
+                        <button className={styles.btn2}>Place Bid</button>
+                    </div>
+                    <div className={styles.auction}>
+                        <img id="img1" src={img3} alt="thumb" className={styles.image} onClick={(e) => setShow(e)}></img>
+                        <p className={styles.t}>Nike Air Max 270 React</p>
+                        <p className={styles.price2}>299,43 ETH</p>
+                        <button className={styles.btn2}>Place Bid</button>
+                    </div>
+                    <div className={styles.auction}>
+                        <img id="img1" src={img1} alt="thumb" className={styles.image} onClick={(e) => setShow(e)}></img>
+                        <p className={styles.t}>Nike Air Max 270 React</p>
+                        <p className={styles.price2}>299,43 ETH</p>
+                        <button className={styles.btn2}>Place Bid</button>
+                    </div>
+                </div>
+            </div>
+            <Footer />
+            <FooterCopy />
             {/* <div className={styles.container}>
                 <div className={styles.col1}>
                     <div className={styles.col3}>
@@ -163,7 +260,6 @@ const AuctionDetail = () => {
                     </div>
                 </div>
             </div> */}
-            <Footer />
         </>
     );
 };
