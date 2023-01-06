@@ -36,7 +36,7 @@ const AddProperty = () => {
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
     const navigate = useNavigate();
-    const baseURL = "http://localhost:8800/api/category/";
+    const baseURL = "http://localhost:5000/api/category/properties";
     const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
     useEffect(() => {
@@ -239,8 +239,8 @@ const AddProperty = () => {
                                     placeholder="Category"
                                     defaultValue="Chair"
                                 >
-                                    {data.map((item) => (
-                                        <option value={item.Name}>{item.Name}</option>
+                                    {data?.categories.map((item) => (
+                                        <option value={item.name}>{item.name}</option>
                                     ))}
                                 </select>
                                 <input

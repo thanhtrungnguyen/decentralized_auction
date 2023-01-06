@@ -17,7 +17,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\server\\server.js"
+            "preLaunchTask": "tsc: build - server/tsconfig.json",
+            "program": "${workspaceFolder}\\server\\src\\server.ts"
         },
         {
             "type": "node-terminal",
