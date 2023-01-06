@@ -12,7 +12,7 @@ const getAllAuctions = async () => {
 
 const getAuctionById = async (filter: FilterQuery<IAuctionDocument>, options: QueryOptions = { lean: true }) => {
   try {
-    return await Auction.findOne(filter, {}, options);
+    return await Auction.findOne(filter, {}, options).populate('property');
   } catch (error) {
     logger.error(error);
   }

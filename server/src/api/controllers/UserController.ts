@@ -13,7 +13,7 @@ export const getAllUsersHandler = async (req: Request, res: Response, next: Next
 
 export const getUserByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
-  return await findUser({ userId })
+  return await findUser({ _id: userId })
     .then((user) => {
       res.status(200).json({ user });
     })
@@ -40,11 +40,11 @@ export const createUserHandler = async (req: Request, res: Response, next: NextF
 export const updateUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
   const update = req.body;
-  const user = await findUser({ userId });
+  const user = await findUser({ _id: userId });
   if (!user) {
     return res.status(404).json({ message: "User isn't found" });
   }
-  return await updateUser({ userId }, update, { new: true })
+  return await updateUser({ _id: userId }, update, { new: true })
     .then((user) => {
       res.status(201).json({ user });
     })
@@ -55,7 +55,7 @@ export const updateUserHandler = async (req: Request, res: Response, next: NextF
 
 export const deleteUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
-  const user = await findUser({ userId });
+  const user = await findUser({ _id: userId });
   if (!user) {
     return res.status(404).json({ message: "User isn't found" });
   }

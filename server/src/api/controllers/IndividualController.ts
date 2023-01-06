@@ -47,11 +47,11 @@ export const createIndividualHandler = async (req: Request, res: Response, next:
 export const updateIndividualHandler = async (req: Request, res: Response, next: NextFunction) => {
   const individualId = req.params.individualId;
   const update = req.body;
-  const individual = await getIndividualById({ individualId });
+  const individual = await getIndividualById({ _id: individualId });
   if (!individual) {
     return res.status(404).json({ message: "Individual isn't found" });
   }
-  return await updateIndividual({ individualId }, update, { new: true })
+  return await updateIndividual({ _id: individualId }, update, { new: true })
     .then((individual) => {
       res.status(201).json({ individual });
     })
@@ -62,11 +62,11 @@ export const updateIndividualHandler = async (req: Request, res: Response, next:
 
 export const deleteIndividualHandler = async (req: Request, res: Response, next: NextFunction) => {
   const individualId = req.params.individualId;
-  const individual = await getIndividualById({ individualId });
+  const individual = await getIndividualById({ _id: individualId });
   if (!individual) {
     return res.status(404).json({ message: "Individual isn't found" });
   }
-  return await deleteIndividual({ individualId })
+  return await deleteIndividual({ _id: individualId })
     .then((individual) => {
       res.status(201).json({ individual, message: 'Deleted individual' });
     })

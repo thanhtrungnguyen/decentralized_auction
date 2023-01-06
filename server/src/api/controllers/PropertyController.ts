@@ -15,7 +15,7 @@ export const getAllPropertiesHandler = async (req: Request, res: Response, next:
 
 export const getPropertyByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const propertyId = req.params.propertyId;
-  return await getPropertyById({ propertyId })
+  return await getPropertyById({ _id: propertyId })
     .then((property) => {
       res.status(200).json({ property });
     })
@@ -43,11 +43,11 @@ export const createPropertyHandler = async (req: Request, res: Response, next: N
 export const updatePropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const propertyId = req.params.propertyId;
   const update = req.body;
-  const property = await getPropertyById({ propertyId });
+  const property = await getPropertyById({ _id: propertyId });
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
-  return await updateProperty({ propertyId }, update, { new: true })
+  return await updateProperty({ _id: propertyId }, update, { new: true })
     .then((property) => {
       res.status(201).json({ property });
     })
@@ -58,11 +58,11 @@ export const updatePropertyHandler = async (req: Request, res: Response, next: N
 
 export const deletePropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const propertyId = req.params.propertyId;
-  const property = await getPropertyById({ propertyId });
+  const property = await getPropertyById({ _id: propertyId });
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
-  return await deleteProperty({ propertyId })
+  return await deleteProperty({ _id: propertyId })
     .then((property) => {
       res.status(201).json({ property, message: 'Deleted property' });
     })

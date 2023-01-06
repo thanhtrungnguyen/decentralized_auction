@@ -9,7 +9,7 @@ import {
 // import { Schema, ValidateResource } from '../middleware/validateResource';
 const router = express.Router();
 
-router.get('/properties', getAllCategoriesHandler);
+router.get('/categories', getAllCategoriesHandler);
 router.get('/:categoryId', getCategoryByIdHandler);
 router.post('/create', createCategoryHandler);
 router.patch('/update/:categoryId', updateCategoryHandler);

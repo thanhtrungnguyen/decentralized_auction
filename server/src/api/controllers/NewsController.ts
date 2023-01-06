@@ -13,7 +13,7 @@ export const getAllNewsHandler = async (req: Request, res: Response, next: NextF
 
 export const getNewsByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const newsId = req.params.newsId;
-  return await getNewsById({ newsId })
+  return await getNewsById({ _id: newsId })
     .then((news) => {
       res.status(200).json({ news });
     })
@@ -36,11 +36,11 @@ export const createNewsHandler = async (req: Request, res: Response, next: NextF
 export const updateNewsHandler = async (req: Request, res: Response, next: NextFunction) => {
   const newsId = req.params.newsId;
   const update = req.body;
-  const news = await getNewsById({ newsId });
+  const news = await getNewsById({ _id: newsId });
   if (!news) {
     return res.status(404).json({ message: "News isn't found" });
   }
-  return await updateNews({ newsId }, update, { new: true })
+  return await updateNews({ _id: newsId }, update, { new: true })
     .then((news) => {
       res.status(201).json({ news });
     })
@@ -51,11 +51,11 @@ export const updateNewsHandler = async (req: Request, res: Response, next: NextF
 
 export const deleteNewsHandler = async (req: Request, res: Response, next: NextFunction) => {
   const newsId = req.params.newsId;
-  const news = await getNewsById({ newsId });
+  const news = await getNewsById({ _id: newsId });
   if (!news) {
     return res.status(404).json({ message: "News isn't found" });
   }
-  return await deleteNews({ newsId })
+  return await deleteNews({ _id: newsId })
     .then((news) => {
       res.status(201).json({ news, message: 'Deleted news' });
     })
