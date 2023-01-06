@@ -4,7 +4,7 @@ import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/auctionList.module.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // import Popup from "reactjs-popup";
 // import PlaceABid from "../../components/popups/PlaceABid";
 import Pagination from "@mui/material/Pagination";
@@ -33,6 +33,7 @@ const AuctionList = () => {
     const [checkedState, setCheckedState] = useState([false, false, false]);
     const baseURLAuction = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
     const [change, setChange] = useState(null);
+    const [categories, setCategories] = useState([]);
     const statusList = [
         { name: "Auction Upcoming", value: 2 },
         { name: "Auction Bidding", value: 3 },
@@ -44,14 +45,6 @@ const AuctionList = () => {
         set_minValue(e.minValue);
         set_maxValue(e.maxValue);
     };
-    // useEffect(() => {
-    //     axios.get(baseURL).then((resp) => {
-    //         console.log(resp.data);
-    //         console.log("axios get");
-    //         setData(resp.data);
-    //         socket.off();
-    //     });
-    // }, [status]);
     const [role, setRole] = useState();
 
     const getUser = () => {
@@ -65,15 +58,34 @@ const AuctionList = () => {
         });
         return users;
     };
+    // get All Category
+    useEffect(() => {
+        async function fetchPostList() {
+            setLoading(true);
+            await axios.get(`http://localhost:5000/api/category/categories`)
+                .then((resp) => {
+                    setCategories(resp.data);
+                    console.log(resp.data);
+                    console.log("axios get");
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+            setLoading(false);
+        }
+        fetchPostList()
+    }, []);
+    // get List Auction 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await axios.get(baseURLAuction).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setData(resp.data);
-                socket.off();
-            });
+            await axios.get(baseURLAuction)
+                .then((resp) => {
+                    setData(resp.data);
+                    // console.log(resp.data);
+                    // console.log("axios get");
+                    socket.off();
+                });
             if (getUser() != null) {
                 setRole(getUser().role);
             } else {
@@ -104,10 +116,14 @@ const AuctionList = () => {
             if (currentState === true) {
                 return sum + statusList[index].value;
             }
+            console.log(sum)
             return sum;
         }, null);
         setStatus(total);
     };
+    const handleApplyFilter = () => {
+
+    }
     const handleSort = (e) => {
         setSort(e.target.value);
         setPage(1);
@@ -127,7 +143,7 @@ const AuctionList = () => {
     //     fetchData();
     //   },[]);
 
-    return !loading ? (
+    return loading ? (
         <Loading />
     ) : (
         <>
@@ -149,38 +165,14 @@ const AuctionList = () => {
                     </div>
                     <div className={styles.category}>
                         <p className={styles.title}>Category</p>
-                        <label className={styles.label}>Nike</label>
-                        <label className={styles.num}>2</label>
-                        <br />
-                        <br />
-                        <label className={styles.label}>Nike</label>
-                        <label className={styles.num}>2</label>
-                        <br />
-                        <br />
-                        <label className={styles.label}>Nike</label>
-                        <label className={styles.num}>2</label>
-                        <br />
-                        <br />
-                        <label className={styles.label}>Nike</label>
-                        <label className={styles.num}>2</label>
-                        <br />
-                        <br />
-                        <label className={styles.label}>Nike</label>
-                        <label className={styles.num}>2</label>
-                        <br />
-                        <br />
-                        <label className={styles.label}>Nike</label>
-                        <label className={styles.num}>2</label>
-                        <br />
-                        <br />
-                        <label className={styles.label}>Nike</label>
-                        <label className={styles.num}>2</label>
-                        <br />
-                        <br />
-                        <label className={styles.label}>Nike</label>
-                        <label className={styles.num}>2</label>
-                        <br />
-                        <br />
+                        {categories.categories.map((item) => {
+                            return <>
+                                <label className={styles.label}>{item.name}</label>
+                                <label className={styles.num}>{categories.categories.length}</label>
+                                <br />
+                                <br />
+                            </>
+                        })}
                     </div>
                     <div className={styles.category}>
                         <p className={styles.title}>Start Bid</p>
@@ -202,29 +194,27 @@ const AuctionList = () => {
                     </div>
                     <div className={styles.category}>
                         <p className={styles.title}>Status</p>
-                        <label className={styles.label}>Nike</label>
+                        <label className={styles.label}>Registration Time </label>
                         <label className={styles.num}>2</label>
                         <br />
                         <br />
-                        <label className={styles.label}>Nike</label>
+                        <label className={styles.label}>Upcoming For Bidding</label>
                         <label className={styles.num}>2</label>
                         <br />
                         <br />
-                        <label className={styles.label}>Nike</label>
+                        <label className={styles.label}>Bidding</label>
                         <label className={styles.num}>2</label>
                         <br />
                         <br />
-                        <label className={styles.label}>Nike</label>
+                        <label className={styles.label}>Auction Closed</label>
                         <label className={styles.num}>2</label>
                         <br />
                         <br />
-                        <label className={styles.label}>Nike</label>
-                        <label className={styles.num}>2</label>
-                        <br />
-                        <br />
+
+
                     </div>
                     <div className={styles.category}>
-                        <button className={styles.btn}>Apply</button>
+                        <button className={styles.btn} onClick={handleApplyFilter}>Apply</button>
                     </div>
                 </div>
                 <div className={styles.content}>
@@ -257,6 +247,7 @@ const AuctionList = () => {
                             <img
                                 className={styles.img}
                                 src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                                alt="img"
                             />
                             <p className={styles.name}>Auction Name</p>
                             <p className={styles.price}>299,43 ETH</p>
@@ -430,6 +421,13 @@ const AuctionList = () => {
                             <button className={styles.btnDetail}>Detail</button>
                         </div>
                     </div>
+                    <Pagination
+                        className={styles.pagi}
+                        count={Math.ceil(10 / 5)}
+                        page={page}
+                        onChange={handleChange}
+                        hidden={data.total === 0}
+                    />
                 </div>
             </div>
 

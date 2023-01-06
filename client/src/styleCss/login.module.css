@@ -9,28 +9,34 @@
     margin-bottom: 100px;
     margin-top: 30px;
 }
+
 i {
     /* position: absolute; */
     top: 38%;
     right: 16%;
 }
+
 .ce {
     margin-top: 30px;
     margin-left: 10px;
 }
+
 i:hover {
     color: #00fcb6;
     cursor: pointer;
 }
+
 .group2 {
     position: absolute;
     width: 433px;
     height: 374px;
     margin: 50px;
 }
+
 .hide {
     display: flex;
 }
+
 .textField {
     box-sizing: border-box;
     width: 432px;
@@ -50,6 +56,7 @@ i:hover {
     color: #9096b2;
     text-decoration: none;
 }
+
 .box {
     width: 70%;
     padding-left: 20%;
@@ -57,6 +64,7 @@ i:hover {
     margin-bottom: 10%;
     margin-top: 5%;
 }
+
 .btnSignIn {
     width: 432px;
     height: 47px;
@@ -81,24 +89,28 @@ i:hover {
     text-align: center;
     color: #000000;
 }
+
 .col {
     width: 100%;
     height: 100%;
     position: relative;
     background: #ffffff;
 }
+
 .col1 {
     width: 50%;
     height: 100%;
     float: left;
     position: relative;
 }
+
 .col2 {
     width: 50%;
     height: 100%;
     float: right;
     position: relative;
 }
+
 .wel {
     font-family: "Overpass";
     font-style: normal;
@@ -115,6 +127,7 @@ i:hover {
     margin-top: 100px;
     margin-left: 100px;
 }
+
 .don {
     font-family: "Nunito";
     font-style: normal;
@@ -130,6 +143,7 @@ i:hover {
 
     color: #444b59;
 }
+
 .sig {
     font-family: "Nunito";
     font-style: normal;
@@ -144,6 +158,7 @@ i:hover {
 
     color: #8699da;
 }
+
 .use {
     font-family: "Nunito";
     font-style: normal;
@@ -155,7 +170,9 @@ i:hover {
 
     color: #444b59;
 }
+
 .ip {
+    padding-left: 32px;
     width: 640px;
     height: 81px;
 
@@ -179,6 +196,7 @@ i:hover {
     /* blue/ 1 9 */
     color: #000000;
 }
+
 .forget {
     font-family: "Nunito";
     font-style: normal;
@@ -192,6 +210,7 @@ i:hover {
     text-decoration: none;
     color: #8699da;
 }
+
 .btn {
     width: 640px;
     height: 80px;
@@ -213,6 +232,7 @@ i:hover {
 
     color: #ffffff;
 }
+
 ::placeholder {
     font-family: "Nunito";
     font-style: normal;
@@ -226,16 +246,20 @@ i:hover {
     /* blue/ 1 9 */
     color: #c8d3f9;
 }
+
 .eye {
+    margin-left: 32px;
     width: 32px;
     height: 32px;
     color: #9eb0ea;
 }
+
 .conLink {
     margin-top: 40px;
 
     width: 100%;
 }
+
 .L {
     font-family: "Nunito";
     font-style: normal;
@@ -251,11 +275,13 @@ i:hover {
     margin-left: 50px;
     margin-right: 50px;
 }
+
 .i {
     width: 30px;
     height: 30px;
     position: absolute;
 }
+
 .img {
     width: 960px;
     height: 850px;
