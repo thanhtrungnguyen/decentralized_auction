@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import { getCategoryById } from '../services/CategoryService';
 import { getAllProperties, getPropertyById, createProperty, updateProperty, deleteProperty } from '../services/PropertyService';
+import { findUser } from '../services/UserService';
 
 export const getAllPropertiesHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllProperties()
@@ -24,7 +26,12 @@ export const getPropertyByIdHandler = async (req: Request, res: Response, next: 
 
 export const createPropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const property = req.body;
-  return await createProperty(property)
+  const category = await getCategoryById({ _id: req.body.category });
+  if (!category) return res.status(404).json({ message: 'Category not found' });
+  const user = await findUser({ _id: req.body.user });
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  return await createProperty({ ...property, user: user._id, category: category._id })
     .then((property) => {
       res.status(201).json({ property });
     })

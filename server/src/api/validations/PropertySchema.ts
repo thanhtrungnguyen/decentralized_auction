@@ -13,5 +13,5 @@ export const PropertySchema = {
     // startViewPropertyTime: Date;
     // endViewPropertyTime: Date;
     // idUser: string;
-  })
+  }).unknown()
 };

@@ -1,31 +1,28 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        
-        {
-            "name": "Launch Chrome",
-            "request": "launch",
-            "type": "chrome",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}\\client"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "envFile": "${workspaceFolder}\\server\\.env",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}\\server\\server.js"
-        },
-        {
-            "type": "node-terminal",
-            "name": "Run Script: start",
-            "request": "launch",
-            "command": "npm run start",
-            "cwd": "${workspaceFolder}\\parse-server-migration"
-        }
-
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}\\client"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program Server",
+      "envFile": "${workspaceFolder}\\server\\.env",
+      "skipFiles": ["<node_internals>/**"],
+      "preLaunchTask": "tsc: build - server/tsconfig.json",
+      "program": "${workspaceFolder}\\server\\src\\server.ts"
+    },
+    {
+      "type": "node-terminal",
+      "name": "Run Script: start",
+      "request": "launch",
+      "command": "npm run start",
+      "cwd": "${workspaceFolder}\\parse-server-migration"
+    }
+  ]
 }

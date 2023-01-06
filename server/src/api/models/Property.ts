@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import crypto from 'crypto';
 import { IUserDocument } from './User';
+import { ICategoryDocument } from './Category';
 
 export interface IProperty {
   name: string;
@@ -12,7 +13,7 @@ export interface IProperty {
   placeViewProperty: string;
   startViewPropertyTime: Date;
   endViewPropertyTime: Date;
-  idCategory: string;
+  category: ICategoryDocument['_id'];
   user: IUserDocument['_id'];
 }
 
