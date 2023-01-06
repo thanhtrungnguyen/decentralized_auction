@@ -12,7 +12,7 @@ import Loading from "../../components/loading/Loading";
 import axios from "axios";
 
 const HomePage = () => {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [status, setStatus] = useState(5);
     const [price, setPrice] = useState(null);
@@ -28,28 +28,28 @@ const HomePage = () => {
     const baseURLAuction = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURLAuction).then((resp) => {
-                // console.log(resp.data);
-                // console.log("axios get");
-                setDataAuction(resp.data);
-            });
-            await axios.get(baseURL).then((resp) => {
-                // console.log(resp.data);
-                // console.log("axios get");
-                setDataNews(resp.data);
-            });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURLAuction]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         await axios.get(baseURLAuction).then((resp) => {
+    //             // console.log(resp.data);
+    //             // console.log("axios get");
+    //             setDataAuction(resp.data);
+    //         });
+    //         await axios.get(baseURL).then((resp) => {
+    //             // console.log(resp.data);
+    //             // console.log("axios get");
+    //             setDataNews(resp.data);
+    //         });
+    //         if (getUser() != null) {
+    //             setRole(getUser().role);
+    //         } else {
+    //             setRole("");
+    //         }
+    //         setLoading(false);
+    //     };
+    //     fetchData();
+    // }, [baseURLAuction]);
     function exportAuction(data) {
         return <>
             {data.auctionlist.map((auction) => (
@@ -131,7 +131,7 @@ const HomePage = () => {
                     <p className={styles.titleBule}>Featured Auctions</p>
                     <div className={styles.RelatedAuctions}>
                         <div className={styles.tb}>
-                            {exportAuction(dataAuction)}
+                            {/* {exportAuction(dataAuction)} */}
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@ const HomePage = () => {
                     <p className={styles.titleBule}>Leatest News</p>
                     <div className={styles.RelatedAuctions}>
                         <div className={styles.tb}>
-                            {exportNews(dataNews)}
+                            {/* {exportNews(dataNews)} */}
                         </div>
                     </div>
                 </div>

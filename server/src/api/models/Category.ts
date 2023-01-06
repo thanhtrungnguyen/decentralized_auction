@@ -3,7 +3,7 @@ import crypto from 'crypto';
 
 export interface ICategory {
   name: string;
-  status: string;
+  status: boolean;
 }
 
 export interface ICategoryDocument extends ICategory, Document {
@@ -14,7 +14,7 @@ export interface ICategoryDocument extends ICategory, Document {
 const categorySchema: Schema = new Schema(
   {
     name: { type: String, required: true },
-    status: { type: String, required: true }
+    status: { type: Boolean, required: true }
   },
   { timestamps: true, versionKey: false }
 );
