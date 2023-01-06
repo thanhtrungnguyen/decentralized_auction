@@ -10,7 +10,7 @@ const getAllCategories = async () => {
   }
 };
 
-const getCategoryById = async (filter: FilterQuery<ICategoryDocument>, options: QueryOptions = { lean: true }) => {
+const getCategory = async (filter: FilterQuery<ICategoryDocument>, options: QueryOptions = { lean: true }) => {
   try {
     return await Category.findOne(filter, {}, options);
   } catch (error) {
@@ -42,4 +42,4 @@ const deleteCategory = async (filter: FilterQuery<ICategory>) => {
   }
 };
 
-export { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory };
+export { getAllCategories, getCategory, createCategory, updateCategory, deleteCategory };

@@ -10,7 +10,7 @@ const getAllNews = async () => {
   }
 };
 
-const getNewsById = async (filter: FilterQuery<INewsDocument>, options: QueryOptions = { lean: true }) => {
+const getNews = async (filter: FilterQuery<INewsDocument>, options: QueryOptions = { lean: true }) => {
   try {
     return await News.findOne(filter, {}, options);
   } catch (error) {
@@ -42,4 +42,4 @@ const deleteNews = async (filter: FilterQuery<INews>) => {
   }
 };
 
-export { getAllNews, getNewsById, createNews, updateNews, deleteNews };
+export { getAllNews, getNews, createNews, updateNews, deleteNews };

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { getAllAuctions, getAuctionById, createAuction, updateAuction, deleteAuction } from '../services/AuctionService';
-import { getPropertyById } from '../services/PropertyService';
+import { getAllAuctions, getAuction, createAuction, updateAuction, deleteAuction } from '../services/AuctionService';
+import { getProperty } from '../services/PropertyService';
 
 export const getAllAuctionsHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllAuctions()
@@ -14,7 +14,7 @@ export const getAllAuctionsHandler = async (req: Request, res: Response, next: N
 
 export const getAuctionByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const auctionId = req.params.auctionId;
-  return await getAuctionById({ _id: auctionId })
+  return await getAuction({ _id: auctionId })
     .then((auction) => {
       res.status(200).json({ auction });
     })
@@ -26,7 +26,7 @@ export const getAuctionByIdHandler = async (req: Request, res: Response, next: N
 export const createAuctionHandler = async (req: Request, res: Response, next: NextFunction) => {
   const auction = req.body;
   const propertyId = req.body.property;
-  const property = await getPropertyById({ _id: propertyId });
+  const property = await getProperty({ _id: propertyId });
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
@@ -44,12 +44,12 @@ export const updateAuctionHandler = async (req: Request, res: Response, next: Ne
   const update = req.body;
   const propertyId = req.body.property;
 
-  const auction = await getAuctionById({ _id: auctionId });
+  const auction = await getAuction({ _id: auctionId });
   if (!auction) {
     return res.status(404).json({ message: "Auction isn't found" });
   }
 
-  const property = await getPropertyById({ _id: propertyId });
+  const property = await getProperty({ _id: propertyId });
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
@@ -64,7 +64,7 @@ export const updateAuctionHandler = async (req: Request, res: Response, next: Ne
 
 export const deleteAuctionHandler = async (req: Request, res: Response, next: NextFunction) => {
   const auctionId = req.params.auctionId;
-  const auction = await getAuctionById({ _id: auctionId });
+  const auction = await getAuction({ _id: auctionId });
   if (!auction) {
     return res.status(404).json({ message: "Auction isn't found" });
   }

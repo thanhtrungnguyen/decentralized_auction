@@ -10,7 +10,7 @@ const getAllIndividuals = async () => {
   }
 };
 
-const getIndividualById = async (filter: FilterQuery<IIndividualDocument>, options: QueryOptions = { lean: true }) => {
+const getIndividual = async (filter: FilterQuery<IIndividualDocument>, options: QueryOptions = { lean: true }) => {
   try {
     return await Individual.findOne(filter, {}, options).populate('user');
   } catch (error) {
@@ -42,4 +42,4 @@ const deleteIndividual = async (filter: FilterQuery<IIndividual>) => {
   }
 };
 
-export { getAllIndividuals, getIndividualById, createIndividual, updateIndividual, deleteIndividual };
+export { getAllIndividuals, getIndividual, createIndividual, updateIndividual, deleteIndividual };

@@ -10,7 +10,7 @@ const getAllRepresentatives = async () => {
   }
 };
 
-const getRepresentativeById = async (filter: FilterQuery<IRepresentativeDocument>, options: QueryOptions = { lean: true }) => {
+const getRepresentative = async (filter: FilterQuery<IRepresentativeDocument>, options: QueryOptions = { lean: true }) => {
   try {
     return await Representative.findOne(filter, {}, options);
   } catch (error) {
@@ -46,4 +46,4 @@ const deleteRepresentative = async (filter: FilterQuery<IRepresentative>) => {
   }
 };
 
-export { getAllRepresentatives, getRepresentativeById, createRepresentative, updateRepresentative, deleteRepresentative };
+export { getAllRepresentatives, getRepresentative, createRepresentative, updateRepresentative, deleteRepresentative };

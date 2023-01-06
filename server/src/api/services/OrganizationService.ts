@@ -10,7 +10,7 @@ const getAllOrganizations = async () => {
   }
 };
 
-const getOrganizationById = async (filter: FilterQuery<IOrganizationDocument>, options: QueryOptions = { lean: true }) => {
+const getOrganization = async (filter: FilterQuery<IOrganizationDocument>, options: QueryOptions = { lean: true }) => {
   try {
     return await Organization.findOne(filter, {}, options);
   } catch (error) {
@@ -42,4 +42,4 @@ const deleteOrganization = async (filter: FilterQuery<IOrganization>) => {
   }
 };
 
-export { getAllOrganizations, getOrganizationById, createOrganization, updateOrganization, deleteOrganization };
+export { getAllOrganizations, getOrganization, createOrganization, updateOrganization, deleteOrganization };

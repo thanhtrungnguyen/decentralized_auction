@@ -10,7 +10,7 @@ const getAllAuctions = async () => {
   }
 };
 
-const getAuctionById = async (filter: FilterQuery<IAuctionDocument>, options: QueryOptions = { lean: true }) => {
+const getAuction = async (filter: FilterQuery<IAuctionDocument>, options: QueryOptions = { lean: true }) => {
   try {
     return await Auction.findOne(filter, {}, options).populate('property');
   } catch (error) {
@@ -42,4 +42,4 @@ const deleteAuction = async (filter: FilterQuery<IAuction>) => {
   }
 };
 
-export { getAllAuctions, getAuctionById, createAuction, updateAuction, deleteAuction };
+export { getAllAuctions, getAuction, createAuction, updateAuction, deleteAuction };

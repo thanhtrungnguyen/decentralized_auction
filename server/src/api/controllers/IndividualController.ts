@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getAllIndividuals, getIndividualById, createIndividual, updateIndividual, deleteIndividual } from '../services/IndividualService';
+import { getAllIndividuals, getIndividual, createIndividual, updateIndividual, deleteIndividual } from '../services/IndividualService';
 import { createUser, findUser } from '../services/UserService';
 
 export const getAllIndividualsHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +14,7 @@ export const getAllIndividualsHandler = async (req: Request, res: Response, next
 
 export const getIndividualByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const individualId = req.params.individualId;
-  return await getIndividualById({ _id: individualId })
+  return await getIndividual({ _id: individualId })
     .then((individual) => {
       res.status(200).json({ individual });
     })
@@ -31,6 +31,18 @@ export const createIndividualHandler = async (req: Request, res: Response, next:
   if (user) {
     return res.status(401).json({ message: 'Username has been exist!' });
   }
+  const existEmailIndividual = await getIndividual({ email: req.body.email });
+  if (existEmailIndividual) {
+    return res.status(401).json({ message: 'Email has been exist!' });
+  }
+  const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
+  if (existPhoneIndividual) {
+    return res.status(401).json({ message: 'Phone has been exist!' });
+  }
+  const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
+  if (existCardNumberIndividual) {
+    return res.status(401).json({ message: 'Card Number has been exist!' });
+  }
   const userCreated: any = await createUser({ ...createUserData, role: 'bidder' });
   if (userCreated._id) {
     return await createIndividual({ ...createIndividualData, user: userCreated._id })
@@ -41,13 +53,12 @@ export const createIndividualHandler = async (req: Request, res: Response, next:
         res.status(500).json({ error });
       });
   }
-  res.status(401).json({ message: 'Created fail!' });
 };
 
 export const updateIndividualHandler = async (req: Request, res: Response, next: NextFunction) => {
   const individualId = req.params.individualId;
   const update = req.body;
-  const individual = await getIndividualById({ _id: individualId });
+  const individual = await getIndividual({ _id: individualId });
   if (!individual) {
     return res.status(404).json({ message: "Individual isn't found" });
   }
@@ -62,7 +73,7 @@ export const updateIndividualHandler = async (req: Request, res: Response, next:
 
 export const deleteIndividualHandler = async (req: Request, res: Response, next: NextFunction) => {
   const individualId = req.params.individualId;
-  const individual = await getIndividualById({ _id: individualId });
+  const individual = await getIndividual({ _id: individualId });
   if (!individual) {
     return res.status(404).json({ message: "Individual isn't found" });
   }

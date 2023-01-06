@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import {
   getAllRepresentatives,
-  getRepresentativeById,
+  getRepresentative,
   createRepresentative,
   updateRepresentative,
   deleteRepresentative
@@ -19,7 +19,7 @@ export const getAllRepresentativesHandler = async (req: Request, res: Response, 
 
 export const getRepresentativeByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const representativeId = req.params.representativeId;
-  return await getRepresentativeById({ representativeId })
+  return await getRepresentative({ representativeId })
     .then((representative) => {
       res.status(200).json({ representative });
     })
@@ -42,7 +42,7 @@ export const createRepresentativeHandler = async (req: Request, res: Response, n
 export const updateRepresentativeHandler = async (req: Request, res: Response, next: NextFunction) => {
   const representativeId = req.params.representativeId;
   const update = req.body;
-  const representative = await getRepresentativeById({ representativeId });
+  const representative = await getRepresentative({ representativeId });
   if (!representative) {
     return res.status(404).json({ message: "Representative isn't found" });
   }
@@ -57,7 +57,7 @@ export const updateRepresentativeHandler = async (req: Request, res: Response, n
 
 export const deleteRepresentativeHandler = async (req: Request, res: Response, next: NextFunction) => {
   const representativeId = req.params.representativeId;
-  const representative = await getRepresentativeById({ representativeId });
+  const representative = await getRepresentative({ representativeId });
   if (!representative) {
     return res.status(404).json({ message: "Representative isn't found" });
   }

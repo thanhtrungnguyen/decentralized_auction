@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory } from '../services/CategoryService';
+import { getAllCategories, getCategory, createCategory, updateCategory, deleteCategory } from '../services/CategoryService';
 
 export const getAllCategoriesHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllCategories()
@@ -13,7 +13,7 @@ export const getAllCategoriesHandler = async (req: Request, res: Response, next:
 
 export const getCategoryByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const categoryId = req.params.categoryId;
-  return await getCategoryById({ _id: categoryId })
+  return await getCategory({ _id: categoryId })
     .then((category) => {
       res.status(200).json({ category });
     })
@@ -36,7 +36,7 @@ export const createCategoryHandler = async (req: Request, res: Response, next: N
 export const updateCategoryHandler = async (req: Request, res: Response, next: NextFunction) => {
   const categoryId = req.params.categoryId;
   const update = req.body;
-  const category = await getCategoryById({ _id: categoryId });
+  const category = await getCategory({ _id: categoryId });
   if (!category) {
     return res.status(404).json({ message: "Category isn't found" });
   }
@@ -51,7 +51,7 @@ export const updateCategoryHandler = async (req: Request, res: Response, next: N
 
 export const deleteCategoryHandler = async (req: Request, res: Response, next: NextFunction) => {
   const categoryId = req.params.categoryId;
-  const category = await getCategoryById({ _id: categoryId });
+  const category = await getCategory({ _id: categoryId });
   if (!category) {
     return res.status(404).json({ message: "Category isn't found" });
   }

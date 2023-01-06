@@ -40,7 +40,7 @@ const swaggerDocs = (app: Express, port: number) => {
     res.send(swaggerSpecification);
   });
 
-  logger.info(`API Documentation available at http://localhost:${port}/api-docs`);
+  logger.info(`API Documentation available at http://localhost:${port}/api-docs, http://localhost:${port}/api-docs.json`);
 };
 
 export default swaggerDocs;

@@ -10,7 +10,7 @@ const getAllProperties = async () => {
   }
 };
 
-const getPropertyById = async (filter: FilterQuery<IPropertyDocument>, options: QueryOptions = { lean: true }) => {
+const getProperty = async (filter: FilterQuery<IPropertyDocument>, options: QueryOptions = { lean: true }) => {
   try {
     return await Property.findOne(filter, {}, options);
   } catch (error) {
@@ -42,4 +42,4 @@ const deleteProperty = async (filter: FilterQuery<IProperty>) => {
   }
 };
 
-export { getAllProperties, getPropertyById, createProperty, updateProperty, deleteProperty };
+export { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty };

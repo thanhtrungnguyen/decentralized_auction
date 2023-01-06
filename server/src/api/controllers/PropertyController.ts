@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { getCategoryById } from '../services/CategoryService';
-import { getAllProperties, getPropertyById, createProperty, updateProperty, deleteProperty } from '../services/PropertyService';
+import { getCategory } from '../services/CategoryService';
+import { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty } from '../services/PropertyService';
 import { findUser } from '../services/UserService';
 
 export const getAllPropertiesHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -15,7 +15,7 @@ export const getAllPropertiesHandler = async (req: Request, res: Response, next:
 
 export const getPropertyByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const propertyId = req.params.propertyId;
-  return await getPropertyById({ _id: propertyId })
+  return await getProperty({ _id: propertyId })
     .then((property) => {
       res.status(200).json({ property });
     })
@@ -26,7 +26,7 @@ export const getPropertyByIdHandler = async (req: Request, res: Response, next: 
 
 export const createPropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const property = req.body;
-  const category = await getCategoryById({ _id: req.body.category });
+  const category = await getCategory({ _id: req.body.category });
   if (!category) return res.status(404).json({ message: 'Category not found' });
   const user = await findUser({ _id: req.body.user });
   if (!user) return res.status(404).json({ message: 'User not found' });
@@ -43,7 +43,7 @@ export const createPropertyHandler = async (req: Request, res: Response, next: N
 export const updatePropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const propertyId = req.params.propertyId;
   const update = req.body;
-  const property = await getPropertyById({ _id: propertyId });
+  const property = await getProperty({ _id: propertyId });
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
@@ -58,7 +58,7 @@ export const updatePropertyHandler = async (req: Request, res: Response, next: N
 
 export const deletePropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const propertyId = req.params.propertyId;
-  const property = await getPropertyById({ _id: propertyId });
+  const property = await getProperty({ _id: propertyId });
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
