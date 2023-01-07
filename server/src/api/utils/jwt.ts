@@ -1,15 +1,23 @@
 import jwt from 'jsonwebtoken';
-import { defaultConfig } from '../../config/default';
 import logger from './logger';
 
-const signJwt = (payload: object, expiresIn: string | number) => {
-  const privateKey = Buffer.from(defaultConfig.jwt.privateKey, 'base64').toString('ascii');
-  return jwt.sign(payload, privateKey, { expiresIn });
+const signJwt = (object: object, key: string, options?: jwt.SignOptions | undefined) => {
+  // const privateKey = Buffer.from(key, 'base64').toString('ascii');
+  const privateKey = 'ggg';
+  return jwt.sign(
+    object,
+    privateKey
+    //    {
+    //   ...(options && options)
+    //   algorithm: 'RS256'
+    // }
+  );
 };
 
-const verifyJwt = (token: string) => {
+const verifyJwt = (token: string, key: string) => {
   try {
-    const publicKey = Buffer.from(defaultConfig.jwt.publicKey, 'base64').toString('ascii');
+    // const publicKey = Buffer.from(key, 'base64').toString('ascii');
+    const publicKey = 'ggg';
     const decoded = jwt.verify(token, publicKey);
     return {
       valid: true,

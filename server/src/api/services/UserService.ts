@@ -11,8 +11,8 @@ const getAllUsers = async () => {
   }
 };
 
-const validatePassword = async ({ username, password }: { username: string; password: string }) => {
-  const user = await User.findOne({ username });
+const validatePassword = async ({ email, password }: { email: string; password: string }) => {
+  const user = await User.findOne({ email });
   if (!user) {
     return false;
   }

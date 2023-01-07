@@ -1,28 +1,24 @@
 import { NextFunction, Request, Response } from 'express';
-import { reIssueAccessToken } from '../services/SessionService';
-import { signJwt, verifyJwt } from '../utils/jwt';
+import { get } from 'lodash';
+import { config } from 'process';
+import { defaultConfig } from '../../config/default';
+import { reIssueAccessToken } from '../services/AuthService';
+import { verifyJwt } from '../utils/jwt';
 
 const deserializeUser = async (req: Request, res: Response, next: NextFunction) => {
-  const { accessToken, refreshToken } = req.cookies;
+  const accessToken = (req.headers.authorization || '').replace(/^Bearer\s/, '');
+
   if (!accessToken) {
     return next();
   }
 
-  const { decoded, expired } = verifyJwt(accessToken);
+  const decoded = verifyJwt(accessToken, defaultConfig.jwt.accessTokenPublicKey);
+
   if (decoded) {
     res.locals.user = decoded;
-    return next();
+    console.log('res.locals.user', res.locals.user);
   }
 
-  if (expired && refreshToken) {
-    const newAccessToken = await reIssueAccessToken(refreshToken);
-    if (newAccessToken) {
-      res.setHeader('x-access-token', newAccessToken);
-    }
-    const result = verifyJwt(newAccessToken as string);
-    res.locals.user = result.decoded;
-    return next();
-  }
   return next();
 };
 
