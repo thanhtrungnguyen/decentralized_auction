@@ -1,6 +1,6 @@
 .container {
     width: 256px;
-    background: #ffffff;
+    background: #48627d;
     height: 100%;
     float: left;
     position: relative;
@@ -15,7 +15,7 @@
 
     /* Grey/Grey 50 */
 
-    color: #6b7280;
+    color: #ffffff;
     text-decoration: none;
 }
 .txt:hover {
@@ -45,7 +45,7 @@
     margin-left: 20px;
     text-decoration: none;
 
-    color: #6b7280;
+    color: #ffffff;
 }
 .txt2:hover {
     color: red;
