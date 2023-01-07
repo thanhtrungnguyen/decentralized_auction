@@ -1,10 +1,17 @@
-import jwtAuthz from 'express-jwt-authz';
+import { NextFunction, Request, Response } from 'express';
+import logger from '../utils/logger';
 
-export const checkPermissions = (permissions: string | string[]) => {
-  // return jwtAuthz( [permissions], {
-  return jwtAuthz(typeof permissions === 'string' ? [permissions] : permissions, {
-    customScopeKey: 'permissions',
-    checkAllScopes: true,
-    failWithError: true
-  });
+export const checkPermission = (requireRole: string) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = res.locals.user;
+      if (user.role !== requireRole) {
+        return res.status(403).send({ message: 'Access denied' });
+      }
+      next();
+    } catch (error) {
+      logger.error(error);
+      return res.status(422).json({ error });
+    }
+  };
 };

@@ -12,7 +12,6 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
     return next();
   }
   const refreshToken = get(req, 'headers.x-refresh');
-  let refreshTokenStr: string = typeof refreshToken != 'undefined' ? refreshToken[0] : '';
   const { decoded, expired } = verifyJwt(accessToken, defaultConfig.jwt.accessTokenPublicKey);
 
   if (decoded) {
