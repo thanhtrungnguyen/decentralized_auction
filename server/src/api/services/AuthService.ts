@@ -13,7 +13,7 @@ const createSession = async (userId: string) => {
 };
 
 const findSessions = async (filter: FilterQuery<ISessionDocument>) => {
-  return await Session.find(filter).lean();
+  return await Session.find(filter).lean().populate('user');
 };
 
 const updateSession = async (filter: FilterQuery<ISessionDocument>, update: UpdateQuery<ISessionDocument>) => {
