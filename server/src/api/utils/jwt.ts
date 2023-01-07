@@ -2,22 +2,16 @@ import jwt from 'jsonwebtoken';
 import logger from './logger';
 
 const signJwt = (object: object, key: string, options?: jwt.SignOptions | undefined) => {
-  // const privateKey = Buffer.from(key, 'base64').toString('ascii');
-  const privateKey = 'ggg';
-  return jwt.sign(
-    object,
-    privateKey
-    //    {
-    //   ...(options && options)
+  const privateKey = Buffer.from(key, 'base64').toString('ascii');
+  return jwt.sign(object, privateKey, {
+    ...(options && options)
     //   algorithm: 'RS256'
-    // }
-  );
+  });
 };
 
 const verifyJwt = (token: string, key: string) => {
   try {
-    // const publicKey = Buffer.from(key, 'base64').toString('ascii');
-    const publicKey = 'ggg';
+    const publicKey = Buffer.from(key, 'base64').toString('ascii');
     const decoded = jwt.verify(token, publicKey);
     return {
       valid: true,

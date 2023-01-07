@@ -26,7 +26,7 @@ const getUserSessionHandler = async (req: Request, res: Response, next: NextFunc
   const userId = res.locals.user._id;
   return await findSessions({ user: userId, valid: true })
     .then((session) => {
-      res.send(session);
+      res.status(200).send(session);
     })
     .catch((error) => {
       res.status(500).json({ error });

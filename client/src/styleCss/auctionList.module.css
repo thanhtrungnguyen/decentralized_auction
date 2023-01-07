@@ -352,6 +352,19 @@ body {
 
     color: #40bfff;
 }
+.status {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 100;
+    font-size: 18px;
+    line-height: 180%;
+
+    letter-spacing: 0.5px;
+
+    margin-left: 400px;
+
+    color: #000000;
+}
 .time {
     font-family: "Poppins";
     font-style: normal;
