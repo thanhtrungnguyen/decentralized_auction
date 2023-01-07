@@ -33,5 +33,12 @@ export const config = {
   contract: {
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI
+  },
+  smtp: {
+    user: 'dap.auction@gmail.com',
+    pass: 'bcwxkbmvgrlcjeio',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false
   }
 };

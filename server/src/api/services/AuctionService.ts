@@ -4,7 +4,7 @@ import logger from '../utils/logger';
 
 const getAllAuctions = async () => {
   try {
-    return await Auction.find({});
+    return await Auction.find({}).populate('property');
   } catch (error) {
     logger.error(error);
   }

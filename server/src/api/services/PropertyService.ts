@@ -12,7 +12,7 @@ const getAllProperties = async () => {
 
 const getProperty = async (filter: FilterQuery<IPropertyDocument>, options: QueryOptions = { lean: true }) => {
   try {
-    return await Property.findOne(filter, {}, options);
+    return await Property.findOne(filter, {}, options).populate('category');
   } catch (error) {
     logger.error(error);
   }
