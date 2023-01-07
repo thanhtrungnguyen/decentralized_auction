@@ -17,6 +17,7 @@ import PageName from "../../components/header/PageName";
 import { AiOutlineSearch, AiOutlineFieldTime } from "react-icons/ai";
 import MultiRangeSlider from "multi-range-slider-react";
 import "./styles.css";
+import { Link } from "react-router-dom";
 const AuctionList = () => {
     const [page, setPage] = React.useState(1);
     // const [buttonPopup, setButtonPopup] = useState(false);
@@ -31,9 +32,10 @@ const AuctionList = () => {
     const [name, setName] = useState(null);
     const [name2, setName2] = useState(null);
     const [checkedState, setCheckedState] = useState([false, false, false]);
-    const baseURLAuction = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
+    const baseURLAuction = `http://localhost:5000/api/auction/auctions`;
     const [change, setChange] = useState(null);
     const [categories, setCategories] = useState([]);
+    const [auctions, setAuctions] = useState([]);
     const statusList = [
         { name: "Auction Upcoming", value: 2 },
         { name: "Auction Bidding", value: 3 },
@@ -66,35 +68,28 @@ const AuctionList = () => {
                 .get(`http://localhost:5000/api/category/categories`)
                 .then((resp) => {
                     setCategories(resp.data);
-                    console.log(resp.data);
-                    console.log("axios get");
+                    // console.log(resp.data);
+                    // console.log("axios get");
                 })
                 .catch((error) => {
                     console.error(error);
                 });
-            setLoading(false);
-        }
-        fetchPostList();
-    }, []);
-    // get List Auction
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURLAuction).then((resp) => {
-                setData(resp.data);
-                // console.log(resp.data);
-                // console.log("axios get");
-                socket.off();
-            });
+            await axios.get(baseURLAuction)
+                .then((resp) => {
+                    setAuctions(resp.data);
+                    console.log(resp.data);
+                    console.log("axios get");
+                    socket.off();
+                });
             if (getUser() != null) {
                 setRole(getUser().role);
             } else {
                 setRole("");
             }
             setLoading(false);
-        };
-        fetchData();
-    }, [change, baseURLAuction]);
+        }
+        fetchPostList()
+    }, [baseURLAuction, change]);
     socket.on("data", (item) => {
         if (item !== change) {
             setChange(item);
@@ -121,25 +116,16 @@ const AuctionList = () => {
         }, null);
         setStatus(total);
     };
-    const handleApplyFilter = () => {};
+    const handleApplyFilter = () => {
+
+    }
+    const handleAuctionDetail = () => {
+
+    }
     const handleSort = (e) => {
         setSort(e.target.value);
         setPage(1);
     };
-
-    //   useEffect(()=>{
-    //     const fetchData = async ()=>{
-    //         setLoading(true);
-    //         try {
-    //             const res = await axios.get('http://localhost:8800/api/auction/');
-    //             setData(res.data)
-    //         } catch (error) {
-    //             setError(error);
-    //         }
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    //   },[]);
 
     return loading ? (
         <Loading />
@@ -243,184 +229,35 @@ const AuctionList = () => {
                         </select>
                     </div>
                     <div className={styles.auctions}>
-                        <div className={styles.auction}>
-                            <img
-                                className={styles.img}
-                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
-                                alt="img"
-                            />
-                            <p className={styles.name}>Auction Name</p>
-                            <p className={styles.price}>299,43 ETH</p>
-
-                            <p className={styles.status}>Status</p>
-
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <br />
-                            <br />
-                            <br />
-                            <button className={styles.btnDetail}>Detail</button>
-                        </div>
-                        <div className={styles.auction}>
-                            <img
-                                className={styles.img}
-                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
-                            />
-                            <p className={styles.name}>Auction Name</p>
-                            <p className={styles.price}>299,43 ETH</p>
-                            <br />
-                            <br />
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <br />
-                            <br />
-                            <br />
-                            <button className={styles.btnDetail}>Detail</button>
-                        </div>
-                        <div className={styles.auction}>
-                            <img
-                                className={styles.img}
-                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
-                            />
-                            <p className={styles.name}>Auction Name</p>
-                            <p className={styles.price}>299,43 ETH</p>
-                            <br />
-                            <br />
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <br />
-                            <br />
-                            <br />
-                            <button className={styles.btnDetail}>Detail</button>
-                        </div>
-                        <div className={styles.auction}>
-                            <img
-                                className={styles.img}
-                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
-                            />
-                            <p className={styles.name}>Auction Name</p>
-                            <p className={styles.price}>299,43 ETH</p>
-                            <br />
-                            <br />
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <br />
-                            <br />
-                            <br />
-                            <button className={styles.btnDetail}>Detail</button>
-                        </div>
-                        <div className={styles.auction}>
-                            <img
-                                className={styles.img}
-                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
-                            />
-                            <p className={styles.name}>Auction Name</p>
-                            <p className={styles.price}>299,43 ETH</p>
-                            <br />
-                            <br />
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <br />
-                            <br />
-                            <br />
-                            <button className={styles.btnDetail}>Detail</button>
-                        </div>
-                        <div className={styles.auction}>
-                            <img
-                                className={styles.img}
-                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
-                            />
-                            <p className={styles.name}>Auction Name</p>
-                            <p className={styles.price}>299,43 ETH</p>
-                            <br />
-                            <br />
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <br />
-                            <br />
-                            <br />
-                            <button className={styles.btnDetail}>Detail</button>
-                        </div>
-                        <div className={styles.auction}>
-                            <img
-                                className={styles.img}
-                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
-                            />
-                            <p className={styles.name}>Auction Name</p>
-                            <p className={styles.price}>299,43 ETH</p>
-                            <br />
-                            <br />
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <br />
-                            <br />
-                            <br />
-                            <button className={styles.btnDetail}>Detail</button>
-                        </div>
-                        <div className={styles.auction}>
-                            <img
-                                className={styles.img}
-                                src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
-                            />
-                            <p className={styles.name}>Auction Name</p>
-                            <p className={styles.price}>299,43 ETH</p>
-                            <br />
-                            <br />
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <p className={styles.time}>
-                                <AiOutlineFieldTime className={styles.i} />
-                                <label className={styles.l}> Auction time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
-                            </p>
-                            <br />
-                            <br />
-                            <br />
-                            <button className={styles.btnDetail}>Detail</button>
-                        </div>
+                        {auctions.auctions.map((item) => {
+                            return <>
+                                <div className={styles.auction}>
+                                    <img
+                                        className={styles.img}
+                                        src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
+                                        alt="img"
+                                    />
+                                    <p className={styles.name}>{item.name}</p>
+                                    <p className={styles.price}>{item.property.startBid} ETH</p>
+                                    <p className={styles.status}>Status</p>
+                                    <p className={styles.time}>
+                                        <AiOutlineFieldTime className={styles.i} />
+                                        <label className={styles.l}>Registration time: {item.startRegistrationTime} - {item.endRegistrationTime}</label>
+                                    </p>
+                                    <p className={styles.time}>
+                                        <AiOutlineFieldTime className={styles.i} />
+                                        <label className={styles.l}> Auction time: {item.startAuctionTime} - {item.endAuctionTime}0</label>
+                                    </p>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <Link className={styles.link} to={`/auctionDetail/${item._id}`}>
+                                        Details
+                                    </Link>
+                                    <button className={styles.btnDetail} onClick={handleAuctionDetail}>Detail</button>
+                                </div>
+                            </>
+                        })}
                     </div>
                     <Pagination className={styles.pagi} count={Math.ceil(10 / 5)} page={page} onChange={handleChange} hidden={data.total === 0} />
                 </div>
