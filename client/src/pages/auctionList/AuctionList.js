@@ -17,8 +17,10 @@ import PageName from "../../components/header/PageName";
 import { AiOutlineSearch, AiOutlineFieldTime } from "react-icons/ai";
 import MultiRangeSlider from "multi-range-slider-react";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 const AuctionList = () => {
+    const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     // const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState([]);
@@ -118,9 +120,7 @@ const AuctionList = () => {
     const handleApplyFilter = () => {
 
     }
-    const handleAuctionDetail = () => {
 
-    }
     const handleSort = (e) => {
         setSort(e.target.value);
         setPage(1);
@@ -249,10 +249,8 @@ const AuctionList = () => {
                                     <br />
                                     <br />
                                     <br />
-                                    <Link className={styles.link} to={`/auctionDetail/${item._id}`}>
-                                        Details
-                                    </Link>
-                                    <button className={styles.btnDetail} onClick={handleAuctionDetail}>Detail</button>
+
+                                    <button className={styles.btnDetail} onClick={() => { navigate(`/auctionDetail/${item._id}`) }}>Detail</button>
                                 </div>
                             </>
                         })}
