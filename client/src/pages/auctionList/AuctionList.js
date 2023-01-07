@@ -62,7 +62,8 @@ const AuctionList = () => {
     useEffect(() => {
         async function fetchPostList() {
             setLoading(true);
-            await axios.get(`http://localhost:5000/api/category/categories`)
+            await axios
+                .get(`http://localhost:5000/api/category/categories`)
                 .then((resp) => {
                     setCategories(resp.data);
                     console.log(resp.data);
@@ -70,22 +71,21 @@ const AuctionList = () => {
                 })
                 .catch((error) => {
                     console.error(error);
-                })
+                });
             setLoading(false);
         }
-        fetchPostList()
+        fetchPostList();
     }, []);
-    // get List Auction 
+    // get List Auction
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await axios.get(baseURLAuction)
-                .then((resp) => {
-                    setData(resp.data);
-                    // console.log(resp.data);
-                    // console.log("axios get");
-                    socket.off();
-                });
+            await axios.get(baseURLAuction).then((resp) => {
+                setData(resp.data);
+                // console.log(resp.data);
+                // console.log("axios get");
+                socket.off();
+            });
             if (getUser() != null) {
                 setRole(getUser().role);
             } else {
@@ -116,14 +116,12 @@ const AuctionList = () => {
             if (currentState === true) {
                 return sum + statusList[index].value;
             }
-            console.log(sum)
+            console.log(sum);
             return sum;
         }, null);
         setStatus(total);
     };
-    const handleApplyFilter = () => {
-
-    }
+    const handleApplyFilter = () => {};
     const handleSort = (e) => {
         setSort(e.target.value);
         setPage(1);
@@ -166,12 +164,14 @@ const AuctionList = () => {
                     <div className={styles.category}>
                         <p className={styles.title}>Category</p>
                         {categories.categories.map((item) => {
-                            return <>
-                                <label className={styles.label}>{item.name}</label>
-                                <label className={styles.num}>{categories.categories.length}</label>
-                                <br />
-                                <br />
-                            </>
+                            return (
+                                <>
+                                    <label className={styles.label}>{item.name}</label>
+                                    <label className={styles.num}>{categories.categories.length}</label>
+                                    <br />
+                                    <br />
+                                </>
+                            );
                         })}
                     </div>
                     <div className={styles.category}>
@@ -210,11 +210,11 @@ const AuctionList = () => {
                         <label className={styles.num}>2</label>
                         <br />
                         <br />
-
-
                     </div>
                     <div className={styles.category}>
-                        <button className={styles.btn} onClick={handleApplyFilter}>Apply</button>
+                        <button className={styles.btn} onClick={handleApplyFilter}>
+                            Apply
+                        </button>
                     </div>
                 </div>
                 <div className={styles.content}>
@@ -251,8 +251,9 @@ const AuctionList = () => {
                             />
                             <p className={styles.name}>Auction Name</p>
                             <p className={styles.price}>299,43 ETH</p>
-                            <br />
-                            <br />
+
+                            <p className={styles.status}>Status</p>
+
                             <p className={styles.time}>
                                 <AiOutlineFieldTime className={styles.i} />
                                 <label className={styles.l}>Registration time: 22/10/2022 10:10:00 - 22/10/2022 10:10:00</label>
@@ -421,13 +422,7 @@ const AuctionList = () => {
                             <button className={styles.btnDetail}>Detail</button>
                         </div>
                     </div>
-                    <Pagination
-                        className={styles.pagi}
-                        count={Math.ceil(10 / 5)}
-                        page={page}
-                        onChange={handleChange}
-                        hidden={data.total === 0}
-                    />
+                    <Pagination className={styles.pagi} count={Math.ceil(10 / 5)} page={page} onChange={handleChange} hidden={data.total === 0} />
                 </div>
             </div>
 
