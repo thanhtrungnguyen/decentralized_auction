@@ -49,8 +49,9 @@ hr {
 }
 .right {
     margin-top: 20px;
-
-    float: right;
+    margin-left: 300px;
+    /* float: right; */
+    position: absolute;
 }
 .link {
     font-family: "Poppins";

@@ -1,0 +1,52 @@
+.container {
+    width: 256px;
+    background: #ffffff;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+.txt {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    /* identical to box height, or 154% */
+
+    /* Grey/Grey 50 */
+
+    color: #6b7280;
+    text-decoration: none;
+}
+.txt:hover {
+    color: aqua;
+}
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+.avt {
+    width: 60px;
+    height: 60px;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+.txt2 {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+    /* or 167% */
+
+    /* Grey/Grey 50 */
+    margin-left: 20px;
+    text-decoration: none;
+
+    color: #6b7280;
+}
+.txt2:hover {
+    color: red;
+}
