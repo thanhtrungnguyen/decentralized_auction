@@ -1,4 +1,4 @@
-import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
+import styles from "../../styleCss/stylesPages/forAdmin/listManager.module.css";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
@@ -17,6 +17,9 @@ import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
+
+import Time from "../../components/time/Time";
 const ListSellers = () => {
     const [page, setPage] = React.useState(1);
     const [role, setRole] = useState();
@@ -87,18 +90,139 @@ const ListSellers = () => {
         <Loading />
     ) : (
         <>
-            {console.log(data)}
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
-            <form onSubmit={handleSubmit}>
+            <div className={styles.container}>
+                <SidebarAdmin />
+                <Time />
+                <div className={styles.r}>
+                    <div className={styles.con}>
+                        <div className={styles.btns}>
+                            <button className={styles.btn}>All</button>
+                            <button className={styles.btn}>Activate</button>
+                            <button className={styles.btn}>Deactivate</button>
+                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
+                            <button className={styles.btn}>Search</button>
+                        </div>
+                        <table className={styles.table}>
+                            <tr>
+                                <th className={styles.th}>Full Name</th>
+                                <th className={styles.th}>Email</th>
+                                <th className={styles.th}>Phone</th>
+                                <th className={styles.th}>Address</th>
+                                <th className={styles.th}>Status</th>
+                                <th className={styles.th}>Action</th>
+                                <th className={styles.th}></th>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>
+                                    <Popup
+                                        trigger={
+                                            <label style={{ color: "red" }} className={styles.linkBlue}>
+                                                Deactivate
+                                            </label>
+                                        }
+                                        position="right center"
+                                    >
+                                        <BanedSeller idManager="" />
+                                    </Popup>
+                                </td>
+                                <td>
+                                    <AiTwotoneEdit className={styles.iconView} />
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Deactivate</td>
+                                <td>
+                                    {" "}
+                                    <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
+                                        <ActiveSeller idManager="" />
+                                    </Popup>
+                                </td>
+                                <td>
+                                    <AiTwotoneEdit className={styles.iconView} />
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <hr />
+                        <div>
+                            <Pagination
+                                className={styles.Pagination}
+                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                // page={page}
+                                // onChange={handleChange}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SidebarAdmin />
+                    <Time />
                     <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
@@ -110,7 +234,6 @@ const ListSellers = () => {
                                     placeholder="Email"
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
-                                    // required
                                 ></input>
                             </div>
                             <br />
@@ -216,7 +339,7 @@ const ListSellers = () => {
                     </div>
                     <Footer />
                 </div>
-            </form>
+            </form> */}
         </>
     );
 };

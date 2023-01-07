@@ -74,6 +74,7 @@ th {
 .iconView {
     width: 25px;
     height: 25px;
+    margin-left: 10px;
 }
 .iconView:hover {
     color: aqua;
@@ -81,15 +82,4 @@ th {
 .Pagination {
     margin-top: 15px;
     float: right;
-}
-.time {
-    margin: 0;
-    width: 100%;
-    height: 40px;
-    background-color: #bcddfe;
-}
-.label {
-    margin-left: 1000px;
-    margin-top: 10px;
-    position: absolute;
 }
