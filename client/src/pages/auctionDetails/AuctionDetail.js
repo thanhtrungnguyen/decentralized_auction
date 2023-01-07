@@ -18,10 +18,12 @@ import BidModal from "../bidder/index";
 import BidModalButton from "../bidder/components/BidModalButton";
 import PageName from "../../components/header/PageName";
 import FooterCopy from "../../components/footer/FooterCopy";
+import moment from "moment";
+import 'moment/locale/vi';
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
-    const { id, propertyId } = useParams();
-    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
+    const { id } = useParams();
+    const baseURL = `http://localhost:5000/api/auction/${id}`;
     const { data, loading, error } = useFetch(baseURL);
     const [role, setRole] = useState();
     let img1 = "https://unboxph3a1e0.zapwp.com/q:intelligent/r:0/wp:1/w:1/u:https://unbox.ph/wp-content/uploads/2011/09/Nike-Air-Mag-3-1200x742.jpeg";
@@ -57,11 +59,11 @@ const AuctionDetail = () => {
             setRole("");
         }
     }, []);
+
     // const [openModal, setOpenModal] = useState(() => {
     //     return false;
     // });
 
-    const [auction, setAuction] = useState([]);
     return loading ? (
         <Loading />
     ) : (
@@ -88,15 +90,15 @@ const AuctionDetail = () => {
                             </div>
                         </div>
                         <div className={styles.content}>
-                            <p className={styles.title}>Nike Airmax 270 React</p>
+                            <p className={styles.title}>{data.auction.name}</p>
                             <br />
                             <br />
                             <hr className={styles.hr} />
-                            <p className={styles.price}>299,43 ETH</p>
-                            <p className={styles.time}>Start Registration Time : 09:00:00 - 31/12/2022</p>
-                            <p className={styles.time}>End Registration Time : 09:00:00 - 31/12/2022</p>
-                            <p className={styles.time}> Auction Start Time : 09:00:00 - 31/12/2022</p>
-                            <p className={styles.time}> Auction End Time : 09:00:00 - 31/12/2022</p>
+                            <p className={styles.price}>{data.auction.property.startBid} ETH</p>
+                            <p className={styles.time}>Start Registration Time : {moment(data.auction.startRegistrationTime).format('L')} - {moment(data.auction.startRegistrationTime).format('LTS')}   </p>
+                            <p className={styles.time}>End Registration Time : {moment(data.auction.endRegistrationTime).format('L')} - {moment(data.auction.endRegistrationTime).format('LTS')} </p>
+                            <p className={styles.time}> Auction Start Time : {moment(data.auction.startAuctionTime).format('L')} - {moment(data.auction.startAuctionTime).format('LTS')}</p>
+                            <p className={styles.time}> Auction End Time : {moment(data.auction.endAuctionTime).format('L')} - {moment(data.auction.endAuctionTime).format('LTS')}</p>
                             <br />
                             <br />
                             <br />
@@ -134,6 +136,8 @@ const AuctionDetail = () => {
                         max are always very comfortable fit, clean and just perfect in every way. just the box was too small and
                     </p>
                 </div>
+
+
                 <p className={styles.related}>RELATED AUCTIONS</p>
                 <div className={styles.auctions}>
                     <div className={styles.auction}>

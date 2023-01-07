@@ -17,6 +17,7 @@ import PageName from "../../components/header/PageName";
 import { AiOutlineSearch, AiOutlineFieldTime } from "react-icons/ai";
 import MultiRangeSlider from "multi-range-slider-react";
 import "./styles.css";
+import { Link } from "react-router-dom";
 const AuctionList = () => {
     const [page, setPage] = React.useState(1);
     // const [buttonPopup, setButtonPopup] = useState(false);
@@ -71,20 +72,12 @@ const AuctionList = () => {
                 })
                 .catch((error) => {
                     console.error(error);
-                })
-            setLoading(false);
-        }
-        fetchPostList()
-    }, []);
-    // get List Auction 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
+                });
             await axios.get(baseURLAuction)
                 .then((resp) => {
                     setAuctions(resp.data);
-                    // console.log(resp.data);
-                    // console.log("axios get");
+                    console.log(resp.data);
+                    console.log("axios get");
                     socket.off();
                 });
             if (getUser() != null) {
@@ -93,9 +86,9 @@ const AuctionList = () => {
                 setRole("");
             }
             setLoading(false);
-        };
-        fetchData();
-    }, [change, baseURLAuction]);
+        }
+        fetchPostList()
+    }, [baseURLAuction, change]);
     socket.on("data", (item) => {
         if (item !== change) {
             setChange(item);
@@ -132,20 +125,6 @@ const AuctionList = () => {
         setSort(e.target.value);
         setPage(1);
     };
-
-    //   useEffect(()=>{
-    //     const fetchData = async ()=>{
-    //         setLoading(true);
-    //         try {
-    //             const res = await axios.get('http://localhost:8800/api/auction/');
-    //             setData(res.data)
-    //         } catch (error) {
-    //             setError(error);
-    //         }
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    //   },[]);
 
     return loading ? (
         <Loading />
@@ -256,7 +235,7 @@ const AuctionList = () => {
                                         alt="img"
                                     />
                                     <p className={styles.name}>{item.name}</p>
-                                    <p className={styles.price}>299,43 ETH</p>
+                                    <p className={styles.price}>{item.property.startBid} ETH</p>
                                     <br />
                                     <br />
                                     <p className={styles.time}>
@@ -270,6 +249,9 @@ const AuctionList = () => {
                                     <br />
                                     <br />
                                     <br />
+                                    <Link className={styles.link} to={`/auctionDetail/${item._id}`}>
+                                        Details
+                                    </Link>
                                     <button className={styles.btnDetail} onClick={handleAuctionDetail}>Detail</button>
                                 </div>
                             </>
