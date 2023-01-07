@@ -3,6 +3,7 @@
     width: 100%;
     height: 55px;
     background: #bcddfe;
+    /* bottom: 0; */
 }
 .txt {
     font-family: "Lato";

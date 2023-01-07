@@ -1,4 +1,4 @@
-import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css";
+import styles from "../../styleCss/stylesPages/forAdmin/listManager.module.css";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
@@ -15,6 +15,8 @@ import { useFetchPagination } from "../../hook/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { AiFillEye } from "react-icons/ai";
+import FooterCopy from "../../components/footer/FooterCopy";
 const ListForManagers = () => {
     const [page, setPage] = React.useState(1);
 
@@ -135,7 +137,148 @@ const ListForManagers = () => {
                 }
             })()}
             <NavBar />
-            <form onSubmit={handleSubmit}>
+            <div className={styles.container}>
+                <SideBarAdmin />
+
+                <div className={styles.r}>
+                    <div className={styles.con}>
+                        <div className={styles.btns}>
+                            <button className={styles.btn}>All</button>
+                            <button className={styles.btn}>Activate</button>
+                            <button className={styles.btn}>Deactivate</button>
+                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
+                            <button className={styles.btn}>Search</button>
+                        </div>
+                        <table className={styles.table}>
+                            <tr>
+                                <th className={styles.th}>Full Name</th>
+                                <th className={styles.th}>Email</th>
+                                <th className={styles.th}>Phone</th>
+                                <th className={styles.th}>Address</th>
+                                <th className={styles.th}>Status</th>
+                                <th className={styles.th}>Action</th>
+                                <th className={styles.th}>View</th>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>
+                                    <Popup
+                                        trigger={
+                                            <label style={{ color: "red" }} className={styles.linkBlue}>
+                                                Deactivate
+                                            </label>
+                                        }
+                                        position="right center"
+                                    >
+                                        <BanedManager idManager="" />
+                                    </Popup>
+                                </td>
+                                <td>
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Deactivate</td>
+                                <td>
+                                    {" "}
+                                    <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
+                                        <ActiveManager idManager="" />
+                                    </Popup>
+                                </td>
+                                <td>
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td>
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td>
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td>
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td>
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td>
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>abc@gmail.com</td>
+                                <td>09000999000</td>
+                                <td>Thach That, Ha Noi, Viet Nam</td>
+                                <td>Activate</td>
+                                <td>Deactivate</td>
+                                <td>
+                                    <AiFillEye className={styles.iconView} />
+                                </td>
+                            </tr>
+                        </table>
+                        <hr />
+                        <div>
+                            <Pagination
+                                className={styles.Pagination}
+                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                // page={page}
+                                // onChange={handleChange}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* <FooterCopy /> */}
+
+            {/* <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarAdmin />
                     <div className={styles.content}>
@@ -217,7 +360,7 @@ const ListForManagers = () => {
                     </div>
                     <Footer />
                 </div>
-            </form>
+            </form> */}
         </>
     );
 };

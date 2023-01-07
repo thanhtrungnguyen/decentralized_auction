@@ -1,8 +1,10 @@
 import Session, { ISessionDocument } from '../models/Session';
-import { get } from 'lodash';
+import { get, omit } from 'lodash';
 import { signJwt, verifyJwt } from '../utils/jwt';
 import { findUser } from './UserService';
 import { FilterQuery, UpdateQuery } from 'mongoose';
+import { IUserDocument } from '../models/User';
+import { config } from '../../config/config';
 import { defaultConfig } from '../../config/default';
 
 const createSession = async (userId: string) => {
@@ -18,8 +20,8 @@ const updateSession = async (filter: FilterQuery<ISessionDocument>, update: Upda
   return await Session.updateOne(filter, update);
 };
 
-const reIssueAccessToken = async (refreshToken: string) => {
-  const { decoded } = verifyJwt(refreshToken);
+const reIssueAccessToken = async ({ refreshToken }: { refreshToken: string }) => {
+  const { decoded } = verifyJwt(refreshToken, defaultConfig.jwt.refreshTokenPublicKey);
   if (!decoded || !get(decoded, 'session')) return false;
 
   const session = await Session.findById(get(decoded, 'session'));

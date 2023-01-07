@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { defaultConfig } from '../../config/default';
-import { createSession, findSessions, updateSession } from '../services/SessionService';
+import { createSession, findSessions, updateSession } from '../services/AuthService';
 import { validatePassword } from '../services/UserService';
 import { signJwt } from '../utils/jwt';
 
@@ -11,16 +11,18 @@ const createUserSessionHandler = async (req: Request, res: Response, next: NextF
   }
 
   const session = await createSession(user._id);
+  const accessToken = await signJwt({ ...user, session: session._id }, defaultConfig.jwt.accessTokenPrivateKey?.toString(), {
+    expiresIn: defaultConfig.jwt.accessTokenTtl
+  });
 
-  const accessToken = await signJwt({ ...user, session: session._id }, defaultConfig.jwt.accessTokenTtl);
-
-  const refreshToken = await await signJwt({ ...user, session: session._id }, defaultConfig.jwt.refreshTokenTtl);
+  const refreshToken = await signJwt({ ...user, session: session._id }, defaultConfig.jwt.refreshTokenPrivateKey, {
+    expiresIn: defaultConfig.jwt.refreshTokenTtl
+  });
 
   return res.send({ accessToken, refreshToken });
 };
 
 const getUserSessionHandler = async (req: Request, res: Response, next: NextFunction) => {
-  console.log(res.locals);
   const userId = res.locals.user._id;
   return await findSessions({ user: userId, valid: true })
     .then((session) => {

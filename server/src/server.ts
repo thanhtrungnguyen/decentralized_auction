@@ -6,6 +6,7 @@ import { config } from './config/config';
 import routes from './api/routes';
 import swaggerDocs from './api/utils/swagger';
 import connectMongo from './api/utils/connectMongo';
+import deserializeUser from './api/middleware/deserializeUser';
 
 const app = express();
 
@@ -36,6 +37,7 @@ const startServer = () => {
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  app.use(deserializeUser);
 
   app.use('/api', routes);
 
