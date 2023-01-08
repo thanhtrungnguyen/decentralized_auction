@@ -129,11 +129,7 @@ const AuctionDetail = () => {
                     <p className={styles.price}>Description</p>
                     <hr />
                     <p className={styles.text}>
-                        air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and scrunched the
-                        sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one of my favorites.air
-                        max are always very comfortable fit, clean and just perfect in every way. just the box was too small and scrunched the
-                        sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one of my favorites.air
-                        max are always very comfortable fit, clean and just perfect in every way. just the box was too small and
+                        {data.auction.property.description}
                     </p>
                 </div>
 

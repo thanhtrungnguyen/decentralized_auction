@@ -18,7 +18,8 @@ import { AiOutlineSearch, AiOutlineFieldTime } from "react-icons/ai";
 import MultiRangeSlider from "multi-range-slider-react";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
-
+import moment from "moment";
+import 'moment/locale/vi';
 const AuctionList = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
@@ -239,14 +240,14 @@ const AuctionList = () => {
                                     />
                                     <p className={styles.name}>{item.name}</p>
                                     <p className={styles.price}>{item.property.startBid} ETH</p>
-                                    <p className={styles.status}>Status</p>
+                                    <p className={styles.status}>Status: {item.status} </p>
                                     <p className={styles.time}>
                                         <AiOutlineFieldTime className={styles.i} />
-                                        <label className={styles.l}>Registration time: {item.startRegistrationTime} - {item.endRegistrationTime}</label>
+                                        <label className={styles.l}>Registration time: {moment(item.startRegistrationTime).format('L')}, {moment(item.startRegistrationTime).format('LTS')} - {moment(item.endRegistrationTime).format('L')}, {moment(item.endRegistrationTime).format('LTS')}</label>
                                     </p>
                                     <p className={styles.time}>
                                         <AiOutlineFieldTime className={styles.i} />
-                                        <label className={styles.l}> Auction time: {item.startAuctionTime} - {item.endAuctionTime}0</label>
+                                        <label className={styles.l}>Registration time: {moment(item.startAuctionTime).format('L')}, {moment(item.startAuctionTime).format('LTS')} - {moment(item.endAuctionTime).format('L')}, {moment(item.endAuctionTime).format('LTS')}</label>
                                     </p>
                                     <br />
                                     <br />

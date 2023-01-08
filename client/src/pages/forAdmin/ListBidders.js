@@ -30,30 +30,30 @@ const ListBidders = () => {
     const [status, setStatus] = useState(null);
     //const [filter,setFilter] = useState("");
     // const navigate = useNavigate();
-    const baseURL = `http://localhost:8800/api/user/getAll/BIDDER/${page}/${status}/${email}`;
+    const baseURL = `http://localhost:5000/api/user/users/bidder`;
     const [role, setRole] = useState();
 
     //const { data, loading, error } = useFetchPagination(baseURL, page);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         await axios.get(baseURL).then((resp) => {
-    //             console.log(resp.data);
-    //             console.log("axios get");
-    //             setData(resp.data);
-    //         });
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                // console.log(resp.data);
+                // console.log("axios get");
+                setData(resp.data);
+            });
 
-    //         // console.log(getUser().type);
-    //         if (getUser() != null) {
-    //             setRole(getUser().role);
-    //         } else {
-    //             setRole("");
-    //         }
+            // console.log(getUser().type);
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
 
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    // }, [baseURL]);
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "email") {
@@ -125,29 +125,35 @@ const ListBidders = () => {
                                 <th className={styles.th}>Action</th>
                                 <th className={styles.th}></th>
                             </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>
-                                    <Popup
-                                        trigger={
-                                            <label style={{ color: "red" }} className={styles.linkBlue}>
-                                                Deactivate
-                                            </label>
-                                        }
-                                        position="right center"
-                                    >
-                                        <BanedBidder idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
+                            {data.users.map((item) => {
+                                return <>
+                                    <tr>
+                                        <td>Classic Bathrobe</td>
+                                        <td>abc@gmail.com</td>
+                                        <td>09000999000</td>
+                                        <td>Thach That, Ha Noi, Viet Nam</td>
+                                        <td>Activate</td>
+                                        <td>
+                                            <Popup
+                                                trigger={
+                                                    <label style={{ color: "red" }} className={styles.linkBlue}>
+                                                        Deactivate
+                                                    </label>
+                                                }
+                                                position="right center"
+                                            >
+                                                <BanedBidder idManager="" />
+                                            </Popup>
+                                        </td>
+                                        <td>
+                                            <AiTwotoneEdit className={styles.iconView} />
+                                            <AiFillEye className={styles.iconView} />
+                                        </td>
+                                    </tr>
+
+                                </>
+                            })}
+
                             <tr>
                                 <td>Classic Bathrobe</td>
                                 <td>abc@gmail.com</td>
@@ -224,9 +230,9 @@ const ListBidders = () => {
                         <div>
                             <Pagination
                                 className={styles.Pagination}
-                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                // page={page}
-                                // onChange={handleChange}
+                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                            // page={page}
+                            // onChange={handleChange}
                             />
                         </div>
                     </div>
