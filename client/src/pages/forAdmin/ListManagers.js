@@ -150,6 +150,14 @@ const ListForManagers = () => {
                             <button className={styles.btn}>Deactivate</button>
                             <input className={styles.ip} type="text" placeholder="Enter Name"></input>
                             <button className={styles.btn}>Search</button>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/addManager");
+                                }}
+                            >
+                                + New Manager
+                            </button>
                         </div>
                         <table className={styles.table}>
                             <tr>
@@ -180,7 +188,12 @@ const ListForManagers = () => {
                                     </Popup>
                                 </td>
                                 <td>
-                                    <AiFillEye className={styles.iconView} />
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/viewManager");
+                                        }}
+                                    />
                                 </td>
                             </tr>
                             <tr>
