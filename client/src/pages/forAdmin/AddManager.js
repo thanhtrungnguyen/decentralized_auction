@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import FooterCopy from "../../components/footer/FooterCopy";
 import Loading from "../../components/loading/Loading";
+import Time from "../../components/time/Time";
 
 const AddManager = () => {
     const [userName, setUsername] = useState("");
@@ -80,52 +81,51 @@ const AddManager = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser userName={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarAdmin />
-                    <div className={styles.content}>
-                        <div className={styles.add}>
-                            <label className={styles.title}>Add a New Manager</label>
-                            <br />
-                            <label className={styles.txt}>Username</label>
-                            <input
-                                id="userName"
-                                type="text"
-                                pattern="[a-zA-Z]{1,50}"
-                                className={styles.input}
-                                value={userName}
-                                onChange={(e) => handleInputChange(e)}
-                                required
-                            ></input>
-                            <label></label>
-                            <br />
-                            <br />
-                            <br />
-                            <label className={styles.txt}>Password</label>
-                            <input
-                                id="password"
-                                type="password"
-                                pattern="^\s*(?:\S\s*){8,}$"
-                                className={styles.input}
-                                value={password}
-                                onChange={(e) => handleInputChange(e)}
-                                required
-                            ></input>
-                            <br />
-                            <input type="button" value="Cancel" className={styles.btnCancel} onClick={cancel}></input>
-                            <input type="submit" value="Add Manager" className={styles.btnSubmit}></input>
-                        </div>
+                    <Time />
+
+                    <div className={styles.add}>
+                        <p className={styles.title}>Add New Manager</p>
+                        <p className={styles.if}>Basic Information</p>
+                        <p className={styles.txt}>First Name</p>
+                        <input className={styles.ip} type="text" id=""></input>
+                        <p className={styles.txt}>Last Name</p>
+                        <input className={styles.ip} type="text" id=""></input>
+                        <p className={styles.txt}>Gender</p>
+                        <select id="gender" className={styles.ip} onChange={(e) => handleInputChange(e)} placeholder="Gender" defaultValue="Male">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <p className={styles.txt}>Email</p>
+                        <input className={styles.ip} type="text" id=""></input>
+                        <p className={styles.txt}>Phone</p>
+                        <input className={styles.ip} type="text" id=""></input>
+                        <p className={styles.txt}>Address</p>
+                        <input className={styles.ip} type="text" id=""></input>
+                        <p className={styles.if}>Account Information</p>
+                        <p className={styles.txt}>Username</p>
+                        <input className={styles.ip} type="text" id=""></input>
+                        <p className={styles.txt}>Password</p>
+                        <input className={styles.ip} type="password" id=""></input>
+                        <p className={styles.txt}>Re-Password</p>
+                        <input className={styles.ip} type="password" id=""></input>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <input className={styles.btnAdd} type="submit" value="Add"></input>
+                        <button
+                            className={styles.btnCancel}
+                            onClick={() => {
+                                navigate("/listManagers");
+                            }}
+                        >
+                            Cancel
+                        </button>
                     </div>
-                    <Footer />
-                    <FooterCopy />
                 </div>
             </form>
         </>

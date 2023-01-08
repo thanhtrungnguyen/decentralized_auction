@@ -14,7 +14,7 @@ import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
 // import { useFetch } from "../../hook/useFetch";
 import { useParams } from "react-router-dom";
-
+import Time from "../../components/time/Time";
 const ViewSeller = () => {
     const { id } = useParams();
     const [data, setData] = useState([]);
@@ -35,47 +35,243 @@ const ViewSeller = () => {
         });
         return users;
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const res = await axios.get(baseURL);
-                setData(res.data);
-            } catch (error) {
-                setError(error);
-            }
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         try {
+    //             const res = await axios.get(baseURL);
+    //             setData(res.data);
+    //         } catch (error) {
+    //             setError(error);
+    //         }
 
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
+    //         if (getUser() != null) {
+    //             setRole(getUser().role);
+    //         } else {
+    //             setRole("");
+    //         }
 
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURL]);
+    //         setLoading(false);
+    //     };
+    //     fetchData();
+    // }, [baseURL]);
     const cancel = () => {
         navigate("/listSellers");
     };
 
-    return loading ? (
+    return !loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
-            <NavBar />
             <form>
                 <div className={styles.container}>
                     <SideBarAdmin />
+                    <Time />
                     <div className={styles.content}>
-                        <div className={styles.left}>
+                        <p className={styles.title}>Organization Information</p>
+                        <p className={styles.if}>Basic Information</p>
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Organization Name</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Mr</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Tax Code</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Hero</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Tax Code Granted Date</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Male</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Tax Code Granted Place</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>02/06/2000</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Organization Specific Address</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>abcxyz@gmail.com</label>
+                            </div>
+                        </div>
+
+                        <p className={styles.title}>Personal Information</p>
+                        <p className={styles.if}>Basic Information</p>
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>First Name</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Mr</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Last Name</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Hero</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Gender</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Male</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Date Of Birth</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>02/06/2000</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Email</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>abcxyz@gmail.com</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Phone</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>0987654321</label>
+                            </div>
+                        </div>
+                        <p className={styles.if}>Address</p>
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Province/City</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Mr</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>District</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Hero</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Wards</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Male</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Specific Address</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>02/06/2000</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <p className={styles.if}>Citizen Card</p>
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Card Number </label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Mr</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Card Granted Date</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Hero</label>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <label className={styles.txt}>Card Granted Place</label>
+                            </div>
+                            <div className={styles.r}>
+                                <label className={styles.txt2}>Male</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                    className={styles.img}
+                                ></img>
+                            </div>
+                            <div className={styles.r}>
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                    className={styles.img}
+                                ></img>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <button
+                            className={styles.btn}
+                            onClick={() => {
+                                navigate("/listSellers");
+                            }}
+                        >
+                            Back
+                        </button>
+
+                        {/* <div className={styles.left}>
                             <p className={styles.title}>Seller information</p>
                             <p className={styles.bold}>Organization information</p>
                             <p className={styles.txt}>Organization name</p>
@@ -105,14 +301,6 @@ const ViewSeller = () => {
                                 src={`http://localhost:8800/api/auction/images/${data.contact.Font_Side_Image__c}`}
                                 alt="images"
                             />
-                            {/* <img
-              className={styles.img}
-              src={`http://localhost:8800/api/auction/images/${data.cardFront}`}
-              alt="images"
-            /> */}
-                            {/* <p className={styles.bold}>Account Information</p>
-                            <p className={styles.txt}>Username</p>
-                            <p className={styles.txt}>Password</p> */}
                         </div>
                         <div className={styles.right}>
                             <p className={styles.title}>.</p>
@@ -165,22 +353,15 @@ const ViewSeller = () => {
                                 src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`}
                                 alt="images"
                             />
-                            {/* <img
-              className={styles.img2}
-              src={`http://localhost:8800/api/auction/images/${data.cardBack}`}
-              alt="images"
-            /> */}
+
                             <p className={styles.bold}>.</p>
-                            {/* <p className={styles.txtR}>wanjala</p> */}
-                            {/* <p className={styles.txtR}>${data.username}</p> */}
-                            <br/>
-                            <br/>
-                            {/* <p className={styles.txtR}>**********</p> */}
-                            {/* <p className={styles.txtR}>${data.password}</p> */}
+
+                            <br />
+                            <br />
+
                             <input type="button" value="Back" className={styles.btnCancel} onClick={cancel}></input>
-                        </div>
+                        </div> */}
                     </div>
-                    <Footer />
                 </div>
             </form>
         </>

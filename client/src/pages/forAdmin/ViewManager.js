@@ -14,6 +14,7 @@ import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
 import { useFetch } from "../../hook/useFetch";
 import { useParams } from "react-router-dom";
+import Time from "../../components/time/Time";
 
 const ViewManager = () => {
     const { id } = useParams();
@@ -52,35 +53,52 @@ const ViewManager = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
-            <NavBar />
             <form>
                 <div className={styles.container}>
                     <SideBarAdmin />
+                    <Time />
                     <div className={styles.content}>
                         <div className={styles.add}>
+                            <br />
+                            <br />
                             <label className={styles.title}>Manager Account Information</label>
                             <br />
-                            <label className={styles.txt}>Username</label>
-                            <label>{data.user.Name}</label>
-                            <label></label>
+                            <br />
+
+                            <p className={styles.if}>Basic Information</p>
+                            <br />
+
+                            <p className={styles.txt}>First Name:</p>
+                            <p className={styles.txt}>Nguyen</p>
+                            <p className={styles.txt}>Last Name:</p>
+                            <p className={styles.txt}>An</p>
+                            <p className={styles.txt}>Gender:</p>
+                            <p className={styles.txt}>Male</p>
+
+                            <p className={styles.txt}>Email:</p>
+                            <p className={styles.txt}>abc@gmail.com</p>
+                            <p className={styles.txt}>Phone:</p>
+                            <p className={styles.txt}>0987654321</p>
+                            <p className={styles.txt}>Address:</p>
+                            <p className={styles.txt}>Thach Hoa, Thach That, Ha Noi</p>
                             <br />
                             <br />
+
+                            <p className={styles.if}>Account Information</p>
                             <br />
-                            <label className={styles.txt}>Password</label>
-                            <label>{data.user.Password__c}</label>
+
+                            <p className={styles.txt}>Username:</p>
+                            <p className={styles.txt}>abcxyz</p>
+                            <p className={styles.txt}>Password:</p>
+                            <p className={styles.txt}>**********</p>
+
+                            <br />
+                            <br />
                             <br />
                             <br />
                             <input type="button" value="Back" className={styles.btnCancel} onClick={cancel}></input>
                         </div>
                     </div>
-                    <Footer />
                 </div>
             </form>
         </>

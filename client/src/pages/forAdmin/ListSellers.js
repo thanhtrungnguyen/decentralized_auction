@@ -18,6 +18,7 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 import Time from "../../components/time/Time";
 const ListSellers = () => {
@@ -86,6 +87,7 @@ const ListSellers = () => {
             setRole("");
         }
     }, []);
+    const navigate = useNavigate();
     return loading ? (
         <Loading />
     ) : (
@@ -101,6 +103,14 @@ const ListSellers = () => {
                             <button className={styles.btn}>Deactivate</button>
                             <input className={styles.ip} type="text" placeholder="Enter Name"></input>
                             <button className={styles.btn}>Search</button>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/addSeller");
+                                }}
+                            >
+                                + New Seller
+                            </button>
                         </div>
                         <table className={styles.table}>
                             <tr>
@@ -131,8 +141,18 @@ const ListSellers = () => {
                                     </Popup>
                                 </td>
                                 <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
+                                    {/* <AiTwotoneEdit
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/viewSeller");
+                                        }}
+                                    /> */}
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/viewSeller");
+                                        }}
+                                    />
                                 </td>
                             </tr>
                             <tr>

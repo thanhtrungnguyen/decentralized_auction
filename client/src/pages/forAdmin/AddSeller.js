@@ -12,7 +12,7 @@ import jwt from "jsonwebtoken";
 import Select from "react-select";
 import useLocationForm from "../register/useLocationForm";
 import Loading from "../../components/loading/Loading";
-
+import Time from "../../components/time/Time";
 const AddSeller = () => {
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const navigate = useNavigate();
@@ -196,17 +196,10 @@ const AddSeller = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (ro === "BIDDER" || ro === "SELLER" || ro === "MANAGER" || ro === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarAdmin />
+                    <Time />
                     <div className={styles.content}>
                         <div className={styles.add}>
                             <p className={styles.textCreate}>Create Seller account</p>
@@ -461,7 +454,6 @@ const AddSeller = () => {
                             <input type="button" className={styles.ipCancel} value="CANCEL" onClick={Cancel}></input>
                         </div>
                     </div>
-                    <Footer />
                 </div>
             </form>
         </>
