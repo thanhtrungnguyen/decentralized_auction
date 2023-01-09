@@ -1,20 +1,14 @@
 import styles from "../../styleCss/stylesPages/forAdmin/listManager.module.css";
-import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBarAdmin";
-import Footer from "../../components/footer/Footer";
+
 import SidebarAdmin from "../../components/sidebar_admin/SidebarAdmin";
-import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-// import { BsFillCheckSquareFill } from "react-icons/bs";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+
 import Popup from "reactjs-popup";
 import BanedSeller from "../../components/popups/forAdmin/BanSeller";
 import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
 import { useFetchPagination } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
-import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";

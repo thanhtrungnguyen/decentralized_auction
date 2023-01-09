@@ -15,6 +15,10 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 // import { useFetch, useFetchPagination } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
+import Time from "../../components/time/Time";
+import Popup from "reactjs-popup";
+import { useNavigate } from "react-router-dom";
+import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 
 const MyProperty = () => {
     const [page, setPage] = React.useState(1);
@@ -32,28 +36,28 @@ const MyProperty = () => {
     const requestAuction = "http://localhost:8800/api/auction/request/";
     const [role, setRole] = useState();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURLCategory).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setListCategory(resp.data);
-            });
-            await axios.get(baseURLProperty, { withCredentials: true }).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setListProperty(resp.data);
-            });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURLProperty]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         await axios.get(baseURLCategory).then((resp) => {
+    //             console.log(resp.data);
+    //             console.log("axios get");
+    //             setListCategory(resp.data);
+    //         });
+    //         await axios.get(baseURLProperty, { withCredentials: true }).then((resp) => {
+    //             console.log(resp.data);
+    //             console.log("axios get");
+    //             setListProperty(resp.data);
+    //         });
+    //         if (getUser() != null) {
+    //             setRole(getUser().role);
+    //         } else {
+    //             setRole("");
+    //         }
+    //         setLoading(false);
+    //     };
+    //     fetchData();
+    // }, [baseURLProperty]);
 
     const RequestAuction = (propertyId) => {
         setLoading(true);
@@ -118,23 +122,171 @@ const MyProperty = () => {
         });
         return users;
     };
-    return loading ? (
+    const navigate = useNavigate();
+
+    return !loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarSeller />
-
-                    <div className={styles.content}>
+                    <Time />
+                    <div className={styles.r}>
+                        <div className={styles.con}>
+                            <div className={styles.btns}>
+                                <button className={styles.btn}>All</button>
+                                <button className={styles.btn}>Created</button>
+                                <button className={styles.btn}>Modified</button>
+                                <button className={styles.btn}>Request</button>
+                                <button className={styles.btn}>Approved</button>
+                                <button className={styles.btn}>Rejected</button>
+                                <input className={styles.ip} type="text" placeholder="Enter Name"></input>
+                                <button className={styles.btn}>Search</button>
+                                <button
+                                    className={styles.btn}
+                                    onClick={() => {
+                                        navigate("/addProperty");
+                                    }}
+                                >
+                                    + New Property
+                                </button>
+                            </div>
+                            <table className={styles.table}>
+                                <tr>
+                                    <th className={styles.th}>Property Name</th>
+                                    <th className={styles.th}>Category</th>
+                                    <th className={styles.th}>Start Bid</th>
+                                    <th className={styles.th}>Status</th>
+                                    <th className={styles.th}>Action</th>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiTwotoneEdit className={styles.iconView} />
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/bidderDetail");
+                                            }}
+                                        />
+                                        <AiOutlineDelete className={styles.iconView} />
+                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
+                                            Request Add
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiTwotoneEdit className={styles.iconView} />
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/bidderDetail");
+                                            }}
+                                        />
+                                        <AiOutlineDelete className={styles.iconView} />
+                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
+                                            Request Add
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiTwotoneEdit className={styles.iconView} />
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/bidderDetail");
+                                            }}
+                                        />
+                                        <AiOutlineDelete className={styles.iconView} />
+                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
+                                            Request Add
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiTwotoneEdit className={styles.iconView} />
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/bidderDetail");
+                                            }}
+                                        />
+                                        <AiOutlineDelete className={styles.iconView} />
+                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
+                                            Request Add
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiTwotoneEdit className={styles.iconView} />
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/bidderDetail");
+                                            }}
+                                        />
+                                        <AiOutlineDelete className={styles.iconView} />
+                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
+                                            Request Add
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiTwotoneEdit className={styles.iconView} />
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/bidderDetail");
+                                            }}
+                                        />
+                                        <AiOutlineDelete className={styles.iconView} />
+                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
+                                            Request Add
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr />
+                            <div>
+                                <Pagination
+                                    className={styles.Pagination}
+                                    // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                    // page={page}
+                                    // onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    {/* <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Property Name</p>
@@ -283,9 +435,7 @@ const MyProperty = () => {
                                 />
                             </div>
                         </div>
-                    </div>
-
-                    <Footer />
+                    </div> */}
                 </div>
             </form>
         </>

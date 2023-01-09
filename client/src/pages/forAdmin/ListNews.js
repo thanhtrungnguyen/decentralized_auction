@@ -19,6 +19,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import Time from "../../components/time/Time";
+
 const ListNews = () => {
     const [page, setPage] = useState(1);
     const [title, setTitle] = useState(null);
@@ -27,6 +28,7 @@ const ListNews = () => {
     // const [searchData, setSearchData] = useState("");
     // const navigate = useNavigate();
     const [role, setRole] = useState();
+    const navigate = useNavigate();
 
     const perPage = 10;
     var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}/${perPage}`;
@@ -142,6 +144,14 @@ const ListNews = () => {
                             <button className={styles.btn}>Deactivate</button>
                             <input className={styles.ip} type="text" placeholder="Enter Name"></input>
                             <button className={styles.btn}>Search</button>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/addNew");
+                                }}
+                            >
+                                + New News
+                            </button>
                         </div>
                         <table className={styles.table}>
                             <tr>
@@ -170,8 +180,18 @@ const ListNews = () => {
                                     </Popup>
                                 </td>
                                 <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
+                                    <AiTwotoneEdit
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/editNews");
+                                        }}
+                                    />
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/viewNewsForAdmin");
+                                        }}
+                                    />
                                 </td>
                             </tr>
                             <tr>
