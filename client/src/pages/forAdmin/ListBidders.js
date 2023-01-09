@@ -1,26 +1,20 @@
 import styles from "../../styleCss/stylesPages/forAdmin/listManager.module.css";
-import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBarAdmin";
-import Footer from "../../components/footer/Footer";
+
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-// import { BsFillCheckSquareFill } from "react-icons/bs";
-// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import BanedBidder from "../../components/popups/forAdmin/BanBidder";
 import ActiveBidder from "../../components/popups/forAdmin/ActiveBidder";
-// import { useFetchPagination } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
-import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import Time from "../../components/time/Time";
+import { useNavigate } from "react-router-dom";
 
-// import { color } from "@mui/system";
 const ListBidders = () => {
     const [page, setPage] = React.useState(1);
     const [data, setData] = useState([]);
@@ -68,6 +62,8 @@ const ListBidders = () => {
         setPage(1);
         event.preventDefault();
     };
+    const navigate = useNavigate();
+
     const handleChange = (event, value) => {
         setPage(value);
     };
