@@ -30,7 +30,7 @@ const ListBidders = () => {
     const [status, setStatus] = useState(null);
     //const [filter,setFilter] = useState("");
     // const navigate = useNavigate();
-    const baseURL = `http://localhost:5000/api/user/users/bidder`;
+    const baseURL = `http://localhost:5000/api/individual/individuals/bidder/${page}/${status}`;
     const [role, setRole] = useState();
 
     //const { data, loading, error } = useFetchPagination(baseURL, page);
@@ -38,12 +38,11 @@ const ListBidders = () => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
-                // console.log(resp.data);
-                // console.log("axios get");
-                setData(resp.data);
-            });
 
-            // console.log(getUser().type);
+                // console.log("axios get");
+                setData(resp.data.individuals);
+                //console.log(resp);
+            });
             if (getUser() != null) {
                 setRole(getUser().role);
             } else {
@@ -51,7 +50,7 @@ const ListBidders = () => {
             }
 
             setLoading(false);
-        };
+        }
         fetchData();
     }, [baseURL]);
     const handleInputChange = (e) => {
@@ -65,22 +64,6 @@ const ListBidders = () => {
         setPage(1);
     };
     const handleSubmit = (event) => {
-        // const formData = new FormData();
-
-        // formData.append("email", email);
-
-        // axios
-        //     .get("http://localhost:8800/api/bidder", formData, {
-        //         withCredentials: true,
-        //     })
-        //     .then((res) => {
-        //         console.log(res);
-        //         console.log(res.data);
-        //         alert(res.data.message);
-        //         // setData(res.data);
-
-        //         navigate("/listBidders");
-        //     });
         email2 === "" ? setEmail(null) : setEmail(email2);
         setPage(1);
         event.preventDefault();
@@ -99,7 +82,43 @@ const ListBidders = () => {
         });
         return users;
     };
-    return !loading ? (
+    function exportData(data) {
+        return <>
+            {data.listUser.map((item) =>
+                <tr>
+                    <td>{item.firstName} {item.lastName}</td>
+                    <td>{item.email}</td>
+                    <td>{item.phone}</td>
+                    <td>{item.address}</td>
+                    <td>{item.user.status === true ? 'Activate' : 'Deactivate'}</td>
+                    <td>
+                        {item.user.status === true ?
+                            <Popup trigger={
+                                <label style={{ color: "red" }} className={styles.linkBlue}>
+                                    Deactivate
+                                </label>
+                            }
+                                position="right center">
+                                <BanedBidder idManager="" />
+                            </Popup> :
+                            <Popup trigger={
+                                <label className={styles.linkBlue}>
+                                    Activate
+                                </label>}
+                                position="right center">
+                                <ActiveBidder idManager="" />
+                            </Popup>}
+
+                    </td>
+                    <td>
+                        <AiTwotoneEdit className={styles.iconView} />
+                        <AiFillEye className={styles.iconView} />
+                    </td>
+                </tr>
+            )}
+        </>
+    }
+    return loading ? (
         <Loading />
     ) : (
         <>
@@ -109,11 +128,15 @@ const ListBidders = () => {
                 <div className={styles.r}>
                     <div className={styles.con}>
                         <div className={styles.btns}>
-                            <button className={styles.btn}>All</button>
-                            <button className={styles.btn}>Activate</button>
-                            <button className={styles.btn}>Deactivate</button>
-                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
-                            <button className={styles.btn}>Search</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='null'>All</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='true'>Activate</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='false'>Deactivate</button>
+                            <form onSubmit={handleSubmit}>
+                                <input className={styles.ip} type="text" placeholder="Enter Email" id="email" value={email2}
+                                    onChange={(e) => handleInputChange(e)}></input>
+                                <button className={styles.btn} type='submit' >Search</button>
+                            </form>
+
                         </div>
                         <table className={styles.table}>
                             <tr>
@@ -123,116 +146,18 @@ const ListBidders = () => {
                                 <th className={styles.th}>Address</th>
                                 <th className={styles.th}>Status</th>
                                 <th className={styles.th}>Action</th>
-                                <th className={styles.th}></th>
+                                {/* <th className={styles.th}></th> */}
                             </tr>
-                            {data.users.map((item) => {
-                                return <>
-                                    <tr>
-                                        <td>Classic Bathrobe</td>
-                                        <td>abc@gmail.com</td>
-                                        <td>09000999000</td>
-                                        <td>Thach That, Ha Noi, Viet Nam</td>
-                                        <td>Activate</td>
-                                        <td>
-                                            <Popup
-                                                trigger={
-                                                    <label style={{ color: "red" }} className={styles.linkBlue}>
-                                                        Deactivate
-                                                    </label>
-                                                }
-                                                position="right center"
-                                            >
-                                                <BanedBidder idManager="" />
-                                            </Popup>
-                                        </td>
-                                        <td>
-                                            <AiTwotoneEdit className={styles.iconView} />
-                                            <AiFillEye className={styles.iconView} />
-                                        </td>
-                                    </tr>
+                            {exportData(data)}
 
-                                </>
-                            })}
-
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Deactivate</td>
-                                <td>
-                                    {" "}
-                                    <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                        <ActiveBidder idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
                         </table>
                         <hr />
                         <div>
                             <Pagination
                                 className={styles.Pagination}
-                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                            // page={page}
-                            // onChange={handleChange}
+                                count={Math.ceil(data.count / 8)}
+                                page={page}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>

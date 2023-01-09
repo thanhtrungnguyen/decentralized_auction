@@ -9,6 +9,35 @@ const getAllIndividuals = async () => {
     logger.error(error);
   }
 };
+const getIndividualsByRole = async (role: String, index: any, status: any) => {
+  try {
+    var skip = parseInt(index);
+    skip = skip == 1 ? 0 : (skip - 1) * 8 + 1;
+    var filterUser, filter;
+    status == 'null' ? (filterUser = { role: role }) : (filterUser = { role: role, status: status });
+    var arr = await Individual.find({})
+      .populate({
+        path: 'user',
+        match: filterUser
+      })
+      .skip(skip)
+      .limit(8)
+      .exec();
+    arr = arr.filter((element) => element.user !== null);
+
+    var count = await Individual.find({})
+      .populate({
+        path: 'user',
+        match: filterUser
+      })
+      .exec();
+    count = count.filter((element) => element.user !== null);
+
+    return { listUser: arr, count: count.length };
+  } catch (error) {
+    logger.error(error);
+  }
+};
 
 const getIndividual = async (filter: FilterQuery<IIndividualDocument>, options: QueryOptions = { lean: true }) => {
   try {
@@ -42,4 +71,4 @@ const deleteIndividual = async (filter: FilterQuery<IIndividual>) => {
   }
 };
 
-export { getAllIndividuals, getIndividual, createIndividual, updateIndividual, deleteIndividual };
+export { getAllIndividuals, getIndividual, createIndividual, updateIndividual, deleteIndividual, getIndividualsByRole };
