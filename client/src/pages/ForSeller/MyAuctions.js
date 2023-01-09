@@ -14,7 +14,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 // import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
-
+import Time from "../../components/time/Time";
 const MyAuctions = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState(null);
@@ -56,23 +56,23 @@ const MyAuctions = () => {
         setStatus(e.target.value);
         setPage(1);
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURLCategory).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setListCategory(resp.data);
-            });
-            await axios.get(baseURLAuction, { withCredentials: true }).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setListAuction(resp.data);
-            });
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURLAuction]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         await axios.get(baseURLCategory).then((resp) => {
+    //             console.log(resp.data);
+    //             console.log("axios get");
+    //             setListCategory(resp.data);
+    //         });
+    //         await axios.get(baseURLAuction, { withCredentials: true }).then((resp) => {
+    //             console.log(resp.data);
+    //             console.log("axios get");
+    //             setListAuction(resp.data);
+    //         });
+    //         setLoading(false);
+    //     };
+    //     fetchData();
+    // }, [baseURLAuction]);
     const handleSubmit = (event) => {
         propertyName2 === "" ? setPropertyName(null) : setPropertyName(propertyName2);
         setCategory(category2);
@@ -98,17 +98,10 @@ const MyAuctions = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarSeller />
+                    <Time />
                     <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
@@ -276,7 +269,6 @@ const MyAuctions = () => {
                             </div>
                         </div>
                     </div>
-                    <Footer />
                 </div>
             </form>
         </>
