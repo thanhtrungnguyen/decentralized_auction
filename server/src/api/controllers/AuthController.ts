@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { defaultConfig } from '../../config/default';
+import { defaultConfig } from '../../config/constant-variables';
 import { createSession, findSessions, updateSession } from '../services/AuthService';
 import { validatePassword } from '../services/UserService';
 import { signJwt } from '../utils/jwt';

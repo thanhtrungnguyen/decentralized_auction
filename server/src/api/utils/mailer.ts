@@ -1,5 +1,5 @@
 import nodemailer, { SendMailOptions } from 'nodemailer';
-import { config } from '../../config/config';
+import { config } from '../../config/custom-environment-variables';
 import logger from './logger';
 
 const smtp = config.smtp;

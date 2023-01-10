@@ -4,7 +4,8 @@ import logger from '../utils/logger';
 
 const getAllIndividuals = async () => {
   try {
-    return await Individual.find({});
+    let list = await Individual.find({}).populate('user');
+    return list;
   } catch (error) {
     logger.error(error);
   }
@@ -12,7 +13,7 @@ const getAllIndividuals = async () => {
 
 const getIndividual = async (filter: FilterQuery<IIndividualDocument>, options: QueryOptions = { lean: true }) => {
   try {
-    return await Individual.findOne(filter, {}, options).populate('user');
+    return await Individual.findOne(filter, {}, options);
   } catch (error) {
     logger.error(error);
   }

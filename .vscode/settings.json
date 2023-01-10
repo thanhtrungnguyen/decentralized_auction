@@ -8,6 +8,7 @@
   "cSpell.words": [
     "codepaths",
     "emerg",
+    "moralis",
     "openapi",
     "pino",
     "tsbuildinfo",
@@ -16,5 +17,6 @@
   ],
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "cSpell.ignoreWords": ["firestore"]
 }

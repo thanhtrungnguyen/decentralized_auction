@@ -16,9 +16,9 @@ createAuction = async (
     startBid,
     priceStep
 ) => {
-    const auction = await ethers.getContract("Auction");
+    const auctionContract = await ethers.getContract("Auction");
     console.log("Creating auction...");
-    const createAuction = await auction.createAuction(
+    const createAuction = await auctionContract.createAuction(
         auctionId,
         startRegistrationTime,
         endRegistrationTime,
@@ -30,14 +30,18 @@ createAuction = async (
         startBid,
         priceStep
     );
-    await createAuction.wait(1);
-    console.log("The Auction created!");
+
+    console.log("Tx hash: ", createAuction.hash);
+    const result = await createAuction.wait(1);
+
+    console.log(result);
+
     if (network.config.chainId == "31337") {
         await moveBlocks(2, (sleepAmount = 1000));
     }
 };
 
-const auctionId = "he6hyre";
+const auctionId = "fdshy5";
 const startRegistrationTime = getEpoch("December 29, 2023 12:25:19");
 const endRegistrationTime = getEpoch("December 29, 2023 12:28:00");
 const startAuctionTime = getEpoch("December 29, 2023 12:28:10");
@@ -47,17 +51,6 @@ const registrationFee = parseWei(0.00001);
 const depositAmount = parseWei(0.002);
 const startBid = parseWei(0.005);
 const priceStep = parseWei(0.00001);
-// console.log(
-//     startRegistrationTime,
-//     endRegistrationTime,
-//     startAuctionTime,
-//     endAuctionTime,
-//     duePaymentTime,
-//     registrationFee,
-//     depositAmount,
-//     startBid,
-//     priceStep
-// );
 
 createAuction(
     auctionId,
