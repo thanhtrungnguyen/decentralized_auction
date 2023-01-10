@@ -156,7 +156,14 @@
     position: absolute;
     margin-top: 1200px; */
 }
-
+.txt {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    margin-left: 20px;
+    line-height: 34px;
+}
 .btnCancel {
     position: absolute;
     width: 118px;
@@ -222,7 +229,7 @@
 .video {
     width: 150px;
     height: 100px;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .auctionForm {
