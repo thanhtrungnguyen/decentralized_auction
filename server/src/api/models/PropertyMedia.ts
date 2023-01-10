@@ -1,3 +1,4 @@
+import { array } from 'joi';
 import mongoose, { Document, Schema } from 'mongoose';
 import { IPropertyDocument } from './Property';
 
@@ -14,7 +15,7 @@ export interface IPropertyMediaDocument extends IPropertyMedia, Document {
 const propertyMediaSchema: Schema = new Schema(
   {
     property: { type: Schema.Types.ObjectId, required: true },
-    mediaUrl: { type: String, required: true }
+    mediaUrl: { type: Array(String), required: true }
   },
   { timestamps: true, versionKey: false }
 );

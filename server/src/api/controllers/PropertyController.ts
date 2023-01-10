@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCategory } from '../services/CategoryService';
-import { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty } from '../services/PropertyService';
+import { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty, findMediaByPropertyId } from '../services/PropertyService';
 import { findUser } from '../services/UserService';
 
 export const getAllPropertiesHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -16,8 +16,14 @@ export const getAllPropertiesHandler = async (req: Request, res: Response, next:
 export const getPropertyByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const propertyId = req.params.propertyId;
   return await getProperty({ _id: propertyId })
-    .then((property) => {
-      res.status(200).json({ property });
+    .then(async (property) => {
+      await findMediaByPropertyId(property?._id)
+        .then((media) => {
+          res.status(200).json({ property, media });
+        })
+        .catch((error) => {
+          res.status(500).json({ error });
+        });
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -26,18 +32,19 @@ export const getPropertyByIdHandler = async (req: Request, res: Response, next: 
 
 export const createPropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const property = req.body;
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
   const category = await getCategory({ _id: req.body.category });
   if (!category) return res.status(404).json({ message: 'Category not found' });
   const user = await findUser({ _id: req.body.user });
   if (!user) return res.status(404).json({ message: 'User not found' });
 
-  return await createProperty({ ...property, user: user._id, category: category._id })
-    .then((property) => {
-      res.status(201).json({ property });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
+  const dataProperty = await createProperty({ ...property, user: user._id, category: category._id }, files);
+
+  if (dataProperty.success == false) {
+    res.status(500).json(dataProperty);
+  } else {
+    res.status(201).json(dataProperty);
+  }
 };
 
 export const updatePropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
