@@ -14,7 +14,7 @@ import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import Time from "../../components/time/Time";
 import axios from "axios";
-
+import moment from "moment";
 const ListNews = () => {
     const [page, setPage] = useState(1);
     const [data, setData] = useState([]);
@@ -86,8 +86,7 @@ const ListNews = () => {
                 {data.listNews.map((item) => (
                     <tr>
                         <td>{item.title}</td>
-                        <td>{item.createdAt}</td>
-
+                        <td>{moment(item.createdAt).format('L')} - {moment(item.createdAt).format('LTS')} </td>
                         <td>{item.status === 'activate' ? 'Activate' : 'Deactivate'}</td>
                         <td>
                             {item.status === 'activate' ?
@@ -157,7 +156,7 @@ const ListNews = () => {
                         <table className={styles.table}>
                             <tr>
                                 <th className={styles.th}>Title</th>
-                                <th className={styles.th}>Last modified</th>
+                                <th className={styles.th}>Created At</th>
 
                                 <th className={styles.th}>Status</th>
                                 <th className={styles.th}>Action</th>
