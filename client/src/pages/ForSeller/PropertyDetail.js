@@ -27,7 +27,7 @@ const PropertyDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const baseURL = `http://localhost:8800/api/property/getById/${id}`;
+    const baseURL = `http://localhost:5000/api/property/${id}`;
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
@@ -42,29 +42,29 @@ const PropertyDetail = () => {
                 console.log("axios get");
                 setData(resp.data);
             });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
+            // if (getUser() != null) {
+            //     setRole(getUser().role);
+            // } else {
+            //     setRole("");
+            // }
             setLoading(false);
         };
         fetchData();
     }, [baseURL]);
 
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-    return !loading ? (
+    // const getUser = () => {
+    //     var users = null;
+    //     const token = Cookies.get("access_token");
+    //     if (!token) {
+    //         console.log("Not authenticated");
+    //     }
+    //     jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+    //         users = user;
+    //     });
+    //     return users;
+    // };
+    return loading ? (
         <Loading />
     ) : (
         <>
@@ -81,9 +81,9 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Image</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <img className={styles.img} src={`https://www.w3schools.com/html/pic_trulli.jpg`} alt="images" />
-                                    <img className={styles.img} src={`https://www.w3schools.com/html/pic_trulli.jpg`} alt="images" />
-                                    <img className={styles.img} src={`https://www.w3schools.com/html/pic_trulli.jpg`} alt="images" />
+                                    <img className={styles.img} src={`${data.media.mediaUrl[0]}`} alt="images" />
+                                    <img className={styles.img} src={`${data.media.mediaUrl[1]}`} alt="images" />
+                                    <img className={styles.img} src={`${data.media.mediaUrl[2]}`} alt="images" />
                                 </div>
                             </div>
                             <br />
@@ -92,9 +92,9 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Video</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <ReactPlayer
+                                    <video
                                         className={styles.video}
-                                        url={"https://www.youtube.com/watch?v=9l90STNZy_A"}
+                                        src={`${data.media.mediaUrl[3]}`}
                                         playing={true}
                                         controls={true}
                                         loop={true}
@@ -111,7 +111,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Name</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.property.name}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -119,7 +119,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Category</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.property.category.name}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -127,7 +127,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Start Bid</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.property.startBid}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -135,7 +135,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Deposit</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.property.depositAmount}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -143,7 +143,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Price Step</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.property.priceStep}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -151,7 +151,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Place View Property</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.property.placeViewProperty}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -159,7 +159,10 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>View Property Time</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>
+                                        From: {new Date(data.property.startViewPropertyTime).toLocaleString()} - To:{" "}
+                                        {new Date(data.property.endViewPropertyTime).toLocaleString()}
+                                    </p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -167,7 +170,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Description</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.property.description}</p>
                                 </div>
                             </div>
                         </div>

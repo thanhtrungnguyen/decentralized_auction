@@ -26,7 +26,7 @@ const AddProperty = () => {
     const [propertyImage3, setPropertyImage3] = useState(null);
     const [propertyVideo, setPropertyVideo] = useState(null);
     const [propertyName, setPropertyName] = useState(null);
-    const [category, setCategory] = useState("Chair");
+    const [category, setCategory] = useState("63b97591ba64545958a46800");
     const [propertyDescription, setPropertyDescription] = useState(null);
     const [startBid, setStartBid] = useState(null);
     const [deposit, setDeposit] = useState(null);
@@ -36,7 +36,7 @@ const AddProperty = () => {
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
     const navigate = useNavigate();
-    const baseURL = "http://localhost:5000/api/category/properties";
+    const baseURL = "http://localhost:5000/api/category/categories";
     const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
     useEffect(() => {
@@ -61,7 +61,7 @@ const AddProperty = () => {
             setPropertyImage3(e.target.files[0]);
         }
         if (id === "propertyVideo") {
-            setPropertyVideo(value);
+            setPropertyVideo(e.target.files[0]);
         }
         if (id === "propertyName") {
             setPropertyName(value);
@@ -100,26 +100,31 @@ const AddProperty = () => {
         formData.append("propertyImage2", propertyImage2);
         formData.append("propertyImage3", propertyImage3);
         formData.append("propertyVideo", propertyVideo);
-        formData.append("propertyName", propertyName);
+        formData.append("name", propertyName);
         formData.append("category", category);
-        formData.append("propertyDescription", propertyDescription);
-        formData.append("viewPropertyTime", viewPropertyTime);
+        formData.append("description", propertyDescription);
+        formData.append("startViewPropertyTime", viewPropertyTime[0]);
+        formData.append("endViewPropertyTime", viewPropertyTime[1]);
         formData.append("startBid", startBid);
-        formData.append("deposit", deposit);
+        formData.append("depositAmount", deposit);
         formData.append("priceStep", priceStep);
         formData.append("placeViewProperty", placeViewProperty);
-        console.log(formData);
+        formData.append("user", "63b9260db72a1b00ff19216c");
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
         axios
-            .post("http://localhost:8800/api/property", formData, {
+            .post("http://localhost:5000/api/property/create", formData, {
                 withCredentials: true,
             })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert("Add property successfully!!!");
-                navigate("/myProperty");
+                if (res.data.success == true) {
+                    alert(res.data.message);
+                } else {
+                    alert(res.data.message);
+                    navigate("/myProperty");
+                }
             });
 
         event.preventDefault();
@@ -191,18 +196,29 @@ const AddProperty = () => {
                                     </div>
                                 </div>
                             </div>
+
                             <div className={styles.fl}>
                                 <div className={styles.l}>
                                     <p className={styles.lable}>Property Video</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <input
+                                    {/* <input
                                         className={styles.inputText}
                                         type="text"
                                         id="propertyVideo"
                                         onChange={(e) => handleInputChange(e)}
                                         required
+                                    ></input> */}
+                                    <input
+                                        className={styles.inputImg}
+                                        id="propertyVideo"
+                                        onChange={(e) => handleInputChange(e)}
+                                        type="file"
+                                        required
                                     ></input>
+                                    <div className={styles.conImg}>
+                                        {propertyVideo && <video src={URL.createObjectURL(propertyVideo)} className={styles.image} controls />}{" "}
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -227,16 +243,10 @@ const AddProperty = () => {
                                     <p className={styles.lable}>Category</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <select
-                                        className={styles.drop}
-                                        onChange={(e) => handleInputChange(e)}
-                                        id="category"
-                                        placeholder="Category"
-                                        defaultValue="Chair"
-                                    >
-                                        {/* {data?.categories.map((item) => (
-                                        <option value={item.name}>{item.name}</option>
-                                    ))} */}
+                                    <select className={styles.drop} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category">
+                                        {data?.categories.map((item) => (
+                                            <option value={item._id}>{item.name}</option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
