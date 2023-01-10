@@ -1,28 +1,33 @@
 import styles from "../../styleCss/stylesComponents/sidebar_seller.module.css";
 
 import { Outlet, Link } from "react-router-dom";
+import { BiBookHeart, BiDizzy, BiDonateHeart, BiNews } from "react-icons/bi";
 
-const SidebarSeller = () => {
+const SidebarManager = () => {
     return (
         <>
             <div className={styles.container}>
-                <p className={styles.title}>Manager Auctions</p>
+                <img
+                    className={styles.avt}
+                    src="https://upload.wikimedia.org/wikipedia/commons/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg"
+                />
+                <p className={styles.txt2}>Manager</p>
+                <p className={styles.txt2}>mark zuckerberg</p>
+                <br />
+                <br />
+                <BiBookHeart className={styles.icon} />
                 <Link to="/autionsListForManager" className={styles.txt}>
-                    Auction
+                    Manage Auction
                 </Link>
                 <br />
-                <p className={styles.title}>Manager Categories</p>
+                <br />
+                <BiDizzy className={styles.icon} />
                 <Link to="/managerCategorys" className={styles.txt}>
-                    Category
-                </Link>{" "}
-                <br />
-                <br />
-                <Link to="/addCategory" className={styles.txt}>
-                    Add New Category
-                </Link>{" "}
+                    Manage Category
+                </Link>
             </div>
         </>
     );
 };
 
-export default SidebarSeller;
+export default SidebarManager;

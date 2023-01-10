@@ -12,7 +12,7 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
-
+import Time from "../../components/time/Time";
 const AddCategory = () => {
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);
@@ -68,18 +68,10 @@ const AddCategory = () => {
         <Loading />
     ) : (
         <>
-            {" "}
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarSeller />
+                    <Time />
                     <div className={styles.detail}>
                         <label className={styles.title}>Add a New Category</label>
                         <label className={styles.txt}>Category Name</label>
@@ -95,10 +87,16 @@ const AddCategory = () => {
                         ></input>
                     </div>
                     <div className={styles.btn}>
-                        <input type="button" value="Cancel" className={styles.btnCancel}></input>{" "}
+                        <button
+                            className={styles.btnCancel}
+                            onClick={() => {
+                                navigate("/managerCategorys");
+                            }}
+                        >
+                            Cancel
+                        </button>{" "}
                         <input type="submit" value="Save" className={styles.btnSave} disabled={categoryName === null ? true : false}></input>
                     </div>
-                    <Footer />
                 </div>
             </form>
         </>

@@ -71,6 +71,14 @@ th {
     height: 40px;
     margin-left: 380px;
 }
+.ip2 {
+    margin-top: 13px;
+    border-radius: 15px;
+    border: 1px solid darkgrey;
+    width: 200px;
+    height: 40px;
+    margin-left: 750px;
+}
 .iconView {
     width: 25px;
     height: 25px;
