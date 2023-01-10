@@ -1,12 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import {
-  getAllIndividuals,
-  getIndividual,
-  createIndividual,
-  updateIndividual,
-  deleteIndividual,
-  getIndividualsByRole
-} from '../services/IndividualService';
+import { getAllIndividuals, getIndividual, createIndividual, updateIndividual, deleteIndividual } from '../services/IndividualService';
 import { createUser, findUser } from '../services/UserService';
 
 export const getAllIndividualsHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -18,20 +11,6 @@ export const getAllIndividualsHandler = async (req: Request, res: Response, next
       res.status(500).json({ error });
     });
 };
-export const getIndividualsByRoleHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const role = req.params.role;
-  const index = req.params.index;
-  const status = req.params.status;
-  //const search = req.params.search;
-  return await getIndividualsByRole(role, index, status)
-    .then((individuals) => {
-      res.status(200).json({ individuals });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
-};
-
 export const getIndividualByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const individualId = req.params.individualId;
   return await getIndividual({ _id: individualId })

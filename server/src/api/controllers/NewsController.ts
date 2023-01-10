@@ -2,7 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import { getAllNews, getNews, createNews, updateNews, deleteNews } from '../services/NewsService';
 
 export const getAllNewsHandler = async (req: Request, res: Response, next: NextFunction) => {
-  return await getAllNews()
+  var index = req.params.index;
+  var status = req.params.status;
+  var search = req.params.search;
+  return await getAllNews(index, status, search)
     .then((news) => {
       res.status(200).json({ news });
     })
@@ -24,6 +27,10 @@ export const getNewsByIdHandler = async (req: Request, res: Response, next: Next
 
 export const createNewsHandler = async (req: Request, res: Response, next: NextFunction) => {
   const news = req.body;
+  var isExist = await getNews({ title: news.title });
+  if (isExist) {
+    return res.status(409).json({ message: 'Title has been exist!' });
+  }
   return await createNews(news)
     .then((news) => {
       res.status(201).json({ news });

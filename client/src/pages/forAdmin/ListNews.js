@@ -1,27 +1,24 @@
 import styles from "../../styleCss/stylesPages/forAdmin/listManager.module.css";
-import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBarAdmin";
-import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import Moment from "moment";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
 import Popup from "reactjs-popup";
 import PublishNews from "../../components/popups/forAdmin/PublishNews";
 import PrivateNews from "../../components/popups/forAdmin/PrivateNews";
-import { useFetchPagination } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
-import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import Time from "../../components/time/Time";
+import axios from "axios";
 
 const ListNews = () => {
     const [page, setPage] = useState(1);
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState(null);
     const [title2, setTitle2] = useState(null);
     const [status, setStatus] = useState(null);
@@ -30,11 +27,27 @@ const ListNews = () => {
     const [role, setRole] = useState();
     const navigate = useNavigate();
 
-    const perPage = 10;
-    var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}/${perPage}`;
-    // var totalURL = `http://localhost:8800/api/news/countNews`;
 
-    var { data, loading } = useFetchPagination(baseURL, page);
+    var baseURL = `http://localhost:5000/api/news/news/${page}/${status}/${title}`;
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+
+                // console.log("axios get");
+                setData(resp.data.news);
+                console.log(resp);
+            });
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
+            setLoading(false);
+        }
+        fetchData();
+    }, [baseURL]);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -44,22 +57,6 @@ const ListNews = () => {
     };
 
     const handleSubmit = (event) => {
-        // const formData = new FormData();
-
-        // formData.append("title", title);
-        // //var { data, loading, error } = useFetchPagination(baseURL, page);
-        // axios
-        //     .get("http://localhost:8800/api/news/search", {title}, {
-        //         withCredentials: true,
-        //     })
-        //     .then((res) => {
-        //         // console.log(res);
-        //         // console.log(res.data);
-        //         // alert(res.data.message);
-        //         setSearchData(res.data);
-
-        //         navigate("/listNews");
-        //     });
         title2 === "" ? setTitle(null) : setTitle(title2);
         setPage(1);
         event.preventDefault();
@@ -83,36 +80,37 @@ const ListNews = () => {
         setPage(1);
         // data = data.listNews.filter(news => news.Status__c.includes(`${filter}`))
     };
-    function search(data) {
+    function exportData(data) {
         return (
             <>
                 {data.listNews.map((item) => (
                     <tr>
-                        <td className={styles.td}>{item.Name}</td>
-                        <td className={styles.td}>{Moment(item.LastModifiedDate).format("DD/MM/yyy - H:mm")}</td>
-                        <td className={styles.td}>{item.Status__c}</td>
-                        <td className={styles.td}>
-                            {(() => {
-                                if (item.Status__c === "Published") {
-                                    return (
-                                        <Popup trigger={<label className={styles.linkBlue}>Private</label>} position="right center">
-                                            <PrivateNews idNews={item.Id} />
-                                        </Popup>
-                                    );
-                                } else {
-                                    return (
-                                        <Popup trigger={<label className={styles.linkBlue}>Publish</label>} position="right center">
-                                            <PublishNews idNews={item.Id} />
-                                        </Popup>
-                                    );
-                                }
-                            })()}
-                            <Link className={styles.linkBlue} to={`/viewNewsForAdmin/${item.Id}`}>
-                                View
-                            </Link>
-                            <Link className={styles.linkBlue} to={`/editNews/${item.Id}`}>
-                                Edit
-                            </Link>
+                        <td>{item.title}</td>
+                        <td>{item.createdAt}</td>
+
+                        <td>{item.status === 'activate' ? 'Activate' : 'Deactivate'}</td>
+                        <td>
+                            {item.status === 'activate' ?
+                                <Popup trigger={<label style={{ color: "red" }} className={styles.linkBlue}>Deactivate</label>} position="right center">
+                                    <PrivateNews idManager="" />
+                                </Popup> :
+                                <Popup trigger={<label style={{ color: "blue" }} className={styles.linkBlue}>Activate</label>} position="right center">
+                                    <PublishNews idManager="" />
+                                </Popup>}
+                        </td>
+                        <td>
+                            <AiTwotoneEdit
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate("/editNews");
+                                }}
+                            />
+                            <AiFillEye
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate("/viewNewsForAdmin");
+                                }}
+                            />
                         </td>
                     </tr>
                 ))}
@@ -139,11 +137,14 @@ const ListNews = () => {
                 <div className={styles.r}>
                     <div className={styles.con}>
                         <div className={styles.btns}>
-                            <button className={styles.btn}>All</button>
-                            <button className={styles.btn}>Activate</button>
-                            <button className={styles.btn}>Deactivate</button>
-                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
-                            <button className={styles.btn}>Search</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='null'>All</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='activate'>Activate</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='deactivate'>Deactivate</button>
+                            <form onSubmit={handleSubmit}>
+                                <input className={styles.ip} type="text" placeholder="Enter Title" id="title" value={title2}
+                                    onChange={(e) => handleInputChange(e)}></input>
+                                <button className={styles.btn} type='submit' >Search</button>
+                            </form>
                             <button
                                 className={styles.btn}
                                 onClick={() => {
@@ -162,176 +163,15 @@ const ListNews = () => {
                                 <th className={styles.th}>Action</th>
                                 <th className={styles.th}></th>
                             </tr>
-                            <tr>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-                                <td>01/01/2022 - 10:10</td>
-
-                                <td>Activate</td>
-                                <td>
-                                    <Popup
-                                        trigger={
-                                            <label style={{ color: "red" }} className={styles.linkBlue}>
-                                                Deactivate
-                                            </label>
-                                        }
-                                        position="right center"
-                                    >
-                                        <PrivateNews idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/editNews");
-                                        }}
-                                    />
-                                    <AiFillEye
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/viewNewsForAdmin");
-                                        }}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>01/01/2022 - 10:10</td>
-
-                                <td>Deactivate</td>
-                                <td>
-                                    {" "}
-                                    <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                        <PublishNews idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-                                <td>01/01/2022 - 10:10</td>
-
-                                <td>Activate</td>
-                                <td>
-                                    <Popup
-                                        trigger={
-                                            <label style={{ color: "red" }} className={styles.linkBlue}>
-                                                Deactivate
-                                            </label>
-                                        }
-                                        position="right center"
-                                    >
-                                        <PrivateNews idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>01/01/2022 - 10:10</td>
-
-                                <td>Deactivate</td>
-                                <td>
-                                    {" "}
-                                    <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                        <PublishNews idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>{" "}
-                            <tr>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-                                <td>01/01/2022 - 10:10</td>
-
-                                <td>Activate</td>
-                                <td>
-                                    <Popup
-                                        trigger={
-                                            <label style={{ color: "red" }} className={styles.linkBlue}>
-                                                Deactivate
-                                            </label>
-                                        }
-                                        position="right center"
-                                    >
-                                        <PrivateNews idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>01/01/2022 - 10:10</td>
-
-                                <td>Deactivate</td>
-                                <td>
-                                    {" "}
-                                    <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                        <PublishNews idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>{" "}
-                            <tr>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-                                <td>01/01/2022 - 10:10</td>
-
-                                <td>Activate</td>
-                                <td>
-                                    <Popup
-                                        trigger={
-                                            <label style={{ color: "red" }} className={styles.linkBlue}>
-                                                Deactivate
-                                            </label>
-                                        }
-                                        position="right center"
-                                    >
-                                        <PrivateNews idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>01/01/2022 - 10:10</td>
-
-                                <td>Deactivate</td>
-                                <td>
-                                    {" "}
-                                    <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                        <PublishNews idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
+                            {exportData(data)}
                         </table>
                         <hr />
                         <div>
                             <Pagination
                                 className={styles.Pagination}
-                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                // page={page}
-                                // onChange={handleChange}
+                                count={Math.ceil(data.count / 8)}
+                                page={page}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
