@@ -162,8 +162,13 @@ const ListBidders = () => {
                                     </Popup>
                                 </td>
                                 <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
+                                    {/* <AiTwotoneEdit className={styles.iconView} /> */}
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/bidderOrganizationDetail");
+                                        }}
+                                    />
                                 </td>
                             </tr>
                             <tr>
