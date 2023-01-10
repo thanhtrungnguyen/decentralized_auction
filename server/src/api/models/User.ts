@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
-import { defaultConfig } from '../../config/default';
+import { defaultConfig } from '../../config/constant-variables';
 
 export interface IUser {
   email: string;

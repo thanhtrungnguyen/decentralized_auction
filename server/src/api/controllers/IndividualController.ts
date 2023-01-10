@@ -1,9 +1,29 @@
 import { Request, Response, NextFunction } from 'express';
-import { getAllIndividuals, getIndividual, createIndividual, updateIndividual, deleteIndividual } from '../services/IndividualService';
+import {
+  getAllIndividuals,
+  getIndividual,
+  createIndividual,
+  updateIndividual,
+  deleteIndividual,
+  getIndividualsByRole
+} from '../services/IndividualService';
 import { createUser, findUser } from '../services/UserService';
 
 export const getAllIndividualsHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllIndividuals()
+    .then((individuals) => {
+      res.status(200).json({ individuals });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+export const getIndividualsByRoleHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const role = req.params.role;
+  const index = req.params.index;
+  const status = req.params.status;
+  //const search = req.params.search;
+  return await getIndividualsByRole(role, index, status)
     .then((individuals) => {
       res.status(200).json({ individuals });
     })
@@ -28,17 +48,17 @@ export const createIndividualHandler = async (req: Request, res: Response, next:
   const createIndividualData = req.body;
   const createUserData = req.body;
   const existEmailIndividual = await getIndividual({ email: req.body.email });
-  if (existEmailIndividual) {
-    return res.status(409).json({ message: 'Email has been exist!' });
-  }
-  const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
-  if (existPhoneIndividual) {
-    return res.status(409).json({ message: 'Phone has been exist!' });
-  }
-  const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
-  if (existCardNumberIndividual) {
-    return res.status(409).json({ message: 'Card Number has been exist!' });
-  }
+  // if (existEmailIndividual) {
+  //   return res.status(409).json({ message: 'Email has been exist!' });
+  // }
+  // const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
+  // if (existPhoneIndividual) {
+  //   return res.status(409).json({ message: 'Phone has been exist!' });
+  // }
+  // const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
+  // if (existCardNumberIndividual) {
+  //   return res.status(409).json({ message: 'Card Number has been exist!' });
+  // }
   const userCreated: any = await createUser({ ...createUserData, role: 'bidder' });
   if (userCreated._id) {
     return await createIndividual({ ...createIndividualData, user: userCreated._id })

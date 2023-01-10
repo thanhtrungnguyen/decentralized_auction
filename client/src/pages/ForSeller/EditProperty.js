@@ -16,6 +16,7 @@ import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import Time from "../../components/time/Time";
 const EditProperty = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -46,47 +47,47 @@ const EditProperty = () => {
     const baseURLCategory = `http://localhost:8800/api/category`;
     const [role, setRole] = useState();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURLCategory).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         await axios.get(baseURLCategory).then((resp) => {
+    //             console.log(resp.data);
+    //             console.log("axios get");
 
-                setlistCategory(resp.data);
-            });
-            await axios.get(baseURLProperty).then((resp) => {
-                console.log(resp.data);
-                setPropertyName(resp.data.Name);
-                setCategory(resp.data.Category_Id__r.Name);
-                setPropertyVideo(resp.data.Properties_Media__r.records[3].Name);
-                setPropertyDescription(resp.data.Description__c);
-                setStartBid(resp.data.Start_Bid__c);
-                setDeposit(resp.data.Deposit_Amount__c);
-                setPriceStep(resp.data.Price_Step__c);
-                setPlaceViewProperty(resp.data.Place_View_Property__c);
-                setStatus(resp.data.Status__c);
-                setViewPropertyTime([
-                    new Date(resp.data.Start_View_Property_Time__c).setTime(
-                        new Date(resp.data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-                    ),
-                    new Date(resp.data.End_View_Property_Time__c).setTime(
-                        new Date(resp.data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-                    ),
-                ]);
-                setData(resp.data);
-            });
+    //             setlistCategory(resp.data);
+    //         });
+    //         await axios.get(baseURLProperty).then((resp) => {
+    //             console.log(resp.data);
+    //             setPropertyName(resp.data.Name);
+    //             setCategory(resp.data.Category_Id__r.Name);
+    //             setPropertyVideo(resp.data.Properties_Media__r.records[3].Name);
+    //             setPropertyDescription(resp.data.Description__c);
+    //             setStartBid(resp.data.Start_Bid__c);
+    //             setDeposit(resp.data.Deposit_Amount__c);
+    //             setPriceStep(resp.data.Price_Step__c);
+    //             setPlaceViewProperty(resp.data.Place_View_Property__c);
+    //             setStatus(resp.data.Status__c);
+    //             setViewPropertyTime([
+    //                 new Date(resp.data.Start_View_Property_Time__c).setTime(
+    //                     new Date(resp.data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
+    //                 ),
+    //                 new Date(resp.data.End_View_Property_Time__c).setTime(
+    //                     new Date(resp.data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
+    //                 ),
+    //             ]);
+    //             setData(resp.data);
+    //         });
 
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
+    //         if (getUser() != null) {
+    //             setRole(getUser().role);
+    //         } else {
+    //             setRole("");
+    //         }
 
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURLCategory]);
+    //         setLoading(false);
+    //     };
+    //     fetchData();
+    // }, [baseURLCategory]);
 
     const baseURLProperty = `http://localhost:8800/api/property/getById/${id}`;
 
@@ -132,7 +133,9 @@ const EditProperty = () => {
             setViewPropertyTime(value);
         }
     };
-
+    const Cancel = () => {
+        navigate("/myProperty");
+    };
     const handleSubmit = (event) => {
         console.log(propertyImage1);
         const formData = new FormData();
@@ -176,21 +179,217 @@ const EditProperty = () => {
         });
         return users;
     };
-    return loading ? (
+    return !loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.root}>
                     <SideBarSeller />
+                    <Time />
+                    <div className={styles.info}>
+                        <div>
+                            <p className={styles.title}>Basic Information</p>
+
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Property Image</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <input
+                                        className={styles.inputImg}
+                                        id="propertyImage1"
+                                        onChange={(e) => handleInputChange(e)}
+                                        type="file"
+                                        required
+                                    ></input>
+                                    <input
+                                        className={styles.inputImg}
+                                        id="propertyImage2"
+                                        onChange={(e) => handleInputChange(e)}
+                                        type="file"
+                                        required
+                                    ></input>
+                                    <input
+                                        className={styles.inputImg}
+                                        id="propertyImage3"
+                                        onChange={(e) => handleInputChange(e)}
+                                        type="file"
+                                        required
+                                    ></input>
+                                    <div className={styles.conImg}>
+                                        {" "}
+                                        {propertyImage1 && (
+                                            <img src={URL.createObjectURL(propertyImage1)} className={styles.image} alt="Thumb" />
+                                        )}{" "}
+                                        {propertyImage2 && <img src={URL.createObjectURL(propertyImage2)} className={styles.image} alt="Thumb" />}{" "}
+                                        {propertyImage3 && <img src={URL.createObjectURL(propertyImage3)} className={styles.image} alt="Thumb" />}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Property Video</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <input
+                                        className={styles.inputText}
+                                        type="text"
+                                        id="propertyVideo"
+                                        onChange={(e) => handleInputChange(e)}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Property Name</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <input
+                                        id="propertyName"
+                                        type="text"
+                                        pattern="^\s*([^\s]\s*){0,100}$"
+                                        placeholder="Enter Property Name"
+                                        className={styles.inputText}
+                                        value={propertyName}
+                                        onChange={(e) => handleInputChange(e)}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Category</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <select
+                                        className={styles.drop}
+                                        onChange={(e) => handleInputChange(e)}
+                                        id="category"
+                                        placeholder="Category"
+                                        defaultValue="Chair"
+                                    >
+                                        {/* {data?.categories.map((item) => (
+                                        <option value={item.name}>{item.name}</option>
+                                    ))} */}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Start Bid</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <input
+                                        id="startBid"
+                                        type="text"
+                                        pattern="^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$"
+                                        placeholder="Enter Start Bid"
+                                        className={styles.inputText}
+                                        value={startBid}
+                                        onChange={(e) => handleInputChange(e)}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Deposit</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <input
+                                        id="deposit"
+                                        type="text"
+                                        pattern="^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$"
+                                        placeholder="Enter Deposit"
+                                        className={styles.inputText}
+                                        value={deposit}
+                                        onChange={(e) => handleInputChange(e)}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Price Step</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <input
+                                        id="priceStep"
+                                        type="number"
+                                        pattern="^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$"
+                                        placeholder="Enter Price Step"
+                                        className={styles.inputText}
+                                        value={priceStep}
+                                        onChange={(e) => handleInputChange(e)}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Place View Property</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <input
+                                        id="placeViewProperty"
+                                        type="text"
+                                        pattern="^\s*([^\s]\s*){0,100}$"
+                                        placeholder="Enter Place View Property"
+                                        className={styles.inputText}
+                                        value={placeViewProperty}
+                                        onChange={(e) => handleInputChange(e)}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>View Property Time</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <DatePicker
+                                        id="viewPropertyTime"
+                                        // onChange={(e) => handleInputChange(e)}
+                                        onChange={setViewPropertyTime}
+                                        ClassName={styles.datePicker}
+                                        value={viewPropertyTime}
+                                        // onChange={setValue}
+                                        range
+                                        numberOfMonths={2}
+                                        format="MM/DD/YYYY HH:mm:ss"
+                                        plugins={[<TimePicker />]}
+                                    />
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Property Description</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <textarea
+                                        id="propertyDescription"
+                                        pattern="^\s*([^\s]\s*){0,}$"
+                                        value={propertyDescription}
+                                        className={styles.textarea}
+                                        onChange={(e) => handleInputChange(e)}
+                                        required
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.btn}>
+                        <input className={styles.btnSave} type="submit" value="Save"></input>
+
+                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
+                    </div>
+                </div>
+                {/* <div className={styles.root}>
+                    <SideBarSeller />
+                    <Time />
                     <div className={styles.info}>
                         <div>
                             <p className={styles.title}>Basic Information</p>
@@ -347,44 +546,13 @@ const EditProperty = () => {
                             </div>
                         </div>
                     </div>
-                    {/* <div className={styles.auction}>
-            <p className={styles.title}>Auction</p>
-            <div className={styles.col1}>
-              <p className={styles.lable}>Start bid</p>
-              <p className={styles.lable}>Bidding Period</p>
-            </div>
-            <div className={styles.col2}>
-              <input
-                id="startBid"
-                type="number"
-                placeholder="Enter Start bid"
-                className={styles.inputText}
-                onChange={(e) => handleInputChange(e)}
-                value={startBid}
-                required
-              ></input>
-              <DatePicker
-                id="biddingPreiod"
-                // onChange={(e) => handleInputChange(e)}
-                onChange={setBiddingPreiod}
-                ClassName={styles.datePicker}
-                value={biddingPreiod}
-                // onChange={setValue}
-                range
-                numberOfMonths={2}
-                format="MM/DD/YYYY HH:mm:ss"
-                plugins={[<TimePicker />]}
-              />
-            </div>
-          </div> */}
+                    =
                     <div className={styles.btn}>
                         <input className={styles.btnSave} type="submit" value="Save "></input>
 
                         <input className={styles.btnCancel} type="button" value="Cancel"></input>
                     </div>
-
-                    <Footer />
-                </div>
+                </div> */}
             </form>
         </>
     );

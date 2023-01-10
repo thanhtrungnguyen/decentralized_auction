@@ -8,6 +8,7 @@ import newsRoutes from './news';
 import userRoutes from './user';
 import individualRoutes from './individual';
 import representativeRoutes from './representative';
+import contractInteractionRoutes from './contractInteraction';
 
 const router = express.Router();
 
@@ -19,5 +20,6 @@ router.use('/news', newsRoutes);
 router.use('/user', userRoutes);
 router.use('/individual', individualRoutes);
 router.use('/representative', representativeRoutes);
+router.use('/contractInteraction', contractInteractionRoutes);
 
 export default router;

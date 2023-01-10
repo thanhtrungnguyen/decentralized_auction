@@ -15,7 +15,7 @@ import FooterCopy from "../../components/footer/FooterCopy";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Loading from "../../components/loading/Loading";
-
+import Time from "../../components/time/Time";
 const AddNews = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -89,17 +89,10 @@ const AddNews = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser userName={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarAdmin />
+                    <Time />
                     <div className={styles.content}>
                         <p className={styles.title}>Add News</p>
                         <label className={styles.label}>Title</label>
@@ -148,8 +141,6 @@ const AddNews = () => {
                         <input type="button" value="Cancel" className={styles.btnCancel} onClick={cancel}></input>
                         <input type="submit" value="Add News" className={styles.btnSubmit}></input>
                     </div>
-                    <Footer />
-                    <FooterCopy />
                 </div>
             </form>
         </>

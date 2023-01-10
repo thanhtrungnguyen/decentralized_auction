@@ -1,29 +1,52 @@
 .container {
-    width: 264px;
+    width: 256px;
+    background: #48627d;
     height: 100%;
-    background: #ffffff;
     float: left;
+    position: relative;
 }
-
-.title {
-    font-family: "Josefin Sans";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 24px;
-    /* identical to box height */
-    color: #5a5c7e;
-    margin-left: 20px;
-}
-
 .txt {
-    font-family: "Josefin Sans";
+    font-family: "Inter";
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 18px;
-    line-height: 18px;
-    /* identical to box height */
+    line-height: 20px;
+    /* identical to box height, or 154% */
+
+    /* Grey/Grey 50 */
+
+    color: #ffffff;
     text-decoration: none;
-    color: #000000;
+}
+.txt:hover {
+    color: aqua;
+}
+.icon {
+    width: 24px;
+    height: 24px;
     margin-left: 20px;
+    margin-right: 10px;
+}
+.avt {
+    width: 60px;
+    height: 60px;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+.txt2 {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+    /* or 167% */
+
+    /* Grey/Grey 50 */
+    margin-left: 20px;
+    text-decoration: none;
+
+    color: #ffffff;
+}
+.txt2:hover {
+    color: red;
 }

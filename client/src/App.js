@@ -133,8 +133,11 @@ function App() {
                         <Route path="viewRegistrationForManager/:id" element={<ViewRegistrationForManager />} />
                         <Route path="viewAuctionResultForManager/:id" element={<AuctionResult />} />
                         <Route path="viewNews/:id" element={<ViewNews />} />
+                        <Route path="viewNews" element={<ViewNews />} />
                         <Route path="viewNewsForAdmin/:id" element={<ViewNewsForAdmin />} />
+                        <Route path="viewNewsForAdmin" element={<ViewNewsForAdmin />} />
                         <Route path="bidderOrganizationDetail/:id" element={<BidderOrganizationDetail />} />
+                        <Route path="bidderOrganizationDetail" element={<BidderOrganizationDetail />} />
                         <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
                     </Routes>
                 </BrowserRouter>

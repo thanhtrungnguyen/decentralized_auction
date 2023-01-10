@@ -17,7 +17,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useParams } from "react-router-dom";
 //import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
-
+import Time from "../../components/time/Time";
 const EditNew = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/news/getById/${id}`;
@@ -30,30 +30,26 @@ const EditNew = () => {
     const [avatar, setAvatar] = useState(null);
 
     console.log(data);
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURL).then((resp) => {
-                setTitle(resp.data.Name);
-                setContent(resp.data.Content__c);
-                setData(resp.data);
-                // console.log(resp.data);
-                // console.log("axios get");
-                // onCitySelect(sCity);
-                // onDistrictSelect(sDistrict);
-                // onWardSelect(sWard);
-            });
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         await axios.get(baseURL).then((resp) => {
+    //             setTitle(resp.data.Name);
+    //             setContent(resp.data.Content__c);
+    //             setData(resp.data);
+    //         });
 
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
+    //         if (getUser() != null) {
+    //             setRole(getUser().role);
+    //         } else {
+    //             setRole("");
+    //         }
 
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURL]);
+    //         setLoading(false);
+    //     };
+    //     fetchData();
+    // }, [baseURL]);
+
     // useEffect(() => {
     //     setTitle(data.title);
     //     setContent(data.content);
@@ -108,21 +104,14 @@ const EditNew = () => {
         navigate("/listNews");
     };
 
-    return loading ? (
+    return !loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser userName={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarAdmin />
+                    <Time />
                     <div className={styles.content}>
                         <p className={styles.title}>Edit News</p>
                         <label className={styles.label}>Title</label>
@@ -176,8 +165,6 @@ const EditNew = () => {
                         <input type="button" value="Cancel" className={styles.btnCancel} onClick={cancel}></input>
                         <input type="submit" value="Save Change" className={styles.btnSubmit}></input>
                     </div>
-                    <Footer />
-                    <FooterCopy />
                 </div>
             </form>
         </>

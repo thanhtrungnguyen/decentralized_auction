@@ -16,6 +16,7 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Loading from "../../components/loading/Loading";
 import { useFetch } from "../../hook/useFetch";
 import createDOMPurify from "dompurify";
+import Time from "../../components/time/Time";
 // import { JSDOM } from "jsdom";
 const ViewNewsForAdmin = () => {
     // const window = new JSDOM("").window;
@@ -31,30 +32,25 @@ const ViewNewsForAdmin = () => {
     const [avatar, setAvatar] = useState(null);
 
     const [role, setRole] = useState();
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURL).then((resp) => {
-                setTitle(resp.data.Name);
-                setContent(resp.data.Content__c);
-                setData(resp.data);
-                // console.log(resp.data);
-                // console.log("axios get");
-                // onCitySelect(sCity);
-                // onDistrictSelect(sDistrict);
-                // onWardSelect(sWard);
-            });
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         await axios.get(baseURL).then((resp) => {
+    //             setTitle(resp.data.Name);
+    //             setContent(resp.data.Content__c);
+    //             setData(resp.data);
+    //         });
 
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
+    //         if (getUser() != null) {
+    //             setRole(getUser().role);
+    //         } else {
+    //             setRole("");
+    //         }
 
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURL]);
+    //         setLoading(false);
+    //     };
+    //     fetchData();
+    // }, [baseURL]);
     //const [match, setMatch] = useState(null);
     const getUser = () => {
         var users = null;
@@ -78,20 +74,12 @@ const ViewNewsForAdmin = () => {
         }
     }, []);
 
-    return loading ? (
+    return !loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser userName={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
-            <NavBar />
             <SideBarAdmin />
-
+            <Time />
             <div className={styles.box}>
                 <h1>{data.Name}</h1>
                 <br />
@@ -99,9 +87,6 @@ const ViewNewsForAdmin = () => {
                 <br />
                 {<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.Content__c) }} />}
             </div>
-
-            <Footer />
-            <FooterCopy />
         </>
     );
 };

@@ -4,7 +4,8 @@ import {
   getIndividualByIdHandler,
   createIndividualHandler,
   updateIndividualHandler,
-  deleteIndividualHandler
+  deleteIndividualHandler,
+  getIndividualsByRoleHandler
 } from '../controllers/IndividualController';
 import { validateResource } from '../middleware/validateResource';
 import { IndividualSchema } from '../validations/IndividualSchema';
@@ -12,6 +13,7 @@ import { UserSchema } from '../validations/UserSchema';
 const router = express.Router();
 
 router.get('/individuals', getAllIndividualsHandler);
+router.get('/individuals/:role/:index/:status', getIndividualsByRoleHandler);
 router.get('/:individualId', getIndividualByIdHandler);
 router.post('/create', validateResource(IndividualSchema.create), validateResource(UserSchema.createBidder), createIndividualHandler);
 router.patch('/update/:individualId', updateIndividualHandler);

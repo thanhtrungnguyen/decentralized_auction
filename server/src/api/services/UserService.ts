@@ -12,15 +12,19 @@ const getAllUsers = async () => {
 };
 
 const validatePassword = async ({ email, password }: { email: string; password: string }) => {
-  const user = await User.findOne({ email });
-  if (!user) {
-    return false;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return false;
+    }
+    const isValidPassword = await user.comparePassword(password);
+    if (!isValidPassword) {
+      return false;
+    }
+    return omit(user.toJSON(), 'password');
+  } catch (error) {
+    logger.error(error);
   }
-  const isValidPassword = await user.comparePassword(password);
-  if (!isValidPassword) {
-    return false;
-  }
-  return omit(user.toJSON(), 'password');
 };
 
 const findUser = async (filter: FilterQuery<IUserDocument>, options: QueryOptions = { lean: true }) => {

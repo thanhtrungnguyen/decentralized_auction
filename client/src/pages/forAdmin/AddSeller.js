@@ -239,6 +239,8 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="taxCodeGrantedDate"
                             ></input>
+                            <br />
+                            <br />
                             <input
                                 className={styles.inputT}
                                 type="text"
@@ -274,7 +276,7 @@ const AddSeller = () => {
                                 id="firstName"
                                 required
                             ></input>
-                            <p className={styles.txtBlack}>Message</p>
+                            <p className={styles.txtBlack}></p>
                             <input
                                 className={styles.inputT}
                                 type="text"
@@ -285,7 +287,7 @@ const AddSeller = () => {
                                 id="lastName"
                                 required
                             ></input>
-                            <p className={styles.txtBlack}>Message</p>
+                            <p className={styles.txtBlack}></p>
                             <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -299,6 +301,8 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="dateOfBirth"
                             ></input>
+                            <br />
+                            <br />
                             <input
                                 className={styles.inputEP}
                                 type="email"
@@ -309,6 +313,8 @@ const AddSeller = () => {
                                 id="email"
                                 required
                             ></input>
+                            <br />
+                            <br />
                             <input
                                 className={styles.inputEP}
                                 type="number"
@@ -320,6 +326,8 @@ const AddSeller = () => {
                                 maxLength={10}
                                 required
                             ></input>
+                            <br />
+                            <br />
                             <input
                                 className={styles.inputT}
                                 type="text"
@@ -330,6 +338,8 @@ const AddSeller = () => {
                                 id="position"
                                 required
                             ></input>
+                            <br />
+                            <br />
                             <p className={styles.textRed}>Address</p>
                             <Select
                                 className={styles.select}
@@ -341,6 +351,8 @@ const AddSeller = () => {
                                 placeholder="Tỉnh/Thành"
                                 defaultValue={selectedCity}
                             />
+                            <br />
+                            <br />
                             <Select
                                 className={styles.select}
                                 name="districtId"
@@ -351,6 +363,8 @@ const AddSeller = () => {
                                 placeholder="Quận/Huyện"
                                 defaultValue={selectedDistrict}
                             />
+                            <br />
+                            <br />
                             <Select
                                 className={styles.select}
                                 name="wardId"
@@ -361,6 +375,8 @@ const AddSeller = () => {
                                 onChange={(option) => onWardSelect(option)}
                                 defaultValue={selectedWard}
                             />
+                            <br />
+                            <br />
                             <input
                                 className={styles.ipadd}
                                 type="text"
@@ -371,6 +387,8 @@ const AddSeller = () => {
                                 id="specificAddress"
                                 required
                             ></input>{" "}
+                            <br />
+                            <br />
                             <p className={styles.textRed}>Identity/Citizen card</p>
                             <input
                                 type="text"
@@ -418,6 +436,22 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             />
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    {cardFront && <img src={URL.createObjectURL(cardFront)} className={styles.img} alt="Thumb" />}
+                                    {/* <img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                        className={styles.img}
+                                    ></img> */}
+                                </div>
+                                <div className={styles.r}>
+                                    {/* <img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                        className={styles.img}
+                                    ></img> */}
+                                    {cardBack && <img src={URL.createObjectURL(cardBack)} className={styles.img} alt="Thumb" />}
+                                </div>
+                            </div>
                             <p className={styles.textBlue}>Account Information</p>
                             <input
                                 className={styles.inputEP}
@@ -429,6 +463,8 @@ const AddSeller = () => {
                                 placeholder="Username"
                                 required
                             ></input>
+                            <br />
+                            <br />
                             <input
                                 className={styles.inputEP}
                                 type="password"
@@ -439,6 +475,8 @@ const AddSeller = () => {
                                 placeholder="Password"
                                 required
                             ></input>
+                            <br />
+                            <br />
                             <input
                                 className={styles.inputEP}
                                 type="password"
@@ -448,10 +486,17 @@ const AddSeller = () => {
                                 placeholder="Re-eneter the password"
                                 required
                             ></input>
-                            <input type="submit" className={styles.ipsubmit} value="CREATE"></input>
                             <br />
                             <br />
-                            <input type="button" className={styles.ipCancel} value="CANCEL" onClick={Cancel}></input>
+                            <input className={styles.btnAdd} type="submit" value="Add"></input>
+                            <button
+                                className={styles.btnCancel}
+                                onClick={() => {
+                                    navigate("/listSellers");
+                                }}
+                            >
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 </div>

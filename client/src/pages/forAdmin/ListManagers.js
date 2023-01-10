@@ -15,20 +15,41 @@ import { useFetchPagination } from "../../hook/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import { AiFillEye } from "react-icons/ai";
+import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import FooterCopy from "../../components/footer/FooterCopy";
 import Time from "../../components/time/Time";
+import axios from "axios";
 const ListForManagers = () => {
     const [page, setPage] = React.useState(1);
-
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState(null);
     const [email2, setEmail2] = useState(null);
     const [status, setStatus] = useState(null);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:8800/api/user/getAll/MANAGER/${page}/${status}/${email}`;
+    const baseURL = `http://localhost:5000/api/individual/individuals/manager/${page}/${status}`;
     const [role, setRole] = useState();
 
-    const { data, loading, error } = useFetchPagination(baseURL, page);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+
+                // console.log("axios get");
+                setData(resp.data.individuals);
+                //console.log(resp);
+            });
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+
+            setLoading(false);
+        }
+        fetchData();
+    }, [baseURL]);
+
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -37,22 +58,6 @@ const ListForManagers = () => {
         }
     };
     const handleSubmit = (event) => {
-        // const formData = new FormData();
-
-        // formData.append("email", email);
-
-        // axios
-        //     .get("http://localhost:8800/api/auction", formData, {
-        //         withCredentials: true,
-        //     })
-        //     .then((res) => {
-        //         console.log(res);
-        //         console.log(res.data);
-        //         alert(res.data.message);
-        //         // setData(res.data);
-
-        //         navigate("/autionsListForManager");
-        //     });
         email2 == "" ? setEmail(null) : setEmail(email2);
         setPage(1);
         event.preventDefault();
@@ -65,45 +70,40 @@ const ListForManagers = () => {
         setPage(1);
     };
     function exportData(data) {
-        return (
-            <>
-                {data.listUser.map((item) => (
-                    <tr>
-                        <td className={styles.td}>{item.User_DAP__r.Name}</td>
-                        <td className={styles.td} style={item.User_DAP__r.Status__c === "Activate" ? {} : { color: "red" }}>
-                            {item.User_DAP__r.Status__c}
-                        </td>
-                        <td className={styles.td}>
-                            <Link className={styles.linkBlue} to={`/viewManager/${item.User_DAP__r.Id}`}>
-                                View
-                            </Link>
-                            {(() => {
-                                if (item.User_DAP__r.Status__c === "Activate") {
-                                    return (
-                                        <Popup
-                                            trigger={
-                                                <label style={{ color: "red" }} className={styles.linkBlue}>
-                                                    Deactivate
-                                                </label>
-                                            }
-                                            position="right center"
-                                        >
-                                            <BanedManager idManager={item.User_DAP__r.Id} />
-                                        </Popup>
-                                    );
-                                } else {
-                                    return (
-                                        <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                            <ActiveManager idManager={item.User_DAP__r.Id} />
-                                        </Popup>
-                                    );
-                                }
-                            })()}
-                        </td>
-                    </tr>
-                ))}
-            </>
-        );
+        return <>
+            {data.listUser.map((item) =>
+                <tr>
+                    <td>{item.firstName} {item.lastName}</td>
+                    <td>{item.email}</td>
+                    <td>{item.phone}</td>
+                    <td>{item.address}</td>
+                    <td>{item.user.status === true ? 'Activate' : 'Deactivate'}</td>
+                    <td>
+                        {item.user.status === true ?
+                            <Popup trigger={
+                                <label style={{ color: "red" }} className={styles.linkBlue}>
+                                    Deactivate
+                                </label>
+                            }
+                                position="right center">
+                                <BanedManager idManager="" />
+                            </Popup> :
+                            <Popup trigger={
+                                <label className={styles.linkBlue}>
+                                    Activate
+                                </label>}
+                                position="right center">
+                                <ActiveManager idManager="" />
+                            </Popup>}
+
+                    </td>
+                    <td>
+                        <AiTwotoneEdit className={styles.iconView} />
+                        <AiFillEye className={styles.iconView} />
+                    </td>
+                </tr>
+            )}
+        </>
     }
     const getUser = () => {
         var users = null;
@@ -117,16 +117,6 @@ const ListForManagers = () => {
         return users;
     };
 
-    useEffect(() => {
-        console.log(getUser());
-
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
     return loading ? (
         <Loading />
     ) : (
@@ -167,125 +157,17 @@ const ListForManagers = () => {
                                 <th className={styles.th}>Address</th>
                                 <th className={styles.th}>Status</th>
                                 <th className={styles.th}>Action</th>
-                                <th className={styles.th}>View</th>
+                                <th className={styles.th}>Action</th>
                             </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>
-                                    <Popup
-                                        trigger={
-                                            <label style={{ color: "red" }} className={styles.linkBlue}>
-                                                Deactivate
-                                            </label>
-                                        }
-                                        position="right center"
-                                    >
-                                        <BanedManager idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiFillEye
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/viewManager");
-                                        }}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Deactivate</td>
-                                <td>
-                                    {" "}
-                                    <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                        <ActiveManager idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td>
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td>
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td>
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td>
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td>
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td>
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
+                            {exportData(data)}
                         </table>
                         <hr />
                         <div>
                             <Pagination
                                 className={styles.Pagination}
-                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                // page={page}
-                                // onChange={handleChange}
+                                count={Math.ceil(data.count / 8)}
+                                page={page}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>

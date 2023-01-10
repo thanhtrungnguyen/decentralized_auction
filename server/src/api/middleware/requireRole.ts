@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import logger from '../utils/logger';
 
-export const checkPermission = (requireRole: string) => {
+export const requireRole = (requireRole: string) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = res.locals.user;

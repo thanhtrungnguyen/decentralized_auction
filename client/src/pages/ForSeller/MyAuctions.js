@@ -3,7 +3,7 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarSeller";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
@@ -14,7 +14,8 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 // import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
-
+import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
+import Time from "../../components/time/Time";
 const MyAuctions = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState(null);
@@ -56,30 +57,30 @@ const MyAuctions = () => {
         setStatus(e.target.value);
         setPage(1);
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURLCategory).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setListCategory(resp.data);
-            });
-            await axios.get(baseURLAuction, { withCredentials: true }).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setListAuction(resp.data);
-            });
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURLAuction]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         await axios.get(baseURLCategory).then((resp) => {
+    //             console.log(resp.data);
+    //             console.log("axios get");
+    //             setListCategory(resp.data);
+    //         });
+    //         await axios.get(baseURLAuction, { withCredentials: true }).then((resp) => {
+    //             console.log(resp.data);
+    //             console.log("axios get");
+    //             setListAuction(resp.data);
+    //         });
+    //         setLoading(false);
+    //     };
+    //     fetchData();
+    // }, [baseURLAuction]);
     const handleSubmit = (event) => {
         propertyName2 === "" ? setPropertyName(null) : setPropertyName(propertyName2);
         setCategory(category2);
         setPage(1);
         event.preventDefault();
     };
-
+    const navigate = useNavigate();
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -94,21 +95,110 @@ const MyAuctions = () => {
         });
         return users;
     };
-    return loading ? (
+    return !loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarSeller />
+                    <Time />
+                    <div className={styles.r}>
+                        <div className={styles.con}>
+                            <div className={styles.btns}>
+                                <button className={styles.btn}>All</button>
+                                <button className={styles.btn}>Created</button>
+                                {/* <button className={styles.btn}>Modified</button> */}
+                                <button className={styles.btn}>Request</button>
+                                <button className={styles.btn}>Approved</button>
+                                <button className={styles.btn}>Rejected</button>
+                                <input className={styles.ip} type="text" placeholder="Enter Name"></input>
+                                <button className={styles.btn}>Search</button>
+                            </div>
+                            <table className={styles.table}>
+                                <tr>
+                                    <th className={styles.th}>Property Name</th>
+                                    <th className={styles.th}>Category</th>
+                                    <th className={styles.th}>Start Bid</th>
+                                    <th className={styles.th}>Status</th>
+                                    <th className={styles.th}>Action</th>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/autitoDetailForSeller");
+                                            }}
+                                        />
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/autitoDetailForSeller");
+                                            }}
+                                        />
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/autitoDetailForSeller");
+                                            }}
+                                        />
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/autitoDetailForSeller");
+                                            }}
+                                        />
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr />
+                            <div>
+                                <Pagination
+                                    className={styles.Pagination}
+                                    // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                    // page={page}
+                                    // onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* <div className={styles.container}>
+                    <SideBarSeller />
+                    <Time />
                     <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
@@ -200,9 +290,7 @@ const MyAuctions = () => {
                             </button>
                             <hr />
                             <p className={styles.txtBold}>Total Auction: {listAuction.totalAuction}</p>
-                            {/* <Link className={styles.btnAdd} to="/addProperty">
-              Add a New Property
-            </Link> */}
+                          
                             <br />
                             <table className={styles.table}>
                                 <tr>
@@ -276,8 +364,7 @@ const MyAuctions = () => {
                             </div>
                         </div>
                     </div>
-                    <Footer />
-                </div>
+                </div> */}
             </form>
         </>
     );

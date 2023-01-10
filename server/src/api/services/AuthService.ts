@@ -4,8 +4,8 @@ import { signJwt, verifyJwt } from '../utils/jwt';
 import { findUser } from './UserService';
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { IUserDocument } from '../models/User';
-import { config } from '../../config/config';
-import { defaultConfig } from '../../config/default';
+import { config } from '../../config/custom-environment-variables';
+import { defaultConfig } from '../../config/constant-variables';
 
 const createSession = async (userId: string) => {
   const session = await Session.create({ user: userId });
@@ -20,7 +20,7 @@ const updateSession = async (filter: FilterQuery<ISessionDocument>, update: Upda
   return await Session.updateOne(filter, update);
 };
 
-const reIssueAccessToken = async ({ refreshToken }: { refreshToken: string }) => {
+const reIssueAccessToken = async ({ refreshToken }: { refreshToken: any }) => {
   const { decoded } = verifyJwt(refreshToken, defaultConfig.jwt.refreshTokenPublicKey);
   if (!decoded || !get(decoded, 'session')) return false;
 
