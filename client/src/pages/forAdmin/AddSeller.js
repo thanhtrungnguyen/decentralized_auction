@@ -27,13 +27,13 @@ const AddSeller = () => {
     const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null);
     const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null);
     const [firstName, setFirstName] = useState(null);
-    const [lastName, setlastName] = useState(null);
-    const [gender, setgender] = useState("Male");
+    const [lastName, setLastName] = useState(null);
+    const [gender, setGender] = useState("Male");
     const [dateOfBirth, setdateOfBirth] = useState(null);
     const [email, setEmail] = useState(null);
     const [phone, setPhone] = useState(null);
     const [specificAddress, setSpecificAddress] = useState(null);
-    const [cardNumber, setcardNumber] = useState(null);
+    const [cardNumber, setCardNumber] = useState(null);
     const [dateRangeCard, setdateRangeCard] = useState(null);
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
@@ -43,7 +43,8 @@ const AddSeller = () => {
     const [rePassword, setRePassword] = useState(null);
     const [position, setPosition] = useState(null);
     const [role, setRole] = useState("SELLER");
-    const [usertype] = useState("ACCOUNT");
+    const userType = "ACCOUNT"
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {
@@ -69,10 +70,10 @@ const AddSeller = () => {
             setFirstName(value);
         }
         if (id === "lastName") {
-            setlastName(value);
+            setLastName(value);
         }
         if (id === "gender") {
-            setgender(value);
+            setGender(value);
         }
         if (id === "dateOfBirth") {
             setdateOfBirth(value);
@@ -87,7 +88,7 @@ const AddSeller = () => {
             setSpecificAddress(value);
         }
         if (id === "cardNumber") {
-            setcardNumber(value);
+            setCardNumber(value);
         }
         if (id === "dateRangeCard") {
             setdateRangeCard(value);
@@ -144,16 +145,16 @@ const AddSeller = () => {
         formData.append("district", selectedDistrict.label);
         formData.append("wardId", wardId);
         formData.append("ward", selectedWard.label);
-        formData.append("specificAddress", specificAddress);
+        formData.append("address", specificAddress);
         formData.append("cardNumber", cardNumber);
-        formData.append("dateRangeCard", dateRangeCard);
+        formData.append("cardGrantedDate", dateRangeCard);
         formData.append("cardGrantedPlace", cardGrantedPlace);
         formData.append("cardFront", cardFront);
         formData.append("cardBack", cardBack);
-        formData.append("userName", userName);
+        formData.append("username", userName);
         formData.append("password", password);
         formData.append("role", role);
-        formData.append("usertype", usertype);
+        formData.append("userType", userType);
 
         axios
             .post("http://localhost:8800/api/auth/registerSeller", formData, {

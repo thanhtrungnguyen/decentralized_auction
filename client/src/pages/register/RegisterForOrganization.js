@@ -51,7 +51,8 @@ const Register = () => {
     const [rePassword, setRePassword] = useState(null);
     const [position, setPosition] = useState(null);
     const [role, setRole] = useState("BIDDER");
-    const [usertype, setUsertype] = useState("ACCOUNT");
+    const userType = "ACCOUNT"
+
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -162,10 +163,10 @@ const Register = () => {
         formData.append("cardGrantedPlace", cardGrantedPlace);
         formData.append("cardFront", cardFront);
         formData.append("cardBack", cardBack);
-        formData.append("username", userName);
+        formData.append("userName", userName);
         formData.append("password", password);
         formData.append("role", role);
-        formData.append("usertype", usertype);
+        formData.append("userType", userType);
         if (rePassword !== password) {
             setMessage("Please enter match the password");
         } else {

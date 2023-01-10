@@ -8,7 +8,8 @@ import {
   verifyUserHandler,
   forgotPasswordHandler,
   changePasswordHandler,
-  resetPasswordHandler
+  resetPasswordHandler,
+  getUserByRoleHandler
 } from '../controllers/UserController';
 import { UserSchema } from '../validations/UserSchema';
 import { validateResource } from '../middleware/validateResource';
@@ -23,5 +24,7 @@ router.post('/forgotPassword', validateResource(UserSchema.forgotPassword), forg
 router.post('/changePassword/:userId', validateResource(UserSchema.changePassword), changePasswordHandler);
 router.post('/verify/:userId/:verificationCode', verifyUserHandler);
 router.post('/resetPassword/:userId/:passwordResetCode', validateResource(UserSchema.changePassword), resetPasswordHandler);
+//
+router.get('/users/:role/:index/:status/:search', getUserByRoleHandler);
 
 export default router;

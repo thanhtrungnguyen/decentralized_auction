@@ -5,7 +5,7 @@ import { NewsSchema } from '../validations/NewsSchema';
 // import { Schema, ValidateResource } from '../middleware/validateResource';
 const router = express.Router();
 
-router.get('/news', getAllNewsHandler);
+router.get('/news/:index/:status/:search', getAllNewsHandler);
 router.get('/:newsId', getNewsByIdHandler);
 router.post('/create', validateResource(NewsSchema.create), createNewsHandler);
 router.patch('/update/:newsId', validateResource(NewsSchema.update), updateNewsHandler);

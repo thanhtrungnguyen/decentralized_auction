@@ -2,9 +2,22 @@ import { FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
 import News, { INews, INewsDocument } from '../models/News';
 import logger from '../utils/logger';
 
-const getAllNews = async () => {
+const getAllNews = async (index: any, status: any, search: any) => {
+  const pase_size = 8;
   try {
-    return await News.find({});
+    var filter;
+    var skip = parseInt(index);
+    skip = skip == 1 ? 0 : (skip - 1) * pase_size;
+    status == 'null' && search == 'null'
+      ? (filter = {})
+      : status == 'null' && search != 'null'
+      ? (filter = { title: { $regex: search, $options: 'i' } })
+      : status != 'null' && search == 'null'
+      ? (filter = { status: status })
+      : (filter = { status: status, title: { $regex: search, $options: 'i' } });
+    var arr = await News.find(filter).skip(skip).limit(pase_size);
+    var count = await News.find(filter);
+    return { listNews: arr, count: count.length };
   } catch (error) {
     logger.error(error);
   }
