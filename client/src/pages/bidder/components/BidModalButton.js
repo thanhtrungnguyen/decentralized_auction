@@ -16,14 +16,15 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     const [auction, setAuction] = useState();
     const [auctionRegistration, setAuctionRegistration] = useState();
     const fetchData = async () => {
-        const baseURL = `http://localhost:8800/api/auctionInformation/${auctionId}`;
+        const baseURL = `http://localhost:5000/api/contractInteraction/createdAuction/${auctionId}`;
         const auctionRegistrationURL = `http://localhost:8800/api/auctionInformation/${auctionId}/auctionRegistration`;
         const getAuction = await axios.get(baseURL);
         const getAuctionRegistration = await axios.get(auctionRegistrationURL);
+        debugger;
         await axios.all([getAuction, getAuctionRegistration]).then(
             axios.spread((...allData) => {
                 console.log(allData);
-                setAuction(allData[0].data);
+                setAuction(allData[0].data.createdAuction[0]);
                 setAuctionRegistration(allData[1].data);
             })
         );
@@ -54,22 +55,22 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     return (
         <>
             <div>
-                {(() => {
+                {/* {(() => {
                     if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
-                        return (
-                            <button
-                                className={styles.btn}
-                                onClick={() => {
-                                    setOpenModal(true);
-                                }}
-                            >
-                                {"Go to Auction"}
-                            </button>
-                        );
+                        return ( */}
+                <button
+                    className={styles.btn}
+                    onClick={() => {
+                        setOpenModal(true);
+                    }}
+                >
+                    {"Go to Auction"}
+                </button>
+                {/* );
                     } else {
                         return <p>Please login</p>;
                     }
-                })()}
+                })()} */}
 
                 {openModal && (
                     <BidModal
