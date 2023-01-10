@@ -1,14 +1,13 @@
 .root {
-    background: #d9d9d9;
+    background: #f9fafb;
     margin: 0;
     padding: 0;
     position: absolute;
     width: 100%;
     height: 150%;
 }
-.l{
+.l {
     display: block;
-
 }
 .info {
     width: 1174px;
@@ -17,6 +16,8 @@
     left: 50%;
     margin-left: -500px;
     position: absolute;
+    border: 1px solid #e5e7eb;
+    margin-top: 40px;
 }
 
 .floatLeft {
@@ -27,7 +28,7 @@
     font-family: "Inter";
     font-style: normal;
     font-weight: 400;
-    font-size: 25px;
+    font-size: 35px;
     line-height: 20px;
     /* identical to box height, or 80% */
     margin-left: 20px;
@@ -44,7 +45,7 @@
     font-family: "Inter";
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 34px;
     /* or 150% */
 
@@ -65,6 +66,7 @@
     width: 746px;
     height: 32px;
     background: #ffffff;
+    font-size: 20px;
 
     border: 1px solid #e0e0e0;
     border-radius: 4px;
@@ -80,6 +82,7 @@
     margin: 16px 0px 16px 0px;
     border: 1px solid #e0e0e0;
     margin-left: 20px;
+    font-size: 20px;
 
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
     border-radius: 4px;
@@ -101,6 +104,7 @@
     width: 753.86px;
     height: 197px;
     left: 832.31px;
+    font-size: 20px;
     top: 769px;
     background: #ffffff;
     border: 1px solid #b1b1b1;
@@ -146,28 +150,30 @@
 }
 
 .btn {
-    width: 1174px;
+    /* width: 1174px;
     left: 50%;
     margin-left: -600px;
     position: absolute;
-    margin-top: 1100px;
+    margin-top: 1200px; */
 }
 
 .btnCancel {
-    width: 79px;
-    height: 36px;
+    position: absolute;
+    width: 118px;
+    height: 54px;
 
-    background: #f7f5ff;
-    border: 1px solid #3918d9;
-    border-radius: 4px;
     font-family: "Inter";
     font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    color: #3918d9;
-    margin-left: 20px;
-    float: right;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+
+    color: #111827;
+    background: #f7f5ff;
+    margin-left: 840px;
+    margin-top: 1200px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
 }
 
 .btnDraft {
@@ -188,19 +194,23 @@
 }
 
 .btnSave {
-    width: 79px;
-    height: 36px;
-
-    background: #3918d9;
-    border-radius: 4px;
     font-family: "Inter";
     font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    float: right;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 143% */
+
+    /* Gray_02/100 */
+    position: absolute;
+    width: 119px;
+    height: 54px;
+
+    margin-left: 980px;
+    margin-top: 1200px;
+    background: #7c3aed;
+    border-radius: 8px;
     color: #ffffff;
-    margin-left: 20px;
 }
 
 .img {
@@ -286,4 +296,15 @@
     border-radius: 5px;
     border: 1px solid #3918d9;
     box-shadow: #3918d9 5px;
+}
+.fl {
+    display: flex;
+}
+.r {
+    width: 80%;
+    float: right;
+}
+.l {
+    width: 20%;
+    float: left;
 }
