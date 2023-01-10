@@ -48,17 +48,17 @@ export const createIndividualHandler = async (req: Request, res: Response, next:
   const createIndividualData = req.body;
   const createUserData = req.body;
   const existEmailIndividual = await getIndividual({ email: req.body.email });
-  if (existEmailIndividual) {
-    return res.status(409).json({ message: 'Email has been exist!' });
-  }
-  const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
-  if (existPhoneIndividual) {
-    return res.status(409).json({ message: 'Phone has been exist!' });
-  }
-  const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
-  if (existCardNumberIndividual) {
-    return res.status(409).json({ message: 'Card Number has been exist!' });
-  }
+  // if (existEmailIndividual) {
+  //   return res.status(409).json({ message: 'Email has been exist!' });
+  // }
+  // const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
+  // if (existPhoneIndividual) {
+  //   return res.status(409).json({ message: 'Phone has been exist!' });
+  // }
+  // const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
+  // if (existCardNumberIndividual) {
+  //   return res.status(409).json({ message: 'Card Number has been exist!' });
+  // }
   const userCreated: any = await createUser({ ...createUserData, role: 'bidder' });
   if (userCreated._id) {
     return await createIndividual({ ...createIndividualData, user: userCreated._id })
