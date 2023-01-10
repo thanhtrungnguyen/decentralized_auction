@@ -2,11 +2,12 @@ import styles from "../../styleCss/stylesPages/forSellers/myProperty.module.css"
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
-import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
+import SidebarManager from "../../components/sidebar_manager/SidebarManager";
 import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
+import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
@@ -16,8 +17,8 @@ import Loading from "../../components/loading/Loading";
 import Popup from "reactjs-popup";
 import ActiveCategory from "../../components/popups/forManager/ActiveCategory";
 import PrivateCategory from "../../components/popups/forManager/PrivateCategory";
-
-const ManagerCategorys = () => {
+import Time from "../../components/time/Time";
+const ManagerCategory = () => {
     const [page, setPage] = React.useState(1);
     const [categoryName, setCategory] = useState(null);
     const [categoryName2, setCategory2] = useState(null);
@@ -53,6 +54,8 @@ const ManagerCategorys = () => {
             setCategory2(value);
         }
     };
+    const navigate = useNavigate();
+
     const handleSubmit = (event) => {
         categoryName2 === "" ? setCategory(null) : setCategory(categoryName2);
         setPage(1);
@@ -76,21 +79,117 @@ const ManagerCategorys = () => {
         });
         return users;
     };
-    return loading ? (
+    return !loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
-                    <SideBarSeller />
+                    <SidebarManager />
+                    <Time />
+                    <div className={styles.r}>
+                        <div className={styles.con}>
+                            <div className={styles.btns}>
+                                <button className={styles.btn}>All</button>
+
+                                <input className={styles.ip2} type="text" placeholder="Enter Name"></input>
+                                <button className={styles.btn}>Search</button>
+                                <button
+                                    className={styles.btn}
+                                    onClick={() => {
+                                        navigate("/addCategory");
+                                    }}
+                                >
+                                    + New Category
+                                </button>
+                            </div>
+                            <table className={styles.table}>
+                                <tr>
+                                    <th className={styles.th}>Property Name</th>
+
+                                    <th className={styles.th}>Status</th>
+                                    <th className={styles.th}>Action</th>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Activate</td>
+
+                                    <td>
+                                        <AiTwotoneEdit
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/editCategory");
+                                            }}
+                                        />
+                                        {/* <Popup
+                                            trigger={
+                                                <label>
+                                                    <AiOutlineDelete className={styles.iconView} />
+                                                </label>
+                                            }
+                                            position="right center"
+                                        >
+                                            <DeleteProperty idProperty="" />
+                                        </Popup> */}
+
+                                        <Popup
+                                            trigger={
+                                                <label style={{ color: "red" }} className={styles.link}>
+                                                    Deactivate
+                                                </label>
+                                            }
+                                            position="right center"
+                                        >
+                                            <PrivateCategory idCategory="" />
+                                        </Popup>
+                                        {/* <Popup trigger={<label className={styles.link}>Activate</label>} position="right center">
+                                            <ActiveCategory idCategory="" />
+                                        </Popup> */}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Deactivate</td>
+
+                                    <td>
+                                        <AiTwotoneEdit
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/editCategory");
+                                            }}
+                                        />
+                                        {/* <Popup
+                                            trigger={
+                                                <label>
+                                                    <AiOutlineDelete className={styles.iconView} />
+                                                </label>
+                                            }
+                                            position="right center"
+                                        >
+                                            <DeleteProperty idProperty="" />
+                                        </Popup> */}
+
+                                        <Popup trigger={<label className={styles.link}>Activate</label>} position="right center">
+                                            <ActiveCategory idCategory="" />
+                                        </Popup>
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr />
+                            <div>
+                                <Pagination
+                                    className={styles.Pagination}
+                                    // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                    // page={page}
+                                    // onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* <div className={styles.container}>
+                    <SidebarManager />
+                    <Time />
                     <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
@@ -168,9 +267,6 @@ const ManagerCategorys = () => {
                                                 Edit
                                             </Link>
 
-                                            {/* <Link className={styles.linkBlue} to={`/deleteCategory/${item.Id}`}>
-                                                {item.Status__c === "Activate" ? "Activate" : "Deactivate"}
-                                            </Link> */}
                                             {(() => {
                                                 if (item.Status__c === "Activate") {
                                                     return (
@@ -207,10 +303,9 @@ const ManagerCategorys = () => {
                             </div>
                         </div>
                     </div>
-                    <Footer />
-                </div>
+                </div> */}
             </form>
         </>
     );
 };
-export default ManagerCategorys;
+export default ManagerCategory;

@@ -19,7 +19,8 @@ import Time from "../../components/time/Time";
 import Popup from "reactjs-popup";
 import { useNavigate } from "react-router-dom";
 import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
-
+import DeleteProperty from "../../components/popups/forSeller/DeleteProperty";
+import RequestAddProperty from "../../components/popups/forSeller/RequestAddProperty";
 const MyProperty = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState(null);
@@ -166,17 +167,32 @@ const MyProperty = () => {
                                     <td>09000999000</td>
                                     <td>Activate</td>
                                     <td>
-                                        <AiTwotoneEdit className={styles.iconView} />
+                                        <AiTwotoneEdit
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/editProperty");
+                                            }}
+                                        />
                                         <AiFillEye
                                             className={styles.iconView}
                                             onClick={() => {
-                                                navigate("/bidderDetail");
+                                                navigate("/propertyDetail");
                                             }}
                                         />
-                                        <AiOutlineDelete className={styles.iconView} />
-                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
-                                            Request Add
-                                        </label>
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                        <Popup
+                                            trigger={
+                                                <label>
+                                                    <AiOutlineDelete className={styles.iconView} />
+                                                </label>
+                                            }
+                                            position="right center"
+                                        >
+                                            <DeleteProperty idProperty="" />
+                                        </Popup>
+                                        <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
+                                            <RequestAddProperty idProperty="" />
+                                        </Popup>
                                     </td>
                                 </tr>
                                 <tr>

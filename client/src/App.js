@@ -137,6 +137,7 @@ function App() {
                         <Route path="viewNewsForAdmin/:id" element={<ViewNewsForAdmin />} />
                         <Route path="viewNewsForAdmin" element={<ViewNewsForAdmin />} />
                         <Route path="bidderOrganizationDetail/:id" element={<BidderOrganizationDetail />} />
+                        <Route path="bidderOrganizationDetail" element={<BidderOrganizationDetail />} />
                         <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
                     </Routes>
                 </BrowserRouter>

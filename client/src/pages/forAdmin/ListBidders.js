@@ -32,7 +32,6 @@ const ListBidders = () => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
-
                 // console.log("axios get");
                 setData(resp.data.individuals);
                 //console.log(resp);
@@ -44,7 +43,7 @@ const ListBidders = () => {
             }
 
             setLoading(false);
-        }
+        };
         fetchData();
     }, [baseURL]);
     const handleInputChange = (e) => {
@@ -79,40 +78,48 @@ const ListBidders = () => {
         return users;
     };
     function exportData(data) {
-        return <>
-            {data.listUser.map((item) =>
-                <tr>
-                    <td>{item.firstName} {item.lastName}</td>
-                    <td>{item.email}</td>
-                    <td>{item.phone}</td>
-                    <td>{item.address}</td>
-                    <td>{item.user.status === true ? 'Activate' : 'Deactivate'}</td>
-                    <td>
-                        {item.user.status === true ?
-                            <Popup trigger={
-                                <label style={{ color: "red" }} className={styles.linkBlue}>
-                                    Deactivate
-                                </label>
-                            }
-                                position="right center">
-                                <BanedBidder idManager="" />
-                            </Popup> :
-                            <Popup trigger={
-                                <label className={styles.linkBlue}>
-                                    Activate
-                                </label>}
-                                position="right center">
-                                <ActiveBidder idManager="" />
-                            </Popup>}
-
-                    </td>
-                    <td>
-                        <AiTwotoneEdit className={styles.iconView} />
-                        <AiFillEye className={styles.iconView} />
-                    </td>
-                </tr>
-            )}
-        </>
+        return (
+            <>
+                {data.listUser.map((item) => (
+                    <tr>
+                        <td>
+                            {item.firstName} {item.lastName}
+                        </td>
+                        <td>{item.email}</td>
+                        <td>{item.phone}</td>
+                        <td>{item.address}</td>
+                        <td>{item.user.status === true ? "Activate" : "Deactivate"}</td>
+                        <td>
+                            {item.user.status === true ? (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "red" }} className={styles.linkBlue}>
+                                            Deactivate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
+                                    <BanedBidder idManager="" />
+                                </Popup>
+                            ) : (
+                                <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
+                                    <ActiveBidder idManager="" />
+                                </Popup>
+                            )}
+                        </td>
+                        <td>
+                            <AiTwotoneEdit className={styles.iconView} />
+                            <AiFillEye
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate("/bidderOrganizationDetail");
+                                }}
+                            />
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
     }
     return loading ? (
         <Loading />
@@ -124,15 +131,28 @@ const ListBidders = () => {
                 <div className={styles.r}>
                     <div className={styles.con}>
                         <div className={styles.btns}>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='null'>All</button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='true'>Activate</button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='false'>Deactivate</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                All
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="true">
+                                Activate
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="false">
+                                Deactivate
+                            </button>
                             <form onSubmit={handleSubmit}>
-                                <input className={styles.ip} type="text" placeholder="Enter Email" id="email" value={email2}
-                                    onChange={(e) => handleInputChange(e)}></input>
-                                <button className={styles.btn} type='submit' >Search</button>
+                                <input
+                                    className={styles.ip}
+                                    type="text"
+                                    placeholder="Enter Email"
+                                    id="email"
+                                    value={email2}
+                                    onChange={(e) => handleInputChange(e)}
+                                ></input>
+                                <button className={styles.btn} type="submit">
+                                    Search
+                                </button>
                             </form>
-
                         </div>
                         <table className={styles.table}>
                             <tr>
@@ -145,16 +165,10 @@ const ListBidders = () => {
                                 {/* <th className={styles.th}></th> */}
                             </tr>
                             {exportData(data)}
-
                         </table>
                         <hr />
                         <div>
-                            <Pagination
-                                className={styles.Pagination}
-                                count={Math.ceil(data.count / 8)}
-                                page={page}
-                                onChange={handleChange}
-                            />
+                            <Pagination className={styles.Pagination} count={Math.ceil(data.count / 8)} page={page} onChange={handleChange} />
                         </div>
                     </div>
                 </div>

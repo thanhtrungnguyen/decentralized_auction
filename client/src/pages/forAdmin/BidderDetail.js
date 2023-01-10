@@ -50,7 +50,7 @@ const BidderDetail = () => {
                 <SideBarAdmin />
                 <Time />
                 <div className={styles.content}>
-                    <p className={styles.title}>Organization Information</p>
+                    {/* <p className={styles.title}>Organization Information</p>
                     <p className={styles.if}>Basic Information</p>
                     <div className={styles.fl}>
                         <div className={styles.l}>
@@ -98,7 +98,7 @@ const BidderDetail = () => {
                         <div className={styles.r}>
                             <label className={styles.txt2}>abcxyz@gmail.com</label>
                         </div>
-                    </div>
+                    </div> */}
 
                     <p className={styles.title}>Personal Information</p>
                     <p className={styles.if}>Basic Information</p>
@@ -247,7 +247,7 @@ const BidderDetail = () => {
                     <button
                         className={styles.btn}
                         onClick={() => {
-                            navigate("/listSellers");
+                            navigate("/listBidders");
                         }}
                     >
                         Back

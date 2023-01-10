@@ -1,8 +1,6 @@
-import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBarSeller";
-import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/stylesPages/forSellers/AuctionDetailForSeller.module.css";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
@@ -12,9 +10,11 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
-
+import Pagination from "@mui/material/Pagination";
+import Time from "../../components/time/Time";
 const AuctionDetailForSeller = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/auction/auctiondetailForSeller/${id}`;
     const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
@@ -41,20 +41,16 @@ const AuctionDetailForSeller = () => {
         });
         return users;
     };
+    const Cancel = () => {
+        navigate("/myAuctions");
+    };
     return loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <div className={styles.container}>
                 <SideBarSeller />
+                <Time />
                 <div className={styles.detail}>
                     <div className={styles.info}>
                         <div className={styles.col1}>
@@ -142,13 +138,39 @@ const AuctionDetailForSeller = () => {
                                 <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
                                 <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
                             </tr>
+                            <tr>
+                                <td className={styles.td}>Dianne Russell</td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                            </tr>
+                            <tr>
+                                <td className={styles.td}>Dianne Russell</td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                            </tr>
+                            <tr>
+                                <td className={styles.td}>Dianne Russell</td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                            </tr>
+                            <tr>
+                                <td className={styles.td}>Dianne Russell</td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                                <td className={styles.td}>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                            </tr>
                         </table>
+                        <Pagination
+                            className={styles.Pagination}
+                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                            // page={page}
+                            // onChange={handleChange}
+                        />
                     </div>
                     <div className={styles.des}>
                         <div className={styles.con}>
                             <p className={styles.titleDes}>Description </p>
                             {/* <label className={styles.label}>{data.auction.description}</label> */}
-                            <label className={styles.label}>
+                            <p className={styles.label}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
                                 aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
@@ -164,12 +186,18 @@ const AuctionDetailForSeller = () => {
                                 do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                                 ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
                                 esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                                deserunt mollit anim id est laborum.
-                            </label>
+                                deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+                                id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
                         </div>
+                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
                     </div>
                 </div>
-                <Footer />
             </div>
         </>
     );
