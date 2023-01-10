@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import logger from './api/utils/logger';
-import { config } from './config/config';
+import { config } from './config/custom-environment-variables';
 import routes from './api/routes';
 import swaggerDocs from './api/utils/swagger';
 import connectMongo from './api/utils/connectMongo';

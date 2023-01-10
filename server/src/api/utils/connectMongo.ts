@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { config } from '../../config/config';
+import { config } from '../../config/custom-environment-variables';
 import logger from '../utils/logger';
 
 export default async () => {

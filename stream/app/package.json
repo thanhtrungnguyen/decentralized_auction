@@ -1,0 +1,15 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "get data from firebase",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dap team",
+  "license": "ISC",
+  "dependencies": {
+    "firebase-admin": "^11.4.1"
+  }
+}
