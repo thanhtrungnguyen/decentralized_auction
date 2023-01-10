@@ -19,7 +19,7 @@ import BidModalButton from "../bidder/components/BidModalButton";
 import PageName from "../../components/header/PageName";
 import FooterCopy from "../../components/footer/FooterCopy";
 import moment from "moment";
-import 'moment/locale/vi';
+import "moment/locale/vi";
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
     const { id } = useParams();
@@ -29,12 +29,12 @@ const AuctionDetail = () => {
     let img1 = "https://unboxph3a1e0.zapwp.com/q:intelligent/r:0/wp:1/w:1/u:https://unbox.ph/wp-content/uploads/2011/09/Nike-Air-Mag-3-1200x742.jpeg";
     let img2 = "https://footwearnews.com/wp-content/uploads/2017/10/nike-mag-heritage-auctions7.jpg?w=700&h=437&crop=1";
     let img3 = "https://myshoes.vn/image/catalog/blog/25.12/giay-nike-air-mag.jpg";
-    const [img, setImg] = useState(img1);
+    const [img, setImg] = useState(null);
     const setShow = (e) => {
-        const { id, value } = e.target;
-        if (id === "img1") setImg(img1);
-        if (id === "img2") setImg(img2);
-        if (id === "img3") setImg(img3);
+        const { id, src } = e.target;
+        if (id === "img1") setImg(src);
+        if (id === "img2") setImg(src);
+        if (id === "img3") setImg(src);
     };
     console.log(data);
     console.log(loading);
@@ -82,11 +82,30 @@ const AuctionDetail = () => {
                 <div className={styles.con}>
                     <div className={styles.info}>
                         <div className={styles.media}>
-                            <img src={img} alt="thumb" className={styles.show}></img>
+                            {img == null && <img src={`${data.auction.property.mediaUrl[0]}`} alt="thumb" className={styles.show}></img>}
+                            {img != null && <img src={img} alt="thumb" className={styles.show}></img>}
                             <div className={styles.choose}>
-                                <img id="img1" src={img1} alt="thumb" className={styles.img} onClick={(e) => setShow(e)}></img>
-                                <img id="img2" src={img2} alt="thumb" className={styles.img} onClick={(e) => setShow(e)}></img>
-                                <img id="img3" src={img3} className={styles.img} alt="thumb" onClick={(e) => setShow(e)}></img>
+                                <img
+                                    id="img1"
+                                    src={`${data.auction.property.mediaUrl[0]}`}
+                                    alt="thumb"
+                                    className={styles.img}
+                                    onClick={(e) => setShow(e)}
+                                ></img>
+                                <img
+                                    id="img2"
+                                    src={`${data.auction.property.mediaUrl[1]}`}
+                                    alt="thumb"
+                                    className={styles.img}
+                                    onClick={(e) => setShow(e)}
+                                ></img>
+                                <img
+                                    id="img3"
+                                    src={`${data.auction.property.mediaUrl[2]}`}
+                                    className={styles.img}
+                                    alt="thumb"
+                                    onClick={(e) => setShow(e)}
+                                ></img>
                             </div>
                         </div>
                         <div className={styles.content}>
@@ -95,10 +114,24 @@ const AuctionDetail = () => {
                             <br />
                             <hr className={styles.hr} />
                             <p className={styles.price}>{data.auction.property.startBid} ETH</p>
-                            <p className={styles.time}>Start Registration Time : {moment(data.auction.startRegistrationTime).format('L')} - {moment(data.auction.startRegistrationTime).format('LTS')}   </p>
-                            <p className={styles.time}>End Registration Time : {moment(data.auction.endRegistrationTime).format('L')} - {moment(data.auction.endRegistrationTime).format('LTS')} </p>
-                            <p className={styles.time}> Auction Start Time : {moment(data.auction.startAuctionTime).format('L')} - {moment(data.auction.startAuctionTime).format('LTS')}</p>
-                            <p className={styles.time}> Auction End Time : {moment(data.auction.endAuctionTime).format('L')} - {moment(data.auction.endAuctionTime).format('LTS')}</p>
+                            <p className={styles.time}>
+                                Start Registration Time : {moment(data.auction.startRegistrationTime).format("L")} -{" "}
+                                {moment(data.auction.startRegistrationTime).format("LTS")}{" "}
+                            </p>
+                            <p className={styles.time}>
+                                End Registration Time : {moment(data.auction.endRegistrationTime).format("L")} -{" "}
+                                {moment(data.auction.endRegistrationTime).format("LTS")}{" "}
+                            </p>
+                            <p className={styles.time}>
+                                {" "}
+                                Auction Start Time : {moment(data.auction.startAuctionTime).format("L")} -{" "}
+                                {moment(data.auction.startAuctionTime).format("LTS")}
+                            </p>
+                            <p className={styles.time}>
+                                {" "}
+                                Auction End Time : {moment(data.auction.endAuctionTime).format("L")} -{" "}
+                                {moment(data.auction.endAuctionTime).format("LTS")}
+                            </p>
                             <br />
                             <br />
                             <br />
@@ -110,9 +143,9 @@ const AuctionDetail = () => {
                         </div>
                     </div>
                     <div className={styles.video}>
-                        <ReactPlayer
+                        <video
                             className={styles.video}
-                            url="https://www.youtube.com/watch?v=NimGxU4Qnhk"
+                            src={`${data.auction.property.mediaUrl[3]}`}
                             playing={true}
                             controls={true}
                             loop={true}
@@ -128,11 +161,8 @@ const AuctionDetail = () => {
                     <br />
                     <p className={styles.price}>Description</p>
                     <hr />
-                    <p className={styles.text}>
-                        {data.auction.property.description}
-                    </p>
+                    <p className={styles.text}>{data.auction.property.description}</p>
                 </div>
-
 
                 <p className={styles.related}>RELATED AUCTIONS</p>
                 <div className={styles.auctions}>

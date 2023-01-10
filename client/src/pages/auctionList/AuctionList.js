@@ -19,7 +19,7 @@ import MultiRangeSlider from "multi-range-slider-react";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import 'moment/locale/vi';
+import "moment/locale/vi";
 const AuctionList = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
@@ -77,13 +77,12 @@ const AuctionList = () => {
                 .catch((error) => {
                     console.error(error);
                 });
-            await axios.get(baseURLAuction)
-                .then((resp) => {
-                    setAuctions(resp.data);
-                    console.log(resp.data);
-                    console.log("axios get");
-                    socket.off();
-                });
+            await axios.get(baseURLAuction).then((resp) => {
+                setAuctions(resp.data);
+                console.log(resp.data);
+                console.log("axios get");
+                socket.off();
+            });
             if (getUser() != null) {
                 setRole(getUser().role);
             } else {
@@ -91,7 +90,7 @@ const AuctionList = () => {
             }
             setLoading(false);
         }
-        fetchPostList()
+        fetchPostList();
     }, [baseURLAuction, change]);
     socket.on("data", (item) => {
         if (item !== change) {
@@ -119,9 +118,7 @@ const AuctionList = () => {
         }, null);
         setStatus(total);
     };
-    const handleApplyFilter = () => {
-
-    }
+    const handleApplyFilter = () => {};
 
     const handleSort = (e) => {
         setSort(e.target.value);
@@ -231,31 +228,44 @@ const AuctionList = () => {
                     </div>
                     <div className={styles.auctions}>
                         {auctions.auctions.map((item) => {
-                            return <>
-                                <div className={styles.auction}>
-                                    <img
-                                        className={styles.img}
-                                        src="https://vnn-imgs-a1.vgcloud.vn/znews-photo.zingcdn.me/w960/Uploaded/ohuokaa/2022_09_27/IMGC4685.jpg"
-                                        alt="img"
-                                    />
-                                    <p className={styles.name}>{item.name}</p>
-                                    <p className={styles.price}>{item.property.startBid} ETH</p>
-                                    <p className={styles.status}>Status: {item.status} </p>
-                                    <p className={styles.time}>
-                                        <AiOutlineFieldTime className={styles.i} />
-                                        <label className={styles.l}>Registration time: {moment(item.startRegistrationTime).format('L')}, {moment(item.startRegistrationTime).format('LTS')} - {moment(item.endRegistrationTime).format('L')}, {moment(item.endRegistrationTime).format('LTS')}</label>
-                                    </p>
-                                    <p className={styles.time}>
-                                        <AiOutlineFieldTime className={styles.i} />
-                                        <label className={styles.l}>Registration time: {moment(item.startAuctionTime).format('L')}, {moment(item.startAuctionTime).format('LTS')} - {moment(item.endAuctionTime).format('L')}, {moment(item.endAuctionTime).format('LTS')}</label>
-                                    </p>
-                                    <br />
-                                    <br />
-                                    <br />
+                            return (
+                                <>
+                                    <div className={styles.auction}>
+                                        <img className={styles.img} src={`${item.property.mediaUrl[0]}`} alt="img" />
+                                        <p className={styles.name}>{item.name}</p>
+                                        <p className={styles.price}>{item.property.startBid} ETH</p>
+                                        <p className={styles.status}>Status: {item.status} </p>
+                                        <p className={styles.time}>
+                                            <AiOutlineFieldTime className={styles.i} />
+                                            <label className={styles.l}>
+                                                Registration time: {moment(item.startRegistrationTime).format("L")},{" "}
+                                                {moment(item.startRegistrationTime).format("LTS")} - {moment(item.endRegistrationTime).format("L")},{" "}
+                                                {moment(item.endRegistrationTime).format("LTS")}
+                                            </label>
+                                        </p>
+                                        <p className={styles.time}>
+                                            <AiOutlineFieldTime className={styles.i} />
+                                            <label className={styles.l}>
+                                                Registration time: {moment(item.startAuctionTime).format("L")},{" "}
+                                                {moment(item.startAuctionTime).format("LTS")} - {moment(item.endAuctionTime).format("L")},{" "}
+                                                {moment(item.endAuctionTime).format("LTS")}
+                                            </label>
+                                        </p>
+                                        <br />
+                                        <br />
+                                        <br />
 
-                                    <button className={styles.btnDetail} onClick={() => { navigate(`/auctionDetail/${item._id}`) }}>Detail</button>
-                                </div>
-                            </>
+                                        <button
+                                            className={styles.btnDetail}
+                                            onClick={() => {
+                                                navigate(`/auctionDetail/${item._id}`);
+                                            }}
+                                        >
+                                            Detail
+                                        </button>
+                                    </div>
+                                </>
+                            );
                         })}
                     </div>
                     <Pagination className={styles.pagi} count={Math.ceil(10 / 5)} page={page} onChange={handleChange} hidden={data.total === 0} />
