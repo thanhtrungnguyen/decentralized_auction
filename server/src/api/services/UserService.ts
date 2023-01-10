@@ -12,9 +12,9 @@ const getAllUsers = async () => {
     logger.error(error);
   }
 };
-const validatePassword = async ({ email, password }: { email: string; password: string }) => {
+const validatePassword = async ({ username, password }: { username: string; password: string }) => {
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
     if (!user) {
       return false;
     }
