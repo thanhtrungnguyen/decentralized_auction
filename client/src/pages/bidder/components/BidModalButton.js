@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 // import { useParams } from "react-router-dom";
-import BidModal from "../index";
+import BidModal from "../BidModal";
 import axios from "../../../config/axiosConfig";
 //import { useFetchBidding } from "../../../hook/useFetch";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";

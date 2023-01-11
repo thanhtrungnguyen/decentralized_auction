@@ -6,9 +6,10 @@ import { verifyJwt } from '../utils/jwt';
 
 const deserializeUser = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = (req.headers.authorization || '').replace(/^Bearer\s/, '');
-  if (!accessToken) {
+  if (!accessToken || accessToken === 'null') {
     return next();
   }
+
   const refreshToken = get(req, 'headers.x-refresh');
   const { decoded, expired } = verifyJwt(accessToken, defaultConfig.jwt.accessTokenPublicKey);
   if (decoded) {

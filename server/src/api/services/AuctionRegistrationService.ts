@@ -12,7 +12,7 @@ const getAllAuctionRegistrations = async () => {
 
 const getAuctionRegistration = async (filter: FilterQuery<IAuctionRegistrationDocument>, options: QueryOptions = { lean: true }) => {
   try {
-    return await AuctionRegistration.findOne(filter, {}, options);
+    return await AuctionRegistration.find(filter, {}, options);
   } catch (error) {
     logger.error(error);
   }
