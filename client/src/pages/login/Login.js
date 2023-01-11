@@ -1,7 +1,7 @@
 import styles from "../../styleCss/login.module.css";
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "../../config/axiosConfig";
 
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +12,7 @@ const eye = <FontAwesomeIcon icon={faEye} />;
 const Login = () => {
     const navigate = useNavigate();
 
-    const [userName, setUserName] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     // const [message, setMassage] = useState("");
     const togglePasswordVisibility = () => {
@@ -23,7 +23,7 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         // axios
-        //     .post("http://localhost:8800/api/auth/login", { userName, password }, { withCredentials: true })
+        //     .post("http://localhost:8800/api/auth/login", { username, password }, { withCredentials: true })
         //     .then((res) => {
         //         console.log(res);
         //         if (res.data.success === "false") {
@@ -44,14 +44,18 @@ const Login = () => {
         //         }
         //     })
         //     .catch((reason) => {
-        //         alert("Incorrect Username or Password!!!");
+        //         alert("Incorrect username or Password!!!");
         //         console.log(reason);
         //     });
+        axios.post("/session", { username, password }).then((response) => {
+            localStorage.setItem("accessToken", response.data.accessToken);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
+        });
 
-        localStorage.setItem(
-            "accessToken",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2JkODUzMWNjOWQ3NWNkODc4MDQ1NGMiLCJ1c2VybmFtZSI6InNlbGxlcjZAZnB0LmVkdS52biIsInZlcmlmaWNhdGlvbkNvZGUiOiI5NzJkZWZlNC01MTQzLTQxOTYtYWZkMC05YzZhZDdmNDUxNWMiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6InNlbGxlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInNlc3Npb24iOiI2M2JlMzc5NDcwMGE1NjVkYTA1MTY0NTQiLCJpYXQiOjE2NzM0MTA0NTIsImV4cCI6MTcwNDk2ODA1Mn0.cAPsFf_FBja4BQp5wFmcQsVwUah5s-9ZyQISXJcf47Q"
-        );
+        // localStorage.setItem(
+        //     "accessToken",
+        //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2JkODUzMWNjOWQ3NWNkODc4MDQ1NGMiLCJ1c2VybmFtZSI6InNlbGxlcjZAZnB0LmVkdS52biIsInZlcmlmaWNhdGlvbkNvZGUiOiI5NzJkZWZlNC01MTQzLTQxOTYtYWZkMC05YzZhZDdmNDUxNWMiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6InNlbGxlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInNlc3Npb24iOiI2M2JlMzc5NDcwMGE1NjVkYTA1MTY0NTQiLCJpYXQiOjE2NzM0MTA0NTIsImV4cCI6MTcwNDk2ODA1Mn0.cAPsFf_FBja4BQp5wFmcQsVwUah5s-9ZyQISXJcf47Q"
+        // );
     };
 
     return (
@@ -70,8 +74,8 @@ const Login = () => {
                                 type="text"
                                 className={styles.textField}
                                 placeholder="Email Address"
-                                value={userName}
-                                onChange={(e) => setUserName(e.target.value)}
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 required
                             ></input>
                             <input
@@ -110,13 +114,13 @@ const Login = () => {
                                 Sign up{" "}
                             </Link>
                         </p>
-                        <p className={styles.use}>Username</p>
+                        <p className={styles.use}>username</p>
                         <input
                             className={styles.ip}
                             type="text"
-                            placeholder="Username"
-                            value={userName}
-                            onChange={(e) => setUserName(e.target.value)}
+                            placeholder="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                         ></input>
                         <p className={styles.use}>Password</p>

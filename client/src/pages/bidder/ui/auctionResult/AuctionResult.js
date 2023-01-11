@@ -5,7 +5,7 @@ import auctionAbi from "../../../../constants/contractAbi.json";
 import contractAddresses from "../../../../constants/contractAddress.json";
 import styles from "../../../../styleCss/stylesComponents/placeABid.module.css";
 import BiddingProperty from "../../components/BiddingProperty";
-import { GOERLI_TEST_NETWORK, MORALIS_API_KEY, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../config/configuration";
+import { GOERLI_TEST_NETWORK, MORALIS_API_KEY, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../config/blockchainConfig";
 import { parseWei, parseEther } from "../../../../utils/ethereumUnitConverter";
 import ClosedAuction from "../ClosedAuction";
 import { ConfirmAuctionResult } from "../../components/ConfirmAuctionResult";

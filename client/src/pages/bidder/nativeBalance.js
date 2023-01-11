@@ -1,5 +1,5 @@
 import Moralis from "moralis";
-import { MORALIS_API_KEY } from "../../config/configuration";
+import { MORALIS_API_KEY } from "../../config/blockchainConfig";
 
 export async function getNativeBalanceOfBidder(walletAddress) {
     await Moralis.start({ apiKey: MORALIS_API_KEY });

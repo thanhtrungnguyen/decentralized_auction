@@ -14,14 +14,14 @@ import TransactionStatus from "./TransactionStatus";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
 // import Payment from "../ui/Payment";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
 // import { parseEther } from "../../../utils/ethereumUnitConverter";
 // import ClosedAuction from "../ui/ClosedAuction";
 export const ConfirmAuctionResult = ({ auction, rank, showConfirmation, highestBid }) => {
     // const { account, isWeb3Enabled } = useMoralis();
     const dispatch = useNotification();
     const [transactionStatus, setTransactionStatus] = useState();
-    const [ setGoPayment] = useState(false);
+    const [setGoPayment] = useState(false);
 
     const {
         runContractFunction: cancelAuctionResult,

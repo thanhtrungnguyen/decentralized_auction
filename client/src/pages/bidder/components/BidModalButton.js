@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 // import { useParams } from "react-router-dom";
 import BidModal from "../index";
-import axios from "axios";
+import axios from "../../../config/axiosConfig";
 //import { useFetchBidding } from "../../../hook/useFetch";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import Cookies from "js-cookie";
@@ -16,10 +16,10 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     const [auction, setAuction] = useState();
     const [auctionRegistration, setAuctionRegistration] = useState();
     const fetchData = async () => {
-        const baseURL = `http://localhost:5000/api/contractInteraction/createdAuction/${auctionId}`;
-        const auctionRegistrationURL = `http://localhost:8800/api/auctionInformation/${auctionId}/auctionRegistration`;
+        const baseURL = `/contractInteraction/createdAuction/${auctionId}`;
+        const auctionRegistrationURL = `/auctionRegistration/${auctionId}`;
         const getAuction = await axios.get(baseURL);
-        const getAuctionRegistration = await axios.get(baseURL);
+        const getAuctionRegistration = await axios.get(auctionRegistrationURL);
         await axios.all([getAuction, getAuctionRegistration]).then(
             axios.spread((...allData) => {
                 console.log(allData);

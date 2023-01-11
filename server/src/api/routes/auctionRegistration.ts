@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   getAllAuctionRegistrationsHandler,
-  getAuctionRegistrationByIdHandler,
+  getAuctionRegistrationByAuctionIdHandler,
   createAuctionRegistrationHandler,
   updateAuctionRegistrationHandler,
   deleteAuctionRegistrationHandler
@@ -12,7 +12,7 @@ import { AuctionRegistrationSchema } from '../validations/AuctionRegistrationSch
 const router = express.Router();
 
 router.get('/auctionRegistrations', getAllAuctionRegistrationsHandler);
-router.get('/:auctionRegistrationId', getAuctionRegistrationByIdHandler);
+router.get('/:auctionId', getAuctionRegistrationByAuctionIdHandler);
 router.post('/create', validateResource(AuctionRegistrationSchema.create), createAuctionRegistrationHandler);
 // router.patch('/update/:auctionRegistrationId', validateResource(AuctionRegistrationSchema.update), updateAuctionRegistrationHandler);
 router.delete('/delete/:auctionRegistrationId', deleteAuctionRegistrationHandler);

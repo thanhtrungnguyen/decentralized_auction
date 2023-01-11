@@ -15,7 +15,7 @@ import jwt from "jsonwebtoken";
 // import { set } from "mongoose";
 import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
-
+import Time from "../../components/time/Time";
 const AuctionResult = () => {
     const [page] = React.useState(1);
     const { id } = useParams();
@@ -73,16 +73,81 @@ const AuctionResult = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <div className={styles.container}>
                 <SideBarSeller />
+                <Time />
+                <div className={styles.r}>
+                    <div className={styles.con}>
+                        <div className={styles.btns}>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/viewRegistrationForManager");
+                                }}
+                            >
+                                Registration Information
+                            </button>
+
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/viewBiddingForManager");
+                                }}
+                            >
+                                Place Bids Log
+                            </button>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/viewAuctionResultForManager");
+                                }}
+                            >
+                                Auction Result
+                            </button>
+                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
+                            <button className={styles.btn}>Search</button>
+                        </div>
+                        <hr />
+                        <p className={styles.title}>Auction Result</p>
+                        <p className={styles.lb}>Payment Time End in 5d 5h 34m 32s</p>
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <p className={styles.label}>Start Bid</p>
+                            </div>
+                            <div className={styles.r}>
+                                <p className={styles.txt}>ABC XYZ</p>
+                            </div>
+                        </div>
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <p className={styles.label}>Bid Amount</p>
+                            </div>
+                            <div className={styles.r}>
+                                <p className={styles.txt}>44 ETH</p>
+                            </div>
+                        </div>{" "}
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <p className={styles.label}>Status</p>
+                            </div>
+                            <div className={styles.r}>
+                                <p className={styles.txt}>Accept Auction result</p>
+                            </div>
+                        </div>{" "}
+                        <div className={styles.fl}>
+                            <div className={styles.l}>
+                                <p className={styles.label}>Payment</p>
+                            </div>
+                            <div className={styles.r}>
+                                <p className={styles.txt}>Not Yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* <div className={styles.container}>
+                <SideBarSeller />
+                <Time />
                 <div className={styles.content}>
                     <div className={styles.search}>
                         <label
@@ -156,8 +221,7 @@ const AuctionResult = () => {
                         </div>
                     </div>
                 </div>
-                <Footer />
-            </div>
+            </div> */}
         </>
     );
 };

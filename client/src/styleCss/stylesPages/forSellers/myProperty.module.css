@@ -1,6 +1,16 @@
 .r {
     position: relative;
 }
+.lb {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #5a5c7e;
+    margin-left: 50px;
+}
 .container {
     background: #f9fafb;
     width: 100%;
@@ -115,4 +125,54 @@ th {
     color: #33a0ff;
     margin-top: 6px;
     position: absolute;
+}
+
+.link2 {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    margin-left: 15px;
+    color: #33a0ff;
+    text-decoration: none;
+}
+.title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 35px;
+    line-height: 20px;
+    /* or 80% */
+    margin-left: 50px;
+    color: #000000;
+}
+.fl {
+    display: flex;
+    width: 1280px;
+}
+.r {
+    width: 70%;
+    /* float: right; */
+}
+.l {
+    width: 30%;
+    float: left;
+}
+.label {
+    width: 100%;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: right;
+}
+.txt {
+    margin-left: 40px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 }

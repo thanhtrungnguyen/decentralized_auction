@@ -19,21 +19,22 @@ const createUserSessionHandler = async (req: Request, res: Response, next: NextF
     expiresIn: defaultConfig.jwt.refreshTokenTtl
   });
 
-  return res.send({ accessToken, refreshToken });
+  return res.status(201).send({ accessToken, refreshToken });
 };
 
 const getUserSessionHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const userId = res?.locals?.user?._id;
-  if (!userId) {
+  const user = res?.locals?.user;
+  if (!user) {
     return res.status(404).json({ message: 'Session not found' });
   }
-  return await findSessions({ user: userId, valid: true })
-    .then((session) => {
-      res.status(200).send(session);
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
+  return res.status(200).send({ user });
+  // return await findSessions({ user: userId, valid: true })
+  //   .then((session) => {
+  //     res.status(200).send(session);
+  //   })
+  //   .catch((error) => {
+  //     res.status(500).json({ error });
+  //   });
 };
 
 const deleteSessionHandler = async (req: Request, res: Response, next: NextFunction) => {

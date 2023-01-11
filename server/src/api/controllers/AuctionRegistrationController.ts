@@ -17,9 +17,9 @@ export const getAllAuctionRegistrationsHandler = async (req: Request, res: Respo
     });
 };
 
-export const getAuctionRegistrationByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const auctionRegistrationId = req.params.auctionRegistrationId;
-  return await getAuctionRegistration({ _id: auctionRegistrationId })
+export const getAuctionRegistrationByAuctionIdHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const auctionId = req.params.auctionId;
+  return await getAuctionRegistration({ auction: auctionId })
     .then((auctionRegistration) => {
       res.status(200).json({ auctionRegistration });
     })
