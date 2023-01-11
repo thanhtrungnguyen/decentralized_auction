@@ -27,11 +27,11 @@ const PropertyDetail = () => {
     // ]);
     const [role, setRole] = useState();
 
-    const { id, propertyId } = useParams();
+    const { id } = useParams();
     const [show, setShow] = useState(false);
     const [show2, setShow2] = useState(false);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
+    const baseURL = `http://localhost:5000/api/property/${id}`;
     const [registrationFee, setRegistrationFee] = useState(null);
     const [name, setName] = useState(null);
     const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
@@ -84,7 +84,6 @@ const PropertyDetail = () => {
                     timeRegistration: timeRegistration,
                     auctionTime: auctionTime,
                     name: name,
-                    propertyId: propertyId,
                     paymentTime: paymentTime,
                 },
                 {
@@ -102,9 +101,7 @@ const PropertyDetail = () => {
         axios
             .put(
                 "http://localhost:8800/api/auction/reject/" + id,
-                {
-                    propertyId: propertyId,
-                },
+                {},
                 {
                     withCredentials: true,
                 }
@@ -186,30 +183,18 @@ const PropertyDetail = () => {
                   src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
-                                <img
-                                    className={styles.img}
-                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
-                                    alt="images"
-                                />
+                                <img className={styles.img} src={`${data.property.mediaUrl[0]}`} alt="images" />
                                 {/* <img
                   className={styles.img}
                   src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
-                                <img
-                                    className={styles.img}
-                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
-                                    alt="images"
-                                />
-                                <img
-                                    className={styles.img}
-                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
-                                    alt="images"
-                                />
+                                <img className={styles.img} src={`${data.property.mediaUrl[1]}`} alt="images" />
+                                <img className={styles.img} src={`${data.property.mediaUrl[2]}`} alt="images" />
                                 <div className={styles.video}>
-                                    <ReactPlayer
+                                    <video
                                         className={styles.video}
-                                        url={`${data.Properties_Media__r.records[3].Name}`}
+                                        src={`${data.property.mediaUrl[3]}`}
                                         playing={true}
                                         controls={true}
                                         loop={true}
@@ -245,7 +230,7 @@ const PropertyDetail = () => {
                                     type="text"
                                     placeholder="Enter Property Name"
                                     className={styles.inputText}
-                                    value={data.Name}
+                                    value={data.property.name}
                                     readonly
                                 ></input>
                                 <select
@@ -256,7 +241,7 @@ const PropertyDetail = () => {
                                     // defaultValue={data.Category_Id__r.Name}
                                     readonly
                                 >
-                                    <option value={data.Category_Id__r.Name}>{data.Category_Id__r.Name}</option>
+                                    <option value={data.property.category._id}>{data.property.category.name}</option>
                                     {/* <option value={data.property.category}>{data.property.category}</option> */}
 
                                     {/* {data.map((property) => (
@@ -269,7 +254,7 @@ const PropertyDetail = () => {
                                     placeholder="Enter Start Bid"
                                     className={styles.inputText}
                                     // value={startBid}
-                                    value={data.Start_Bid__c}
+                                    value={data.property.startBid}
                                     // value={"123"}
                                     required
                                 ></input>
@@ -279,7 +264,7 @@ const PropertyDetail = () => {
                                     placeholder="Enter Deposit"
                                     className={styles.inputText}
                                     // value={deposit}
-                                    value={data.Deposit_Amount__c}
+                                    value={data.property.depositAmount}
                                     // value={"123"}
                                     required
                                     readonly
@@ -290,7 +275,7 @@ const PropertyDetail = () => {
                                     placeholder="Enter Price Step"
                                     className={styles.inputText}
                                     // value={priceStep}
-                                    value={data.Price_Step__c}
+                                    value={data.property.priceStep}
                                     // value={"321"}
                                     required
                                     readonly
@@ -301,7 +286,7 @@ const PropertyDetail = () => {
                                     placeholder="Enter Place View Property"
                                     className={styles.inputText}
                                     // value={placeViewProperty}
-                                    value={data.Place_View_Property__c}
+                                    value={data.property.placeViewProperty}
                                     // value={"Ha Noi"}
                                     required
                                     readonly
@@ -313,12 +298,8 @@ const PropertyDetail = () => {
                                     // onChange={(e) => handleInputChange(e)}
                                     // onChange={setViewPropertyTime}
                                     value={[
-                                        new Date(data.Start_View_Property_Time__c).setTime(
-                                            new Date(data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-                                        ),
-                                        new Date(data.End_View_Property_Time__c).setTime(
-                                            new Date(data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-                                        ),
+                                        new Date(data.property.startViewPropertyTime).toLocaleString(),
+                                        new Date(data.property.endViewPropertyTime).toLocaleString(),
                                     ]}
                                     //   value={data.property.viewPropertyTime}
                                     // onChange={setValue}
@@ -332,7 +313,7 @@ const PropertyDetail = () => {
                                 <textarea
                                     id="propertyDescription"
                                     // value={propertyDescription}
-                                    value={data.Description__c}
+                                    value={data.property.description}
                                     // value={
                                     //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                                     // }
