@@ -27,17 +27,17 @@ const ListForManagers = () => {
     const [email2, setEmail2] = useState(null);
     const [status, setStatus] = useState(null);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:5000/api/individual/individuals/manager/${page}/${status}/${email}`;
+
     const [role, setRole] = useState();
 
+    const baseURL = `http://localhost:5000/api/user/users/manager/${page}/${status}/${email}`;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
-
                 // console.log("axios get");
-                setData(resp.data.individuals);
-                //console.log(resp);
+                setData(resp.data.user);
+                console.log(resp);
             });
             if (getUser() != null) {
                 setRole(getUser().role);
@@ -46,7 +46,7 @@ const ListForManagers = () => {
             }
 
             setLoading(false);
-        }
+        };
         fetchData();
     }, [baseURL]);
 
@@ -79,6 +79,10 @@ const ListForManagers = () => {
                     <td>{item.address}</td>
                     <td>{item.user.status === true ? 'Activate' : 'Deactivate'}</td>
                     <td>
+
+                    </td>
+                    <td>
+                        <AiFillEye className={styles.iconView} />
                         {item.user.status === true ?
                             <Popup trigger={
                                 <label style={{ color: "red" }} className={styles.linkBlue}>
@@ -89,17 +93,12 @@ const ListForManagers = () => {
                                 <BanedManager idManager="" />
                             </Popup> :
                             <Popup trigger={
-                                <label className={styles.linkBlue}>
+                                <label style={{ color: "blue" }} className={styles.linkBlue}>
                                     Activate
                                 </label>}
                                 position="right center">
                                 <ActiveManager idManager="" />
                             </Popup>}
-
-                    </td>
-                    <td>
-                        <AiTwotoneEdit className={styles.iconView} />
-                        <AiFillEye className={styles.iconView} />
                     </td>
                 </tr>
             )}

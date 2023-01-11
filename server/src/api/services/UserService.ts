@@ -90,23 +90,49 @@ const getBidderFilter = async (index: any, status: any, search: any) => {
 const getSellerFilter = async (index: any, status: any, search: any) => {
   const role = 'seller';
   try {
-    // var filterUser, filter, arr;
-    // status == 'null' ? (filterUser = { role: role }) : (filterUser = { role: role, status: status });
-    // search == 'null' ? (filter = {}) : (filter = { email: { $regex: search, $options: 'i' } });
-    // await Organization.find({ filter })
-    //   .populate({
-    //     path: 'user',
-    //     match: filterUser
-    //   })
-    //   .sort({ createdAt: -1 })
-    //   .then((result) => {
-    //     arr = result.filter((element) => element.user !== null).slice((index - 1) * page_size, index * page_size);
-    //   });
-    // var count = await User.find({ role: role });
-    // return { listUser: arr, count: count.length };
+    var filterUser, filter;
+    status == 'null' ? (filterUser = { role: role }) : (filterUser = { role: role, status: status });
+    search == 'null' ? (filter = {}) : (filter = { email: { $regex: search, $options: 'i' } });
+    var arr = await Individual.find(filter)
+      .populate({
+        path: 'user',
+        match: filterUser
+      })
+      .sort({ createdAt: -1 })
+      .exec();
+    arr = arr.filter((element) => element.user !== null).slice((index - 1) * page_size, index * page_size);
+    var count = await Individual.find(filter)
+      .populate({
+        path: 'user',
+        match: filterUser
+      })
+      .exec();
+    count = count.filter((element) => element.user !== null);
+    return { listUser: arr, count: count.length };
+  } catch (error) {
+    logger.error(error);
+  }
+};
+const getManagerFilter = async (index: any, status: any, search: any) => {
+  const role = 'manager';
+  try {
+    var filterUser, filter, arr;
+    status == 'null' ? (filterUser = { role: role }) : (filterUser = { role: role, status: status });
+    search == 'null' ? (filter = {}) : (filter = { email: { $regex: search, $options: 'i' } });
+    await Individual.find({ filter })
+      .populate({
+        path: 'user',
+        match: filterUser
+      })
+      .sort({ createdAt: -1 })
+      .then((result) => {
+        arr = result.filter((element) => element.user !== null).slice((index - 1) * page_size, index * page_size);
+      });
+    var count = await User.find({ role: role });
+    return { listUser: arr, count: count.length };
   } catch (error) {
     logger.error(error);
   }
 };
 
-export { getAllUsers, findUser, createUser, updateUser, deleteUser, validatePassword, getBidderFilter, getSellerFilter };
+export { getAllUsers, findUser, createUser, updateUser, deleteUser, validatePassword, getBidderFilter, getSellerFilter, getManagerFilter };

@@ -10,6 +10,26 @@ const getAllProperties = async () => {
     logger.error(error);
   }
 };
+const getPropertiesByUser = async (userId: any, index: any, status: any, search: any) => {
+  const pase_size = 8;
+  try {
+    var filter;
+    var skip = parseInt(index);
+    skip = skip == 1 ? 0 : (skip - 1) * pase_size;
+    status == 'null' && search == 'null'
+      ? (filter = { user: userId })
+      : status == 'null' && search != 'null'
+      ? (filter = { name: { $regex: search, $options: 'i' }, user: userId })
+      : status != 'null' && search == 'null'
+      ? (filter = { status: status, user: userId })
+      : (filter = { status: status, name: { $regex: search, $options: 'i' }, user: userId });
+    var arr = await Property.find(filter).populate('category').skip(skip).limit(pase_size);
+    var count = await Property.find(filter);
+    return { listProperty: arr, count: count.length };
+  } catch (error) {
+    logger.error(error);
+  }
+};
 
 const getProperty = async (filter: FilterQuery<IPropertyDocument>, options: QueryOptions = { lean: true }) => {
   try {
@@ -72,4 +92,4 @@ const deleteProperty = async (filter: FilterQuery<IProperty>) => {
 //   return await PropertyMedia.findOne({ property: propertyId });
 // };
 
-export { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty };
+export { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty, getPropertiesByUser };

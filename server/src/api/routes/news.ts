@@ -4,11 +4,33 @@ import { validateResource } from '../middleware/validateResource';
 import { NewsSchema } from '../validations/NewsSchema';
 // import { Schema, ValidateResource } from '../middleware/validateResource';
 const router = express.Router();
+import multer from 'multer';
 
+const upload = multer({ dest: 'uploads/' });
 router.get('/news/:index/:status/:search', getAllNewsHandler);
 router.get('/:newsId', getNewsByIdHandler);
-router.post('/create', validateResource(NewsSchema.create), createNewsHandler);
-router.patch('/update/:newsId', validateResource(NewsSchema.update), updateNewsHandler);
+router.post(
+  '/create',
+  upload.fields([
+    {
+      name: 'avatar',
+      maxCount: 1
+    }
+  ]),
+  validateResource(NewsSchema.create),
+  createNewsHandler
+);
+router.patch(
+  '/update/:newsId',
+  upload.fields([
+    {
+      name: 'avatar',
+      maxCount: 1
+    }
+  ]),
+  validateResource(NewsSchema.update),
+  updateNewsHandler
+);
 router.delete('/delete/:newsId', deleteNewsHandler);
 
 export default router;

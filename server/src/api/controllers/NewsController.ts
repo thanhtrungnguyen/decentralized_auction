@@ -27,11 +27,13 @@ export const getNewsByIdHandler = async (req: Request, res: Response, next: Next
 
 export const createNewsHandler = async (req: Request, res: Response, next: NextFunction) => {
   const news = req.body;
+  const files = req.files as { [fieldName: string]: Express.Multer.File[] };
   var isExist = await getNews({ title: news.title });
   if (isExist) {
     return res.status(409).json({ message: 'Title has been exist!' });
   }
-  return await createNews(news)
+
+  return await createNews(news, files)
     .then((news) => {
       res.status(201).json({ news });
     })
@@ -43,11 +45,12 @@ export const createNewsHandler = async (req: Request, res: Response, next: NextF
 export const updateNewsHandler = async (req: Request, res: Response, next: NextFunction) => {
   const newsId = req.params.newsId;
   const update = req.body;
+  const files = req.files as { [fieldName: string]: Express.Multer.File[] };
   const news = await getNews({ _id: newsId });
   if (!news) {
     return res.status(404).json({ message: "News isn't found" });
   }
-  return await updateNews({ _id: newsId }, update, { new: true })
+  return await updateNews({ _id: newsId }, update, { new: true }, files)
     .then((news) => {
       res.status(201).json({ news });
     })

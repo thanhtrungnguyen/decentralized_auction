@@ -4,7 +4,8 @@ import {
   getPropertyByIdHandler,
   createPropertyHandler,
   updatePropertyHandler,
-  deletePropertyHandler
+  deletePropertyHandler,
+  getPropertiesByUserHandler
 } from '../controllers/PropertyController';
 import { validateResource } from '../middleware/validateResource';
 import { PropertySchema } from '../validations/PropertySchema';
@@ -14,6 +15,7 @@ const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
 router.get('/properties', getAllPropertiesHandler);
+router.get('/myProperty/:index/:status/:search', getPropertiesByUserHandler);
 router.get('/:propertyId', getPropertyByIdHandler);
 router.post(
   '/create',

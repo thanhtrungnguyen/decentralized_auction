@@ -110,10 +110,16 @@ const AddProperty = () => {
         formData.append("priceStep", priceStep);
         formData.append("placeViewProperty", placeViewProperty);
         formData.append("user", "63bd8531cc9d75cd8780454c");
+        const accessToken = localStorage.getItem("accessToken");
+        const config = {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        };
+
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
+
         axios
-            .post("http://localhost:5000/api/property/create", formData, {
+            .post("http://localhost:5000/api/property/create", formData, config, {
                 withCredentials: true,
             })
             .then((res) => {
