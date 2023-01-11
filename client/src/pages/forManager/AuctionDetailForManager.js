@@ -23,10 +23,10 @@ const AuctionDetailForManager = () => {
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),
     // ]);
-    const { id, propertyId } = useParams();
+    const { id } = useParams();
     // const [show, setShow] = useState(false);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:8800/api/auction/auctiondetail/${id}/${propertyId}`;
+    const baseURL = `http://localhost:5000/api/auction/${id}`;
     const [registrationFee, setRegistrationFee] = useState(null);
     const [name, setName] = useState(null);
     const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
@@ -34,7 +34,7 @@ const AuctionDetailForManager = () => {
 
     const [auctionTime, setAuctionTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
 
-    const { data, loading} = useFetch(baseURL);
+    const { data, loading } = useFetch(baseURL);
     // const onClick = () => {
     //     console.log(show);
 
@@ -168,30 +168,18 @@ const AuctionDetailForManager = () => {
                   src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
-                                <img
-                                    className={styles.img}
-                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
-                                    alt="images"
-                                />
+                                <img className={styles.img} src={`${data.auction.property.mediaUrl[0]}`} alt="images" />
                                 {/* <img
                   className={styles.img}
                   src="https://www.w3schools.com/html/pic_trulli.jpg"
                   alt="images"
                 /> */}
-                                <img
-                                    className={styles.img}
-                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
-                                    alt="images"
-                                />
-                                <img
-                                    className={styles.img}
-                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
-                                    alt="images"
-                                />
+                                <img className={styles.img} src={`${data.auction.property.mediaUrl[1]}`} alt="images" />
+                                <img className={styles.img} src={`${data.auction.property.mediaUrl[2]}`} alt="images" />
                                 <div className={styles.video}>
-                                    <ReactPlayer
+                                    <video
                                         className={styles.video}
-                                        url={`${data.Properties_Media__r.records[3].Name}`}
+                                        src={`${data.auction.property.mediaUrl[3]}`}
                                         playing={true}
                                         controls={true}
                                         loop={true}
@@ -227,7 +215,7 @@ const AuctionDetailForManager = () => {
                                     type="text"
                                     placeholder="Enter Property Name"
                                     className={styles.inputText}
-                                    value={data.Name}
+                                    value={data.auction.property.name}
                                     readonly
                                 ></input>
                                 <select
@@ -238,7 +226,7 @@ const AuctionDetailForManager = () => {
                                     // defaultValue={data.Category_Id__r.Name}
                                     readonly
                                 >
-                                    <option value={data.Category_Id__r.Name}>{data.Category_Id__r.Name}</option>
+                                    <option value={data.auction.property.category._id}>{data.auction.property.category.name}</option>
                                     {/* <option value={data.property.category}>{data.property.category}</option> */}
 
                                     {/* {data.map((property) => (
@@ -251,7 +239,7 @@ const AuctionDetailForManager = () => {
                                     placeholder="Enter Start Bid"
                                     className={styles.inputText}
                                     // value={startBid}
-                                    value={data.Start_Bid__c}
+                                    value={data.auction.property.startBid}
                                     // value={"123"}
                                     required
                                 ></input>
@@ -261,7 +249,7 @@ const AuctionDetailForManager = () => {
                                     placeholder="Enter Deposit"
                                     className={styles.inputText}
                                     // value={deposit}
-                                    value={data.Deposit_Amount__c}
+                                    value={data.auction.property.depositAmount}
                                     // value={"123"}
                                     required
                                     readonly
@@ -272,7 +260,7 @@ const AuctionDetailForManager = () => {
                                     placeholder="Enter Price Step"
                                     className={styles.inputText}
                                     // value={priceStep}
-                                    value={data.Price_Step__c}
+                                    value={data.auction.property.priceStep}
                                     // value={"321"}
                                     required
                                     readonly
@@ -283,7 +271,7 @@ const AuctionDetailForManager = () => {
                                     placeholder="Enter Place View Property"
                                     className={styles.inputText}
                                     // value={placeViewProperty}
-                                    value={data.Place_View_Property__c}
+                                    value={data.auction.property.placeViewProperty}
                                     // value={"Ha Noi"}
                                     required
                                     readonly
@@ -294,7 +282,10 @@ const AuctionDetailForManager = () => {
                                     // onChange={(e) => handleInputChange(e)}
                                     // onChange={setViewPropertyTime}
                                     ClassName={styles.datePicker}
-                                    value={[convertDateTime(data.Start_View_Property_Time__c), convertDateTime(data.End_View_Property_Time__c)]}
+                                    value={[
+                                        new Date(data.auction.property.startViewPropertyTime),
+                                        new Date(data.auction.property.endViewPropertyTime),
+                                    ]}
                                     //   value={data.property.viewPropertyTime}
                                     // onChange={setValue}
                                     range
@@ -307,7 +298,7 @@ const AuctionDetailForManager = () => {
                                 <textarea
                                     id="propertyDescription"
                                     // value={propertyDescription}
-                                    value={data.Description__c}
+                                    value={data.auction.property.description}
                                     // value={
                                     //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                                     // }
@@ -334,7 +325,7 @@ const AuctionDetailForManager = () => {
                                 className={styles.inputText}
                                 // value={priceStep}
                                 // value={data.property.priceStep}
-                                value={data.Auctions1__r.records[0].Name}
+                                value={data.auction.name}
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
@@ -345,7 +336,7 @@ const AuctionDetailForManager = () => {
                                 className={styles.inputText}
                                 // value={priceStep}
                                 // value={data.property.priceStep}
-                                value={data.Auctions1__r.records[0].RegistrationFee__c}
+                                value={data.auction.registrationFee}
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
@@ -355,10 +346,7 @@ const AuctionDetailForManager = () => {
                                 // onChange={(e) => handleInputChange(e)}
                                 onChange={setTimeRegistration}
                                 ClassName={styles.datePicker}
-                                value={[
-                                    convertDateTime(data.Auctions1__r.records[0].Start_Registration_Time__c),
-                                    convertDateTime(data.Auctions1__r.records[0].End_Registration_Time__c),
-                                ]}
+                                value={[new Date(data.auction.startRegistrationTime), new Date(data.auction.endRegistrationTime)]}
                                 //   value={data.property.viewPropertyTime}
                                 // onChange={setValue}
                                 range
@@ -374,10 +362,7 @@ const AuctionDetailForManager = () => {
                                 // onChange={(e) => handleInputChange(e)}
                                 onChange={setAuctionTime}
                                 ClassName={styles.datePicker}
-                                value={[
-                                    convertDateTime(data.Auctions1__r.records[0].Start_Aution_Time__c),
-                                    convertDateTime(data.Auctions1__r.records[0].End_Auction_Time__c),
-                                ]}
+                                value={[new Date(data.auction.startAuctionTime), new Date(data.auction.endAuctionTime)]}
                                 //   value={data.property.viewPropertyTime}
                                 // onChange={setValue}
                                 range
