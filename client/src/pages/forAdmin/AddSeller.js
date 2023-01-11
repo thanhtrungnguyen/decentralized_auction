@@ -124,13 +124,14 @@ const AddSeller = () => {
         let ward = selectedWard.label;
         let cardfront = cardFront.name;
         let cardback = cardBack.name;
+
         const formData = new FormData();
 
-        formData.append("organizationName", organizationName);
+        formData.append("name", organizationName);
         formData.append("taxCode", taxCode);
         formData.append("taxCodeGrantedDate", taxCodeGrantedDate);
         formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace);
-        formData.append("specificAddressOrganization", specificAddressOrganization);
+        formData.append("addressOrganization", specificAddressOrganization);
 
         formData.append("firstName", firstName);
         formData.append("lastName", lastName);
@@ -143,8 +144,8 @@ const AddSeller = () => {
         formData.append("city", selectedCity.label);
         formData.append("districtId", districtId);
         formData.append("district", selectedDistrict.label);
-        formData.append("wardId", wardId);
-        formData.append("ward", selectedWard.label);
+        formData.append("wardsId", wardId);
+        formData.append("wards", selectedWard.label);
         formData.append("address", specificAddress);
         formData.append("cardNumber", cardNumber);
         formData.append("cardGrantedDate", dateRangeCard);
@@ -155,17 +156,20 @@ const AddSeller = () => {
         formData.append("password", password);
         formData.append("role", role);
         formData.append("userType", userType);
-
+        console.log(formData.data())
         axios
-            .post("http://localhost:8800/api/auth/registerSeller", formData, {
+            .post('http://localhost:5000/api/organization/create', formData, {
                 withCredentials: true,
             })
-            .then((res) => {
+            .then(res => {
                 console.log(res);
                 console.log(res.data);
                 alert("Add seller successfully!!!");
                 navigate("/listSellers");
-            });
+            })
+            .catch(err => {
+                console.error(err);
+            })
         event.preventDefault();
     };
     const Cancel = () => {

@@ -20,7 +20,7 @@ import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 const EditNew = () => {
     const { id } = useParams();
-    const baseURL = `http://localhost:8800/api/news/getById/${id}`;
+    const baseURL = `http://localhost:5000/api/news/${id}`;
     const [role, setRole] = useState();
     //const { data, loading, error } = useFetch(baseURL);
     const [loading, setLoading] = useState(true);
@@ -29,26 +29,25 @@ const EditNew = () => {
     const [title, setTitle] = useState(null);
     const [avatar, setAvatar] = useState(null);
 
-    console.log(data);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         await axios.get(baseURL).then((resp) => {
-    //             setTitle(resp.data.Name);
-    //             setContent(resp.data.Content__c);
-    //             setData(resp.data);
-    //         });
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                setTitle(resp.data.news.title);
+                setContent(resp.data.news.content);
+                setData(resp.data.news);
+            });
 
-    //         if (getUser() != null) {
-    //             setRole(getUser().role);
-    //         } else {
-    //             setRole("");
-    //         }
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
 
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    // }, [baseURL]);
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
 
     // useEffect(() => {
     //     setTitle(data.title);
@@ -85,26 +84,27 @@ const EditNew = () => {
         }
     };
     const handleSubmit = (event) => {
+
         const formData = new FormData();
 
         formData.append("title", title);
         formData.append("content", content);
         formData.append("avatar", avatar);
 
-        console.log(formData.get("content"));
-        axios.put(`http://localhost:8800/api/news/updateNews/${id}`, formData, { withCredentials: true }).then((res) => {
-            console.log(res);
-            console.log(res.data);
-            alert("Edit new successfully!!!");
-            navigate("/listNews");
-        });
+        axios.patch(`http://localhost:5000/api/news/update/${id}`, formData, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert("Edit new successfully!!!");
+                navigate("/listNews");
+            });
         event.preventDefault();
     };
     const cancel = () => {
         navigate("/listNews");
     };
 
-    return !loading ? (
+    return loading ? (
         <Loading />
     ) : (
         <>
@@ -125,7 +125,7 @@ const EditNew = () => {
                         {avatar != null && <img src={URL.createObjectURL(avatar)} className={styles.image} alt="Thumb" />}
 
                         {avatar == null && (
-                            <img src={`http://localhost:8800/api/auction/images/${data.Avatar__c}`} className={styles.image} alt="Thumb" />
+                            <img src={`${data.avatar}`} className={styles.image} alt="Thumb" />
                         )}
 
                         <br />

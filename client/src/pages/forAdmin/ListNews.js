@@ -101,13 +101,13 @@ const ListNews = () => {
                             <AiTwotoneEdit
                                 className={styles.iconView}
                                 onClick={() => {
-                                    navigate("/editNews");
+                                    navigate(`/editNews/${item._id}`);
                                 }}
                             />
                             <AiFillEye
                                 className={styles.iconView}
                                 onClick={() => {
-                                    navigate("/viewNewsForAdmin");
+                                    navigate(`/viewNewsForAdmin/${item._id}`);
                                 }}
                             />
                         </td>

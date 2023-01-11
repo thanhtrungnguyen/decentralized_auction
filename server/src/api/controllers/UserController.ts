@@ -1,6 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
-import { getAllUsers, findUser, createUser, updateUser, deleteUser, getBidderFilter } from '../services/UserService';
+import {
+  getAllUsers,
+  findUser,
+  createUser,
+  updateUser,
+  deleteUser,
+  getBidderFilter,
+  getSellerFilter,
+  getManagerFilter
+} from '../services/UserService';
 import sendEmail from '../utils/mailer';
 import { createIndividual, getIndividual } from '../services/IndividualService';
 export const getAllUsersHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -27,7 +36,7 @@ export const getUserByRoleHandler = async (req: Request, res: Response, next: Ne
       });
   }
   if (role == 'seller') {
-    return await getBidderFilter(index, status, search)
+    return await getSellerFilter(index, status, search)
       .then((user) => {
         res.status(200).json({ user });
       })
@@ -36,7 +45,7 @@ export const getUserByRoleHandler = async (req: Request, res: Response, next: Ne
       });
   }
   if (role == 'manager') {
-    return await getBidderFilter(index, status, search)
+    return await getManagerFilter(index, status, search)
       .then((user) => {
         res.status(200).json({ user });
       })
