@@ -47,7 +47,9 @@ const createNews = async (news: INews, files: { [fieldName: string]: Express.Mul
     logger.error(error);
   }
 };
-
+function isEmptyObject(obj: Object) {
+  return JSON.stringify(obj) === '{}';
+}
 const updateNews = async (
   filter: FilterQuery<INewsDocument>,
   update: UpdateQuery<INewsDocument>,
@@ -55,14 +57,15 @@ const updateNews = async (
   files: { [fieldName: string]: Express.Multer.File[] }
 ) => {
   var img1;
-
   try {
-    const file1 = files['avatar'][0];
-    if (file1) {
-      img1 = await (await uploadFile(file1)).data;
-      update.avatar = img1;
-    } else {
-      return { success: false, message: 'Upload avatar fail!!!' };
+    if (!isEmptyObject(files)) {
+      const file1 = files['avatar'][0];
+      if (file1) {
+        img1 = await (await uploadFile(file1)).data;
+        update.avatar = img1;
+      } else {
+        return { success: false, message: 'Upload avatar fail!!!' };
+      }
     }
     return await News.findOneAndUpdate(filter, update, options);
   } catch (error) {

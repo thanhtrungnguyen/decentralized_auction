@@ -11,6 +11,6 @@ export const NewsSchema = {
     title: Joi.string().trim().required(),
     avatar: Joi.string().trim(),
     content: Joi.string().trim().required(),
-    status: Joi.string().trim().required()
+    status: Joi.string().trim()
   })
 };
