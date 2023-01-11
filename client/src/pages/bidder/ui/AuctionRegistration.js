@@ -11,7 +11,7 @@ import BiddingProperty from "../components/BiddingProperty";
 import { useEffect, useState } from "react";
 import WaitingForAuctionTime from "./WaitingForAuctionTime";
 import TransactionStatus from "../components/TransactionStatus";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
 import { useFetchBidding } from "../../../hook/useFetch";
 import Loader from "../components/Loader";
 import axios from "axios";

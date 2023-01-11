@@ -14,7 +14,7 @@ import TransactionHistory from "../../components/TransactionHistory";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
 import Payment from "../Payment";
-import { GOERLI_TEST_NETWORK, MORALIS_API_KEY, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../config/configuration";
+import { GOERLI_TEST_NETWORK, MORALIS_API_KEY, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../config/blockchainConfig";
 import { parseEther } from "../../../../utils/ethereumUnitConverter";
 import ClosedAuction from "../ClosedAuction";
 import { ConfirmAuctionResult } from "../../components/ConfirmAuctionResult";

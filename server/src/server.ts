@@ -20,9 +20,10 @@ connectMongo()
 
 const startServer = () => {
   app.use((req, res, next) => {
-    logger.info(`Incoming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
+    const info = `- IP: [${req.socket.remoteAddress}] - METHOD: [${req.method}] - URL: [${req.url}] `;
+    logger.info(`Request  ${info}`);
     res.on('finish', () => {
-      logger.info(`Result - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}] - STATUS: [${res.statusCode}]`);
+      logger.info(`Response ${info} - STATUS: [${res.statusCode}]`);
     });
     next();
   });

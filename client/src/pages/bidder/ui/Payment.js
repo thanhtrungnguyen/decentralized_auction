@@ -10,7 +10,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import BiddingProperty from "../components/BiddingProperty";
 import TransactionStatus from "../components/TransactionStatus";
 import ClosedAuction from "./ClosedAuction";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
 import { parseWei, parseEther } from "../../../utils/ethereumUnitConverter";
 const Payment = ({ auction, highestBid }) => {
     const dispatch = useNotification();

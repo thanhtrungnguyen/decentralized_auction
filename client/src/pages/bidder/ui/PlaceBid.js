@@ -18,7 +18,7 @@ import BiddingProperty from "../components/BiddingProperty";
 import TransactionHistory from "../components/TransactionHistory";
 import AuctionResult from "./auctionResult/AuctionResult";
 import { useFetchBidding } from "../../../hook/useFetch";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/configuration";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
 import Loader from "../components/Loader";
 import Decimal from "decimal.js";
 import io from "socket.io-client";
