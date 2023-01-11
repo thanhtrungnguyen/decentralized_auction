@@ -117,32 +117,37 @@ const MyProperty = () => {
                         <td>{item.startBid}</td>
                         <td>{item.status}</td>
                         <td>
-                            <AiTwotoneEdit
-                                className={styles.iconView}
-                                onClick={() => {
-                                    navigate("/editProperty");
-                                }}
-                            />
-                            <AiFillEye
-                                className={styles.iconView}
-                                onClick={() => {
-                                    navigate("/propertyDetail");
-                                }}
-                            />
-                            {/* <AiOutlineDelete className={styles.iconView} /> */}
-                            <Popup
-                                trigger={
-                                    <label>
-                                        <AiOutlineDelete className={styles.iconView} />
-                                    </label>
-                                }
-                                position="right center"
-                            >
-                                <DeleteProperty idProperty="" />
-                            </Popup>
-                            <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
-                                <RequestAddProperty idProperty="" />
-                            </Popup>
+                            {
+                                item.status === 'Created' || item.status === 'Modified' ?
+                                    <>
+                                        <AiTwotoneEdit className={styles.iconView} onClick={() => { navigate("/editProperty"); }} />
+
+                                        <AiFillEye className={styles.iconView} onClick={() => { navigate("/propertyDetail"); }} />
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                        <Popup trigger={<label> <AiOutlineDelete className={styles.iconView} /></label>} position="right center">
+                                            <DeleteProperty idProperty="" />
+                                        </Popup>
+                                        <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
+                                            <RequestAddProperty idProperty="" />
+                                        </Popup>
+                                    </>
+                                    : item.status === 'Request' || item.status === 'Approved' ?
+                                        <>
+                                            <AiFillEye className={styles.iconView} onClick={() => { navigate("/propertyDetail"); }} />
+                                        </>
+                                        :
+                                        <>
+                                            <AiTwotoneEdit className={styles.iconView} onClick={() => { navigate("/editProperty"); }} />
+                                            <AiFillEye className={styles.iconView} onClick={() => { navigate("/propertyDetail"); }} />
+                                            <Popup trigger={<label> <AiOutlineDelete className={styles.iconView} /></label>} position="right center">
+                                                <DeleteProperty idProperty="" />
+                                            </Popup>
+                                        </>
+                            }
+
+
+
+
                         </td>
                     </tr>
                 ))}
