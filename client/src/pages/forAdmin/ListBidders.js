@@ -1,7 +1,6 @@
 import styles from "../../styleCss/stylesPages/forAdmin/listManager.module.css";
 
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
-import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -24,7 +23,7 @@ const ListBidders = () => {
     const [status, setStatus] = useState(null);
     //const [filter,setFilter] = useState("");
     // const navigate = useNavigate();
-    const baseURL = `http://localhost:5000/api/individual/individuals/bidder/${page}/${status}`;
+    const baseURL = `http://localhost:5000/api/user/users/bidder/${page}/${status}/${email}`;
     const [role, setRole] = useState();
 
     //const { data, loading, error } = useFetchPagination(baseURL, page);
@@ -33,8 +32,8 @@ const ListBidders = () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
                 // console.log("axios get");
-                setData(resp.data.individuals);
-                //console.log(resp);
+                setData(resp.data.user);
+                console.log(resp);
             });
             if (getUser() != null) {
                 setRole(getUser().role);
@@ -78,48 +77,39 @@ const ListBidders = () => {
         return users;
     };
     function exportData(data) {
-        return (
-            <>
-                {data.listUser.map((item) => (
-                    <tr>
-                        <td>
-                            {item.firstName} {item.lastName}
-                        </td>
-                        <td>{item.email}</td>
-                        <td>{item.phone}</td>
-                        <td>{item.address}</td>
-                        <td>{item.user.status === true ? "Activate" : "Deactivate"}</td>
-                        <td>
-                            {item.user.status === true ? (
-                                <Popup
-                                    trigger={
-                                        <label style={{ color: "red" }} className={styles.linkBlue}>
-                                            Deactivate
-                                        </label>
-                                    }
-                                    position="right center"
-                                >
-                                    <BanedBidder idManager="" />
-                                </Popup>
-                            ) : (
-                                <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                    <ActiveBidder idManager="" />
-                                </Popup>
-                            )}
-                        </td>
-                        <td>
-                            <AiTwotoneEdit className={styles.iconView} />
-                            <AiFillEye
-                                className={styles.iconView}
-                                onClick={() => {
-                                    navigate("/bidderOrganizationDetail");
-                                }}
-                            />
-                        </td>
-                    </tr>
-                ))}
-            </>
-        );
+        return <>
+            {data.listUser.map((item) =>
+                <tr>
+                    <td>{item.firstName} {item.lastName}</td>
+                    <td>{item.email}</td>
+                    <td>{item.phone}</td>
+                    <td>{item.address}</td>
+                    <td>{item.user.status === true ? 'Activate' : 'Deactivate'}</td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <AiFillEye className={styles.iconView} />
+                        {item.user.status === true ?
+                            <Popup trigger={
+                                <label style={{ color: "red" }} className={styles.linkBlue}>
+                                    Deactivate
+                                </label>
+                            }
+                                position="right center">
+                                <BanedBidder idManager="" />
+                            </Popup> :
+                            <Popup trigger={
+                                <label style={{ color: "blue" }} className={styles.linkBlue}>
+                                    Activate
+                                </label>}
+                                position="right center">
+                                <ActiveBidder idManager="" />
+                            </Popup>}
+                    </td>
+                </tr>
+            )}
+        </>
     }
     return loading ? (
         <Loading />
@@ -161,8 +151,8 @@ const ListBidders = () => {
                                 <th className={styles.th}>Phone</th>
                                 <th className={styles.th}>Address</th>
                                 <th className={styles.th}>Status</th>
+                                <th className={styles.th}></th>
                                 <th className={styles.th}>Action</th>
-                                {/* <th className={styles.th}></th> */}
                             </tr>
                             {exportData(data)}
                         </table>

@@ -11,14 +11,14 @@ import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 // import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useFetcher, useParams } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import { useNavigate } from "react-router-dom";
-
+import { useFetch } from "../../hook/useFetch";
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -28,29 +28,12 @@ const PropertyDetail = () => {
     const navigate = useNavigate();
 
     const baseURL = `http://localhost:5000/api/property/${id}`;
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+
     const [role, setRole] = useState();
     const Cancel = () => {
         navigate("/myProperty");
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURL).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setData(resp.data);
-            });
-            // if (getUser() != null) {
-            //     setRole(getUser().role);
-            // } else {
-            //     setRole("");
-            // }
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURL]);
+    const { data, loading, error } = useFetch(baseURL);
 
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
     // const getUser = () => {
@@ -81,9 +64,9 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Image</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <img className={styles.img} src={`${data.media.mediaUrl[0]}`} alt="images" />
-                                    <img className={styles.img} src={`${data.media.mediaUrl[1]}`} alt="images" />
-                                    <img className={styles.img} src={`${data.media.mediaUrl[2]}`} alt="images" />
+                                    <img className={styles.img} src={`${data.property.mediaUrl[0]}`} alt="images" />
+                                    <img className={styles.img} src={`${data.property.mediaUrl[1]}`} alt="images" />
+                                    <img className={styles.img} src={`${data.property.mediaUrl[2]}`} alt="images" />
                                 </div>
                             </div>
                             <br />
@@ -94,7 +77,7 @@ const PropertyDetail = () => {
                                 <div className={styles.r}>
                                     <video
                                         className={styles.video}
-                                        src={`${data.media.mediaUrl[3]}`}
+                                        src={`${data.property.mediaUrl[3]}`}
                                         playing={true}
                                         controls={true}
                                         loop={true}

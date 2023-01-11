@@ -1,7 +1,6 @@
 import { FilterQuery, ObjectId, QueryOptions, UpdateQuery } from 'mongoose';
 import { uploadFile } from '../../s3';
 import Property, { IProperty, IPropertyDocument } from '../models/Property';
-import PropertyMedia from '../models/PropertyMedia';
 import logger from '../utils/logger';
 
 const getAllProperties = async () => {
@@ -33,25 +32,19 @@ const createProperty = async (property: IProperty, files: { [fieldname: string]:
       img3 = await (await uploadFile(file3)).data;
       video = await (await uploadFile(file4)).data;
       property.status = 'Created';
+      property.mediaUrl = [img1, img2, img3, video];
+    } else {
+      return { success: false, message: 'Create property media fail!!!' };
     }
 
     await Property.create(property)
       .then((item) => {
-        propertyId = item._id;
         propertyItem = item;
       })
       .catch((error) => {
         logger.error(error);
         return { success: false, message: 'Create property fail!!!' };
       });
-
-    await PropertyMedia.create({
-      property: propertyId,
-      mediaUrl: [img1, img2, img3, video]
-    }).catch((error) => {
-      logger.error(error);
-      return { success: false, message: 'Create property media fail!!!' };
-    });
 
     return { success: true, message: 'create property sucessfully!!', propertyItem: propertyItem };
   } catch (error) {
@@ -75,8 +68,8 @@ const deleteProperty = async (filter: FilterQuery<IProperty>) => {
     logger.error(error);
   }
 };
-const findMediaByPropertyId = async (propertyId: ObjectId) => {
-  return await PropertyMedia.findOne({ property: propertyId });
-};
+// const findMediaByPropertyId = async (propertyId: ObjectId) => {
+//   return await PropertyMedia.findOne({ property: propertyId });
+// };
 
-export { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty, findMediaByPropertyId };
+export { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty };

@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import { defaultConfig } from '../../config/constant-variables';
 
 export interface IUser {
-  email: string;
+  username: string;
   password: string;
   verificationCode: string;
   passwordResetCode: string | null;
@@ -21,7 +21,7 @@ export interface IUserDocument extends IUser, Document {
 
 const userSchema: Schema = new Schema(
   {
-    email: { type: String, required: true, unique: true },
+    username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     verificationCode: { type: String, default: crypto.randomUUID() },
     passwordResetCode: { type: String || null },

@@ -13,6 +13,7 @@ export interface IProperty {
   placeViewProperty: string;
   startViewPropertyTime: Date;
   endViewPropertyTime: Date;
+  mediaUrl: Array<string>;
   category: ICategoryDocument['_id'];
   user: IUserDocument['_id'];
 }
@@ -33,6 +34,7 @@ const propertySchema: Schema = new Schema(
     placeViewProperty: { type: String, required: true },
     startViewPropertyTime: { type: Date, required: true },
     endViewPropertyTime: { type: Date, required: true },
+    mediaUrl: { type: Array(String), required: true },
     category: { type: Schema.Types.ObjectId, required: true, ref: 'Category' },
     user: { type: Schema.Types.ObjectId, required: true, ref: 'User' }
   },

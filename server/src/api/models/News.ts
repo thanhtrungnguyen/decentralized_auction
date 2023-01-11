@@ -3,7 +3,8 @@ import crypto from 'crypto';
 
 export interface INews {
   title: string;
-  description: string;
+  avatar: string;
+  content: string;
   status: string;
 }
 
@@ -15,8 +16,9 @@ export interface INewsDocument extends INews, Document {
 const newsSchema: Schema = new Schema(
   {
     title: { type: String, required: true },
-    description: { type: String, required: true },
-    status: { type: String, required: true, default: 'active' }
+    avatar: { type: String },
+    content: { type: String, required: true },
+    status: { type: String, required: true, default: 'activate' }
   },
   { timestamps: true, versionKey: false }
 );

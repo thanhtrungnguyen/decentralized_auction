@@ -109,7 +109,7 @@ const AddProperty = () => {
         formData.append("depositAmount", deposit);
         formData.append("priceStep", priceStep);
         formData.append("placeViewProperty", placeViewProperty);
-        formData.append("user", "63b9260db72a1b00ff19216c");
+        formData.append("user", "63bd8531cc9d75cd8780454c");
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
         axios

@@ -27,7 +27,7 @@ const ListForManagers = () => {
     const [email2, setEmail2] = useState(null);
     const [status, setStatus] = useState(null);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:5000/api/individual/individuals/manager/${page}/${status}`;
+    const baseURL = `http://localhost:5000/api/individual/individuals/manager/${page}/${status}/${email}`;
     const [role, setRole] = useState();
 
     useEffect(() => {
@@ -135,11 +135,14 @@ const ListForManagers = () => {
                 <div className={styles.r}>
                     <div className={styles.con}>
                         <div className={styles.btns}>
-                            <button className={styles.btn}>All</button>
-                            <button className={styles.btn}>Activate</button>
-                            <button className={styles.btn}>Deactivate</button>
-                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
-                            <button className={styles.btn}>Search</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='null'>All</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='true'>Activate</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='false'>Deactivate</button>
+                            <form onSubmit={handleSubmit}>
+                                <input className={styles.ip} type="text" placeholder="Enter Email" id="email" value={email2}
+                                    onChange={(e) => handleInputChange(e)}></input>
+                                <button className={styles.btn} type='submit' >Search</button>
+                            </form>
                             <button
                                 className={styles.btn}
                                 onClick={() => {

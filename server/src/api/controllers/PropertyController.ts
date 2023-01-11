@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCategory } from '../services/CategoryService';
-import { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty, findMediaByPropertyId } from '../services/PropertyService';
+import { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty } from '../services/PropertyService';
 import { findUser } from '../services/UserService';
 
 export const getAllPropertiesHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,13 +17,7 @@ export const getPropertyByIdHandler = async (req: Request, res: Response, next: 
   const propertyId = req.params.propertyId;
   return await getProperty({ _id: propertyId })
     .then(async (property) => {
-      await findMediaByPropertyId(property?._id)
-        .then((media) => {
-          res.status(200).json({ property, media });
-        })
-        .catch((error) => {
-          res.status(500).json({ error });
-        });
+      res.status(200).json({ property });
     })
     .catch((error) => {
       res.status(500).json({ error });

@@ -1,14 +1,14 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import crypto from 'crypto';
-import { IUserDocument } from './User';
+
+import { IIndividualDocument } from './Individual';
 
 export interface IOrganization {
   name: string;
   taxCode: string;
   taxCodeGrantedDate: string;
   taxCodeGrantedPlace: string;
-  address: string;
-  user: IUserDocument['_id'];
+  addressOrganization: string;
+  individual: IIndividualDocument['_id'];
 }
 
 export interface IOrganizationDocument extends IOrganization, Document {
@@ -21,8 +21,8 @@ const organizationSchema: Schema = new Schema(
     name: { type: String, required: true },
     taxCodeGrantedDate: { type: String, required: true },
     taxCodeGrantedPlace: { type: String, required: true },
-    address: { type: String, required: true },
-    user: { type: Schema.Types.ObjectId, required: true, ref: 'User' }
+    addressOrganization: { type: String, required: true },
+    individual: { type: Schema.Types.ObjectId, required: true, ref: 'Individual' }
   },
   { timestamps: true, versionKey: false }
 );

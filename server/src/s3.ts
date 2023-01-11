@@ -29,7 +29,7 @@ export const uploadFile = async (file: Express.Multer.File) => {
 
     return { success: true, message: 'File Uploaded with Successfull', data: res.Location };
   } catch (error) {
-    return { success: false, message: 'Unable to Upload the file', data: error };
+    return { success: false, message: 'Unable to Upload the file', data: '' };
   }
 };
 
