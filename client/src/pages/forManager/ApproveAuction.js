@@ -18,8 +18,12 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import "../../styleCss/stylesPages/forManagers/Approve.css";
+import Popup from "reactjs-popup";
 import Loading from "../../components/loading/Loading";
-
+import Time from "../../components/time/Time";
+import SidebarManager from "../../components/sidebar_manager/SidebarManager";
+import ApproveAuction from "../../components/popups/forManager/ApproveAuction";
+import RejectAuction from "../../components/popups/forManager/RejectAuction";
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -97,23 +101,28 @@ const PropertyDetail = () => {
                 navigate("/autionsListForManager");
             });
     };
-    const RejectAuction = () => {
-        axios
-            .put(
-                "http://localhost:8800/api/auction/reject/" + id,
-                {},
-                {
-                    withCredentials: true,
-                }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert(res.data.message);
-            });
-    };
+    // const RejectAuction = () => {
+    //     axios
+    //         .put(
+    //             "http://localhost:8800/api/auction/reject/" + id,
+    //             {
+    //                 propertyId: propertyId,
+    //             },
+    //             {
+    //                 withCredentials: true,
+    //             }
+    //         )
+    //         .then((res) => {
+    //             console.log(res);
+    //             console.log(res.data);
+    //             alert(res.data.message);
+    //         });
+    // };
     const Cancel = () => {
         navigate("/autionsListForManager");
+    };
+    const Approve = () => {
+        return <ApproveAuction idProperty="12" />;
     };
     const getUser = () => {
         var users = null;
@@ -140,17 +149,138 @@ const PropertyDetail = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
-            <NavBar />
             <form>
                 <div className={styles.root}>
+                    <SidebarManager />
+                    <Time />
+                    <div className={styles.info}>
+                        <div>
+                            <p className={styles.title}>Property Information</p>
+
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Property Image</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <img
+                                        className={styles.img}
+                                        src={`https://cdn3.dhht.vn/wp-content/uploads/2022/07/thuong-hieu-nike-cua-nuoc-nao-y-nghia-logo-va-cac-san-pham.jpg`}
+                                        alt="images"
+                                    />
+                                    <img
+                                        className={styles.img}
+                                        src={`https://cdn3.dhht.vn/wp-content/uploads/2022/07/thuong-hieu-nike-cua-nuoc-nao-y-nghia-logo-va-cac-san-pham.jpg`}
+                                        alt="images"
+                                    />
+                                    <img
+                                        className={styles.img}
+                                        src={`https://cdn3.dhht.vn/wp-content/uploads/2022/07/thuong-hieu-nike-cua-nuoc-nao-y-nghia-logo-va-cac-san-pham.jpg`}
+                                        alt="images"
+                                    />
+                                </div>
+                            </div>
+                            <br />
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Property Video</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <ReactPlayer
+                                        className={styles.video}
+                                        url={`https://www.youtube.com/watch?v=VZaPQMVgr-w`}
+                                        playing={true}
+                                        controls={true}
+                                        loop={true}
+                                        muted={true}
+                                        playsinline={true}
+                                        onReady={true}
+                                        width="350px"
+                                        height="200px"
+                                    />
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Property Name</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <p className={styles.txt}>ABC XYZ</p>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Category</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <p className={styles.txt}>ABC XYZ</p>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Start Bid</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <p className={styles.txt}>ABC XYZ</p>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Deposit</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <p className={styles.txt}>ABC XYZ</p>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Price Step</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <p className={styles.txt}>ABC XYZ</p>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Place View Property</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <p className={styles.txt}>ABC XYZ</p>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>View Property Time</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <p className={styles.txt}>ABC XYZ</p>
+                                </div>
+                            </div>
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    <p className={styles.lable}>Property Description</p>
+                                </div>
+                                <div className={styles.r}>
+                                    <p className={styles.txt}>ABC XYZ</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.btn}></div>
+                    <div className={styles.btn}>
+                        <Popup trigger={<label className={styles.btnSave}> Approve</label>} position="right center">
+                            <ApproveAuction idProperty="123" />
+                        </Popup>
+                        <Popup trigger={<label className={styles.btnSave2}> Reject</label>} position="right center">
+                            <RejectAuction idProperty="123" />
+                        </Popup>
+
+                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
+                    </div>
+                </div>
+                {/* <div className={styles.root}>
                     <SideBarSeller />
+                    <Time />
                     <div className={styles.info}>
                         <div>
                             <p className={styles.title}>Property Information</p>
@@ -178,19 +308,21 @@ const PropertyDetail = () => {
                                 <p className={styles.lable}>Property Description</p>
                             </div>
                             <div className={styles.col2}>
-                                {/* <img
-                  className={styles.img}
-                  src="https://www.w3schools.com/html/pic_trulli.jpg"
-                  alt="images"
-                /> */}
-                                <img className={styles.img} src={`${data.property.mediaUrl[0]}`} alt="images" />
-                                {/* <img
-                  className={styles.img}
-                  src="https://www.w3schools.com/html/pic_trulli.jpg"
-                  alt="images"
-                /> */}
-                                <img className={styles.img} src={`${data.property.mediaUrl[1]}`} alt="images" />
-                                <img className={styles.img} src={`${data.property.mediaUrl[2]}`} alt="images" />
+                                <img
+                                    className={styles.img}
+                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[0].Name}`}
+                                    alt="images"
+                                />
+                                <img
+                                    className={styles.img}
+                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[1].Name}`}
+                                    alt="images"
+                                />
+                                <img
+                                    className={styles.img}
+                                    src={`http://localhost:8800/api/auction/images/${data.Properties_Media__r.records[2].Name}`}
+                                    alt="images"
+                                />
                                 <div className={styles.video}>
                                     <video
                                         className={styles.video}
@@ -205,26 +337,6 @@ const PropertyDetail = () => {
                                         height="90%"
                                     />
                                 </div>
-                                {/* <img
-                  className={styles.img}
-                  src={`http://localhost:8800/api/auction/images/${data[0].Properties_Media__r.records[2].Name}`}
-                  alt="images"
-                /> */}
-                                {/* <input
-                  className={styles.inputImg}
-                  id="propertyImage"
-                  type="file"
-                  multiple
-                  required
-                ></input>
-                <br />
-                <input
-                  className={styles.inputImg}
-                  type="file"
-                  id="propertyVideo"
-                  required
-                  //   defaultValue={data.property.propertyVideo}
-                ></input> */}
                                 <input
                                     id="propertyName"
                                     type="text"
@@ -241,12 +353,7 @@ const PropertyDetail = () => {
                                     // defaultValue={data.Category_Id__r.Name}
                                     readonly
                                 >
-                                    <option value={data.property.category._id}>{data.property.category.name}</option>
-                                    {/* <option value={data.property.category}>{data.property.category}</option> */}
-
-                                    {/* {data.map((property) => (
-                  <option value={property.category}>{property.category}</option>
-                ))} */}
+                                    <option value={data.Category_Id__r.Name}>{data.Category_Id__r.Name}</option>
                                 </select>
                                 <input
                                     id="startBid"
@@ -291,7 +398,6 @@ const PropertyDetail = () => {
                                     required
                                     readonly
                                 ></input>
-                                {/* <div className={styles.date}> */}
                                 <DatePicker
                                     wrapperClassName={styles.datePicker}
                                     id="placeViewProperty"
@@ -309,7 +415,6 @@ const PropertyDetail = () => {
                                     plugins={[<TimePicker />]}
                                     readOnly
                                 />
-                                {/* </div> */}
                                 <textarea
                                     id="propertyDescription"
                                     // value={propertyDescription}
@@ -356,7 +461,7 @@ const PropertyDetail = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 required
                             ></input>
-                            {/* <div className={styles.date}> */}
+
                             <DatePicker
                                 id="timeRegistration"
                                 // onChange={(e) => handleInputChange(e)}
@@ -370,9 +475,9 @@ const PropertyDetail = () => {
                                 format="MM/DD/YYYY HH:mm:ss"
                                 plugins={[<TimePicker />]}
                             />
-                            {/* </div> */}
+
                             <br />
-                            {/* <div className={styles.date}> */}
+
                             <DatePicker
                                 id="auctionTime"
                                 // onChange={(e) => handleInputChange(e)}
@@ -386,15 +491,11 @@ const PropertyDetail = () => {
                                 format="MM/DD/YYYY HH:mm:ss"
                                 plugins={[<TimePicker />]}
                             />
-                            {/* </div> */}
-                            {/* <div className={styles.date}> */}
+
                             <DatePicker selected={paymentTime} onChange={setPaymentTime} format="MM/DD/YYYY HH:mm:ss" plugins={[<TimePicker />]} />
-                            {/* </div> */}
                         </div>
                     </div>
                     <div className={styles.btn2}>
-                        {/* <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={() => AprroveAuction()}></input> */}
-
                         <input className={styles.btnSave2} type="button" value="Save and Publish" onClick={onTrue2}></input>
                         {show2 && (
                             <div className={styles.popup}>
@@ -428,9 +529,8 @@ const PropertyDetail = () => {
                         )}
 
                         <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
-                    </div>{" "}
-                    <Footer />
-                </div>
+                    </div>
+                </div> */}
             </form>
         </>
     );

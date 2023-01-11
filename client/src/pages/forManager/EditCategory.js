@@ -1,18 +1,13 @@
 import styles from "../../styleCss/stylesPages/forManagers/addCategory.module.css";
-import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBarManager";
-import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
-// import { Outlet, Link } from "react-router-dom";
-// import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
+import Time from "../../components/time/Time";
 const EditCategory = () => {
     const [categoryName, setCategoryName] = useState(null);
     const navigate = useNavigate();
@@ -73,41 +68,45 @@ const EditCategory = () => {
         });
         return users;
     };
-    return loading ? (
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        if (id === "categoryName") {
+            setCategoryName(value);
+        }
+    };
+    return !loading ? (
         <Loading />
     ) : (
         <>
-            {" "}
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarSeller />
+                    <Time />
                     <div className={styles.detail}>
-                        <label className={styles.title}>Edit Category</label>
+                        <label className={styles.title}>Add a New Category</label>
                         <label className={styles.txt}>Category Name</label>
                         <input
+                            id="categoryName"
                             type="text"
                             pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){0,10}$"
                             placeholder="Enter category name"
                             value={categoryName}
-                            onChange={(e) => setCategoryName(e.target.value)}
+                            onChange={(e) => handleInputChange(e)}
                             className={styles.input}
-                            defaultValue={data.records[0].Name}
                             required
                         ></input>
                     </div>
                     <div className={styles.btn}>
-                        <input type="button" value="Cancel" className={styles.btnCancel} onClick={Cancel}></input>{" "}
+                        <button
+                            className={styles.btnCancel}
+                            onClick={() => {
+                                navigate("/managerCategorys");
+                            }}
+                        >
+                            Cancel
+                        </button>{" "}
                         <input type="submit" value="Save" className={styles.btnSave} disabled={categoryName === null ? true : false}></input>
                     </div>
-                    <Footer />
                 </div>
             </form>
         </>

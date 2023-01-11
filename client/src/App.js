@@ -132,6 +132,9 @@ function App() {
                         <Route path="viewBiddingForManager/:id" element={<ViewBiddingForManager />} />
                         <Route path="viewRegistrationForManager/:id" element={<ViewRegistrationForManager />} />
                         <Route path="viewAuctionResultForManager/:id" element={<AuctionResult />} />
+                        <Route path="viewBiddingForManager" element={<ViewBiddingForManager />} />
+                        <Route path="viewRegistrationForManager" element={<ViewRegistrationForManager />} />
+                        <Route path="viewAuctionResultForManager" element={<AuctionResult />} />
                         <Route path="viewNews/:id" element={<ViewNews />} />
                         <Route path="viewNews" element={<ViewNews />} />
                         <Route path="viewNewsForAdmin/:id" element={<ViewNewsForAdmin />} />

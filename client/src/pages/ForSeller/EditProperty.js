@@ -1,7 +1,4 @@
 import styles from "../../styleCss/stylesPages/forSellers/AddProperty.module.css";
-import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBarSeller";
-import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
 import { Outlet, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
