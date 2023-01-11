@@ -25,40 +25,40 @@ const MyProperty = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState(null);
     const [category2, setCategory2] = useState(null);
-    const [propertyName, setPropertyName] = useState(null);
-    const [propertyName2, setPropertyName2] = useState(null);
+    const [search, setSearch] = useState(null);
+    const [search2, setSearch2] = useState(null);
     const [status, setStatus] = useState(null);
     const [listCategory, setListCategory] = useState([]);
     const [listProperty, setListProperty] = useState([]);
     const [loading, setLoading] = useState(true);
     // const navigate = useNavigate();
     const baseURLCategory = "http://localhost:8800/api/category/";
-    const baseURLProperty = `http://localhost:8800/api/property/getAll/${page}/${status}/${category}/${propertyName}`;
+    const baseURLProperty = `http://localhost:5000/api/property/myProperty/${page}/${status}/${search}`;
     const requestAuction = "http://localhost:8800/api/auction/request/";
     const [role, setRole] = useState();
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         await axios.get(baseURLCategory).then((resp) => {
-    //             console.log(resp.data);
-    //             console.log("axios get");
-    //             setListCategory(resp.data);
-    //         });
-    //         await axios.get(baseURLProperty, { withCredentials: true }).then((resp) => {
-    //             console.log(resp.data);
-    //             console.log("axios get");
-    //             setListProperty(resp.data);
-    //         });
-    //         if (getUser() != null) {
-    //             setRole(getUser().role);
-    //         } else {
-    //             setRole("");
-    //         }
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    // }, [baseURLProperty]);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            // await axios.get(baseURLCategory).then((resp) => {
+            //     console.log(resp.data);
+            //     console.log("axios get");
+            //     setListCategory(resp.data);
+            // });
+            await axios.get(baseURLProperty, { withCredentials: true }).then((resp) => {
+                // console.log(resp.data);
+                // console.log("axios get");
+                setListProperty(resp.data.properties);
+            });
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURLProperty]);
 
     const RequestAuction = (propertyId) => {
         setLoading(true);
@@ -85,30 +85,13 @@ const MyProperty = () => {
         if (id === "category") {
             setCategory2(value);
         }
-        if (id === "propertyName") {
-            setPropertyName2(value);
+        if (id === "search") {
+            setSearch2(value);
         }
     };
     const handleSubmit = (event) => {
-        // const formData = new FormData();
-
-        // formData.append("propertyName", propertyName);
-        // formData.append("category", category);
-
-        // axios
-        //     .get("http://localhost:8800/api/property", formData, {
-        //         withCredentials: true,
-        //     })
-        //     .then((res) => {
-        //         console.log(res);
-        //         console.log(res.data);
-        //         alert(res.data.message);
-        //         // setData(res.data);
-
-        //         // navigate("/myProperty");
-        //     });
-        propertyName2 === "" ? setPropertyName(null) : setPropertyName(propertyName2);
-        setCategory(category2);
+        search2 === '' ? setSearch(null) : setSearch(search2);
+        //setCategory(category2);
         setPage(1);
         event.preventDefault();
     };
@@ -124,8 +107,50 @@ const MyProperty = () => {
         return users;
     };
     const navigate = useNavigate();
+    function exportData(data) {
+        return (
+            <>
+                {data.listProperty.map((item) => (
+                    <tr>
+                        <td>{item.name}</td>
+                        <td>{item.category.name}</td>
+                        <td>{item.startBid}</td>
+                        <td>{item.status}</td>
+                        <td>
+                            <AiTwotoneEdit
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate("/editProperty");
+                                }}
+                            />
+                            <AiFillEye
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate("/propertyDetail");
+                                }}
+                            />
+                            {/* <AiOutlineDelete className={styles.iconView} /> */}
+                            <Popup
+                                trigger={
+                                    <label>
+                                        <AiOutlineDelete className={styles.iconView} />
+                                    </label>
+                                }
+                                position="right center"
+                            >
+                                <DeleteProperty idProperty="" />
+                            </Popup>
+                            <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
+                                <RequestAddProperty idProperty="" />
+                            </Popup>
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
+    }
 
-    return !loading ? (
+    return loading ? (
         <Loading />
     ) : (
         <>
@@ -136,14 +161,21 @@ const MyProperty = () => {
                     <div className={styles.r}>
                         <div className={styles.con}>
                             <div className={styles.btns}>
-                                <button className={styles.btn}>All</button>
-                                <button className={styles.btn}>Created</button>
-                                <button className={styles.btn}>Modified</button>
-                                <button className={styles.btn}>Request</button>
-                                <button className={styles.btn}>Approved</button>
-                                <button className={styles.btn}>Rejected</button>
-                                <input className={styles.ip} type="text" placeholder="Enter Name"></input>
-                                <button className={styles.btn}>Search</button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='null'>All</button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Created'>Created</button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Modified'>Modified</button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Request'>Request</button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Approved'>Approved</button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Rejected'>Rejected</button>
+                                <form onSubmit={handleSubmit}>
+                                    <input className={styles.ip}
+                                        type="text"
+                                        placeholder="Enter Property Name"
+                                        id="search"
+                                        value={search2}
+                                        onChange={(e) => handleInputChange(e)}></input>
+                                    <button className={styles.btn} type='submit' >Search</button>
+                                </form>
                                 <button
                                     className={styles.btn}
                                     onClick={() => {
@@ -161,143 +193,15 @@ const MyProperty = () => {
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiTwotoneEdit
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/editProperty");
-                                            }}
-                                        />
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/propertyDetail");
-                                            }}
-                                        />
-                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                        <Popup
-                                            trigger={
-                                                <label>
-                                                    <AiOutlineDelete className={styles.iconView} />
-                                                </label>
-                                            }
-                                            position="right center"
-                                        >
-                                            <DeleteProperty idProperty="" />
-                                        </Popup>
-                                        <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
-                                            <RequestAddProperty idProperty="" />
-                                        </Popup>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiTwotoneEdit className={styles.iconView} />
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/bidderDetail");
-                                            }}
-                                        />
-                                        <AiOutlineDelete className={styles.iconView} />
-                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
-                                            Request Add
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiTwotoneEdit className={styles.iconView} />
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/bidderDetail");
-                                            }}
-                                        />
-                                        <AiOutlineDelete className={styles.iconView} />
-                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
-                                            Request Add
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiTwotoneEdit className={styles.iconView} />
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/bidderDetail");
-                                            }}
-                                        />
-                                        <AiOutlineDelete className={styles.iconView} />
-                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
-                                            Request Add
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiTwotoneEdit className={styles.iconView} />
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/bidderDetail");
-                                            }}
-                                        />
-                                        <AiOutlineDelete className={styles.iconView} />
-                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
-                                            Request Add
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiTwotoneEdit className={styles.iconView} />
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/bidderDetail");
-                                            }}
-                                        />
-                                        <AiOutlineDelete className={styles.iconView} />
-                                        <label className={styles.link} onClick={() => RequestAuction(``)}>
-                                            Request Add
-                                        </label>
-                                    </td>
-                                </tr>
+                                {exportData(listProperty)}
                             </table>
                             <hr />
                             <div>
                                 <Pagination
                                     className={styles.Pagination}
-                                    // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                    // page={page}
-                                    // onChange={handleChange}
+                                    count={Math.ceil(listProperty.count / 8)}
+                                    page={page}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
