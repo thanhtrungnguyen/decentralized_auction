@@ -90,14 +90,14 @@ const ListForManagers = () => {
                                 </label>
                             }
                                 position="right center">
-                                <BanedManager idManager="" />
+                                <BanedManager idManager={item.user._id} />
                             </Popup> :
                             <Popup trigger={
                                 <label style={{ color: "blue" }} className={styles.linkBlue}>
                                     Activate
                                 </label>}
                                 position="right center">
-                                <ActiveManager idManager="" />
+                                <ActiveManager idManager={item.user._id} />
                             </Popup>}
                     </td>
                 </tr>

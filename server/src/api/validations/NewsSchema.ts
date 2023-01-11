@@ -5,7 +5,7 @@ export const NewsSchema = {
   create: Joi.object<INews>({
     title: Joi.string().trim().required(),
     content: Joi.string().trim().required(),
-    avatar: Joi.string().trim()
+    avatar: Joi.string().trim().required()
   }),
   update: Joi.object<INews>({
     title: Joi.string().trim().required(),

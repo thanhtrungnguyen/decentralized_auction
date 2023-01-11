@@ -84,49 +84,63 @@ export const createUserHandler = async (req: Request, res: Response, next: NextF
       res.status(500).json({ error });
     });
 };
-export const createSellerHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const createUserData = req.body;
-  const createOrganizationData = req.body;
-  const createIndividualData = req.body;
-
-  const user = await findUser({ username: createUserData.username });
-  if (user) {
-    return res.status(400).json({ message: 'User name has been exist!' });
+export const changeStatusUserHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.params.userId;
+  const update = { status: req.params.status == 'true' ? true : false };
+  const user = await findUser({ _id: userId });
+  if (!user) {
+    return res.status(404).json({ message: 'User is not found' });
   }
-  const existEmailIndividual = await getIndividual({ email: req.body.email });
-  if (existEmailIndividual) {
-    return res.status(409).json({ message: 'Email has been exist!' });
-  }
-  const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
-  if (existPhoneIndividual) {
-    return res.status(409).json({ message: 'Phone has been exist!' });
-  }
-  const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
-  if (existCardNumberIndividual) {
-    return res.status(409).json({ message: 'Card Number has been exist!' });
-  }
-  const userCreated: any = await createUser({ ...createUserData, role: 'bidder' });
-  if (userCreated._id) {
-    return await createIndividual({ ...createIndividualData, user: userCreated._id })
-      .then((individual: any) => {
-        res.status(201).json({ individual });
-      })
-      .catch((error: any) => {
-        res.status(500).json({ error });
-      });
-  }
-  await createUser(createUserData)
-    .then(async (user: any) => {
-      await sendEmail({
-        to: user.userName,
-        subject: '[DAP] Verify your email',
-        text: `Id: ${user._id} \nVerification code: ${user.verificationCode}`
-      });
+  return await updateUser({ _id: userId }, update, { new: true })
+    .then((user) => {
       res.status(201).json({ user });
     })
-    .catch((error: any) => {
+    .catch((error) => {
       res.status(500).json({ error });
     });
+};
+export const createSellerHandler = async (req: Request, res: Response, next: NextFunction) => {
+  // const createUserData = req.body;
+  // const createOrganizationData = req.body;
+  // const createIndividualData = req.body;
+  // const user = await findUser({ username: createUserData.username });
+  // if (user) {
+  //   return res.status(400).json({ message: 'User name has been exist!' });
+  // }
+  // const existEmailIndividual = await getIndividual({ email: req.body.email });
+  // if (existEmailIndividual) {
+  //   return res.status(409).json({ message: 'Email has been exist!' });
+  // }
+  // const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
+  // if (existPhoneIndividual) {
+  //   return res.status(409).json({ message: 'Phone has been exist!' });
+  // }
+  // const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
+  // if (existCardNumberIndividual) {
+  //   return res.status(409).json({ message: 'Card Number has been exist!' });
+  // }
+  // const userCreated: any = await createUser({ ...createUserData, role: 'bidder' });
+  // if (userCreated._id) {
+  //   return await createIndividual({ ...createIndividualData, user: userCreated._id })
+  //     .then((individual: any) => {
+  //       res.status(201).json({ individual });
+  //     })
+  //     .catch((error: any) => {
+  //       res.status(500).json({ error });
+  //     });
+  // }
+  // await createUser(createUserData)
+  //   .then(async (user: any) => {
+  //     await sendEmail({
+  //       to: user.userName,
+  //       subject: '[DAP] Verify your email',
+  //       text: `Id: ${user._id} \nVerification code: ${user.verificationCode}`
+  //     });
+  //     res.status(201).json({ user });
+  //   })
+  //   .catch((error: any) => {
+  //     res.status(500).json({ error });
+  //   });
 };
 export const verifyUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   // const userId = req.params.userId;

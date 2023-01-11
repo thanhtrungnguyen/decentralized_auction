@@ -40,7 +40,7 @@ const individualSchema: Schema = new Schema(
     dateOfBirth: { type: String, required: true },
     city: { type: String, required: true },
     cityId: { type: String, required: true },
-    province: { type: String, required: true },
+    province: { type: String },
     district: { type: String, required: true },
     districtId: { type: String, required: true },
     wards: { type: String, required: true },
