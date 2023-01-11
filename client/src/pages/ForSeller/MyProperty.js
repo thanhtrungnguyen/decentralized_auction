@@ -90,7 +90,7 @@ const MyProperty = () => {
         }
     };
     const handleSubmit = (event) => {
-        search2 === '' ? setSearch(null) : setSearch(search2);
+        search2 === "" ? setSearch(null) : setSearch(search2);
         //setCategory(category2);
         setPage(1);
         event.preventDefault();
@@ -117,37 +117,73 @@ const MyProperty = () => {
                         <td>{item.startBid}</td>
                         <td>{item.status}</td>
                         <td>
-                            {
-                                item.status === 'Created' || item.status === 'Modified' ?
-                                    <>
-                                        <AiTwotoneEdit className={styles.iconView} onClick={() => { navigate("/editProperty"); }} />
+                            {item.status === "Created" || item.status === "Modified" ? (
+                                <>
+                                    <AiTwotoneEdit
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/editProperty");
+                                        }}
+                                    />
 
-                                        <AiFillEye className={styles.iconView} onClick={() => { navigate("/propertyDetail"); }} />
-                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                        <Popup trigger={<label> <AiOutlineDelete className={styles.iconView} /></label>} position="right center">
-                                            <DeleteProperty idProperty="" />
-                                        </Popup>
-                                        <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
-                                            <RequestAddProperty idProperty="" />
-                                        </Popup>
-                                    </>
-                                    : item.status === 'Request' || item.status === 'Approved' ?
-                                        <>
-                                            <AiFillEye className={styles.iconView} onClick={() => { navigate("/propertyDetail"); }} />
-                                        </>
-                                        :
-                                        <>
-                                            <AiTwotoneEdit className={styles.iconView} onClick={() => { navigate("/editProperty"); }} />
-                                            <AiFillEye className={styles.iconView} onClick={() => { navigate("/propertyDetail"); }} />
-                                            <Popup trigger={<label> <AiOutlineDelete className={styles.iconView} /></label>} position="right center">
-                                                <DeleteProperty idProperty="" />
-                                            </Popup>
-                                        </>
-                            }
-
-
-
-
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/propertyDetail/" + `${item._id}`);
+                                        }}
+                                    />
+                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                    <Popup
+                                        trigger={
+                                            <label>
+                                                {" "}
+                                                <AiOutlineDelete className={styles.iconView} />
+                                            </label>
+                                        }
+                                        position="right center"
+                                    >
+                                        <DeleteProperty idProperty="" />
+                                    </Popup>
+                                    <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
+                                        <RequestAddProperty idProperty="" />
+                                    </Popup>
+                                </>
+                            ) : item.status === "Request" || item.status === "Approved" ? (
+                                <>
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/propertyDetail/" + `${item._id}`);
+                                        }}
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <AiTwotoneEdit
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/editProperty");
+                                        }}
+                                    />
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/propertyDetail/" + `${item._id}`);
+                                        }}
+                                    />
+                                    <Popup
+                                        trigger={
+                                            <label>
+                                                {" "}
+                                                <AiOutlineDelete className={styles.iconView} />
+                                            </label>
+                                        }
+                                        position="right center"
+                                    >
+                                        <DeleteProperty idProperty="" />
+                                    </Popup>
+                                </>
+                            )}
                         </td>
                     </tr>
                 ))}
@@ -166,20 +202,36 @@ const MyProperty = () => {
                     <div className={styles.r}>
                         <div className={styles.con}>
                             <div className={styles.btns}>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='null'>All</button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Created'>Created</button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Modified'>Modified</button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Request'>Request</button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Approved'>Approved</button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='Rejected'>Rejected</button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                    All
+                                </button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Created">
+                                    Created
+                                </button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Modified">
+                                    Modified
+                                </button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">
+                                    Request
+                                </button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">
+                                    Approved
+                                </button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Rejected">
+                                    Rejected
+                                </button>
                                 <form onSubmit={handleSubmit}>
-                                    <input className={styles.ip}
+                                    <input
+                                        className={styles.ip}
                                         type="text"
                                         placeholder="Enter Property Name"
                                         id="search"
                                         value={search2}
-                                        onChange={(e) => handleInputChange(e)}></input>
-                                    <button className={styles.btn} type='submit' >Search</button>
+                                        onChange={(e) => handleInputChange(e)}
+                                    ></input>
+                                    <button className={styles.btn} type="submit">
+                                        Search
+                                    </button>
                                 </form>
                                 <button
                                     className={styles.btn}
