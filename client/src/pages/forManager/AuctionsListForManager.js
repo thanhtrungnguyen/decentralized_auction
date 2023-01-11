@@ -3,7 +3,6 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBarManager";
 import Footer from "../../components/footer/Footer";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
-import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
@@ -14,6 +13,11 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 // import { set } from "mongoose";
 import Loading from "../../components/loading/Loading";
+import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
+import Time from "../../components/time/Time";
+import { Link, useNavigate } from "react-router-dom";
+import useWindowSize from "@react-hook/window-size";
+import Confetti from "react-confetti";
 const AuctionsListForManager = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState(null);
@@ -31,6 +35,7 @@ const AuctionsListForManager = () => {
     const [listAuction, setListAuction] = useState([]);
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -90,21 +95,122 @@ const AuctionsListForManager = () => {
         });
         return users;
     };
-    return loading ? (
+
+    return !loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
+            <Confetti width="1900px" height="960px" />
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <SideBarSeller />
+                    <Time />
+                    <div className={styles.r}>
+                        <div className={styles.con}>
+                            <div className={styles.btns}>
+                                <button className={styles.btn}>All</button>
+                                {/* <button className={styles.btn}>Created</button> */}
+                                {/* <button className={styles.btn}>Modified</button> */}
+                                <button className={styles.btn}>Request Add</button>
+                                <button className={styles.btn}>Approved</button>
+                                <button className={styles.btn}>Upcoming</button>
+                                <button className={styles.btn}>Bidding</button>
+                                <button className={styles.btn}>Closed</button>
+                                <input className={styles.ip} type="text" placeholder="Enter Name"></input>
+                                <button className={styles.btn}>Search</button>
+                            </div>
+                            <table className={styles.table}>
+                                <tr>
+                                    <th className={styles.th}>Property Name</th>
+                                    <th className={styles.th}>Registration time</th>
+                                    <th className={styles.th}>Auction time</th>
+                                    <th className={styles.th}>Status</th>
+                                    <th className={styles.th}>Action</th>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                                    <td>From 10:00-06/24/2021 to 10:00-06/24/2021</td>
+                                    <td>Request Add</td>
+                                    <td>
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/auctionDetailForManager");
+                                            }}
+                                        />
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                        <Link className={styles.link2} to={`/approveAuction`}>
+                                            Approve/Reject
+                                        </Link>
+                                        <Link className={styles.link2} to={`/viewRegistrationForManager`}>
+                                            Process
+                                        </Link>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Approve</td>
+                                    <td>
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/auctionDetailForManager");
+                                            }}
+                                        />
+                                        <AiTwotoneEdit className={styles.iconView} />
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/auctionDetailForManager");
+                                            }}
+                                        />
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classic Bathrobe</td>
+                                    <td>Car</td>
+                                    <td>09000999000</td>
+                                    <td>Activate</td>
+                                    <td>
+                                        <AiFillEye
+                                            className={styles.iconView}
+                                            onClick={() => {
+                                                navigate("/auctionDetailForManager");
+                                            }}
+                                        />
+                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr />
+                            <div>
+                                <Pagination
+                                    className={styles.Pagination}
+                                    // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                    // page={page}
+                                    // onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* <div className={styles.container}>
+                    <SideBarSeller />
+                    <Time />
+
                     <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
@@ -116,7 +222,7 @@ const AuctionsListForManager = () => {
                                     placeholder="Please input"
                                     value={propertyName2}
                                     onChange={(e) => handleInputChange(e)}
-                                //required
+                                    //required
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
@@ -125,7 +231,7 @@ const AuctionsListForManager = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="category"
                                 placeholder="Category"
-                            //defaultValue="null"
+                                //defaultValue="null"
                             >
                                 <option value="null">All</option>
                                 {listCategory.map((item) => (
@@ -197,9 +303,7 @@ const AuctionsListForManager = () => {
                             </button>
                             <hr />
                             <p className={styles.txtBold}>Total Auction: {listAuction.totalAuction}</p>
-                            {/* <Link className={styles.btnAdd} to="/addProperty">
-              Add a New Property
-            </Link> */}
+                         
                             <br />
                             <table className={styles.table}>
                                 <tr>
@@ -221,19 +325,19 @@ const AuctionsListForManager = () => {
                                             {auction.Auctions1__r.records[0].Status__c === "Request" && `__`}
                                             {auction.Auctions1__r.records[0].Status__c !== "Request" &&
                                                 "From " +
-                                                new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c)
-                                                    .toUTCString()
-                                                    .split("GMT")[0] +
-                                                "To " +
-                                                new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
+                                                    new Date(auction.Auctions1__r.records[0].Start_Registration_Time__c)
+                                                        .toUTCString()
+                                                        .split("GMT")[0] +
+                                                    "To " +
+                                                    new Date(auction.Auctions1__r.records[0].End_Registration_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
                                         <td className={styles.td}>
                                             {auction.Auctions1__r.records[0].Status__c === "Request" && `__`}
                                             {auction.Auctions1__r.records[0].Status__c !== "Request" &&
                                                 "From " +
-                                                new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
-                                                " To " +
-                                                new Date(auction.Auctions1__r.records[0].End_Auction_Time__c).toUTCString().split("GMT")[0]}
+                                                    new Date(auction.Auctions1__r.records[0].Start_Aution_Time__c).toUTCString().split("GMT")[0] +
+                                                    " To " +
+                                                    new Date(auction.Auctions1__r.records[0].End_Auction_Time__c).toUTCString().split("GMT")[0]}
                                         </td>
                                         <td className={styles.td}>{auction.Auctions1__r.records[0].Status__c}</td>
                                         <td className={styles.td}>
@@ -244,7 +348,6 @@ const AuctionsListForManager = () => {
                                                 View
                                             </Link>
                                             {auction.Auctions1__r.records[0].Status__c === "Bidding" && (
-
                                                 <Link
                                                     className={styles.linkBlue}
                                                     to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
@@ -253,7 +356,6 @@ const AuctionsListForManager = () => {
                                                 </Link>
                                             )}
                                             {auction.Auctions1__r.records[0].Status__c === "UpcomingforBid" && (
-
                                                 <Link
                                                     className={styles.linkBlue}
                                                     to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
@@ -261,9 +363,8 @@ const AuctionsListForManager = () => {
                                                     Process
                                                 </Link>
                                             )}
-                                            
-                                            {auction.Auctions1__r.records[0].Status__c === "RegistrationTime" && (
 
+                                            {auction.Auctions1__r.records[0].Status__c === "RegistrationTime" && (
                                                 <Link
                                                     className={styles.linkBlue}
                                                     to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
@@ -272,7 +373,6 @@ const AuctionsListForManager = () => {
                                                 </Link>
                                             )}
                                             {auction.Auctions1__r.records[0].Status__c === "Closed" && (
-
                                                 <Link
                                                     className={styles.linkBlue}
                                                     to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
@@ -281,7 +381,6 @@ const AuctionsListForManager = () => {
                                                 </Link>
                                             )}
                                             {auction.Auctions1__r.records[0].Status__c === "Success" && (
-
                                                 <Link
                                                     className={styles.linkBlue}
                                                     to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
@@ -290,7 +389,6 @@ const AuctionsListForManager = () => {
                                                 </Link>
                                             )}
                                             {auction.Auctions1__r.records[0].Status__c === "Fail" && (
-
                                                 <Link
                                                     className={styles.linkBlue}
                                                     to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}
@@ -320,8 +418,7 @@ const AuctionsListForManager = () => {
                             </div>
                         </div>
                     </div>
-                    <Footer />
-                </div>
+                </div> */}
             </form>
         </>
     );

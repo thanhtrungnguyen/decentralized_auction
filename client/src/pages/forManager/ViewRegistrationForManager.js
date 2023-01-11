@@ -15,7 +15,7 @@ import jwt from "jsonwebtoken";
 // import { set } from "mongoose";
 import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
-
+import Time from "../../components/time/Time";
 const ViewRegistrationForManager = () => {
     const [page, setPage] = React.useState(1);
     const { id } = useParams();
@@ -73,16 +73,89 @@ const ViewRegistrationForManager = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <div className={styles.container}>
                 <SideBarSeller />
+                <Time />
+                <div className={styles.r}>
+                    <div className={styles.con}>
+                        <div className={styles.btns}>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/viewRegistrationForManager");
+                                }}
+                            >
+                                Registration Information
+                            </button>
+
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/viewBiddingForManager");
+                                }}
+                            >
+                                Place Bids Log
+                            </button>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/viewAuctionResultForManager");
+                                }}
+                            >
+                                Auction Result
+                            </button>
+                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
+                            <button className={styles.btn}>Search</button>
+                        </div>
+                        <p className={styles.lb}>Registration Time End in 1d 4h 32m 32s</p>
+                        <p className={styles.lb}>Total Registered Bidders: 10</p>
+                        <table className={styles.table}>
+                            <tr>
+                                <th className={styles.th}>Username</th>
+                                <th className={styles.th}>Wallet</th>
+                                <th className={styles.th}>Registration Hash</th>
+                                <th className={styles.th}>Registered at</th>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>dd/MM/yyyy - HH:mm:ss</td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>dd/MM/yyyy - HH:mm:ss</td>
+                            </tr>{" "}
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>dd/MM/yyyy - HH:mm:ss</td>
+                            </tr>{" "}
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>dd/MM/yyyy - HH:mm:ss</td>
+                            </tr>
+                        </table>
+                        <hr />
+                        <div>
+                            <Pagination
+                                className={styles.Pagination}
+                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                // page={page}
+                                // onChange={handleChange}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* <div className={styles.container}>
+                <SideBarSeller />
+                <Time />
                 <div className={styles.content}>
                     <div className={styles.search}>
                         <label
@@ -137,8 +210,7 @@ const ViewRegistrationForManager = () => {
                         </div>
                     </div>
                 </div>
-                <Footer />
-            </div>
+            </div> */}
         </>
     );
 };

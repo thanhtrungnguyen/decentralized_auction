@@ -16,6 +16,7 @@ import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
 import io from "socket.io-client";
+import Time from "../../components/time/Time";
 const ViewBiddingForManager = () => {
     const [page, setPage] = React.useState(1);
     const { id } = useParams();
@@ -46,7 +47,7 @@ const ViewBiddingForManager = () => {
             setLoading(false);
         };
         fetchData();
-    }, [status,baseURL]);
+    }, [status, baseURL]);
     socket.on("count", (item) => {
         if (item !== status) {
             setStatus(data);
@@ -84,15 +85,105 @@ const ViewBiddingForManager = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}{" "}
-            <NavBar />
             <div className={styles.container}>
+                <SideBarSeller />
+                <Time />
+                <div className={styles.r}>
+                    <div className={styles.con}>
+                        <div className={styles.btns}>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/viewRegistrationForManager");
+                                }}
+                            >
+                                Registration Information
+                            </button>
+
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/viewBiddingForManager");
+                                }}
+                            >
+                                Place Bids Log
+                            </button>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/viewAuctionResultForManager");
+                                }}
+                            >
+                                Auction Result
+                            </button>
+                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
+                            <button className={styles.btn}>Search</button>
+                        </div>
+                        <p className={styles.lb}>Registration Time End in 1d 4h 32m 32s</p>
+                        <p className={styles.lb}>Place Bids Log</p>
+                        <table className={styles.table}>
+                            <tr>
+                                <th className={styles.th}>Username</th>
+                                <th className={styles.th}>Wallet</th>
+                                <th className={styles.th}>Tx Hash</th>
+                                <th className={styles.th}>Bid Amount</th>
+                                <th className={styles.th}>Placed at</th>
+                                <th className={styles.th}>Status</th>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>2.234123</td>
+                                <td>dd/MM/yyyy - HH:mm:ss</td>
+                                <td>Retracted</td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>2.234123</td>
+                                <td>dd/MM/yyyy - HH:mm:ss</td>
+                                <td>Retracted</td>
+                            </tr>{" "}
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>2.234123</td>
+                                <td>dd/MM/yyyy - HH:mm:ss</td>
+                                <td>Bidding</td>
+                            </tr>{" "}
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>2.234123</td>
+                                <td>dd/MM/yyyy - HH:mm:ss</td>
+                                <td>Retracted</td>
+                            </tr>{" "}
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>0xdfdf...fdfd</td>
+                                <td>2.234123</td>
+                                <td>dd/MM/yyyy - HH:mm:ss</td>
+                                <td>Bidding</td>
+                            </tr>
+                        </table>
+                        <hr />
+                        <div>
+                            <Pagination
+                                className={styles.Pagination}
+                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                // page={page}
+                                // onChange={handleChange}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* <div className={styles.container}>
                 <SideBarSeller />
                 <div className={styles.content}>
                     <div className={styles.search}>
@@ -155,7 +246,7 @@ const ViewBiddingForManager = () => {
                     </div>
                 </div>
                 <Footer />
-            </div>
+            </div> */}
         </>
     );
 };
