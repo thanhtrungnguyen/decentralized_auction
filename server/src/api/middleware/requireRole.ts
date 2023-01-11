@@ -4,9 +4,9 @@ import logger from '../utils/logger';
 export const requireRole = (requireRole: string) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = res.locals.user;
-      if (user.role !== requireRole) {
-        return res.status(403).send({ message: 'Access denied' });
+      const user = res?.locals?.user;
+      if (!user || user.role !== requireRole) {
+        return res.sendStatus(403);
       }
       next();
     } catch (error) {
