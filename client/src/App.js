@@ -95,7 +95,7 @@ function App() {
                         <Route path="autionsListForManager" element={<AuctionsListForManager />} />
                         <Route path="auctionDetailForManager" element={<AuctionDetailForManager />} />
                         <Route path="auctionDetailForManager/:id/:propertyId" element={<AuctionDetailForManager />} />
-                        <Route path="approveAuction/:id/:propertyId" element={<ApproveAuction />} />
+                        <Route path="approveAuction/:id" element={<ApproveAuction />} />
                         <Route path="approveAuction" element={<ApproveAuction />} />
                         <Route path="managerCategorys" element={<ManagerCategorys />} />
                         <Route path="addCategory" element={<AddCategory />} />

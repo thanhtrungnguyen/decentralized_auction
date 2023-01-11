@@ -3,7 +3,7 @@ import contractAbi from '../api/constants/contractAbi.json';
 
 const SALT_WORK_FACTOR = 10;
 
-const ACCESS_TOKEN_TTL = '15m';
+const ACCESS_TOKEN_TTL = '1y';
 
 const REFRESH_TOKEN_TTL = '1y';
 

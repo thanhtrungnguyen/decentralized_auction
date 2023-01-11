@@ -26,13 +26,14 @@ export const getPropertyByIdHandler = async (req: Request, res: Response, next: 
 
 export const createPropertyHandler = async (req: Request, res: Response, next: NextFunction) => {
   const property = req.body;
+  const userId = res.locals.user._id;
   const files = req.files as { [fieldname: string]: Express.Multer.File[] };
   const category = await getCategory({ _id: req.body.category });
   if (!category) return res.status(404).json({ message: 'Category not found' });
   const user = await findUser({ _id: req.body.user });
   if (!user) return res.status(404).json({ message: 'User not found' });
 
-  const dataProperty = await createProperty({ ...property, user: user._id, category: category._id }, files);
+  const dataProperty = await createProperty({ ...property, user: userId, category: category._id }, files);
 
   if (dataProperty.success == false) {
     res.status(500).json(dataProperty);
