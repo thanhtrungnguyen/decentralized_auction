@@ -9,6 +9,7 @@ import userRoutes from './user';
 import individualRoutes from './individual';
 import representativeRoutes from './representative';
 import contractInteractionRoutes from './contractInteraction';
+import auctionRegistrationRoutes from './auctionRegistration';
 
 const router = express.Router();
 
@@ -21,5 +22,6 @@ router.use('/user', userRoutes);
 router.use('/individual', individualRoutes);
 router.use('/representative', representativeRoutes);
 router.use('/contractInteraction', contractInteractionRoutes);
+router.use('/auctionRegistration', auctionRegistrationRoutes);
 
 export default router;

@@ -19,8 +19,7 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
         const baseURL = `http://localhost:5000/api/contractInteraction/createdAuction/${auctionId}`;
         const auctionRegistrationURL = `http://localhost:8800/api/auctionInformation/${auctionId}/auctionRegistration`;
         const getAuction = await axios.get(baseURL);
-        const getAuctionRegistration = await axios.get(auctionRegistrationURL);
-        debugger;
+        const getAuctionRegistration = await axios.get(baseURL);
         await axios.all([getAuction, getAuctionRegistration]).then(
             axios.spread((...allData) => {
                 console.log(allData);

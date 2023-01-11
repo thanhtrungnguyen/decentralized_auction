@@ -47,6 +47,7 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
         const currentTimestamp = Math.floor(Date.now() / 1000);
         const registeredWallet = checkUserRegistered();
         console.log(checkUserRegistered());
+        // debugger;
         if (loading) return "Loading";
         if (!auction) return "AuctionNotFound";
         if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
