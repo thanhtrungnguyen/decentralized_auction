@@ -23,7 +23,10 @@ const createUserSessionHandler = async (req: Request, res: Response, next: NextF
 };
 
 const getUserSessionHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const userId = res.locals.user._id;
+  const userId = res?.locals?.user?._id;
+  if (!userId) {
+    return res.status(404).json({ message: 'Session not found' });
+  }
   return await findSessions({ user: userId, valid: true })
     .then((session) => {
       res.status(200).send(session);

@@ -8,11 +8,12 @@ import { UserSchema } from '../validations/UserSchema';
 const router = express.Router();
 
 router.post('/', validateResource(UserSchema.login), createUserSessionHandler);
-router.get('/', requireUser, getUserSessionHandler);
-router.delete('/', requireUser, deleteSessionHandler);
+router.use(requireUser);
+router.get('/', getUserSessionHandler);
+router.delete('/', deleteSessionHandler);
 // check authorization
-router.get('/admin', requireUser, requireRole(defaultConfig.role.admin), getUserSessionHandler);
-router.get('/manager', requireUser, requireRole(defaultConfig.role.manager), getUserSessionHandler);
-router.get('/seller', requireUser, requireRole(defaultConfig.role.seller), getUserSessionHandler);
-router.get('/bidder', requireUser, requireRole(defaultConfig.role.bidder), getUserSessionHandler);
+router.get('/admin', requireRole(defaultConfig.role.admin), getUserSessionHandler);
+router.get('/manager', requireRole(defaultConfig.role.manager), getUserSessionHandler);
+router.get('/seller', requireRole(defaultConfig.role.seller), getUserSessionHandler);
+router.get('/bidder', requireRole(defaultConfig.role.bidder), getUserSessionHandler);
 export default router;

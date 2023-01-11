@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { get } from 'lodash';
-import { config } from 'process';
 import { defaultConfig } from '../../config/constant-variables';
 import { reIssueAccessToken } from '../services/AuthService';
 import { verifyJwt } from '../utils/jwt';
@@ -12,10 +11,8 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
   }
   const refreshToken = get(req, 'headers.x-refresh');
   const { decoded, expired } = verifyJwt(accessToken, defaultConfig.jwt.accessTokenPublicKey);
-  console.log(decoded, expired);
   if (decoded) {
     res.locals.user = decoded;
-    return next();
   }
 
   // if (expired && refreshToken) {
