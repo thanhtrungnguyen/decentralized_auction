@@ -1,4 +1,5 @@
 import { FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
+import { uploadFile } from '../../s3';
 import News, { INews, INewsDocument } from '../models/News';
 import logger from '../utils/logger';
 
@@ -31,16 +32,38 @@ const getNews = async (filter: FilterQuery<INewsDocument>, options: QueryOptions
   }
 };
 
-const createNews = async (news: INews) => {
+const createNews = async (news: INews, files: { [fieldName: string]: Express.Multer.File[] }) => {
+  var img1;
   try {
+    const file1 = files['avatar'][0];
+    if (file1) {
+      img1 = await (await uploadFile(file1)).data;
+      news.avatar = img1;
+    } else {
+      return { success: false, message: 'Upload avatar fail!!!' };
+    }
     return await News.create(news);
   } catch (error) {
     logger.error(error);
   }
 };
 
-const updateNews = async (filter: FilterQuery<INewsDocument>, update: UpdateQuery<INewsDocument>, options: QueryOptions) => {
+const updateNews = async (
+  filter: FilterQuery<INewsDocument>,
+  update: UpdateQuery<INewsDocument>,
+  options: QueryOptions,
+  files: { [fieldName: string]: Express.Multer.File[] }
+) => {
+  var img1;
+
   try {
+    const file1 = files['avatar'][0];
+    if (file1) {
+      img1 = await (await uploadFile(file1)).data;
+      update.avatar = img1;
+    } else {
+      return { success: false, message: 'Upload avatar fail!!!' };
+    }
     return await News.findOneAndUpdate(filter, update, options);
   } catch (error) {
     logger.error(error);

@@ -1,10 +1,23 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCategory } from '../services/CategoryService';
-import { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty } from '../services/PropertyService';
+import { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty, getPropertiesByUser } from '../services/PropertyService';
 import { findUser } from '../services/UserService';
 
 export const getAllPropertiesHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllProperties()
+    .then((properties) => {
+      res.status(200).json({ properties });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+export const getPropertiesByUserHandler = async (req: Request, res: Response, next: NextFunction) => {
+  var index = req.params.index;
+  var status = req.params.status;
+  var search = req.params.search;
+  var userId = '63bd8531cc9d75cd8780454c';
+  return await getPropertiesByUser(userId, index, status, search)
     .then((properties) => {
       res.status(200).json({ properties });
     })

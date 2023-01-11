@@ -15,17 +15,35 @@ import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 import Time from "../../components/time/Time";
+import axios from "axios";
 const ListSellers = () => {
     const [page, setPage] = React.useState(1);
     const [role, setRole] = useState();
-
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState(null);
     const [email2, setEmail2] = useState(null);
     const [status, setStatus] = useState(null);
     // const navigate = useNavigate();
-    const baseURL = `http://localhost:8800/api/user/getAll/SELLER/${page}/${status}/${email}`;
+    const baseURL = `http://localhost:5000/api/user/users/seller/${page}/${status}/${email}`;
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                // console.log("axios get");
+                setData(resp.data.user);
+                console.log(resp);
+            });
+            if (getUser() != null) {
+                setRole(getUser().role);
+            } else {
+                setRole("");
+            }
 
-    const { data, loading } = useFetchPagination(baseURL, page);
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -34,22 +52,6 @@ const ListSellers = () => {
         }
     };
     const handleSubmit = (event) => {
-        // const formData = new FormData();
-
-        // formData.append("email", email);
-
-        // axios
-        //     .get("http://localhost:8800/api/seller", formData, {
-        //         withCredentials: true,
-        //     })
-        //     .then((res) => {
-        //         console.log(res);
-        //         console.log(res.data);
-        //         alert(res.data.message);
-        //         //setData(res.data);
-
-        //         navigate("/listSellers");
-        //     });
         email2 === "" ? setEmail(null) : setEmail(email2);
         setPage(1);
         event.preventDefault();
@@ -82,6 +84,41 @@ const ListSellers = () => {
         }
     }, []);
     const navigate = useNavigate();
+    function exportData(data) {
+        return <>
+            {data.listUser.map((item) =>
+                <tr>
+                    <td>{item.firstName} {item.lastName}</td>
+                    <td>{item.email}</td>
+                    <td>{item.phone}</td>
+                    <td>{item.address}</td>
+                    <td>{item.user.status === true ? 'Activate' : 'Deactivate'}</td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <AiFillEye className={styles.iconView} />
+                        {item.user.status === true ?
+                            <Popup trigger={
+                                <label style={{ color: "red" }} className={styles.linkBlue}>
+                                    Deactivate
+                                </label>
+                            }
+                                position="right center">
+                                <BanedSeller idManager="" />
+                            </Popup> :
+                            <Popup trigger={
+                                <label style={{ color: "blue" }} className={styles.linkBlue}>
+                                    Activate
+                                </label>}
+                                position="right center">
+                                <ActiveSeller idManager="" />
+                            </Popup>}
+                    </td>
+                </tr>
+            )}
+        </>
+    }
     return loading ? (
         <Loading />
     ) : (
@@ -92,11 +129,28 @@ const ListSellers = () => {
                 <div className={styles.r}>
                     <div className={styles.con}>
                         <div className={styles.btns}>
-                            <button className={styles.btn}>All</button>
-                            <button className={styles.btn}>Activate</button>
-                            <button className={styles.btn}>Deactivate</button>
-                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
-                            <button className={styles.btn}>Search</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                All
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="true">
+                                Activate
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="false">
+                                Deactivate
+                            </button>
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    className={styles.ip}
+                                    type="text"
+                                    placeholder="Enter Email"
+                                    id="email"
+                                    value={email2}
+                                    onChange={(e) => handleInputChange(e)}
+                                ></input>
+                                <button className={styles.btn} type="submit">
+                                    Search
+                                </button>
+                            </form>
                             <button
                                 className={styles.btn}
                                 onClick={() => {
@@ -116,118 +170,16 @@ const ListSellers = () => {
                                 <th className={styles.th}>Action</th>
                                 <th className={styles.th}></th>
                             </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>
-                                    <Popup
-                                        trigger={
-                                            <label style={{ color: "red" }} className={styles.linkBlue}>
-                                                Deactivate
-                                            </label>
-                                        }
-                                        position="right center"
-                                    >
-                                        <BanedSeller idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    {/* <AiTwotoneEdit
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/viewSeller");
-                                        }}
-                                    /> */}
-                                    <AiFillEye
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/viewSeller");
-                                        }}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Deactivate</td>
-                                <td>
-                                    {" "}
-                                    <Popup trigger={<label className={styles.linkBlue}>Activate</label>} position="right center">
-                                        <ActiveSeller idManager="" />
-                                    </Popup>
-                                </td>
-                                <td>
-                                    <AiTwotoneEdit className={styles.iconView} />
-                                    <AiFillEye className={styles.iconView} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>abc@gmail.com</td>
-                                <td>09000999000</td>
-                                <td>Thach That, Ha Noi, Viet Nam</td>
-                                <td>Activate</td>
-                                <td>Deactivate</td>
-                                <td></td>
-                            </tr>
+                            {exportData(data)}
                         </table>
                         <hr />
                         <div>
                             <Pagination
                                 className={styles.Pagination}
-                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                // page={page}
-                                // onChange={handleChange}
+                                hidden={data.count === 0 ? true : false}
+                                count={Math.ceil(data.count / 8)}
+                                page={page}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
