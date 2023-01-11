@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 // import { useParams } from "react-router-dom";
 import BidModal from "../index";
-import axios from "axios";
+import axios from "../../../config/axiosConfig";
 //import { useFetchBidding } from "../../../hook/useFetch";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import Cookies from "js-cookie";
-import { host } from "../../../config/axiosConfig";
 import jwt from "jsonwebtoken";
 const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     const [openModal, setOpenModal] = useState(() => {
@@ -17,8 +16,8 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     const [auction, setAuction] = useState();
     const [auctionRegistration, setAuctionRegistration] = useState();
     const fetchData = async () => {
-        const baseURL = `${host}/api/contractInteraction/createdAuction/${auctionId}`;
-        const auctionRegistrationURL = `${host}/api/auctionRegistration/${auctionId}`;
+        const baseURL = `/contractInteraction/createdAuction/${auctionId}`;
+        const auctionRegistrationURL = `/auctionRegistration/${auctionId}`;
         const getAuction = await axios.get(baseURL);
         const getAuctionRegistration = await axios.get(auctionRegistrationURL);
         await axios.all([getAuction, getAuctionRegistration]).then(
