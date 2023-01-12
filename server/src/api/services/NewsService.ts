@@ -72,7 +72,13 @@ const updateNews = async (
     logger.error(error);
   }
 };
-
+const changeStatus = async (filter: FilterQuery<INewsDocument>, update: UpdateQuery<INewsDocument>, options: QueryOptions) => {
+  try {
+    return await News.findOneAndUpdate(filter, update, options);
+  } catch (error) {
+    logger.error(error);
+  }
+};
 const deleteNews = async (filter: FilterQuery<INews>) => {
   try {
     return await News.deleteOne(filter);
@@ -81,4 +87,4 @@ const deleteNews = async (filter: FilterQuery<INews>) => {
   }
 };
 
-export { getAllNews, getNews, createNews, updateNews, deleteNews };
+export { getAllNews, getNews, createNews, updateNews, deleteNews, changeStatus };

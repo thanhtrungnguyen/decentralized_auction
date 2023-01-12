@@ -3,7 +3,7 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/auctionList.module.css";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 // import { Link } from "react-router-dom";
 // import Popup from "reactjs-popup";
 // import PlaceABid from "../../components/popups/PlaceABid";
@@ -35,7 +35,7 @@ const AuctionList = () => {
     const [name, setName] = useState(null);
     const [name2, setName2] = useState(null);
     const [checkedState, setCheckedState] = useState([false, false, false]);
-    const baseURLAuction = `http://localhost:5000/api/auction/auctions`;
+    const baseURLAuction = `/auction/auctions`;
     const [change, setChange] = useState(null);
     const [categories, setCategories] = useState([]);
     const [auctions, setAuctions] = useState([]);
@@ -130,7 +130,7 @@ const AuctionList = () => {
         }, null);
         setStatus(total);
     };
-    const handleApplyFilter = () => {};
+    const handleApplyFilter = () => { };
 
     const handleSort = (e) => {
         setSort(e.target.value);

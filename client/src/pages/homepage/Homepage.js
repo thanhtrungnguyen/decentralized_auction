@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Loading from "../../components/loading/Loading";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import FooterCopy from "../../components/footer/FooterCopy";
 const HomePage = () => {
     const [loading, setLoading] = useState(false);
@@ -24,8 +24,8 @@ const HomePage = () => {
     const perPage = 4;
     var statusNews = "Published";
     var title = null;
-    var baseURL = `http://localhost:8800/api/news/getAll/${page}/${statusNews}/${title}/${perPage}`;
-    const baseURLAuction = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
+    var baseURL = `/news/getAll/${page}/${statusNews}/${title}/${perPage}`;
+    const baseURLAuction = `/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
 
     // useEffect(() => {
     //     const fetchData = async () => {

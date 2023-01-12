@@ -1,5 +1,12 @@
 import express from 'express';
-import { getAllNewsHandler, getNewsByIdHandler, createNewsHandler, updateNewsHandler, deleteNewsHandler } from '../controllers/NewsController';
+import {
+  getAllNewsHandler,
+  getNewsByIdHandler,
+  createNewsHandler,
+  updateNewsHandler,
+  deleteNewsHandler,
+  changeStatusNewsHandler
+} from '../controllers/NewsController';
 import { validateResource } from '../middleware/validateResource';
 import { NewsSchema } from '../validations/NewsSchema';
 // import { Schema, ValidateResource } from '../middleware/validateResource';
@@ -21,7 +28,7 @@ router.post(
       maxCount: 1
     }
   ]),
-  validateResource(NewsSchema.create),
+  //validateResource(NewsSchema.create),
   createNewsHandler
 );
 router.put(
@@ -35,6 +42,7 @@ router.put(
   validateResource(NewsSchema.update),
   updateNewsHandler
 );
+router.put('/changeStatus/:newsId', changeStatusNewsHandler);
 router.delete('/delete/:newsId', deleteNewsHandler);
 
 export default router;

@@ -9,6 +9,26 @@ const getAllCategories = async () => {
     logger.error(error);
   }
 };
+const getListCategory = async (index: any, status: any, search: any) => {
+  var filter;
+  const page_size = 8;
+  try {
+    var skip = parseInt(index);
+    skip = skip == 1 ? 0 : (skip - 1) * page_size;
+    status == 'null' && search == 'null'
+      ? (filter = {})
+      : status == 'null' && search != 'null'
+      ? (filter = { name: { $regex: search, $options: 'i' } })
+      : status != 'null' && search == 'null'
+      ? (filter = { status: status })
+      : (filter = { status: status, name: { $regex: search, $options: 'i' } });
+    var arr = await Category.find(filter).sort({ createdAt: -1 }).skip(skip).limit(page_size);
+    var count = await Category.find(filter);
+    return { listCategory: arr, count: count.length };
+  } catch (error) {
+    logger.error(error);
+  }
+};
 
 const getCategory = async (filter: FilterQuery<ICategoryDocument>, options: QueryOptions = { lean: true }) => {
   try {
@@ -42,4 +62,4 @@ const deleteCategory = async (filter: FilterQuery<ICategory>) => {
   }
 };
 
-export { getAllCategories, getCategory, createCategory, updateCategory, deleteCategory };
+export { getAllCategories, getCategory, createCategory, updateCategory, deleteCategory, getListCategory };

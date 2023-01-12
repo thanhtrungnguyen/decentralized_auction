@@ -16,9 +16,9 @@ export interface INewsDocument extends INews, Document {
 const newsSchema: Schema = new Schema(
   {
     title: { type: String, required: true },
-    avatar: { type: String },
+    avatar: { type: String, required: true },
     content: { type: String, required: true },
-    status: { type: String, required: true, default: 'activate' }
+    status: { type: String, required: true, default: 'Activate' }
   },
   { timestamps: true, versionKey: false }
 );

@@ -1,6 +1,6 @@
 import styles from "../../styleCss/login.module.css";
 import { useState } from "react";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
@@ -33,7 +33,7 @@ const NewPassword = () => {
         } else {
             await axios
                 .post(
-                    "http://localhost:8800/api/auth/reset-password",
+                    "/auth/reset-password",
                     { password1: password, password2: rePassword, userId: userId, token: token },
                     { withCredentials: true }
                 )
@@ -43,9 +43,9 @@ const NewPassword = () => {
                     // alert(res.data.message);
                     navigate(`/login`);
                 });
-                
+
         }
-       
+
         event.preventDefault();
     };
 

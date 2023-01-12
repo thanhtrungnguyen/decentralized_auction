@@ -1,6 +1,6 @@
 import styles from "../../styleCss/login.module.css";
 import { useState } from "react";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
@@ -12,10 +12,10 @@ const EnterEmail = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        axios.post("http://localhost:8800/api/auth/forgotPassword", { userName }, { withCredentials: true }).then((res) => {
+        axios.post("/auth/forgotPassword", { userName }, { withCredentials: true }).then((res) => {
             console.log(res);
             console.log(res.data);
-            
+
         });
         alert("Please check your email !!!");
         navigate('/homePage');

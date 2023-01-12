@@ -10,7 +10,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 // import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import { useFetcher, useParams } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";

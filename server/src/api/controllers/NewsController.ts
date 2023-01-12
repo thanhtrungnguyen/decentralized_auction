@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getAllNews, getNews, createNews, updateNews, deleteNews } from '../services/NewsService';
+import { getAllNews, getNews, createNews, updateNews, deleteNews, changeStatus } from '../services/NewsService';
 
 export const getAllNewsHandler = async (req: Request, res: Response, next: NextFunction) => {
   var index = req.params.index;
@@ -52,6 +52,18 @@ export const updateNewsHandler = async (req: Request, res: Response, next: NextF
     return res.status(404).json({ message: "News isn't found" });
   }
   return await updateNews({ _id: newsId }, update, { new: true }, files)
+    .then((news) => {
+      res.status(201).json({ news });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+export const changeStatusNewsHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const newsId = req.params.newsId;
+  const update = { status: req.body.status };
+
+  return await changeStatus({ _id: newsId }, update, { new: true })
     .then((news) => {
       res.status(201).json({ news });
     })

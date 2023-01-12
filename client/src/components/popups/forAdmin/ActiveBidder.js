@@ -2,16 +2,16 @@ import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
+import axios from "../../../config/axiosConfig";
 const ActiveBidder = ({ idBidder }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
-    
+
     const handleSubmit = (event) => {
         console.log(idBidder);
-        
+
         axios
-            .put(`http://localhost:8800/api/user/changeStatus/${idBidder}`, idBidder, {
+            .patch(`/user/changeStatus/${idBidder}/true`, {
                 withCredentials: true,
             })
             .then((res) => {

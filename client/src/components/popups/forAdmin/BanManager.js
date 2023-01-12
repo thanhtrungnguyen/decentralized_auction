@@ -2,7 +2,7 @@ import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
+import axios from "../../../config/axiosConfig";
 const BanedManager = ({ idManager }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
@@ -10,7 +10,7 @@ const BanedManager = ({ idManager }) => {
     const handleSubmit = (event) => {
         console.log(idManager);
         axios
-            .put(`http://localhost:8800/api/user/changeStatus/${idManager}`, idManager, {
+            .patch(`/user/changeStatus/${idManager}/false`, {
                 withCredentials: true,
             })
             .then((res) => {

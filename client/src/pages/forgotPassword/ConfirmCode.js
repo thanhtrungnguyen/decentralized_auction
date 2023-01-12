@@ -1,6 +1,6 @@
 import styles from "../../styleCss/login.module.css";
 import { useState } from "react";
-// import axios from "axios";
+// import axios from "../../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
@@ -20,7 +20,7 @@ const ConfirmCode = () => {
         event.preventDefault();
         // axios
         //   .post(
-        //     "http://localhost:8800/api/auth/login",
+        //     "/auth/login",
         //     { code },
         //     { withCredentials: true }
         //   )
