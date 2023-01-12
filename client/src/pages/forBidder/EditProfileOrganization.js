@@ -2,7 +2,7 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import Loading from "../../components/loading/Loading";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -174,7 +174,7 @@ const EditProfileOrganization = () => {
         formData.append("cardFront", cardFront);
         formData.append("cardBack", cardBack);
 
-        axios.put(`http://localhost:8800/api/user/updateProfile/${id}`, formData, { withCredentials: true }).then((res) => {
+        axios.put(`/user/updateProfile/${id}`, formData, { withCredentials: true }).then((res) => {
             console.log(res);
             console.log(res.data);
             alert("Edit profile successfully!!!");

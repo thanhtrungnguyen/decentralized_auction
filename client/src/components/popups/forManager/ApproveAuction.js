@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 // import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
-import axios from "axios";
+import axios from "../../../config/axiosConfig";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import "./styles.css";
 const ApproveAuction = ({ auctionId, propertyId }) => {
@@ -32,11 +32,11 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                 `http://localhost:5000/api/auction/approve/${auctionId}`,
                 {
                     name: name,
-                    startRegistrationTime: startRegistrationTime,
-                    endRegistrationTime: endRegistrationTime,
-                    startAuctionTime: startAuctionTime,
-                    endAuctionTime: endAuctionTime,
-                    duePaymentTime: duePaymentTime,
+                    startRegistrationTime: new Date(startRegistrationTime),
+                    endRegistrationTime: new Date(endRegistrationTime),
+                    startAuctionTime: new Date(startAuctionTime),
+                    endAuctionTime: new Date(endAuctionTime),
+                    duePaymentTime: new Date(duePaymentTime),
                     registrationFee: registrationFee,
                     status: "Approved",
                     property: propertyId,

@@ -7,7 +7,7 @@ export const PropertySchema = {
   create: Joi.object<IProperty>({
     name: Joi.string().trim().required(),
     description: Joi.string().trim().required(),
-    status: Joi.string().trim().required(),
+    //status: Joi.string().trim().required(),
     depositAmount: Joi.string().trim().regex(floatingPointPattern).required(),
     priceStep: Joi.string().trim().regex(floatingPointPattern).required(),
     startBid: Joi.string().trim().regex(floatingPointPattern).required(),

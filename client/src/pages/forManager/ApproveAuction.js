@@ -10,7 +10,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 // import Popup from "reactjs-popup";
@@ -82,7 +82,7 @@ const PropertyDetail = () => {
         // alert(name + registrationFee + timeRegistration + auctionTime);
         axios
             .put(
-                "http://localhost:8800/api/auction/approve/" + id,
+                "/auction/approve/" + id,
                 {
                     registrationFee: registrationFee,
                     timeRegistration: timeRegistration,

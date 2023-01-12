@@ -1,7 +1,7 @@
 import styles from "../../styleCss/stylesPages/forSellers/AuctionDetailForSeller.module.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+// import axios from "../../config/axiosConfig";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
@@ -161,9 +161,9 @@ const AuctionDetailForSeller = () => {
                         </table>
                         <Pagination
                             className={styles.Pagination}
-                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                            // page={page}
-                            // onChange={handleChange}
+                        // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                        // page={page}
+                        // onChange={handleChange}
                         />
                     </div>
                     <div className={styles.des}>

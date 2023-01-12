@@ -7,7 +7,8 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
+// import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -53,11 +54,14 @@ const AddNews = () => {
         formData.append("title", title);
         formData.append("content", content);
         formData.append("avatar", avatar);
-        //console.log(formData.get("content"));
+        //console.log(formData.get("avatar"));
         axios
             .post(
                 "http://localhost:5000/api/news/create",
                 formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                },
                 { withCredentials: true }
             )
             .then((res) => {

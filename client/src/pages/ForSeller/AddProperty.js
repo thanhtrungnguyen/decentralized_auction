@@ -9,7 +9,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 // import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -110,26 +110,27 @@ const AddProperty = () => {
         formData.append("priceStep", priceStep);
         formData.append("placeViewProperty", placeViewProperty);
         formData.append("user", "63bd8531cc9d75cd8780454c");
-        const accessToken = localStorage.getItem("accessToken");
-        const config = {
-            headers: { Authorization: `Bearer ${accessToken}` },
-        };
 
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
 
         axios
-            .post("http://localhost:5000/api/property/create", formData, config, {
-                withCredentials: true,
-            })
+            .post("/property/create", formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                },
+                {
+                    withCredentials: true,
+                })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                if (res.data.success == true) {
-                    alert(res.data.message);
-                } else {
+                if (res.data.success === true) {
                     alert(res.data.message);
                     navigate("/myProperty");
+                } else {
+                    alert(res.data.message);
+
                 }
             });
 

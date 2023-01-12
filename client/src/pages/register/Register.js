@@ -5,7 +5,7 @@ import useLocationForm from "./useLocationForm";
 import Select from "react-select";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
@@ -48,8 +48,8 @@ const Register = () => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
-    const [role] = useState("BIDDER");
-    const [usertype] = useState("CONTACT");
+    const role = 'bidder'
+    //const [usertype] = useState("CONTACT");
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -114,28 +114,29 @@ const Register = () => {
         formData.append("dateOfBirth", dateOfBirth);
         formData.append("email", email);
         formData.append("phone", phone);
+        //formData.append("position", position);
         formData.append("cityId", cityId);
         formData.append("city", selectedCity.label);
         formData.append("districtId", districtId);
         formData.append("district", selectedDistrict.label);
-        formData.append("wardId", wardId);
-        formData.append("ward", selectedWard.label);
-        formData.append("specificAddress", specificAddress);
+        formData.append("wardsId", wardId);
+        formData.append("wards", selectedWard.label);
+        formData.append("address", specificAddress);
         formData.append("cardNumber", cardNumber);
-        formData.append("dateRangeCard", dateRangeCard);
+        formData.append("cardGrantedDate", dateRangeCard);
         formData.append("cardGrantedPlace", cardGrantedPlace);
-        formData.append("cardFront", cardFront);
-        formData.append("cardBack", cardBack);
+        formData.append("frontSideImage", cardFront);
+        formData.append("backSideImage", cardBack);
         formData.append("username", username);
         formData.append("password", password);
         formData.append("role", role);
-        formData.append("usertype", usertype);
+        // formData.append("usertype", usertype);
         if (rePassword !== password) {
             setMessage("Please enter match the password");
         } else {
             axios
                 .post(
-                    "http://localhost:8800/api/auth/register",
+                    "/individual/create",
                     formData,
                     {
                         headers: { "Content-Type": "multipart/form-data" },

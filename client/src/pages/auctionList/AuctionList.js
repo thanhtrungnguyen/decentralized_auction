@@ -3,7 +3,7 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/auctionList.module.css";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 // import { Link } from "react-router-dom";
 // import Popup from "reactjs-popup";
 // import PlaceABid from "../../components/popups/PlaceABid";
@@ -27,7 +27,7 @@ const AuctionList = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(false);
-    const socket = io.connect("http://localhost:8800");
+    const socket = io.connect("http://localhost:5000");
     //const baseURL = "http://localhost:8800/api/auction/";
     const [status, setStatus] = useState(null);
     const [sort, setSort] = useState(1);
@@ -35,7 +35,7 @@ const AuctionList = () => {
     const [name, setName] = useState(null);
     const [name2, setName2] = useState(null);
     const [checkedState, setCheckedState] = useState([false, false, false]);
-    const baseURLAuction = `http://localhost:5000/api/auction/auctions`;
+    const baseURLAuction = `/auction/auctions`;
     const [change, setChange] = useState(null);
     const [categories, setCategories] = useState([]);
     const [auctions, setAuctions] = useState([]);
@@ -65,37 +65,49 @@ const AuctionList = () => {
     };
     // get All Category
     useEffect(() => {
-        async function fetchPostList() {
-            setLoading(true);
-            await axios
-                .get(`http://localhost:5000/api/category/categories`)
-                .then((resp) => {
-                    setCategories(resp.data);
-                    // console.log(resp.data);
-                    // console.log("axios get");
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-            await axios.get(baseURLAuction).then((resp) => {
-                setAuctions(resp.data);
-                console.log(resp.data);
-                console.log("axios get");
-                socket.off();
-            });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
-            setLoading(false);
+        if (loading) {
+            fetchPostList();
+        } else {
+            fetchDataStatus();
         }
-        fetchPostList();
     }, [baseURLAuction, change]);
+    async function fetchPostList() {
+        setLoading(true);
+        await axios
+            .get(`http://localhost:5000/api/category/categories`)
+            .then((resp) => {
+                setCategories(resp.data);
+                // console.log(resp.data);
+                // console.log("axios get");
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        await axios.get(baseURLAuction).then((resp) => {
+            setAuctions(resp.data);
+            console.log(resp.data);
+            console.log("axios get");
+            // socket.off();
+        });
+        if (getUser() != null) {
+            setRole(getUser().role);
+        } else {
+            setRole("");
+        }
+        setLoading(false);
+    }
+    const fetchDataStatus = async () => {
+        await axios.get(baseURLAuction).then((resp) => {
+            setAuctions(resp.data);
+            console.log(resp.data);
+            console.log("axios get");
+            // socket.off();
+        });
+    };
+
     socket.on("data", (item) => {
         if (item !== change) {
             setChange(item);
-            console.log(item);
         }
     });
     const handleSubmit = (event) => {
@@ -118,7 +130,7 @@ const AuctionList = () => {
         }, null);
         setStatus(total);
     };
-    const handleApplyFilter = () => {};
+    const handleApplyFilter = () => { };
 
     const handleSort = (e) => {
         setSort(e.target.value);

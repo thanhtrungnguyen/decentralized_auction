@@ -5,6 +5,7 @@ import { IndividualSchema } from '../validations/IndividualSchema';
 import { UserSchema } from '../validations/UserSchema';
 const router = express.Router();
 import multer from 'multer';
+import { OrganizationSchema } from '../validations/OrganizationSchema';
 
 const upload = multer({ dest: 'uploads/' });
 router.post(
@@ -19,6 +20,7 @@ router.post(
       maxCount: 1
     }
   ]),
+  validateResource(OrganizationSchema.create),
   validateResource(IndividualSchema.create),
   validateResource(UserSchema.createBidder),
   createSellerHandler

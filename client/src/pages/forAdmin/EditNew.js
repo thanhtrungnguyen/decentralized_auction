@@ -7,7 +7,7 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -95,7 +95,7 @@ const EditNew = () => {
         }
 
 
-        axios.put(`http://localhost:5000/api/news/update/${id}`, formData, { withCredentials: true })
+        axios.put(`/news/update/${id}`, formData, { withCredentials: true })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);

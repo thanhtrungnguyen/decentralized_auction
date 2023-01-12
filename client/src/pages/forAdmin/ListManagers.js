@@ -18,7 +18,7 @@ import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import FooterCopy from "../../components/footer/FooterCopy";
 import Time from "../../components/time/Time";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 const ListForManagers = () => {
     const [page, setPage] = React.useState(1);
     const [data, setData] = useState([]);
@@ -30,7 +30,7 @@ const ListForManagers = () => {
 
     const [role, setRole] = useState();
 
-    const baseURL = `http://localhost:5000/api/user/users/manager/${page}/${status}/${email}`;
+    const baseURL = `/user/users/manager/${page}/${status}/${email}`;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);

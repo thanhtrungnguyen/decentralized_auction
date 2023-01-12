@@ -54,8 +54,7 @@ import ViewNews from "./pages/common/ViewNews";
 import ViewNewsForAdmin from "./pages/forAdmin/ViewNewsForAdmin";
 import BidderOrganizationDetail from "./pages/forAdmin/BidderOrganizationDetail";
 import FakeAuctionDetail from "./pages/bidder/FakeAuctionDetail";
-// import axios from "axios";
-// axios.defaults.withCredentials = true;
+
 
 function App() {
     return (

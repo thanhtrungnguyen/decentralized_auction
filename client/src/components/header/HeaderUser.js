@@ -2,7 +2,6 @@ import styles from "../../styleCss/stylesComponents/header.module.css";
 import { BiMessageDetail, BiBell } from "react-icons/bi";
 import { Outlet, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";

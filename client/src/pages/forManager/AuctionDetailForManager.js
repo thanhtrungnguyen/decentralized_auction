@@ -8,7 +8,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
-// import axios from "axios";
+// import axios from "../../config/axiosConfig";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 // import Popup from "reactjs-popup";
@@ -137,21 +137,9 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Property Image</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <img
-                                        className={styles.img}
-                                        src={`https://cdn3.dhht.vn/wp-content/uploads/2022/07/thuong-hieu-nike-cua-nuoc-nao-y-nghia-logo-va-cac-san-pham.jpg`}
-                                        alt="images"
-                                    />
-                                    <img
-                                        className={styles.img}
-                                        src={`https://cdn3.dhht.vn/wp-content/uploads/2022/07/thuong-hieu-nike-cua-nuoc-nao-y-nghia-logo-va-cac-san-pham.jpg`}
-                                        alt="images"
-                                    />
-                                    <img
-                                        className={styles.img}
-                                        src={`https://cdn3.dhht.vn/wp-content/uploads/2022/07/thuong-hieu-nike-cua-nuoc-nao-y-nghia-logo-va-cac-san-pham.jpg`}
-                                        alt="images"
-                                    />
+                                    <img className={styles.img} src={`${data.auction.property.mediaUrl[0]}`} alt="images" />
+                                    <img className={styles.img} src={`${data.auction.property.mediaUrl[1]}`} alt="images" />
+                                    <img className={styles.img} src={`${data.auction.property.mediaUrl[2]}`} alt="images" />
                                 </div>
                             </div>
                             <br />
@@ -160,9 +148,9 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Property Video</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <ReactPlayer
+                                    <video
                                         className={styles.video}
-                                        url={`https://www.youtube.com/watch?v=VZaPQMVgr-w`}
+                                        src={`${data.auction.property.mediaUrl[3]}`}
                                         playing={true}
                                         controls={true}
                                         loop={true}
@@ -179,7 +167,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Property Name</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.name}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -187,7 +175,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Category</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.category.name}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -195,7 +183,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Start Bid</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.startBid}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -203,7 +191,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Deposit</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.depositAmount}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -211,7 +199,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Price Step</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.priceStep}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -219,7 +207,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Place View Property</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.placeViewProperty}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -227,7 +215,11 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>View Property Time</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>
+                                        {" "}
+                                        From: {new Date(data.auction.property.startViewPropertyTime).toLocaleString()} - To:{" "}
+                                        {new Date(data.auction.property.endViewPropertyTime).toLocaleString()}
+                                    </p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -235,7 +227,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Property Description</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.description}</p>
                                 </div>
                             </div>
                             <p className={styles.title}>Auction Information</p>
@@ -244,7 +236,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Auction Name</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.name}</p>
                                 </div>
                             </div>{" "}
                             <div className={styles.fl}>
@@ -252,7 +244,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Registration Fee</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.registrationFee}</p>
                                 </div>
                             </div>{" "}
                             <div className={styles.fl}>
@@ -260,7 +252,11 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Time Registration</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>
+                                        {" "}
+                                        From: {new Date(data.auction.startRegistrationTime).toLocaleString()} - To:{" "}
+                                        {new Date(data.auction.endRegistrationTime).toLocaleString()}
+                                    </p>
                                 </div>
                             </div>{" "}
                             <div className={styles.fl}>
@@ -268,7 +264,11 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Auction Time</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>
+                                        {" "}
+                                        From: {new Date(data.auction.startAuctionTime).toLocaleString()} - To:{" "}
+                                        {new Date(data.auction.endAuctionTime).toLocaleString()}
+                                    </p>
                                 </div>
                             </div>{" "}
                             <div className={styles.fl}>
@@ -276,7 +276,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Due payment time</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{new Date(data.auction.duePaymentTime).toLocaleString()}</p>
                                 </div>
                             </div>
                         </div>

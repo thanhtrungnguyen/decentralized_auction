@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 // import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 // import { Button } from "@mui/material";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -33,7 +33,7 @@ const MyProperty = () => {
     const [loading, setLoading] = useState(true);
     // const navigate = useNavigate();
     const baseURLCategory = "http://localhost:8800/api/category/";
-    const baseURLProperty = `http://localhost:5000/api/property/myProperty/${page}/${status}/${search}`;
+    const baseURLProperty = `/property/myProperty/${page}/${status}/${search}`;
     const requestAuction = "http://localhost:8800/api/auction/request/";
     const [role, setRole] = useState();
 
@@ -148,7 +148,7 @@ const MyProperty = () => {
                                         <RequestAddProperty idProperty={`${item._id}`} />
                                     </Popup>
                                 </>
-                            ) : item.status === "Request" || item.status === "Approved" ? (
+                            ) : item.status === "Request" || item.status === "Approved" || item.status === "Closed" ? (
                                 <>
                                     <AiFillEye
                                         className={styles.iconView}
@@ -195,75 +195,75 @@ const MyProperty = () => {
         <Loading />
     ) : (
         <>
-            <form onSubmit={handleSubmit}>
-                <div className={styles.container}>
-                    <SideBarSeller />
-                    <Time />
-                    <div className={styles.r}>
-                        <div className={styles.con}>
-                            <div className={styles.btns}>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
-                                    All
+
+            <div className={styles.container}>
+                <SideBarSeller />
+                <Time />
+                <div className={styles.r}>
+                    <div className={styles.con}>
+                        <div className={styles.btns}>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                All
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Created">
+                                Created
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Modified">
+                                Modified
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">
+                                Request
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">
+                                Approved
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Rejected">
+                                Rejected
+                            </button>
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    className={styles.ip}
+                                    type="text"
+                                    placeholder="Enter Property Name"
+                                    id="search"
+                                    value={search2}
+                                    onChange={(e) => handleInputChange(e)}
+                                ></input>
+                                <button className={styles.btn} type="submit">
+                                    Search
                                 </button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Created">
-                                    Created
-                                </button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Modified">
-                                    Modified
-                                </button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">
-                                    Request
-                                </button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">
-                                    Approved
-                                </button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Rejected">
-                                    Rejected
-                                </button>
-                                <form onSubmit={handleSubmit}>
-                                    <input
-                                        className={styles.ip}
-                                        type="text"
-                                        placeholder="Enter Property Name"
-                                        id="search"
-                                        value={search2}
-                                        onChange={(e) => handleInputChange(e)}
-                                    ></input>
-                                    <button className={styles.btn} type="submit">
-                                        Search
-                                    </button>
-                                </form>
-                                <button
-                                    className={styles.btn}
-                                    onClick={() => {
-                                        navigate("/addProperty");
-                                    }}
-                                >
-                                    + New Property
-                                </button>
-                            </div>
-                            <table className={styles.table}>
-                                <tr>
-                                    <th className={styles.th}>Property Name</th>
-                                    <th className={styles.th}>Category</th>
-                                    <th className={styles.th}>Start Bid</th>
-                                    <th className={styles.th}>Status</th>
-                                    <th className={styles.th}>Action</th>
-                                </tr>
-                                {exportData(listProperty)}
-                            </table>
-                            <hr />
-                            <div>
-                                <Pagination
-                                    className={styles.Pagination}
-                                    count={Math.ceil(listProperty.count / 8)}
-                                    page={page}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                            </form>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/addProperty");
+                                }}
+                            >
+                                + New Property
+                            </button>
+                        </div>
+                        <table className={styles.table}>
+                            <tr>
+                                <th className={styles.th}>Property Name</th>
+                                <th className={styles.th}>Category</th>
+                                <th className={styles.th}>Start Bid</th>
+                                <th className={styles.th}>Status</th>
+                                <th className={styles.th}>Action</th>
+                            </tr>
+                            {exportData(listProperty)}
+                        </table>
+                        <hr />
+                        <div>
+                            <Pagination
+                                className={styles.Pagination}
+                                count={Math.ceil(listProperty.count / 8)}
+                                page={page}
+                                onChange={handleChange}
+                            />
                         </div>
                     </div>
-                    {/* <div className={styles.content}>
+                </div>
+                {/* <div className={styles.content}>
                         <div className={styles.search}>
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Property Name</p>
@@ -413,8 +413,8 @@ const MyProperty = () => {
                             </div>
                         </div>
                     </div> */}
-                </div>
-            </form>
+            </div>
+
         </>
     );
 };

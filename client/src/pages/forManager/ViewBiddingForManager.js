@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -22,8 +22,8 @@ const ViewBiddingForManager = () => {
     const { id } = useParams();
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:8800/api/auction/getAllBidding/${id}`;
-    const socket = io.connect("http://localhost:8800");
+    const baseURL = `/auction/getAllBidding/${id}`;
+    //const socket = io.connect("http://localhost:8800");
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
     const [status, setStatus] = useState(null);
@@ -48,12 +48,12 @@ const ViewBiddingForManager = () => {
         };
         fetchData();
     }, [status, baseURL]);
-    socket.on("count", (item) => {
-        if (item !== status) {
-            setStatus(data);
-            console.log(item);
-        }
-    });
+    // socket.on("count", (item) => {
+    //     if (item !== status) {
+    //         setStatus(data);
+    //         console.log(item);
+    //     }
+    // });
     const onClick = () => {
         navigate(`/viewBiddingForManager/${id}`);
     };
@@ -175,9 +175,9 @@ const ViewBiddingForManager = () => {
                         <div>
                             <Pagination
                                 className={styles.Pagination}
-                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                // page={page}
-                                // onChange={handleChange}
+                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                            // page={page}
+                            // onChange={handleChange}
                             />
                         </div>
                     </div>

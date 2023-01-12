@@ -6,7 +6,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
@@ -41,7 +41,7 @@ const EditProperty = () => {
     const { id } = useParams();
 
     const navigate = useNavigate();
-    const baseURLCategory = `http://localhost:8800/api/category`;
+    const baseURLCategory = `/category`;
     const [role, setRole] = useState();
 
     // useEffect(() => {

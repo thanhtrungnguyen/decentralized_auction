@@ -23,7 +23,7 @@ export const createSellerHandler = async (req: Request, res: Response, next: Nex
   if (existCardNumberIndividual) {
     return res.status(409).json({ message: 'Card Number has been exist!' });
   }
-  const userCreated = await createUser({ ...createData, role: 'seller' });
+  const userCreated = await createUser({ ...createData });
   if (userCreated) {
     const individualCreated = await createIndividual({ ...createData, user: userCreated._id }, files);
     if (individualCreated) {

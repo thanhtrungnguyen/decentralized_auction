@@ -3,7 +3,7 @@ import styles from "../../styleCss/stylesPages/forAdmin/listManager.module.css";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import Popup from "reactjs-popup";
 import BanedBidder from "../../components/popups/forAdmin/BanBidder";
 import ActiveBidder from "../../components/popups/forAdmin/ActiveBidder";
@@ -23,7 +23,7 @@ const ListBidders = () => {
     const [status, setStatus] = useState(null);
     //const [filter,setFilter] = useState("");
     // const navigate = useNavigate();
-    const baseURL = `http://localhost:5000/api/user/users/bidder/${page}/${status}/${email}`;
+    const baseURL = `/user/users/bidder/${page}/${status}/${email}`;
     const [role, setRole] = useState();
 
     //const { data, loading, error } = useFetchPagination(baseURL, page);
