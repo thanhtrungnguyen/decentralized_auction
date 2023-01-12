@@ -35,7 +35,7 @@ const PropertyDetail = () => {
     const [show, setShow] = useState(false);
     const [show2, setShow2] = useState(false);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:5000/api/property/${id}`;
+    const baseURL = `http://localhost:5000/api/auction/${id}`;
     const [registrationFee, setRegistrationFee] = useState(null);
     const [name, setName] = useState(null);
     const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
@@ -162,21 +162,9 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Image</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <img
-                                        className={styles.img}
-                                        src={`https://cdn3.dhht.vn/wp-content/uploads/2022/07/thuong-hieu-nike-cua-nuoc-nao-y-nghia-logo-va-cac-san-pham.jpg`}
-                                        alt="images"
-                                    />
-                                    <img
-                                        className={styles.img}
-                                        src={`https://cdn3.dhht.vn/wp-content/uploads/2022/07/thuong-hieu-nike-cua-nuoc-nao-y-nghia-logo-va-cac-san-pham.jpg`}
-                                        alt="images"
-                                    />
-                                    <img
-                                        className={styles.img}
-                                        src={`https://cdn3.dhht.vn/wp-content/uploads/2022/07/thuong-hieu-nike-cua-nuoc-nao-y-nghia-logo-va-cac-san-pham.jpg`}
-                                        alt="images"
-                                    />
+                                    <img className={styles.img} src={`${data.auction.property.mediaUrl[0]}`} alt="images" />
+                                    <img className={styles.img} src={`${data.auction.property.mediaUrl[1]}`} alt="images" />
+                                    <img className={styles.img} src={`${data.auction.property.mediaUrl[2]}`} alt="images" />
                                 </div>
                             </div>
                             <br />
@@ -185,9 +173,9 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Video</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <ReactPlayer
+                                    <video
                                         className={styles.video}
-                                        url={`https://www.youtube.com/watch?v=VZaPQMVgr-w`}
+                                        src={`${data.auction.property.mediaUrl[3]}`}
                                         playing={true}
                                         controls={true}
                                         loop={true}
@@ -204,7 +192,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Name</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.name}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -212,7 +200,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Category</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.category.name}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -220,7 +208,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Start Bid</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.startBid}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -228,7 +216,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Deposit</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.depositAmount}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -236,7 +224,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Price Step</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.priceStep}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -244,7 +232,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Place View Property</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.placeViewProperty}</p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -252,7 +240,10 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>View Property Time</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>
+                                        From: {new Date(data.auction.property.startViewPropertyTime).toLocaleString()} - To:{" "}
+                                        {new Date(data.auction.property.endViewPropertyTime).toLocaleString()}
+                                    </p>
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -260,7 +251,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Description</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>ABC XYZ</p>
+                                    <p className={styles.txt}>{data.auction.property.description}</p>
                                 </div>
                             </div>
                         </div>
@@ -269,10 +260,10 @@ const PropertyDetail = () => {
                     <div className={styles.btn}></div>
                     <div className={styles.btn}>
                         <Popup trigger={<label className={styles.btnSave}> Approve</label>} position="right center">
-                            <ApproveAuction idProperty="123" />
+                            <ApproveAuction auctionId={data.auction._id} propertyId={data.auction.property._id} />
                         </Popup>
                         <Popup trigger={<label className={styles.btnSave2}> Reject</label>} position="right center">
-                            <RejectAuction idProperty="123" />
+                            <RejectAuction auctionId={data.auction._id} />
                         </Popup>
 
                         <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>

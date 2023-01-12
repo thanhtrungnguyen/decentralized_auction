@@ -97,14 +97,14 @@ const ListBidders = () => {
                                 </label>
                             }
                                 position="right center">
-                                <BanedBidder idManager="" />
+                                <BanedBidder idBidder={item.user._id} />
                             </Popup> :
                             <Popup trigger={
                                 <label style={{ color: "blue" }} className={styles.linkBlue}>
                                     Activate
                                 </label>}
                                 position="right center">
-                                <ActiveBidder idManager="" />
+                                <ActiveBidder idBidder={item.user._id} />
                             </Popup>}
                     </td>
                 </tr>

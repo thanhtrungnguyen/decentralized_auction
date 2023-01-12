@@ -16,8 +16,16 @@ import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 
 const AddManager = () => {
-    const [userName, setUsername] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [rePassword, setRePassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [gender, setGender] = useState("Male");
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [specificAddress, setSpecificAddress] = useState('');
+    const [message, setMessage] = useState('');
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);
 
@@ -35,36 +43,62 @@ const AddManager = () => {
     }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        if (id === "userName") {
+        if (id === "username") {
             setUsername(value);
         }
         if (id === "password") {
             setPassword(value);
         }
+        if (id === "rePassword") {
+            setRePassword(value);
+        }
+        if (id === "firstName") {
+            setFirstName(value);
+        }
+        if (id === "lastName") {
+            setLastName(value);
+        }
+        if (id === "gender") {
+            setGender(value);
+        }
+        if (id === "email") {
+            setEmail(value);
+        }
+        if (id === "phone") {
+            setPhone(value);
+        }
+        if (id === "specificAddress") {
+            setSpecificAddress(value);
+        }
     };
     const handleSubmit = (event) => {
-        const formData = new FormData();
+        if (rePassword !== password) {
+            setMessage("Please enter match the password");
+        } else {
+            axios
+                .post(
+                    "http://localhost:5000/api/informationOperator/create",
+                    {
+                        username: username,
+                        password: password,
+                        firstName: firstName,
+                        lastName: lastName,
+                        phone: phone,
+                        email: email,
+                        gender: gender,
+                        address: specificAddress
+                    },
+                    { withCredentials: true }
+                )
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    alert("Add manager successfully!!!");
+                    navigate("/listManagers");
+                });
+        }
 
-        formData.append("userName", userName);
-        formData.append("password", password);
-        console.log(formData.get("userName"));
-        axios
-            .post(
-                "http://localhost:8800/api/auth/registerManager",
-                { userName, password },
-
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert("Add manager successfully!!!");
-                navigate("/listManagers");
-            });
         event.preventDefault();
-    };
-    const cancel = () => {
-        navigate("/listManagers");
     };
     const getUser = () => {
         var users = null;
@@ -90,9 +124,9 @@ const AddManager = () => {
                         <p className={styles.title}>Add New Manager</p>
                         <p className={styles.if}>Basic Information</p>
                         <p className={styles.txt}>First Name</p>
-                        <input className={styles.ip} type="text" id=""></input>
+                        <input className={styles.ip} type="text" onChange={(e) => handleInputChange(e)} id="firstName"></input>
                         <p className={styles.txt}>Last Name</p>
-                        <input className={styles.ip} type="text" id=""></input>
+                        <input className={styles.ip} type="text" onChange={(e) => handleInputChange(e)} id="lastName"></input>
                         <p className={styles.txt}>Gender</p>
                         <select id="gender" className={styles.ip} onChange={(e) => handleInputChange(e)} placeholder="Gender" defaultValue="Male">
                             <option value="Male">Male</option>
@@ -100,18 +134,19 @@ const AddManager = () => {
                             <option value="Other">Other</option>
                         </select>
                         <p className={styles.txt}>Email</p>
-                        <input className={styles.ip} type="text" id=""></input>
+                        <input className={styles.ip} type="text" onChange={(e) => handleInputChange(e)} id="email"></input>
                         <p className={styles.txt}>Phone</p>
-                        <input className={styles.ip} type="text" id=""></input>
+                        <input className={styles.ip} type="text" onChange={(e) => handleInputChange(e)} id="phone"></input>
                         <p className={styles.txt}>Address</p>
-                        <input className={styles.ip} type="text" id=""></input>
+                        <input className={styles.ip} type="text" onChange={(e) => handleInputChange(e)} id="specificAddress"></input>
                         <p className={styles.if}>Account Information</p>
                         <p className={styles.txt}>Username</p>
-                        <input className={styles.ip} type="text" id=""></input>
+                        <input className={styles.ip} type="text" onChange={(e) => handleInputChange(e)} id="username"></input>
                         <p className={styles.txt}>Password</p>
-                        <input className={styles.ip} type="password" id=""></input>
+                        <input className={styles.ip} type="password" onChange={(e) => handleInputChange(e)} id="password"></input>
                         <p className={styles.txt}>Re-Password</p>
-                        <input className={styles.ip} type="password" id=""></input>
+                        <input className={styles.ip} type="password" onChange={(e) => handleInputChange(e)} id="rePassword"></input>
+                        <label style={{ color: "red" }}>{message}</label>
                         <br />
                         <br />
                         <br />

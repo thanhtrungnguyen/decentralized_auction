@@ -36,6 +36,7 @@ const EditNew = () => {
                 setTitle(resp.data.news.title);
                 setContent(resp.data.news.content);
                 setData(resp.data.news);
+                //setAvatar(resp.data.news.avatar);
             });
 
             if (getUser() != null) {
@@ -89,9 +90,12 @@ const EditNew = () => {
 
         formData.append("title", title);
         formData.append("content", content);
-        formData.append("avatar", avatar);
+        if (avatar != null) {
+            formData.append("avatar", avatar);
+        }
 
-        axios.patch(`http://localhost:5000/api/news/update/${id}`, formData, { withCredentials: true })
+
+        axios.put(`http://localhost:5000/api/news/update/${id}`, formData, { withCredentials: true })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);

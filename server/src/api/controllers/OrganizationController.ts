@@ -1,14 +1,13 @@
-import { createUser, findUser } from '../services/UserService';
+import { createUser, getUser } from '../services/UserService';
 import { Request, Response, NextFunction } from 'express';
 import { createIndividual, getIndividual } from '../services/IndividualService';
 import { createOrganization } from '../services/OrganizationService';
 
 export const createSellerHandler = async (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body);
-  const createUserData = req.body;
-  const createOrganizationData = req.body;
-  const createIndividualData = req.body;
-  const user = await findUser({ username: createUserData.username });
+  const createData = req.body;
+  const files = req.files as { [fieldName: string]: Express.Multer.File[] };
+  const user = await getUser({ username: createData.username });
   if (user) {
     return res.status(400).json({ message: 'User name has been exist!' });
   }
@@ -24,11 +23,11 @@ export const createSellerHandler = async (req: Request, res: Response, next: Nex
   if (existCardNumberIndividual) {
     return res.status(409).json({ message: 'Card Number has been exist!' });
   }
-  const userCreated = await createUser({ ...createUserData, role: 'bidder' });
+  const userCreated = await createUser({ ...createData, role: 'seller' });
   if (userCreated) {
-    const individualCreated = await createIndividual({ ...createIndividualData, user: userCreated._id });
+    const individualCreated = await createIndividual({ ...createData, user: userCreated._id }, files);
     if (individualCreated) {
-      return await createOrganization({ ...createOrganizationData, individual: individualCreated._id })
+      return await createOrganization({ ...createData, individual: individualCreated })
         .then((seller: any) => {
           res.status(201).json({ seller });
         })

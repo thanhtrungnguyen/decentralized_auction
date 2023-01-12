@@ -23,7 +23,7 @@ const getAuction = async (filter: FilterQuery<IAuctionDocument>, options: QueryO
   }
 };
 
-const createAuction = async (auction: IAuction) => {
+const createAuction = async (auction: Object) => {
   try {
     return await Auction.create(auction);
   } catch (error) {

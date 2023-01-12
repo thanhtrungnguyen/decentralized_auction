@@ -1,7 +1,7 @@
 import Session, { ISessionDocument } from '../models/Session';
 import { get, omit } from 'lodash';
 import { signJwt, verifyJwt } from '../utils/jwt';
-import { findUser } from './UserService';
+import { getUser } from './UserService';
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { IUserDocument } from '../models/User';
 import { config } from '../../config/custom-environment-variables';
@@ -27,7 +27,7 @@ const reIssueAccessToken = async ({ refreshToken }: { refreshToken: any }) => {
   const session = await Session.findById(get(decoded, 'session'));
   if (!session || !session.valid) return false;
 
-  const user = findUser({ _id: session.user });
+  const user = getUser({ _id: session.user });
   if (!user) return false;
 
   const accessToken = signJwt({ ...user, session: session._id }, defaultConfig.jwt.accessTokenTtl);

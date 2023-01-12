@@ -20,13 +20,13 @@ export interface IAuctionDocument extends IAuction, Document {
 
 const auctionSchema: Schema = new Schema(
   {
-    name: { type: String, required: true },
-    startRegistrationTime: { type: String, required: true },
-    endRegistrationTime: { type: String, required: true },
-    startAuctionTime: { type: String, required: true },
-    endAuctionTime: { type: String, required: true },
-    duePaymentTime: { type: String, required: true },
-    registrationFee: { type: String, required: true },
+    name: { type: String },
+    startRegistrationTime: { type: String },
+    endRegistrationTime: { type: String },
+    startAuctionTime: { type: String },
+    endAuctionTime: { type: String },
+    duePaymentTime: { type: String },
+    registrationFee: { type: String },
     status: { type: String, required: true },
     property: { type: Schema.Types.ObjectId, required: true, ref: 'Property' }
   },

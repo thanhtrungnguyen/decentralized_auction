@@ -46,6 +46,7 @@ export const updateNewsHandler = async (req: Request, res: Response, next: NextF
   const newsId = req.params.newsId;
   const update = req.body;
   const files = req.files as { [fieldName: string]: Express.Multer.File[] };
+
   const news = await getNews({ _id: newsId });
   if (!news) {
     return res.status(404).json({ message: "News isn't found" });
