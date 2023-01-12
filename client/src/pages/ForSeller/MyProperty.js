@@ -145,7 +145,7 @@ const MyProperty = () => {
                                         <DeleteProperty idProperty="" />
                                     </Popup>
                                     <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
-                                        <RequestAddProperty idProperty="" />
+                                        <RequestAddProperty idProperty={`${item._id}`} />
                                     </Popup>
                                 </>
                             ) : item.status === "Request" || item.status === "Approved" ? (
