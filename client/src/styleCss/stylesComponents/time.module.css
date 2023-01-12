@@ -9,3 +9,17 @@
     margin-top: 10px;
     position: absolute;
 }
+.label2 {
+    margin-left: 1400px;
+    margin-top: 10px;
+    position: absolute;
+    color: #ffffff;
+    border: 1px solid black;
+    margin-top: 5px;
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    background-color: violet;
+    border-radius: 5px;
+}
