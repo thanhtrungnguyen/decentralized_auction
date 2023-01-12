@@ -23,7 +23,7 @@ const getPropertiesByUser = async (userId: any, index: any, status: any, search:
       : status != 'null' && search == 'null'
       ? (filter = { status: status, user: userId })
       : (filter = { status: status, name: { $regex: search, $options: 'i' }, user: userId });
-    var arr = await Property.find(filter).populate('category').skip(skip).limit(page_size);
+    var arr = await Property.find(filter).populate('category').skip(skip).limit(page_size).sort({ createdAt: -1 });
     var count = await Property.find(filter);
     return { listProperty: arr, count: count.length };
   } catch (error) {

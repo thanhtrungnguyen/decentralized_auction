@@ -155,7 +155,7 @@ const ManagerCategory = () => {
                         </div>
                         <table className={styles.table}>
                             <tr>
-                                <th className={styles.th}>Property Name</th>
+                                <th className={styles.th}>Category Name</th>
 
                                 <th className={styles.th}>Status</th>
                                 <th className={styles.th}>Action</th>

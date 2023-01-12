@@ -148,7 +148,7 @@ const MyProperty = () => {
                                         <RequestAddProperty idProperty={`${item._id}`} />
                                     </Popup>
                                 </>
-                            ) : item.status === "Request" || item.status === "Approved" ? (
+                            ) : item.status === "Request" || item.status === "Approved" || item.status === "Closed" ? (
                                 <>
                                     <AiFillEye
                                         className={styles.iconView}
