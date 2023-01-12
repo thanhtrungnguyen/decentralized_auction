@@ -23,7 +23,7 @@ const ViewBiddingForManager = () => {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const baseURL = `http://localhost:8800/api/auction/getAllBidding/${id}`;
-    const socket = io.connect("http://localhost:8800");
+    // const socket = io.connect("http://localhost:8800");
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
     const [status, setStatus] = useState(null);
@@ -48,12 +48,12 @@ const ViewBiddingForManager = () => {
         };
         fetchData();
     }, [status, baseURL]);
-    socket.on("count", (item) => {
-        if (item !== status) {
-            setStatus(data);
-            console.log(item);
-        }
-    });
+    // socket.on("count", (item) => {
+    //     if (item !== status) {
+    //         setStatus(data);
+    //         console.log(item);
+    //     }
+    // });
     const onClick = () => {
         navigate(`/viewBiddingForManager/${id}`);
     };
