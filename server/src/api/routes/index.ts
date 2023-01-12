@@ -11,6 +11,7 @@ import organizationRouters from './organization';
 import representativeRoutes from './representative';
 import contractInteractionRoutes from './contractInteraction';
 import auctionRegistrationRoutes from './auctionRegistration';
+import informationOperatorRoutes from './informationOperator';
 
 const router = express.Router();
 
@@ -25,5 +26,5 @@ router.use('/representative', representativeRoutes);
 router.use('/organization', organizationRouters);
 router.use('/contractInteraction', contractInteractionRoutes);
 router.use('/auctionRegistration', auctionRegistrationRoutes);
-
+router.use('/informationOperator', informationOperatorRoutes);
 export default router;

@@ -9,7 +9,8 @@ import {
   forgotPasswordHandler,
   changePasswordHandler,
   resetPasswordHandler,
-  getUserByRoleHandler
+  getUserByRoleHandler,
+  changeStatusUserHandler
 } from '../controllers/UserController';
 import { UserSchema } from '../validations/UserSchema';
 import { validateResource } from '../middleware/validateResource';
@@ -19,6 +20,7 @@ router.get('/users', getAllUsersHandler);
 router.get('/:userId', getUserByIdHandler);
 router.post('/create', validateResource(UserSchema.create), createUserHandler);
 router.patch('/update/:userId', validateResource(UserSchema.updateStatus), updateUserHandler);
+router.patch('/changeStatus/:userId/:status', validateResource(UserSchema.updateStatus), changeStatusUserHandler);
 // router.delete('/delete/:userId', deleteUserHandler);
 router.post('/forgotPassword', validateResource(UserSchema.forgotPassword), forgotPasswordHandler);
 router.post('/changePassword/:userId', validateResource(UserSchema.changePassword), changePasswordHandler);

@@ -8,9 +8,9 @@ const BanedSeller = ({ idSeller }) => {
     const [expanded, setExpanded] = useState(true);
 
     const handleSubmit = (event) => {
-        console.log(idSeller);
+        // console.log(idSeller);
         axios
-            .put(`http://localhost:8800/api/user/changeStatus/${idSeller}`, idSeller, {
+            .patch(`http://localhost:5000/api/user/changeStatus/${idSeller}/false`, {
                 withCredentials: true,
             })
             .then((res) => {

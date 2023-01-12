@@ -13,7 +13,7 @@ export const UserSchema = {
     role: Joi.string().trim().required()
   }).unknown(),
   updateStatus: Joi.object<IUser>({
-    status: Joi.boolean().required()
+    status: Joi.boolean()
   }).unknown(),
   createBidder: Joi.object<IUser>({
     username: Joi.string().trim().required(),

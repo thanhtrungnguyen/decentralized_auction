@@ -105,14 +105,14 @@ const ListSellers = () => {
                                 </label>
                             }
                                 position="right center">
-                                <BanedSeller idManager="" />
+                                <BanedSeller idSeller={item.user._id} />
                             </Popup> :
                             <Popup trigger={
                                 <label style={{ color: "blue" }} className={styles.linkBlue}>
                                     Activate
                                 </label>}
                                 position="right center">
-                                <ActiveSeller idManager="" />
+                                <ActiveSeller idSeller={item.user._id} />
                             </Popup>}
                     </td>
                 </tr>

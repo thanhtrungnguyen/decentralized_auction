@@ -150,13 +150,12 @@ const AddSeller = () => {
         formData.append("cardNumber", cardNumber);
         formData.append("cardGrantedDate", dateRangeCard);
         formData.append("cardGrantedPlace", cardGrantedPlace);
-        formData.append("cardFront", cardFront);
-        formData.append("cardBack", cardBack);
+        formData.append("frontSideImage", cardFront);
+        formData.append("backSideImage", cardBack);
         formData.append("username", userName);
         formData.append("password", password);
-        formData.append("role", role);
-        formData.append("userType", userType);
-        console.log(formData.data())
+        // formData.append("role", role);
+        // formData.append("userType", userType);
         axios
             .post('http://localhost:5000/api/organization/create', formData, {
                 withCredentials: true,
@@ -168,7 +167,7 @@ const AddSeller = () => {
                 navigate("/listSellers");
             })
             .catch(err => {
-                console.error(err);
+                console.error(err.response.data.message);
             })
         event.preventDefault();
     };

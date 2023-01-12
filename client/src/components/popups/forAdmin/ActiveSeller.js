@@ -10,7 +10,7 @@ const ActiveSeller = ({ idSeller }) => {
     const handleSubmit = (event) => {
         console.log(idSeller);
         axios
-            .put(`http://localhost:8800/api/user/changeStatus/${idSeller}`, idSeller, {
+            .patch(`http://localhost:5000/api/user/changeStatus/${idSeller}/true`, {
                 withCredentials: true,
             })
             .then((res) => {
