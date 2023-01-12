@@ -7,6 +7,7 @@ import routes from './api/routes';
 import swaggerDocs from './api/utils/swagger';
 import connectMongo from './api/utils/connectMongo';
 import deserializeUser from './api/middleware/deserializeUser';
+import { connectSocket } from './socketio';
 
 const app = express();
 
@@ -53,7 +54,5 @@ const startServer = () => {
     });
   });
 
-  http.createServer(app).listen(config.server.port, async () => {
-    logger.info(`Server is running at http://localhost:${config.server.port}`);
-  });
+  connectSocket(app);
 };

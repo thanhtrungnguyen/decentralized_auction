@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import io from "socket.io-client";
 
-
-const socket = io.connect("http://localhost:8800");
+// const socket = io.connect("http://localhost:8800");
 export const useFetch = (url) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -112,7 +111,7 @@ export const useFetchBidding = (url, auctionId) => {
     useEffect(() => {
         const controller = new AbortController();
         setLoading(true);
-        socket.emit("send_message", {message: "message", auctionId: auctionId });
+        // socket.emit("send_message", {message: "message", auctionId: auctionId });
         axios
             .get(url, { signal: controller.signal })
             .then((res) => {
