@@ -11,11 +11,11 @@ const getAllProperties = async () => {
   }
 };
 const getPropertiesByUser = async (userId: any, index: any, status: any, search: any) => {
-  const pase_size = 8;
+  const page_size = 8;
   try {
     var filter;
     var skip = parseInt(index);
-    skip = skip == 1 ? 0 : (skip - 1) * pase_size;
+    skip = skip == 1 ? 0 : (skip - 1) * page_size;
     status == 'null' && search == 'null'
       ? (filter = { user: userId })
       : status == 'null' && search != 'null'
@@ -23,7 +23,7 @@ const getPropertiesByUser = async (userId: any, index: any, status: any, search:
       : status != 'null' && search == 'null'
       ? (filter = { status: status, user: userId })
       : (filter = { status: status, name: { $regex: search, $options: 'i' }, user: userId });
-    var arr = await Property.find(filter).populate('category').skip(skip).limit(pase_size);
+    var arr = await Property.find(filter).populate('category').skip(skip).limit(page_size);
     var count = await Property.find(filter);
     return { listProperty: arr, count: count.length };
   } catch (error) {
