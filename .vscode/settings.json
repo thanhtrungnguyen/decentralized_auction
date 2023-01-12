@@ -6,6 +6,7 @@
   "editor.wordWrap": "on",
   "git.ignoreLimitWarning": true,
   "cSpell.words": [
+    "ckeditor",
     "codepaths",
     "emerg",
     "moralis",

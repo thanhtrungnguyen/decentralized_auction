@@ -7,9 +7,9 @@ export interface IProperty {
   name: string;
   description: string;
   status: string;
-  depositAmount: number;
-  priceStep: number;
-  startBid: number;
+  depositAmount: string;
+  priceStep: string;
+  startBid: string;
   placeViewProperty: string;
   startViewPropertyTime: Date;
   endViewPropertyTime: Date;
@@ -28,9 +28,9 @@ const propertySchema: Schema = new Schema(
     name: { type: String, required: true },
     description: { type: String, required: true },
     status: { type: String, required: true },
-    depositAmount: { type: Number, required: true },
-    priceStep: { type: Number, required: true },
-    startBid: { type: Number, required: true },
+    depositAmount: { type: String, required: true },
+    priceStep: { type: String, required: true },
+    startBid: { type: String, required: true },
     placeViewProperty: { type: String, required: true },
     startViewPropertyTime: { type: Date, required: true },
     endViewPropertyTime: { type: Date, required: true },
