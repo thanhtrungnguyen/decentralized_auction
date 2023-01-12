@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 // import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
-import axios from "axios";
+import axios from "../../../config/axiosConfig";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import "./styles.css";
 const ApproveAuction = ({ idProperty }) => {
@@ -29,7 +29,7 @@ const ApproveAuction = ({ idProperty }) => {
     const handleSubmit = (event) => {
         console.log(idProperty);
         axios
-            .put(`http://localhost:8800/api/category/changeStatus/${idProperty}`, idProperty, {
+            .put(`/category/changeStatus/${idProperty}`, idProperty, {
                 withCredentials: true,
             })
             .then((res) => {
