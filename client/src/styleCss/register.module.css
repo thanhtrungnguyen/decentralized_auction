@@ -1,11 +1,12 @@
 .container {
-    width: 770px;
+    width: 800px;
     height: 1800px;
     left: 50%;
     margin-left: -335px;
     background: #f8f8fd;
     border-radius: 5px;
     position: relative;
+    margin-bottom: 100px;
 }
 
 .textCreate {
@@ -121,63 +122,93 @@
     padding-left: 30px;
 }
 .inputT {
-    width: 400px;
-    height: 32px;
-
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     background: #ffffff;
     border: 1px solid #e0e0e0;
-    border-radius: 4px;
     margin-left: 30px;
     margin-right: 200px;
 }
 .inputEP {
-    width: 400px;
-    height: 32px;
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 
     background: #ffffff;
     border: 1px solid #e0e0e0;
-    border-radius: 4px;
     margin-left: 30px;
-    margin-right: 200px;
     margin-bottom: 30px;
 }
 .dropdown {
-    width: 400px;
-    height: 32px;
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     margin-left: 30px;
     margin-bottom: 30px;
 }
 
 .ipdate {
-    /* Auto layout */
-    width: 400px;
-    height: 32px;
-    /* White */
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     background: #ffffff;
     border: 1px solid #bfc6e0;
-    border-radius: 4px;
     margin-left: 30px;
     margin-right: 300px;
     margin-bottom: 40px;
 }
 
 .select {
-    width: 400px;
-    height: 32px;
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     margin-left: 30px;
     margin-top: 30px;
 }
-
+.fl {
+    display: flex;
+}
 .ipadd {
     width: 700px;
-    height: 32px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     margin-left: 30px;
     margin-top: 40px;
     margin-right: 300px;
     margin-bottom: 20px;
     background: #ffffff;
     border: 1px solid #e0e0e0;
-    border-radius: 4px;
 }
 
 .ip3 {
@@ -198,9 +229,9 @@
 
 .ipsubmit {
     width: 700px;
-    height: 36px;
-    background: #4c34c2;
-    border-radius: 4px;
+    height: 45px;
+    background: #f43f5e;
+    border-radius: 10px;
     margin-left: 30px;
 
     /* BodyText/Inter/14/Medium */
@@ -215,4 +246,10 @@
     /* Gray_02/100 */
 
     color: #ffffff;
+}
+.i {
+    width: 20px;
+    line-height: 40px;
+    height: 20px;
+    margin-left: 10px;
 }

@@ -98,7 +98,7 @@ const HomePage = () => {
         return users;
     };
 
-    return !loading ? (
+    return loading ? (
         <Loading />
     ) : (
         <>

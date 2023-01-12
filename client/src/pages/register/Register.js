@@ -327,7 +327,7 @@ const Register = () => {
                         placeholder="Username"
                         required
                     ></input>
-                    <div>
+                    <div className={styles.fl}>
                         <input
                             className={styles.inputEP}
                             type={passwordShown1 ? "text" : "password"}
@@ -338,9 +338,11 @@ const Register = () => {
                             placeholder="Password"
                             required
                         ></input>
-                        <i onClick={togglePasswordVisibility}>{eye}</i>
+                        <i className={styles.i} onClick={togglePasswordVisibility}>
+                            {eye}
+                        </i>
                     </div>
-                    <div>
+                    <div className={styles.fl}>
                         <input
                             className={styles.inputEP}
                             type={passwordShown2 ? "text" : "password"}
@@ -350,7 +352,9 @@ const Register = () => {
                             placeholder="Re-eneter the password"
                             required
                         ></input>
-                        <i onClick={toggleRePasswordVisibility}>{eye}</i>
+                        <i className={styles.i} onClick={toggleRePasswordVisibility}>
+                            {eye}
+                        </i>
                     </div>
                     <label style={{ color: "red" }}>{message}</label>
                     <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>

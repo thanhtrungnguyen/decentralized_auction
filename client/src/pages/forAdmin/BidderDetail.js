@@ -50,56 +50,6 @@ const BidderDetail = () => {
                 <SideBarAdmin />
                 <Time />
                 <div className={styles.content}>
-                    {/* <p className={styles.title}>Organization Information</p>
-                    <p className={styles.if}>Basic Information</p>
-                    <div className={styles.fl}>
-                        <div className={styles.l}>
-                            <label className={styles.txt}>Organization Name</label>
-                        </div>
-                        <div className={styles.r}>
-                            <label className={styles.txt2}>Mr</label>
-                        </div>
-                    </div>
-                    <br />
-                    <div className={styles.fl}>
-                        <div className={styles.l}>
-                            <label className={styles.txt}>Tax Code</label>
-                        </div>
-                        <div className={styles.r}>
-                            <label className={styles.txt2}>Hero</label>
-                        </div>
-                    </div>
-                    <br />
-
-                    <div className={styles.fl}>
-                        <div className={styles.l}>
-                            <label className={styles.txt}>Tax Code Granted Date</label>
-                        </div>
-                        <div className={styles.r}>
-                            <label className={styles.txt2}>Male</label>
-                        </div>
-                    </div>
-                    <br />
-
-                    <div className={styles.fl}>
-                        <div className={styles.l}>
-                            <label className={styles.txt}>Tax Code Granted Place</label>
-                        </div>
-                        <div className={styles.r}>
-                            <label className={styles.txt2}>02/06/2000</label>
-                        </div>
-                    </div>
-                    <br />
-
-                    <div className={styles.fl}>
-                        <div className={styles.l}>
-                            <label className={styles.txt}>Organization Specific Address</label>
-                        </div>
-                        <div className={styles.r}>
-                            <label className={styles.txt2}>abcxyz@gmail.com</label>
-                        </div>
-                    </div> */}
-
                     <p className={styles.title}>Personal Information</p>
                     <p className={styles.if}>Basic Information</p>
                     <div className={styles.fl}>

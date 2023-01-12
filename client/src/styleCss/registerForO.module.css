@@ -1,6 +1,6 @@
 .container {
-    width: 770px;
-    height: 2250px;
+    width: 800px;
+    height: 2350px;
     left: 50%;
     margin-left: -335px;
     background: #f8f8fd;
@@ -43,7 +43,7 @@
 .divImg {
     width: 250px;
     height: 150px;
-    background: #ffffff;
+    background: #fff4f4;
     border: 2px solid #f0c3c3;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     margin-left: 30px;
@@ -52,7 +52,7 @@
 .divImg2 {
     width: 250px;
     height: 150px;
-    background: #fff4f4;
+    background: #ffffff;
     border: 2px solid #f0c3c3;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     margin-left: 480px;
@@ -63,14 +63,6 @@
     margin-top: 10px;
     width: 70px;
     height: 70px;
-}
-
-.divI {
-    width: 69px;
-    height: 69px;
-    background-color: #1d3178;
-    margin-left: 90px;
-    margin-top: 20px;
 }
 
 .textFor {
@@ -89,7 +81,6 @@
 }
 
 .textBlue {
-    width: 254px;
     height: 18px;
     font-family: "Josefin Sans";
     font-style: normal;
@@ -116,7 +107,6 @@
     padding-left: 30px;
 }
 .txtBlack {
-    width: 250px;
     height: 16px;
 
     font-family: "Josefin Sans";
@@ -130,64 +120,93 @@
     padding-left: 30px;
 }
 .inputT {
-    width: 400px;
-    height: 32px;
-
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     background: #ffffff;
     border: 1px solid #e0e0e0;
-    border-radius: 4px;
     margin-left: 30px;
     margin-right: 200px;
-    /* margin-bottom: 30px; */
 }
 .inputEP {
-    width: 400px;
-    height: 32px;
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 
     background: #ffffff;
     border: 1px solid #e0e0e0;
-    border-radius: 4px;
     margin-left: 30px;
-    margin-right: 200px;
     margin-bottom: 30px;
 }
 .dropdown {
-    width: 400px;
-    height: 32px;
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     margin-left: 30px;
     margin-bottom: 30px;
 }
 
 .ipdate {
-    /* Auto layout */
-    width: 400px;
-    height: 32px;
-    /* White */
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     background: #ffffff;
     border: 1px solid #bfc6e0;
-    border-radius: 4px;
     margin-left: 30px;
     margin-right: 300px;
     margin-bottom: 40px;
 }
 
 .select {
-    width: 400px;
-    height: 32px;
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     margin-left: 30px;
     margin-top: 30px;
 }
-
+.fl {
+    display: flex;
+}
 .ipadd {
     width: 700px;
-    height: 32px;
+    height: 40px;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
     margin-left: 30px;
     margin-top: 40px;
     margin-right: 300px;
     margin-bottom: 20px;
     background: #ffffff;
     border: 1px solid #e0e0e0;
-    border-radius: 4px;
 }
 
 .ip3 {
@@ -208,9 +227,9 @@
 
 .ipsubmit {
     width: 700px;
-    height: 36px;
-    background: #4c34c2;
-    border-radius: 4px;
+    height: 45px;
+    background: #f43f5e;
+    border-radius: 10px;
     margin-left: 30px;
 
     /* BodyText/Inter/14/Medium */
@@ -225,4 +244,10 @@
     /* Gray_02/100 */
 
     color: #ffffff;
+}
+.i {
+    width: 20px;
+    line-height: 40px;
+    height: 20px;
+    margin-left: 10px;
 }

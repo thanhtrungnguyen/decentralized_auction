@@ -1,4 +1,5 @@
-import "../../styleCss/stylesPages/forBidder/Profile.css";
+// import "../../styleCss/stylesPages/forBidder/Profile.css";
+import styles from "../../styleCss/stylesPages/forBidder/profile.module.css";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
@@ -63,8 +64,175 @@ const Profile = () => {
             <NavBar />
             <PageName pageName={"Profile"} link={`profile/${id}`} home={"homePage"} />
 
-            <div className="con">
-                <div className="containers">
+            <div className="containers">
+                <div className={styles.content}>
+                    <p className={styles.title}>Personal Information</p>
+                    <p className={styles.if}>Basic Information</p>
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>First Name</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>Mr</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Last Name</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>Hero</label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Gender</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>Male</label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Date Of Birth</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>02/06/2000</label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Email</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>abcxyz@gmail.com</label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Phone</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>0987654321</label>
+                        </div>
+                    </div>
+                    <p className={styles.if}>Address</p>
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Province/City</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>Mr</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>District</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>Hero</label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Wards</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>Male</label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Specific Address</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>02/06/2000</label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <p className={styles.if}>Citizen Card</p>
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Card Number </label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>Mr</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Card Granted Date</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>Hero</label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <label className={styles.txt}>Card Granted Place</label>
+                        </div>
+                        <div className={styles.r}>
+                            <label className={styles.txt2}>Male</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div className={styles.fl}>
+                        <div className={styles.l}>
+                            <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                className={styles.img}
+                            ></img>
+                        </div>
+                        <div className={styles.r}>
+                            <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                className={styles.img}
+                            ></img>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <button
+                        className={styles.btn}
+                        onClick={() => {
+                            navigate("/login");
+                        }}
+                    >
+                        Log out
+                    </button>
+                    <button
+                        className={styles.btn2}
+                        onClick={() => {
+                            navigate("/editProfile");
+                        }}
+                    >
+                        Edit
+                    </button>
+                </div>
+                <Footer />
+                <FooterCopy />
+                {/* <div className="containers">
                     <p className="title">Personal Information</p>
                     <br />
                     <br />
@@ -184,19 +352,6 @@ const Profile = () => {
 
                     <img className="img" src={`http://localhost:8800/api/auction/images/${data.contact.Font_Side_Image__c}`} alt="images" />
                     <img className="img2" src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`} alt="images" />
-                    {/* <p className="bold">Account Information</p>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <div className="row">
-                        <label className="label">Username</label>
-                        <input type="text" className="input" value={data.contact.username} readOnly></input>
-                    </div>
-                    <div className="row">
-                        <label className="label">Password</label>
-                        <input type="password" className="input" value={data.contact.password} readOnly></input>
-                    </div> */}
                 </div>
                 <div className="conBtn">
                     <button className="btnChange" onClick={ChangePassword}>
@@ -205,9 +360,7 @@ const Profile = () => {
                     <button className="btn" onClick={handleClick}>
                         Edit Profile
                     </button>
-                </div>
-                <Footer />
-                <FooterCopy />
+                </div> */}
             </div>
         </>
     );

@@ -14,13 +14,13 @@ import FooterCopy from "../../components/footer/FooterCopy";
 import { useNavigate } from "react-router-dom";
 import useLocationForm from "../register/useLocationForm";
 import Select from "react-select";
-import "../../styleCss/stylesPages/forBidder/ProfileOrganization.css";
-
+// import "../../styleCss/stylesPages/forBidder/ProfileOrganization.css";
+import styles from "../../styleCss/stylesPages/forBidder/editProfile.module.css";
 const EditProfileOrganization = () => {
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/user/${id}`;
     //const { data, loading, error } = useFetch(baseURL);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const [role, setRole] = useState();
@@ -48,43 +48,43 @@ const EditProfileOrganization = () => {
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await axios.get(baseURL).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setFirstName(resp.data.contact.First_Name__c);
-                setLastName(resp.data.contact.Last_Name__c);
-                setGender(resp.data.contact.Gender__c);
-                setDateOfBirth(resp.data.contact.Date_Of_Birth__c);
-                setEmail(resp.data.contact.Email__c);
-                setPhone(resp.data.contact.Phone__c);
-                setSpecificAddress(resp.data.contact.Address__c);
-                setCardNumber(resp.data.contact.Card_Number__c);
-                setCardGrantedPlace(resp.data.contact.Card_Granted_Place__c);
-                setDateRangeCard(resp.data.contact.Card_Granted_Date__c);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         await axios.get(baseURL).then((resp) => {
+    //             console.log(resp.data);
+    //             console.log("axios get");
+    //             setFirstName(resp.data.contact.First_Name__c);
+    //             setLastName(resp.data.contact.Last_Name__c);
+    //             setGender(resp.data.contact.Gender__c);
+    //             setDateOfBirth(resp.data.contact.Date_Of_Birth__c);
+    //             setEmail(resp.data.contact.Email__c);
+    //             setPhone(resp.data.contact.Phone__c);
+    //             setSpecificAddress(resp.data.contact.Address__c);
+    //             setCardNumber(resp.data.contact.Card_Number__c);
+    //             setCardGrantedPlace(resp.data.contact.Card_Granted_Place__c);
+    //             setDateRangeCard(resp.data.contact.Card_Granted_Date__c);
 
-                setOrganizationName(resp.data.account.Name);
-                setTaxCode(resp.data.account.Tax_Code__c);
-                setTaxCodeGrantedDate(resp.data.account.Tax_Code_Granted_Date__c);
-                setTaxCodeGrantedPlace(resp.data.account.Tax_Code_Granted_Place__c);
-                setSpecificAddressOrganization(resp.data.account.Specific_Address__c);
-                setPosition(resp.data.position);
+    //             setOrganizationName(resp.data.account.Name);
+    //             setTaxCode(resp.data.account.Tax_Code__c);
+    //             setTaxCodeGrantedDate(resp.data.account.Tax_Code_Granted_Date__c);
+    //             setTaxCodeGrantedPlace(resp.data.account.Tax_Code_Granted_Place__c);
+    //             setSpecificAddressOrganization(resp.data.account.Specific_Address__c);
+    //             setPosition(resp.data.position);
 
-                setData(resp.data);
-            });
+    //             setData(resp.data);
+    //         });
 
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
+    //         if (getUser() != null) {
+    //             setRole(getUser().role);
+    //         } else {
+    //             setRole("");
+    //         }
 
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURL]);
+    //         setLoading(false);
+    //     };
+    //     fetchData();
+    // }, [baseURL]);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {
@@ -213,8 +213,278 @@ const EditProfileOrganization = () => {
             })()}
             <NavBar />
             <PageName pageName={"Edit Profile"} link={`editProfile/${id}`} home={"homePage"} />
-
-            <div className="con">
+            <form onSubmit={handleSubmit}>
+                <div className={styles.container2}>
+                    <div className={styles.content}>
+                        <div className={styles.add2}>
+                            <p className={styles.textCreate}>Edit Profile</p>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <p className={styles.textBlue}>Organization information</p>
+                            <input
+                                className={styles.inputT}
+                                type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
+                                placeholder="Organization name"
+                                value={organizationName}
+                                onChange={(e) => handleInputChange(e)}
+                                id="organizationName"
+                                required
+                            ></input>
+                            <br />
+                            <br />
+                            <input
+                                className={styles.inputT}
+                                type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
+                                placeholder="Tax code"
+                                value={taxCode}
+                                onChange={(e) => handleInputChange(e)}
+                                id="taxCode"
+                                required
+                            ></input>
+                            <p className={styles.txtBlack}>Tax code granted date</p>
+                            <input
+                                type="date"
+                                className={styles.ipdate}
+                                value={taxCodeGrantedDate}
+                                onChange={(e) => handleInputChange(e)}
+                                id="taxCodeGrantedDate"
+                            ></input>
+                            <br />
+                            <br />
+                            <input
+                                className={styles.inputT}
+                                type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
+                                placeholder="Tax code granted place"
+                                value={taxCodeGrantedPlace}
+                                onChange={(e) => handleInputChange(e)}
+                                id="taxCodeGrantedPlace"
+                                required
+                            ></input>
+                            <br />
+                            <br />
+                            <br />
+                            <input
+                                className={styles.inputT}
+                                type="text"
+                                pattern="^\s*([^\s]\s*){0,300}$"
+                                placeholder="Specific address"
+                                value={specificAddressOrganization}
+                                onChange={(e) => handleInputChange(e)}
+                                id="specificAddressOrganization"
+                                required
+                            ></input>
+                            <p className={styles.textRed}>Basic information</p>
+                            <input
+                                className={styles.inputT}
+                                type="text"
+                                pattern="[a-zA-Z]{1,50}"
+                                placeholder="First name"
+                                value={firstName}
+                                onChange={(e) => handleInputChange(e)}
+                                id="firstName"
+                                required
+                            ></input>
+                            <p className={styles.txtBlack}></p>
+                            <input
+                                className={styles.inputT}
+                                type="text"
+                                pattern="[a-zA-Z]{1,50}"
+                                placeholder="Last name"
+                                value={lastName}
+                                onChange={(e) => handleInputChange(e)}
+                                id="lastName"
+                                required
+                            ></input>
+                            <p className={styles.txtBlack}></p>
+                            <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <p className={styles.txtBlack}>Date of birth</p>
+                            <input
+                                type="date"
+                                className={styles.ipdate}
+                                value={dateOfBirth}
+                                onChange={(e) => handleInputChange(e)}
+                                id="dateOfBirth"
+                            ></input>
+                            <br />
+                            <br />
+                            <input
+                                className={styles.inputEP}
+                                type="email"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                                placeholder="Email address"
+                                value={email}
+                                onChange={(e) => handleInputChange(e)}
+                                id="email"
+                                required
+                            ></input>
+                            <br />
+                            <br />
+                            <input
+                                className={styles.inputEP}
+                                type="number"
+                                pattern="[0]\d{9}"
+                                placeholder="Phone number"
+                                value={phone}
+                                onChange={(e) => handleInputChange(e)}
+                                id="phone"
+                                maxLength={10}
+                                required
+                            ></input>
+                            {/* <br />
+                            <br />
+                            <input
+                                className={styles.inputT}
+                                type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
+                                placeholder="Position"
+                                value={position}
+                                onChange={(e) => handleInputChange(e)}
+                                id="position"
+                                required
+                            ></input> */}
+                            <br />
+                            <br />
+                            <p className={styles.textRed}>Address</p>
+                            <Select
+                                className={styles.select}
+                                name="cityId"
+                                key={`cityId_${selectedCity?.value}`}
+                                isDisabled={cityOptions.length === 0}
+                                options={cityOptions}
+                                onChange={(option) => onCitySelect(option)}
+                                placeholder="Tỉnh/Thành"
+                                defaultValue={selectedCity}
+                            />
+                            <br />
+                            <br />
+                            <Select
+                                className={styles.select}
+                                name="districtId"
+                                key={`districtId_${selectedDistrict?.value}`}
+                                isDisabled={districtOptions.length === 0}
+                                options={districtOptions}
+                                onChange={(option) => onDistrictSelect(option)}
+                                placeholder="Quận/Huyện"
+                                defaultValue={selectedDistrict}
+                            />
+                            <br />
+                            <br />
+                            <Select
+                                className={styles.select}
+                                name="wardId"
+                                key={`wardId_${selectedWard?.value}`}
+                                isDisabled={wardOptions.length === 0}
+                                options={wardOptions}
+                                placeholder="Phường/Xã"
+                                onChange={(option) => onWardSelect(option)}
+                                defaultValue={selectedWard}
+                            />
+                            <br />
+                            <br />
+                            <input
+                                className={styles.ipadd}
+                                type="text"
+                                pattern="^\s*([^\s]\s*){0,300}$"
+                                placeholder="Specific address"
+                                value={specificAddress}
+                                onChange={(e) => handleInputChange(e)}
+                                id="specificAddress"
+                                required
+                            ></input>{" "}
+                            <br />
+                            <br />
+                            <p className={styles.textRed}>Identity/Citizen card</p>
+                            <input
+                                type="text"
+                                pattern="\d{12}"
+                                placeholder="Card number"
+                                className={styles.ip3}
+                                value={cardNumber}
+                                onChange={(e) => handleInputChange(e)}
+                                id="cardNumber"
+                                required
+                            ></input>
+                            <input
+                                type="date"
+                                className={styles.ip3}
+                                value={dateRangeCard}
+                                onChange={(e) => handleInputChange(e)}
+                                id="dateRangeCard"
+                            ></input>
+                            <input
+                                type="text"
+                                pattern="^\s*([^\s]\s*){0,100}$"
+                                placeholder="Card granted place"
+                                className={styles.ip3}
+                                value={cardGrantedPlace}
+                                onChange={(e) => handleInputChange(e)}
+                                id="cardGrantedPlace"
+                                required
+                            ></input>
+                            <input
+                                className={styles.imgCard}
+                                id="cardFront"
+                                type="file"
+                                // onChange={(e) => {
+                                //   console.log(e.target.files[0]);
+                                // }}
+                                onChange={(e) => handleInputChange(e)}
+                                required
+                            />
+                            <input
+                                id="cardBack"
+                                type="file"
+                                // onChange={(e) => {
+                                //   console.log(e.target.files[0]);
+                                // }}
+                                onChange={(e) => handleInputChange(e)}
+                                required
+                            />
+                            <div className={styles.fl}>
+                                <div className={styles.l}>
+                                    {cardFront && <img src={URL.createObjectURL(cardFront)} className={styles.img} alt="Thumb" />}
+                                    {/* <img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                        className={styles.img}
+                                    ></img> */}
+                                </div>
+                                <div className={styles.r}>
+                                    {/* <img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                        className={styles.img}
+                                    ></img> */}
+                                    {cardBack && <img src={URL.createObjectURL(cardBack)} className={styles.img} alt="Thumb" />}
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <input className={styles.btnAdd} type="submit" value="Save"></input>
+                            <button
+                                className={styles.btnCancel}
+                                onClick={() => {
+                                    navigate("/profileOrganization");
+                                }}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                        <Footer />
+                        <FooterCopy />
+                    </div>
+                </div>
+            </form>
+            {/* <div className="con">
                 <form onSubmit={handleSubmit}>
                     <div className="container">
                         <p className="title">Organization Information</p>
@@ -589,19 +859,6 @@ const EditProfileOrganization = () => {
                             <img src={`http://localhost:8800/api/auction/images/${data.contact.Back_Side_Image__c}`} className="img2" alt="Thumb" />
                         )}
                         {cardBack != null && <img src={URL.createObjectURL(cardBack)} className="img2" alt="Thumb" />}
-                        {/* <p className="bold">Account Information</p>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <div className="row">
-                            <label className="label">Username</label>
-                            <input type="text" className="input" readOnly></input>
-                        </div>
-                        <div className="row">
-                            <label className="label">Password</label>
-                            <input type="password" className="input" readOnly></input>
-                        </div> */}
                     </div>
                     <div className="conBtn">
                         <button className="btnCancel" onClick={Cancel}>
@@ -612,7 +869,7 @@ const EditProfileOrganization = () => {
                 </form>
                 <Footer />
                 <FooterCopy />
-            </div>
+            </div> */}
         </>
     );
 };
