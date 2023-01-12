@@ -1,8 +1,7 @@
 import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import axios from "axios";
+import axios from "../../../config/axiosConfig";
 import { useFetch } from "../../../hook/useFetch";
 const RequestAddProperty = ({ idProperty }) => {
     const navigate = useNavigate();
@@ -12,9 +11,13 @@ const RequestAddProperty = ({ idProperty }) => {
         console.log(idProperty);
         setLoading(true);
         axios
-            .put(`http://localhost:8800/api/user/requestAdd/${idProperty}`, idProperty, {
-                withCredentials: true,
-            })
+            .post(
+                `http://localhost:5000/api/auction/create`,
+                { propertyid: idProperty },
+                {
+                    withCredentials: true,
+                }
+            )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
