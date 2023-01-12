@@ -53,26 +53,25 @@ const Login = () => {
                 if (response.status === 201) {
                     localStorage.setItem("accessToken", response.data.accessToken);
                     localStorage.setItem("refreshToken", response.data.refreshToken);
-                    if (response.data.role === "bidder") {
+                    if (response.data.user.role === "bidder") {
                         navigate("/homePage");
                     }
                     if (response.data.user.role === "admin") {
                         navigate("/listManagers");
                     }
-                    if (response.data.role === "seller") {
+                    if (response.data.user.role === "seller") {
                         navigate("/myProperty");
                     }
-                    if (response.data.role === "manager") {
+                    if (response.data.user.role === "manager") {
                         navigate("/autionsListForManager");
                     }
                 }
-                alert(response.data);
             })
             .catch((error) => {
                 if (error.response.status === 401) {
                     alert("Incorrect username or Password!!!");
                 }
-                alert(error.response.message);
+                alert("Ủa???");
             });
 
         // localStorage.setItem(
