@@ -7,7 +7,7 @@ import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import axios from "axios";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import "./styles.css";
-const ApproveAuction = ({ idProperty }) => {
+const ApproveAuction = ({ auctionId, propertyId }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
     const [registrationFee, setRegistrationFee] = useState(null);
@@ -27,11 +27,24 @@ const ApproveAuction = ({ idProperty }) => {
         }
     };
     const handleSubmit = (event) => {
-        console.log(idProperty);
         axios
-            .put(`http://localhost:8800/api/category/changeStatus/${idProperty}`, idProperty, {
-                withCredentials: true,
-            })
+            .patch(
+                `http://localhost:5000/api/auction/approve/${auctionId}`,
+                {
+                    name: name,
+                    startRegistrationTime: startRegistrationTime,
+                    endRegistrationTime: endRegistrationTime,
+                    startAuctionTime: startAuctionTime,
+                    endAuctionTime: endAuctionTime,
+                    duePaymentTime: duePaymentTime,
+                    registrationFee: registrationFee,
+                    status: "Approved",
+                    property: propertyId,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -52,9 +65,16 @@ const ApproveAuction = ({ idProperty }) => {
                     <form onSubmit={handleSubmit}>
                         <p className={styles.title}>Approve Auction</p>
                         <p className={styles.txt}>Auction Name</p>
-                        <input className={styles.input} type="text" value={name} onChange={(e) => handleInputChange(e)} required></input>
+                        <input className={styles.input} id="name" type="text" value={name} onChange={(e) => handleInputChange(e)} required></input>
                         <p className={styles.txt}>Registration Fee</p>
-                        <input className={styles.input} type="text" value={registrationFee} onChange={(e) => handleInputChange(e)} required></input>
+                        <input
+                            className={styles.input}
+                            id="registrationFee"
+                            type="text"
+                            value={registrationFee}
+                            onChange={(e) => handleInputChange(e)}
+                            required
+                        ></input>
                         <p className={styles.txt}>Time Registration</p>
                         <div className={styles.fl}>
                             <label className={styles.lb}>From:</label>
