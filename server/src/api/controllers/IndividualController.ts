@@ -23,31 +23,35 @@ export const getIndividualByIdHandler = async (req: Request, res: Response, next
 };
 
 export const createIndividualHandler = async (req: Request, res: Response, next: NextFunction) => {
-  // console.log(req.body);
-  // const createIndividualData = req.body;
-  // const createUserData = req.body;
-  // const existEmailIndividual = await getIndividual({ email: req.body.email });
-  // // if (existEmailIndividual) {
-  // //   return res.status(409).json({ message: 'Email has been exist!' });
-  // // }
-  // // const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
-  // // if (existPhoneIndividual) {
-  // //   return res.status(409).json({ message: 'Phone has been exist!' });
-  // // }
-  // // const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
-  // // if (existCardNumberIndividual) {
-  // //   return res.status(409).json({ message: 'Card Number has been exist!' });
-  // // }
-  // const userCreated: any = await createUser({ ...createUserData, role: 'bidder' });
-  // if (userCreated._id) {
-  //   return await createIndividual({ ...createIndividualData, user: userCreated._id })
-  //     .then((individual: any) => {
-  //       res.status(201).json({ individual });
-  //     })
-  //     .catch((error: any) => {
-  //       res.status(500).json({ error });
-  //     });
-  // }
+  console.log(req.body);
+  const createData = req.body;
+  const files = req.files as { [fieldName: string]: Express.Multer.File[] };
+  const user = await getUser({ username: createData.username });
+  if (user) {
+    return res.status(400).json({ message: 'User name has been exist!' });
+  }
+  const existEmailIndividual = await getIndividual({ email: req.body.email });
+  if (existEmailIndividual) {
+    return res.status(409).json({ message: 'Email has been exist!' });
+  }
+  const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
+  if (existPhoneIndividual) {
+    return res.status(409).json({ message: 'Phone has been exist!' });
+  }
+  const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
+  if (existCardNumberIndividual) {
+    return res.status(409).json({ message: 'Card Number has been exist!' });
+  }
+  const userCreated: any = await createUser({ ...createData, role: 'bidder' });
+  if (userCreated._id) {
+    return await createIndividual({ ...createData, user: userCreated._id }, files)
+      .then((individual: any) => {
+        res.status(201).json({ individual });
+      })
+      .catch((error: any) => {
+        res.status(500).json({ error });
+      });
+  }
 };
 
 export const updateIndividualHandler = async (req: Request, res: Response, next: NextFunction) => {

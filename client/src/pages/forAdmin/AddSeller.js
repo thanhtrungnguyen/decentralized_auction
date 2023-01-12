@@ -42,7 +42,7 @@ const AddSeller = () => {
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
     const [position, setPosition] = useState(null);
-    const [role, setRole] = useState("SELLER");
+    const role = 'seller'
     const userType = "ACCOUNT"
 
     const handleInputChange = (e) => {
@@ -111,9 +111,9 @@ const AddSeller = () => {
         if (id === "rePassword") {
             setRePassword(value);
         }
-        if (id === "role") {
-            setRole(value);
-        }
+        // if (id === "role") {
+        //     setRole(value);
+        // }
     };
     const handleSubmit = (event) => {
         let cityId = selectedCity.value;
@@ -154,7 +154,7 @@ const AddSeller = () => {
         formData.append("backSideImage", cardBack);
         formData.append("username", userName);
         formData.append("password", password);
-        // formData.append("role", role);
+        formData.append("role", role);
         // formData.append("userType", userType);
         axios
             .post('/organization/create', formData, {

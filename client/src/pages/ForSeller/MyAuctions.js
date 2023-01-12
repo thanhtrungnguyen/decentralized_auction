@@ -99,104 +99,104 @@ const MyAuctions = () => {
         <Loading />
     ) : (
         <>
-            <form onSubmit={handleSubmit}>
-                <div className={styles.container}>
-                    <SideBarSeller />
-                    <Time />
-                    <div className={styles.r}>
-                        <div className={styles.con}>
-                            <div className={styles.btns}>
-                                <button className={styles.btn}>All</button>
-                                <button className={styles.btn}>Created</button>
-                                {/* <button className={styles.btn}>Modified</button> */}
-                                <button className={styles.btn}>Request</button>
-                                <button className={styles.btn}>Approved</button>
-                                <button className={styles.btn}>Rejected</button>
-                                <input className={styles.ip} type="text" placeholder="Enter Name"></input>
-                                <button className={styles.btn}>Search</button>
-                            </div>
-                            <table className={styles.table}>
-                                <tr>
-                                    <th className={styles.th}>Property Name</th>
-                                    <th className={styles.th}>Category</th>
-                                    <th className={styles.th}>Start Bid</th>
-                                    <th className={styles.th}>Status</th>
-                                    <th className={styles.th}>Action</th>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/autitoDetailForSeller");
-                                            }}
-                                        />
-                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/autitoDetailForSeller");
-                                            }}
-                                        />
-                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/autitoDetailForSeller");
-                                            }}
-                                        />
-                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Car</td>
-                                    <td>09000999000</td>
-                                    <td>Activate</td>
-                                    <td>
-                                        <AiFillEye
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/autitoDetailForSeller");
-                                            }}
-                                        />
-                                        {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                    </td>
-                                </tr>
-                            </table>
-                            <hr />
-                            <div>
-                                <Pagination
-                                    className={styles.Pagination}
-                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                // page={page}
-                                // onChange={handleChange}
-                                />
-                            </div>
+
+            <div className={styles.container}>
+                <SideBarSeller />
+                <Time />
+                <div className={styles.r}>
+                    <div className={styles.con}>
+                        <div className={styles.btns}>
+                            <button className={styles.btn}>All</button>
+                            <button className={styles.btn}>Created</button>
+                            {/* <button className={styles.btn}>Modified</button> */}
+                            <button className={styles.btn}>Request</button>
+                            <button className={styles.btn}>Approved</button>
+                            <button className={styles.btn}>Rejected</button>
+                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
+                            <button className={styles.btn}>Search</button>
+                        </div>
+                        <table className={styles.table}>
+                            <tr>
+                                <th className={styles.th}>Property Name</th>
+                                <th className={styles.th}>Category</th>
+                                <th className={styles.th}>Start Bid</th>
+                                <th className={styles.th}>Status</th>
+                                <th className={styles.th}>Action</th>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>Car</td>
+                                <td>09000999000</td>
+                                <td>Activate</td>
+                                <td>
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/autitoDetailForSeller");
+                                        }}
+                                    />
+                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>Car</td>
+                                <td>09000999000</td>
+                                <td>Activate</td>
+                                <td>
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/autitoDetailForSeller");
+                                        }}
+                                    />
+                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>Car</td>
+                                <td>09000999000</td>
+                                <td>Activate</td>
+                                <td>
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/autitoDetailForSeller");
+                                        }}
+                                    />
+                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Classic Bathrobe</td>
+                                <td>Car</td>
+                                <td>09000999000</td>
+                                <td>Activate</td>
+                                <td>
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/autitoDetailForSeller");
+                                        }}
+                                    />
+                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                </td>
+                            </tr>
+                        </table>
+                        <hr />
+                        <div>
+                            <Pagination
+                                className={styles.Pagination}
+                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                            // page={page}
+                            // onChange={handleChange}
+                            />
                         </div>
                     </div>
                 </div>
-                {/* <div className={styles.container}>
+            </div>
+            {/* <div className={styles.container}>
                     <SideBarSeller />
                     <Time />
                     <div className={styles.content}>
@@ -365,7 +365,6 @@ const MyAuctions = () => {
                         </div>
                     </div>
                 </div> */}
-            </form>
         </>
     );
 };

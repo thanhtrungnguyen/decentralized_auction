@@ -4,7 +4,8 @@ import {
   getCategoryByIdHandler,
   createCategoryHandler,
   updateCategoryHandler,
-  deleteCategoryHandler
+  deleteCategoryHandler,
+  getListCategoryHandler
 } from '../controllers/CategoryController';
 import { validateResource } from '../middleware/validateResource';
 import { CategorySchema } from '../validations/CategorySchema';
@@ -12,6 +13,7 @@ import { CategorySchema } from '../validations/CategorySchema';
 const router = express.Router();
 
 router.get('/categories', getAllCategoriesHandler);
+router.get('/categories/:index/:status/:search', getListCategoryHandler);
 router.get('/:categoryId', getCategoryByIdHandler);
 router.post('/create', validateResource(CategorySchema.create), createCategoryHandler);
 router.patch('/update/:categoryId', validateResource(CategorySchema.update), updateCategoryHandler);

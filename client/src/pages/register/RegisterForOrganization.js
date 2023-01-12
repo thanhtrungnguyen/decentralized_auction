@@ -50,7 +50,7 @@ const Register = () => {
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
     const [position, setPosition] = useState(null);
-    const [role, setRole] = useState("BIDDER");
+    const role = 'bidder'
     const userType = "ACCOUNT"
 
 
@@ -122,9 +122,9 @@ const Register = () => {
         if (id === "rePassword") {
             setRePassword(value);
         }
-        if (id === "role") {
-            setRole(value);
-        }
+        // if (id === "role") {
+        //     setRole(value);
+        // }
     };
     const handleSubmit = (event) => {
         let cityId = selectedCity.value;
@@ -138,11 +138,12 @@ const Register = () => {
         //let certificateCompany = companyCertifcate.name;
 
         const formData = new FormData();
-        formData.append("organizationName", organizationName);
+
+        formData.append("name", organizationName);
         formData.append("taxCode", taxCode);
         formData.append("taxCodeGrantedDate", taxCodeGrantedDate);
         formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace);
-        formData.append("specificAddressOrganization", specificAddressOrganization);
+        formData.append("addressOrganization", specificAddressOrganization);
 
         formData.append("firstName", firstName);
         formData.append("lastName", lastName);
@@ -155,24 +156,24 @@ const Register = () => {
         formData.append("city", selectedCity.label);
         formData.append("districtId", districtId);
         formData.append("district", selectedDistrict.label);
-        formData.append("wardId", wardId);
-        formData.append("ward", selectedWard.label);
-        formData.append("specificAddress", specificAddress);
+        formData.append("wardsId", wardId);
+        formData.append("wards", selectedWard.label);
+        formData.append("address", specificAddress);
         formData.append("cardNumber", cardNumber);
-        formData.append("dateRangeCard", dateRangeCard);
+        formData.append("cardGrantedDate", dateRangeCard);
         formData.append("cardGrantedPlace", cardGrantedPlace);
-        formData.append("cardFront", cardFront);
-        formData.append("cardBack", cardBack);
-        formData.append("userName", userName);
+        formData.append("frontSideImage", cardFront);
+        formData.append("backSideImage", cardBack);
+        formData.append("username", userName);
         formData.append("password", password);
         formData.append("role", role);
-        formData.append("userType", userType);
+        //formData.append("userType", userType);
         if (rePassword !== password) {
             setMessage("Please enter match the password");
         } else {
             axios
                 .post(
-                    "/auth/register",
+                    '/organization/create',
                     formData,
                     {
                         headers: { "Content-Type": "multipart/form-data" },

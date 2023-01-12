@@ -26,16 +26,16 @@ const ManagerCategory = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     // const navigate = useNavigate();
-    const baseURL = `/category/getAll/${page}/${status}/${categoryName}`;
+    var baseURL = `/category/categories/${page}/${status}/${categoryName}`;
     const [role, setRole] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setData(resp.data);
+                // console.log(resp.data);
+                // console.log("axios get");
+                setData(resp.data.categories);
             });
 
             if (getUser() != null) {
@@ -79,115 +79,102 @@ const ManagerCategory = () => {
         });
         return users;
     };
-    return !loading ? (
+    function exportData(data) {
+        return <>
+            {data.listCategory.map((item) =>
+                <tr>
+                    <td>{item.name}</td>
+                    <td>{item.status === true ? 'Activate' : 'Deactivate'}</td>
+
+                    <td>
+                        <AiTwotoneEdit
+                            className={styles.iconView}
+                            onClick={() => {
+                                navigate("/editCategory");
+                            }}
+                        />
+                        {/* <Popup trigger={<label><AiOutlineDelete className={styles.iconView} /></label>} position="right center">
+                            <DeleteProperty idProperty=""/>
+                        </Popup> */}
+                        {item.status === true ?
+                            <Popup trigger={<label style={{ color: "red" }} className={styles.link}> Deactivate </label>} position="right center">
+                                <PrivateCategory idCategory="" />
+                            </Popup>
+                            :
+                            <Popup trigger={<label style={{ color: "blue" }} className={styles.link}>Activate</label>} position="right center">
+                                <ActiveCategory idCategory="" />
+                            </Popup>
+                        }
+
+
+                    </td>
+                </tr>
+            )}
+        </>
+    }
+    return loading ? (
         <Loading />
     ) : (
         <>
-            <form onSubmit={handleSubmit}>
-                <div className={styles.container}>
-                    <SidebarManager />
-                    <Time />
-                    <div className={styles.r}>
-                        <div className={styles.con}>
-                            <div className={styles.btns}>
-                                <button className={styles.btn}>All</button>
-
-                                <input className={styles.ip2} type="text" placeholder="Enter Name"></input>
-                                <button className={styles.btn}>Search</button>
-                                <button
-                                    className={styles.btn}
-                                    onClick={() => {
-                                        navigate("/addCategory");
-                                    }}
-                                >
-                                    + New Category
+            <div className={styles.container}>
+                <SidebarManager />
+                <Time />
+                <div className={styles.r}>
+                    <div className={styles.con}>
+                        <div className={styles.btns}>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                All
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="true">
+                                Activate
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="false">
+                                Deactivate
+                            </button>
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    className={styles.ip}
+                                    type="text"
+                                    placeholder="Enter Name"
+                                    id="categoryName"
+                                    value={categoryName2}
+                                    onChange={(e) => handleInputChange(e)}
+                                ></input>
+                                <button className={styles.btn} type="submit">
+                                    Search
                                 </button>
-                            </div>
-                            <table className={styles.table}>
-                                <tr>
-                                    <th className={styles.th}>Property Name</th>
+                            </form>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    navigate("/addCategory");
+                                }}
+                            >
+                                + New Category
+                            </button>
+                        </div>
+                        <table className={styles.table}>
+                            <tr>
+                                <th className={styles.th}>Property Name</th>
 
-                                    <th className={styles.th}>Status</th>
-                                    <th className={styles.th}>Action</th>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Activate</td>
-
-                                    <td>
-                                        <AiTwotoneEdit
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/editCategory");
-                                            }}
-                                        />
-                                        {/* <Popup
-                                            trigger={
-                                                <label>
-                                                    <AiOutlineDelete className={styles.iconView} />
-                                                </label>
-                                            }
-                                            position="right center"
-                                        >
-                                            <DeleteProperty idProperty="" />
-                                        </Popup> */}
-
-                                        <Popup
-                                            trigger={
-                                                <label style={{ color: "red" }} className={styles.link}>
-                                                    Deactivate
-                                                </label>
-                                            }
-                                            position="right center"
-                                        >
-                                            <PrivateCategory idCategory="" />
-                                        </Popup>
-                                        {/* <Popup trigger={<label className={styles.link}>Activate</label>} position="right center">
-                                            <ActiveCategory idCategory="" />
-                                        </Popup> */}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Classic Bathrobe</td>
-                                    <td>Deactivate</td>
-
-                                    <td>
-                                        <AiTwotoneEdit
-                                            className={styles.iconView}
-                                            onClick={() => {
-                                                navigate("/editCategory");
-                                            }}
-                                        />
-                                        {/* <Popup
-                                            trigger={
-                                                <label>
-                                                    <AiOutlineDelete className={styles.iconView} />
-                                                </label>
-                                            }
-                                            position="right center"
-                                        >
-                                            <DeleteProperty idProperty="" />
-                                        </Popup> */}
-
-                                        <Popup trigger={<label className={styles.link}>Activate</label>} position="right center">
-                                            <ActiveCategory idCategory="" />
-                                        </Popup>
-                                    </td>
-                                </tr>
-                            </table>
-                            <hr />
-                            <div>
-                                <Pagination
-                                    className={styles.Pagination}
-                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                // page={page}
-                                // onChange={handleChange}
-                                />
-                            </div>
+                                <th className={styles.th}>Status</th>
+                                <th className={styles.th}>Action</th>
+                            </tr>
+                            {exportData(data)}
+                        </table>
+                        <hr />
+                        <div>
+                            <Pagination
+                                className={styles.Pagination}
+                                count={Math.ceil(data.count / 8)}
+                                page={page}
+                                onChange={handleChange}
+                            />
                         </div>
                     </div>
                 </div>
-                {/* <div className={styles.container}>
+            </div>
+            {/* <div className={styles.container}>
                     <SidebarManager />
                     <Time />
                     <div className={styles.content}>
@@ -304,7 +291,6 @@ const ManagerCategory = () => {
                         </div>
                     </div>
                 </div> */}
-            </form>
         </>
     );
 };
