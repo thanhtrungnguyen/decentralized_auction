@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getAllAuctions, getAuction, createAuction, updateAuction, deleteAuction } from '../services/AuctionService';
 import { getProperty, updateProperty } from '../services/PropertyService';
+import { createAuctionOnContract } from '../utils/runContractFunction';
 
 export const getAllAuctionsHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllAuctions()
@@ -82,8 +83,21 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
   });
 
   return await updateAuction({ _id: auctionId }, update, { new: true })
-    .then((auction) => {
-      res.status(201).json({ auction });
+    .then(async (auction) => {
+      const objectAuction = {
+        auctionId: auction?._id,
+        startRegistrationTime: auction?.startRegistrationTime,
+        endRegistrationTime: auction?.endRegistrationTime,
+        startAuctionTime: auction?.startAuctionTime,
+        endAuctionTime: auction?.endAuctionTime,
+        duePaymentTime: auction?.duePaymentTime,
+        registrationFee: auction?.registrationFee,
+        depositAmount: property?.depositAmount,
+        startBid: property?.startBid,
+        priceStep: property?.priceStep
+      };
+      const result = await createAuctionOnContract(objectAuction);
+      res.status(201).json({ auction, result });
     })
     .catch((error) => {
       res.status(500).json({ error });

@@ -13,7 +13,4 @@ const convertSpecificTimezoneToEpochTimestamp = (time: string) => {
   return nd;
 };
 
-export default {
-  getTime: convertEpochTimestampToSpecificTimezone,
-  getEpoch: convertSpecificTimezoneToEpochTimestamp
-};
+export { convertEpochTimestampToSpecificTimezone as getTime, convertSpecificTimezoneToEpochTimestamp as getEpoch };

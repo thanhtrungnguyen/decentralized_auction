@@ -16,7 +16,7 @@ import { defaultConfig } from '../../config/constant-variables';
 const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
-router.use(requireRole(defaultConfig.role.seller));
+router.use(requireRole('seller'));
 router.get('/properties', getAllPropertiesHandler);
 router.get('/myProperty/:index/:status/:search', getPropertiesByUserHandler);
 router.get('/:propertyId', getPropertyByIdHandler);

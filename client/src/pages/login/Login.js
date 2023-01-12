@@ -47,10 +47,33 @@ const Login = () => {
         //         alert("Incorrect username or Password!!!");
         //         console.log(reason);
         //     });
-        axios.post("/session", { username, password }).then((response) => {
-            localStorage.setItem("accessToken", response.data.accessToken);
-            localStorage.setItem("refreshToken", response.data.refreshToken);
-        });
+        axios
+            .post("/session", { username, password })
+            .then((response) => {
+                if (response.status === 201) {
+                    localStorage.setItem("accessToken", response.data.accessToken);
+                    localStorage.setItem("refreshToken", response.data.refreshToken);
+                    if (response.data.role === "bidder") {
+                        navigate("/homePage");
+                    }
+                    if (response.data.user.role === "admin") {
+                        navigate("/listManagers");
+                    }
+                    if (response.data.role === "seller") {
+                        navigate("/myProperty");
+                    }
+                    if (response.data.role === "manager") {
+                        navigate("/autionsListForManager");
+                    }
+                }
+                alert(response.data);
+            })
+            .catch((error) => {
+                if (error.response.status === 401) {
+                    alert("Incorrect username or Password!!!");
+                }
+                alert(error.response.message);
+            });
 
         // localStorage.setItem(
         //     "accessToken",

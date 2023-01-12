@@ -10,7 +10,7 @@ import { defaultConfig } from '../../config/constant-variables';
 
 const upload = multer({ dest: 'uploads/' });
 
-router.use(requireRole(defaultConfig.role.admin));
+router.use(requireRole('admin'));
 router.get('/news/:index/:status/:search', getAllNewsHandler);
 router.get('/:newsId', getNewsByIdHandler);
 router.post(

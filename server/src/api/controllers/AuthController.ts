@@ -19,7 +19,7 @@ const createUserSessionHandler = async (req: Request, res: Response, next: NextF
     expiresIn: defaultConfig.jwt.refreshTokenTtl
   });
 
-  return res.status(201).send({ accessToken, refreshToken });
+  return res.status(201).send({ accessToken, refreshToken, user });
 };
 
 const getUserSessionHandler = async (req: Request, res: Response, next: NextFunction) => {
