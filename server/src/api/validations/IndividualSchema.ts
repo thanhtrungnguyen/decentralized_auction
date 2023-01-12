@@ -11,7 +11,7 @@ export const IndividualSchema = {
     gender: Joi.string().trim().required(),
     city: Joi.string().trim().required(),
     cityId: Joi.string().trim().required(),
-    province: Joi.string().trim().required(),
+    province: Joi.string().trim(),
     district: Joi.string().trim().required(),
     districtId: Joi.string().trim().required(),
     wards: Joi.string().trim().required(),
@@ -19,8 +19,8 @@ export const IndividualSchema = {
     address: Joi.string().trim().required(),
     cardNumber: Joi.string().trim().required(),
     cardGrantedDate: Joi.string().trim().required(),
-    cardGrantedPlace: Joi.string().trim().required()
-    // frontSideImage: Joi.string().trim().required(),
-    // backSideImage: Joi.string().trim().required()
+    cardGrantedPlace: Joi.string().trim().required(),
+    frontSideImage: Joi.string().trim(),
+    backSideImage: Joi.string().trim()
   }).unknown()
 };

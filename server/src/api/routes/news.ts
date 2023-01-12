@@ -20,7 +20,7 @@ router.post(
   validateResource(NewsSchema.create),
   createNewsHandler
 );
-router.patch(
+router.put(
   '/update/:newsId',
   upload.fields([
     {
