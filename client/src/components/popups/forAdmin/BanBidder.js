@@ -12,7 +12,7 @@ const BanedBidder = ({ idBidder }) => {
         console.log(idBidder);
         setLoading(true);
         axios
-            .patch(`/user/changeStatus/${idBidder}/false`, idBidder, {
+            .patch(`/user/changeStatus/${idBidder}/false`, {
                 withCredentials: true,
             })
             .then((res) => {

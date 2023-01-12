@@ -10,7 +10,7 @@ const BanedManager = ({ idManager }) => {
     const handleSubmit = (event) => {
         console.log(idManager);
         axios
-            .patch(`/user/changeStatus/${idManager}/false`, idManager, {
+            .patch(`/user/changeStatus/${idManager}/false`, {
                 withCredentials: true,
             })
             .then((res) => {

@@ -11,7 +11,7 @@ const ActiveBidder = ({ idBidder }) => {
         console.log(idBidder);
 
         axios
-            .patch(`/user/changeStatus/${idBidder}/true`, idBidder, {
+            .patch(`/user/changeStatus/${idBidder}/true`, {
                 withCredentials: true,
             })
             .then((res) => {

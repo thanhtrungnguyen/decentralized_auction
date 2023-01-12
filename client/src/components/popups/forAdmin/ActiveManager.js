@@ -10,7 +10,7 @@ const ActiveManager = ({ idManager }) => {
     const handleSubmit = (event) => {
         console.log(idManager);
         axios
-            .patch(`/user/changeStatus/${idManager}/true`, idManager, {
+            .patch(`/user/changeStatus/${idManager}/true`, {
                 withCredentials: true,
             })
             .then((res) => {
