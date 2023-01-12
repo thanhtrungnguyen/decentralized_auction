@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
 import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -26,7 +26,7 @@ const ManagerCategory = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     // const navigate = useNavigate();
-    const baseURL = `http://localhost:8800/api/category/getAll/${page}/${status}/${categoryName}`;
+    const baseURL = `/category/getAll/${page}/${status}/${categoryName}`;
     const [role, setRole] = useState();
 
     useEffect(() => {
@@ -179,9 +179,9 @@ const ManagerCategory = () => {
                             <div>
                                 <Pagination
                                     className={styles.Pagination}
-                                    // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                    // page={page}
-                                    // onChange={handleChange}
+                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                // page={page}
+                                // onChange={handleChange}
                                 />
                             </div>
                         </div>

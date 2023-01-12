@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import Time from "../../components/time/Time";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import moment from "moment";
 const ListNews = () => {
     const [page, setPage] = useState(1);
@@ -28,7 +28,7 @@ const ListNews = () => {
     const navigate = useNavigate();
 
 
-    var baseURL = `http://localhost:5000/api/news/news/${page}/${status}/${title}`;
+    var baseURL = `news/news/${page}/${status}/${title}`;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);

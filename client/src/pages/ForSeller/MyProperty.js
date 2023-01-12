@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 // import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 // import { Button } from "@mui/material";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -33,7 +33,7 @@ const MyProperty = () => {
     const [loading, setLoading] = useState(true);
     // const navigate = useNavigate();
     const baseURLCategory = "http://localhost:8800/api/category/";
-    const baseURLProperty = `http://localhost:5000/api/property/myProperty/${page}/${status}/${search}`;
+    const baseURLProperty = `/property/myProperty/${page}/${status}/${search}`;
     const requestAuction = "http://localhost:8800/api/auction/request/";
     const [role, setRole] = useState();
 

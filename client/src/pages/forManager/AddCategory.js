@@ -6,7 +6,7 @@ import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
 // import { Outlet, Link } from "react-router-dom";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -39,7 +39,7 @@ const AddCategory = () => {
     const handleSubmit = (event) => {
         axios
             .post(
-                `http://localhost:8800/api/category`,
+                `/category`,
                 { categoryName: categoryName },
                 {
                     withCredentials: true,

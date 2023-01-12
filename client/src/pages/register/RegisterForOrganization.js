@@ -4,7 +4,7 @@ import useLocationForm from "./useLocationForm";
 import Select from "react-select";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
@@ -128,13 +128,13 @@ const Register = () => {
     };
     const handleSubmit = (event) => {
         let cityId = selectedCity.value;
-        let city = selectedCity.label;
+        //let city = selectedCity.label;
         let districtId = selectedDistrict.value;
-        let district = selectedDistrict.label;
+        //let district = selectedDistrict.label;
         let wardId = selectedWard.value;
-        let ward = selectedWard.label;
-        let cardfront = cardFront.name;
-        let cardback = cardBack.name;
+        // let ward = selectedWard.label;
+        // let cardfront = cardFront.name;
+        // let cardback = cardBack.name;
         //let certificateCompany = companyCertifcate.name;
 
         const formData = new FormData();
@@ -172,7 +172,7 @@ const Register = () => {
         } else {
             axios
                 .post(
-                    "http://localhost:8800/api/auth/register",
+                    "/auth/register",
                     formData,
                     {
                         headers: { "Content-Type": "multipart/form-data" },

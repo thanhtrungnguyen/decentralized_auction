@@ -1,6 +1,6 @@
 import styles from "../../styleCss/login.module.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
@@ -21,7 +21,7 @@ const ViewNews = () => {
     const DOMPurify = createDOMPurify();
 
     const { id } = useParams();
-    const baseURL = `http://localhost:8800/api/news/getById/${id}`;
+    const baseURL = `/news/getById/${id}`;
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);

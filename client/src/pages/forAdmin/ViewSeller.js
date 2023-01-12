@@ -7,7 +7,7 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -20,7 +20,7 @@ const ViewSeller = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [setError] = useState(false);
-    const baseURL = `http://localhost:8800/api/user/${id}`;
+    const baseURL = `/user/${id}`;
     const [role, setRole] = useState();
 
     const navigate = useNavigate();

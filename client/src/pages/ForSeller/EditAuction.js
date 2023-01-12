@@ -9,7 +9,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 // import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -77,7 +77,7 @@ const EditAuction = () => {
         formData.append("propertyDescription", propertyDescription);
         formData.append("startBid", startBid);
         formData.append("biddingPreiod", biddingPreiod);
-        axios.put("http://localhost:8800/api/EditAuction", formData).then((res) => {
+        axios.put("/EditAuction", formData).then((res) => {
             console.log(res);
             console.log(res.data);
             alert("Edit Auction successfully!!!");

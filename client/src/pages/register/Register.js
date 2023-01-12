@@ -5,7 +5,7 @@ import useLocationForm from "./useLocationForm";
 import Select from "react-select";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
@@ -135,7 +135,7 @@ const Register = () => {
         } else {
             axios
                 .post(
-                    "http://localhost:8800/api/auth/register",
+                    "/auth/register",
                     formData,
                     {
                         headers: { "Content-Type": "multipart/form-data" },

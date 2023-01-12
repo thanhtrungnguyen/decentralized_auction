@@ -7,7 +7,7 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -56,7 +56,7 @@ const AddNews = () => {
         //console.log(formData.get("content"));
         axios
             .post(
-                "http://localhost:5000/api/news/create",
+                "/news/create",
                 formData,
                 { withCredentials: true }
             )

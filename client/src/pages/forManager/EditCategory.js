@@ -1,7 +1,7 @@
 import styles from "../../styleCss/stylesPages/forManagers/addCategory.module.css";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -16,7 +16,7 @@ const EditCategory = () => {
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
 
-    const baseURL = `http://localhost:8800/api/category/getById/${id}`;
+    const baseURL = `/category/getById/${id}`;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -43,7 +43,7 @@ const EditCategory = () => {
     const handleSubmit = (event) => {
         axios
             .put(
-                `http://localhost:8800/api/category/update/${id}`,
+                `/category/update/${id}`,
                 { categoryName: categoryName },
                 {
                     withCredentials: true,

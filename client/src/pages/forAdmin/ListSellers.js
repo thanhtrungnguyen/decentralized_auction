@@ -15,7 +15,7 @@ import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 import Time from "../../components/time/Time";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 const ListSellers = () => {
     const [page, setPage] = React.useState(1);
     const [role, setRole] = useState();
@@ -25,7 +25,7 @@ const ListSellers = () => {
     const [email2, setEmail2] = useState(null);
     const [status, setStatus] = useState(null);
     // const navigate = useNavigate();
-    const baseURL = `http://localhost:5000/api/user/users/seller/${page}/${status}/${email}`;
+    const baseURL = `/user/users/seller/${page}/${status}/${email}`;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);

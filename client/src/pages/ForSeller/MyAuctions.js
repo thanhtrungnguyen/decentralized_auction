@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
 // import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -29,8 +29,8 @@ const MyAuctions = () => {
     // const navigate = useNavigate();
     // const baseURL = "http://localhost:8800/api/myAuctions/";
     // const { data, loading, error } = useFetch(baseURL);
-    const baseURLCategory = "http://localhost:8800/api/category/";
-    const baseURLAuction = `http://localhost:8800/api/auction/getAuctionForSeller/${page}/${propertyName}/${category}/${status}`;
+    const baseURLCategory = "/category/";
+    const baseURLAuction = `/auction/getAuctionForSeller/${page}/${propertyName}/${category}/${status}`;
     //const { data, loading, error } = useFetch(baseURL);
     const [listCategory, setListCategory] = useState([]);
     const [listAuction, setListAuction] = useState([]);
@@ -188,9 +188,9 @@ const MyAuctions = () => {
                             <div>
                                 <Pagination
                                     className={styles.Pagination}
-                                    // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                    // page={page}
-                                    // onChange={handleChange}
+                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                // page={page}
+                                // onChange={handleChange}
                                 />
                             </div>
                         </div>
