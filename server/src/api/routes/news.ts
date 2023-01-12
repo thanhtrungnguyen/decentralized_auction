@@ -5,8 +5,12 @@ import { NewsSchema } from '../validations/NewsSchema';
 // import { Schema, ValidateResource } from '../middleware/validateResource';
 const router = express.Router();
 import multer from 'multer';
+import { requireRole } from '../middleware/requireRole';
+import { defaultConfig } from '../../config/constant-variables';
 
 const upload = multer({ dest: 'uploads/' });
+
+router.use(requireRole(defaultConfig.role.admin));
 router.get('/news/:index/:status/:search', getAllNewsHandler);
 router.get('/:newsId', getNewsByIdHandler);
 router.post(

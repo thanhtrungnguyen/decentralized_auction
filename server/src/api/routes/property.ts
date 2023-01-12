@@ -10,10 +10,13 @@ import {
 import { validateResource } from '../middleware/validateResource';
 import { PropertySchema } from '../validations/PropertySchema';
 import multer from 'multer';
+import { requireRole } from '../middleware/requireRole';
+import { defaultConfig } from '../../config/constant-variables';
 
 const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
+router.use(requireRole(defaultConfig.role.seller));
 router.get('/properties', getAllPropertiesHandler);
 router.get('/myProperty/:index/:status/:search', getPropertiesByUserHandler);
 router.get('/:propertyId', getPropertyByIdHandler);

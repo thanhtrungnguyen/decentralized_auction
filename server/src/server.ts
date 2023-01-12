@@ -45,6 +45,8 @@ const startServer = () => {
 
   swaggerDocs(app, config.server.port);
 
+  ///
+
   app.use((req, res, next) => {
     const error = new Error('Not found');
     logger.error(error);

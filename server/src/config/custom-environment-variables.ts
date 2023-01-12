@@ -28,6 +28,9 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY || '';
 const SERVICE_ACCOUNT_EMAIL = process.env.SERVICE_ACCOUNT_EMAIL || '';
 const CLIENT_ID = process.env.CLIENT_ID || '';
 
+const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || '';
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL || '';
+
 export const config = {
   mongo: {
     username: MONGO_USERNAME,
@@ -59,5 +62,9 @@ export const config = {
     token_uri: 'https://accounts.google.com/o/oauth2/token',
     auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
     client_x509_cert_url: `https://www.googleapis.com/robot/v1/metadata/x509/${SERVICE_ACCOUNT_EMAIL}`
+  },
+  blockchain: {
+    privateKey: WALLET_PRIVATE_KEY,
+    rpcUrl: GOERLI_RPC_URL
   }
 };
