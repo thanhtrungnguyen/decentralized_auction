@@ -3,7 +3,6 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import Moment from "moment";
 import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import PublishNews from "../../components/popups/forAdmin/PublishNews";
@@ -87,14 +86,14 @@ const ListNews = () => {
                     <tr>
                         <td>{item.title}</td>
                         <td>{moment(item.createdAt).format('L')} - {moment(item.createdAt).format('LTS')} </td>
-                        <td>{item.status === 'activate' ? 'Activate' : 'Deactivate'}</td>
+                        <td>{item.status === 'Activate' ? 'Activate' : 'Deactivate'}</td>
                         <td>
-                            {item.status === 'activate' ?
+                            {item.status === 'Activate' ?
                                 <Popup trigger={<label style={{ color: "red" }} className={styles.linkBlue}>Deactivate</label>} position="right center">
-                                    <PrivateNews idManager="" />
+                                    <PrivateNews idNews={item._id} />
                                 </Popup> :
                                 <Popup trigger={<label style={{ color: "blue" }} className={styles.linkBlue}>Activate</label>} position="right center">
-                                    <PublishNews idManager="" />
+                                    <PublishNews idNews={item._id} />
                                 </Popup>}
                         </td>
                         <td>

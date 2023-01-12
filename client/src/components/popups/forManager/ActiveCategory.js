@@ -10,7 +10,7 @@ const ActiveCategory = ({ idCategory }) => {
     const handleSubmit = (event) => {
         console.log(idCategory);
         axios
-            .put(`/category/changeStatus/${idCategory}`, idCategory, {
+            .put(`/category/changeStatus/${idCategory}/true`, {
                 withCredentials: true,
             })
             .then((res) => {

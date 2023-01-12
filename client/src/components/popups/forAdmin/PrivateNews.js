@@ -10,14 +10,14 @@ const PrivateNews = ({ idNews }) => {
     const handleSubmit = (event) => {
         console.log(idNews);
         axios
-            .put("/privateNews", idNews, {
+            .put(`/news/changeStatus/${idNews}`, { status: 'Deactivate' }, {
                 withCredentials: true,
             })
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                alert(res.data.message);
-                navigate("/listNews");
+                //alert(res.data.message);
+                window.location.reload(false);
             });
         setExpanded(false);
 

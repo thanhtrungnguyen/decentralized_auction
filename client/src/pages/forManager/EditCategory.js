@@ -10,20 +10,21 @@ import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 const EditCategory = () => {
     const [categoryName, setCategoryName] = useState(null);
+    const [status, setStatus] = useState(null);
     const navigate = useNavigate();
     const { id } = useParams();
-    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
 
-    const baseURL = `/category/getById/${id}`;
+    const baseURL = `/category/${id}`;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
                 console.log(resp.data);
-                console.log("axios get");
-                setData(resp.data);
+                //console.log("axios get");
+                setCategoryName(resp.data.category.name);
+                setStatus(resp.data.category.status);
             });
 
             if (getUser() != null) {
@@ -42,9 +43,9 @@ const EditCategory = () => {
     };
     const handleSubmit = (event) => {
         axios
-            .put(
+            .patch(
                 `/category/update/${id}`,
-                { categoryName: categoryName },
+                { name: categoryName, status: status },
                 {
                     withCredentials: true,
                 }
@@ -73,8 +74,11 @@ const EditCategory = () => {
         if (id === "categoryName") {
             setCategoryName(value);
         }
+        if (id === "status") {
+            setStatus(value);
+        }
     };
-    return !loading ? (
+    return loading ? (
         <Loading />
     ) : (
         <>
@@ -95,6 +99,16 @@ const EditCategory = () => {
                             className={styles.input}
                             required
                         ></input>
+                        <select
+                            id="status"
+                            className={styles.dropdown}
+                            onChange={(e) => handleInputChange(e)}
+                            placeholder="Gender"
+                            value={status}
+                        >
+                            <option value="true">Activate</option>
+                            <option value="false">Deactivate</option>
+                        </select>
                     </div>
                     <div className={styles.btn}>
                         <button

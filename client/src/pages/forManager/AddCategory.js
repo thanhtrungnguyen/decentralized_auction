@@ -39,17 +39,21 @@ const AddCategory = () => {
     const handleSubmit = (event) => {
         axios
             .post(
-                `/category`,
-                { categoryName: categoryName },
+                `/category/create`,
+                { name: categoryName },
                 {
                     withCredentials: true,
                 }
             )
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
+                // console.log(res);
+                // console.log(res.data);
                 alert("Add Category Successful");
                 navigate("/managerCategorys");
+            })
+            .catch(err => {
+                // console.log(err.response.data.mess);
+                alert(err.response.data.mess)
             });
         event.preventDefault();
     };

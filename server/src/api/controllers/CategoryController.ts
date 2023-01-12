@@ -36,6 +36,10 @@ export const getCategoryByIdHandler = async (req: Request, res: Response, next: 
 
 export const createCategoryHandler = async (req: Request, res: Response, next: NextFunction) => {
   const category = req.body;
+  const isExist = await getCategory({ name: category.name });
+  if (isExist) {
+    return res.status(400).json({ mess: 'Category has been exist !!!' });
+  }
   return await createCategory(category)
     .then((category) => {
       res.status(201).json({ category });
@@ -48,6 +52,21 @@ export const createCategoryHandler = async (req: Request, res: Response, next: N
 export const updateCategoryHandler = async (req: Request, res: Response, next: NextFunction) => {
   const categoryId = req.params.categoryId;
   const update = req.body;
+  const category = await getCategory({ _id: categoryId });
+  if (!category) {
+    return res.status(404).json({ message: "Category isn't found" });
+  }
+  return await updateCategory({ _id: categoryId }, update, { new: true })
+    .then((category) => {
+      res.status(201).json({ category });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+export const changeStatusCategoryHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const categoryId = req.params.categoryId;
+  const update = { status: req.params.status == 'true' ? true : false };
   const category = await getCategory({ _id: categoryId });
   if (!category) {
     return res.status(404).json({ message: "Category isn't found" });

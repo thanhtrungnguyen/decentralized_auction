@@ -22,7 +22,7 @@ const getListCategory = async (index: any, status: any, search: any) => {
       : status != 'null' && search == 'null'
       ? (filter = { status: status })
       : (filter = { status: status, name: { $regex: search, $options: 'i' } });
-    var arr = await Category.find(filter).skip(skip).limit(page_size);
+    var arr = await Category.find(filter).sort({ createdAt: -1 }).skip(skip).limit(page_size);
     var count = await Category.find(filter);
     return { listCategory: arr, count: count.length };
   } catch (error) {

@@ -90,7 +90,7 @@ const ManagerCategory = () => {
                         <AiTwotoneEdit
                             className={styles.iconView}
                             onClick={() => {
-                                navigate("/editCategory");
+                                navigate(`/editCategory/${item._id}`);
                             }}
                         />
                         {/* <Popup trigger={<label><AiOutlineDelete className={styles.iconView} /></label>} position="right center">
@@ -98,11 +98,11 @@ const ManagerCategory = () => {
                         </Popup> */}
                         {item.status === true ?
                             <Popup trigger={<label style={{ color: "red" }} className={styles.link}> Deactivate </label>} position="right center">
-                                <PrivateCategory idCategory="" />
+                                <PrivateCategory idCategory={item._id} />
                             </Popup>
                             :
                             <Popup trigger={<label style={{ color: "blue" }} className={styles.link}>Activate</label>} position="right center">
-                                <ActiveCategory idCategory="" />
+                                <ActiveCategory idCategory={item._id} />
                             </Popup>
                         }
 
