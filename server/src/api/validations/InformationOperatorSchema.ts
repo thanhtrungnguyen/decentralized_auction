@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { IInformationOperator } from '../models/InformationOperator';
 
-export const IndividualSchema = {
+export const InformationOperatorSchema = {
   create: Joi.object<IInformationOperator>({
     firstName: Joi.string().trim().required(),
     lastName: Joi.string().trim().required(),

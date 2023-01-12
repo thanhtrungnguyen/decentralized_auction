@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCategory } from '../services/CategoryService';
 import { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty, getPropertiesByUser } from '../services/PropertyService';
-import { findUser } from '../services/UserService';
+import { getUser } from '../services/UserService';
 
 export const getAllPropertiesHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllProperties()
@@ -43,7 +43,7 @@ export const createPropertyHandler = async (req: Request, res: Response, next: N
   const files = req.files as { [fieldname: string]: Express.Multer.File[] };
   const category = await getCategory({ _id: req.body.category });
   if (!category) return res.status(404).json({ message: 'Category not found' });
-  const user = await findUser({ _id: req.body.user });
+  const user = await getUser({ _id: req.body.user });
   if (!user) return res.status(404).json({ message: 'User not found' });
 
   const dataProperty = await createProperty({ ...property, user: userId, category: category._id }, files);

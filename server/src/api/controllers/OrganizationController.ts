@@ -1,4 +1,4 @@
-import { createUser, findUser } from '../services/UserService';
+import { createUser, getUser } from '../services/UserService';
 import { Request, Response, NextFunction } from 'express';
 import { createIndividual, getIndividual } from '../services/IndividualService';
 import { createOrganization } from '../services/OrganizationService';
@@ -7,7 +7,7 @@ export const createSellerHandler = async (req: Request, res: Response, next: Nex
   console.log(req.body);
   const createData = req.body;
   const files = req.files as { [fieldName: string]: Express.Multer.File[] };
-  const user = await findUser({ username: createData.username });
+  const user = await getUser({ username: createData.username });
   if (user) {
     return res.status(400).json({ message: 'User name has been exist!' });
   }

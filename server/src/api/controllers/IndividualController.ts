@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getAllIndividuals, getIndividual, createIndividual, updateIndividual, deleteIndividual } from '../services/IndividualService';
-import { createUser, findUser } from '../services/UserService';
+import { createUser, getUser } from '../services/UserService';
 
 export const getAllIndividualsHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllIndividuals()

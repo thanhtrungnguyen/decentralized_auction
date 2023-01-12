@@ -2,13 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 import {
   getAllUsers,
-  findUser,
   createUser,
   updateUser,
   deleteUser,
   getBidderFilter,
   getSellerFilter,
-  getManagerFilter
+  getManagerFilter,
+  getUser
 } from '../services/UserService';
 import sendEmail from '../utils/mailer';
 import { createIndividual, getIndividual } from '../services/IndividualService';
@@ -56,7 +56,7 @@ export const getUserByRoleHandler = async (req: Request, res: Response, next: Ne
 };
 export const getUserByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
-  return await findUser({ _id: userId })
+  return await getUser({ _id: userId })
     .then((user) => {
       res.status(200).json({ user });
     })
@@ -67,7 +67,7 @@ export const getUserByIdHandler = async (req: Request, res: Response, next: Next
 
 export const createUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   const createUserData = req.body;
-  const user = await findUser({ userName: createUserData.userName });
+  const user = await getUser({ userName: createUserData.userName });
   if (user) {
     return res.status(400).json({ message: 'Email has been exist!' });
   }
@@ -87,7 +87,7 @@ export const createUserHandler = async (req: Request, res: Response, next: NextF
 export const changeStatusUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
   const update = { status: req.params.status == 'true' ? true : false };
-  const user = await findUser({ _id: userId });
+  const user = await getUser({ _id: userId });
   if (!user) {
     return res.status(404).json({ message: 'User is not found' });
   }
@@ -103,7 +103,7 @@ export const createSellerHandler = async (req: Request, res: Response, next: Nex
   // const createUserData = req.body;
   // const createOrganizationData = req.body;
   // const createIndividualData = req.body;
-  // const user = await findUser({ username: createUserData.username });
+  // const user = await getUser({ username: createUserData.username });
   // if (user) {
   //   return res.status(400).json({ message: 'User name has been exist!' });
   // }
@@ -145,7 +145,7 @@ export const createSellerHandler = async (req: Request, res: Response, next: Nex
 export const verifyUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   // const userId = req.params.userId;
   // const verificationCode = req.params.verificationCode;
-  // const user = await findUser({ _id: userId });
+  // const user = await getUser({ _id: userId });
   // if (!user) {
   //   return res.status(409).json({ message: "User isn't found" });
   // }
@@ -168,7 +168,7 @@ export const verifyUserHandler = async (req: Request, res: Response, next: NextF
 export const updateUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
   const update = req.body;
-  const user = await findUser({ _id: userId });
+  const user = await getUser({ _id: userId });
   if (!user) {
     return res.status(404).json({ message: 'User is not found' });
   }
@@ -183,7 +183,7 @@ export const updateUserHandler = async (req: Request, res: Response, next: NextF
 
 export const forgotPasswordHandler = async (req: Request, res: Response, next: NextFunction) => {
   // const { email } = req.body;
-  // const user = await findUser({ email: email });
+  // const user = await getUser({ email: email });
   // if (!user) {
   //   return res.status(404).json({ message: 'User is not found' });
   // }
@@ -205,7 +205,7 @@ export const forgotPasswordHandler = async (req: Request, res: Response, next: N
 export const resetPasswordHandler = async (req: Request, res: Response, next: NextFunction) => {
   const { userId, passwordResetCode } = req.params;
   const { password } = req.body;
-  const user = await findUser({ _id: userId });
+  const user = await getUser({ _id: userId });
   if (!user || !user.passwordResetCode || user.passwordResetCode !== passwordResetCode) {
     return res.status(400).send('Could not reset user password');
   }
@@ -223,7 +223,7 @@ export const resetPasswordHandler = async (req: Request, res: Response, next: Ne
 export const changePasswordHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
   const { password } = req.body;
-  const user = await findUser({ _id: userId });
+  const user = await getUser({ _id: userId });
   if (!user) {
     return res.status(404).json({ message: "User isn't found" });
   }
@@ -239,7 +239,7 @@ export const changePasswordHandler = async (req: Request, res: Response, next: N
 
 // export const deleteUserHandler = async (req: Request, res: Response, next: NextFunction) => {
 //   const userId = req.params.userId;
-//   const user = await findUser({ _id: userId });
+//   const user = await getUser({ _id: userId });
 //   if (!user) {
 //     return res.status(404).json({ message: "User isn't found" });
 //   }
