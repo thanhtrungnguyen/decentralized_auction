@@ -67,17 +67,17 @@ export const getUserByIdHandler = async (req: Request, res: Response, next: Next
 
 export const createUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   const createUserData = req.body;
-  const user = await getUser({ userName: createUserData.userName });
+  const user = await getUser({ username: createUserData.username });
   if (user) {
-    return res.status(400).json({ message: 'Email has been exist!' });
+    return res.status(400).json({ message: 'User has been exist!' });
   }
   return await createUser(createUserData)
     .then(async (user: any) => {
-      await sendEmail({
-        to: user.email,
-        subject: '[DAP] Verify your email',
-        text: `Id: ${user._id} \nVerification code: ${user.verificationCode}`
-      });
+      // await sendEmail({
+      //   to: user.email,
+      //   subject: '[DAP] Verify your email',
+      //   text: `Id: ${user._id} \nVerification code: ${user.verificationCode}`
+      // });
       res.status(201).json({ user });
     })
     .catch((error: any) => {

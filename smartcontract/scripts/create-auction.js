@@ -41,7 +41,7 @@ createAuction = async (
     }
 };
 
-const auctionId = "fdshy5";
+const auctionId = "63bfc0488059a4222c423e50";
 const startRegistrationTime = getEpoch("December 29, 2023 12:25:19");
 const endRegistrationTime = getEpoch("December 29, 2023 12:28:00");
 const startAuctionTime = getEpoch("December 29, 2023 12:28:10");
