@@ -24,27 +24,11 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
             axios.spread((...allData) => {
                 console.log(allData);
                 setAuction(allData[0].data.createdAuction[0]);
-                setAuctionRegistration(allData[1].data);
+                setAuctionRegistration(allData[1].data.auctionRegistration[0]);
             })
         );
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
     useEffect(() => {
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
         fetchData();
     }, []);
     console.log(auction);
