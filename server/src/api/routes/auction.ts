@@ -6,7 +6,8 @@ import {
   createAuctionHandler,
   updateAuctionHandler,
   deleteAuctionHandler,
-  approveAuctionHandler
+  approveAuctionHandler,
+  getListAuctionsHandler
 } from '../controllers/AuctionController';
 import { requireRole } from '../middleware/requireRole';
 import { validateResource } from '../middleware/validateResource';
@@ -15,6 +16,7 @@ import { AuctionSchema } from '../validations/AuctionSchema';
 const router = express.Router();
 
 router.get('/auctions', getAllAuctionsHandler);
+router.get('/auctions/:index/:status/:search', getListAuctionsHandler);
 router.get('/:auctionId', getAuctionByIdHandler);
 
 router.post('/create', createAuctionHandler);

@@ -4,6 +4,8 @@ import { BsFillPersonFill } from "react-icons/bs";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
+import { useNavigate } from "react-router-dom";
+
 const Time = () => {
     const getUser = () => {
         var users = null;
@@ -16,6 +18,8 @@ const Time = () => {
         });
         return users;
     };
+    const navigate = useNavigate();
+
     const locale = "en";
     const [today, setDate] = useState(new Date()); // Save the current date to be able to trigger an update
 
@@ -50,6 +54,14 @@ const Time = () => {
             <div className={styles.time}>
                 <label className={styles.label}>
                     {date},{time},{wish}
+                </label>
+                <label
+                    className={styles.label2}
+                    onClick={() => {
+                        navigate("/login");
+                    }}
+                >
+                    Log out
                 </label>
             </div>
         </>

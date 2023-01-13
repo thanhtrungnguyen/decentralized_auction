@@ -3,6 +3,7 @@ import { Outlet, Link } from "react-router-dom";
 import { BsFillPersonFill } from "react-icons/bs";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import jwt from "jsonwebtoken";
 const Header = () => {
     const getUser = () => {
@@ -26,6 +27,8 @@ const Header = () => {
             setType("");
         }
     }, []);
+    const navigate = useNavigate();
+
     return (
         <>
             <div className={styles.header}>
@@ -58,6 +61,14 @@ const Header = () => {
                         <option value="english">EN</option>
                         <option value="vietnamese">VN</option>
                     </select>
+                    <label
+                        className={styles.label2}
+                        onClick={() => {
+                            navigate("/login");
+                        }}
+                    >
+                        Log out
+                    </label>
                 </div>
                 <hr />
             </div>

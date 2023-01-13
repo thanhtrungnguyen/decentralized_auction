@@ -40,7 +40,7 @@ const startServer = () => {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(deserializeUser);
-
+  app.disable('etag');
   app.use('/api', routes);
 
   swaggerDocs(app, config.server.port);
