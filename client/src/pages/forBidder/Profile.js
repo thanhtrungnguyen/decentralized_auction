@@ -6,14 +6,14 @@ import Footer from "../../components/footer/Footer";
 import React, { useEffect, useState } from "react";
 // import axios from "axios";
 import Loading from "../../components/loading/Loading";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hook/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
 import PageName from "../../components/header/PageName";
 import FooterCopy from "../../components/footer/FooterCopy";
 import { useNavigate } from "react-router-dom";
+import axios from "../../config/axiosConfig";
+import { LogoutButton } from "../../components/buttons/LogoutButton";
 
 const Profile = () => {
     const { id, propertyId } = useParams();
@@ -21,46 +21,20 @@ const Profile = () => {
     const { data, loading, error } = useFetch(baseURL);
     const navigate = useNavigate();
     const [role, setRole] = useState();
-    useEffect(() => {
-        console.log(getUser());
-
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
+    useEffect(() => {}, []);
     console.log(data);
     console.log(loading);
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
     const handleClick = () => {
         navigate(`/editProfile/${id}`);
     };
     const ChangePassword = () => {
         navigate(`/changePassword/${id}`);
     };
+
     return loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
             <NavBar />
             <PageName pageName={"Profile"} link={`profile/${id}`} home={"homePage"} />
 
@@ -213,14 +187,7 @@ const Profile = () => {
                     <br />
                     <br />
                     <br />
-                    <button
-                        className={styles.btn}
-                        onClick={() => {
-                            navigate("/login");
-                        }}
-                    >
-                        Log out
-                    </button>
+                    <LogoutButton />
                     <button
                         className={styles.btn2}
                         onClick={() => {

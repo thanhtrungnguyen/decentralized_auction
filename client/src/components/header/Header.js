@@ -5,28 +5,11 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import { LogoutButton } from "../buttons/LogoutButton";
 const Header = () => {
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
     const [type, setType] = useState("");
     const [id, setId] = useState();
-    useEffect(() => {
-        if (getUser() != null) {
-            setType(getUser().type);
-            setId(getUser().id);
-        } else {
-            setType("");
-        }
-    }, []);
+
     const navigate = useNavigate();
 
     return (
@@ -61,14 +44,7 @@ const Header = () => {
                         <option value="english">EN</option>
                         <option value="vietnamese">VN</option>
                     </select>
-                    <label
-                        className={styles.label2}
-                        onClick={() => {
-                            navigate("/login");
-                        }}
-                    >
-                        Log out
-                    </label>
+                    <LogoutButton />
                 </div>
                 <hr />
             </div>
