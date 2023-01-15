@@ -47,8 +47,13 @@ const AuctionList = () => {
     const [minValue, set_minValue] = useState(25);
     const [maxValue, set_maxValue] = useState(75);
     const handleInput = (e) => {
-        set_minValue(e.minValue);
-        set_maxValue(e.maxValue);
+        const { id, value } = e.target;
+        if (id === "minValue") {
+            set_minValue(value);
+        }
+        if (id === "maxValue") {
+            set_maxValue(value);
+        }
     };
     const [role, setRole] = useState();
 
@@ -130,7 +135,7 @@ const AuctionList = () => {
         }, null);
         setStatus(total);
     };
-    const handleApplyFilter = () => { };
+    const handleApplyFilter = () => {};
 
     const handleSort = (e) => {
         setSort(e.target.value);
@@ -163,7 +168,8 @@ const AuctionList = () => {
                             return (
                                 <>
                                     <label className={styles.label}>{item.name}</label>
-                                    <label className={styles.num}>{categories.categories.length}</label>
+                                    <input type="checkbox" className={styles.checkbox} value={item.name} />
+                                    {/* <label className={styles.num}>{categories.categories.length}</label> */}
                                     <br />
                                     <br />
                                 </>
@@ -171,11 +177,31 @@ const AuctionList = () => {
                         })}
                     </div>
                     <div className={styles.category}>
-                        <p className={styles.title}>Start Bid</p>
-                        <p className={styles.label}>
+                        <p className={styles.title}>Start Bid (ETH)</p>
+                        <label className={styles.label}>From: </label>
+                        <input
+                            id="minValue"
+                            value={minValue}
+                            type="number"
+                            className={styles.ranger}
+                            onChange={(e) => {
+                                handleInput(e);
+                            }}
+                        ></input>
+                        <label className={styles.label}>To: </label>
+                        <input
+                            type="number"
+                            id="maxValue"
+                            value={maxValue}
+                            className={styles.ranger}
+                            onChange={(e) => {
+                                handleInput(e);
+                            }}
+                        ></input>
+                        {/* <p className={styles.label}>
                             Ranger: {minValue}ETH - {maxValue}ETH
-                        </p>
-                        <MultiRangeSlider
+                        </p> */}
+                        {/* <MultiRangeSlider
                             className={styles.m}
                             min={0}
                             max={100}
@@ -185,25 +211,29 @@ const AuctionList = () => {
                             onInput={(e) => {
                                 handleInput(e);
                             }}
-                        />
+                        /> */}
                         <br />
                     </div>
                     <div className={styles.category}>
                         <p className={styles.title}>Status</p>
                         <label className={styles.label}>Registration Time </label>
-                        <label className={styles.num}>2</label>
+                        <input type="checkbox" className={styles.checkbox} value="" />
+                        {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
                         <label className={styles.label}>Upcoming For Bidding</label>
-                        <label className={styles.num}>2</label>
+                        <input type="checkbox" className={styles.checkbox} value="" />
+                        {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
                         <label className={styles.label}>Bidding</label>
-                        <label className={styles.num}>2</label>
+                        <input type="checkbox" className={styles.checkbox} value="" />
+                        {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
                         <label className={styles.label}>Auction Closed</label>
-                        <label className={styles.num}>2</label>
+                        <input type="checkbox" className={styles.checkbox} value="" />
+                        {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
                     </div>
