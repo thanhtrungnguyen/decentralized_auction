@@ -157,6 +157,12 @@ body {
     margin: 0px;
     height: 100%;
 }
+.ranger {
+    margin-left: 10px;
+    width: 80px;
+    height: 20px;
+    margin-bottom: 10px;
+}
 .nav {
     width: 30%;
     float: left;
@@ -236,6 +242,17 @@ body {
     float: right;
     margin-right: 20px;
     opacity: 0.35;
+}
+.checkbox {
+    float: right;
+    margin-right: 20px;
+    width: 15px;
+    height: 15px;
+}
+.checkbox:hover {
+    width: 18px;
+    height: 18px;
+    background-color: #03a9f4;
 }
 .title {
     font-family: "Poppins";
