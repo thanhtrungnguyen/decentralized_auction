@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import WaitingForAuctionTime from "./WaitingForAuctionTime";
 import TransactionStatus from "../components/TransactionStatus";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
-import { useFetchBidding } from "../../../hook/useFetch";
+import { useFetchData } from "../../../hook/useFetch";
 import Loader from "../components/Loader";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -26,7 +26,7 @@ function AuctionRegistration({ auction, propertyObject }) {
     const [isRegisteredBidder, setRegisteredBidder] = useState(false);
     const [isLoadingInfo, setLoadingInfo] = useState(true);
     const baseURL = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
-    const { loading, data: registeredBid, error } = useFetchBidding(baseURL);
+    const { loading, data: registeredBid, error } = useFetchData(baseURL);
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUI();

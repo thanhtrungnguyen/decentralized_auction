@@ -17,7 +17,7 @@ import TransactionStatus from "../components/TransactionStatus";
 import BiddingProperty from "../components/BiddingProperty";
 import TransactionHistory from "../components/TransactionHistory";
 import AuctionResult from "./auctionResult/AuctionResult";
-import { useFetchBidding } from "../../../hook/useFetch";
+import { useFetchData } from "../../../hook/useFetch";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
 import Loader from "../components/Loader";
 import Decimal from "decimal.js";
@@ -25,8 +25,8 @@ import io from "socket.io-client";
 function PlaceBid({ auction, propertyObject }) {
     const baseURLPlacedBid = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/placedBid`;
     const baseURLRegistered = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
-    const { loading: loadingPlacedBid, data: placedBid, error: errorPlacedBid } = useFetchBidding(baseURLPlacedBid, auction.auctionId);
-    const { loading: loadingRegistered, data: registered, error: errorRegistered } = useFetchBidding(baseURLRegistered, auction.auctionId);
+    const { loading: loadingPlacedBid, data: placedBid, error: errorPlacedBid } = useFetchData(baseURLPlacedBid, auction.auctionId);
+    const { loading: loadingRegistered, data: registered, error: errorRegistered } = useFetchData(baseURLRegistered, auction.auctionId);
     const dispatch = useNotification();
     const [highestBid, setHighestBid] = useState(0);
     const [inputBidAmount, setInputBidAmount] = useState("0");
@@ -35,7 +35,7 @@ function PlaceBid({ auction, propertyObject }) {
     const [isRegisteredBidder, setRegisteredBidder] = useState(false);
     const [minBidAmount, setMinBidAmount] = useState();
     const [status, setStatus] = useState(false);
-    const socket = io.connect("http://localhost:8800");
+    // const socket = io.connect("http://localhost:8800");
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUI();
@@ -52,13 +52,13 @@ function PlaceBid({ auction, propertyObject }) {
         return isRegistered;
     };
 
-    socket.on("receive_message", (data) => {
-        if (auction.auctionId == data.auction) {
-            setHighestBid(data.highest);
-        }
+    // socket.on("receive_message", (data) => {
+    //     if (auction.auctionId == data.auction) {
+    //         setHighestBid(data.highest);
+    //     }
 
-        // setMessageReceived(data.message);
-    });
+    //     // setMessageReceived(data.message);
+    // });
 
     // const checkRetractedBidder=()=>{
     //     registered?.forEach((element) => {
@@ -128,8 +128,8 @@ function PlaceBid({ auction, propertyObject }) {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
-            socket.emit("join_room", auction.auctionId);
-            socket.emit("send_message", { message: "message", auctionId: auction.auctionId });
+            // socket.emit("join_room", auction.auctionId);
+            // socket.emit("send_message", { message: "message", auctionId: auction.auctionId });
             dispatch({
                 type: "success",
                 title: "Place Bid Notification",
@@ -143,8 +143,7 @@ function PlaceBid({ auction, propertyObject }) {
     };
 
     const placeBidHandleError = async (tx) => {
-        console.log(tx);
-        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
+        const message = tx.data.message;
         setTransactionStatus({ status: message });
         dispatch({
             type: "error",
@@ -162,8 +161,8 @@ function PlaceBid({ auction, propertyObject }) {
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
             dispatch({
                 type: "success",
-                title: "retractBid Notification",
-                message: "retractBid Completed!",
+                title: "Retract Bid Notification",
+                message: "Retract Bid Completed!",
                 position: "topR",
                 icon: <BsCheckLg />,
             });
@@ -173,8 +172,7 @@ function PlaceBid({ auction, propertyObject }) {
     };
 
     const retractBidHandleError = async (tx) => {
-        console.log(tx);
-        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
+        const message = tx.data.message;
         setTransactionStatus({ status: message });
         dispatch({
             type: "error",
@@ -270,8 +268,6 @@ function PlaceBid({ auction, propertyObject }) {
                         <p className={styles.txt}>You have selected:</p>
                         <div>
                             <div className={styles.info}>
-                                {/* <BiddingProperty auction={auction} />
-                        <BiddingProperty auction={auction} property={property} /> */}
                                 <BiddingProperty propertyObject={propertyObject} />
                                 {highestBid != 0 ? (
                                     <>
