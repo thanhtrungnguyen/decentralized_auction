@@ -85,39 +85,48 @@ const ListSellers = () => {
     }, []);
     const navigate = useNavigate();
     function exportData(data) {
-        return <>
-            {data.listUser.map((item) =>
-                <tr>
-                    <td>{item.firstName} {item.lastName}</td>
-                    <td>{item.email}</td>
-                    <td>{item.phone}</td>
-                    <td>{item.address}</td>
-                    <td>{item.user.status === true ? 'Activate' : 'Deactivate'}</td>
-                    <td>
-
-                    </td>
-                    <td>
-                        <AiFillEye className={styles.iconView} />
-                        {item.user.status === true ?
-                            <Popup trigger={
-                                <label style={{ color: "red" }} className={styles.linkBlue}>
-                                    Deactivate
-                                </label>
-                            }
-                                position="right center">
-                                <BanedSeller idSeller={item.user._id} />
-                            </Popup> :
-                            <Popup trigger={
-                                <label style={{ color: "blue" }} className={styles.linkBlue}>
-                                    Activate
-                                </label>}
-                                position="right center">
-                                <ActiveSeller idSeller={item.user._id} />
-                            </Popup>}
-                    </td>
-                </tr>
-            )}
-        </>
+        return (
+            <>
+                {data.listUser.map((item) => (
+                    <tr>
+                        <td>
+                            {item.firstName} {item.lastName}
+                        </td>
+                        <td>{item.email}</td>
+                        <td>{item.phone}</td>
+                        <td>{item.address}</td>
+                        <td>{item.user.status === true ? "Activate" : "Deactivate"}</td>
+                        <td></td>
+                        <td>
+                            <AiFillEye className={styles.iconView} />
+                            {item.user.status === true ? (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "red" }} className={styles.linkBlue}>
+                                            Deactivate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
+                                    <BanedSeller idSeller={item.user._id} />
+                                </Popup>
+                            ) : (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "blue" }} className={styles.linkBlue}>
+                                            Activate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
+                                    <ActiveSeller idSeller={item.user._id} />
+                                </Popup>
+                            )}
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
     }
     return loading ? (
         <Loading />
@@ -152,7 +161,7 @@ const ListSellers = () => {
                                 </button>
                             </form>
                             <button
-                                className={styles.btn}
+                                className={styles.btn2}
                                 onClick={() => {
                                     navigate("/addSeller");
                                 }}

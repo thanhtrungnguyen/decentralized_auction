@@ -50,7 +50,6 @@ const ListForManagers = () => {
         fetchData();
     }, [baseURL]);
 
-
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "email") {
@@ -70,39 +69,48 @@ const ListForManagers = () => {
         setPage(1);
     };
     function exportData(data) {
-        return <>
-            {data.listUser.map((item) =>
-                <tr>
-                    <td>{item.firstName} {item.lastName}</td>
-                    <td>{item.email}</td>
-                    <td>{item.phone}</td>
-                    <td>{item.address}</td>
-                    <td>{item.user.status === true ? 'Activate' : 'Deactivate'}</td>
-                    <td>
-
-                    </td>
-                    <td>
-                        <AiFillEye className={styles.iconView} />
-                        {item.user.status === true ?
-                            <Popup trigger={
-                                <label style={{ color: "red" }} className={styles.linkBlue}>
-                                    Deactivate
-                                </label>
-                            }
-                                position="right center">
-                                <BanedManager idManager={item.user._id} />
-                            </Popup> :
-                            <Popup trigger={
-                                <label style={{ color: "blue" }} className={styles.linkBlue}>
-                                    Activate
-                                </label>}
-                                position="right center">
-                                <ActiveManager idManager={item.user._id} />
-                            </Popup>}
-                    </td>
-                </tr>
-            )}
-        </>
+        return (
+            <>
+                {data.listUser.map((item) => (
+                    <tr>
+                        <td>
+                            {item.firstName} {item.lastName}
+                        </td>
+                        <td>{item.email}</td>
+                        <td>{item.phone}</td>
+                        <td>{item.address}</td>
+                        <td>{item.user.status === true ? "Activate" : "Deactivate"}</td>
+                        <td></td>
+                        <td>
+                            <AiFillEye className={styles.iconView} />
+                            {item.user.status === true ? (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "red" }} className={styles.linkBlue}>
+                                            Deactivate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
+                                    <BanedManager idManager={item.user._id} />
+                                </Popup>
+                            ) : (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "blue" }} className={styles.linkBlue}>
+                                            Activate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
+                                    <ActiveManager idManager={item.user._id} />
+                                </Popup>
+                            )}
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
     }
     const getUser = () => {
         var users = null;
@@ -134,16 +142,30 @@ const ListForManagers = () => {
                 <div className={styles.r}>
                     <div className={styles.con}>
                         <div className={styles.btns}>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='null'>All</button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='true'>Activate</button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='false'>Deactivate</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                All
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="true">
+                                Activate
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="false">
+                                Deactivate
+                            </button>
                             <form onSubmit={handleSubmit}>
-                                <input className={styles.ip} type="text" placeholder="Enter Email" id="email" value={email2}
-                                    onChange={(e) => handleInputChange(e)}></input>
-                                <button className={styles.btn} type='submit' >Search</button>
+                                <input
+                                    className={styles.ip}
+                                    type="text"
+                                    placeholder="Enter Email"
+                                    id="email"
+                                    value={email2}
+                                    onChange={(e) => handleInputChange(e)}
+                                ></input>
+                                <button className={styles.btn} type="submit">
+                                    Search
+                                </button>
                             </form>
                             <button
-                                className={styles.btn}
+                                className={styles.btn2}
                                 onClick={() => {
                                     navigate("/addManager");
                                 }}
@@ -165,12 +187,7 @@ const ListForManagers = () => {
                         </table>
                         <hr />
                         <div>
-                            <Pagination
-                                className={styles.Pagination}
-                                count={Math.ceil(data.count / 8)}
-                                page={page}
-                                onChange={handleChange}
-                            />
+                            <Pagination className={styles.Pagination} count={Math.ceil(data.count / 8)} page={page} onChange={handleChange} />
                         </div>
                     </div>
                 </div>

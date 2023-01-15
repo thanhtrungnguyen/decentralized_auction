@@ -26,13 +26,11 @@ const ListNews = () => {
     const [role, setRole] = useState();
     const navigate = useNavigate();
 
-
     var baseURL = `news/news/${page}/${status}/${title}`;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
-
                 // console.log("axios get");
                 setData(resp.data.news);
                 console.log(resp);
@@ -44,7 +42,7 @@ const ListNews = () => {
             }
 
             setLoading(false);
-        }
+        };
         fetchData();
     }, [baseURL]);
 
@@ -85,16 +83,34 @@ const ListNews = () => {
                 {data.listNews.map((item) => (
                     <tr>
                         <td>{item.title}</td>
-                        <td>{moment(item.createdAt).format('L')} - {moment(item.createdAt).format('LTS')} </td>
-                        <td>{item.status === 'Activate' ? 'Activate' : 'Deactivate'}</td>
                         <td>
-                            {item.status === 'Activate' ?
-                                <Popup trigger={<label style={{ color: "red" }} className={styles.linkBlue}>Deactivate</label>} position="right center">
+                            {moment(item.createdAt).format("L")} - {moment(item.createdAt).format("LTS")}{" "}
+                        </td>
+                        <td>{item.status === "Activate" ? "Activate" : "Deactivate"}</td>
+                        <td>
+                            {item.status === "Activate" ? (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "red" }} className={styles.linkBlue}>
+                                            Deactivate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
                                     <PrivateNews idNews={item._id} />
-                                </Popup> :
-                                <Popup trigger={<label style={{ color: "blue" }} className={styles.linkBlue}>Activate</label>} position="right center">
+                                </Popup>
+                            ) : (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "blue" }} className={styles.linkBlue}>
+                                            Activate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
                                     <PublishNews idNews={item._id} />
-                                </Popup>}
+                                </Popup>
+                            )}
                         </td>
                         <td>
                             <AiTwotoneEdit
@@ -135,16 +151,30 @@ const ListNews = () => {
                 <div className={styles.r}>
                     <div className={styles.con}>
                         <div className={styles.btns}>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='null'>All</button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='activate'>Activate</button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value='deactivate'>Deactivate</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                All
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="activate">
+                                Activate
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="deactivate">
+                                Deactivate
+                            </button>
                             <form onSubmit={handleSubmit}>
-                                <input className={styles.ip} type="text" placeholder="Enter Title" id="title" value={title2}
-                                    onChange={(e) => handleInputChange(e)}></input>
-                                <button className={styles.btn} type='submit' >Search</button>
+                                <input
+                                    className={styles.ip}
+                                    type="text"
+                                    placeholder="Enter Title"
+                                    id="title"
+                                    value={title2}
+                                    onChange={(e) => handleInputChange(e)}
+                                ></input>
+                                <button className={styles.btn} type="submit">
+                                    Search
+                                </button>
                             </form>
                             <button
-                                className={styles.btn}
+                                className={styles.btn2}
                                 onClick={() => {
                                     navigate("/addNew");
                                 }}
@@ -165,12 +195,7 @@ const ListNews = () => {
                         </table>
                         <hr />
                         <div>
-                            <Pagination
-                                className={styles.Pagination}
-                                count={Math.ceil(data.count / 8)}
-                                page={page}
-                                onChange={handleChange}
-                            />
+                            <Pagination className={styles.Pagination} count={Math.ceil(data.count / 8)} page={page} onChange={handleChange} />
                         </div>
                     </div>
                 </div>
