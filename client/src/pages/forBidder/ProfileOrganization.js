@@ -15,6 +15,8 @@ import HeaderUser from "../../components/header/HeaderUser";
 import PageName from "../../components/header/PageName";
 import FooterCopy from "../../components/footer/FooterCopy";
 import { useNavigate } from "react-router-dom";
+import axios from "../../config/axiosConfig";
+import { LogoutButton } from "../../components/buttons/LogoutButton";
 
 const ProfileOrganization = () => {
     const { id } = useParams();
@@ -22,46 +24,20 @@ const ProfileOrganization = () => {
     const { data, loading, error } = useFetch(baseURL);
     const navigate = useNavigate();
     const [role, setRole] = useState();
-    useEffect(() => {
-        console.log(getUser());
-
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
+    useEffect(() => {}, []);
     console.log(data);
     console.log(loading);
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
     const handleClick = () => {
         navigate(`/editProfileOrganization/${id}`);
     };
     const Cancel = () => {
         navigate(`/homePage`);
     };
+
     return loading ? (
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
             <NavBar />
             <PageName pageName={"Profile"} link={`profile/${id}`} home={"homePage"} />
 
@@ -263,14 +239,7 @@ const ProfileOrganization = () => {
                     <br />
                     <br />
                     <br />
-                    <button
-                        className={styles.btn}
-                        onClick={() => {
-                            navigate("/login");
-                        }}
-                    >
-                        Log out
-                    </button>
+                    <LogoutButton />
                     <button
                         className={styles.btn2}
                         onClick={() => {

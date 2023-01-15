@@ -22,31 +22,6 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // axios
-        //     .post("http://localhost:8800/api/auth/login", { username, password }, { withCredentials: true })
-        //     .then((res) => {
-        //         console.log(res);
-        //         if (res.data.success === "false") {
-        //             alert(res.data.message);
-        //         } else {
-        //             if (res.data.role === "BIDDER") {
-        //                 navigate("/homePage");
-        //             }
-        //             if (res.data.role === "ADMIN") {
-        //                 navigate("/listManagers");
-        //             }
-        //             if (res.data.role === "SELLER") {
-        //                 navigate("/myProperty");
-        //             }
-        //             if (res.data.role === "MANAGER") {
-        //                 navigate("/autionsListForManager");
-        //             }
-        //         }
-        //     })
-        //     .catch((reason) => {
-        //         alert("Incorrect username or Password!!!");
-        //         console.log(reason);
-        //     });
         axios
             .post("/session", { username, password })
             .then((response) => {
@@ -73,11 +48,6 @@ const Login = () => {
                 }
                 alert("Ủa???");
             });
-
-        // localStorage.setItem(
-        //     "accessToken",
-        //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2JkODUzMWNjOWQ3NWNkODc4MDQ1NGMiLCJ1c2VybmFtZSI6InNlbGxlcjZAZnB0LmVkdS52biIsInZlcmlmaWNhdGlvbkNvZGUiOiI5NzJkZWZlNC01MTQzLTQxOTYtYWZkMC05YzZhZDdmNDUxNWMiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6InNlbGxlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInNlc3Npb24iOiI2M2JlMzc5NDcwMGE1NjVkYTA1MTY0NTQiLCJpYXQiOjE2NzM0MTA0NTIsImV4cCI6MTcwNDk2ODA1Mn0.cAPsFf_FBja4BQp5wFmcQsVwUah5s-9ZyQISXJcf47Q"
-        // );
     };
 
     return (
