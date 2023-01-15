@@ -18,6 +18,8 @@ import Time from "../../components/time/Time";
 import { Link, useNavigate } from "react-router-dom";
 import useWindowSize from "@react-hook/window-size";
 import Confetti from "react-confetti";
+import Select from "react-select";
+
 import moment from "moment";
 const AuctionsListForManager = () => {
     const [page, setPage] = React.useState(1);
@@ -98,45 +100,76 @@ const AuctionsListForManager = () => {
     };
 
     function exportData(data) {
-        return <>
-            {data.listAuction.map((item) =>
-                <tr>
-                    <td>{item.status === 'Request' ? '___________' : item.name}</td>
-                    <td>{item.status === 'Request' ? '___________' :
-                        <>
-                            From {moment(item.startRegistrationTime).format("L")} - {moment(item.startRegistrationTime).format("LTS")} to {moment(item.endRegistrationTime).format("L")} - {moment(item.endRegistrationTime).format("LTS")}
-                        </>
-                    }
-                    </td>
-                    <td>{item.status === 'Request' ? '___________' :
-                        <>
-                            From {moment(item.startAuctionTime).format("L")} - {moment(item.startAuctionTime).format("LTS")} to {moment(item.endAuctionTime).format("L")} - {moment(item.endAuctionTime).format("LTS")}
-                        </>
-                    }
-                    </td>
-                    <td>{item.status === 'Request' ? 'Request Add' : item.status}</td>
-                    <td>{item.status === 'Request' ?
-                        <>
-                            <AiFillEye className={styles.iconView} onClick={() => { navigate("/auctionDetailForManager"); }} />
-                            <Link className={styles.link2} to={`/approveAuction`}>
-                                Approve/Reject
-                            </Link>
-                        </> :
-                        <>
-                            <AiFillEye className={styles.iconView} onClick={() => { navigate("/auctionDetailForManager"); }} />
-                            <Link className={styles.link2} to={`/viewRegistrationForManager`}>
-                                Process
-                            </Link>
-                        </>}
+        return (
+            <>
+                {data.listAuction.map((item) => (
+                    <tr>
+                        <td>{item.status === "Request" ? "___________" : item.name}</td>
+                        <td>
+                            {item.status === "Request" ? (
+                                "___________"
+                            ) : (
+                                <>
+                                    From {moment(item.startRegistrationTime).format("L")} - {moment(item.startRegistrationTime).format("LTS")} to{" "}
+                                    {moment(item.endRegistrationTime).format("L")} - {moment(item.endRegistrationTime).format("LTS")}
+                                </>
+                            )}
+                        </td>
+                        <td>
+                            {item.status === "Request" ? (
+                                "___________"
+                            ) : (
+                                <>
+                                    From {moment(item.startAuctionTime).format("L")} - {moment(item.startAuctionTime).format("LTS")} to{" "}
+                                    {moment(item.endAuctionTime).format("L")} - {moment(item.endAuctionTime).format("LTS")}
+                                </>
+                            )}
+                        </td>
+                        <td>{item.status === "Request" ? "Request Add" : item.status}</td>
+                        <td>
+                            {item.status === "Request" ? (
+                                <>
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/auctionDetailForManager");
+                                        }}
+                                    />
+                                    <Link className={styles.link2} to={`/approveAuction`}>
+                                        Approve/Reject
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <AiFillEye
+                                        className={styles.iconView}
+                                        onClick={() => {
+                                            navigate("/auctionDetailForManager");
+                                        }}
+                                    />
+                                    <Link className={styles.link2} to={`/viewRegistrationForManager`}>
+                                        Process
+                                    </Link>
+                                </>
+                            )}
 
-                        {/* <AiOutlineDelete className={styles.iconView} /> */}
-
-
-                    </td>
-                </tr>
-            )}
-        </>
+                            {/* <AiOutlineDelete className={styles.iconView} /> */}
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
     }
+    const options = [
+        { value: "HihiHEhe", label: "HihiHEhe" },
+        { value: "chocolate", label: "chocolate" },
+        { value: "strawberry", label: "Strawberry" },
+        { value: "vanilla", label: "Vanilla" },
+        { value: "HihiHEhe", label: "HihiHEhe" },
+        { value: "chocolate", label: "chocolate" },
+        { value: "strawberry", label: "Strawberry" },
+        { value: "vanilla", label: "Vanilla" },
+    ];
     return loading ? (
         <Loading />
     ) : (
@@ -149,16 +182,39 @@ const AuctionsListForManager = () => {
                     <div className={styles.r}>
                         <div className={styles.con}>
                             <div className={styles.btns}>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">All</button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                    All
+                                </button>
                                 {/* <button className={styles.btn}>Created</button> */}
                                 {/* <button className={styles.btn}>Modified</button> */}
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">Request Add</button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">Approved</button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Upcoming">Upcoming</button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Bidding">Bidding</button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Closed">Closed</button>
-                                <input className={styles.ip} type="text" placeholder="Enter Name" id="auctionName" value={auctionName2} onChange={(e) => handleInputChange(e)}></input>
-                                <button className={styles.btn} type="submit">Search</button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">
+                                    Request Add
+                                </button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">
+                                    Approved
+                                </button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Upcoming">
+                                    Upcoming
+                                </button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Bidding">
+                                    Bidding
+                                </button>
+                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Closed">
+                                    Closed
+                                </button>
+                                <Select className={styles.select} options={options} placeholder="Select Seller" />
+
+                                <input
+                                    className={styles.ip}
+                                    type="text"
+                                    placeholder="Enter Name"
+                                    id="auctionName"
+                                    value={auctionName2}
+                                    onChange={(e) => handleInputChange(e)}
+                                ></input>
+                                <button className={styles.btn} type="submit">
+                                    Search
+                                </button>
                             </div>
                             <table className={styles.table}>
                                 <tr>
@@ -174,9 +230,9 @@ const AuctionsListForManager = () => {
                             <div>
                                 <Pagination
                                     className={styles.Pagination}
-                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                // page={page}
-                                // onChange={handleChange}
+                                    // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                    // page={page}
+                                    // onChange={handleChange}
                                 />
                             </div>
                         </div>
