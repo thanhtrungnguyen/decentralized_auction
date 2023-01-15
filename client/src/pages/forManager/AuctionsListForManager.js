@@ -174,9 +174,9 @@ const AuctionsListForManager = () => {
                             <div>
                                 <Pagination
                                     className={styles.Pagination}
-                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                                // page={page}
-                                // onChange={handleChange}
+                                    count={listAuction.count}
+                                    page={page}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
