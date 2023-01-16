@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import WaitingForAuctionTime from "./WaitingForAuctionTime";
 import TransactionStatus from "../components/TransactionStatus";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
-import { useFetchBidding } from "../../../hook/useFetch";
+import { useFetchData } from "../../../hook/useFetch";
 import Loader from "../components/Loader";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -25,13 +25,13 @@ function AuctionRegistration({ auction, propertyObject }) {
     const [transactionStatus, setTransactionStatus] = useState();
     const [isRegisteredBidder, setRegisteredBidder] = useState(false);
     const [isLoadingInfo, setLoadingInfo] = useState(true);
-    const baseURL = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
-    const { loading, data: registeredBid, error } = useFetchBidding(baseURL);
+    // const baseURL = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
+    // const { loading, data: registeredBid, error } = useFetchData(baseURL);
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUI();
         }
-    }, [isWeb3Enabled, account, isRegisteredBidder, loading, registeredBid]);
+    }, [isWeb3Enabled, account, isRegisteredBidder]);
 
     const amount =
         auction.registrationFee != null && auction.depositAmount != null
@@ -53,20 +53,20 @@ function AuctionRegistration({ auction, propertyObject }) {
     });
     const updateUI = async () => {
         // setBidInformation(await getBidInformationByAuctionId());
-        await checkRegisteredBidder();
+        // await checkRegisteredBidder();
         setLoadingInfo(false);
         // setRegisteredBidder(true);
     };
 
-    const checkRegisteredBidder = async () => {
-        if (!registeredBid) return;
-        await registeredBid.forEach((element) => {
-            if (element.bidder.toUpperCase() === account.toUpperCase()) {
-                setRegisteredBidder(true);
-            }
-        });
-        // setRegisteredBidder(false);
-    };
+    // const checkRegisteredBidder = async () => {
+    //     if (!registeredBid) return;
+    //     await registeredBid.forEach((element) => {
+    //         if (element.bidder.toUpperCase() === account.toUpperCase()) {
+    //             setRegisteredBidder(true);
+    //         }
+    //     });
+    //     // setRegisteredBidder(false);
+    // };
 
     const getUser = () => {
         var users = null;
@@ -79,18 +79,18 @@ function AuctionRegistration({ auction, propertyObject }) {
         });
         return users;
     };
-    const createAuctionRegistration = () => {
-        const postUrl = "http://localhost:8800/api/auctionInformation/auctionRegistration";
-        const auctionRegistration = { auctionId: auction.auctionId, bidderId: getUser().userName, wallet: account };
-        axios
-            .post(postUrl, auctionRegistration)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+    // const createAuctionRegistration = () => {
+    //     const postUrl = "http://localhost:8800/api/auctionInformation/auctionRegistration";
+    //     const auctionRegistration = { auctionId: auction.auctionId, bidderId: getUser().userName, wallet: account };
+    //     axios
+    //         .post(postUrl, auctionRegistration)
+    //         .then((res) => {
+    //             console.log(res);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // };
 
     const handleSuccess = async (tx) => {
         try {
@@ -99,7 +99,7 @@ function AuctionRegistration({ auction, propertyObject }) {
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
             updateUI();
             setRegisteredBidder(true);
-            createAuctionRegistration();
+            // createAuctionRegistration();
             handleSuccessNotification(tx);
         } catch (error) {
             console.log(error);

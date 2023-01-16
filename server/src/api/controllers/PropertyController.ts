@@ -16,7 +16,7 @@ export const getPropertiesByUserHandler = async (req: Request, res: Response, ne
   var index = req.params.index;
   var status = req.params.status;
   var search = req.params.search;
-  var userId = '63bd8531cc9d75cd8780454c';
+  var userId = res.locals.user._id;
   return await getPropertiesByUser(userId, index, status, search)
     .then((properties) => {
       res.status(200).json({ properties });

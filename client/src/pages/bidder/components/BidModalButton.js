@@ -1,12 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-// import { useParams } from "react-router-dom";
 import BidModal from "../BidModal";
-import axios from "../../../config/axiosConfig";
-//import { useFetchBidding } from "../../../hook/useFetch";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+import { useFetchData } from "../../../hook/useFetch";
 const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     const [openModal, setOpenModal] = useState(() => {
         return false;
@@ -15,24 +11,10 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
 
     const [auction, setAuction] = useState();
     const [auctionRegistration, setAuctionRegistration] = useState();
-    const fetchData = async () => {
-        const baseURL = `/contractInteraction/createdAuction/${auctionId}`;
-        const auctionRegistrationURL = `/auctionRegistration/${auctionId}`;
-        const getAuction = await axios.get(baseURL);
-        const getAuctionRegistration = await axios.get(auctionRegistrationURL);
-        await axios.all([getAuction, getAuctionRegistration]).then(
-            axios.spread((...allData) => {
-                console.log(allData);
-                setAuction(allData[0].data.createdAuction[0]);
-                setAuctionRegistration(allData[1].data.auctionRegistration[0]);
-            })
-        );
-    };
-    useEffect(() => {
-        fetchData();
-    }, []);
-    console.log(auction);
-    console.log(auctionRegistration);
+    const { loading: auctionLoading, data: auctionData, error: auctionError } = useFetchData(`/contractInteraction/createdAuction/${auctionId}`);
+    const { loading: regitrationLoading, data: registrationData, error: registrationError } = useFetchData(`/auctionRegistration/${auctionId}`);
+    console.log("data1", auctionData);
+    console.log("data2", registrationData);
     // console.log("Auction Log", auction ? auction.auctionId );
     // console.log("Auction Registration", auctionRegistration ? auctionRegistration.auctionId );
     return (
@@ -58,8 +40,8 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
                 {openModal && (
                     <BidModal
                         closeModal={setOpenModal}
-                        auction={auction}
-                        auctionRegistration={auctionRegistration}
+                        auction={auctionData?.createdAuction}
+                        auctionRegistration={registrationData?.auctionRegistration}
                         propertyId={propertyId}
                         propertyObject={propertyObject}
                     />

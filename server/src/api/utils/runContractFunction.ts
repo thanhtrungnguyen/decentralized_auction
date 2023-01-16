@@ -35,8 +35,20 @@ const formatInput = (objectAuction: any) => {
 
 export const createAuctionOnContract = async (objectAuction: any) => {
   try {
-    const result = await contract.createAuction(formatInput(objectAuction));
-    logger.debug(result);
+    const formattedAuction = await formatInput(objectAuction);
+    const result = await contract.createAuction(
+      formattedAuction.auctionId,
+      formattedAuction.startRegistrationTime,
+      formattedAuction.endRegistrationTime,
+      formattedAuction.startAuctionTime,
+      formattedAuction.endAuctionTime,
+      formattedAuction.duePaymentTime,
+      formattedAuction.registrationFee,
+      formattedAuction.depositAmount,
+      formattedAuction.startBid,
+      formattedAuction.priceStep
+    );
+    logger.info(result);
     return result;
   } catch (error) {
     logger.error(error);

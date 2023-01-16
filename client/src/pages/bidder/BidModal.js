@@ -23,37 +23,26 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
             setHasMetamask(true);
         }
     }, [isWeb3Enabled, account]);
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-    const checkUserRegistered = () => {
-        let wallet;
-        auctionRegistration?.map((element) => {
-            if (element.bidderId == getUser().id) {
-                wallet = element.wallet;
-            }
-        });
-        return wallet;
-    };
+    // const checkUserRegistered = () => {
+    //     let wallet;
+    //     auctionRegistration?.map((element) => {
+    //         if (element.bidderId == getUser().id) {
+    //             wallet = element.wallet;
+    //         }
+    //     });
+    //     return wallet;
+    // };
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
-        const registeredWallet = checkUserRegistered();
-        console.log(checkUserRegistered());
+        // const registeredWallet = checkUserRegistered();
+        // console.log(checkUserRegistered());
         // debugger;
         if (loading) return "Loading";
         if (!auction) return "AuctionNotFound";
         if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
-        if (registeredWallet != null && registeredWallet != account) {
-            return "RegisteredWithOtherWallet";
-        }
+        // if (registeredWallet != null && registeredWallet != account) {
+        //     return "RegisteredWithOtherWallet";
+        // }
         if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
         if (auction.endRegistrationTime < currentTimestamp) {
             // if (registeredWallet == account) {
@@ -97,7 +86,7 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
                 return (
                     <div>
                         <h1>You have registered the auction with other account</h1>
-                        <strong>{checkUserRegistered()}</strong>
+                        {/* <strong>{checkUserRegistered()}</strong> */}
                     </div>
                 );
             case "AuctionNotFound":
@@ -106,7 +95,7 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
                 return "???????";
         }
     };
-    console.log("checkUserRegistered()", checkUserRegistered());
+    // console.log("checkUserRegistered()", checkUserRegistered());
     return (
         <div className={styles.container}>
             <HeaderBid closeModal={closeModal} />
