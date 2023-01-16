@@ -52,10 +52,10 @@ const PropertyDetail = () => {
     ) : (
         <>
             <form>
-                <div className={styles.root}>
+                <div className={styles.root2}>
                     <SidebarSeller />
                     <Time />
-                    <div className={styles.info}>
+                    <div className={styles.info2}>
                         <div>
                             <p className={styles.title}>Basic Information</p>
 
@@ -160,7 +160,7 @@ const PropertyDetail = () => {
                     </div>
 
                     <div className={styles.btn}>
-                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
+                        <input className={styles.btnCancel2} type="button" value="Cancel" onClick={Cancel}></input>
                     </div>
                 </div>
             </form>

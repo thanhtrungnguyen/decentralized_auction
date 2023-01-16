@@ -80,37 +80,52 @@ const ManagerCategory = () => {
         return users;
     };
     function exportData(data) {
-        return <>
-            {data.listCategory.map((item) =>
-                <tr>
-                    <td>{item.name}</td>
-                    <td>{item.status === true ? 'Activate' : 'Deactivate'}</td>
+        return (
+            <>
+                {data.listCategory.map((item) => (
+                    <tr>
+                        <td>{item.name}</td>
+                        <td>{item.status === true ? "Activate" : "Deactivate"}</td>
 
-                    <td>
-                        <AiTwotoneEdit
-                            className={styles.iconView}
-                            onClick={() => {
-                                navigate(`/editCategory/${item._id}`);
-                            }}
-                        />
-                        {/* <Popup trigger={<label><AiOutlineDelete className={styles.iconView} /></label>} position="right center">
+                        <td>
+                            <AiTwotoneEdit
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate(`/editCategory/${item._id}`);
+                                }}
+                            />
+                            {/* <Popup trigger={<label><AiOutlineDelete className={styles.iconView} /></label>} position="right center">
                             <DeleteProperty idProperty=""/>
                         </Popup> */}
-                        {item.status === true ?
-                            <Popup trigger={<label style={{ color: "red" }} className={styles.link}> Deactivate </label>} position="right center">
-                                <PrivateCategory idCategory={item._id} />
-                            </Popup>
-                            :
-                            <Popup trigger={<label style={{ color: "blue" }} className={styles.link}>Activate</label>} position="right center">
-                                <ActiveCategory idCategory={item._id} />
-                            </Popup>
-                        }
-
-
-                    </td>
-                </tr>
-            )}
-        </>
+                            {item.status === true ? (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "red" }} className={styles.link}>
+                                            {" "}
+                                            Deactivate{" "}
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
+                                    <PrivateCategory idCategory={item._id} />
+                                </Popup>
+                            ) : (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "blue" }} className={styles.link}>
+                                            Activate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
+                                    <ActiveCategory idCategory={item._id} />
+                                </Popup>
+                            )}
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
     }
     return loading ? (
         <Loading />
@@ -133,7 +148,7 @@ const ManagerCategory = () => {
                             </button>
                             <form onSubmit={handleSubmit}>
                                 <input
-                                    className={styles.ip}
+                                    className={styles.ip3}
                                     type="text"
                                     placeholder="Enter Name"
                                     id="categoryName"
@@ -145,7 +160,7 @@ const ManagerCategory = () => {
                                 </button>
                             </form>
                             <button
-                                className={styles.btn}
+                                className={styles.btn2}
                                 onClick={() => {
                                     navigate("/addCategory");
                                 }}
@@ -164,12 +179,7 @@ const ManagerCategory = () => {
                         </table>
                         <hr />
                         <div>
-                            <Pagination
-                                className={styles.Pagination}
-                                count={Math.ceil(data.count / 8)}
-                                page={page}
-                                onChange={handleChange}
-                            />
+                            <Pagination className={styles.Pagination} count={Math.ceil(data.count / 8)} page={page} onChange={handleChange} />
                         </div>
                     </div>
                 </div>

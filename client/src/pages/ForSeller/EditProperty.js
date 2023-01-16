@@ -100,7 +100,7 @@ const EditProperty = () => {
             setPropertyImage3(e.target.files[0]);
         }
         if (id === "propertyVideo") {
-            setPropertyVideo(value);
+            setPropertyVideo(e.target.files[0]);
         }
         if (id === "propertyName") {
             setPropertyName(value);
@@ -230,12 +230,20 @@ const EditProperty = () => {
                                 </div>
                                 <div className={styles.r}>
                                     <input
-                                        className={styles.inputText}
-                                        type="text"
+                                        className={styles.inputImg}
                                         id="propertyVideo"
                                         onChange={(e) => handleInputChange(e)}
+                                        type="file"
                                         required
                                     ></input>
+                                    <div className={styles.conImg}>
+                                        {propertyVideo && <video src={URL.createObjectURL(propertyVideo)} className={styles.video} controls />}
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
                                 </div>
                             </div>
                             <div className={styles.fl}>

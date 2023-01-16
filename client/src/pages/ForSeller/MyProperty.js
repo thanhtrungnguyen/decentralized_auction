@@ -122,7 +122,7 @@ const MyProperty = () => {
                                     <AiTwotoneEdit
                                         className={styles.iconView}
                                         onClick={() => {
-                                            navigate("/editProperty");
+                                            navigate(`/editProperty/${item._id}`);
                                         }}
                                     />
 
@@ -195,7 +195,6 @@ const MyProperty = () => {
         <Loading />
     ) : (
         <>
-
             <div className={styles.container}>
                 <SideBarSeller />
                 <Time />
@@ -234,7 +233,7 @@ const MyProperty = () => {
                                 </button>
                             </form>
                             <button
-                                className={styles.btn}
+                                className={styles.btn2}
                                 onClick={() => {
                                     navigate("/addProperty");
                                 }}
@@ -254,12 +253,7 @@ const MyProperty = () => {
                         </table>
                         <hr />
                         <div>
-                            <Pagination
-                                className={styles.Pagination}
-                                count={Math.ceil(listProperty.count / 8)}
-                                page={page}
-                                onChange={handleChange}
-                            />
+                            <Pagination className={styles.Pagination} count={Math.ceil(listProperty.count / 8)} page={page} onChange={handleChange} />
                         </div>
                     </div>
                 </div>
@@ -414,7 +408,6 @@ const MyProperty = () => {
                         </div>
                     </div> */}
             </div>
-
         </>
     );
 };

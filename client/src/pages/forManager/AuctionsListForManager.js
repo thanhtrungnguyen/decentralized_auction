@@ -128,29 +128,29 @@ const AuctionsListForManager = () => {
                         <td>{item.status === "Request" ? "Request Add" : item.status}</td>
                         <td>
                             {item.status === "Request" ? (
-                                <>
+                                <div className={styles.fl2}>
                                     <AiFillEye
                                         className={styles.iconView}
                                         onClick={() => {
-                                            navigate("/auctionDetailForManager");
+                                            navigate(`/auctionDetailForManager/${item._id}`);
                                         }}
                                     />
-                                    <Link className={styles.link2} to={`/approveAuction`}>
+                                    <Link className={styles.link2} to={`/approveAuction/${item._id}`}>
                                         Approve/Reject
                                     </Link>
-                                </>
+                                </div>
                             ) : (
-                                <>
+                                <div className={styles.fl2}>
                                     <AiFillEye
                                         className={styles.iconView}
                                         onClick={() => {
-                                            navigate("/auctionDetailForManager");
+                                            navigate(`/auctionDetailForManager/${item._id}`);
                                         }}
                                     />
                                     <Link className={styles.link2} to={`/viewRegistrationForManager`}>
                                         Process
                                     </Link>
-                                </>
+                                </div>
                             )}
 
                             {/* <AiOutlineDelete className={styles.iconView} /> */}

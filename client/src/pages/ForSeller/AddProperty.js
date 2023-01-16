@@ -16,6 +16,7 @@ import jwt from "jsonwebtoken";
 import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
+import "./styles.css";
 const AddProperty = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -115,13 +116,16 @@ const AddProperty = () => {
         // formData.append("biddingPreiod", biddingPreiod);
 
         axios
-            .post("/property/create", formData,
+            .post(
+                "/property/create",
+                formData,
                 {
                     headers: { "Content-Type": "multipart/form-data" },
                 },
                 {
                     withCredentials: true,
-                })
+                }
+            )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -130,7 +134,6 @@ const AddProperty = () => {
                     navigate("/myProperty");
                 } else {
                     alert(res.data.message);
-
                 }
             });
 
@@ -224,8 +227,13 @@ const AddProperty = () => {
                                         required
                                     ></input>
                                     <div className={styles.conImg}>
-                                        {propertyVideo && <video src={URL.createObjectURL(propertyVideo)} className={styles.image} controls />}{" "}
+                                        {propertyVideo && <video src={URL.createObjectURL(propertyVideo)} className={styles.video} controls />}{" "}
                                     </div>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
                                 </div>
                             </div>
                             <div className={styles.fl}>
@@ -250,7 +258,7 @@ const AddProperty = () => {
                                     <p className={styles.lable}>Category</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <select className={styles.drop} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category">
+                                    <select className={styles.inputText} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category">
                                         {data?.categories.map((item) => (
                                             <option value={item._id}>{item.name}</option>
                                         ))}
@@ -331,6 +339,7 @@ const AddProperty = () => {
                                 </div>
                                 <div className={styles.r}>
                                     <DatePicker
+                                        style={{ width: "746px" }}
                                         id="viewPropertyTime"
                                         // onChange={(e) => handleInputChange(e)}
                                         onChange={setViewPropertyTime}

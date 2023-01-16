@@ -85,6 +85,17 @@ th {
 .btn:hover {
     background-color: aqua;
 }
+.btn2 {
+    height: 40px;
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-left: 20px;
+    border: 1px solid darkgrey;
+}
+.btn2:hover {
+    background-color: aqua;
+}
 .ip {
     margin-top: 13px;
     border-radius: 15px;
@@ -100,6 +111,14 @@ th {
     width: 200px;
     height: 40px;
     margin-left: 750px;
+}
+.ip3 {
+    margin-top: 13px;
+    border-radius: 15px;
+    border: 1px solid darkgrey;
+    width: 200px;
+    height: 40px;
+    margin-left: 450px;
 }
 .iconView {
     width: 25px;
@@ -162,6 +181,9 @@ th {
 .fl {
     display: flex;
     width: 1280px;
+}
+.fl2 {
+    display: flex;
 }
 .r {
     width: 70%;
