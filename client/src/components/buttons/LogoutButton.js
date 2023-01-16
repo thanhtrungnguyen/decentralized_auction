@@ -12,10 +12,11 @@ export const LogoutButton = () => {
                 if (response.status === 201) {
                     localStorage.setItem("accessToken", response.data.accessToken);
                     localStorage.setItem("refreshToken", response.data.refreshToken);
+                    navigate("/login");
                 }
             })
             .catch((error) => {
-                console.log(error);
+                console.log("Logout error:", error);
                 alert("Ủa???");
             });
     };
@@ -24,7 +25,6 @@ export const LogoutButton = () => {
         <button
             onClick={() => {
                 handleLogout();
-                navigate("/login");
             }}
         >
             Fucking Logout
