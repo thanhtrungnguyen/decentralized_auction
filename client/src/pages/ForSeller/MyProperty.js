@@ -253,7 +253,7 @@ const MyProperty = () => {
                         </table>
                         <hr />
                         <div>
-                            <Pagination className={styles.Pagination} count={Math.ceil(listProperty.count / 8)} page={page} onChange={handleChange} />
+                            <Pagination className={styles.Pagination} count={Math.ceil(listProperty.count / 8)} hidden={listProperty.count === 0 ? true : false} page={page} onChange={handleChange} />
                         </div>
                     </div>
                 </div>

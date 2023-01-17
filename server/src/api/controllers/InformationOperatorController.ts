@@ -38,7 +38,7 @@ export const createInformationOperatorHandler = async (req: Request, res: Respon
     return res.status(409).json({ message: 'Phone has been exist!' });
   }
 
-  const userCreated: any = await createUser({ ...createData, role: 'manager' });
+  const userCreated: any = await createUser({ ...createData, role: createData.role });
   if (userCreated._id) {
     return await createInformationOperator({ ...createData, user: userCreated._id })
       .then((result: any) => {

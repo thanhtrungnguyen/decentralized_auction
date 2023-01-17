@@ -118,7 +118,7 @@ const Register = () => {
         });
     };
     const [listUsername, setListUsername] = useState([]);
-    const baseURL = `http://localhost:5000/api/user/users`;
+    const baseURL = `/user/users`;
 
     const handleSubmit = (event) => {
         axios.get(baseURL, { withCredentials: true }).then((resp) => {
@@ -279,7 +279,7 @@ const Register = () => {
                         value={lastName}
                         onChange={(e) => handleInputChange(e)}
                         id="lastName"
-                        // required
+                    // required
                     ></input>
                     <p className={styles.txtBlack}></p>
                     <select
@@ -304,7 +304,7 @@ const Register = () => {
                         value={email}
                         onChange={(e) => handleInputChange(e)}
                         id="email"
-                        //required
+                    //required
                     ></input>
                     <input
                         className={styles.inputEP}
@@ -314,7 +314,7 @@ const Register = () => {
                         value={phone}
                         onChange={(e) => handleInputChange(e)}
                         id="phone"
-                        //required
+                    //required
                     ></input>
                     <p className={styles.textRed}>Address</p>
                     <Select
@@ -355,7 +355,7 @@ const Register = () => {
                         value={specificAddress}
                         onChange={(e) => handleInputChange(e)}
                         id="specificAddress"
-                        //required
+                    //required
                     ></input>{" "}
                     <p className={styles.textRed}>Identity/Citizen card</p>
                     <input
@@ -366,7 +366,7 @@ const Register = () => {
                         value={cardNumber}
                         onChange={(e) => handleInputChange(e)}
                         id="cardNumber"
-                        //required
+                    //required
                     ></input>
                     <input type="date" className={styles.ip3} value={dateRangeCard} onChange={(e) => handleInputChange(e)} id="dateRangeCard"></input>
                     <input
@@ -377,7 +377,7 @@ const Register = () => {
                         value={cardGrantedPlace}
                         onChange={(e) => handleInputChange(e)}
                         id="cardGrantedPlace"
-                        //required
+                    //required
                     ></input>
                     <input
                         className={styles.imgCard}
@@ -388,7 +388,7 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                        //required
+                    //required
                     />
                     <input
                         id="cardBack"
@@ -398,9 +398,9 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                        //required
+                    //required
                     />
-                    <p className={styles.textBlue}>Account Infomation</p>
+                    <p className={styles.textBlue}>Account Information</p>
                     <input
                         className={styles.inputEP}
                         type="email"
@@ -409,7 +409,7 @@ const Register = () => {
                         onChange={(e) => handleInputChange(e)}
                         id="userName"
                         placeholder="Username"
-                        //required
+                    //required
                     ></input>
                     <div className={styles.fl}>
                         <input
@@ -420,7 +420,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="password"
                             placeholder="Password"
-                            //required
+                        //required
                         ></input>
                         <i className={styles.i} onClick={togglePasswordVisibility}>
                             {eye}
@@ -434,7 +434,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="rePassword"
                             placeholder="Re-eneter the password"
-                            //required
+                        //required
                         ></input>
                         <i className={styles.i} onClick={toggleRePasswordVisibility}>
                             {eye}
