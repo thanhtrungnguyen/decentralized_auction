@@ -15,7 +15,7 @@ import { useFetchBidding } from "../../hook/useFetch";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
-const BidModal = ({ setOpenModal, auction, auctionRegistration, propertyId, property }) => {
+const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
     const { chainId, isWeb3Enabled, account } = useMoralis();
     const [hasMetamask, setHasMetamask] = useState(false);
     useEffect(() => {
