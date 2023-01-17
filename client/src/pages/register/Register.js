@@ -53,6 +53,8 @@ const Register = () => {
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
     const role = "bidder";
+    const [isExist, setIsExit] = useState(false);
+
     //const [usertype] = useState("CONTACT");
 
     const handleInputChange = (e) => {
@@ -115,7 +117,21 @@ const Register = () => {
             theme: "light",
         });
     };
+    const [listUsername, setListUsername] = useState([]);
+    const baseURL = `http://localhost:5000/api/user/users`;
+
     const handleSubmit = (event) => {
+        axios.get(baseURL, { withCredentials: true }).then((resp) => {
+            setListUsername(resp.data.users);
+            listUsername.map((item) => {
+                if (item.username === username) {
+                    setIsExit(true);
+                    console.log(item.username);
+                } else {
+                    setIsExit(false);
+                }
+            });
+        });
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
@@ -156,6 +172,8 @@ const Register = () => {
             notify("🦄 password is empty");
         } else if (!rePassword) {
             notify("🦄 rePassword is empty");
+        } else if (isExist) {
+            notify("🦄 Username is exist");
         } else if (rePassword != password) {
             notify("🦄 rePassword is not same password");
         } else {
@@ -196,6 +214,9 @@ const Register = () => {
                     console.log(res.data);
                     alert("Register successfully!!!");
                     navigate("/login");
+                })
+                .catch(() => {
+                    notify("🦄 Register Failed");
                 });
         }
 
