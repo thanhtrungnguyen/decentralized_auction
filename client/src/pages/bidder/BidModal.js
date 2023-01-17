@@ -15,7 +15,7 @@ import { useFetchBidding } from "../../hook/useFetch";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
-const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyId, propertyObject }) => {
+const BidModal = ({ setOpenModal, auction, auctionRegistration, propertyId, property }) => {
     const { chainId, isWeb3Enabled, account } = useMoralis();
     const [hasMetamask, setHasMetamask] = useState(false);
     useEffect(() => {
@@ -37,7 +37,6 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
         // const registeredWallet = checkUserRegistered();
         // console.log(checkUserRegistered());
         // debugger;
-        if (loading) return "Loading";
         if (!auction) return "AuctionNotFound";
         if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
         // if (registeredWallet != null && registeredWallet != account) {
@@ -62,17 +61,17 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
             case "Loading":
                 return <Loading />;
             case "NotYetRegistrationTime":
-                return <NotYetRegistrationTime auction={auction} propertyObject={propertyObject} />;
+                return <NotYetRegistrationTime auction={auction} property={property} />;
             case "RegistrationTime":
                 // return <AuctionRegistration auction={auction} property={property} />;
-                return <AuctionRegistration auction={auction} propertyObject={propertyObject} />;
+                return <AuctionRegistration auction={auction} property={property} />;
             case "WaitingAuctionTime":
-                return <WaitingForAuctionTime auction={auction} propertyObject={propertyObject} />;
+                return <WaitingForAuctionTime auction={auction} property={property} />;
             case "AuctionTime":
-                return <PlaceBid auction={auction} property={propertyId} propertyObject={propertyObject} />;
+                return <PlaceBid auction={auction} property={property} />;
             case "PaymentTime":
                 // return <h2>PaymentTime</h2>;
-                return <AuctionResult auction={auction} propertyObject={propertyObject} />;
+                return <AuctionResult auction={auction} property={property} />;
             case "AuctionEnded":
                 return <h2>Auction Ended</h2>;
             case "NotRegistered":
@@ -98,7 +97,7 @@ const BidModal = ({ closeModal, loading, auction, auctionRegistration, propertyI
     // console.log("checkUserRegistered()", checkUserRegistered());
     return (
         <div className={styles.container}>
-            <HeaderBid closeModal={closeModal} />
+            <HeaderBid setOpenModal={setOpenModal} />
             <div>
                 {hasMetamask ? (
                     isWeb3Enabled ? (

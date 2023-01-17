@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Countdown from "react-countdown";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import AuctionRegistration from "./AuctionRegistration";
-const NotYetRegistrationTime = ({ auction, propertyObject }) => {
+const NotYetRegistrationTime = ({ auction, property }) => {
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            return <AuctionRegistration auction={auction} propertyObject={propertyObject} />;
+            return <AuctionRegistration auction={auction} property={property} />;
         } else {
             return (
                 <>

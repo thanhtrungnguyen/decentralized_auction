@@ -22,7 +22,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig
 import Loader from "../components/Loader";
 import Decimal from "decimal.js";
 import io from "socket.io-client";
-function PlaceBid({ auction, propertyObject }) {
+function PlaceBid({ auction, property }) {
     const baseURLPlacedBid = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/placedBid`;
     const baseURLRegistered = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
     const { loading: loadingPlacedBid, data: placedBid, error: errorPlacedBid } = useFetchData(baseURLPlacedBid, auction.auctionId);
@@ -259,7 +259,7 @@ function PlaceBid({ auction, propertyObject }) {
 
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            return <AuctionResult auction={auction} propertyObject={propertyObject} />;
+            return <AuctionResult auction={auction} property={property} />;
         } else {
             return (
                 <div>
@@ -268,7 +268,7 @@ function PlaceBid({ auction, propertyObject }) {
                         <p className={styles.txt}>You have selected:</p>
                         <div>
                             <div className={styles.info}>
-                                <BiddingProperty propertyObject={propertyObject} />
+                                <BiddingProperty property={property} />
                                 {highestBid != 0 ? (
                                     <>
                                         <p className={styles.txtM}>Starting bid:</p>
