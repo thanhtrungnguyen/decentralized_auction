@@ -5,9 +5,7 @@ import { ConnectButton } from "web3uikit";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import { useMoralis } from "react-moralis";
 
-const HeaderBid = ({ closeModal }) => {
-    const { account } = useMoralis();
-
+const HeaderBid = ({ setOpenModal }) => {
     return (
         <div>
             <div className={styles.connect}>
@@ -15,7 +13,7 @@ const HeaderBid = ({ closeModal }) => {
                 <button
                     className={styles.btnClose}
                     onClick={() => {
-                        closeModal(false);
+                        setOpenModal(false);
                     }}
                 >
                     Close

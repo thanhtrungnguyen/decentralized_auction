@@ -2,10 +2,10 @@ import React from "react";
 import Countdown from "react-countdown";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import PlaceBid from "./PlaceBid";
-const WaitingForAuctionTime = ({ auction, propertyObject }) => {
+const WaitingForAuctionTime = ({ auction, property }) => {
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            return <PlaceBid auction={auction} propertyObject={propertyObject} />;
+            return <PlaceBid auction={auction} property={property} />;
         } else {
             return (
                 <>

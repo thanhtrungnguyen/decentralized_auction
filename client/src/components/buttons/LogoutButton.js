@@ -10,8 +10,9 @@ export const LogoutButton = () => {
             .delete("/session")
             .then((response) => {
                 if (response.status === 201) {
-                    localStorage.setItem("accessToken", response.data.accessToken);
-                    localStorage.setItem("refreshToken", response.data.refreshToken);
+                    // localStorage.setItem("accessToken", response.data.accessToken);
+                    // localStorage.setItem("refreshToken", response.data.refreshToken);
+                    localStorage.clear();
                 }
             })
             .then(navigate("/login"))
