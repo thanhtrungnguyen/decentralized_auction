@@ -15,8 +15,12 @@ import FooterCopy from "../../components/footer/FooterCopy";
 // import ReactDOM from "react-dom/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const eye = <FontAwesomeIcon icon={faEye} />;
 // axios.defaults.withCredentials = true;
+
 const Register = () => {
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const navigate = useNavigate();
@@ -33,7 +37,7 @@ const Register = () => {
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
 
-    const [firstName, setFirstName] = useState(null);
+    const [firstName, setFirstName] = useState("");
     const [lastName, setlastName] = useState(null);
     const [gender, setgender] = useState("Male");
     const [dateOfBirth, setdateOfBirth] = useState(null);
@@ -48,40 +52,40 @@ const Register = () => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
-    const role = 'bidder'
+    const role = "bidder";
     //const [usertype] = useState("CONTACT");
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "firstName") {
-            setFirstName(value);
+            setFirstName(value.trim());
         }
         if (id === "lastName") {
-            setlastName(value);
+            setlastName(value.trim());
         }
         if (id === "gender") {
-            setgender(value);
+            setgender(value.trim());
         }
         if (id === "dateOfBirth") {
-            setdateOfBirth(value);
+            setdateOfBirth(value.trim());
         }
         if (id === "email") {
-            setEmail(value);
+            setEmail(value.trim());
         }
         if (id === "phone") {
-            setPhone(value);
+            setPhone(value.trim());
         }
         if (id === "specificAddress") {
-            setSpecificAddress(value);
+            setSpecificAddress(value.trim());
         }
         if (id === "cardNumber") {
-            setcardNumber(value);
+            setcardNumber(value.trim());
         }
         if (id === "dateRangeCard") {
-            setdateRangeCard(value);
+            setdateRangeCard(value.trim());
         }
         if (id === "cardGrantedPlace") {
-            setCardGrantedPlace(value);
+            setCardGrantedPlace(value.trim());
         }
         if (id === "cardFront") {
             setCardFront(e.target.files[0]);
@@ -90,50 +94,94 @@ const Register = () => {
             setCardBack(e.target.files[0]);
         }
         if (id === "userName") {
-            setUsername(value);
+            setUsername(value.trim());
         }
         if (id === "password") {
-            setPassword(value);
+            setPassword(value.trim());
         }
         if (id === "rePassword") {
-            setRePassword(value);
+            setRePassword(value.trim());
         }
-        // if (id === "role") {
-        //   setRole(value);
-        // }
+    };
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
     };
     const handleSubmit = (event) => {
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
 
-        const formData = new FormData();
-        formData.append("firstName", firstName);
-        formData.append("lastName", lastName);
-        formData.append("gender", gender);
-        formData.append("dateOfBirth", dateOfBirth);
-        formData.append("email", email);
-        formData.append("phone", phone);
-        //formData.append("position", position);
-        formData.append("cityId", cityId);
-        formData.append("city", selectedCity.label);
-        formData.append("districtId", districtId);
-        formData.append("district", selectedDistrict.label);
-        formData.append("wardsId", wardId);
-        formData.append("wards", selectedWard.label);
-        formData.append("address", specificAddress);
-        formData.append("cardNumber", cardNumber);
-        formData.append("cardGrantedDate", dateRangeCard);
-        formData.append("cardGrantedPlace", cardGrantedPlace);
-        formData.append("frontSideImage", cardFront);
-        formData.append("backSideImage", cardBack);
-        formData.append("username", username);
-        formData.append("password", password);
-        formData.append("role", role);
-        // formData.append("usertype", usertype);
-        if (rePassword !== password) {
-            setMessage("Please enter match the password");
+        if (!firstName) {
+            notify("🦄 FirstName is empty");
+        } else if (!lastName) {
+            notify("🦄 LastName is empty");
+        } else if (!gender) {
+            notify("🦄 Gender is empty");
+        } else if (!dateOfBirth) {
+            notify("🦄 Date Of Birth is empty");
+        } else if (!email) {
+            notify("🦄 Email is empty");
+        } else if (!phone) {
+            notify("🦄 phone is empty");
+        } else if (!cityId) {
+            notify("🦄 city is empty");
+        } else if (!districtId) {
+            notify("🦄 district is empty");
+        } else if (!wardId) {
+            notify("🦄 ward is empty");
+        } else if (!specificAddress) {
+            notify("🦄 specificAddress is empty");
+        } else if (!cardNumber) {
+            notify("🦄 cardNumber is empty");
+        } else if (!dateRangeCard) {
+            notify("🦄 dateRangeCard is empty");
+        } else if (!cardGrantedPlace) {
+            notify("🦄 cardGrantedPlace is empty");
+        } else if (!cardFront) {
+            notify("🦄 cardFront is empty");
+        } else if (!cardBack) {
+            notify("🦄 cardBack is empty");
+        } else if (!username) {
+            notify("🦄 username is empty");
+        } else if (!password) {
+            notify("🦄 password is empty");
+        } else if (!rePassword) {
+            notify("🦄 rePassword is empty");
+        } else if (rePassword != password) {
+            notify("🦄 rePassword is not same password");
         } else {
+            const formData = new FormData();
+            formData.append("firstName", firstName);
+            formData.append("lastName", lastName);
+            formData.append("gender", gender);
+            formData.append("dateOfBirth", dateOfBirth);
+            formData.append("email", email);
+            formData.append("phone", phone);
+            //formData.append("position", position);
+            formData.append("cityId", cityId);
+            formData.append("city", selectedCity.label);
+            formData.append("districtId", districtId);
+            formData.append("district", selectedDistrict.label);
+            formData.append("wardsId", wardId);
+            formData.append("wards", selectedWard.label);
+            formData.append("address", specificAddress);
+            formData.append("cardNumber", cardNumber);
+            formData.append("cardGrantedDate", dateRangeCard);
+            formData.append("cardGrantedPlace", cardGrantedPlace);
+            formData.append("frontSideImage", cardFront);
+            formData.append("backSideImage", cardBack);
+            formData.append("username", username);
+            formData.append("password", password);
+            formData.append("role", role);
             axios
                 .post(
                     "/individual/create",
@@ -158,8 +206,23 @@ const Register = () => {
         <>
             <Header />
             <NavBar />
+
             <div className={styles.container}>
                 <form onSubmit={handleSubmit}>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
+                    {/* Same as */}
+                    <ToastContainer />
                     <p className={styles.textCreate}>Create your DAP account</p>
                     <Link to="/login" className={styles.textAd}>
                         Already have an account? Login
@@ -180,14 +243,13 @@ const Register = () => {
                     <input
                         className={styles.inputT}
                         type="text"
-                        pattern="[a-zA-Z]{1,50}"
+                        // pattern="[a-zA-Z]{1,50}"
                         placeholder="First name"
                         value={firstName}
                         onChange={(e) => handleInputChange(e)}
                         id="firstName"
-                        required
                     ></input>
-                    <p className={styles.txtBlack}>Message</p>
+                    <p className={styles.txtBlack}></p>
                     <input
                         className={styles.inputT}
                         type="text"
@@ -196,9 +258,9 @@ const Register = () => {
                         value={lastName}
                         onChange={(e) => handleInputChange(e)}
                         id="lastName"
-                        required
+                        // required
                     ></input>
-                    <p className={styles.txtBlack}>Message</p>
+                    <p className={styles.txtBlack}></p>
                     <select
                         id="gender"
                         className={styles.dropdown}
@@ -221,7 +283,7 @@ const Register = () => {
                         value={email}
                         onChange={(e) => handleInputChange(e)}
                         id="email"
-                        required
+                        //required
                     ></input>
                     <input
                         className={styles.inputEP}
@@ -231,7 +293,7 @@ const Register = () => {
                         value={phone}
                         onChange={(e) => handleInputChange(e)}
                         id="phone"
-                        required
+                        //required
                     ></input>
                     <p className={styles.textRed}>Address</p>
                     <Select
@@ -272,7 +334,7 @@ const Register = () => {
                         value={specificAddress}
                         onChange={(e) => handleInputChange(e)}
                         id="specificAddress"
-                        required
+                        //required
                     ></input>{" "}
                     <p className={styles.textRed}>Identity/Citizen card</p>
                     <input
@@ -283,7 +345,7 @@ const Register = () => {
                         value={cardNumber}
                         onChange={(e) => handleInputChange(e)}
                         id="cardNumber"
-                        required
+                        //required
                     ></input>
                     <input type="date" className={styles.ip3} value={dateRangeCard} onChange={(e) => handleInputChange(e)} id="dateRangeCard"></input>
                     <input
@@ -294,7 +356,7 @@ const Register = () => {
                         value={cardGrantedPlace}
                         onChange={(e) => handleInputChange(e)}
                         id="cardGrantedPlace"
-                        required
+                        //required
                     ></input>
                     <input
                         className={styles.imgCard}
@@ -305,7 +367,7 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                        required
+                        //required
                     />
                     <input
                         id="cardBack"
@@ -315,7 +377,7 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                        required
+                        //required
                     />
                     <p className={styles.textBlue}>Account Infomation</p>
                     <input
@@ -326,7 +388,7 @@ const Register = () => {
                         onChange={(e) => handleInputChange(e)}
                         id="userName"
                         placeholder="Username"
-                        required
+                        //required
                     ></input>
                     <div className={styles.fl}>
                         <input
@@ -337,7 +399,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="password"
                             placeholder="Password"
-                            required
+                            //required
                         ></input>
                         <i className={styles.i} onClick={togglePasswordVisibility}>
                             {eye}
@@ -351,7 +413,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="rePassword"
                             placeholder="Re-eneter the password"
-                            required
+                            //required
                         ></input>
                         <i className={styles.i} onClick={toggleRePasswordVisibility}>
                             {eye}
