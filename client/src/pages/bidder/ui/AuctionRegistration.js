@@ -12,38 +12,47 @@ import { useEffect, useState } from "react";
 import WaitingForAuctionTime from "./WaitingForAuctionTime";
 import TransactionStatus from "../components/TransactionStatus";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
-import { useFetchData } from "../../../hook/useFetch";
 import Loader from "../components/Loader";
-import axios from "axios";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
+import { getBidderState } from "../../../utils/getBidderState";
 
-function AuctionRegistration({ auction, propertyObject }) {
+function AuctionRegistration({ auction, property }) {
     const { account, isWeb3Enabled } = useMoralis();
-    const dispatch = useNotification();
-    // const [bidInformation, setBidInformation] = useState();
     const [transactionStatus, setTransactionStatus] = useState();
-    const [isRegisteredBidder, setRegisteredBidder] = useState(false);
-    const [isLoadingInfo, setLoadingInfo] = useState(true);
-    // const baseURL = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
-    // const { loading, data: registeredBid, error } = useFetchData(baseURL);
-    useEffect(() => {
-        if (isWeb3Enabled) {
-            updateUI();
-        }
-    }, [isWeb3Enabled, account, isRegisteredBidder]);
+    const [bidderState, setBidderState] = useState(false);
+    const dispatch = useNotification();
+
+    const updateUI = async () => {
+        setTransactionStatus();
+        setBidderState();
+        await getBidInformationByAuctionId();
+        setBidderState(getBidderState(bidInformationData, account));
+    };
 
     const amount =
         auction.registrationFee != null && auction.depositAmount != null
-            ? ethers.utils.parseUnits(new Decimal(auction.registrationFee).plus(auction.depositAmount).toString(), "ether").toString()
+            ? parseWei(new Decimal(auction.registrationFee).plus(auction.depositAmount).toString(), "ether")
             : "0";
 
     const {
+        runContractFunction: getBidInformationByAuctionId,
+        data: bidInformationData,
+        error: bidInformationError,
+        isFetching: isBidInformationFetching,
+        isLoading: isBidInformationLoading,
+    } = useWeb3Contract({
+        abi: CONTRACT_ABI,
+        contractAddress: CONTRACT_ADDRESS,
+        functionName: "getBidInformationByAuctionId",
+        params: { auctionId: auction.auctionId },
+    });
+
+    const {
         runContractFunction: registerToBid,
-        data,
+        data: registerToBidData,
         error: errorRegisterToBid,
-        isFetching,
-        isLoading,
+        isFetching: isRegisterToBidFetching,
+        isLoading: isRegisterToBidLoading,
     } = useWeb3Contract({
         abi: CONTRACT_ABI,
         contractAddress: CONTRACT_ADDRESS,
@@ -51,46 +60,12 @@ function AuctionRegistration({ auction, propertyObject }) {
         msgValue: amount,
         params: { auctionId: auction.auctionId },
     });
-    const updateUI = async () => {
-        // setBidInformation(await getBidInformationByAuctionId());
-        // await checkRegisteredBidder();
-        setLoadingInfo(false);
-        // setRegisteredBidder(true);
-    };
 
-    // const checkRegisteredBidder = async () => {
-    //     if (!registeredBid) return;
-    //     await registeredBid.forEach((element) => {
-    //         if (element.bidder.toUpperCase() === account.toUpperCase()) {
-    //             setRegisteredBidder(true);
-    //         }
-    //     });
-    //     // setRegisteredBidder(false);
-    // };
-
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
+    useEffect(() => {
+        if (isWeb3Enabled) {
+            updateUI();
         }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-    // const createAuctionRegistration = () => {
-    //     const postUrl = "http://localhost:8800/api/auctionInformation/auctionRegistration";
-    //     const auctionRegistration = { auctionId: auction.auctionId, bidderId: getUser().userName, wallet: account };
-    //     axios
-    //         .post(postUrl, auctionRegistration)
-    //         .then((res) => {
-    //             console.log(res);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // };
+    }, [isWeb3Enabled, account, bidInformationData?.length]);
 
     const handleSuccess = async (tx) => {
         try {
@@ -98,23 +73,19 @@ function AuctionRegistration({ auction, propertyObject }) {
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
             updateUI();
-            setRegisteredBidder(true);
-            // createAuctionRegistration();
-            handleSuccessNotification(tx);
+            dispatch({
+                type: "success",
+                title: "Registration Notification",
+                message: "Registration Completed!",
+                position: "topR",
+                icon: <BsCheckLg />,
+            });
         } catch (error) {
             console.log(error);
         }
     };
-    const handleSuccessNotification = () => {
-        dispatch({
-            type: "success",
-            title: "Registration Notification",
-            message: "Registration Completed!",
-            position: "topR",
-            icon: <BsCheckLg />,
-        });
-    };
-    const handleErrorNotification = () => {
+
+    const handleError = () => {
         setTransactionStatus({ status: "Failed" });
         dispatch({
             type: "error",
@@ -125,9 +96,40 @@ function AuctionRegistration({ auction, propertyObject }) {
         });
     };
 
+    const renderCurrentBidderState = () => {
+        switch (bidderState) {
+            case "NOT_REGISTERED":
+                return (
+                    <>
+                        <p className={styles.txtT}>
+                            Total amount you must to pay:
+                            {parseEther(amount)}
+                            ETH
+                        </p>
+                        <button
+                            disabled={isRegisterToBidFetching || isRegisterToBidLoading}
+                            className={styles.btn}
+                            onClick={async () =>
+                                await registerToBid({
+                                    onSuccess: handleSuccess,
+                                    onError: handleError,
+                                })
+                            }
+                        >
+                            {isRegisterToBidFetching || isRegisterToBidLoading ? <div>Loading...</div> : <div>Register for auction</div>}
+                        </button>
+                    </>
+                );
+            case "BIDDING":
+                return <p className={styles.title}>You have Registered The Auction</p>;
+            default:
+                return <Loader />;
+        }
+    };
+
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            return <WaitingForAuctionTime auction={auction} propertyObject={propertyObject} />;
+            return <WaitingForAuctionTime auction={auction} property={property} />;
         } else {
             return (
                 <div>
@@ -136,11 +138,9 @@ function AuctionRegistration({ auction, propertyObject }) {
                         <p className={styles.txt}>You have selected:</p>\
                         <div>
                             <div className={styles.info}>
-                                {/* <BiddingProperty auction={auction} property={property} /> */}
-                                <BiddingProperty propertyObject={propertyObject} />
+                                <BiddingProperty property={property} />
                                 <p className={styles.txtM}>Starting bid:</p>
                                 <p className={styles.txtNormal}>{auction.startBid}</p>
-                                {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
                                 <p className={styles.txtM}>Registration ends in:</p>
                                 <p className={styles.txtNormal}>
                                     <span>
@@ -149,41 +149,39 @@ function AuctionRegistration({ auction, propertyObject }) {
                                 </p>
                             </div>
                             <div className={styles.detail}>
-                                {/* <form> */}
                                 <p className={styles.title}>Registration details:</p>
                                 <p className={styles.txtT}>Registration Fee: {auction.registrationFee} ETH</p>
                                 <p className={styles.txtT}>Deposit Amount: {auction.depositAmount} ETH</p>
-
-                                {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
-                                {/* <label className={styles.mess}>message</label> */}
-                                {isLoadingInfo ? (
+                                {/* {isBidInformationFetching || isBidInformationLoading ? (
                                     <Loader />
-                                ) : !isRegisteredBidder ? (
+                                ) : !isRegistered ? (
                                     <>
                                         <p className={styles.txtT}>
                                             Total amount you must to pay:
-                                            {auction.registrationFee != null && auction.depositAmount != null
-                                                ? new Decimal(auction.registrationFee).plus(auction.depositAmount).toString()
-                                                : "0"}
+                                            {parseEther(amount)}
                                             ETH
                                         </p>
                                         <button
-                                            disabled={isRegisteredBidder || isLoading || isFetching}
+                                            disabled={isRegisterToBidFetching || isRegisterToBidLoading}
                                             className={styles.btn}
                                             onClick={async () =>
                                                 await registerToBid({
                                                     onSuccess: handleSuccess,
-                                                    onError: handleErrorNotification,
+                                                    onError: handleError,
                                                 })
                                             }
                                         >
-                                            {isLoading || isFetching ? <div>Loading...</div> : <div>Register for auction</div>}
+                                            {isRegisterToBidFetching || isRegisterToBidLoading ? (
+                                                <div>Loading...</div>
+                                            ) : (
+                                                <div>Register for auction</div>
+                                            )}
                                         </button>
                                     </>
                                 ) : (
                                     <p className={styles.title}>You have Registered The Auction</p>
-                                )}
-
+                                )} */}
+                                {renderCurrentBidderState()}
                                 <TransactionStatus transactionStatus={transactionStatus} />
                             </div>
                         </div>

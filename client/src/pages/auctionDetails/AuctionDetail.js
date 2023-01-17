@@ -36,29 +36,7 @@ const AuctionDetail = () => {
         if (id === "img2") setImg(src);
         if (id === "img3") setImg(src);
     };
-    console.log(data);
-    console.log(loading);
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-    useEffect(() => {
-        console.log(getUser());
-
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
+    useEffect(() => {}, []);
 
     // const [openModal, setOpenModal] = useState(() => {
     //     return false;
@@ -70,7 +48,7 @@ const AuctionDetail = () => {
         <>
             {(() => {
                 if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
+                    // return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
                 }

@@ -158,8 +158,11 @@ const AddSeller = () => {
         // formData.append("userType", userType);
         axios
             .post('/organization/create', formData, {
-                withCredentials: true,
-            })
+                headers: { "Content-Type": "multipart/form-data" },
+            },
+                {
+                    withCredentials: true,
+                })
             .then(res => {
                 console.log(res);
                 console.log(res.data);

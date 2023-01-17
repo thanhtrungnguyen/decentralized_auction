@@ -35,7 +35,7 @@ const AuctionList = () => {
     const [name, setName] = useState(null);
     const [name2, setName2] = useState(null);
     const [checkedState, setCheckedState] = useState([false, false, false]);
-    const baseURLAuction = `/auction/auctions`;
+    const baseURLAuction = `/auction/auctions/bidder/${page}/${status}/${name}`;
     const [change, setChange] = useState(null);
     const [categories, setCategories] = useState([]);
     const [auctions, setAuctions] = useState([]);
@@ -68,7 +68,8 @@ const AuctionList = () => {
         });
         return users;
     };
-    // get All Category
+
+
     useEffect(() => {
         if (loading) {
             fetchPostList();
@@ -79,7 +80,7 @@ const AuctionList = () => {
     async function fetchPostList() {
         setLoading(true);
         await axios
-            .get(`http://localhost:5000/api/category/categories`)
+            .get(`/category/categories`)
             .then((resp) => {
                 setCategories(resp.data);
                 // console.log(resp.data);
@@ -89,7 +90,7 @@ const AuctionList = () => {
                 console.error(error);
             });
         await axios.get(baseURLAuction).then((resp) => {
-            setAuctions(resp.data);
+            setAuctions(resp.data.auctions);
             console.log(resp.data);
             console.log("axios get");
             // socket.off();
@@ -103,7 +104,7 @@ const AuctionList = () => {
     }
     const fetchDataStatus = async () => {
         await axios.get(baseURLAuction).then((resp) => {
-            setAuctions(resp.data);
+            setAuctions(resp.data.auctions);
             console.log(resp.data);
             console.log("axios get");
             // socket.off();
@@ -141,7 +142,46 @@ const AuctionList = () => {
         setSort(e.target.value);
         setPage(1);
     };
+    function exportData(data) {
+        return <>
+            {data.listAuction.map((item) =>
+                <div className={styles.auction}>
+                    <img className={styles.img} src={`${item.property.mediaUrl[0]}`} alt="img" />
+                    <p className={styles.name}>{item.name}</p>
+                    <p className={styles.price}>{item.property.startBid} ETH</p>
+                    <p className={styles.status}>Status: {item.status} </p>
+                    <p className={styles.time}>
+                        <AiOutlineFieldTime className={styles.i} />
+                        <label className={styles.l}>
+                            Registration time: {moment(item.startRegistrationTime).format("L")},{" "}
+                            {moment(item.startRegistrationTime).format("LTS")} - {moment(item.endRegistrationTime).format("L")},{" "}
+                            {moment(item.endRegistrationTime).format("LTS")}
+                        </label>
+                    </p>
+                    <p className={styles.time}>
+                        <AiOutlineFieldTime className={styles.i} />
+                        <label className={styles.l}>
+                            Registration time: {moment(item.startAuctionTime).format("L")},{" "}
+                            {moment(item.startAuctionTime).format("LTS")} - {moment(item.endAuctionTime).format("L")},{" "}
+                            {moment(item.endAuctionTime).format("LTS")}
+                        </label>
+                    </p>
+                    <br />
+                    <br />
+                    <br />
 
+                    <button
+                        className={styles.btnDetail}
+                        onClick={() => {
+                            navigate(`/auctionDetail/${item._id}`);
+                        }}
+                    >
+                        Detail
+                    </button>
+                </div>
+            )}
+        </>
+    }
     return loading ? (
         <Loading />
     ) : (
@@ -269,48 +309,10 @@ const AuctionList = () => {
                         </select>
                     </div>
                     <div className={styles.auctions}>
-                        {auctions.auctions.map((item) => {
-                            return (
-                                <>
-                                    <div className={styles.auction}>
-                                        <img className={styles.img} src={`${item.property.mediaUrl[0]}`} alt="img" />
-                                        <p className={styles.name}>{item.name}</p>
-                                        <p className={styles.price}>{item.property.startBid} ETH</p>
-                                        <p className={styles.status}>Status: {item.status} </p>
-                                        <p className={styles.time}>
-                                            <AiOutlineFieldTime className={styles.i} />
-                                            <label className={styles.l}>
-                                                Registration time: {moment(item.startRegistrationTime).format("L")},{" "}
-                                                {moment(item.startRegistrationTime).format("LTS")} - {moment(item.endRegistrationTime).format("L")},{" "}
-                                                {moment(item.endRegistrationTime).format("LTS")}
-                                            </label>
-                                        </p>
-                                        <p className={styles.time}>
-                                            <AiOutlineFieldTime className={styles.i} />
-                                            <label className={styles.l}>
-                                                Registration time: {moment(item.startAuctionTime).format("L")},{" "}
-                                                {moment(item.startAuctionTime).format("LTS")} - {moment(item.endAuctionTime).format("L")},{" "}
-                                                {moment(item.endAuctionTime).format("LTS")}
-                                            </label>
-                                        </p>
-                                        <br />
-                                        <br />
-                                        <br />
-
-                                        <button
-                                            className={styles.btnDetail}
-                                            onClick={() => {
-                                                navigate(`/auctionDetail/${item._id}`);
-                                            }}
-                                        >
-                                            Detail
-                                        </button>
-                                    </div>
-                                </>
-                            );
-                        })}
+                        {exportData(auctions)}
                     </div>
-                    <Pagination className={styles.pagi} count={Math.ceil(10 / 5)} page={page} onChange={handleChange} hidden={data.total === 0} />
+                    <Pagination className={styles.pagi} hidden={auctions.count === 0 ? true : false}
+                        count={Math.ceil(auctions.count / 3)} page={page} onChange={handleChange} />
                 </div>
             </div>
 
