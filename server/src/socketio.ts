@@ -9,8 +9,13 @@ import { updateProperty } from './api/services/PropertyService';
 
 export const connectSocket = (app: any) => {
   const server = http.createServer(app);
-  const io = new Server(server);
-
+  const io = new Server(server, {
+    cors: {
+      origin: config.client.address,
+      methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+      credentials: true
+    }
+  });
   io.on('connection', (socket) => {});
   io.on('error', (err) => {
     console.log('Caught flash policy server socket error: ');
