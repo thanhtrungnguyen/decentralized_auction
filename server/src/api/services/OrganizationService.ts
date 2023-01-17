@@ -4,7 +4,21 @@ import logger from '../utils/logger';
 
 const getAllOrganizations = async () => {
   try {
-    return await Organization.find({});
+    let listSeller;
+    await Organization.find({})
+      .populate({
+        path: 'individual',
+        populate: {
+          path: 'user',
+          match: {
+            role: 'seller'
+          }
+        }
+      })
+      .then((result) => {
+        listSeller = result.filter((element) => element.individual.user !== null);
+      });
+    return listSeller;
   } catch (error) {
     logger.error(error);
   }

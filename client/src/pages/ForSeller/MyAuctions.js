@@ -29,8 +29,8 @@ const MyAuctions = () => {
     // const navigate = useNavigate();
     // const baseURL = "http://localhost:8800/api/myAuctions/";
     // const { data, loading, error } = useFetch(baseURL);
-    const baseURLCategory = "/category/";
-    const baseURLAuction = `/auction/getAuctionForSeller/${page}/${propertyName}/${category}/${status}`;
+    //const baseURLCategory = "/category/";
+    const baseURLAuction = `/auction/auctions`;
     //const { data, loading, error } = useFetch(baseURL);
     const [listCategory, setListCategory] = useState([]);
     const [listAuction, setListAuction] = useState([]);
@@ -57,23 +57,23 @@ const MyAuctions = () => {
         setStatus(e.target.value);
         setPage(1);
     };
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         await axios.get(baseURLCategory).then((resp) => {
-    //             console.log(resp.data);
-    //             console.log("axios get");
-    //             setListCategory(resp.data);
-    //         });
-    //         await axios.get(baseURLAuction, { withCredentials: true }).then((resp) => {
-    //             console.log(resp.data);
-    //             console.log("axios get");
-    //             setListAuction(resp.data);
-    //         });
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    // }, [baseURLAuction]);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            // await axios.get(baseURLCategory).then((resp) => {
+            //     console.log(resp.data);
+            //     console.log("axios get");
+            //     setListCategory(resp.data);
+            // });
+            await axios.get(baseURLAuction, { withCredentials: true }).then((resp) => {
+                console.log(resp.data);
+                console.log("axios get");
+                setListAuction(resp.data.auctions);
+            });
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURLAuction]);
     const handleSubmit = (event) => {
         propertyName2 === "" ? setPropertyName(null) : setPropertyName(propertyName2);
         setCategory(category2);
@@ -95,6 +95,29 @@ const MyAuctions = () => {
         });
         return users;
     };
+    function exportData(data) {
+        return (
+            <>
+                {data.map((item) => (
+                    <tr>
+                        <td>Classic Bathrobe</td>
+                        <td>Car</td>
+                        <td>09000999000</td>
+                        <td>Activate</td>
+                        <td>
+                            <AiFillEye
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate("/autitoDetailForSeller");
+                                }}
+                            />
+                            {/* <AiOutlineDelete className={styles.iconView} /> */}
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
+    }
     return !loading ? (
         <Loading />
     ) : (
@@ -117,72 +140,13 @@ const MyAuctions = () => {
                         </div>
                         <table className={styles.table}>
                             <tr>
-                                <th className={styles.th}>Property Name</th>
+                                <th className={styles.th}>Auction Name</th>
                                 <th className={styles.th}>Category</th>
                                 <th className={styles.th}>Start Bid</th>
                                 <th className={styles.th}>Status</th>
                                 <th className={styles.th}>Action</th>
                             </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>Car</td>
-                                <td>09000999000</td>
-                                <td>Activate</td>
-                                <td>
-                                    <AiFillEye
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/autitoDetailForSeller");
-                                        }}
-                                    />
-                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>Car</td>
-                                <td>09000999000</td>
-                                <td>Activate</td>
-                                <td>
-                                    <AiFillEye
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/autitoDetailForSeller");
-                                        }}
-                                    />
-                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>Car</td>
-                                <td>09000999000</td>
-                                <td>Activate</td>
-                                <td>
-                                    <AiFillEye
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/autitoDetailForSeller");
-                                        }}
-                                    />
-                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>Car</td>
-                                <td>09000999000</td>
-                                <td>Activate</td>
-                                <td>
-                                    <AiFillEye
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/autitoDetailForSeller");
-                                        }}
-                                    />
-                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
-                                </td>
-                            </tr>
+                            {exportData(listAuction)}
                         </table>
                         <hr />
                         <div>

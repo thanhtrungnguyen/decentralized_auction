@@ -1,5 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-import { getAllAuctions, getAuction, createAuction, updateAuction, deleteAuction, getListAuctions } from '../services/AuctionService';
+import {
+  getAllAuctions,
+  getAuction,
+  createAuction,
+  updateAuction,
+  deleteAuction,
+  getListAuctions,
+  getListAuctionsForBidder
+} from '../services/AuctionService';
 import { getProperty, updateProperty } from '../services/PropertyService';
 import { createAuctionOnContract } from '../utils/runContractFunction';
 
@@ -16,7 +24,8 @@ export const getListAuctionsHandler = async (req: Request, res: Response, next: 
   const index = req.params.index;
   const status = req.params.status;
   const search = req.params.search;
-  return await getListAuctions(index, status, search)
+  const sellerName = req.params.sellerName;
+  return await getListAuctions(index, status, search, sellerName)
     .then((auctions) => {
       res.status(200).json({ auctions });
     })
@@ -24,7 +33,19 @@ export const getListAuctionsHandler = async (req: Request, res: Response, next: 
       res.status(500).json({ error });
     });
 };
+export const getListAuctionsByBidderHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const index = req.params.index;
+  const status = req.params.status;
+  const search = req.params.search;
 
+  return await getListAuctionsForBidder(index, status, search)
+    .then((auctions) => {
+      res.status(200).json({ auctions });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
 export const getAuctionByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const auctionId = req.params.auctionId;
   return await getAuction({ _id: auctionId })
