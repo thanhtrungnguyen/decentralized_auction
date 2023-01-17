@@ -16,7 +16,8 @@ import jwt from "jsonwebtoken";
 import { useFetch } from "../../hook/useFetch";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
-import "./styles.css";
+import { ToastContainer, toast } from "react-toastify";
+// import "./styles.css";
 const AddProperty = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
@@ -27,7 +28,7 @@ const AddProperty = () => {
     const [propertyImage3, setPropertyImage3] = useState(null);
     const [propertyVideo, setPropertyVideo] = useState(null);
     const [propertyName, setPropertyName] = useState(null);
-    const [category, setCategory] = useState("63b97591ba64545958a46800");
+    const [category, setCategory] = useState('null');
     const [propertyDescription, setPropertyDescription] = useState(null);
     const [startBid, setStartBid] = useState(null);
     const [deposit, setDeposit] = useState(null);
@@ -50,6 +51,18 @@ const AddProperty = () => {
             setRole("");
         }
     }, []);
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "propertyImage1") {
@@ -96,46 +109,54 @@ const AddProperty = () => {
         navigate("/myProperty");
     };
     const handleSubmit = (event) => {
-        const formData = new FormData();
-        formData.append("propertyImage1", propertyImage1);
-        formData.append("propertyImage2", propertyImage2);
-        formData.append("propertyImage3", propertyImage3);
-        formData.append("propertyVideo", propertyVideo);
-        formData.append("name", propertyName);
-        formData.append("category", category);
-        formData.append("description", propertyDescription);
-        formData.append("startViewPropertyTime", viewPropertyTime[0]);
-        formData.append("endViewPropertyTime", viewPropertyTime[1]);
-        formData.append("startBid", startBid);
-        formData.append("depositAmount", deposit);
-        formData.append("priceStep", priceStep);
-        formData.append("placeViewProperty", placeViewProperty);
-        formData.append("user", "63bd8531cc9d75cd8780454c");
+        if (category === 'null') {
+            notify("🦄 Please select category");
+        } else {
+            const formData = new FormData();
+            formData.append("propertyImage1", propertyImage1);
+            formData.append("propertyImage2", propertyImage2);
+            formData.append("propertyImage3", propertyImage3);
+            formData.append("propertyVideo", propertyVideo);
+            formData.append("name", propertyName);
+            formData.append("category", category);
+            formData.append("description", propertyDescription);
+            formData.append("startViewPropertyTime", viewPropertyTime[0]);
+            formData.append("endViewPropertyTime", viewPropertyTime[1]);
+            formData.append("startBid", startBid);
+            formData.append("depositAmount", deposit);
+            formData.append("priceStep", priceStep);
+            formData.append("placeViewProperty", placeViewProperty);
+            formData.append("user", "63bd8531cc9d75cd8780454c");
 
-        // formData.append("startBid", startBid);
-        // formData.append("biddingPreiod", biddingPreiod);
+            // formData.append("startBid", startBid);
+            // formData.append("biddingPreiod", biddingPreiod);
 
-        axios
-            .post(
-                "/property/create",
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                },
-                {
-                    withCredentials: true,
-                }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                if (res.data.success === true) {
-                    alert(res.data.message);
-                    navigate("/myProperty");
-                } else {
-                    alert(res.data.message);
-                }
-            });
+            axios
+                .post(
+                    "/property/create",
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    if (res.data.success === true) {
+                        alert(res.data.message);
+                        navigate("/myProperty");
+                    } else {
+                        alert(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    notify(err.response.data.message);
+                });
+        }
+
 
         event.preventDefault();
     };
@@ -163,6 +184,20 @@ const AddProperty = () => {
     ) : (
         <>
             <form onSubmit={handleSubmit}>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
+                {/* Same as */}
+                <ToastContainer />
                 <div className={styles.root}>
                     <SideBarSeller />
                     <Time />
@@ -259,6 +294,7 @@ const AddProperty = () => {
                                 </div>
                                 <div className={styles.r}>
                                     <select className={styles.inputText} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category">
+                                        <option value='null'>---------Select Category---------</option>
                                         {data?.categories.map((item) => (
                                             <option value={item._id}>{item.name}</option>
                                         ))}
