@@ -23,34 +23,34 @@ import Select from "react-select";
 import moment from "moment";
 const AuctionsListForManager = () => {
     const [page, setPage] = React.useState(1);
-    const [category, setCategory] = useState(null);
-    const [category2, setCategory2] = useState(null);
+    const [sellerName, setSellerName] = useState(null);
+    const [sellerName2, setSellerName2] = useState(null);
     const [auctionName, setAuctionName] = useState(null);
     const [auctionName2, setAuctionName2] = useState(null);
-    // const [data, setData] = useState([]);
-    // const navigate = useNavigate();
+
     const [status, setStatus] = useState(null);
-    // const baseURL = "http://localhost:8800/api/auction/";
     //const baseURLCategory = "/category/";
 
     // const baseURL = `http://localhost:8800/api/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
-    const [listCategory, setListCategory] = useState([]);
+    // const [listCategory, setListCategory] = useState([]);
     const [listAuction, setListAuction] = useState([]);
+    const [listSellers, setListSellers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
     const navigate = useNavigate();
-    const baseURLAuction = `/auction/auctions/${page}/${status}/${auctionName}`;
+    const baseURLAuction = `/auction/auctions/${page}/${status}/${auctionName}/${sellerName}`;
+    const baseURLSeller = `/organization/seller`;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            // await axios.get(baseURLCategory).then((resp) => {
-            //     console.log(resp.data);
-            //     console.log("axios get");
-            //     setListCategory(resp.data);
-            // });
+            await axios.get(baseURLSeller).then((resp) => {
+                // console.log(resp.data);
+                // console.log("axios get");
+                setListSellers(resp.data.listSeller);
+            });
             await axios.get(baseURLAuction).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
+                // console.log(resp.data);
+                // console.log("axios get");
                 setListAuction(resp.data.auctions);
             });
 
@@ -67,16 +67,24 @@ const AuctionsListForManager = () => {
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        if (id === "category") {
-            setCategory2(value);
+        if (id === "sellerName") {
+
+            //alert(sellerName2)
         }
         if (id === "auctionName") {
             setAuctionName2(value);
         }
+    }
+
+    const handleSelectChange = (event) => {
+
+        //setSellerName2(event.value);
+        setSellerName(event.value);
+        console.log(sellerName)
+
     };
     const handleSubmit = (event) => {
         auctionName2 === "" ? setAuctionName(null) : setAuctionName(auctionName2);
-        setCategory(category2);
         setPage(1);
         event.preventDefault();
     };
@@ -99,77 +107,86 @@ const AuctionsListForManager = () => {
         return users;
     };
 
-    function exportData(data) {
+    function exportData(auctions, sellers) {
         return (
             <>
-                {data.listAuction.map((item) => (
-                    <tr>
-                        <td>{item.status === "Request" ? "___________" : item.name}</td>
-                        <td>
-                            {item.status === "Request" ? (
-                                "___________"
-                            ) : (
-                                <>
-                                    From {moment(item.startRegistrationTime).format("L")} - {moment(item.startRegistrationTime).format("LTS")} to{" "}
-                                    {moment(item.endRegistrationTime).format("L")} - {moment(item.endRegistrationTime).format("LTS")}
-                                </>
-                            )}
-                        </td>
-                        <td>
-                            {item.status === "Request" ? (
-                                "___________"
-                            ) : (
-                                <>
-                                    From {moment(item.startAuctionTime).format("L")} - {moment(item.startAuctionTime).format("LTS")} to{" "}
-                                    {moment(item.endAuctionTime).format("L")} - {moment(item.endAuctionTime).format("LTS")}
-                                </>
-                            )}
-                        </td>
-                        <td>{item.status === "Request" ? "Request Add" : item.status}</td>
-                        <td>
-                            {item.status === "Request" ? (
-                                <>
-                                    <AiFillEye
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/auctionDetailForManager");
-                                        }}
-                                    />
-                                    <Link className={styles.link2} to={`/approveAuction`}>
-                                        Approve/Reject
-                                    </Link>
-                                </>
-                            ) : (
-                                <>
-                                    <AiFillEye
-                                        className={styles.iconView}
-                                        onClick={() => {
-                                            navigate("/auctionDetailForManager");
-                                        }}
-                                    />
-                                    <Link className={styles.link2} to={`/viewRegistrationForManager`}>
-                                        Process
-                                    </Link>
-                                </>
-                            )}
+                {auctions.listAuction.map((auction) => (
+                    sellers.map((seller) => (
+                        auction.property.user._id === seller.individual.user._id ?
+                            <tr>
+                                <td>{seller.name}</td>
+                                <td>{auction.status === "Request" ? "___________" : auction.name}</td>
+                                <td>
+                                    {auction.status === "Request" ? (
+                                        "___________"
+                                    ) : (
+                                        <>
+                                            From {moment(auction.startRegistrationTime).format("L")} - {moment(auction.startRegistrationTime).format("LTS")} <br></br>
+                                            To {moment(auction.endRegistrationTime).format("L")} - {moment(auction.endRegistrationTime).format("LTS")}
+                                        </>
+                                    )}
+                                </td>
+                                <td>
+                                    {auction.status === "Request" ? (
+                                        "___________"
+                                    ) : (
+                                        <>
+                                            From {moment(auction.startAuctionTime).format("L")} - {moment(auction.startAuctionTime).format("LTS")} <br></br>
+                                            To {moment(auction.endAuctionTime).format("L")} - {moment(auction.endAuctionTime).format("LTS")}
+                                        </>
+                                    )}
+                                </td>
+                                <td>{auction.status === "Request" ? "Request Add" : auction.status}</td>
+                                <td>
+                                    {auction.status === "Request" ? (
+                                        <>
+                                            <AiFillEye
+                                                className={styles.iconView}
+                                                onClick={() => {
+                                                    navigate(`/auctionDetailForManager/${auction._id}`);
+                                                }}
+                                            />
+                                            <Link className={styles.link2} to={`/approveAuction/${auction._id}`}>
+                                                Approve/Reject
+                                            </Link>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <AiFillEye
+                                                className={styles.iconView}
+                                                onClick={() => {
+                                                    navigate("/auctionDetailForManager");
+                                                }}
+                                            />
+                                            <Link className={styles.link2} to={`/viewRegistrationForManager`}>
+                                                Process
+                                            </Link>
+                                        </>
+                                    )}
 
-                            {/* <AiOutlineDelete className={styles.iconView} /> */}
-                        </td>
-                    </tr>
-                ))}
+                                    {/* <AiOutlineDelete className={styles.iconView} /> */}
+                                </td>
+                            </tr> : <></>
+                    ))
+                )
+                )}
             </>
         );
     }
-    const options = [
-        { value: "HihiHEhe", label: "HihiHEhe" },
-        { value: "chocolate", label: "chocolate" },
-        { value: "strawberry", label: "Strawberry" },
-        { value: "vanilla", label: "Vanilla" },
-        { value: "HihiHEhe", label: "HihiHEhe" },
-        { value: "chocolate", label: "chocolate" },
-        { value: "strawberry", label: "Strawberry" },
-        { value: "vanilla", label: "Vanilla" },
+    const statusAuction = [
+        { value: "null", label: "All" },
+        { value: "Request", label: "Request Add" },
+        { value: "Approved", label: "Approved" },
+        { value: "Upcoming", label: "Upcoming" },
+        { value: "Bidding", label: "Bidding" },
+        { value: "Closed", label: "Closed" },
     ];
+    function exportSeller(data) {
+        var a = [{ value: "null", label: "All" }]
+        data.map(item => a.push({ value: item.individual.user._id, label: item.name }))
+        return a
+    }
+
     return loading ? (
         <Loading />
     ) : (
@@ -202,8 +219,24 @@ const AuctionsListForManager = () => {
                                 <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Closed">
                                     Closed
                                 </button>
-                                <Select className={styles.select} options={options} placeholder="Select Seller" />
+                                {/* <Select
+                                    className={styles.select}
+                                    //id="sellerName"
+                                    options={statusAuction}
+                                    onChange={e => handleSelectChange("statusAuctions", e)}
 
+
+                                    placeholder="Select Status Auction" >
+                                </Select> */}
+                                <Select
+                                    className={styles.select}
+                                    id="sellerName"
+                                    options={exportSeller(listSellers)}
+                                    onChange={e => handleSelectChange(e)}
+                                    //defaultInputValue={'All'}
+                                    //selectOption={sellerName2}
+                                    placeholder="Select Seller" >
+                                </Select>
                                 <input
                                     className={styles.ip}
                                     type="text"
@@ -218,19 +251,20 @@ const AuctionsListForManager = () => {
                             </div>
                             <table className={styles.table}>
                                 <tr>
+                                    <th className={styles.th}>Seller Name</th>
                                     <th className={styles.th}>Auction Name</th>
                                     <th className={styles.th}>Registration time</th>
                                     <th className={styles.th}>Auction time</th>
                                     <th className={styles.th}>Status</th>
                                     <th className={styles.th}>Action</th>
                                 </tr>
-                                {exportData(listAuction)}
+                                {exportData(listAuction, listSellers)}
                             </table>
                             <hr />
                             <div>
                                 <Pagination
                                     className={styles.Pagination}
-                                    count={listAuction.count}
+                                    count={Math.ceil(listAuction.count / 8)}
                                     page={page}
                                     onChange={handleChange}
                                 />
@@ -257,20 +291,7 @@ const AuctionsListForManager = () => {
                                 ></input>
                             </div>
                             <p className={styles.title}>Category</p>
-                            <select
-                                className={styles.select}
-                                onChange={(e) => handleInputChange(e)}
-                                id="category"
-                                placeholder="Category"
-                                //defaultValue="null"
-                            >
-                                <option value="null">All</option>
-                                {listCategory.map((item) => (
-                                    <option value={item.Name} selected={item.Name === category2}>
-                                        {item.Name}
-                                    </option>
-                                ))}
-                            </select>
+                            
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>

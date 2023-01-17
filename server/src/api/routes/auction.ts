@@ -17,7 +17,7 @@ import { AuctionSchema } from '../validations/AuctionSchema';
 const router = express.Router();
 
 router.get('/auctions', getAllAuctionsHandler);
-router.get('/auctions/:index/:status/:search', getListAuctionsHandler);
+router.get('/auctions/:index/:status/:search/:sellerName', getListAuctionsHandler);
 router.get('/auctions/bidder/:index/:status/:search', getListAuctionsByBidderHandler);
 router.get('/:auctionId', getAuctionByIdHandler);
 

@@ -24,8 +24,8 @@ export const getListAuctionsHandler = async (req: Request, res: Response, next: 
   const index = req.params.index;
   const status = req.params.status;
   const search = req.params.search;
-
-  return await getListAuctions(index, status, search)
+  const sellerName = req.params.sellerName;
+  return await getListAuctions(index, status, search, sellerName)
     .then((auctions) => {
       res.status(200).json({ auctions });
     })
