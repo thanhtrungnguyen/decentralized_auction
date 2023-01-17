@@ -1,5 +1,5 @@
 import express from 'express';
-import { createSellerHandler } from '../controllers/OrganizationController';
+import { createSellerHandler, getSellerHandler } from '../controllers/OrganizationController';
 import { validateResource } from '../middleware/validateResource';
 import { IndividualSchema } from '../validations/IndividualSchema';
 import { UserSchema } from '../validations/UserSchema';
@@ -25,4 +25,5 @@ router.post(
   validateResource(UserSchema.createBidder),
   createSellerHandler
 );
+router.get('/seller', getSellerHandler);
 export default router;

@@ -17,8 +17,8 @@ const getAllNews = async (index: any, status: any, search: any) => {
       ? (filter = { status: status })
       : (filter = { status: status, title: { $regex: search, $options: 'i' } });
     var arr = await News.find(filter).skip(skip).limit(pase_size);
-    var count = await News.find(filter);
-    return { listNews: arr, count: count.length };
+    var count = await News.find(filter).count();
+    return { listNews: arr, count: count };
   } catch (error) {
     logger.error(error);
   }

@@ -19,8 +19,8 @@ export const IndividualSchema = {
     address: Joi.string().trim().required(),
     cardNumber: Joi.string().trim().required(),
     cardGrantedDate: Joi.string().trim().required(),
-    cardGrantedPlace: Joi.string().trim().required(),
-    frontSideImage: Joi.string().trim(),
-    backSideImage: Joi.string().trim()
+    cardGrantedPlace: Joi.string().trim().required()
+    // frontSideImage: Joi.string().trim(),
+    // backSideImage: Joi.string().trim()
   }).unknown()
 };
