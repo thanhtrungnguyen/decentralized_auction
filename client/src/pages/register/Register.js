@@ -121,6 +121,11 @@ const Register = () => {
     const baseURL = `http://localhost:5000/api/user/users`;
 
     const handleSubmit = (event) => {
+        const fsizeBack = cardBack.size;
+        const fileBack = Math.round(fsizeBack / 1024);
+        const fsizeFront = cardFront.size;
+        const fileFront = Math.round(fsizeFront / 1024);
+        console.log(fileBack);
         axios.get(baseURL, { withCredentials: true }).then((resp) => {
             setListUsername(resp.data.users);
             listUsername.map((item) => {
@@ -164,6 +169,10 @@ const Register = () => {
             notify("🦄 cardGrantedPlace is empty");
         } else if (!cardFront) {
             notify("🦄 cardFront is empty");
+        } else if (fileBack > 2048) {
+            notify("🦄 File card back, please select a file less than 2mb");
+        } else if (fileFront > 2048) {
+            notify("🦄 File card front, please select a file less than 2mb");
         } else if (!cardBack) {
             notify("🦄 cardBack is empty");
         } else if (!username) {
