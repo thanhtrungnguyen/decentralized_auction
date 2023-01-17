@@ -86,7 +86,8 @@ const AddManager = () => {
                         phone: phone,
                         email: email,
                         gender: gender,
-                        address: specificAddress
+                        address: specificAddress,
+                        role: 'manager'
                     },
                     { withCredentials: true }
                 )

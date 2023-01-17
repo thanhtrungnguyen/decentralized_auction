@@ -140,12 +140,12 @@ const AuctionsListForManager = () => {
                                 <td>
                                     {auction.status === "Request" ? (
                                         <div className={styles.fl2}>
-                                            <AiFillEye
+                                            {/* <AiFillEye
                                                 className={styles.iconView}
                                                 onClick={() => {
                                                     navigate(`/auctionDetailForManager/${auction._id}`);
                                                 }}
-                                            />
+                                            /> */}
                                             <Link className={styles.link2} to={`/approveAuction/${auction._id}`}>
                                                 Approve/Reject
                                             </Link>
