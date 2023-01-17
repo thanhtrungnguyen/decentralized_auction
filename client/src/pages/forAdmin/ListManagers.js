@@ -1,7 +1,4 @@
 import styles from "../../styleCss/stylesPages/forAdmin/listManager.module.css";
-import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBarAdmin";
-import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { Link } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
@@ -82,9 +79,15 @@ const ListForManagers = () => {
                         <td>{item.user.status === true ? "Activate" : "Deactivate"}</td>
                         <td></td>
                         <td>
-                            <AiFillEye className={styles.iconView} />
+                            <AiFillEye
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate("/viewManager");
+                                }}
+                            />
                             {item.user.status === true ? (
                                 <Popup
+                                    className={styles.fl}
                                     trigger={
                                         <label style={{ color: "red" }} className={styles.linkBlue}>
                                             Deactivate

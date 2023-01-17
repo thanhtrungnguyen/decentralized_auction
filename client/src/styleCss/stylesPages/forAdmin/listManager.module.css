@@ -24,6 +24,7 @@
     border-collapse: collapse;
     width: 100%;
 }
+
 th,
 td {
     text-align: left;
@@ -94,4 +95,10 @@ th {
 .Pagination {
     margin-top: 15px;
     float: right;
+}
+.linkBlue {
+    margin-left: 20px;
+}
+.fl {
+    display: flex;
 }

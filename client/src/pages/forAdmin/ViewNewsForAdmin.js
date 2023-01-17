@@ -81,6 +81,7 @@ const ViewNewsForAdmin = () => {
             <SideBarAdmin />
             <Time />
             <div className={styles.box}>
+                <h1>HIH</h1>
                 <h1>{data.Name}</h1>
                 <br />
                 <br />

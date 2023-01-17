@@ -77,39 +77,53 @@ const ListBidders = () => {
         return users;
     };
     function exportData(data) {
-        return <>
-            {data.listUser.map((item) =>
-                <tr>
-                    <td>{item.firstName} {item.lastName}</td>
-                    <td>{item.email}</td>
-                    <td>{item.phone}</td>
-                    <td>{item.address}</td>
-                    <td>{item.user.status === true ? 'Activate' : 'Deactivate'}</td>
-                    <td>
-
-                    </td>
-                    <td>
-                        <AiFillEye className={styles.iconView} />
-                        {item.user.status === true ?
-                            <Popup trigger={
-                                <label style={{ color: "red" }} className={styles.linkBlue}>
-                                    Deactivate
-                                </label>
-                            }
-                                position="right center">
-                                <BanedBidder idBidder={item.user._id} />
-                            </Popup> :
-                            <Popup trigger={
-                                <label style={{ color: "blue" }} className={styles.linkBlue}>
-                                    Activate
-                                </label>}
-                                position="right center">
-                                <ActiveBidder idBidder={item.user._id} />
-                            </Popup>}
-                    </td>
-                </tr>
-            )}
-        </>
+        return (
+            <>
+                {data.listUser.map((item) => (
+                    <tr>
+                        <td>
+                            {item.firstName} {item.lastName}
+                        </td>
+                        <td>{item.email}</td>
+                        <td>{item.phone}</td>
+                        <td>{item.address}</td>
+                        <td>{item.user.status === true ? "Activate" : "Deactivate"}</td>
+                        <td></td>
+                        <td>
+                            <AiFillEye
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate("/bidderDetail");
+                                }}
+                            />
+                            {item.user.status === true ? (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "red" }} className={styles.linkBlue}>
+                                            Deactivate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
+                                    <BanedBidder idBidder={item.user._id} />
+                                </Popup>
+                            ) : (
+                                <Popup
+                                    trigger={
+                                        <label style={{ color: "blue" }} className={styles.linkBlue}>
+                                            Activate
+                                        </label>
+                                    }
+                                    position="right center"
+                                >
+                                    <ActiveBidder idBidder={item.user._id} />
+                                </Popup>
+                            )}
+                        </td>
+                    </tr>
+                ))}
+            </>
+        );
     }
     return loading ? (
         <Loading />
@@ -162,7 +176,9 @@ const ListBidders = () => {
                                 className={styles.Pagination}
                                 hidden={data.count === 0 ? true : false}
                                 count={Math.ceil(data.count / 8)}
-                                page={page} onChange={handleChange} />
+                                page={page}
+                                onChange={handleChange}
+                            />
                         </div>
                     </div>
                 </div>

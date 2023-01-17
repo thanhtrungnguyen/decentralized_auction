@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../config/axiosConfig";
+import styles from "../../styleCss/stylesComponents/time.module.css";
 
 export const LogoutButton = () => {
     const navigate = useNavigate();
@@ -23,11 +24,12 @@ export const LogoutButton = () => {
 
     return (
         <button
+            className={styles.label2}
             onClick={() => {
                 handleLogout();
             }}
         >
-            Fucking Logout
+            Log out
         </button>
     );
 };
