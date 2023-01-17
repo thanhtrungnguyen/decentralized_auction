@@ -1,93 +1,54 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-// import { Outlet, Link } from "react-router-dom";
 import { useNotification } from "web3uikit";
-import { useMoralis, useWeb3Contract, useApiContract } from "react-moralis";
-// import HeaderBid from "../components/HeaderBid";
-// import auctionAbi from "../../../constants/contractAbi.json";
-// import contractAddresses from "../../../constants/contractAddress.json";
-// import Moralis from "moralis";
+import { useMoralis, useWeb3Contract } from "react-moralis";
 import { ethers } from "ethers";
 import Countdown from "react-countdown";
-// import { useParams } from "react-router-dom";
-// import axios from "axios";
+
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import TransactionStatus from "../components/TransactionStatus";
 import BiddingProperty from "../components/BiddingProperty";
 import TransactionHistory from "../components/TransactionHistory";
 import AuctionResult from "./auctionResult/AuctionResult";
-import { useFetchData } from "../../../hook/useFetch";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
+import { getBidderState } from "../../../utils/getBidderState";
 import Loader from "../components/Loader";
 import Decimal from "decimal.js";
 import io from "socket.io-client";
 function PlaceBid({ auction, property }) {
-    const baseURLPlacedBid = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/placedBid`;
-    const baseURLRegistered = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/registered`;
-    const { loading: loadingPlacedBid, data: placedBid, error: errorPlacedBid } = useFetchData(baseURLPlacedBid, auction.auctionId);
-    const { loading: loadingRegistered, data: registered, error: errorRegistered } = useFetchData(baseURLRegistered, auction.auctionId);
     const dispatch = useNotification();
     const [highestBid, setHighestBid] = useState(0);
     const [inputBidAmount, setInputBidAmount] = useState("0");
     const [transactionStatus, setTransactionStatus] = useState();
     const { account, isWeb3Enabled } = useMoralis();
-    const [isRegisteredBidder, setRegisteredBidder] = useState(false);
     const [minBidAmount, setMinBidAmount] = useState();
+    const [bidderState, setBidderState] = useState(false);
     const [status, setStatus] = useState(false);
     // const socket = io.connect("http://localhost:8800");
-    useEffect(() => {
-        if (isWeb3Enabled) {
-            updateUI();
-        }
-    }, [isWeb3Enabled, account, loadingPlacedBid, loadingRegistered, registered, highestBid]);
 
-    const checkRegisteredBidder = () => {
-        let isRegistered = false;
-        registered?.map((element) => {
-            if (element.bidder == account.toLowerCase()) {
-                isRegistered = true;
-            }
-        });
-        return isRegistered;
-    };
+    console.log("bidderState", bidderState);
 
-    // socket.on("receive_message", (data) => {
-    //     if (auction.auctionId == data.auction) {
-    //         setHighestBid(data.highest);
-    //     }
-
-    //     // setMessageReceived(data.message);
-    // });
-
-    // const checkRetractedBidder=()=>{
-    //     registered?.forEach((element) => {
-    //         if (element.bidder == account.toLowerCase()) {
-    //             setRegisteredBidder(true);
-    //         }
-    //     });
-    // }
-
-    // const getHighestBid = () => {
-    //     let highest = 0;
-    //     placedBid?.map((element) => {
-    //         if (element.bidAmount > highest) {
-    //             highest = element.bidAmount;
-    //         }
-    //     });
-    //     setHighestBid(highest);
-    // };
     const updateUI = async () => {
-        // getHighestBid();
-        setRegisteredBidder(checkRegisteredBidder);
-        setMinBidAmount(() => {
-            if (highestBid != 0 && auction.priceStep != null) {
-                if (highestBid > 0) return new Decimal(highestBid).plus(auction.priceStep).toString();
-            }
-            if (highestBid == 0) return auction.startBid;
-            return "0";
-        });
+        setTransactionStatus();
+        setBidderState();
+        await getBidInformationByAuctionId();
+        setBidderState(getBidderState(bidInformationData, account));
     };
+
+    const {
+        runContractFunction: getBidInformationByAuctionId,
+        data: bidInformationData,
+        error: bidInformationError,
+        isFetching: isBidInformationFetching,
+        isLoading: isBidInformationLoading,
+    } = useWeb3Contract({
+        abi: CONTRACT_ABI,
+        contractAddress: CONTRACT_ADDRESS,
+        functionName: "getBidInformationByAuctionId",
+        params: { auctionId: auction.auctionId },
+    });
+
     const {
         runContractFunction: placeBid,
         data: dataPlaceBid,
@@ -96,7 +57,7 @@ function PlaceBid({ auction, property }) {
         isLoading: isLoadingPlaceBid,
     } = useWeb3Contract({
         abi: CONTRACT_ABI,
-        contractAddress: CONTRACT_ADDRESS, // your contract address here
+        contractAddress: CONTRACT_ADDRESS,
         functionName: "placeBid",
         msgValue: "0",
         params: {
@@ -104,7 +65,6 @@ function PlaceBid({ auction, property }) {
             bidAmount: ethers.utils.parseEther(inputBidAmount.toString() || "0").toString(),
         },
     });
-    // console.log(dataPlaceBid);
 
     const {
         runContractFunction: retractBid,
@@ -114,13 +74,18 @@ function PlaceBid({ auction, property }) {
         isLoading: isLoadingRetractBid,
     } = useWeb3Contract({
         abi: CONTRACT_ABI,
-        contractAddress: CONTRACT_ADDRESS, // your contract address here
+        contractAddress: CONTRACT_ADDRESS,
         functionName: "retractBid",
         msgValue: "0",
         params: {
             auctionId: auction.auctionId,
         },
     });
+    useEffect(() => {
+        if (isWeb3Enabled) {
+            updateUI();
+        }
+    }, [isWeb3Enabled, account, bidInformationData?.length]);
 
     //============================================================================================
     const placeBidHandleSuccess = async (tx) => {
@@ -183,20 +148,11 @@ function PlaceBid({ auction, property }) {
         });
     };
     //============================================================================================
-    const getBidderState = () => {
-        // console.log("first");
-        return "BIDDING";
-        if (loadingRegistered || loadingPlacedBid) return "LOADING";
-        if (isRegisteredBidder) return "BIDDING";
-        if (!isRegisteredBidder) return "NOT_REGISTERED";
-
-        return null;
-    };
 
     const renderCurrentBidderState = () => {
-        switch (getBidderState()) {
-            case "LOADING":
-                return <Loader />;
+        switch (bidderState) {
+            case "NOT_REGISTERED":
+                return <p className={styles.title}>You haven't registered the auction</p>;
             case "BIDDING":
                 return (
                     <>
@@ -250,10 +206,8 @@ function PlaceBid({ auction, property }) {
                         <TransactionStatus transactionStatus={transactionStatus} />
                     </>
                 );
-            case "NOT_REGISTERED":
-                return <p className={styles.title}>You haven't registered the auction</p>;
             default:
-                return <>???</>;
+                return <Loader />;
         }
     };
 
