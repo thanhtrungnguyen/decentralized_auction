@@ -35,11 +35,6 @@ const ListNews = () => {
                 setData(resp.data.news);
                 console.log(resp);
             });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
 
             setLoading(false);
         };
@@ -61,17 +56,17 @@ const ListNews = () => {
     const handleChange = (event, page) => {
         setPage(page);
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+    // const getUser = () => {
+    //     var users = null;
+    //     const token = Cookies.get("access_token");
+    //     if (!token) {
+    //         console.log("Not authenticated");
+    //     }
+    //     jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+    //         users = user;
+    //     });
+    //     return users;
+    // };
     const handleChangeStatus = (e) => {
         setStatus(e.target.value);
         setPage(1);
@@ -131,16 +126,7 @@ const ListNews = () => {
             </>
         );
     }
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
     return loading ? (
         <Loading />
     ) : (
