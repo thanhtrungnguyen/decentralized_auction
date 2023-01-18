@@ -20,7 +20,7 @@ const router = express.Router();
 router.get('/auctions', getAllAuctionsHandler);
 router.get('/auctions/manager/:index/:status/:search/:sellerName', getListAuctionsHandler);
 router.get('/auctions/bidder/:index/:status/:search', getListAuctionsByBidderHandler);
-router.get('/auctions/seller/:id/:index/:status/:search', getListAuctionsBySellerHandler);
+router.get('/auctions/seller/:index/:status/:search', getListAuctionsBySellerHandler);
 router.get('/:auctionId', getAuctionByIdHandler);
 
 router.post('/create', createAuctionHandler);

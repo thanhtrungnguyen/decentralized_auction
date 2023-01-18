@@ -52,7 +52,7 @@ export const getListAuctionsBySellerHandler = async (req: Request, res: Response
   const index = req.params.index;
   const status = req.params.status;
   const search = req.params.search;
-  const id = req.params.id;
+  const id = res.locals.user._id;
   return await getListAuctionsForSeller(id, index, status, search)
     .then((auctions) => {
       res.status(200).json({ auctions });

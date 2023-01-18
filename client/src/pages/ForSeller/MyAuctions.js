@@ -30,7 +30,7 @@ const MyAuctions = () => {
     // const baseURL = "http://localhost:8800/api/myAuctions/";
     // const { data, loading, error } = useFetch(baseURL);
     //const baseURLCategory = "/category/";
-    const baseURLAuction = `/auction/auctions/seller/63c6bd3d17de272e37c2526d/${page}/${status}/${auctionName}`;
+    const baseURLAuction = `/auction/auctions/seller/${page}/${status}/${auctionName}`;
     //const { data, loading, error } = useFetch(baseURL);
     const [listCategory, setListCategory] = useState([]);
     const [listAuction, setListAuction] = useState([]);
