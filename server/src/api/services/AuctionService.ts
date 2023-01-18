@@ -74,7 +74,7 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any) =>
   }
 };
 const getListAuctionsForSeller = async (id: any, index: any, status: any, search: any) => {
-  var filter;
+  var filter, arr, count;
   status == 'null' && search == 'null'
     ? (filter = {})
     : status == 'null' && search != 'null'
@@ -85,16 +85,20 @@ const getListAuctionsForSeller = async (id: any, index: any, status: any, search
 
   try {
     var skip = parseInt(index);
-    const page_size = 3;
+    const page_size = 8;
     skip = skip == 1 ? 0 : (skip - 1) * page_size;
-    var arr = await Auction.find(filter)
+    await Auction.find(filter)
       .populate({ path: 'property', match: { user: id }, populate: { path: 'category' } })
       .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(page_size);
-    var count = await Auction.find(filter)
+      .then((result) => {
+        arr = result.filter((element) => element.property !== null).slice((index - 1) * page_size, index * page_size);
+      });
+    await Auction.find(filter)
       .populate({ path: 'property', match: { user: id }, populate: { path: 'category' } })
-      .count();
+      .sort({ createdAt: -1 })
+      .then((result) => {
+        count = result.filter((element) => element.property !== null).length;
+      });
     return { listAuction: arr, count: count };
   } catch (error) {
     logger.error(error);

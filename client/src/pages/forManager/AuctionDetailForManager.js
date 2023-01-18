@@ -92,7 +92,7 @@ const AuctionDetailForManager = () => {
     //         });
     // };
     const Cancel = () => {
-        navigate("/autionsListForManager");
+        navigate("/auctionListForManager");
     };
     const getUser = () => {
         var users = null;

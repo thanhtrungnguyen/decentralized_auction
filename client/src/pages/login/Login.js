@@ -38,7 +38,7 @@ const Login = () => {
                         navigate("/myProperty");
                     }
                     if (response.data.user.role === "manager") {
-                        navigate("/autionsListForManager");
+                        navigate("/auctionListForManager");
                     }
                 }
             })

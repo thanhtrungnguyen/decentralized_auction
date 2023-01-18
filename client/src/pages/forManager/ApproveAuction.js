@@ -98,7 +98,7 @@ const PropertyDetail = () => {
                 // console.log(res);
                 // console.log(res.data);
                 alert("Approve Auction successfully!!!");
-                navigate("/autionsListForManager");
+                navigate("/auctionListForManager");
             });
     };
     // const RejectAuction = () => {
@@ -119,7 +119,7 @@ const PropertyDetail = () => {
     //         });
     // };
     const Cancel = () => {
-        navigate("/autionsListForManager");
+        navigate("/auctionListForManager");
     };
     const Approve = () => {
         return <ApproveAuction idProperty="12" />;

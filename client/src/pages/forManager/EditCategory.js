@@ -39,7 +39,7 @@ const EditCategory = () => {
     }, [baseURL]);
 
     const Cancel = (e) => {
-        navigate("/managerCategorys");
+        navigate("/managerCategories");
     };
     const handleSubmit = (event) => {
         axios
@@ -54,7 +54,7 @@ const EditCategory = () => {
                 console.log(res);
                 console.log(res.data);
                 alert("Update Successful");
-                navigate("/managerCategorys");
+                navigate("/managerCategories");
             });
         event.preventDefault();
     };
@@ -114,7 +114,7 @@ const EditCategory = () => {
                         <button
                             className={styles.btnCancel}
                             onClick={() => {
-                                navigate("/managerCategorys");
+                                navigate("/managerCategories");
                             }}
                         >
                             Cancel

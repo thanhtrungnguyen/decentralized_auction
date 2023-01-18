@@ -30,6 +30,11 @@ const ListNews = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
+            await axios.get('/session').then((resp) => {
+                // console.log("axios get");
+                // setData(resp.data.news);
+                console.log(resp);
+            });
             await axios.get(baseURL).then((resp) => {
                 // console.log("axios get");
                 setData(resp.data.news);

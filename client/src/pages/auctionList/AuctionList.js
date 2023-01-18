@@ -110,7 +110,6 @@ const AuctionList = () => {
             // socket.off();
         });
     };
-
     socket.on("data", (item) => {
         if (item !== change) {
             setChange(item);
@@ -136,7 +135,7 @@ const AuctionList = () => {
         }, null);
         setStatus(total);
     };
-    const handleApplyFilter = () => {};
+    const handleApplyFilter = () => { };
 
     const handleSort = (e) => {
         setSort(e.target.value);

@@ -49,7 +49,7 @@ const AddCategory = () => {
                 // console.log(res);
                 // console.log(res.data);
                 alert("Add Category Successful");
-                navigate("/managerCategorys");
+                navigate("/managerCategories");
             })
             .catch(err => {
                 // console.log(err.response.data.mess);
@@ -94,7 +94,7 @@ const AddCategory = () => {
                         <button
                             className={styles.btnCancel}
                             onClick={() => {
-                                navigate("/managerCategorys");
+                                navigate("/managerCategories");
                             }}
                         >
                             Cancel

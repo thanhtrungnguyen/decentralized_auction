@@ -25,7 +25,7 @@ import EditProperty from "./pages/ForSeller/EditProperty";
 import PropertyDetail from "./pages/ForSeller/PropertyDetail";
 import AuctionsListForManager from "./pages/forManager/AuctionsListForManager";
 import ApproveAuction from "./pages/forManager/ApproveAuction";
-import ManagerCategorys from "./pages/forManager/ManageCategorys";
+import ManagerCategories from "./pages/forManager/ManageCategorys";
 import AddCategory from "./pages/forManager/AddCategory";
 import EditCategory from "./pages/forManager/EditCategory";
 import ListManagers from "./pages/forAdmin/ListManagers";
@@ -89,14 +89,14 @@ function App() {
                         <Route path="myAuctions" element={<MyAuctions />} />
                         <Route path="editAuction/:id" element={<EditAuction />} />
                         <Route path="editAuction" element={<EditAuction />} />
-                        <Route path="autitoDetailForSeller/:id" element={<AuctionDetailForSeller />} />
-                        <Route path="autitoDetailForSeller" element={<AuctionDetailForSeller />} />
-                        <Route path="autionsListForManager" element={<AuctionsListForManager />} />
+                        <Route path="auctionDetailForSeller/:id" element={<AuctionDetailForSeller />} />
+                        <Route path="auctionDetailForSeller" element={<AuctionDetailForSeller />} />
+                        <Route path="auctionListForManager" element={<AuctionsListForManager />} />
                         <Route path="auctionDetailForManager" element={<AuctionDetailForManager />} />
                         <Route path="auctionDetailForManager/:id" element={<AuctionDetailForManager />} />
                         <Route path="approveAuction/:id" element={<ApproveAuction />} />
                         <Route path="approveAuction" element={<ApproveAuction />} />
-                        <Route path="managerCategorys" element={<ManagerCategorys />} />
+                        <Route path="managerCategories" element={<ManagerCategories />} />
                         <Route path="addCategory" element={<AddCategory />} />
                         <Route path="editCategory/:id" element={<EditCategory />} />
                         <Route path="editCategory" element={<EditCategory />} />

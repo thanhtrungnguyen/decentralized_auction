@@ -12,7 +12,7 @@ const NavBar = () => {
 
                     <label className={styles.dap}>DAP</label>
                     <div className={styles.right}>
-                        <Link className={styles.home} to="/autionsListForManager">
+                        <Link className={styles.home} to="/auctionListForManager">
                             Manager Center
                         </Link>
                     </div>
