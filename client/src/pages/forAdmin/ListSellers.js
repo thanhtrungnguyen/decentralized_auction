@@ -98,7 +98,9 @@ const ListSellers = () => {
                         <td>{item.user.status === true ? "Activate" : "Deactivate"}</td>
                         <td></td>
                         <td>
-                            <AiFillEye className={styles.iconView} />
+                            <AiFillEye className={styles.iconView} onClick={() => {
+                                navigate(`/viewSeller/${item._id}`);
+                            }} />
                             {item.user.status === true ? (
                                 <Popup
                                     trigger={
