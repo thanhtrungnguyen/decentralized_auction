@@ -45,31 +45,31 @@ const AddManager = () => {
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "username") {
-            setUsername(value.trim());
+            setUsername(value);
         }
         if (id === "password") {
-            setPassword(value.trim());
+            setPassword(value);
         }
         if (id === "rePassword") {
-            setRePassword(value.trim());
+            setRePassword(value);
         }
         if (id === "firstName") {
-            setFirstName(value.trim());
+            setFirstName(value);
         }
         if (id === "lastName") {
-            setLastName(value.trim());
+            setLastName(value);
         }
         if (id === "gender") {
-            setGender(value.trim());
+            setGender(value);
         }
         if (id === "email") {
-            setEmail(value.trim());
+            setEmail(value);
         }
         if (id === "phone") {
-            setPhone(value.trim());
+            setPhone(value);
         }
         if (id === "specificAddress") {
-            setSpecificAddress(value.trim());
+            setSpecificAddress(value);
         }
     };
     const notify = (message) => {
@@ -113,23 +113,23 @@ const AddManager = () => {
                 }
             });
         });
-        if (!firstName) {
+        if (!firstName.trim()) {
             notify("🦄 FirstName is empty");
-        } else if (!lastName) {
+        } else if (!lastName.trim()) {
             notify("🦄 LastName is empty");
         } else if (!gender) {
             notify("🦄 Gender is empty");
-        } else if (!email) {
+        } else if (!email.trim()) {
             notify("🦄 Email is empty");
-        } else if (!phone) {
+        } else if (!phone.trim()) {
             notify("🦄 phone is empty");
-        } else if (!specificAddress) {
+        } else if (!specificAddress.trim()) {
             notify("🦄 specificAddress is empty");
-        } else if (!username) {
+        } else if (!username.trim()) {
             notify("🦄 username is empty");
-        } else if (!password) {
+        } else if (!password.trim()) {
             notify("🦄 password is empty");
-        } else if (!rePassword) {
+        } else if (!rePassword.trim()) {
             notify("🦄 rePassword is empty");
         } else if (isExist) {
             notify("🦄 Username is exist");
@@ -144,14 +144,14 @@ const AddManager = () => {
                 .post(
                     "/informationOperator/create",
                     {
-                        username: username,
-                        password: password,
-                        firstName: firstName,
-                        lastName: lastName,
-                        phone: phone,
-                        email: email,
-                        gender: gender,
-                        address: specificAddress,
+                        username: username.trim(),
+                        password: password.trim(),
+                        firstName: firstName.trim(),
+                        lastName: lastName.trim(),
+                        phone: phone.trim(),
+                        email: email.trim(),
+                        gender: gender.trim(),
+                        address: specificAddress.trim(),
                         role: "manager",
                     },
                     { withCredentials: true }
@@ -211,12 +211,12 @@ const AddManager = () => {
                             type="text"
                             onChange={(e) => handleInputChange(e)}
                             id="firstName"
-                            pattern="[a-zA-Z]{1,50}"
+                            pattern="[a-zA-Z\s]{1,50}"
                         ></input>
                         <p className={styles.txt}>Last Name</p>
                         <input
                             className={styles.ip}
-                            pattern="[a-zA-Z]{1,50}"
+                            pattern="[a-zA-Z\s]{1,50}"
                             type="text"
                             onChange={(e) => handleInputChange(e)}
                             id="lastName"
@@ -236,7 +236,13 @@ const AddManager = () => {
                             id="email"
                         ></input>
                         <p className={styles.txt}>Phone</p>
-                        <input className={styles.ip} type="text" onChange={(e) => handleInputChange(e)} id="phone" pattern="[0]\d{9}"></input>
+                        <input
+                            className={styles.ip}
+                            type="text"
+                            onChange={(e) => handleInputChange(e)}
+                            id="phone"
+                            pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
+                        ></input>
                         <p className={styles.txt}>Address</p>
                         <input
                             className={styles.ip}
