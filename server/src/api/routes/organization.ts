@@ -28,4 +28,5 @@ router.post(
 router.get('/seller', getSellerHandler);
 router.get('/getAll', getAllHandler);
 router.get('/getById/:idIndividual', getSellerByIdHandler);
+
 export default router;

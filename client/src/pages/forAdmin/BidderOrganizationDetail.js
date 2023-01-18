@@ -11,9 +11,11 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import Time from "../../components/time/Time";
+import moment from "moment";
+import "moment/locale/vi";
 const BidderOrganizationDetail = () => {
     const { id } = useParams();
-    const baseURL = `http://localhost:8800/api/user/${id}`;
+    const baseURL = `/organization/getById/${id}`;
     const { data, loading, error } = useFetch(baseURL);
     const navigate = useNavigate();
     const cancel = () => {
@@ -57,7 +59,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Organization Name</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Mr</label>
+                            <label className={styles.txt2}>{data.result.name}</label>
                         </div>
                     </div>
                     <br />
@@ -66,7 +68,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Tax Code</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Hero</label>
+                            <label className={styles.txt2}>{data.result.taxCode}</label>
                         </div>
                     </div>
                     <br />
@@ -76,7 +78,8 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Tax Code Granted Date</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Male</label>
+
+                            <label className={styles.txt2}>{moment(data.result.taxCodeGrantedDate).format("L")}</label>
                         </div>
                     </div>
                     <br />
@@ -86,7 +89,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Tax Code Granted Place</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>02/06/2000</label>
+                            <label className={styles.txt2}>{data.result.taxCodeGrantedPlace}</label>
                         </div>
                     </div>
                     <br />
@@ -96,7 +99,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Organization Specific Address</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>abcxyz@gmail.com</label>
+                            <label className={styles.txt2}>{data.result.addressOrganization}</label>
                         </div>
                     </div>
 
@@ -107,7 +110,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>First Name</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Mr</label>
+                            <label className={styles.txt2}>{data.result.individual.firstName}</label>
                         </div>
                     </div>
                     <br />
@@ -116,7 +119,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Last Name</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Hero</label>
+                            <label className={styles.txt2}>{data.result.individual.lastName}</label>
                         </div>
                     </div>
                     <br />
@@ -126,7 +129,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Gender</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Male</label>
+                            <label className={styles.txt2}>{data.result.individual.gender}</label>
                         </div>
                     </div>
                     <br />
@@ -136,7 +139,8 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Date Of Birth</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>02/06/2000</label>
+
+                            <label className={styles.txt2}> {moment(data.result.individual.dateOfBirth).format("L")}</label>
                         </div>
                     </div>
                     <br />
@@ -146,7 +150,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Email</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>abcxyz@gmail.com</label>
+                            <label className={styles.txt2}>{data.result.individual.email}</label>
                         </div>
                     </div>
                     <br />
@@ -156,7 +160,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Phone</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>0987654321</label>
+                            <label className={styles.txt2}>{data.result.individual.phone}</label>
                         </div>
                     </div>
                     <p className={styles.if}>Address</p>
@@ -165,7 +169,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Province/City</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Mr</label>
+                            <label className={styles.txt2}>{data.result.individual.city}</label>
                         </div>
                     </div>
                     <br />
@@ -174,7 +178,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>District</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Hero</label>
+                            <label className={styles.txt2}>{data.result.individual.district}</label>
                         </div>
                     </div>
                     <br />
@@ -184,7 +188,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Wards</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Male</label>
+                            <label className={styles.txt2}>{data.result.individual.wards}</label>
                         </div>
                     </div>
                     <br />
@@ -194,7 +198,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Specific Address</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>02/06/2000</label>
+                            <label className={styles.txt2}>{data.result.individual.address}</label>
                         </div>
                     </div>
                     <br />
@@ -205,7 +209,7 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Card Number </label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Mr</label>
+                            <label className={styles.txt2}>{data.result.individual.cardNumber}</label>
                         </div>
                     </div>
                     <br />
@@ -214,7 +218,8 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Card Granted Date</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Hero</label>
+
+                            <label className={styles.txt2}>{moment(data.result.individual.cardGrantedDate).format("L")}</label>
                         </div>
                     </div>
                     <br />
@@ -224,21 +229,23 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Card Granted Place</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Male</label>
+                            <label className={styles.txt2}>{data.result.individual.cardGrantedPlace}</label>
                         </div>
                     </div>
                     <br />
                     <div className={styles.fl}>
                         <div className={styles.l}>
                             <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                src={data.result.individual.frontSideImage}
                                 className={styles.img}
+                                alt='img'
                             ></img>
                         </div>
                         <div className={styles.r}>
                             <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                src={data.result.individual.backSideImage}
                                 className={styles.img}
+                                alt='img'
                             ></img>
                         </div>
                     </div>

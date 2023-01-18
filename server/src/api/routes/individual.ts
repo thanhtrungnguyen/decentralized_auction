@@ -14,7 +14,7 @@ import multer from 'multer';
 
 const upload = multer({ dest: 'uploads/' });
 router.get('/individuals', getAllIndividualsHandler);
-router.get('/:individualId', getIndividualByIdHandler);
+router.get('/getById/:individualId', getIndividualByIdHandler);
 router.post(
   '/create',
   upload.fields([
