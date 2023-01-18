@@ -62,39 +62,40 @@ const Register = () => {
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "firstName") {
-            setFirstName(value.trim());
+            setFirstName(value);
         }
         if (id === "lastName") {
-            setlastName(value.trim());
+            setlastName(value);
         }
         if (id === "gender") {
-            setgender(value.trim());
+            setgender(value);
         }
         if (id === "dateOfBirth") {
-            setdateOfBirth(value.trim());
+            setdateOfBirth(value);
         }
         if (id === "email") {
-            setEmail(value.trim());
+            setEmail(value);
         }
         if (id === "phone") {
-            setPhone(value.trim());
+            setPhone(value);
         }
         if (id === "specificAddress") {
-            setSpecificAddress(value.trim());
+            setSpecificAddress(value);
         }
         if (id === "cardNumber") {
-            setcardNumber(value.trim());
+            setcardNumber(value);
         }
         if (id === "dateRangeCard") {
-            setdateRangeCard(value.trim());
+            setdateRangeCard(value);
         }
         if (id === "cardGrantedPlace") {
-            setCardGrantedPlace(value.trim());
+            setCardGrantedPlace(value);
         }
         if (id === "cardFront") {
             setCardFront(e.target.files[0]);
             const fsizeFront = cardFront.size;
             setFileFront(Math.round(fsizeFront / 1024));
+            console.log(fileFront);
         }
         if (id === "cardBack") {
             setCardBack(e.target.files[0]);
@@ -103,13 +104,13 @@ const Register = () => {
             console.log(fileBack);
         }
         if (id === "userName") {
-            setUsername(value.trim());
+            setUsername(value);
         }
         if (id === "password") {
-            setPassword(value.trim());
+            setPassword(value);
         }
         if (id === "rePassword") {
-            setRePassword(value.trim());
+            setRePassword(value);
         }
     };
     const notify = (message) => {
@@ -189,12 +190,12 @@ const Register = () => {
             notify("🦄 rePassword is not same password");
         } else {
             const formData = new FormData();
-            formData.append("firstName", firstName);
-            formData.append("lastName", lastName);
+            formData.append("firstName", firstName.trim());
+            formData.append("lastName", lastName.trim());
             formData.append("gender", gender);
             formData.append("dateOfBirth", dateOfBirth);
-            formData.append("email", email);
-            formData.append("phone", phone);
+            formData.append("email", email.trim());
+            formData.append("phone", phone.trim());
             //formData.append("position", position);
             formData.append("cityId", cityId);
             formData.append("city", selectedCity.label);
@@ -202,15 +203,15 @@ const Register = () => {
             formData.append("district", selectedDistrict.label);
             formData.append("wardsId", wardId);
             formData.append("wards", selectedWard.label);
-            formData.append("address", specificAddress);
-            formData.append("cardNumber", cardNumber);
-            formData.append("cardGrantedDate", dateRangeCard);
-            formData.append("cardGrantedPlace", cardGrantedPlace);
+            formData.append("address", specificAddress.trim());
+            formData.append("cardNumber", cardNumber.trim());
+            formData.append("cardGrantedDate", dateRangeCard.trim());
+            formData.append("cardGrantedPlace", cardGrantedPlace.trim());
             formData.append("frontSideImage", cardFront);
             formData.append("backSideImage", cardBack);
-            formData.append("username", username);
-            formData.append("password", password);
-            formData.append("role", role);
+            formData.append("username", username.trim());
+            formData.append("password", password.trim());
+            formData.append("role", role.trim());
             axios
                 .post(
                     "/individual/create",
@@ -416,7 +417,7 @@ const Register = () => {
                     <p className={styles.textBlue}>Account Information</p>
                     <input
                         className={styles.inputEP}
-                        type="email"
+                        type="text"
                         // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                         pattern="?=.{6,20}$"
                         value={username}
