@@ -93,7 +93,8 @@ const ListBidders = () => {
                             <AiFillEye
                                 className={styles.iconView}
                                 onClick={() => {
-                                    navigate(`/bidderDetail/${item._id}`);
+                                    if (item.user.type === 'individual') { navigate(`/bidderDetail/${item._id}`); }
+                                    else { navigate(`/bidderOrganizationDetail/${item._id}`) }
                                 }}
                             />
                             {item.user.status === true ? (

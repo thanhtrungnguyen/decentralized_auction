@@ -9,6 +9,24 @@ const getAllOrganizations = async () => {
       .populate({
         path: 'individual',
         populate: {
+          path: 'user'
+        }
+      })
+      .then((result) => {
+        listSeller = result.filter((element) => element.individual.user !== null);
+      });
+    return listSeller;
+  } catch (error) {
+    logger.error(error);
+  }
+};
+const getAllSellers = async () => {
+  try {
+    let listSeller;
+    await Organization.find({})
+      .populate({
+        path: 'individual',
+        populate: {
           path: 'user',
           match: {
             role: 'seller'
@@ -56,4 +74,4 @@ const deleteOrganization = async (filter: FilterQuery<IOrganization>) => {
   }
 };
 
-export { getAllOrganizations, getOrganization, createOrganization, updateOrganization, deleteOrganization };
+export { getAllOrganizations, getOrganization, createOrganization, updateOrganization, deleteOrganization, getAllSellers };

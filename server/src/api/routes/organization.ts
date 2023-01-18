@@ -1,5 +1,5 @@
 import express from 'express';
-import { createSellerHandler, getSellerByIdHandler, getSellerHandler } from '../controllers/OrganizationController';
+import { createSellerHandler, getAllHandler, getSellerByIdHandler, getSellerHandler } from '../controllers/OrganizationController';
 import { validateResource } from '../middleware/validateResource';
 import { IndividualSchema } from '../validations/IndividualSchema';
 import { UserSchema } from '../validations/UserSchema';
@@ -26,5 +26,7 @@ router.post(
   createSellerHandler
 );
 router.get('/seller', getSellerHandler);
+router.get('/getAll', getAllHandler);
 router.get('/getById/:idIndividual', getSellerByIdHandler);
+
 export default router;

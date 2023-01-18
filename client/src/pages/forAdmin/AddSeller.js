@@ -45,7 +45,7 @@ const AddSeller = () => {
     const [rePassword, setRePassword] = useState(null);
     const [position, setPosition] = useState(null);
     const role = "seller";
-    const userType = "ACCOUNT";
+    const userType = "organization";
     const [fileBack, setFileBack] = useState(0);
     const [fileFront, setFileFront] = useState(0);
     const handleInputChange = (e) => {
@@ -245,7 +245,7 @@ const AddSeller = () => {
             formData.append("username", userName);
             formData.append("password", password);
             formData.append("role", role);
-            // formData.append("userType", userType);
+            formData.append("type", userType);
             axios
                 .post(
                     "/organization/create",
@@ -334,7 +334,7 @@ const AddSeller = () => {
                                 value={organizationName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="organizationName"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />
@@ -346,7 +346,7 @@ const AddSeller = () => {
                                 value={taxCode}
                                 onChange={(e) => handleInputChange(e)}
                                 id="taxCode"
-                                ////required
+                            ////required
                             ></input>
                             <p className={styles.txtBlack}>Tax code granted date</p>
                             <input
@@ -366,7 +366,7 @@ const AddSeller = () => {
                                 value={taxCodeGrantedPlace}
                                 onChange={(e) => handleInputChange(e)}
                                 id="taxCodeGrantedPlace"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />
@@ -379,7 +379,7 @@ const AddSeller = () => {
                                 value={specificAddressOrganization}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddressOrganization"
-                                //required
+                            //required
                             ></input>
                             <p className={styles.textBlue}>Representative Information</p>
                             <p className={styles.textRed}>Basic information</p>
@@ -391,7 +391,7 @@ const AddSeller = () => {
                                 value={firstName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="firstName"
-                                //required
+                            //required
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <input
@@ -402,7 +402,7 @@ const AddSeller = () => {
                                 value={lastName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="lastName"
-                                //required
+                            //required
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
@@ -428,7 +428,7 @@ const AddSeller = () => {
                                 value={email}
                                 onChange={(e) => handleInputChange(e)}
                                 id="email"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />
@@ -441,7 +441,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="phone"
                                 maxLength={10}
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />
@@ -453,7 +453,7 @@ const AddSeller = () => {
                                 value={position}
                                 onChange={(e) => handleInputChange(e)}
                                 id="position"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />
@@ -502,7 +502,7 @@ const AddSeller = () => {
                                 value={specificAddress}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddress"
-                                //required
+                            //required
                             ></input>{" "}
                             <br />
                             <br />
@@ -515,7 +515,7 @@ const AddSeller = () => {
                                 value={cardNumber}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardNumber"
-                                //required
+                            //required
                             ></input>
                             <input
                                 type="date"
@@ -532,7 +532,7 @@ const AddSeller = () => {
                                 value={cardGrantedPlace}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardGrantedPlace"
-                                //required
+                            //required
                             ></input>
                             <input
                                 className={styles.imgCard}
@@ -542,7 +542,7 @@ const AddSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                //required
+                            //required
                             />
                             <input
                                 id="cardBack"
@@ -551,7 +551,7 @@ const AddSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                //required
+                            //required
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
@@ -578,7 +578,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="userName"
                                 placeholder="Username"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />
@@ -590,7 +590,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="password"
                                 placeholder="Password"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />
@@ -601,7 +601,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="rePassword"
                                 placeholder="Re-eneter the password"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />

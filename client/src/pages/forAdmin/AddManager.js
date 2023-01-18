@@ -29,7 +29,7 @@ const AddManager = () => {
     const [message, setMessage] = useState("");
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);
-
+    const type = "operator";
     const navigate = useNavigate();
     useEffect(() => {
         console.log(getUser());
@@ -153,6 +153,7 @@ const AddManager = () => {
                         gender: gender.trim(),
                         address: specificAddress.trim(),
                         role: "manager",
+                        type: type
                     },
                     { withCredentials: true }
                 )
