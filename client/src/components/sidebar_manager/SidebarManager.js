@@ -16,13 +16,13 @@ const SidebarManager = () => {
                 <br />
                 <br />
                 <BiBookHeart className={styles.icon} />
-                <Link to="/autionsListForManager" className={styles.txt}>
+                <Link to="/auctionListForManager" className={styles.txt}>
                     Manage Auction
                 </Link>
                 <br />
                 <br />
                 <BiDizzy className={styles.icon} />
-                <Link to="/managerCategorys" className={styles.txt}>
+                <Link to="/managerCategories" className={styles.txt}>
                     Manage Category
                 </Link>
             </div>

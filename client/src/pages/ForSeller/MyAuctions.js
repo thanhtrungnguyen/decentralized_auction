@@ -44,6 +44,7 @@ const MyAuctions = () => {
             setRole("");
         }
     }, []);
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "category") {
@@ -109,7 +110,7 @@ const MyAuctions = () => {
                             <AiFillEye
                                 className={styles.iconView}
                                 onClick={() => {
-                                    navigate("/autitoDetailForSeller");
+                                    navigate("/auctionDetailForSeller");
                                 }}
                             />
                             {/* <AiOutlineDelete className={styles.iconView} /> */}
