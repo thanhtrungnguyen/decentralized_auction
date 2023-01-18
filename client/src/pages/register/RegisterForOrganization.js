@@ -55,7 +55,8 @@ const Register = () => {
     const role = "bidder";
     const userType = "ACCOUNT";
     const [isExist, setIsExit] = useState(false);
-
+    const [fileBack, setFileBack] = useState(null);
+    const [fileFront, setFileFront] = useState(null);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {
@@ -108,9 +109,13 @@ const Register = () => {
         }
         if (id === "cardFront") {
             setCardFront(e.target.files[0]);
+            const fsizeFront = cardFront.size;
+            setFileFront(Math.round(fsizeFront / 1024));
         }
         if (id === "cardBack") {
             setCardBack(e.target.files[0]);
+            const fsizeBack = cardBack.size;
+            setFileBack(Math.round(fsizeBack / 1024));
         }
         if (id === "userName") {
             setUsername(value.trim());
@@ -137,6 +142,10 @@ const Register = () => {
     const [listUsername, setListUsername] = useState([]);
     const baseURL = `http://localhost:5000/api/user/users`;
     const handleSubmit = (event) => {
+        // const fsizeBack = cardBack.size;
+        // const fileBack = Math.round(fsizeBack / 1024);
+        // const fsizeFront = cardFront.size;
+        // const fileFront = Math.round(fsizeFront / 1024);
         axios.get(baseURL, { withCredentials: true }).then((resp) => {
             setListUsername(resp.data.users);
             listUsername.map((item) => {
@@ -195,6 +204,10 @@ const Register = () => {
             notify("🦄 cardFront is empty");
         } else if (!cardBack) {
             notify("🦄 cardBack is empty");
+        } else if (fileBack > 2048) {
+            notify("🦄 File card back, please select a file less than 2mb");
+        } else if (fileFront > 2048) {
+            notify("🦄 File card front, please select a file less than 2mb");
         } else if (!userName) {
             notify("🦄 username is empty");
         } else if (!password) {
@@ -237,28 +250,25 @@ const Register = () => {
             formData.append("password", password);
             formData.append("role", role);
             //formData.append("userType", userType);
-            if (rePassword !== password) {
-                setMessage("Please enter match the password");
-            } else {
-                axios
-                    .post(
-                        "/organization/create",
-                        formData,
-                        {
-                            headers: { "Content-Type": "multipart/form-data" },
-                        },
-                        { withCredentials: true }
-                    )
-                    .then((res) => {
-                        console.log(res);
-                        console.log(res.data);
-                        alert("Register successfully!!!");
-                        navigate("/login");
-                    })
-                    .catch((err) => {
-                        notify(notify(err.response.data.message));
-                    });
-            }
+
+            axios
+                .post(
+                    "/organization/create",
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    },
+                    { withCredentials: true }
+                )
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    alert("Register successfully!!!");
+                    navigate("/login");
+                })
+                .catch(() => {
+                    notify("🦄 Register Failed");
+                });
         }
         event.preventDefault();
     };
@@ -308,7 +318,7 @@ const Register = () => {
                         value={organizationName}
                         onChange={(e) => handleInputChange(e)}
                         id="organizationName"
-                    // required
+                        // required
                     ></input>
                     <p className={styles.txtBlack}></p>
                     <input
@@ -319,7 +329,7 @@ const Register = () => {
                         value={taxCode}
                         onChange={(e) => handleInputChange(e)}
                         id="taxCode"
-                    //required
+                        //required
                     ></input>
                     <p className={styles.txtBlack}></p>
                     <p className={styles.txtBlack}>Tax code granted date</p>
@@ -329,7 +339,7 @@ const Register = () => {
                         value={taxCodeGrantedDate}
                         onChange={(e) => handleInputChange(e)}
                         id="taxCodeGrantedDate"
-                    //required
+                        //required
                     ></input>
                     <input
                         className={styles.inputT}
@@ -339,7 +349,7 @@ const Register = () => {
                         value={taxCodeGrantedPlace}
                         onChange={(e) => handleInputChange(e)}
                         id="taxCodeGrantedPlace"
-                    //required
+                        //required
                     ></input>
                     <br />
                     <br />
@@ -352,7 +362,7 @@ const Register = () => {
                         value={specificAddressOrganization}
                         onChange={(e) => handleInputChange(e)}
                         id="specificAddressOrganization"
-                    //required
+                        //required
                     ></input>
                     {/* <input
             className={styles.imgCard}
@@ -374,7 +384,7 @@ const Register = () => {
                         value={firstName}
                         onChange={(e) => handleInputChange(e)}
                         id="firstName"
-                    ////required
+                        ////required
                     ></input>
                     <p className={styles.txtBlack}>Message</p>
                     <input
@@ -385,7 +395,7 @@ const Register = () => {
                         value={lastName}
                         onChange={(e) => handleInputChange(e)}
                         id="lastName"
-                    //required
+                        //required
                     ></input>
                     <p className={styles.txtBlack}>Message</p>
                     <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
@@ -403,7 +413,7 @@ const Register = () => {
                         value={email}
                         onChange={(e) => handleInputChange(e)}
                         id="email"
-                    //required
+                        //required
                     ></input>
                     <input
                         className={styles.inputEP}
@@ -413,7 +423,7 @@ const Register = () => {
                         value={phone}
                         onChange={(e) => handleInputChange(e)}
                         id="phone"
-                    //required
+                        //required
                     ></input>
                     <input
                         className={styles.inputT}
@@ -423,7 +433,7 @@ const Register = () => {
                         value={position}
                         onChange={(e) => handleInputChange(e)}
                         id="position"
-                    //required
+                        //required
                     ></input>
                     <p className={styles.textRed}>Address</p>
                     <Select
@@ -464,7 +474,7 @@ const Register = () => {
                         value={specificAddress}
                         onChange={(e) => handleInputChange(e)}
                         id="specificAddress"
-                    //required
+                        //required
                     ></input>{" "}
                     <p className={styles.textRed}>Identity/Citizen card</p>
                     <input
@@ -475,7 +485,7 @@ const Register = () => {
                         value={cardNumber}
                         onChange={(e) => handleInputChange(e)}
                         id="cardNumber"
-                    //required
+                        //required
                     ></input>
                     <input type="date" className={styles.ip3} value={dateRangeCard} onChange={(e) => handleInputChange(e)} id="dateRangeCard"></input>
                     <input
@@ -486,7 +496,7 @@ const Register = () => {
                         value={cardGrantedPlace}
                         onChange={(e) => handleInputChange(e)}
                         id="cardGrantedPlace"
-                    //required
+                        //required
                     ></input>
                     <input
                         className={styles.imgCard}
@@ -496,7 +506,7 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                    //required
+                        //required
                     />
                     <input
                         id="cardBack"
@@ -505,18 +515,18 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                    //required
+                        //required
                     />
                     <p className={styles.textBlue}>Account Information</p>
                     <input
                         className={styles.inputEP}
-                        type="email"
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                        type="text"
+                        pattern="?=.{8,20}$"
                         value={userName}
                         onChange={(e) => handleInputChange(e)}
                         id="userName"
                         placeholder="Username"
-                    //required
+                        //required
                     ></input>
                     <div>
                         <input
@@ -527,7 +537,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="password"
                             placeholder="Password"
-                        //required
+                            //required
                         ></input>
                         <i onClick={togglePasswordVisibility}>{eye}</i>
                     </div>
@@ -539,7 +549,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="rePassword"
                             placeholder="Re-eneter the password"
-                        //required
+                            //required
                         ></input>
                         <i onClick={toggleRePasswordVisibility}>{eye}</i>
                     </div>

@@ -96,11 +96,13 @@ const ListSellers = () => {
                         <td>{item.phone}</td>
                         <td>{item.address}</td>
                         <td>{item.user.status === true ? "Activate" : "Deactivate"}</td>
-                        <td></td>
                         <td>
-                            <AiFillEye className={styles.iconView} onClick={() => {
-                                navigate(`/viewSeller/${item._id}`);
-                            }} />
+                            <AiFillEye
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate(`/viewSeller/${item._id}`);
+                                }}
+                            />
                             {item.user.status === true ? (
                                 <Popup
                                     trigger={
@@ -179,7 +181,6 @@ const ListSellers = () => {
                                 <th className={styles.th}>Address</th>
                                 <th className={styles.th}>Status</th>
                                 <th className={styles.th}>Action</th>
-                                <th className={styles.th}></th>
                             </tr>
                             {exportData(data)}
                         </table>

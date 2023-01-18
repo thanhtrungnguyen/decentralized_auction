@@ -54,6 +54,8 @@ const Register = () => {
     const [rePassword, setRePassword] = useState(null);
     const role = "bidder";
     const [isExist, setIsExit] = useState(false);
+    const [fileBack, setFileBack] = useState(0);
+    const [fileFront, setFileFront] = useState(0);
 
     //const [usertype] = useState("CONTACT");
 
@@ -91,9 +93,14 @@ const Register = () => {
         }
         if (id === "cardFront") {
             setCardFront(e.target.files[0]);
+            const fsizeFront = cardFront.size;
+            setFileFront(Math.round(fsizeFront / 1024));
         }
         if (id === "cardBack") {
             setCardBack(e.target.files[0]);
+            const fsizeBack = cardBack.size;
+            setFileBack(Math.round(fsizeBack / 1024));
+            console.log(fileBack);
         }
         if (id === "userName") {
             setUsername(value.trim());
@@ -164,6 +171,10 @@ const Register = () => {
             notify("🦄 cardGrantedPlace is empty");
         } else if (!cardFront) {
             notify("🦄 cardFront is empty");
+        } else if (fileBack > 2048) {
+            notify("🦄 File card back, please select a file less than 2mb");
+        } else if (fileFront > 2048) {
+            notify("🦄 File card front, please select a file less than 2mb");
         } else if (!cardBack) {
             notify("🦄 cardBack is empty");
         } else if (!username) {
@@ -266,7 +277,7 @@ const Register = () => {
                     <input
                         className={styles.inputT}
                         type="text"
-                        // pattern="[a-zA-Z]{1,50}"
+                        pattern="[a-zA-Z]{1,50}"
                         placeholder="First name"
                         value={firstName}
                         onChange={(e) => handleInputChange(e)}
@@ -281,7 +292,7 @@ const Register = () => {
                         value={lastName}
                         onChange={(e) => handleInputChange(e)}
                         id="lastName"
-                    // required
+                        // required
                     ></input>
                     <p className={styles.txtBlack}></p>
                     <select
@@ -306,7 +317,7 @@ const Register = () => {
                         value={email}
                         onChange={(e) => handleInputChange(e)}
                         id="email"
-                    //required
+                        //required
                     ></input>
                     <input
                         className={styles.inputEP}
@@ -316,7 +327,7 @@ const Register = () => {
                         value={phone}
                         onChange={(e) => handleInputChange(e)}
                         id="phone"
-                    //required
+                        //required
                     ></input>
                     <p className={styles.textRed}>Address</p>
                     <Select
@@ -357,7 +368,7 @@ const Register = () => {
                         value={specificAddress}
                         onChange={(e) => handleInputChange(e)}
                         id="specificAddress"
-                    //required
+                        //required
                     ></input>{" "}
                     <p className={styles.textRed}>Identity/Citizen card</p>
                     <input
@@ -368,7 +379,7 @@ const Register = () => {
                         value={cardNumber}
                         onChange={(e) => handleInputChange(e)}
                         id="cardNumber"
-                    //required
+                        //required
                     ></input>
                     <input type="date" className={styles.ip3} value={dateRangeCard} onChange={(e) => handleInputChange(e)} id="dateRangeCard"></input>
                     <input
@@ -379,7 +390,7 @@ const Register = () => {
                         value={cardGrantedPlace}
                         onChange={(e) => handleInputChange(e)}
                         id="cardGrantedPlace"
-                    //required
+                        //required
                     ></input>
                     <input
                         className={styles.imgCard}
@@ -390,7 +401,7 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                    //required
+                        //required
                     />
                     <input
                         id="cardBack"
@@ -400,18 +411,19 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                    //required
+                        //required
                     />
                     <p className={styles.textBlue}>Account Information</p>
                     <input
                         className={styles.inputEP}
                         type="email"
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                        // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                        pattern="?=.{6,20}$"
                         value={username}
                         onChange={(e) => handleInputChange(e)}
                         id="userName"
                         placeholder="Username"
-                    //required
+                        //required
                     ></input>
                     <div className={styles.fl}>
                         <input
@@ -422,7 +434,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="password"
                             placeholder="Password"
-                        //required
+                            //required
                         ></input>
                         <i className={styles.i} onClick={togglePasswordVisibility}>
                             {eye}
@@ -436,7 +448,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="rePassword"
                             placeholder="Re-eneter the password"
-                        //required
+                            //required
                         ></input>
                         <i className={styles.i} onClick={toggleRePasswordVisibility}>
                             {eye}
