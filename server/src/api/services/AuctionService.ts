@@ -55,9 +55,9 @@ const getListAuctions = async (index: any, status: any, search: any, sellerName:
 const getListAuctionsForBidder = async (index: any, status: any, search: any) => {
   var filter;
   status == 'null' && search == 'null'
-    ? (filter = {})
+    ? (filter = { status: { $ne: 'Request' } })
     : status == 'null' && search != 'null'
-    ? (filter = { name: { $regex: search, $options: 'i' } })
+    ? (filter = { name: { $regex: search, $options: 'i' }, status: { $ne: 'Request' } })
     : status != 'null' && search == 'null'
     ? (filter = { status: status })
     : (filter = { status: status, name: { $regex: search, $options: 'i' } });
@@ -73,7 +73,33 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any) =>
     logger.error(error);
   }
 };
+const getListAuctionsForSeller = async (id: any, index: any, status: any, search: any) => {
+  var filter;
+  status == 'null' && search == 'null'
+    ? (filter = {})
+    : status == 'null' && search != 'null'
+    ? (filter = { name: { $regex: search, $options: 'i' } })
+    : status != 'null' && search == 'null'
+    ? (filter = { status: status })
+    : (filter = { status: status, name: { $regex: search, $options: 'i' } });
 
+  try {
+    var skip = parseInt(index);
+    const page_size = 3;
+    skip = skip == 1 ? 0 : (skip - 1) * page_size;
+    var arr = await Auction.find(filter)
+      .populate({ path: 'property', match: { user: id }, populate: { path: 'category' } })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(page_size);
+    var count = await Auction.find(filter)
+      .populate({ path: 'property', match: { user: id }, populate: { path: 'category' } })
+      .count();
+    return { listAuction: arr, count: count };
+  } catch (error) {
+    logger.error(error);
+  }
+};
 const getAuction = async (filter: FilterQuery<IAuctionDocument>, options: QueryOptions = { lean: true }) => {
   try {
     return await Auction.findOne(filter, {}, options).populate({
@@ -111,4 +137,13 @@ const deleteAuction = async (filter: FilterQuery<IAuction>) => {
   }
 };
 
-export { getAllAuctions, getAuction, createAuction, updateAuction, deleteAuction, getListAuctions, getListAuctionsForBidder };
+export {
+  getAllAuctions,
+  getAuction,
+  createAuction,
+  updateAuction,
+  deleteAuction,
+  getListAuctions,
+  getListAuctionsForBidder,
+  getListAuctionsForSeller
+};

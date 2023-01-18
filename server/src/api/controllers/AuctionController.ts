@@ -6,7 +6,8 @@ import {
   updateAuction,
   deleteAuction,
   getListAuctions,
-  getListAuctionsForBidder
+  getListAuctionsForBidder,
+  getListAuctionsForSeller
 } from '../services/AuctionService';
 import { getProperty, updateProperty } from '../services/PropertyService';
 import { createAuctionOnContract } from '../utils/runContractFunction';
@@ -39,6 +40,20 @@ export const getListAuctionsByBidderHandler = async (req: Request, res: Response
   const search = req.params.search;
 
   return await getListAuctionsForBidder(index, status, search)
+    .then((auctions) => {
+      res.status(200).json({ auctions });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+export const getListAuctionsBySellerHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const index = req.params.index;
+  const status = req.params.status;
+  const search = req.params.search;
+  const id = req.params.id;
+  return await getListAuctionsForSeller(id, index, status, search)
     .then((auctions) => {
       res.status(200).json({ auctions });
     })

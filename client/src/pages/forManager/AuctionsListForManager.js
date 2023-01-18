@@ -38,7 +38,7 @@ const AuctionsListForManager = () => {
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
     const navigate = useNavigate();
-    const baseURLAuction = `/auction/auctions/${page}/${status}/${auctionName}/${sellerName}`;
+    const baseURLAuction = `/auction/auctions/manager/${page}/${status}/${auctionName}/${sellerName}`;
     const baseURLSeller = `/organization/seller`;
     useEffect(() => {
         const fetchData = async () => {
