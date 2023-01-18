@@ -1,7 +1,7 @@
 import { createUser, getUser } from '../services/UserService';
 import { Request, Response, NextFunction } from 'express';
 import { createIndividual, getIndividual } from '../services/IndividualService';
-import { createOrganization, getAllOrganizations, getOrganization } from '../services/OrganizationService';
+import { createOrganization, getAllOrganizations, getAllSellers, getOrganization } from '../services/OrganizationService';
 
 export const createSellerHandler = async (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body);
@@ -38,6 +38,15 @@ export const createSellerHandler = async (req: Request, res: Response, next: Nex
   }
 };
 export const getSellerHandler = async (req: Request, res: Response, next: NextFunction) => {
+  return await getAllSellers()
+    .then((listSeller: any) => {
+      res.status(201).json({ listSeller });
+    })
+    .catch((error: any) => {
+      res.status(500).json({ error });
+    });
+};
+export const getAllHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllOrganizations()
     .then((listSeller: any) => {
       res.status(201).json({ listSeller });

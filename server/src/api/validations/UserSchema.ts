@@ -10,7 +10,8 @@ export const UserSchema = {
       .required()
       .label('Confirm password')
       .messages({ 'any.only': '{{#label}} does not match' }),
-    role: Joi.string().trim().required()
+    role: Joi.string().trim().required(),
+    type: Joi.string().trim().required()
   }).unknown(),
   updateStatus: Joi.object<IUser>({
     status: Joi.boolean()

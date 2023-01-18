@@ -10,6 +10,7 @@ export interface IUser {
   passwordResetCode: string | null;
   verified: boolean;
   status: string;
+  type: string;
   role: string;
 }
 
@@ -27,6 +28,7 @@ const userSchema: Schema = new Schema(
     passwordResetCode: { type: String || null },
     verified: { type: Boolean, default: false },
     status: { type: Boolean, required: true, default: true },
+    type: { type: String, required: true, enum: ['individual', 'organization', 'operator'] },
     role: { type: String, required: true, enum: ['admin', 'manager', 'seller', 'bidder'] }
   },
   { timestamps: true, versionKey: false }
