@@ -24,7 +24,13 @@ const AuctionResult = ({ auction, property }) => {
     const [accountBidInformation, setAccountBidInformation] = useState();
     const [bidderState, setBidderState] = useState();
 
-    const { runContractFunction: returnedBidInformation } = useWeb3Contract({
+    const {
+        runContractFunction: getBidInformationByAuctionId,
+        data: bidInformationData,
+        error: bidInformationError,
+        isFetching: isBidInformationFetching,
+        isLoading: isBidInformationLoading,
+    } = useWeb3Contract({
         abi: CONTRACT_ABI,
         contractAddress: CONTRACT_ADDRESS,
         functionName: "getBidInformationByAuctionId",
@@ -65,21 +71,21 @@ const AuctionResult = ({ auction, property }) => {
         });
         return rank;
     };
-    const returnedState = () => {
-        let state = null;
-        if (accountBidInformation) {
-            bidInformation.forEach((element) => {
-                if (element.bidder.toLowerCase() == account.toLowerCase()) {
-                    if (accountBidInformation.bidderState == 1) state = "RETRACT";
-                    if (accountBidInformation.bidderState == 2) state = "CANCEL";
-                    if (accountBidInformation.bidderState == 3) state = "WITHDRAW";
-                    if (accountBidInformation.bidderState == 4) state = "PAYMENT";
-                    if (accountBidInformation.bidderState == 0) state = getRankOfBidder();
-                }
-            });
-        }
-        return state;
-    };
+    // const returnedState = () => {
+    //     let state = null;
+    //     if (accountBidInformation) {
+    //         bidInformation.forEach((element) => {
+    //             if (element.bidder.toLowerCase() == account.toLowerCase()) {
+    //                 if (accountBidInformation.bidderState == 1) state = "RETRACT";
+    //                 if (accountBidInformation.bidderState == 2) state = "CANCEL";
+    //                 if (accountBidInformation.bidderState == 3) state = "WITHDRAW";
+    //                 if (accountBidInformation.bidderState == 4) state = "PAYMENT";
+    //                 if (accountBidInformation.bidderState == 0) state = getRankOfBidder();
+    //             }
+    //         });
+    //     }
+    //     return state;
+    // };
     console.log(rank);
     const renderTopBidder = () => {
         console.log("returnedState: ", returnedState());

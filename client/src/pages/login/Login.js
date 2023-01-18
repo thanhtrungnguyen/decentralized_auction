@@ -2,11 +2,13 @@ import styles from "../../styleCss/login.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../config/axiosConfig";
-
+import { useNotification } from "web3uikit";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { AiFillHome } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
+import { BsCheckLg } from "react-icons/bs";
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Login = () => {
@@ -19,7 +21,7 @@ const Login = () => {
         setPasswordShown1(passwordShown1 ? false : true);
     };
     const [passwordShown1, setPasswordShown1] = useState(false);
-
+    const dispatch = useNotification();
     const handleSubmit = async (event) => {
         event.preventDefault();
         axios
@@ -43,10 +45,13 @@ const Login = () => {
                 }
             })
             .catch((error) => {
-                if (error.response.status === 401) {
-                    alert("Incorrect username or Password!!!");
-                }
-                alert("Ủa???");
+                dispatch({
+                    type: "error",
+                    title: error.response.statusText,
+                    message: error.response.data.message,
+                    position: "topR",
+                    icon: <AiOutlineClose />,
+                });
             });
     };
 
