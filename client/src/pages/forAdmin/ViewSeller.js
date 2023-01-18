@@ -87,7 +87,7 @@ const ViewSeller = () => {
                                 <label className={styles.txt}>Tax Code</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{data.name}</label>
+                                <label className={styles.txt2}>{data.taxCode}</label>
                             </div>
                         </div>
                         <br />

@@ -47,8 +47,8 @@ export const getSellerHandler = async (req: Request, res: Response, next: NextFu
     });
 };
 export const getSellerByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id;
-  return await getOrganization({ _id: id })
+  const id = req.params.idIndividual;
+  return await getOrganization({ individual: id })
     .then((result: any) => {
       res.status(201).json({ result });
     })
