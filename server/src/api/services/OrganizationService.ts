@@ -26,7 +26,7 @@ const getAllOrganizations = async () => {
 
 const getOrganization = async (filter: FilterQuery<IOrganizationDocument>, options: QueryOptions = { lean: true }) => {
   try {
-    return await Organization.findOne(filter, {}, options);
+    return await Organization.findOne(filter, {}, options).populate({ path: 'individual' });
   } catch (error) {
     logger.error(error);
   }

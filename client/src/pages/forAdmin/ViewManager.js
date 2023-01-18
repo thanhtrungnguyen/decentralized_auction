@@ -19,7 +19,7 @@ import Time from "../../components/time/Time";
 const ViewManager = () => {
     const { id } = useParams();
 
-    const baseURL = `/user/${id}`;
+    const baseURL = `/informationOperator/${id}`;
 
     const navigate = useNavigate();
     const { data, loading } = useFetch(baseURL);
@@ -68,19 +68,19 @@ const ViewManager = () => {
                             <p className={styles.if}>Basic Information</p>
                             <br />
 
-                            <p className={styles.txt}>First Name:</p>
-                            <p className={styles.txt}>Nguyen</p>
+                            <p className={styles.txt}>First Name: </p>
+                            <p className={styles.txt}>{data.result.firstName}</p>
                             <p className={styles.txt}>Last Name:</p>
-                            <p className={styles.txt}>An</p>
+                            <p className={styles.txt}>{data.result.lastName}</p>
                             <p className={styles.txt}>Gender:</p>
-                            <p className={styles.txt}>Male</p>
+                            <p className={styles.txt}>{data.result.gender}</p>
 
                             <p className={styles.txt}>Email:</p>
-                            <p className={styles.txt}>abc@gmail.com</p>
+                            <p className={styles.txt}>{data.result.email}m</p>
                             <p className={styles.txt}>Phone:</p>
-                            <p className={styles.txt}>0987654321</p>
+                            <p className={styles.txt}>{data.result.phone}</p>
                             <p className={styles.txt}>Address:</p>
-                            <p className={styles.txt}>Thach Hoa, Thach That, Ha Noi</p>
+                            <p className={styles.txt}>{data.result.address}</p>
                             <br />
                             <br />
 

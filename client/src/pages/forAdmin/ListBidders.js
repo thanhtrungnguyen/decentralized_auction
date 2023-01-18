@@ -93,7 +93,7 @@ const ListBidders = () => {
                             <AiFillEye
                                 className={styles.iconView}
                                 onClick={() => {
-                                    navigate("/bidderDetail");
+                                    navigate(`/bidderDetail/${item._id}`);
                                 }}
                             />
                             {item.user.status === true ? (

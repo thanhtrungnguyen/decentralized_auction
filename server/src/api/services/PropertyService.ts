@@ -66,7 +66,7 @@ const createProperty = async (property: IProperty, files: { [fieldname: string]:
         return { success: false, message: 'Create property fail!!!' };
       });
 
-    return { success: true, message: 'create property sucessfully!!', propertyItem: propertyItem };
+    return { success: true, message: 'Create property successfully!!', propertyItem: propertyItem };
   } catch (error) {
     logger.error(error);
     return { success: false, message: 'Missing file' };

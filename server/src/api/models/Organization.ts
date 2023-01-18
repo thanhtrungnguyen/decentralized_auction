@@ -19,6 +19,7 @@ export interface IOrganizationDocument extends IOrganization, Document {
 const organizationSchema: Schema = new Schema(
   {
     name: { type: String, required: true },
+    taxCode: { type: String, required: true },
     taxCodeGrantedDate: { type: String, required: true },
     taxCodeGrantedPlace: { type: String, required: true },
     addressOrganization: { type: String, required: true },

@@ -20,9 +20,9 @@ const MyAuctions = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState(null);
     const [category2, setCategory2] = useState(null);
-    const [propertyName, setPropertyName] = useState(null);
+    const [auctionName, setAuctionName] = useState(null);
     const [role, setRole] = useState();
-    const [propertyName2, setPropertyName2] = useState(null);
+    const [propertyName2, setAuctionName2] = useState(null);
     const [status, setStatus] = useState(null);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -30,7 +30,7 @@ const MyAuctions = () => {
     // const baseURL = "http://localhost:8800/api/myAuctions/";
     // const { data, loading, error } = useFetch(baseURL);
     //const baseURLCategory = "/category/";
-    const baseURLAuction = `/auction/auctions`;
+    const baseURLAuction = `/auction/auctions/seller/${page}/${status}/${auctionName}`;
     //const { data, loading, error } = useFetch(baseURL);
     const [listCategory, setListCategory] = useState([]);
     const [listAuction, setListAuction] = useState([]);
@@ -49,8 +49,8 @@ const MyAuctions = () => {
         if (id === "category") {
             setCategory2(value);
         }
-        if (id === "propertyName") {
-            setPropertyName2(value);
+        if (id === "auctionName") {
+            setAuctionName2(value);
         }
     };
     const handleChangeStatus = (e) => {
@@ -75,7 +75,7 @@ const MyAuctions = () => {
         fetchData();
     }, [baseURLAuction]);
     const handleSubmit = (event) => {
-        propertyName2 === "" ? setPropertyName(null) : setPropertyName(propertyName2);
+        propertyName2 === "" ? setAuctionName(null) : setAuctionName(propertyName2);
         setCategory(category2);
         setPage(1);
         event.preventDefault();
@@ -98,12 +98,13 @@ const MyAuctions = () => {
     function exportData(data) {
         return (
             <>
-                {data.map((item) => (
+                {data.listAuction.map((item) => (
                     <tr>
-                        <td>Classic Bathrobe</td>
-                        <td>Car</td>
-                        <td>09000999000</td>
-                        <td>Activate</td>
+                        <td>{item.name}</td>
+                        <td>{item.property.name}</td>
+                        <td>{item.property.category.name}</td>
+                        <td>{item.property.startBid}</td>
+                        <td>{item.property.status}</td>
                         <td>
                             <AiFillEye
                                 className={styles.iconView}
@@ -118,7 +119,7 @@ const MyAuctions = () => {
             </>
         );
     }
-    return !loading ? (
+    return loading ? (
         <Loading />
     ) : (
         <>
@@ -129,18 +130,30 @@ const MyAuctions = () => {
                 <div className={styles.r}>
                     <div className={styles.con}>
                         <div className={styles.btns}>
-                            <button className={styles.btn}>All</button>
-                            <button className={styles.btn}>Created</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">All</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Created">Created</button>
                             {/* <button className={styles.btn}>Modified</button> */}
-                            <button className={styles.btn}>Request</button>
-                            <button className={styles.btn}>Approved</button>
-                            <button className={styles.btn}>Rejected</button>
-                            <input className={styles.ip} type="text" placeholder="Enter Name"></input>
-                            <button className={styles.btn}>Search</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">Request</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">Approved</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Rejected">Rejected</button>
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    className={styles.ip}
+                                    type="text"
+                                    placeholder="Enter Auction Name"
+                                    id="auctionName"
+                                    value={propertyName2}
+                                    onChange={(e) => handleInputChange(e)}
+                                ></input>
+                                <button className={styles.btn} type="submit">
+                                    Search
+                                </button>
+                            </form>
                         </div>
                         <table className={styles.table}>
                             <tr>
                                 <th className={styles.th}>Auction Name</th>
+                                <th className={styles.th}>Property Name</th>
                                 <th className={styles.th}>Category</th>
                                 <th className={styles.th}>Start Bid</th>
                                 <th className={styles.th}>Status</th>
@@ -152,9 +165,10 @@ const MyAuctions = () => {
                         <div>
                             <Pagination
                                 className={styles.Pagination}
-                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                            // page={page}
-                            // onChange={handleChange}
+                                count={Math.ceil(listAuction.count / 8)}
+                                hidden={listAuction.count === 0 ? true : false}
+                                page={page}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
@@ -168,7 +182,7 @@ const MyAuctions = () => {
                             <div className={styles.floatLeft}>
                                 <p className={styles.title}>Auction Name</p>
                                 <input
-                                    id="propertyName"
+                                    id="auctionName"
                                     className={styles.input}
                                     type="text"
                                     placeholder="Please input"
@@ -194,7 +208,7 @@ const MyAuctions = () => {
                             <br />
                             <br />
                             <input className={styles.btn} type="submit" value="Search"></input>
-                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e) => setPropertyName2("")}></input>
+                            <input className={styles.btnReset} type="button" value="Reset" onClick={(e) => setAuctionName2("")}></input>
                             <br />
                             <br />
                             <hr className={styles.hr} />

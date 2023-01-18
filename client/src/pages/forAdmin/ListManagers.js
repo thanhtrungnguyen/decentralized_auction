@@ -82,7 +82,7 @@ const ListForManagers = () => {
                             <AiFillEye
                                 className={styles.iconView}
                                 onClick={() => {
-                                    navigate("/viewManager");
+                                    navigate(`/viewManager/${item._id}`);
                                 }}
                             />
                             {item.user.status === true ? (

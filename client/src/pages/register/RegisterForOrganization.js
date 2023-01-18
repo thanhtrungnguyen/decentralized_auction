@@ -255,8 +255,8 @@ const Register = () => {
                         alert("Register successfully!!!");
                         navigate("/login");
                     })
-                    .catch(() => {
-                        notify("🦄 Register Failed");
+                    .catch((err) => {
+                        notify(notify(err.response.data.message));
                     });
             }
         }
@@ -308,7 +308,7 @@ const Register = () => {
                         value={organizationName}
                         onChange={(e) => handleInputChange(e)}
                         id="organizationName"
-                        // required
+                    // required
                     ></input>
                     <p className={styles.txtBlack}></p>
                     <input
@@ -319,7 +319,7 @@ const Register = () => {
                         value={taxCode}
                         onChange={(e) => handleInputChange(e)}
                         id="taxCode"
-                        //required
+                    //required
                     ></input>
                     <p className={styles.txtBlack}></p>
                     <p className={styles.txtBlack}>Tax code granted date</p>
@@ -329,7 +329,7 @@ const Register = () => {
                         value={taxCodeGrantedDate}
                         onChange={(e) => handleInputChange(e)}
                         id="taxCodeGrantedDate"
-                        //required
+                    //required
                     ></input>
                     <input
                         className={styles.inputT}
@@ -339,7 +339,7 @@ const Register = () => {
                         value={taxCodeGrantedPlace}
                         onChange={(e) => handleInputChange(e)}
                         id="taxCodeGrantedPlace"
-                        //required
+                    //required
                     ></input>
                     <br />
                     <br />
@@ -352,7 +352,7 @@ const Register = () => {
                         value={specificAddressOrganization}
                         onChange={(e) => handleInputChange(e)}
                         id="specificAddressOrganization"
-                        //required
+                    //required
                     ></input>
                     {/* <input
             className={styles.imgCard}
@@ -374,7 +374,7 @@ const Register = () => {
                         value={firstName}
                         onChange={(e) => handleInputChange(e)}
                         id="firstName"
-                        ////required
+                    ////required
                     ></input>
                     <p className={styles.txtBlack}>Message</p>
                     <input
@@ -385,7 +385,7 @@ const Register = () => {
                         value={lastName}
                         onChange={(e) => handleInputChange(e)}
                         id="lastName"
-                        //required
+                    //required
                     ></input>
                     <p className={styles.txtBlack}>Message</p>
                     <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
@@ -403,7 +403,7 @@ const Register = () => {
                         value={email}
                         onChange={(e) => handleInputChange(e)}
                         id="email"
-                        //required
+                    //required
                     ></input>
                     <input
                         className={styles.inputEP}
@@ -413,7 +413,7 @@ const Register = () => {
                         value={phone}
                         onChange={(e) => handleInputChange(e)}
                         id="phone"
-                        //required
+                    //required
                     ></input>
                     <input
                         className={styles.inputT}
@@ -423,7 +423,7 @@ const Register = () => {
                         value={position}
                         onChange={(e) => handleInputChange(e)}
                         id="position"
-                        //required
+                    //required
                     ></input>
                     <p className={styles.textRed}>Address</p>
                     <Select
@@ -464,7 +464,7 @@ const Register = () => {
                         value={specificAddress}
                         onChange={(e) => handleInputChange(e)}
                         id="specificAddress"
-                        //required
+                    //required
                     ></input>{" "}
                     <p className={styles.textRed}>Identity/Citizen card</p>
                     <input
@@ -475,7 +475,7 @@ const Register = () => {
                         value={cardNumber}
                         onChange={(e) => handleInputChange(e)}
                         id="cardNumber"
-                        //required
+                    //required
                     ></input>
                     <input type="date" className={styles.ip3} value={dateRangeCard} onChange={(e) => handleInputChange(e)} id="dateRangeCard"></input>
                     <input
@@ -486,7 +486,7 @@ const Register = () => {
                         value={cardGrantedPlace}
                         onChange={(e) => handleInputChange(e)}
                         id="cardGrantedPlace"
-                        //required
+                    //required
                     ></input>
                     <input
                         className={styles.imgCard}
@@ -496,7 +496,7 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                        //required
+                    //required
                     />
                     <input
                         id="cardBack"
@@ -505,7 +505,7 @@ const Register = () => {
                         //   console.log(e.target.files[0]);
                         // }}
                         onChange={(e) => handleInputChange(e)}
-                        //required
+                    //required
                     />
                     <p className={styles.textBlue}>Account Information</p>
                     <input
@@ -516,7 +516,7 @@ const Register = () => {
                         onChange={(e) => handleInputChange(e)}
                         id="userName"
                         placeholder="Username"
-                        //required
+                    //required
                     ></input>
                     <div>
                         <input
@@ -527,7 +527,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="password"
                             placeholder="Password"
-                            //required
+                        //required
                         ></input>
                         <i onClick={togglePasswordVisibility}>{eye}</i>
                     </div>
@@ -539,7 +539,7 @@ const Register = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="rePassword"
                             placeholder="Re-eneter the password"
-                            //required
+                        //required
                         ></input>
                         <i onClick={toggleRePasswordVisibility}>{eye}</i>
                     </div>

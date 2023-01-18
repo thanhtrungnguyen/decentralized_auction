@@ -117,21 +117,21 @@ const Register = () => {
             theme: "light",
         });
     };
-    const [listUsername, setListUsername] = useState([]);
-    const baseURL = `/user/users`;
+    // const [listUsername, setListUsername] = useState([]);
+    // const baseURL = `/user/users`;
 
     const handleSubmit = (event) => {
-        axios.get(baseURL, { withCredentials: true }).then((resp) => {
-            setListUsername(resp.data.users);
-            listUsername.map((item) => {
-                if (item.username === username) {
-                    setIsExit(true);
-                    console.log(item.username);
-                } else {
-                    setIsExit(false);
-                }
-            });
-        });
+        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
+        //     setListUsername(resp.data.users);
+        //     listUsername.map((item) => {
+        //         if (item.username === username) {
+        //             setIsExit(true);
+        //             console.log(item.username);
+        //         } else {
+        //             setIsExit(false);
+        //         }
+        //     });
+        // });
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
@@ -215,8 +215,10 @@ const Register = () => {
                     alert("Register successfully!!!");
                     navigate("/login");
                 })
-                .catch(() => {
-                    notify("🦄 Register Failed");
+                .catch((err) => {
+                    //if(err.response.data.status === 409)
+                    //console.log(err)
+                    notify(err.response.data.message);
                 });
         }
 
