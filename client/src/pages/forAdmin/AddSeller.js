@@ -13,13 +13,15 @@ import Select from "react-select";
 import useLocationForm from "../register/useLocationForm";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 const AddSeller = () => {
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const navigate = useNavigate();
-    const [ro, setRo] = useState();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
+    const [isExist, setIsExit] = useState(false);
 
     const [organizationName, setOrganizationName] = useState(null);
     const [taxCode, setTaxCode] = useState(null);
@@ -42,80 +44,112 @@ const AddSeller = () => {
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
     const [position, setPosition] = useState(null);
-    const role = 'seller'
-    const userType = "ACCOUNT"
-
+    const role = "seller";
+    const userType = "ACCOUNT";
+    const [fileBack, setFileBack] = useState(0);
+    const [fileFront, setFileFront] = useState(0);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {
-            setOrganizationName(value);
+            setOrganizationName(value.trim());
         }
         if (id === "position") {
-            setPosition(value);
+            setPosition(value.trim());
         }
         if (id === "taxCode") {
-            setTaxCode(value);
+            setTaxCode(value.trim());
         }
         if (id === "taxCodeGrantedDate") {
-            setTaxCodeGrantedDate(value);
+            setTaxCodeGrantedDate(value.trim());
         }
         if (id === "taxCodeGrantedPlace") {
-            setTaxCodeGrantedPlace(value);
+            setTaxCodeGrantedPlace(value.trim());
         }
         if (id === "specificAddressOrganization") {
-            setSpecificAddressOrganization(value);
+            setSpecificAddressOrganization(value.trim());
         }
 
         if (id === "firstName") {
-            setFirstName(value);
+            setFirstName(value.trim());
         }
         if (id === "lastName") {
-            setLastName(value);
+            setLastName(value.trim());
         }
         if (id === "gender") {
-            setGender(value);
+            setGender(value.trim());
         }
         if (id === "dateOfBirth") {
-            setdateOfBirth(value);
+            setdateOfBirth(value.trim());
         }
         if (id === "email") {
-            setEmail(value);
+            setEmail(value.trim());
         }
         if (id === "phone") {
-            setPhone(value);
+            setPhone(value.trim());
         }
         if (id === "specificAddress") {
-            setSpecificAddress(value);
+            setSpecificAddress(value.trim());
         }
         if (id === "cardNumber") {
-            setCardNumber(value);
+            setCardNumber(value.trim());
         }
         if (id === "dateRangeCard") {
-            setdateRangeCard(value);
+            setdateRangeCard(value.trim());
         }
         if (id === "cardGrantedPlace") {
-            setCardGrantedPlace(value);
+            setCardGrantedPlace(value.trim());
         }
         if (id === "cardFront") {
             setCardFront(e.target.files[0]);
+            const fsizeFront = cardFront.size;
+            setFileFront(Math.round(fsizeFront / 1024));
         }
         if (id === "cardBack") {
             setCardBack(e.target.files[0]);
+            const fsizeBack = cardBack.size;
+            setFileBack(Math.round(fsizeBack / 1024));
+            console.log(fileBack);
         }
         if (id === "userName") {
-            setUsername(value);
+            setUsername(value.trim());
         }
         if (id === "password") {
-            setPassword(value);
+            setPassword(value.trim());
         }
         if (id === "rePassword") {
-            setRePassword(value);
+            setRePassword(value.trim());
         }
-        // if (id === "role") {
-        //     setRole(value);
-        // }
     };
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
+    const [listUsername, setListUsername] = useState([]);
+    const baseURL = `http://localhost:5000/api/user/users`;
     const handleSubmit = (event) => {
+        // const fsizeBack = cardBack.size;
+        // const fileBack = Math.round(fsizeBack / 1024);
+        // const fsizeFront = cardFront.size;
+        // const fileFront = Math.round(fsizeFront / 1024);
+        axios.get(baseURL, { withCredentials: true }).then((resp) => {
+            setListUsername(resp.data.users);
+            listUsername.map((item) => {
+                if (item.username === userName) {
+                    setIsExit(true);
+                    console.log(item.username);
+                } else {
+                    setIsExit(false);
+                }
+            });
+        });
         let cityId = selectedCity.value;
         let city = selectedCity.label;
         let districtId = selectedDistrict.value;
@@ -124,81 +158,143 @@ const AddSeller = () => {
         let ward = selectedWard.label;
         let cardfront = cardFront.name;
         let cardback = cardBack.name;
+        if (!organizationName) {
+            notify("🦄 organizationName is empty");
+        } else if (!taxCode) {
+            notify("🦄 taxCode is empty");
+        } else if (!taxCodeGrantedDate) {
+            notify("🦄 taxCodeGrantedDate is empty");
+        } else if (!taxCodeGrantedPlace) {
+            notify("🦄 taxCodeGrantedPlace is empty");
+        } else if (!specificAddressOrganization) {
+            notify("🦄 specificAddressOrganization is empty");
+        } else if (!firstName) {
+            notify("🦄 FirstName is empty");
+        } else if (!lastName) {
+            notify("🦄 LastName is empty");
+        } else if (!gender) {
+            notify("🦄 Gender is empty");
+        } else if (!dateOfBirth) {
+            notify("🦄 Date Of Birth is empty");
+        } else if (!email) {
+            notify("🦄 Email is empty");
+        } else if (!phone) {
+            notify("🦄 phone is empty");
+        } else if (!position) {
+            notify("🦄 position is empty");
+        } else if (!cityId) {
+            notify("🦄 city is empty");
+        } else if (!districtId) {
+            notify("🦄 district is empty");
+        } else if (!wardId) {
+            notify("🦄 ward is empty");
+        } else if (!specificAddress) {
+            notify("🦄 specificAddress is empty");
+        } else if (!cardNumber) {
+            notify("🦄 cardNumber is empty");
+        } else if (!dateRangeCard) {
+            notify("🦄 dateRangeCard is empty");
+        } else if (!cardGrantedPlace) {
+            notify("🦄 cardGrantedPlace is empty");
+        } else if (!cardFront) {
+            notify("🦄 cardFront is empty");
+        } else if (!cardBack) {
+            notify("🦄 cardBack is empty");
+        } else if (fileBack > 2048) {
+            notify("🦄 File card back, please select a file less than 2mb");
+        } else if (fileFront > 2048) {
+            notify("🦄 File card front, please select a file less than 2mb");
+        } else if (!userName) {
+            notify("🦄 username is empty");
+        } else if (!password) {
+            notify("🦄 password is empty");
+        } else if (!rePassword) {
+            notify("🦄 rePassword is empty");
+        } else if (isExist) {
+            notify("🦄 Username is exist");
+        } else if (rePassword != password) {
+            notify("🦄 rePassword is not same password");
+        } else {
+            const formData = new FormData();
 
-        const formData = new FormData();
+            formData.append("name", organizationName);
+            formData.append("taxCode", taxCode);
+            formData.append("taxCodeGrantedDate", taxCodeGrantedDate);
+            formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace);
+            formData.append("addressOrganization", specificAddressOrganization);
 
-        formData.append("name", organizationName);
-        formData.append("taxCode", taxCode);
-        formData.append("taxCodeGrantedDate", taxCodeGrantedDate);
-        formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace);
-        formData.append("addressOrganization", specificAddressOrganization);
-
-        formData.append("firstName", firstName);
-        formData.append("lastName", lastName);
-        formData.append("gender", gender);
-        formData.append("dateOfBirth", dateOfBirth);
-        formData.append("email", email);
-        formData.append("phone", phone);
-        formData.append("position", position);
-        formData.append("cityId", cityId);
-        formData.append("city", selectedCity.label);
-        formData.append("districtId", districtId);
-        formData.append("district", selectedDistrict.label);
-        formData.append("wardsId", wardId);
-        formData.append("wards", selectedWard.label);
-        formData.append("address", specificAddress);
-        formData.append("cardNumber", cardNumber);
-        formData.append("cardGrantedDate", dateRangeCard);
-        formData.append("cardGrantedPlace", cardGrantedPlace);
-        formData.append("frontSideImage", cardFront);
-        formData.append("backSideImage", cardBack);
-        formData.append("username", userName);
-        formData.append("password", password);
-        formData.append("role", role);
-        // formData.append("userType", userType);
-        axios
-            .post('/organization/create', formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            },
-                {
-                    withCredentials: true,
+            formData.append("firstName", firstName);
+            formData.append("lastName", lastName);
+            formData.append("gender", gender);
+            formData.append("dateOfBirth", dateOfBirth);
+            formData.append("email", email);
+            formData.append("phone", phone);
+            formData.append("position", position);
+            formData.append("cityId", cityId);
+            formData.append("city", selectedCity.label);
+            formData.append("districtId", districtId);
+            formData.append("district", selectedDistrict.label);
+            formData.append("wardsId", wardId);
+            formData.append("wards", selectedWard.label);
+            formData.append("address", specificAddress);
+            formData.append("cardNumber", cardNumber);
+            formData.append("cardGrantedDate", dateRangeCard);
+            formData.append("cardGrantedPlace", cardGrantedPlace);
+            formData.append("frontSideImage", cardFront);
+            formData.append("backSideImage", cardBack);
+            formData.append("username", userName);
+            formData.append("password", password);
+            formData.append("role", role);
+            // formData.append("userType", userType);
+            axios
+                .post(
+                    "/organization/create",
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    alert("Add seller successfully!!!");
+                    navigate("/listSellers");
                 })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                alert("Add seller successfully!!!");
-                navigate("/listSellers");
-            })
-            .catch(err => {
-                console.error(err.response.data.message);
-            })
+                .catch((err) => {
+                    console.error(err.response.data.message);
+                    notify(`🦄 Register Failed: ${err.response.data.message}`);
+                });
+        }
         event.preventDefault();
     };
     const Cancel = () => {
         navigate("/listSellers");
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-    useEffect(() => {
-        console.log(getUser());
+    // const getUser = () => {
+    //     var users = null;
+    //     const token = Cookies.get("access_token");
+    //     if (!token) {
+    //         console.log("Not authenticated");
+    //     }
+    //     jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+    //         users = user;
+    //     });
+    //     return users;
+    // };
+    // useEffect(() => {
+    //     console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRo(getUser().role);
-        } else {
-            setRo("");
-        }
-        setLoading(false);
-    }, []);
+    //     // console.log(getUser().type);
+    //     if (getUser() != null) {
+    //         setRo(getUser().role);
+    //     } else {
+    //         setRo("");
+    //     }
+    //     setLoading(false);
+    // }, []);
     return loading ? (
         <Loading />
     ) : (
@@ -207,6 +303,20 @@ const AddSeller = () => {
                 <div className={styles.container}>
                     <SideBarAdmin />
                     <Time />
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
+                    {/* Same as */}
+                    <ToastContainer />
                     <div className={styles.content}>
                         <div className={styles.add}>
                             <p className={styles.textCreate}>Create Seller account</p>
@@ -224,7 +334,7 @@ const AddSeller = () => {
                                 value={organizationName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="organizationName"
-                                required
+                                //required
                             ></input>
                             <br />
                             <br />
@@ -236,7 +346,7 @@ const AddSeller = () => {
                                 value={taxCode}
                                 onChange={(e) => handleInputChange(e)}
                                 id="taxCode"
-                                required
+                                ////required
                             ></input>
                             <p className={styles.txtBlack}>Tax code granted date</p>
                             <input
@@ -256,7 +366,7 @@ const AddSeller = () => {
                                 value={taxCodeGrantedPlace}
                                 onChange={(e) => handleInputChange(e)}
                                 id="taxCodeGrantedPlace"
-                                required
+                                //required
                             ></input>
                             <br />
                             <br />
@@ -269,7 +379,7 @@ const AddSeller = () => {
                                 value={specificAddressOrganization}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddressOrganization"
-                                required
+                                //required
                             ></input>
                             <p className={styles.textBlue}>Representative Information</p>
                             <p className={styles.textRed}>Basic information</p>
@@ -281,7 +391,7 @@ const AddSeller = () => {
                                 value={firstName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="firstName"
-                                required
+                                //required
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <input
@@ -292,7 +402,7 @@ const AddSeller = () => {
                                 value={lastName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="lastName"
-                                required
+                                //required
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
@@ -318,7 +428,7 @@ const AddSeller = () => {
                                 value={email}
                                 onChange={(e) => handleInputChange(e)}
                                 id="email"
-                                required
+                                //required
                             ></input>
                             <br />
                             <br />
@@ -331,7 +441,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="phone"
                                 maxLength={10}
-                                required
+                                //required
                             ></input>
                             <br />
                             <br />
@@ -343,7 +453,7 @@ const AddSeller = () => {
                                 value={position}
                                 onChange={(e) => handleInputChange(e)}
                                 id="position"
-                                required
+                                //required
                             ></input>
                             <br />
                             <br />
@@ -392,7 +502,7 @@ const AddSeller = () => {
                                 value={specificAddress}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddress"
-                                required
+                                //required
                             ></input>{" "}
                             <br />
                             <br />
@@ -405,7 +515,7 @@ const AddSeller = () => {
                                 value={cardNumber}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardNumber"
-                                required
+                                //required
                             ></input>
                             <input
                                 type="date"
@@ -422,7 +532,7 @@ const AddSeller = () => {
                                 value={cardGrantedPlace}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardGrantedPlace"
-                                required
+                                //required
                             ></input>
                             <input
                                 className={styles.imgCard}
@@ -432,7 +542,7 @@ const AddSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                required
+                                //required
                             />
                             <input
                                 id="cardBack"
@@ -441,7 +551,7 @@ const AddSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                required
+                                //required
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
@@ -462,13 +572,13 @@ const AddSeller = () => {
                             <p className={styles.textBlue}>Account Information</p>
                             <input
                                 className={styles.inputEP}
-                                type="email"
-                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                                type="text"
+                                pattern="?=.{8,20}$"
                                 value={userName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="userName"
                                 placeholder="Username"
-                                required
+                                //required
                             ></input>
                             <br />
                             <br />
@@ -480,7 +590,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="password"
                                 placeholder="Password"
-                                required
+                                //required
                             ></input>
                             <br />
                             <br />
@@ -491,7 +601,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="rePassword"
                                 placeholder="Re-eneter the password"
-                                required
+                                //required
                             ></input>
                             <br />
                             <br />
