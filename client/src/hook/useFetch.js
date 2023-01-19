@@ -71,6 +71,28 @@ export const useFetchAuction = (url) => {
     };
     return { listAuction, loading, error, reFetch };
 };
+export const useFetchAuctionDetail = (url) => {
+    const [auction, setAuction] = useState(null);
+    const [auctionLoading, setLoading] = useState(true);
+    const [auctionError, setError] = useState(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                axios.get(url).then((resp) => {
+                    console.log(resp.data.auction);
+
+                    setAuction(resp.data.auction);
+                });
+            } catch (error) {
+                setError(error);
+            }
+            setLoading(false);
+        };
+        fetchData();
+    }, [url]);
+    return { auction, auctionLoading, auctionError };
+};
 export const useFetchPagination = (url, page) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);

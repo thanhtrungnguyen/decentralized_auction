@@ -14,12 +14,13 @@ const app = express();
 connectMongo()
   .then(() => {
     startServer();
+    connectSocket(app);
   })
   .catch((error) => {
     logger.error(error);
   });
 
-const startServer = () => {
+export const startServer = () => {
   app.use((req, res, next) => {
     const info = `- IP: [${req.socket.remoteAddress}] - METHOD: [${req.method}] - URL: [${req.url}] `;
     logger.info(`Request  ${info}`);
@@ -56,5 +57,5 @@ const startServer = () => {
     });
   });
 
-  connectSocket(app);
+  return app;
 };

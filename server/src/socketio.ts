@@ -6,6 +6,7 @@ import cron from 'node-cron';
 import logger from './api/utils/logger';
 import { getAllAuctions, updateAuction } from './api/services/AuctionService';
 import { updateProperty } from './api/services/PropertyService';
+import { getCountPlacedBidAndRetracted } from './api/services/ContractInteractionService';
 
 export const connectSocket = (app: any) => {
   const server = http.createServer(app);
@@ -73,6 +74,17 @@ export const connectSocket = (app: any) => {
   });
   taskRegistrationTime.start();
 
+  var countUpdated: number | undefined;
+  const taskUpdateBiddingAndRetracted = cron.schedule('*/3 * * * * *', async () => {
+    var count = await getCountPlacedBidAndRetracted();
+    if(countUpdated!=count){
+      countUpdated = count;
+      io.emit('count', count);
+      
+    }
+    
+  });
+  taskUpdateBiddingAndRetracted.start();
   // transaction.start();
   server.listen(config.server.port, async () => {
     logger.info(`Server is running at http://localhost:${config.server.port}`);

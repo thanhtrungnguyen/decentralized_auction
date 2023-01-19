@@ -29,19 +29,16 @@ const ViewRegistrationForManager = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-
             axios.get(baseURL).then((resp) => {
                 console.log(resp.data);
                 console.log("axios get");
                 setData(resp.data);
             });
-
             if (getUser() != null) {
                 setRole(getUser().role);
             } else {
                 setRole("");
             }
-
             setLoading(false);
         };
         fetchData();
@@ -82,7 +79,7 @@ const ViewRegistrationForManager = () => {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigate("/viewRegistrationForManager");
+                                    Registration();
                                 }}
                             >
                                 Registration Information
@@ -91,7 +88,7 @@ const ViewRegistrationForManager = () => {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigate("/viewBiddingForManager");
+                                    onClick();
                                 }}
                             >
                                 Place Bids Log
@@ -99,7 +96,7 @@ const ViewRegistrationForManager = () => {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigate("/viewAuctionResultForManager");
+                                    result();
                                 }}
                             >
                                 Auction Result
@@ -145,9 +142,9 @@ const ViewRegistrationForManager = () => {
                         <div>
                             <Pagination
                                 className={styles.Pagination}
-                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                            // page={page}
-                            // onChange={handleChange}
+                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                // page={page}
+                                // onChange={handleChange}
                             />
                         </div>
                     </div>

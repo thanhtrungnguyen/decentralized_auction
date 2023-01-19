@@ -17,43 +17,43 @@ import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
 import io from "socket.io-client";
 import Time from "../../components/time/Time";
+import Countdown from "react-countdown";
 const ViewBiddingForManager = () => {
     const [page, setPage] = React.useState(1);
     const { id } = useParams();
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const baseURL = `/auction/getAllBidding/${id}`;
-    //const socket = io.connect("http://localhost:8800");
+    const baseURL = `/contractInteraction/placedBid/${id}`;
+    const baseURLAuction = `auction/${id}`;
+    const socket = io.connect("http://localhost:5000");
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
     const [status, setStatus] = useState(null);
-
+    const [auction, setAuction] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-
-            axios.get(baseURL).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setData(resp.data);
+            axios.get(baseURLAuction).then((resp) => {
+                console.log(resp.data.auction);
+                setAuction(resp.data.auction);
             });
-
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
+            axios.get(baseURL).then((resp) => {
+                console.log(resp.data.placedBid);
+                console.log("axios get");
+                console.log("abc" + status);
+                setData(resp.data.placedBid);
+            });
 
             setLoading(false);
         };
         fetchData();
     }, [status, baseURL]);
-    // socket.on("count", (item) => {
-    //     if (item !== status) {
-    //         setStatus(data);
-    //         console.log(item);
-    //     }
-    // });
+    socket.on("count", (item) => {
+        if (item != status) {
+            setStatus(item);
+            console.log(item);
+        }
+    });
     const onClick = () => {
         navigate(`/viewBiddingForManager/${id}`);
     };
@@ -81,6 +81,17 @@ const ViewBiddingForManager = () => {
         var date = new Date(new Date(0).setUTCSeconds(dates));
         return date.toLocaleString();
     };
+    const renderer = ({ days, hours, minutes, seconds, completed }) => {
+        if (completed) {
+            return <p className={styles.lb}>Auction End</p>;
+        } else {
+            return (
+                <p className={styles.lb}>
+                    Auction Time End in {days}d {hours}h {minutes}m {seconds}s
+                </p>
+            );
+        }
+    };
     return loading ? (
         <Loading />
     ) : (
@@ -94,7 +105,7 @@ const ViewBiddingForManager = () => {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigate("/viewRegistrationForManager");
+                                    Registration();
                                 }}
                             >
                                 Registration Information
@@ -103,7 +114,7 @@ const ViewBiddingForManager = () => {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigate("/viewBiddingForManager");
+                                    onClick();
                                 }}
                             >
                                 Place Bids Log
@@ -111,7 +122,7 @@ const ViewBiddingForManager = () => {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigate("/viewAuctionResultForManager");
+                                    result();
                                 }}
                             >
                                 Auction Result
@@ -119,65 +130,40 @@ const ViewBiddingForManager = () => {
                             <input className={styles.ip} type="text" placeholder="Enter Name"></input>
                             <button className={styles.btn}>Search</button>
                         </div>
-                        <p className={styles.lb}>Registration Time End in 1d 4h 32m 32s</p>
+                        {/* <Countdown date={auction.endAuctionTime * 1000} renderer={renderer} /> */}
                         <p className={styles.lb}>Place Bids Log</p>
-                        <table className={styles.table}>
-                            <tr>
-                                <th className={styles.th}>Username</th>
-                                <th className={styles.th}>Wallet</th>
-                                <th className={styles.th}>Tx Hash</th>
-                                <th className={styles.th}>Bid Amount</th>
-                                <th className={styles.th}>Placed at</th>
-                                <th className={styles.th}>Status</th>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>2.234123</td>
-                                <td>dd/MM/yyyy - HH:mm:ss</td>
-                                <td>Retracted</td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>2.234123</td>
-                                <td>dd/MM/yyyy - HH:mm:ss</td>
-                                <td>Retracted</td>
-                            </tr>{" "}
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>2.234123</td>
-                                <td>dd/MM/yyyy - HH:mm:ss</td>
-                                <td>Bidding</td>
-                            </tr>{" "}
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>2.234123</td>
-                                <td>dd/MM/yyyy - HH:mm:ss</td>
-                                <td>Retracted</td>
-                            </tr>{" "}
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>2.234123</td>
-                                <td>dd/MM/yyyy - HH:mm:ss</td>
-                                <td>Bidding</td>
-                            </tr>
-                        </table>
+                        <>
+                            <table className={styles.table}>
+                                <tr>
+                                    <th className={styles.th}>Username</th>
+                                    <th className={styles.th}>Wallet</th>
+                                    <th className={styles.th}>Tx Hash</th>
+                                    <th className={styles.th}>Bid Amount</th>
+                                    <th className={styles.th}>Placed at</th>
+                                    <th className={styles.th}>Status</th>
+                                </tr>
+
+                                {data.map((bid) => (
+                                    <>
+                                        <tr>
+                                            <td>Classic Bathrobe</td>
+                                            <td>{bid.bidder}</td>
+                                            <td>{bid.transactionHash}</td>
+                                            <td>{bid.bidAmount}</td>
+                                            <td>{getDate(bid.blockTimestamp)}</td>
+                                            <td>{bid.name}</td>
+                                        </tr>
+                                    </>
+                                ))}
+                            </table>
+                        </>
                         <hr />
                         <div>
                             <Pagination
                                 className={styles.Pagination}
-                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                            // page={page}
-                            // onChange={handleChange}
+                                // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                                // page={page}
+                                // onChange={handleChange}
                             />
                         </div>
                     </div>

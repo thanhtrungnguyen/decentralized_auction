@@ -82,7 +82,7 @@ const AuctionResult = () => {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigate("/viewRegistrationForManager");
+                                    Registration();
                                 }}
                             >
                                 Registration Information
@@ -91,7 +91,7 @@ const AuctionResult = () => {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigate("/viewBiddingForManager");
+                                    onClick();
                                 }}
                             >
                                 Place Bids Log
@@ -99,7 +99,7 @@ const AuctionResult = () => {
                             <button
                                 className={styles.btn}
                                 onClick={() => {
-                                    navigate("/viewAuctionResultForManager");
+                                    result();
                                 }}
                             >
                                 Auction Result

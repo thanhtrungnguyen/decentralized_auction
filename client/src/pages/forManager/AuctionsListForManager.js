@@ -68,20 +68,17 @@ const AuctionsListForManager = () => {
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "sellerName") {
-
             //alert(sellerName2)
         }
         if (id === "auctionName") {
             setAuctionName2(value);
         }
-    }
+    };
 
     const handleSelectChange = (event) => {
-
         //setSellerName2(event.value);
         setSellerName(event.value);
-        console.log(sellerName)
-
+        console.log(sellerName);
     };
     const handleSubmit = (event) => {
         auctionName2 === "" ? setAuctionName(null) : setAuctionName(auctionName2);
@@ -110,9 +107,9 @@ const AuctionsListForManager = () => {
     function exportData(auctions, sellers) {
         return (
             <>
-                {auctions.listAuction.map((auction) => (
-                    sellers.map((seller) => (
-                        auction.property.user._id === seller.individual.user._id ?
+                {auctions.listAuction.map((auction) =>
+                    sellers.map((seller) =>
+                        auction.property.user._id === seller.individual.user._id ? (
                             <tr>
                                 <td>{seller.name}</td>
                                 <td>{auction.status === "Request" ? "___________" : auction.name}</td>
@@ -121,7 +118,8 @@ const AuctionsListForManager = () => {
                                         "___________"
                                     ) : (
                                         <>
-                                            From {moment(auction.startRegistrationTime).format("L")} - {moment(auction.startRegistrationTime).format("LTS")} <br></br>
+                                            From {moment(auction.startRegistrationTime).format("L")} -{" "}
+                                            {moment(auction.startRegistrationTime).format("LTS")} <br></br>
                                             To {moment(auction.endRegistrationTime).format("L")} - {moment(auction.endRegistrationTime).format("LTS")}
                                         </>
                                     )}
@@ -131,7 +129,8 @@ const AuctionsListForManager = () => {
                                         "___________"
                                     ) : (
                                         <>
-                                            From {moment(auction.startAuctionTime).format("L")} - {moment(auction.startAuctionTime).format("LTS")} <br></br>
+                                            From {moment(auction.startAuctionTime).format("L")} - {moment(auction.startAuctionTime).format("LTS")}{" "}
+                                            <br></br>
                                             To {moment(auction.endAuctionTime).format("L")} - {moment(auction.endAuctionTime).format("LTS")}
                                         </>
                                     )}
@@ -158,7 +157,7 @@ const AuctionsListForManager = () => {
                                                     navigate("/auctionDetailForManager");
                                                 }}
                                             />
-                                            <Link className={styles.link2} to={`/viewRegistrationForManager`}>
+                                            <Link className={styles.link2} to={`/viewRegistrationForManager/${auction._id}`}>
                                                 Process
                                             </Link>
                                         </div>
@@ -166,9 +165,11 @@ const AuctionsListForManager = () => {
 
                                     {/* <AiOutlineDelete className={styles.iconView} /> */}
                                 </td>
-                            </tr> : <></>
-                    ))
-                )
+                            </tr>
+                        ) : (
+                            <></>
+                        )
+                    )
                 )}
             </>
         );
@@ -182,9 +183,9 @@ const AuctionsListForManager = () => {
         { value: "Closed", label: "Closed" },
     ];
     function exportSeller(data) {
-        var a = [{ value: "null", label: "All" }]
-        data.map(item => a.push({ value: item.individual.user._id, label: item.name }))
-        return a
+        var a = [{ value: "null", label: "All" }];
+        data.map((item) => a.push({ value: item.individual.user._id, label: item.name }));
+        return a;
     }
 
     return loading ? (
@@ -232,11 +233,11 @@ const AuctionsListForManager = () => {
                                     className={styles.select}
                                     id="sellerName"
                                     options={exportSeller(listSellers)}
-                                    onChange={e => handleSelectChange(e)}
+                                    onChange={(e) => handleSelectChange(e)}
                                     //defaultInputValue={'All'}
                                     //selectOption={sellerName2}
-                                    placeholder="Select Seller" >
-                                </Select>
+                                    placeholder="Select Seller"
+                                ></Select>
                                 <input
                                     className={styles.ip}
                                     type="text"
