@@ -11,6 +11,14 @@ export const createSellerHandler = async (req: Request, res: Response, next: Nex
   if (user) {
     return res.status(400).json({ message: 'User name has been exist!' });
   }
+  const existOrganizationName = await getOrganization({ name: req.body.name });
+  if (existOrganizationName) {
+    return res.status(409).json({ message: 'Organization name has been exist!' });
+  }
+  const existOrganizationTaxCode = await getOrganization({ taxCode: req.body.taxCode });
+  if (existOrganizationTaxCode) {
+    return res.status(409).json({ message: 'Tax Code has been exist!' });
+  }
   const existEmailIndividual = await getIndividual({ email: req.body.email });
   if (existEmailIndividual) {
     return res.status(409).json({ message: 'Email has been exist!' });
