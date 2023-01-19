@@ -22,7 +22,6 @@ import moment from "moment";
 import "moment/locale/vi";
 const AuctionList = () => {
     const navigate = useNavigate();
-    const [page, setPage] = React.useState(1);
     // const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -30,22 +29,31 @@ const AuctionList = () => {
     const socket = io.connect("http://localhost:5000");
     //const baseURL = "http://localhost:8800/api/auction/";
     const [status, setStatus] = useState(null);
-    const [sort, setSort] = useState(1);
+
     const [price, setPrice] = useState(null);
     const [name, setName] = useState(null);
     const [name2, setName2] = useState(null);
     const [checkedState, setCheckedState] = useState([false, false, false]);
     const baseURLAuction = `/auction/auctions/bidder/${page}/${status}/${name}`;
     const [change, setChange] = useState(null);
-    const [categories, setCategories] = useState([]);
+
     const [auctions, setAuctions] = useState([]);
+
+
+
+    const [page, setPage] = useState(1);
+    const [minValue, set_minValue] = useState(25);
+    const [maxValue, set_maxValue] = useState(75);
+    const [search, setSearch] = useState("");
+    const [categories, setCategories] = useState([]);
     const statusList = [
         { name: "Auction Upcoming", value: 2 },
         { name: "Auction Bidding", value: 3 },
         { name: "Auction Closed", value: 4 },
     ];
-    const [minValue, set_minValue] = useState(25);
-    const [maxValue, set_maxValue] = useState(75);
+    const [sort, setSort] = useState(1);
+
+
     const handleInput = (e) => {
         const { id, value } = e.target;
         if (id === "minValue") {
@@ -55,19 +63,21 @@ const AuctionList = () => {
             set_maxValue(value);
         }
     };
+
+
     const [role, setRole] = useState();
 
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+    // const getUser = () => {
+    //     var users = null;
+    //     const token = Cookies.get("access_token");
+    //     if (!token) {
+    //         console.log("Not authenticated");
+    //     }
+    //     jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
+    //         users = user;
+    //     });
+    //     return users;
+    // };
 
 
     useEffect(() => {
@@ -79,27 +89,18 @@ const AuctionList = () => {
     }, [baseURLAuction, change]);
     async function fetchPostList() {
         setLoading(true);
-        await axios
-            .get(`/category/categories`)
-            .then((resp) => {
-                setCategories(resp.data);
-                // console.log(resp.data);
-                // console.log("axios get");
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+
         await axios.get(baseURLAuction).then((resp) => {
             setAuctions(resp.data.auctions);
             console.log(resp.data);
             console.log("axios get");
             // socket.off();
         });
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
+        // if (getUser() != null) {
+        //     setRole(getUser().role);
+        // } else {
+        //     setRole("");
+        // }
         setLoading(false);
     }
     const fetchDataStatus = async () => {
@@ -185,13 +186,13 @@ const AuctionList = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
+            {/* {(() => {
                 if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
                     return <HeaderUser username={getUser().userName} />;
                 } else {
                     return <Header />;
                 }
-            })()}
+            })()} */}
             <NavBar />
             <PageName pageName={"Auction List"} link={"auctionList"} home={"homePage"} />
 
@@ -255,22 +256,22 @@ const AuctionList = () => {
                     </div>
                     <div className={styles.category}>
                         <p className={styles.title}>Status</p>
-                        <label className={styles.label}>Registration Time </label>
+                        <label className={styles.label}>Upcoming </label>
                         <input type="checkbox" className={styles.checkbox} value="" />
                         {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
-                        <label className={styles.label}>Upcoming For Bidding</label>
+                        <label className={styles.label}>Current Auction</label>
                         <input type="checkbox" className={styles.checkbox} value="" />
                         {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
-                        <label className={styles.label}>Bidding</label>
+                        <label className={styles.label}>Past Auction</label>
                         <input type="checkbox" className={styles.checkbox} value="" />
                         {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
-                        <label className={styles.label}>Auction Closed</label>
+                        <label className={styles.label}>All</label>
                         <input type="checkbox" className={styles.checkbox} value="" />
                         {/* <label className={styles.num}>2</label> */}
                         <br />
