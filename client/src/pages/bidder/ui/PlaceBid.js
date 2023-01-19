@@ -15,7 +15,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig
 import { getBidderState } from "../../../utils/getBidderState";
 import Loader from "../components/Loader";
 import Decimal from "decimal.js";
-import io from "socket.io-client";
+import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
 function PlaceBid({ auction, property }) {
     const dispatch = useNotification();
     const [highestBid, setHighestBid] = useState(0);
@@ -24,17 +24,6 @@ function PlaceBid({ auction, property }) {
     const { account, isWeb3Enabled } = useMoralis();
     const [minBidAmount, setMinBidAmount] = useState();
     const [bidderState, setBidderState] = useState(false);
-    const [status, setStatus] = useState(false);
-    // const socket = io.connect("http://localhost:8800");
-
-    console.log("bidderState", bidderState);
-
-    const updateUI = async () => {
-        setTransactionStatus();
-        setBidderState();
-        await getBidInformationByAuctionId();
-        setBidderState(getBidderState(bidInformationData, account));
-    };
 
     const {
         runContractFunction: getBidInformationByAuctionId,
@@ -46,6 +35,19 @@ function PlaceBid({ auction, property }) {
         abi: CONTRACT_ABI,
         contractAddress: CONTRACT_ADDRESS,
         functionName: "getBidInformationByAuctionId",
+        params: { auctionId: auction.auctionId },
+    });
+
+    const {
+        runContractFunction: getHighestBidOfAuction,
+        data: highestBidOfAuctionData,
+        error: highestBidOfAuctionError,
+        isFetching: isHighestBidOfAuctionFetching,
+        isLoading: isHighestBidOfAuctionLoading,
+    } = useWeb3Contract({
+        abi: CONTRACT_ABI,
+        contractAddress: CONTRACT_ADDRESS,
+        functionName: "getHighestBidOfAuction",
         params: { auctionId: auction.auctionId },
     });
 
@@ -81,10 +83,35 @@ function PlaceBid({ auction, property }) {
             auctionId: auction.auctionId,
         },
     });
+
+    const updateUI = async () => {
+        setTransactionStatus();
+        setBidderState();
+        await getBidInformationByAuctionId();
+        setBidderState(getBidderState(bidInformationData, account));
+    };
+
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUI();
         }
+        // const interval = setInterval(async () => {
+        //     await getHighestBidOfAuction();
+        //     setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
+        //     setMinBidAmount(
+        //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
+        //     );
+        //     console.log(
+        //         "highestBid",
+        //         highestBid,
+        //         "priceStep",
+        //         auction.priceStep,
+        //         "minBidAmount",
+        //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
+        //     );
+        // }, 1000);
+
+        // return () => clearInterval(interval);
     }, [isWeb3Enabled, account, bidInformationData?.length]);
 
     //============================================================================================
@@ -93,8 +120,6 @@ function PlaceBid({ auction, property }) {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
-            // socket.emit("join_room", auction.auctionId);
-            // socket.emit("send_message", { message: "message", auctionId: auction.auctionId });
             dispatch({
                 type: "success",
                 title: "Place Bid Notification",
@@ -124,6 +149,7 @@ function PlaceBid({ auction, property }) {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            setBidderState("RETRACT");
             dispatch({
                 type: "success",
                 title: "Retract Bid Notification",
@@ -149,6 +175,34 @@ function PlaceBid({ auction, property }) {
     };
     //============================================================================================
 
+    const renderHighestBid = () => {
+        switch (highestBid) {
+            case "0":
+                return (
+                    <>
+                        <p className={styles.txtM}>Starting bid:</p>
+                        <p className={styles.txtNormal}>{auction.startBid}</p>
+                    </>
+                );
+            case 0:
+                return (
+                    <>
+                        <p className={styles.txtM}>Starting bid:</p>
+                        <p className={styles.txtNormal}>{auction.startBid}</p>
+                    </>
+                );
+            default:
+                return (
+                    <>
+                        <p className={styles.txtM}>Current bid:</p>
+                        <p className={styles.txtNormal}>{highestBid} ETH</p>
+                        <p className={styles.txtM}>Price step:</p>
+                        <p className={styles.txtNormal}>{auction.priceStep} ETH</p>
+                    </>
+                );
+        }
+    };
+
     const renderCurrentBidderState = () => {
         switch (bidderState) {
             case "NOT_REGISTERED":
@@ -160,12 +214,12 @@ function PlaceBid({ auction, property }) {
                         <p className={styles.txtT}>Your bid must be at least {minBidAmount} ETH</p>
                         <input
                             className={styles.input}
-                            type="number"
+                            type="text"
                             value={inputBidAmount}
-                            validation={{
-                                max: "",
-                                min: 1,
-                            }}
+                            // validation={{
+                            //     max: "",
+                            //     min: 1,
+                            // }}
                             onChange={(event) => {
                                 setInputBidAmount(event.target.value);
                             }}
@@ -223,19 +277,7 @@ function PlaceBid({ auction, property }) {
                         <div>
                             <div className={styles.info}>
                                 <BiddingProperty property={property} />
-                                {highestBid != 0 ? (
-                                    <>
-                                        <p className={styles.txtM}>Starting bid:</p>
-                                        <p className={styles.txtNormal}>{auction.startBid}</p>
-                                    </>
-                                ) : (
-                                    <>
-                                        <p className={styles.txtM}>Current bid:</p>
-                                        <p className={styles.txtNormal}>{highestBid} ETH</p>
-                                    </>
-                                )}
-                                <p className={styles.txtM}>Price step:</p>
-                                <p className={styles.txtNormal}>{auction.priceStep} ETH</p>
+                                {renderHighestBid()}
                                 <p className={styles.txtM}>Auction ends in:</p>
                                 <p className={styles.txtNormal}>
                                     <span>

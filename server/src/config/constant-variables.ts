@@ -7,10 +7,10 @@ const ACCESS_TOKEN_TTL = '1y';
 
 const REFRESH_TOKEN_TTL = '1y';
 
-const ACCESS_TOKEN_PRIVATE_KEY = process.env.ACCESS_TOKEN_PRIVATE_KEY || '';
-const ACCESS_TOKEN_PUBLIC_KEY = process.env.ACCESS_TOKEN_PUBLIC_KEY || '';
-const REFRESH_PRIVATE_KEY = process.env.REFRESH_PRIVATE_KEY || '';
-const REFRESH_PUBLIC_KEY = process.env.REFRESH_PUBLIC_KEY || '';
+const ACCESS_TOKEN_PRIVATE_KEY = process.env.ACCESS_TOKEN_PRIVATE_KEY || 'xxx';
+const ACCESS_TOKEN_PUBLIC_KEY = process.env.ACCESS_TOKEN_PUBLIC_KEY || 'xxx';
+const REFRESH_PRIVATE_KEY = process.env.REFRESH_PRIVATE_KEY || 'xxx';
+const REFRESH_PUBLIC_KEY = process.env.REFRESH_PUBLIC_KEY || 'xxx';
 
 const CHAIN_ID = '5';
 const CONTRACT_ABI = contractAbi;
@@ -29,11 +29,5 @@ export const defaultConfig = {
   contract: {
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI
-  },
-  role: {
-    admin: 'admin',
-    manager: 'manager',
-    seller: 'seller',
-    bidder: 'bidder'
   }
 };

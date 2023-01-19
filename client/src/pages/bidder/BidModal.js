@@ -56,7 +56,7 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
     };
 
     const renderCurrentState = () => {
-        console.log("State: " + auctionState());
+        // console.log("State: " + auctionState());
         switch (auctionState()) {
             case "Loading":
                 return <Loading />;
