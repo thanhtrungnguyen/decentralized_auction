@@ -10,8 +10,8 @@ export const LogoutButton = () => {
         axios
             .delete("/session")
             .then((response) => {
-                if (response.status === 201) {
-                    window.localStorage.clear();
+                if (response.status === 204) {
+                    // do
                 }
             })
             .then(navigate("/login"))
