@@ -151,7 +151,10 @@ const ViewBiddingForManager = () => {
                                             <td>{bid.transactionHash}</td>
                                             <td>{bid.bidAmount}</td>
                                             <td>{getDate(bid.blockTimestamp)}</td>
-                                            <td>{bid.name}</td>
+                                            <td>
+                                                {bid.name === "PlacedBid" && "Bidding"}
+                                                {bid.name === "RetractedBid" && "RetractedBid"}
+                                            </td>
                                         </tr>
                                     </>
                                 ))}
