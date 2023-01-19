@@ -1,5 +1,6 @@
 import express from 'express';
 import { defaultConfig } from '../../config/constant-variables';
+import { roles } from '../../config/roles';
 import {
   getAllAuctionsHandler,
   getAuctionByIdHandler,
@@ -24,8 +25,8 @@ router.get('/auctions/seller/:index/:status/:search', getListAuctionsBySellerHan
 router.get('/:auctionId', getAuctionByIdHandler);
 
 router.post('/create', createAuctionHandler);
-router.patch('/update/:auctionId', requireRole('seller'), validateResource(AuctionSchema.update), updateAuctionHandler);
-router.patch('/approve/:auctionId', requireRole('manager'), validateResource(AuctionSchema.update), approveAuctionHandler);
+router.patch('/update/:auctionId', requireRole(roles.SELLER), validateResource(AuctionSchema.update), updateAuctionHandler);
+router.patch('/approve/:auctionId', requireRole(roles.MANAGER), validateResource(AuctionSchema.update), approveAuctionHandler);
 router.delete('/delete/:auctionId', deleteAuctionHandler);
 //validateResource(AuctionSchema.create),
 export default router;

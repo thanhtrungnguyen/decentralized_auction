@@ -20,7 +20,7 @@ const updateSession = async (filter: FilterQuery<ISessionDocument>, update: Upda
   return await Session.updateOne(filter, update);
 };
 
-const reIssueAccessToken = async ({ refreshToken }: { refreshToken: any }) => {
+const reIssueAccessToken = async (refreshToken: any) => {
   const { decoded } = verifyJwt(refreshToken, defaultConfig.jwt.refreshTokenPublicKey);
   if (!decoded || !get(decoded, 'session')) return false;
 

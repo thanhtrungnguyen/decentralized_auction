@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import logger from '../utils/logger';
 
-export const requireRole = (requireRole: string) => {
+export const requireRole = (...allowedRoles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = res?.locals?.user;
-      if (!user || user.role !== requireRole) {
-        return res.sendStatus(403);
-      }
+      if (!res?.locals?.user) return res.sendStatus(401);
+      const isRequireRole = allowedRoles.map((role) => {
+        if (role === res?.locals?.user?.role) return true;
+      });
+      if (!isRequireRole) return res.sendStatus(403);
       next();
     } catch (error) {
       logger.error(error);

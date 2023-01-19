@@ -1,14 +1,14 @@
 import express from 'express';
-import http from 'http';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+
 import logger from './api/utils/logger';
-import { config } from './config/custom-environment-variables';
 import routes from './api/routes';
 import swaggerDocs from './api/utils/swagger';
 import connectMongo from './api/utils/connectMongo';
 import deserializeUser from './api/middleware/deserializeUser';
 import { connectSocket } from './socketio';
-
+import { config } from './config/custom-environment-variables';
 const app = express();
 
 connectMongo()
@@ -37,7 +37,7 @@ export const startServer = () => {
       credentials: true
     })
   );
-
+  app.use(cookieParser());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(deserializeUser);
