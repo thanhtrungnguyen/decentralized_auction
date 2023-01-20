@@ -1,9 +1,10 @@
 import styles from "../../styleCss/stylesComponents/sidebar_seller.module.css";
 import { BiBookHeart, BiDizzy, BiDonateHeart, BiNews } from "react-icons/bi";
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 
 const SidebarSeller = () => {
+    const navigate = useNavigate();
     return (
         <>
             <div className={styles.container}>
@@ -12,7 +13,14 @@ const SidebarSeller = () => {
                     src="https://upload.wikimedia.org/wikipedia/commons/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg"
                 />
                 <p className={styles.txt2}>Seller</p>
-                <p className={styles.txt2}>mark zuckerberg</p>
+                <p
+                    className={styles.txt2}
+                    onClick={() => {
+                        navigate("/profileSeller");
+                    }}
+                >
+                    mark zuckerberg
+                </p>
                 <br />
                 <br />
                 <BiBookHeart className={styles.icon} />

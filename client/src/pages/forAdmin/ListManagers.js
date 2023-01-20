@@ -77,12 +77,17 @@ const ListForManagers = () => {
                         <td>{item.phone}</td>
                         <td>{item.address}</td>
                         <td>{item.user.status === true ? "Activate" : "Deactivate"}</td>
-                        <td></td>
                         <td>
                             <AiFillEye
                                 className={styles.iconView}
                                 onClick={() => {
                                     navigate(`/viewManager/${item._id}`);
+                                }}
+                            />
+                            <AiTwotoneEdit
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate(`/editManager/${item._id}`);
                                 }}
                             />
                             {item.user.status === true ? (
@@ -183,7 +188,6 @@ const ListForManagers = () => {
                                 <th className={styles.th}>Phone</th>
                                 <th className={styles.th}>Address</th>
                                 <th className={styles.th}>Status</th>
-                                <th className={styles.th}>Action</th>
                                 <th className={styles.th}>Action</th>
                             </tr>
                             {exportData(data)}

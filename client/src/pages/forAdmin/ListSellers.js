@@ -103,6 +103,12 @@ const ListSellers = () => {
                                     navigate(`/viewSeller/${item._id}`);
                                 }}
                             />
+                            <AiTwotoneEdit
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate(`/editSeller/${item._id}`);
+                                }}
+                            />
                             {/* <AiTwotoneEdit
                                 className={styles.iconView}
                                 onClick={() => {
