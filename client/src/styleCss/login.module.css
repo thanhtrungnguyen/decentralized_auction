@@ -212,7 +212,7 @@ i:hover {
 }
 
 .btn {
-    width: 640px;
+    width: 670px;
     height: 80px;
 
     /* blue /2 7 */
@@ -285,4 +285,20 @@ i:hover {
 .img {
     width: 960px;
     height: 850px;
+}
+
+.errorMessage {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 10px;
+    width: 640px;
+    font-family: Arial, sans-serif;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
 }

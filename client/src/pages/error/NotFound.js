@@ -11,39 +11,17 @@ import Loading from "../../components/loading/Loading";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 const ErrorPage = ({ error }) => {
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        console.log(getUser());
-
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-            setLoading(false);
-        } else {
-            setRole("");
-            setLoading(false);
-        }
-    }, []);
+    useEffect(() => {}, []);
     return loading ? (
         <Loading />
     ) : (
         <>
             {(() => {
                 if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
+                    return <HeaderUser username={"fixing"} />;
                 } else {
                     return <Header />;
                 }
