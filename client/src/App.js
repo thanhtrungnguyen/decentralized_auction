@@ -60,6 +60,9 @@ import ProfileManager from "./pages/forManager/Profile";
 import ChangePasswordManager from "./pages/forManager/ChangePassword";
 import EditManager from "./pages/forAdmin/EditManager";
 import EditSeller from "./pages/forAdmin/EditSeller";
+import ProfileAdmin from "./pages/forAdmin/ProfileAdmin";
+import ChangePasswordAdmin from "./pages/forAdmin/ChangePassword";
+import EditProfileAdmin from "./pages/forAdmin/EditProfileAdmin";
 function App() {
     return (
         <MoralisProvider initializeOnMount={false}>
@@ -157,6 +160,12 @@ function App() {
                         <Route path="editManager/:managerId" element={<EditManager />} />
                         <Route path="editSeller" element={<EditSeller />} />
                         <Route path="editSeller/:sellerId" element={<EditSeller />} />
+                        <Route path="changePasswordAdmin" element={<ChangePasswordAdmin />} />
+                        <Route path="changePasswordAdmin/:adminId" element={<ChangePasswordAdmin />} />
+                        <Route path="profileAdmin" element={<ProfileAdmin />} />
+                        <Route path="profileAdmin/:adminId" element={<ProfileAdmin />} />
+                        <Route path="editProfileAdmin/:adminId" element={<EditProfileAdmin />} />
+                        <Route path="editProfileAdmin" element={<EditProfileAdmin />} />
                     </Routes>
                 </BrowserRouter>
             </NotificationProvider>
