@@ -54,8 +54,15 @@ import ViewNews from "./pages/common/ViewNews";
 import ViewNewsForAdmin from "./pages/forAdmin/ViewNewsForAdmin";
 import BidderOrganizationDetail from "./pages/forAdmin/BidderOrganizationDetail";
 import FakeAuctionDetail from "./pages/bidder/FakeAuctionDetail";
-
-
+import EditProfileSeller from "./pages/ForSeller/EditProfile";
+import ProfileSeller from "./pages/ForSeller/ProfileSeller";
+import ProfileManager from "./pages/forManager/Profile";
+import ChangePasswordManager from "./pages/forManager/ChangePassword";
+import EditManager from "./pages/forAdmin/EditManager";
+import EditSeller from "./pages/forAdmin/EditSeller";
+import ProfileAdmin from "./pages/forAdmin/ProfileAdmin";
+import ChangePasswordAdmin from "./pages/forAdmin/ChangePassword";
+import EditProfileAdmin from "./pages/forAdmin/EditProfileAdmin";
 function App() {
     return (
         <MoralisProvider initializeOnMount={false}>
@@ -141,6 +148,24 @@ function App() {
                         <Route path="bidderOrganizationDetail/:id" element={<BidderOrganizationDetail />} />
                         <Route path="bidderOrganizationDetail" element={<BidderOrganizationDetail />} />
                         <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
+                        <Route path="profileSeller/:sellerId" element={<ProfileSeller />} />
+                        <Route path="editProfileSeller/:sellerId" element={<EditProfileSeller />} />
+                        <Route path="profileSeller" element={<ProfileSeller />} />
+                        <Route path="editProfileSeller" element={<EditProfileSeller />} />
+                        <Route path="profileManager/:managerId" element={<ProfileManager />} />
+                        <Route path="changePasswordManager/:managerId" element={<ChangePasswordManager />} />
+                        <Route path="profileManager" element={<ProfileManager />} />
+                        <Route path="changePasswordManager" element={<ChangePasswordManager />} />
+                        <Route path="editManager" element={<EditManager />} />
+                        <Route path="editManager/:managerId" element={<EditManager />} />
+                        <Route path="editSeller" element={<EditSeller />} />
+                        <Route path="editSeller/:sellerId" element={<EditSeller />} />
+                        <Route path="changePasswordAdmin" element={<ChangePasswordAdmin />} />
+                        <Route path="changePasswordAdmin/:adminId" element={<ChangePasswordAdmin />} />
+                        <Route path="profileAdmin" element={<ProfileAdmin />} />
+                        <Route path="profileAdmin/:adminId" element={<ProfileAdmin />} />
+                        <Route path="editProfileAdmin/:adminId" element={<EditProfileAdmin />} />
+                        <Route path="editProfileAdmin" element={<EditProfileAdmin />} />
                     </Routes>
                 </BrowserRouter>
             </NotificationProvider>

@@ -15,7 +15,7 @@ import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-const AddSeller = () => {
+const EditSeller = () => {
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -321,7 +321,7 @@ const AddSeller = () => {
                     <ToastContainer />
                     <div className={styles.content}>
                         <div className={styles.add}>
-                            <p className={styles.textCreate}>Create Seller account</p>
+                            <p className={styles.textCreate}>Edit Seller account</p>
                             <br />
                             <p className={styles.textBlue}>Organization information</p>
                             <br />
@@ -544,7 +544,7 @@ const AddSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                //required
+                                required
                             />
                             <input
                                 id="cardBack"
@@ -553,7 +553,7 @@ const AddSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                //required
+                                required
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
@@ -581,29 +581,7 @@ const AddSeller = () => {
                                 id="userName"
                                 placeholder="Username"
                                 //required
-                            ></input>
-                            <br />
-                            <br />
-                            <input
-                                className={styles.inputEP}
-                                type="password"
-                                pattern="^\s*(?:\S\s*){8,}$"
-                                value={password}
-                                onChange={(e) => handleInputChange(e)}
-                                id="password"
-                                placeholder="Password"
-                                //required
-                            ></input>
-                            <br />
-                            <br />
-                            <input
-                                className={styles.inputEP}
-                                type="password"
-                                value={rePassword}
-                                onChange={(e) => handleInputChange(e)}
-                                id="rePassword"
-                                placeholder="Re-eneter the password"
-                                //required
+                                readOnly
                             ></input>
                             <br />
                             <br />
@@ -623,4 +601,4 @@ const AddSeller = () => {
         </>
     );
 };
-export default AddSeller;
+export default EditSeller;

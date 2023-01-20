@@ -86,6 +86,29 @@
     border: 1px solid #e5e7eb;
     border-radius: 8px;
 }
+.btnChange {
+    width: 150px;
+    height: 54px;
+
+    margin-left: 20px;
+
+    float: right;
+    background: violet;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+
+    margin-right: 20px;
+    /* identical to box height, or 150% */
+
+    /* Grey/Grey 90 */
+
+    color: #111827;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
 .btnAdd {
     width: 119px;
     height: 54px;
