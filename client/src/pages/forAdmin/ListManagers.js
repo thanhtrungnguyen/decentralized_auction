@@ -54,7 +54,7 @@ const ListForManagers = () => {
         }
     };
     const handleSubmit = (event) => {
-        email2 == "" ? setEmail(null) : setEmail(email2);
+        email2.trim() === "" ? setEmail(null) : setEmail(email2);
         setPage(1);
         event.preventDefault();
     };
@@ -160,10 +160,11 @@ const ListForManagers = () => {
                                     type="text"
                                     placeholder="Enter Email"
                                     id="email"
+
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
                                 ></input>
-                                <button className={styles.btn} type="submit">
+                                <button className={styles.btn} type="submit" disabled={email2.trim() === "" ? true : false}>
                                     Search
                                 </button>
                             </form>

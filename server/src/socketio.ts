@@ -43,9 +43,9 @@ export const connectSocket = (app: any) => {
         }
       }
       if (currentTime - timeEndRegistrationFN > 0 && currentTime - timeStartAuctionFN < 0) {
-        if (auction.status != 'UpcomingforBid') {
-          await updateAuction({ _id: auction._id }, { status: 'UpcomingforBid' }, { new: true });
-          await updateProperty({ _id: auction.property._id }, { status: 'UpcomingforBid' }, { new: true });
+        if (auction.status != 'UpcomingForBid') {
+          await updateAuction({ _id: auction._id }, { status: 'UpcomingForBid' }, { new: true });
+          await updateProperty({ _id: auction.property._id }, { status: 'UpcomingForBid' }, { new: true });
           i = i + 1;
           io.emit('data', i);
         }
@@ -77,12 +77,10 @@ export const connectSocket = (app: any) => {
   var countUpdated: number | undefined;
   const taskUpdateBiddingAndRetracted = cron.schedule('*/3 * * * * *', async () => {
     var count = await getCountPlacedBidAndRetracted();
-    if(countUpdated!=count){
+    if (countUpdated != count) {
       countUpdated = count;
       io.emit('count', count);
-      
     }
-    
   });
   taskUpdateBiddingAndRetracted.start();
   // transaction.start();

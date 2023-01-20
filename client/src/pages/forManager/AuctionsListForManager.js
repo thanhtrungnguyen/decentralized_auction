@@ -329,7 +329,7 @@ const AuctionsListForManager = () => {
                             </button>
                             <button
                                 className={styles.link}
-                                value="UpcomingforBid"
+                                value="UpcomingForBid"
                                 onClick={(e) => {
                                     handleChangeStatus(e);
                                 }}
@@ -408,7 +408,7 @@ const AuctionsListForManager = () => {
                                                     Process
                                                 </Link>
                                             )}
-                                            {auction.Auctions1__r.records[0].Status__c === "UpcomingforBid" && (
+                                            {auction.Auctions1__r.records[0].Status__c === "UpcomingForBid" && (
                                                 <Link
                                                     className={styles.linkBlue}
                                                     to={`/viewRegistrationForManager/${auction.Auctions1__r.records[0].Id}`}

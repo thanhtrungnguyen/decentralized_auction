@@ -154,7 +154,7 @@ const ListBidders = () => {
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
                                 ></input>
-                                <button className={styles.btn} type="submit">
+                                <button className={styles.btn} type="submit" disabled={email2.trim() === "" ? true : false}>
                                     Search
                                 </button>
                             </form>

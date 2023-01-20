@@ -35,11 +35,14 @@ export const getListAuctionsHandler = async (req: Request, res: Response, next: 
     });
 };
 export const getListAuctionsByBidderHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const index = req.params.index;
-  const status = req.params.status;
-  const search = req.params.search;
-
-  return await getListAuctionsForBidder(index, status, search)
+  const index = req.query.page;
+  const status = req.query.status;
+  const search = req.query.search;
+  const sort = req.query.sort;
+  const category = req.query.category;
+  const minPrice = req.query.minValue;
+  const maxPrice = req.query.maxValue;
+  return await getListAuctionsForBidder(index, status, search, sort, category, minPrice, maxPrice)
     .then((auctions) => {
       res.status(200).json({ auctions });
     })
