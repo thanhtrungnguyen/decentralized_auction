@@ -10,7 +10,7 @@ import Loading from "../../components/loading/Loading";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hook/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
 import PageName from "../../components/header/PageName";
 import FooterCopy from "../../components/footer/FooterCopy";

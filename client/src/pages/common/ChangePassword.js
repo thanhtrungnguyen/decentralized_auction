@@ -11,7 +11,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import FooterCopy from "../../components/footer/FooterCopy";
 import HeaderUser from "../../components/header/HeaderUser";
-// import { useFetch } from "../../hook/useFetch";
+// import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 // import bcrypt from "bcryptjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

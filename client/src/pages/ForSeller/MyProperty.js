@@ -13,7 +13,7 @@ import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-// import { useFetch, useFetchPagination } from "../../hook/useFetch";
+// import { useFetch, useFetchPagination } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import Popup from "reactjs-popup";
@@ -253,7 +253,13 @@ const MyProperty = () => {
                         </table>
                         <hr />
                         <div>
-                            <Pagination className={styles.Pagination} count={Math.ceil(listProperty.count / 8)} hidden={listProperty.count === 0 ? true : false} page={page} onChange={handleChange} />
+                            <Pagination
+                                className={styles.Pagination}
+                                count={Math.ceil(listProperty.count / 8)}
+                                hidden={listProperty.count === 0 ? true : false}
+                                page={page}
+                                onChange={handleChange}
+                            />
                         </div>
                     </div>
                 </div>

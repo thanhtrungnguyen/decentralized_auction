@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 // import axios from "axios";
 import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hook/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
 import PageName from "../../components/header/PageName";
 import FooterCopy from "../../components/footer/FooterCopy";

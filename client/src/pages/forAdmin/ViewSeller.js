@@ -12,7 +12,7 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
-// import { useFetch } from "../../hook/useFetch";
+// import { useFetch } from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import Time from "../../components/time/Time";
 const ViewSeller = () => {
@@ -39,11 +39,10 @@ const ViewSeller = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                await axios.get(baseURL).then(resp => {
-                    console.log(resp)
+                await axios.get(baseURL).then((resp) => {
+                    console.log(resp);
                     setData(resp.data.result);
                 });
-
             } catch (error) {
                 setError(error);
             }
@@ -251,18 +250,10 @@ const ViewSeller = () => {
                         <br />
                         <div className={styles.fl}>
                             <div className={styles.l}>
-                                <img
-                                    src={data.individual.frontSideImage}
-                                    className={styles.img}
-                                    alt='img'
-                                ></img>
+                                <img src={data.individual.frontSideImage} className={styles.img} alt="img"></img>
                             </div>
                             <div className={styles.r}>
-                                <img
-                                    src={data.individual.backSideImage}
-                                    className={styles.img}
-                                    alt='img'
-                                ></img>
+                                <img src={data.individual.backSideImage} className={styles.img} alt="img"></img>
                             </div>
                         </div>
                         <br />

@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import Loading from "../../components/loading/Loading";
 import jwt from "jsonwebtoken";
-import { useFetchPagination } from "../../hook/useFetch";
+import { useFetchPagination } from "../../hooks/useFetch";
 import moment from "moment";
 import { Pagination } from "@mui/material";
 const News = () => {
@@ -32,7 +32,7 @@ const News = () => {
     const handleSubmit = (event) => {
         title2 === "" ? setTitle(null) : setTitle(title2);
         setPage(1);
-        console.log(title2)
+        console.log(title2);
         event.preventDefault();
     };
 

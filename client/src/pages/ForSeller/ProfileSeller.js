@@ -12,7 +12,7 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
-// import { useFetch } from "../../hook/useFetch";
+// import { useFetch } from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import Time from "../../components/time/Time";
 const ProfileSeller = () => {

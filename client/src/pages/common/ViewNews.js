@@ -11,9 +11,9 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import FooterCopy from "../../components/footer/FooterCopy";
 import HeaderUser from "../../components/header/HeaderUser";
-// import { useFetch } from "../../hook/useFetch";
+// import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
-import { useFetch } from "../../hook/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import createDOMPurify from "dompurify";
 // import { JSDOM } from "jsdom";
 const ViewNews = () => {

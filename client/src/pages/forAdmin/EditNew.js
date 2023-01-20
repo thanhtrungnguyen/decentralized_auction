@@ -15,7 +15,7 @@ import FooterCopy from "../../components/footer/FooterCopy";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useParams } from "react-router-dom";
-//import { useFetch } from "../../hook/useFetch";
+//import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 const EditNew = () => {
@@ -85,7 +85,6 @@ const EditNew = () => {
         }
     };
     const handleSubmit = (event) => {
-
         const formData = new FormData();
 
         formData.append("title", title);
@@ -94,14 +93,12 @@ const EditNew = () => {
             formData.append("avatar", avatar);
         }
 
-
-        axios.put(`/news/update/${id}`, formData, { withCredentials: true })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert("Edit new successfully!!!");
-                navigate("/listNews");
-            });
+        axios.put(`/news/update/${id}`, formData, { withCredentials: true }).then((res) => {
+            console.log(res);
+            console.log(res.data);
+            alert("Edit new successfully!!!");
+            navigate("/listNews");
+        });
         event.preventDefault();
     };
     const cancel = () => {
@@ -128,9 +125,7 @@ const EditNew = () => {
                         <input className={styles.file} id="avatar" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} />
                         {avatar != null && <img src={URL.createObjectURL(avatar)} className={styles.image} alt="Thumb" />}
 
-                        {avatar == null && (
-                            <img src={`${data.avatar}`} className={styles.image} alt="Thumb" />
-                        )}
+                        {avatar == null && <img src={`${data.avatar}`} className={styles.image} alt="Thumb" />}
 
                         <br />
                         <br />

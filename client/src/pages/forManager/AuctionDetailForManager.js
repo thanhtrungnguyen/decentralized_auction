@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 // import axios from "../../config/axiosConfig";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hook/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 // import Popup from "reactjs-popup";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";

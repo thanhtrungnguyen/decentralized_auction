@@ -12,7 +12,7 @@ import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-// import { useFetch } from "../../hook/useFetch";
+// import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import Time from "../../components/time/Time";
@@ -124,19 +124,28 @@ const MyAuctions = () => {
         <Loading />
     ) : (
         <>
-
             <div className={styles.container}>
                 <SideBarSeller />
                 <Time />
                 <div className={styles.r}>
                     <div className={styles.con}>
                         <div className={styles.btns}>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">All</button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Created">Created</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                All
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Created">
+                                Created
+                            </button>
                             {/* <button className={styles.btn}>Modified</button> */}
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">Request</button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">Approved</button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Rejected">Rejected</button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">
+                                Request
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">
+                                Approved
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Rejected">
+                                Rejected
+                            </button>
                             <form onSubmit={handleSubmit}>
                                 <input
                                     className={styles.ip}

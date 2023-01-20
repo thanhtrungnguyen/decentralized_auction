@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useFetchData } from "../../hook/useFetch";
+import { useFetchData } from "../../hooks/useFetch";
 import BidModalButton from "./components/BidModalButton";
 
 const FakeAuctionDetail = () => {

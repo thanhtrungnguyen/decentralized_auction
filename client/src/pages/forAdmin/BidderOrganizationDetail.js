@@ -4,7 +4,7 @@ import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import { useNavigate, useParams } from "react-router-dom";
-import { useFetch } from "../../hook/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -78,7 +78,6 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Tax Code Granted Date</label>
                         </div>
                         <div className={styles.r}>
-
                             <label className={styles.txt2}>{moment(data.result.taxCodeGrantedDate).format("L")}</label>
                         </div>
                     </div>
@@ -139,7 +138,6 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Date Of Birth</label>
                         </div>
                         <div className={styles.r}>
-
                             <label className={styles.txt2}> {moment(data.result.individual.dateOfBirth).format("L")}</label>
                         </div>
                     </div>
@@ -218,7 +216,6 @@ const BidderOrganizationDetail = () => {
                             <label className={styles.txt}>Card Granted Date</label>
                         </div>
                         <div className={styles.r}>
-
                             <label className={styles.txt2}>{moment(data.result.individual.cardGrantedDate).format("L")}</label>
                         </div>
                     </div>
@@ -235,18 +232,10 @@ const BidderOrganizationDetail = () => {
                     <br />
                     <div className={styles.fl}>
                         <div className={styles.l}>
-                            <img
-                                src={data.result.individual.frontSideImage}
-                                className={styles.img}
-                                alt='img'
-                            ></img>
+                            <img src={data.result.individual.frontSideImage} className={styles.img} alt="img"></img>
                         </div>
                         <div className={styles.r}>
-                            <img
-                                src={data.result.individual.backSideImage}
-                                className={styles.img}
-                                alt='img'
-                            ></img>
+                            <img src={data.result.individual.backSideImage} className={styles.img} alt="img"></img>
                         </div>
                     </div>
                     <br />

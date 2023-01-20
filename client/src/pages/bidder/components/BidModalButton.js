@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import BidModal from "../BidModal";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import { useFetchData } from "../../../hook/useFetch";
+import { useFetchData } from "../../../hooks/useFetch";
 const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     const [isOpenModal, setOpenModal] = useState(() => {
         return false;

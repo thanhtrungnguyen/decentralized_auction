@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useWeb3Contract } from "react-moralis";
-// import { useFetchBidding } from "../../../hook/useFetch";
+// import { useFetchBidding } from "../../../hooks/useFetch";
 // import auctionAbi from "../../../constants/contractAbi.json";
 // import contractAddresses from "../../../constants/contractAddress.json";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";

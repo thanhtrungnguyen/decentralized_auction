@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import { useFetch } from "../../../hook/useFetch";
+import { useFetch } from "../../../hooks/useFetch";
 const DeleteProperty = ({ idProperty }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);

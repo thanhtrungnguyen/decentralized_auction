@@ -18,7 +18,7 @@ import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import { useNavigate } from "react-router-dom";
-import { useFetch } from "../../hook/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 const PropertyDetail = () => {
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),

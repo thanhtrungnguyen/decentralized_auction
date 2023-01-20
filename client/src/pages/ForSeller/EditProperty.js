@@ -8,7 +8,7 @@ import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import axios from "../../config/axiosConfig";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hook/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";

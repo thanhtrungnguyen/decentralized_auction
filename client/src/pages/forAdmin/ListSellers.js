@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import BanedSeller from "../../components/popups/forAdmin/BanSeller";
 import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
-import { useFetchPagination } from "../../hook/useFetch";
+import { useFetchPagination } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";

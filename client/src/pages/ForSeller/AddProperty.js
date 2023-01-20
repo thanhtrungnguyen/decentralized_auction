@@ -13,7 +13,7 @@ import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import { useFetch } from "../../hook/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import { ToastContainer, toast } from "react-toastify";
@@ -28,7 +28,7 @@ const AddProperty = () => {
     const [propertyImage3, setPropertyImage3] = useState(null);
     const [propertyVideo, setPropertyVideo] = useState(null);
     const [propertyName, setPropertyName] = useState(null);
-    const [category, setCategory] = useState('null');
+    const [category, setCategory] = useState("null");
     const [propertyDescription, setPropertyDescription] = useState(null);
     const [startBid, setStartBid] = useState(null);
     const [deposit, setDeposit] = useState(null);
@@ -109,7 +109,7 @@ const AddProperty = () => {
         navigate("/myProperty");
     };
     const handleSubmit = (event) => {
-        if (category === 'null') {
+        if (category === "null") {
             notify("🦄 Please select category");
         } else {
             const formData = new FormData();
@@ -152,11 +152,10 @@ const AddProperty = () => {
                         alert(res.data.message);
                     }
                 })
-                .catch(err => {
+                .catch((err) => {
                     notify(err.response.data.message);
                 });
         }
-
 
         event.preventDefault();
     };
@@ -294,7 +293,7 @@ const AddProperty = () => {
                                 </div>
                                 <div className={styles.r}>
                                     <select className={styles.inputText} onChange={(e) => handleInputChange(e)} id="category" placeholder="Category">
-                                        <option value='null'>---------Select Category---------</option>
+                                        <option value="null">---------Select Category---------</option>
                                         {data?.categories.map((item) => (
                                             <option value={item._id}>{item.name}</option>
                                         ))}

@@ -11,7 +11,7 @@ import WaitingForAuctionTime from "./ui/WaitingForAuctionTime";
 import Loading from "./components/Loader";
 import { SUPPORT_CHAINS, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../config/blockchainConfig";
 import AuctionResult from "./ui/auctionResult/AuctionResult";
-import { useFetchBidding } from "../../hook/useFetch";
+import { useFetchBidding } from "../../hooks/useFetch";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 

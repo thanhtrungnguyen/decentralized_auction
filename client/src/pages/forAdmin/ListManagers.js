@@ -8,7 +8,7 @@ import Popup from "reactjs-popup";
 import BanedManager from "../../components/popups/forAdmin/BanManager";
 import ActiveManager from "../../components/popups/forAdmin/ActiveManager";
 import Loading from "../../components/loading/Loading";
-import { useFetchPagination } from "../../hook/useFetch";
+import { useFetchPagination } from "../../hooks/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
