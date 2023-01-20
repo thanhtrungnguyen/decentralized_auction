@@ -56,7 +56,11 @@ const ListBidders = () => {
         setPage(1);
     };
     const handleSubmit = (event) => {
-        email2 === "" ? setEmail(null) : setEmail(email2);
+        if (email2.trim() === "") {
+            //alert("Please enter email")
+            setEmail2('')
+            setEmail(null)
+        } else setEmail(email2.trim());
         setPage(1);
         event.preventDefault();
     };
@@ -154,7 +158,7 @@ const ListBidders = () => {
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
                                 ></input>
-                                <button className={styles.btn} type="submit" disabled={email2.trim() === "" ? true : false}>
+                                <button className={styles.btn} type="submit" >
                                     Search
                                 </button>
                             </form>

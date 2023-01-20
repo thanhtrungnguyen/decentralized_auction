@@ -21,7 +21,7 @@ const ListForManagers = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState(null);
-    const [email2, setEmail2] = useState(null);
+    const [email2, setEmail2] = useState('');
     const [status, setStatus] = useState(null);
     const navigate = useNavigate();
 
@@ -54,7 +54,11 @@ const ListForManagers = () => {
         }
     };
     const handleSubmit = (event) => {
-        email2.trim() === "" ? setEmail(null) : setEmail(email2);
+        if (email2.trim() === "") {
+            //alert("Please enter email")
+            setEmail2('')
+            setEmail(null)
+        } else setEmail(email2.trim());
         setPage(1);
         event.preventDefault();
     };
@@ -165,11 +169,10 @@ const ListForManagers = () => {
                                     type="text"
                                     placeholder="Enter Email"
                                     id="email"
-
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
                                 ></input>
-                                <button className={styles.btn} type="submit" disabled={email2.trim() === "" ? true : false}>
+                                <button className={styles.btn} type="submit"   >
                                     Search
                                 </button>
                             </form>
