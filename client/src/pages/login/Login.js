@@ -1,27 +1,43 @@
 import styles from "../../styleCss/login.module.css";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "../../config/axiosConfig";
 import { useNotification } from "web3uikit";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { AiFillHome } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
+import useAuth from "../../hooks/useAuth";
+
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Login = () => {
+    // debugger;
+    const { setAuth } = useAuth();
+    const dispatch = useNotification();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const usernameRef = useRef();
+    const errorRef = useRef();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    // const [message, setMassage] = useState("");
+    const [errorMessage, setErrorMassage] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+
     const togglePasswordVisibility = () => {
-        setPasswordShown1(passwordShown1 ? false : true);
+        setShowPassword(showPassword ? false : true);
     };
-    const [passwordShown1, setPasswordShown1] = useState(false);
-    const dispatch = useNotification();
+
+    useEffect(() => {
+        usernameRef.current.focus();
+    }, []);
+
+    useEffect(() => {
+        setErrorMassage("");
+    }, [username, password]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -35,7 +51,15 @@ const Login = () => {
                 }
             )
             .then((response) => {
+                console.log("there");
                 if (response.status === 201) {
+                    const user = response.data.user;
+                    const accessToken = response.data.accessToken;
+                    const refreshToken = response.data.refreshToken;
+                    setAuth({ user, accessToken, refreshToken });
+                    setUsername("");
+                    setPassword("");
+
                     if (response.data.user.role === "bidder") {
                         navigate("/homePage");
                     }
@@ -51,13 +75,17 @@ const Login = () => {
                 }
             })
             .catch((error) => {
-                dispatch({
-                    type: "error",
-                    title: error.response.statusText,
-                    message: error.response.data.message,
-                    position: "topR",
-                    icon: <AiOutlineClose />,
-                });
+                if (!error?.response) {
+                    setErrorMassage("No server response");
+                } else if (error.response?.status === 422) {
+                    setErrorMassage("Unprocessable Entity");
+                } else if (error.response?.status === 401) {
+                    setErrorMassage(error.response?.data?.message);
+                } else {
+                    setErrorMassage("Login Failed");
+                }
+                errorRef.current.focus();
+                console.log(errorMessage);
             });
     };
 
@@ -73,10 +101,12 @@ const Login = () => {
                                 Sign up{" "}
                             </Link>
                         </p>
-                        <p className={styles.use}>username</p>
+                        <p className={styles.use}>Username</p>
                         <input
                             className={styles.ip}
                             type="text"
+                            id="username"
+                            ref={usernameRef}
                             placeholder="username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -85,25 +115,28 @@ const Login = () => {
                         <p className={styles.use}>Password</p>
                         <input
                             className={styles.ip}
-                            type={passwordShown1 ? "text" : "password"}
+                            type={showPassword ? "text" : "password"}
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         ></input>
+
                         <i className={styles.eye} onClick={togglePasswordVisibility}>
                             {eye}
                         </i>
+
                         <br />
                         <br />
+                        <p ref={errorRef} className={errorMessage ? styles.errorMessage : styles.offscreen} aria-live="assertive">
+                            {errorMessage}
+                        </p>
+                        <input className={styles.btn} type="submit" value="Sign in" />
                         <p>
                             <Link className={styles.forget} to="/enterEmail">
                                 Forget password?
                             </Link>
                         </p>
-                        <br />
-                        <br />
-                        <input className={styles.btn} type="submit" value="Sign in" />
                     </div>
                     <div className={styles.col2}>
                         <div className={styles.conLink}>
@@ -128,50 +161,6 @@ const Login = () => {
                     </div>
                 </form>
             </div>
-            {/* <Header />
-
-            <NavBar />
-            <PageName pageName={"Login"} link={"login"} home={"homePage"} />
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <div className={styles.group3}>
-                        <div className={styles.group2}>
-                            <p className={styles.txtLogin}>Login</p>
-                            <p className={styles.text}>Please login using account detail bellow.</p>
-                            <input
-                                type="text"
-                                className={styles.textField}
-                                placeholder="Email Address"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            ></input>
-                            <input
-                                type="password"
-                                className={styles.textField}
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            ></input>
-                            <p className={styles.text}>
-                                <Link to="/enterEmail" className={styles.text}>
-                                    Forgot your password?
-                                </Link>
-                            </p>
-
-                            <input className={styles.btnSignIn} type="submit" value="Sign in" />
-                            <p className={styles.text}>
-                                <Link to="/register" className={styles.text}>
-                                    Don’t have an Account?Create account{" "}
-                                </Link>
-                            </p>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <Footer />
-            <FooterCopy /> */}
         </>
     );
 };

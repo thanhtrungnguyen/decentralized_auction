@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../config/axiosConfig";
+import useAuth from "../../hooks/useAuth";
 import styles from "../../styleCss/stylesComponents/time.module.css";
 
 export const LogoutButton = () => {
     const navigate = useNavigate();
+    const { setAuth } = useAuth();
 
     const handleLogout = () => {
         axios
             .delete("/session")
             .then((response) => {
-                if (response.status === 204) {
-                    // do
-                }
+                setAuth({});
             })
             .then(navigate("/login"))
             .catch((error) => {
