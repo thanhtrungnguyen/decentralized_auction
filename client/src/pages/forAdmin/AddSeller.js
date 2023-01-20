@@ -132,24 +132,24 @@ const AddSeller = () => {
             theme: "light",
         });
     };
-    // const [listUsername, setListUsername] = useState([]);
-    // const baseURL = `http://localhost:5000/api/user/users`;
+    const [listUsername, setListUsername] = useState([]);
+    const baseURL = `http://localhost:5000/api/user/users`;
     const handleSubmit = (event) => {
-        // const fsizeBack = cardBack.size;
-        // const fileBack = Math.round(fsizeBack / 1024);
-        // const fsizeFront = cardFront.size;
-        // const fileFront = Math.round(fsizeFront / 1024);
-        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
-        //     setListUsername(resp.data.users);
-        //     listUsername.map((item) => {
-        //         if (item.username === userName) {
-        //             setIsExit(true);
-        //             console.log(item.username);
-        //         } else {
-        //             setIsExit(false);
-        //         }
-        //     });
-        // });
+        const fsizeBack = cardBack.size;
+        const fileBack = Math.round(fsizeBack / 1024);
+        const fsizeFront = cardFront.size;
+        const fileFront = Math.round(fsizeFront / 1024);
+        axios.get(baseURL, { withCredentials: true }).then((resp) => {
+            setListUsername(resp.data.users);
+            listUsername.map((item) => {
+                if (item.username === userName) {
+                    setIsExit(true);
+                    console.log(item.username);
+                } else {
+                    setIsExit(false);
+                }
+            });
+        });
         let cityId = selectedCity.value;
         let city = selectedCity.label;
         let districtId = selectedDistrict.value;
@@ -200,13 +200,11 @@ const AddSeller = () => {
             notify("🦄 cardFront is empty");
         } else if (!cardBack) {
             notify("🦄 cardBack is empty");
-        }
-        //  else if (fileBack > 2048) {
-        //     notify("🦄 File card back, please select a file less than 2mb");
-        // } else if (fileFront > 2048) {
-        //     notify("🦄 File card front, please select a file less than 2mb");
-        // }
-        else if (!userName) {
+        } else if (fileBack > 2048) {
+            notify("🦄 File card back, please select a file less than 2mb");
+        } else if (fileFront > 2048) {
+            notify("🦄 File card front, please select a file less than 2mb");
+        } else if (!userName) {
             notify("🦄 username is empty");
         } else if (!password) {
             notify("🦄 password is empty");
@@ -336,7 +334,7 @@ const AddSeller = () => {
                                 value={organizationName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="organizationName"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -348,7 +346,7 @@ const AddSeller = () => {
                                 value={taxCode}
                                 onChange={(e) => handleInputChange(e)}
                                 id="taxCode"
-                                ////required
+                                required
                             ></input>
                             <p className={styles.txtBlack}>Tax code granted date</p>
                             <input
@@ -368,7 +366,7 @@ const AddSeller = () => {
                                 value={taxCodeGrantedPlace}
                                 onChange={(e) => handleInputChange(e)}
                                 id="taxCodeGrantedPlace"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -381,7 +379,7 @@ const AddSeller = () => {
                                 value={specificAddressOrganization}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddressOrganization"
-                                //required
+                                required
                             ></input>
                             <p className={styles.textBlue}>Representative Information</p>
                             <p className={styles.textRed}>Basic information</p>
@@ -393,7 +391,7 @@ const AddSeller = () => {
                                 value={firstName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="firstName"
-                                //required
+                                required
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <input
@@ -404,7 +402,7 @@ const AddSeller = () => {
                                 value={lastName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="lastName"
-                                //required
+                                required
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
@@ -430,7 +428,7 @@ const AddSeller = () => {
                                 value={email}
                                 onChange={(e) => handleInputChange(e)}
                                 id="email"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -443,7 +441,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="phone"
                                 maxLength={10}
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -455,7 +453,7 @@ const AddSeller = () => {
                                 value={position}
                                 onChange={(e) => handleInputChange(e)}
                                 id="position"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -504,7 +502,7 @@ const AddSeller = () => {
                                 value={specificAddress}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddress"
-                                //required
+                                required
                             ></input>{" "}
                             <br />
                             <br />
@@ -517,7 +515,7 @@ const AddSeller = () => {
                                 value={cardNumber}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardNumber"
-                                //required
+                                required
                             ></input>
                             <input
                                 type="date"
@@ -534,7 +532,7 @@ const AddSeller = () => {
                                 value={cardGrantedPlace}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardGrantedPlace"
-                                //required
+                                required
                             ></input>
                             <input
                                 className={styles.imgCard}
@@ -544,7 +542,7 @@ const AddSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                //required
+                                required
                             />
                             <input
                                 id="cardBack"
@@ -553,7 +551,7 @@ const AddSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                //required
+                                required
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
@@ -580,7 +578,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="userName"
                                 placeholder="Username"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -592,7 +590,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="password"
                                 placeholder="Password"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -603,7 +601,7 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="rePassword"
                                 placeholder="Re-eneter the password"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />

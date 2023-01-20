@@ -336,7 +336,7 @@ const EditSeller = () => {
                                 value={organizationName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="organizationName"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -348,7 +348,7 @@ const EditSeller = () => {
                                 value={taxCode}
                                 onChange={(e) => handleInputChange(e)}
                                 id="taxCode"
-                                ////required
+                                required
                             ></input>
                             <p className={styles.txtBlack}>Tax code granted date</p>
                             <input
@@ -368,7 +368,7 @@ const EditSeller = () => {
                                 value={taxCodeGrantedPlace}
                                 onChange={(e) => handleInputChange(e)}
                                 id="taxCodeGrantedPlace"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -381,7 +381,7 @@ const EditSeller = () => {
                                 value={specificAddressOrganization}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddressOrganization"
-                                //required
+                                required
                             ></input>
                             <p className={styles.textBlue}>Representative Information</p>
                             <p className={styles.textRed}>Basic information</p>
@@ -393,7 +393,7 @@ const EditSeller = () => {
                                 value={firstName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="firstName"
-                                //required
+                                required
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <input
@@ -404,7 +404,7 @@ const EditSeller = () => {
                                 value={lastName}
                                 onChange={(e) => handleInputChange(e)}
                                 id="lastName"
-                                //required
+                                required
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
@@ -430,7 +430,7 @@ const EditSeller = () => {
                                 value={email}
                                 onChange={(e) => handleInputChange(e)}
                                 id="email"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -443,7 +443,7 @@ const EditSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="phone"
                                 maxLength={10}
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -455,7 +455,7 @@ const EditSeller = () => {
                                 value={position}
                                 onChange={(e) => handleInputChange(e)}
                                 id="position"
-                                //required
+                                required
                             ></input>
                             <br />
                             <br />
@@ -504,7 +504,7 @@ const EditSeller = () => {
                                 value={specificAddress}
                                 onChange={(e) => handleInputChange(e)}
                                 id="specificAddress"
-                                //required
+                                required
                             ></input>{" "}
                             <br />
                             <br />
@@ -517,7 +517,7 @@ const EditSeller = () => {
                                 value={cardNumber}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardNumber"
-                                //required
+                                required
                             ></input>
                             <input
                                 type="date"
@@ -534,7 +534,7 @@ const EditSeller = () => {
                                 value={cardGrantedPlace}
                                 onChange={(e) => handleInputChange(e)}
                                 id="cardGrantedPlace"
-                                //required
+                                required
                             ></input>
                             <input
                                 className={styles.imgCard}
@@ -580,7 +580,6 @@ const EditSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="userName"
                                 placeholder="Username"
-                                //required
                                 readOnly
                             ></input>
                             <br />
