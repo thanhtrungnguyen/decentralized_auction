@@ -76,9 +76,9 @@ module.exports = (app) => {
     //         }
     //         if (currentTime - timeEndRegistrationFN > 0 && currentTime - timeStartAuctionFN < 0) {
     //             var auctionget = await AuctionService.findStatusAuction(auction._doc.auctionId);
-    //             if (auctionget.status != "UpcomingforBid") {
-    //                 await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "UpcomingforBid");
-    //                 await AuctionService.updateStatusForAuction(auction._doc.auctionId, "UpcomingforBid");
+    //             if (auctionget.status != "UpcomingForBid") {
+    //                 await AuctionService.updateStatusAuctionMongo(auction._doc.auctionId, "UpcomingForBid");
+    //                 await AuctionService.updateStatusForAuction(auction._doc.auctionId, "UpcomingForBid");
     //                 i = i + 1;
     //                 io.emit("data", i);
     //             }

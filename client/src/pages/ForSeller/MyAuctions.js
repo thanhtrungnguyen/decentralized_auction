@@ -251,7 +251,7 @@ const MyAuctions = () => {
                             </button>
                             <button
                                 className={styles.link}
-                                value="UpcomingforBid"
+                                value="UpcomingForBid"
                                 onClick={(e) => {
                                     handleChangeStatus(e);
                                 }}

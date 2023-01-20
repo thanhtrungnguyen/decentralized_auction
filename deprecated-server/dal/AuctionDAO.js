@@ -161,7 +161,7 @@ const getAllAuction = async (index, name, category, statusAuction) => {
     );
     return { listAuction: auctions, total: total, totalAuction: totalAuction };
 };
-const getAuctionForSeller = async (userId,index, name, category, statusAuction) => {
+const getAuctionForSeller = async (userId, index, name, category, statusAuction) => {
     var query,
         queryCount = "";
     var auctions,
@@ -254,66 +254,66 @@ const getAuctionDetailByID = async (auctionId, propertyId) => {
 
 const filterAuction = async (index, status, price, sort, name) => {
     var connection = await conn();
-    var auctionlist,total = null;
+    var auctionlist, total = null;
     var num = (parseInt(index) - 1) * 5;
     var statusQuery,
-        priceQuery,sortQuery,nameQuery = "";
+        priceQuery, sortQuery, nameQuery = "";
     var query =
         `Select Id, Name, Description__c, Category_Id__r.Name, Deposit_Amount__c, End_View_Property_Time__c, Place_View_Property__c, Price_Step__c, Start_Bid__c, ` +
         `Start_View_Property_Time__c, Status__c, User_Id__c, (Select Name From Properties_Media__r), (Select Id, Name, RegistrationFee__c, Due_Payment_Time__c, ` +
         `End_Auction_Time__c, Start_Aution_Time__c, Start_Registration_Time__c, End_Registration_Time__c, Property_DAP_Id__c, Status__c From Auctions1__r  ) ` +
-        `From Property_DAP__c WHERE Id IN (SELECT Property_DAP_Id__c  FROM Auction__c where Status__c != 'Request' ` ;
+        `From Property_DAP__c WHERE Id IN (SELECT Property_DAP_Id__c  FROM Auction__c where Status__c != 'Request' `;
     var queryCount =
         `Select Id, Name, Description__c, Category_Id__r.Name, Deposit_Amount__c, End_View_Property_Time__c, Place_View_Property__c, Price_Step__c, Start_Bid__c, ` +
         `Start_View_Property_Time__c, Status__c, User_Id__c, (Select Name From Properties_Media__r), (Select Id, Name, RegistrationFee__c, Due_Payment_Time__c, ` +
         `End_Auction_Time__c, Start_Aution_Time__c, Start_Registration_Time__c, End_Registration_Time__c, Property_DAP_Id__c, Status__c From Auctions1__r  ) ` +
-        `From Property_DAP__c WHERE Id IN (SELECT Property_DAP_Id__c  FROM Auction__c  where Status__c != 'Request' ` ;
-    
-    status == 2 ? (statusQuery = ` (Status__c = 'UpcomingforBid') `): 
-    status == 3 ? (statusQuery = ` (Status__c = 'Bidding') `): 
-    status == 4 ? (statusQuery = ` (Status__c = 'Closed') `): 
-    status == 5 ? (statusQuery = ` (Status__c = 'UpcomingforBid' or Status__c = 'Bidding') `): 
-    status == 6 ? (statusQuery = ` (Status__c = 'UpcomingforBid' or Status__c = 'Closed') `): 
-    status == 7 ? (statusQuery = ` (Status__c = 'Bidding' or Status__c = 'Closed') `): 
-    status == 9 ? (statusQuery = ` (Status__c = 'Bidding' or Status__c = 'UpcomingforBid' or Status__c = 'Closed') `): "";
+        `From Property_DAP__c WHERE Id IN (SELECT Property_DAP_Id__c  FROM Auction__c  where Status__c != 'Request' `;
 
-    price == 1 ? (priceQuery = ` (Start_Bid__c <= 0.25) `): 
-    price == 2 ? (priceQuery = ` (Start_Bid__c >= 0.25 and Start_Bid__c <= 0.5) `): 
-    price == 3 ? (priceQuery = ` (Start_Bid__c >= 0.5 and Start_Bid__c <= 0.75) `): 
-    price == 4 ? (priceQuery = ` (Start_Bid__c >= 0.75) `): "";
+    status == 2 ? (statusQuery = ` (Status__c = 'UpcomingForBid') `) :
+        status == 3 ? (statusQuery = ` (Status__c = 'Bidding') `) :
+            status == 4 ? (statusQuery = ` (Status__c = 'Closed') `) :
+                status == 5 ? (statusQuery = ` (Status__c = 'UpcomingForBid' or Status__c = 'Bidding') `) :
+                    status == 6 ? (statusQuery = ` (Status__c = 'UpcomingForBid' or Status__c = 'Closed') `) :
+                        status == 7 ? (statusQuery = ` (Status__c = 'Bidding' or Status__c = 'Closed') `) :
+                            status == 9 ? (statusQuery = ` (Status__c = 'Bidding' or Status__c = 'UpcomingForBid' or Status__c = 'Closed') `) : "";
 
-    name == 'null' ? nameQuery = '': nameQuery = (` (Name like '%${name}%') `)
+    price == 1 ? (priceQuery = ` (Start_Bid__c <= 0.25) `) :
+        price == 2 ? (priceQuery = ` (Start_Bid__c >= 0.25 and Start_Bid__c <= 0.5) `) :
+            price == 3 ? (priceQuery = ` (Start_Bid__c >= 0.5 and Start_Bid__c <= 0.75) `) :
+                price == 4 ? (priceQuery = ` (Start_Bid__c >= 0.75) `) : "";
 
-    sort == 1 ? (sortQuery = `order by CreatedDate desc `):
-    sort == 2 ? (sortQuery = `order by Start_Bid__c asc `):
-    sort == 3 ? (sortQuery = `order by Start_Bid__c desc `):"";
+    name == 'null' ? nameQuery = '' : nameQuery = (` (Name like '%${name}%') `)
 
-    
-    
-    if (status == 'null' && price == 'null' && name == 'null'){
-        query = query +  `) ${sortQuery} limit 5 offset ${num}`;
-        queryCount = queryCount +  `) ${sortQuery} `;
-    }else if(status == 'null' && price == 'null'){
-        query = query +  `and ${nameQuery}) ` + `${sortQuery} limit 5 offset ${num}`;
-        queryCount = queryCount +  `and ${nameQuery}) ` + `${sortQuery}`;
-    }else if(status == 'null' && name == 'null'){
-        query = query +  `) and ${priceQuery}` + `${sortQuery} limit 5 offset ${num}`;
-        queryCount = queryCount +  `) and ${priceQuery}` + `${sortQuery}`;
-    }else if(price == 'null'  && name == 'null'){
-        query = query +  `and ${statusQuery}) ` + `${sortQuery} limit 5 offset ${num}`;
-        queryCount = queryCount +  `and ${statusQuery}) ` + `${sortQuery}`;
-    }else if(status == 'null' ){
-        query = query + `and ${nameQuery}) ` +  `and ${priceQuery}` + `${sortQuery} limit 5 offset ${num}`;
-        queryCount = queryCount + `and ${nameQuery}) ` +  `and ${priceQuery}` + `${sortQuery}`;
-    }else if(price == 'null' ){
-        query = query + `and ${nameQuery}` +  `and ${statusQuery}) ` + `${sortQuery} limit 5 offset ${num}`;
-        queryCount = queryCount + `and ${nameQuery}` +  `and ${statusQuery}) ` + `${sortQuery}`;
-    }else if(name == 'null'){
-        query = query + `and ${statusQuery}) ` +  `and ${priceQuery}` + `${sortQuery} limit 5 offset ${num}`;
-        queryCount = queryCount + `and ${statusQuery}) ` +  `and ${priceQuery}` + `${sortQuery}`;
-    }else{
-        query = query + `and ${nameQuery}` + `and ${statusQuery}) ` +  `and ${priceQuery}` + `${sortQuery} limit 5 offset ${num}`;
-        queryCount = queryCount + `and ${nameQuery}` + `and ${statusQuery}) ` +  `and ${priceQuery}` + `${sortQuery}`;
+    sort == 1 ? (sortQuery = `order by CreatedDate desc `) :
+        sort == 2 ? (sortQuery = `order by Start_Bid__c asc `) :
+            sort == 3 ? (sortQuery = `order by Start_Bid__c desc `) : "";
+
+
+
+    if (status == 'null' && price == 'null' && name == 'null') {
+        query = query + `) ${sortQuery} limit 5 offset ${num}`;
+        queryCount = queryCount + `) ${sortQuery} `;
+    } else if (status == 'null' && price == 'null') {
+        query = query + `and ${nameQuery}) ` + `${sortQuery} limit 5 offset ${num}`;
+        queryCount = queryCount + `and ${nameQuery}) ` + `${sortQuery}`;
+    } else if (status == 'null' && name == 'null') {
+        query = query + `) and ${priceQuery}` + `${sortQuery} limit 5 offset ${num}`;
+        queryCount = queryCount + `) and ${priceQuery}` + `${sortQuery}`;
+    } else if (price == 'null' && name == 'null') {
+        query = query + `and ${statusQuery}) ` + `${sortQuery} limit 5 offset ${num}`;
+        queryCount = queryCount + `and ${statusQuery}) ` + `${sortQuery}`;
+    } else if (status == 'null') {
+        query = query + `and ${nameQuery}) ` + `and ${priceQuery}` + `${sortQuery} limit 5 offset ${num}`;
+        queryCount = queryCount + `and ${nameQuery}) ` + `and ${priceQuery}` + `${sortQuery}`;
+    } else if (price == 'null') {
+        query = query + `and ${nameQuery}` + `and ${statusQuery}) ` + `${sortQuery} limit 5 offset ${num}`;
+        queryCount = queryCount + `and ${nameQuery}` + `and ${statusQuery}) ` + `${sortQuery}`;
+    } else if (name == 'null') {
+        query = query + `and ${statusQuery}) ` + `and ${priceQuery}` + `${sortQuery} limit 5 offset ${num}`;
+        queryCount = queryCount + `and ${statusQuery}) ` + `and ${priceQuery}` + `${sortQuery}`;
+    } else {
+        query = query + `and ${nameQuery}` + `and ${statusQuery}) ` + `and ${priceQuery}` + `${sortQuery} limit 5 offset ${num}`;
+        queryCount = queryCount + `and ${nameQuery}` + `and ${statusQuery}) ` + `and ${priceQuery}` + `${sortQuery}`;
     }
 
     await connection.query(query, function (err, result) {
@@ -332,14 +332,14 @@ const filterAuction = async (index, status, price, sort, name) => {
         // console.log("fetched : " + result.records.length);
         total = result.totalSize
     });
-    return {auctionlist:auctionlist,total:total};
+    return { auctionlist: auctionlist, total: total };
 };
 
 const getAuctionForUpdateStatus = async (auctionId) => {
     var connection = await conn();
     var auction = null;
     await connection.query(
-        "Select Id, Name, RegistrationFee__c, Due_Payment_Time__c, End_Auction_Time__c, Start_Aution_Time__c, Start_Registration_Time__c, End_Registration_Time__c, Property_DAP_Id__c, Status__c From Auction__c where Status__c in ('Approved','RegistrationTime','Bidding', 'UpcomingforBid', 'Closed') and Id = '" +
+        "Select Id, Name, RegistrationFee__c, Due_Payment_Time__c, End_Auction_Time__c, Start_Aution_Time__c, Start_Registration_Time__c, End_Registration_Time__c, Property_DAP_Id__c, Status__c From Auction__c where Status__c in ('Approved','RegistrationTime','Bidding', 'UpcomingForBid', 'Closed') and Id = '" +
         auctionId +
         "'",
         function (err, result) {

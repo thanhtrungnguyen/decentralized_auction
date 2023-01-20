@@ -1,6 +1,8 @@
 import { match } from 'assert';
+import { result } from 'lodash';
 import { FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
 import Auction, { IAuction, IAuctionDocument } from '../models/Auction';
+import Category from '../models/Category';
 import logger from '../utils/logger';
 
 const getAllAuctions = async () => {
@@ -52,22 +54,72 @@ const getListAuctions = async (index: any, status: any, search: any, sellerName:
     logger.error(error);
   }
 };
-const getListAuctionsForBidder = async (index: any, status: any, search: any) => {
-  var filter;
-  status == 'null' && search == 'null'
-    ? (filter = { status: { $ne: 'Request' } })
-    : status == 'null' && search != 'null'
-    ? (filter = { name: { $regex: search, $options: 'i' }, status: { $ne: 'Request' } })
-    : status != 'null' && search == 'null'
-    ? (filter = { status: status })
-    : (filter = { status: status, name: { $regex: search, $options: 'i' } });
-
+const getListAuctionsForBidder = async (index: any, status: any, search: any, sort: any, category: any, minPrice: any, maxPrice: any) => {
+  var arr, count;
+  // status == 'null' && search == 'null'
+  //   ? (filterAuction = { status: { $ne: 'Request' } })
+  //   : status == 'null' && search != 'null'
+  //   ? (filterAuction = { name: { $regex: search, $options: 'i' }, status: { $ne: 'Request' } })
+  //   : status != 'null' && search == 'null'
+  //   ? (filterAuction = { status: status })
+  //   : (filterAuction = { status: status, name: { $regex: search, $options: 'i' } });
+  const allStatus = ['Closed', 'Bidding', 'RegistrationTime', 'UpcomingForBid', 'Approved'];
+  status === 'all' ? (status = [...allStatus]) : (status = status.split(','));
+  if (category === '') {
+    await Category.find({}).then((result) => (category = result));
+  } else {
+    category = category.split(',');
+  }
+  sort = parseInt(sort);
   try {
     var skip = parseInt(index);
     const page_size = 3;
     skip = skip == 1 ? 0 : (skip - 1) * page_size;
-    var arr = await Auction.find(filter).populate('property').sort({ createdAt: -1 }).skip(skip).limit(page_size);
-    var count = await Auction.find(filter).count();
+    //var arr = await Auction.find(filterAuction).populate('property').sort({ createdAt: -1 }).skip(skip).limit(page_size);
+    await Auction.find({ name: { $regex: search, $options: 'i' }, status: { $ne: 'Request' } })
+      .where('status')
+      .in([...status])
+      .populate({
+        path: 'property',
+        match: {
+          startBid: { $gte: parseInt(minPrice), $lt: parseInt(maxPrice) }
+        },
+        options: {
+          sort: sort === 0 ? {} : { startBid: sort }
+        },
+        populate: {
+          path: 'category',
+          match: {
+            name: { $in: [...category] }
+          }
+        }
+      })
+      .sort(sort === 0 ? { createdAt: -1 } : {})
+      .then((result) => {
+        arr = result.filter((item) => item.property !== null && item.property.category !== null).slice((index - 1) * page_size, index * page_size);
+      });
+    await Auction.find({ name: { $regex: search, $options: 'i' }, status: { $ne: 'Request' } })
+      .where('status')
+      .in([...status])
+      .populate({
+        path: 'property',
+        match: {
+          startBid: { $gte: parseInt(minPrice), $lt: parseInt(maxPrice) }
+        },
+        options: {
+          sort: sort === 0 ? {} : { startBid: sort }
+        },
+        populate: {
+          path: 'category',
+          match: {
+            name: { $in: [...category] }
+          }
+        }
+      })
+      .sort(sort === 0 ? { createdAt: -1 } : {})
+      .then((result) => {
+        count = result.filter((item) => item.property !== null && item.property.category !== null).length;
+      });
     return { listAuction: arr, count: count };
   } catch (error) {
     logger.error(error);
