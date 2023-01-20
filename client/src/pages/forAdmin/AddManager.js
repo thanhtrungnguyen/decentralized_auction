@@ -153,7 +153,7 @@ const AddManager = () => {
                         gender: gender.trim(),
                         address: specificAddress.trim(),
                         role: "manager",
-                        type: type
+                        type: type,
                     },
                     { withCredentials: true }
                 )
@@ -213,11 +213,13 @@ const AddManager = () => {
                             onChange={(e) => handleInputChange(e)}
                             id="firstName"
                             pattern="[a-zA-Z\s]{1,50}"
+                            required
                         ></input>
                         <p className={styles.txt}>Last Name</p>
                         <input
                             className={styles.ip}
                             pattern="[a-zA-Z\s]{1,50}"
+                            required
                             type="text"
                             onChange={(e) => handleInputChange(e)}
                             id="lastName"
@@ -234,6 +236,7 @@ const AddManager = () => {
                             type="email"
                             onChange={(e) => handleInputChange(e)}
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                            required
                             id="email"
                         ></input>
                         <p className={styles.txt}>Phone</p>
@@ -241,6 +244,7 @@ const AddManager = () => {
                             className={styles.ip}
                             type="text"
                             onChange={(e) => handleInputChange(e)}
+                            required
                             id="phone"
                             pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
                         ></input>
@@ -249,22 +253,31 @@ const AddManager = () => {
                             className={styles.ip}
                             type="text"
                             onChange={(e) => handleInputChange(e)}
+                            required
                             pattern="^\s*([^\s]\s*){0,300}$"
                             id="specificAddress"
                         ></input>
                         <p className={styles.if}>Account Information</p>
                         <p className={styles.txt}>Username</p>
-                        <input className={styles.ip} type="text" onChange={(e) => handleInputChange(e)} id="username" pattern="?=.{6,20}$"></input>
+                        <input
+                            className={styles.ip}
+                            type="text"
+                            onChange={(e) => handleInputChange(e)}
+                            id="username"
+                            required
+                            pattern="?=.{6,20}$"
+                        ></input>
                         <p className={styles.txt}>Password</p>
                         <input
                             className={styles.ip}
                             type="password"
                             onChange={(e) => handleInputChange(e)}
                             id="password"
+                            required
                             pattern="^\s*(?:\S\s*){8,}$"
                         ></input>
                         <p className={styles.txt}>Re-Password</p>
-                        <input className={styles.ip} type="password" onChange={(e) => handleInputChange(e)} id="rePassword"></input>
+                        <input className={styles.ip} type="password" required onChange={(e) => handleInputChange(e)} id="rePassword"></input>
                         <label style={{ color: "red" }}>{message}</label>
                         <br />
                         <br />
