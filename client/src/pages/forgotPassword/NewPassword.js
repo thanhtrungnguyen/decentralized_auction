@@ -32,18 +32,16 @@ const NewPassword = () => {
             setMessage("Please enter match the password");
         } else {
             await axios
-                .post(
-                    "/auth/reset-password",
-                    { password1: password, password2: rePassword, userId: userId, token: token },
-                    { withCredentials: true }
-                )
+                .post("/auth/reset-password", { password1: password, password2: rePassword, userId: userId, token: token }, { withCredentials: true })
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
                     // alert(res.data.message);
                     navigate(`/login`);
+                })
+                .catch(() => {
+                    alert("🦄 Failed");
                 });
-
         }
 
         event.preventDefault();
@@ -81,7 +79,7 @@ const NewPassword = () => {
                                 ></input>
                                 <i onClick={toggleRePasswordVisibility}>{eye}</i>
                             </div>
-                            <label style={{ color: 'red' }}>{message}</label>
+                            <label style={{ color: "red" }}>{message}</label>
 
                             <br />
                             <br />
