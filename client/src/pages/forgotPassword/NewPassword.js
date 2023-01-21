@@ -39,8 +39,8 @@ const NewPassword = () => {
                     // alert(res.data.message);
                     navigate(`/login`);
                 })
-                .catch(() => {
-                    alert("🦄 Failed");
+                .catch((err) => {
+                    alert(`🦄 Failed: ${err.response.data.message}`);
                 });
         }
 

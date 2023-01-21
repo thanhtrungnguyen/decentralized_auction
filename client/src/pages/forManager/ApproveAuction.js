@@ -100,8 +100,8 @@ const PropertyDetail = () => {
                 alert("Approve Auction successfully!!!");
                 navigate("/auctionListForManager");
             })
-            .catch(() => {
-                alert("🦄 Failed");
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message}`);
             });
     };
     // const RejectAuction = () => {

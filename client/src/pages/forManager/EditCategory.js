@@ -56,8 +56,8 @@ const EditCategory = () => {
                 alert("Update Successful");
                 navigate("/managerCategories");
             })
-            .catch(() => {
-                alert("🦄 Failed");
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message}`);
             });
         event.preventDefault();
     };

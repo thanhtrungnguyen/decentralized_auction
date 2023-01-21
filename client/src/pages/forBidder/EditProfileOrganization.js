@@ -182,8 +182,8 @@ const EditProfileOrganization = () => {
                 alert("Edit profile successfully!!!");
                 navigate(`profile/${id}`);
             })
-            .catch(() => {
-                alert("🦄 Failed");
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message}`);
             });
         console.log(formData);
 

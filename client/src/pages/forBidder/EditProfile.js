@@ -164,8 +164,8 @@ const EditProfile = () => {
                 alert("Update Successful");
                 navigate(`/profile/${id}`);
             })
-            .catch(() => {
-                alert("🦄 Failed");
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message}`);
             });
         console.log(formData);
 

@@ -85,8 +85,8 @@ const EditAuction = () => {
                 alert("Edit Auction successfully!!!");
                 navigate("/myAuctions");
             })
-            .catch(() => {
-                alert("🦄 Failed");
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message}`);
             });
         console.log(formData);
         for (const [key, value] of formData) {

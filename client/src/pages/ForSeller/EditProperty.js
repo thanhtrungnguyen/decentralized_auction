@@ -162,8 +162,8 @@ const EditProperty = () => {
                 alert("Edit property successfully!!!");
                 navigate("/myProperty");
             })
-            .catch(() => {
-                alert("🦄 Failed");
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message}`);
             });
 
         event.preventDefault();

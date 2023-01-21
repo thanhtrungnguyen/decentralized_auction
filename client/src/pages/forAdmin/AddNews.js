@@ -70,8 +70,8 @@ const AddNews = () => {
                 alert("Add new successfully!!!");
                 navigate("/listNews");
             })
-            .catch(() => {
-                alert("🦄 Failed");
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message}`);
             });
         event.preventDefault();
     };
