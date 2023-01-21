@@ -163,7 +163,7 @@ const EditProperty = () => {
                 navigate("/myProperty");
             })
             .catch((err) => {
-                alert(`🦄 Failed: ${err.response.data.message}`);
+                alert(`🦄 Failed: ${err.response.data.message}, ${err}`);
             });
 
         event.preventDefault();

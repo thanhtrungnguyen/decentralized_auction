@@ -51,9 +51,9 @@ const AddCategory = () => {
                 alert("Add Category Successful");
                 navigate("/managerCategories");
             })
-            .catch(err => {
+            .catch((err) => {
                 // console.log(err.response.data.mess);
-                alert(err.response.data.mess)
+                alert(`${err.response.data.mess}, ${err} `);
             });
         event.preventDefault();
     };

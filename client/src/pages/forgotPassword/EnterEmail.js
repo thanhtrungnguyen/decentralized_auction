@@ -19,7 +19,7 @@ const EnterEmail = () => {
                 console.log(res.data);
             })
             .catch((err) => {
-                alert(`🦄 Failed: ${err.response.data.message}`);
+                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
             });
         alert("Please check your email !!!");
         navigate("/homePage");

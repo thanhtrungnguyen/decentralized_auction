@@ -40,7 +40,7 @@ const NewPassword = () => {
                     navigate(`/login`);
                 })
                 .catch((err) => {
-                    alert(`🦄 Failed: ${err.response.data.message}`);
+                    alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
                 });
         }
 

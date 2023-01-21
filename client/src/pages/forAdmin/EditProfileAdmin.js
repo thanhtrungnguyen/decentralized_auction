@@ -164,7 +164,7 @@ const EditProfileAdmin = () => {
                     navigate("/listManagers");
                 })
                 .catch((err) => {
-                    notify(`🦄 Create Failed: ${err.response.data.message}`);
+                    notify(`🦄 Create Failed: ${err.response.data.message} , ${err}`);
                 });
         }
 

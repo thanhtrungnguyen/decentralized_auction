@@ -102,7 +102,7 @@ const EditNew = () => {
                 navigate("/listNews");
             })
             .catch((err) => {
-                alert(`🦄 Failed: ${err.response.data.message}`);
+                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
             });
         event.preventDefault();
     };
