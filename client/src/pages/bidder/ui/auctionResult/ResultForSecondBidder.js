@@ -20,7 +20,7 @@ import ClosedAuction from "../ClosedAuction";
 import { ConfirmAuctionResult } from "../../components/ConfirmAuctionResult";
 import { getNativeBalanceOfBidder } from "../../nativeBalance";
 
-const ResultForSecondBidder = ({ auction, highestBid, rank }) => {
+const ResultForSecondBidder = ({ auction, amount }) => {
     const dispatch = useNotification();
     const [transactionStatus, setTransactionStatus] = useState();
     const [goPayment, setGoPayment] = useState();
@@ -71,7 +71,7 @@ const ResultForSecondBidder = ({ auction, highestBid, rank }) => {
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
             setShowConfirmation(false);
-            return <ClosedAuction />;
+            return <Payment auction={auction} amount={amount} />;
         } else {
             return (
                 <div>
@@ -126,9 +126,10 @@ const ResultForSecondBidder = ({ auction, highestBid, rank }) => {
     return (
         <>
             {goPayment ? (
-                <Payment auction={auction} highestBid={highestBid} />
+                <Payment auction={auction} amount={amount} />
             ) : (
-                <Countdown date={auction.endAuctionTime * 1000 + 360000 * 2} renderer={renderer} />
+                <Countdown date={Date.now() + 36000 * 2} renderer={renderer} />
+                // <Countdown date={auction.endAuctionTime * 1000 + 360000 * 2} renderer={renderer} />
             )}
         </>
     );

@@ -22,6 +22,7 @@ import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import DeleteProperty from "../../components/popups/forSeller/DeleteProperty";
 import RequestAddProperty from "../../components/popups/forSeller/RequestAddProperty";
 import useAuth from "../../hooks/useAuth";
+import { useFetchData } from "../../hooks/useFetch";
 const MyProperty = () => {
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState(null);
@@ -37,9 +38,6 @@ const MyProperty = () => {
     const baseURLProperty = `/property/myProperty/${page}/${status}/${search}`;
     const requestAuction = "http://localhost:8800/api/auction/request/";
     const [role, setRole] = useState();
-
-    const { auth } = useAuth();
-    console.log(auth.user);
 
     useEffect(() => {
         const fetchData = async () => {

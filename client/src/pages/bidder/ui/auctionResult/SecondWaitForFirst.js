@@ -1,17 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../../../styleCss/stylesComponents/placeABid.module.css";
 import Countdown from "react-countdown";
 import ResultForSecondBidder from "./ResultForSecondBidder";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../config/blockchainConfig";
+import { useWeb3Contract } from "react-moralis";
+import ResultForOtherBidders from "./ResultForOtherBidders";
+import CheckOpportunity from "./CheckOpportunity";
 
-const SecondWaitForFirst = ({ auction, highestBid, rank, accountBidInformation }) => {
+const SecondWaitForFirst = ({ auction, amount }) => {
+    const [bidInformation, setBidInformation] = useState();
+    const [isHaveOpportunity, setHaveOpportunity] = useState();
+    const {
+        runContractFunction: getBidInformationByAuctionId,
+        data: bidInformationData,
+        error: bidInformationError,
+        isFetching: isBidInformationFetching,
+        isLoading: isBidInformationLoading,
+    } = useWeb3Contract({
+        abi: CONTRACT_ABI,
+        contractAddress: CONTRACT_ADDRESS,
+        functionName: "getBidInformationByAuctionId",
+        params: { auctionId: auction.auctionId },
+    });
+    const checkOpportunity = async () => {
+        await getBidInformationByAuctionId();
+        setBidInformation(bidInformationData);
+        let hasPayment = false;
+        bidInformation?.forEach((element) => {
+            if (element.bidderState === 4) {
+                hasPayment = false;
+            }
+        });
+        setHaveOpportunity(hasPayment);
+    };
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
-            return <ResultForSecondBidder auction={auction} highestBid={highestBid} rank={rank} accountBidInformation={accountBidInformation} />;
+            return <CheckOpportunity auction={auction} amount={amount} />;
         } else {
             return (
                 <div>
-                    <p className={styles.txtM}>Your place:</p>
-                    <p className={styles.txtNormal}>{rank} </p>
                     <p className={styles.txtNormal}>Waiting for the first bidder confirmation in:</p>
                     <p className={styles.txtNormal}>
                         <span>
@@ -22,7 +49,7 @@ const SecondWaitForFirst = ({ auction, highestBid, rank, accountBidInformation }
             );
         }
     };
-    return <Countdown date={auction.endAuctionTime + 360000} renderer={renderer} />;
+    return <Countdown date={Date.now() + 10000 / 2} renderer={renderer} />;
 };
 
 export default SecondWaitForFirst;

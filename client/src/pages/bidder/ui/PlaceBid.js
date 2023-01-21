@@ -18,12 +18,12 @@ import Decimal from "decimal.js";
 import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
 function PlaceBid({ auction, property }) {
     const dispatch = useNotification();
-    const [highestBid, setHighestBid] = useState(0);
+    const { account, isWeb3Enabled } = useMoralis();
+    const [highestBid, setHighestBid] = useState("0");
     const [inputBidAmount, setInputBidAmount] = useState("0");
     const [transactionStatus, setTransactionStatus] = useState();
-    const { account, isWeb3Enabled } = useMoralis();
+
     const [minBidAmount, setMinBidAmount] = useState();
-    const [bidderState, setBidderState] = useState(false);
 
     const {
         runContractFunction: getBidInformationByAuctionId,
@@ -86,32 +86,33 @@ function PlaceBid({ auction, property }) {
 
     const updateUI = async () => {
         setTransactionStatus();
-        setBidderState();
         await getBidInformationByAuctionId();
-        setBidderState(getBidderState(bidInformationData, account));
+        // await getHighestBidOfAuction();
+        // setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
+        // setMinBidAmount(
+        //     highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
+        // );
     };
-
+    // const updateCurrentAuction = async () => {
+    //     await getHighestBidOfAuction();
+    //     setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
+    //     setMinBidAmount(
+    //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
+    //     );
+    //     console.log(
+    //         "highestBid",
+    //         highestBid,
+    //         "priceStep",
+    //         auction.priceStep,
+    //         "minBidAmount",
+    //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
+    //     );
+    // };
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUI();
+            // updateCurrentAuction();
         }
-        // const interval = setInterval(async () => {
-        //     await getHighestBidOfAuction();
-        //     setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
-        //     setMinBidAmount(
-        //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
-        //     );
-        //     console.log(
-        //         "highestBid",
-        //         highestBid,
-        //         "priceStep",
-        //         auction.priceStep,
-        //         "minBidAmount",
-        //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
-        //     );
-        // }, 1000);
-
-        // return () => clearInterval(interval);
     }, [isWeb3Enabled, account, bidInformationData?.length]);
 
     //============================================================================================
@@ -149,7 +150,8 @@ function PlaceBid({ auction, property }) {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
-            setBidderState("RETRACT");
+            // setBidderState("RETRACT");
+            updateUI();
             dispatch({
                 type: "success",
                 title: "Retract Bid Notification",
@@ -204,7 +206,7 @@ function PlaceBid({ auction, property }) {
     };
 
     const renderCurrentBidderState = () => {
-        switch (bidderState) {
+        switch (getBidderState(bidInformationData, account)) {
             case "NOT_REGISTERED":
                 return <p className={styles.title}>You haven't registered the auction</p>;
             case "BIDDING":
