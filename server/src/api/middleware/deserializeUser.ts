@@ -21,6 +21,7 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
 
     if (newAccessToken) {
       res.setHeader('x-access-token', newAccessToken);
+      res.send(res.locals.user);
 
       res.cookie('accessToken', newAccessToken, {
         maxAge: 900000, // 15 mins
