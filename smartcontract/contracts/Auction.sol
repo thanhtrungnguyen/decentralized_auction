@@ -270,11 +270,14 @@ contract Auction {
     }
 
     modifier isWinnerOfAuction(string memory auctionId) {
+        uint256 index = getIndexOfBidder(auctionId);
+        if (index == 9999) {
+            revert Auction__NotRegisteredBidder();
+        }
+        _;
         if (
-            s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState !=
-            BidderState.BIDING ||
-            s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount !=
-            getHighestBidOfAuction(auctionId)
+            s_bidInformations[auctionId][index].bidderState != BidderState.BIDING ||
+            s_bidInformations[auctionId][index].bidAmount != getHighestBidOfAuction(auctionId)
         ) {
             revert Auction__NotWinnerOfAuction();
         }
@@ -524,7 +527,7 @@ contract Auction {
                 return i;
             }
         }
-        return 0;
+        return 9999;
     }
 
     function getIndexOfSecondOfAuction(string memory auctionId) private returns (uint256) {

@@ -58,8 +58,7 @@ const AuctionList = () => {
     }, [])
 
 
-    const baseURLAuction = `/auction/auctions/bidder?page=${page}&status=${status}&search=${search}
-                            &sort=${sort}&category=${filterCategories}&minValue=${minValue}&maxValue=${maxValue}`;
+    const baseURLAuction = `/auction/auctions/bidder?page=${page}&status=${status}&search=${search}&sort=${sort}&category=${filterCategories}&minValue=${minValue}&maxValue=${maxValue}`;
     const handleInput = (e) => {
         const { id, value } = e.target;
         if (id === "minValue") {
@@ -98,8 +97,7 @@ const AuctionList = () => {
 
         await axios.get(baseURLAuction).then((resp) => {
             setAuctions(resp.data.auctions);
-            console.log(resp.data);
-            console.log("axios get");
+            console.log(resp.data.auctions);
             // socket.off();
         });
         // if (getUser() != null) {
@@ -130,12 +128,12 @@ const AuctionList = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-    const handleChangeStatus = ({ currentTarget: input }) => {
-        if (input.checked) {
-            const state = [...filterCategories, input.value];
+    const handleChangeStatus = (event) => {
+        if (event.target.checked) {
+            const state = [...filterCategories, event.target.value];
             setFilterCategories(state)
         } else {
-            const state = filterCategories.filter(item => item !== input.value)
+            const state = filterCategories.filter(item => item !== event.target.value)
             setFilterCategories(state)
         }
     };
@@ -315,7 +313,7 @@ const AuctionList = () => {
                         {exportData(auctions)}
                     </div>
                     <Pagination className={styles.pagi} hidden={auctions.count === 0 ? true : false}
-                        count={Math.ceil(auctions.count / 3)} page={page} onChange={handleChange} />
+                        count={Math.ceil(auctions.count / 5)} page={page} onChange={handleChange} />
                 </div>
             </div>
 

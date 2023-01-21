@@ -69,6 +69,9 @@ const AddNews = () => {
                 console.log(res.data);
                 alert("Add new successfully!!!");
                 navigate("/listNews");
+            })
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
             });
         event.preventDefault();
     };

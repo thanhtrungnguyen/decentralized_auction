@@ -163,8 +163,8 @@ const EditProfileAdmin = () => {
                     alert("Add manager successfully!!!");
                     navigate("/listManagers");
                 })
-                .catch(() => {
-                    notify("🦄 Create Failed");
+                .catch((err) => {
+                    notify(`🦄 Create Failed: ${err.response.data.message} , ${err}`);
                 });
         }
 

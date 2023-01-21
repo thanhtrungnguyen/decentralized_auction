@@ -77,12 +77,17 @@ const EditAuction = () => {
         formData.append("propertyDescription", propertyDescription);
         formData.append("startBid", startBid);
         formData.append("biddingPreiod", biddingPreiod);
-        axios.put("/EditAuction", formData).then((res) => {
-            console.log(res);
-            console.log(res.data);
-            alert("Edit Auction successfully!!!");
-            navigate("/myAuctions");
-        });
+        axios
+            .put("/EditAuction", formData)
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert("Edit Auction successfully!!!");
+                navigate("/myAuctions");
+            })
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message}, ${err}`);
+            });
         console.log(formData);
         for (const [key, value] of formData) {
             console.log(key + ": " + value);

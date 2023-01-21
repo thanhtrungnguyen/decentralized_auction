@@ -82,7 +82,7 @@ const ChangePasswordSeller = () => {
                 })
                 .catch((err) => {
                     console.error(err.response.data.message);
-                    notify(`🦄 Change password Failed: ${err.response.data.message}`);
+                    notify(`🦄 Change password Failed: ${err.response.data.message} , ${err}`);
                 });
         }
         event.preventDefault();

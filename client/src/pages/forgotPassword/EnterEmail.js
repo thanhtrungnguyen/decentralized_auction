@@ -12,13 +12,17 @@ const EnterEmail = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        axios.post("/auth/forgotPassword", { userName }, { withCredentials: true }).then((res) => {
-            console.log(res);
-            console.log(res.data);
-
-        });
+        axios
+            .post("/auth/forgotPassword", { userName }, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+            })
+            .catch((err) => {
+                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
+            });
         alert("Please check your email !!!");
-        navigate('/homePage');
+        navigate("/homePage");
     };
 
     return (

@@ -288,12 +288,11 @@ i:hover {
 }
 
 .errorMessage {
-    background-color: lightpink;
     color: firebrick;
     font-weight: bold;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
-    padding-left: 10px;
+    margin-left: 100px;
     width: 640px;
     font-family: Arial, sans-serif;
 }

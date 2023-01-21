@@ -4,14 +4,16 @@ import styles from "../../../../styleCss/stylesComponents/placeABid.module.css";
 import BiddingProperty from "../../components/BiddingProperty";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../config/blockchainConfig";
 import { getBidderState } from "../../../../utils/getBidderState";
-import { getBidderRank } from "../../../../utils/getBidderRank";
+import { getBidAmountOfBidder, getBidderRank, getHighestBid } from "../../../../utils/getBidderRank";
 import Loader from "../../components/Loader";
+import { parseEther } from "../../../../utils/ethereumUnitConverter";
+import ResultForFirstBidder from "./ResultForFirstBidder";
+import SecondWaitForFirst from "./SecondWaitForFirst";
+import ResultForOtherBidders from "./ResultForOtherBidders";
 
 const AuctionResult = ({ auction, property }) => {
     const { account, isWeb3Enabled } = useMoralis();
-    const [rank, setRank] = useState();
     const [bidInformation, setBidInformation] = useState();
-    const [bidderState, setBidderState] = useState();
 
     const {
         runContractFunction: getBidInformationByAuctionId,
@@ -29,10 +31,6 @@ const AuctionResult = ({ auction, property }) => {
     const setup = async () => {
         await getBidInformationByAuctionId();
         setBidInformation(bidInformationData);
-        if (bidInformation != null) {
-            setBidderState(getBidderState(bidInformation, account));
-            // setRank(getBidderRank(bidInformation, account));
-        }
     };
 
     useEffect(() => {
@@ -42,22 +40,23 @@ const AuctionResult = ({ auction, property }) => {
     }, [isWeb3Enabled, account, bidInformationData?.length]);
 
     const renderBidderRank = () => {
+        const rank = getBidderRank(bidInformation, account);
         switch (rank) {
             case 0:
                 return <>0: {rank}</>;
             case 1:
-                return <>1: {rank}</>;
+                return <ResultForFirstBidder auction={auction} amount={getBidAmountOfBidder(bidInformation, account)} />;
             case 2:
-                return <>2: {rank}</>;
+                return <SecondWaitForFirst auction={auction} amount={getBidAmountOfBidder(bidInformation, account)} />;
             case -2:
                 return <>-2: {rank}</>;
             default:
-                return <>default: {rank}</>;
+                return <ResultForOtherBidders auction={auction} />;
         }
     };
 
     const renderBidderState = () => {
-        switch (bidderState) {
+        switch (getBidderState(bidInformation, account)) {
             case "NOT_REGISTERED":
                 return <>NOT_REGISTERED</>;
             case "BIDDING":
@@ -84,10 +83,12 @@ const AuctionResult = ({ auction, property }) => {
                 <p className={styles.txt}>Your Auction has ended:</p>
                 <div className={styles.info}>
                     <BiddingProperty property={property} />
-                    {/* <p className={styles.txtM}>Current bid:</p>
-                    <p className={styles.txtNormal}>{highestBid} ETH</p>
+                    <p className={styles.txtM}>Current bid:</p>
+                    <p className={styles.txtNormal}>{getHighestBid(bidInformation)} ETH</p>
                     <p className={styles.txtM}>Your bid:</p>
-                    <p className={styles.txtNormal}>{highestBid} ETH</p> */}
+                    <p className={styles.txtNormal}>{getBidAmountOfBidder(bidInformation, account)} ETH</p>
+                    <p className={styles.txtM}>Your place:</p>
+                    <p className={styles.txtNormal}>{getBidderRank(bidInformation, account)} st nd th</p>
                 </div>
             </div>
             <div className={styles.detail}>{renderBidderState()}</div>

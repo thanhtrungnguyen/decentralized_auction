@@ -232,7 +232,7 @@ const Register = () => {
                 .catch((err) => {
                     //if(err.response.data.status === 409)
                     //console.log(err)
-                    notify(err.response.data.message);
+                    notify(`${err.response.data.message}, ${err}`);
                 });
         }
 
