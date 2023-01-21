@@ -93,12 +93,17 @@ const EditNew = () => {
             formData.append("avatar", avatar);
         }
 
-        axios.put(`/news/update/${id}`, formData, { withCredentials: true }).then((res) => {
-            console.log(res);
-            console.log(res.data);
-            alert("Edit new successfully!!!");
-            navigate("/listNews");
-        });
+        axios
+            .put(`/news/update/${id}`, formData, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert("Edit new successfully!!!");
+                navigate("/listNews");
+            })
+            .catch(() => {
+                alert("🦄 Failed");
+            });
         event.preventDefault();
     };
     const cancel = () => {

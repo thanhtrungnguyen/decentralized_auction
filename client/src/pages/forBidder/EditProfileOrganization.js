@@ -174,12 +174,17 @@ const EditProfileOrganization = () => {
         formData.append("cardFront", cardFront);
         formData.append("cardBack", cardBack);
 
-        axios.put(`/user/updateProfile/${id}`, formData, { withCredentials: true }).then((res) => {
-            console.log(res);
-            console.log(res.data);
-            alert("Edit profile successfully!!!");
-            navigate(`profile/${id}`);
-        });
+        axios
+            .put(`/user/updateProfile/${id}`, formData, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert("Edit profile successfully!!!");
+                navigate(`profile/${id}`);
+            })
+            .catch(() => {
+                alert("🦄 Failed");
+            });
         console.log(formData);
 
         event.preventDefault();

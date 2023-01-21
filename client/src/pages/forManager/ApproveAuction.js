@@ -99,6 +99,9 @@ const PropertyDetail = () => {
                 // console.log(res.data);
                 alert("Approve Auction successfully!!!");
                 navigate("/auctionListForManager");
+            })
+            .catch(() => {
+                alert("🦄 Failed");
             });
     };
     // const RejectAuction = () => {

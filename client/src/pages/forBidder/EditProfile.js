@@ -156,12 +156,17 @@ const EditProfile = () => {
         formData.append("cardBack", cardBack);
         // formData.append('_method', 'PUT')
         console.log(selectedDistrict);
-        axios.put(`/user/updateProfile/${id}`, formData, { withCredentials: true }).then((res) => {
-            console.log(res);
-            console.log(res.data);
-            alert("Update Successful");
-            navigate(`/profile/${id}`);
-        });
+        axios
+            .put(`/user/updateProfile/${id}`, formData, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                alert("Update Successful");
+                navigate(`/profile/${id}`);
+            })
+            .catch(() => {
+                alert("🦄 Failed");
+            });
         console.log(formData);
 
         event.preventDefault();

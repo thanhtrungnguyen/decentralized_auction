@@ -55,6 +55,9 @@ const EditCategory = () => {
                 console.log(res.data);
                 alert("Update Successful");
                 navigate("/managerCategories");
+            })
+            .catch(() => {
+                alert("🦄 Failed");
             });
         event.preventDefault();
     };
@@ -99,13 +102,7 @@ const EditCategory = () => {
                             className={styles.input}
                             required
                         ></input>
-                        <select
-                            id="status"
-                            className={styles.dropdown}
-                            onChange={(e) => handleInputChange(e)}
-                            placeholder="Gender"
-                            value={status}
-                        >
+                        <select id="status" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender" value={status}>
                             <option value="true">Activate</option>
                             <option value="false">Deactivate</option>
                         </select>
