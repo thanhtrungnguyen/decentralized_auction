@@ -267,7 +267,7 @@ const Register = () => {
                     navigate("/login");
                 })
                 .catch((err) => {
-                    notify(`🦄 Register Failed: ${err}`);
+                    notify(`🦄 Register Failed: ${err.response.data.message}, ${err}`);
                 });
         }
         event.preventDefault();

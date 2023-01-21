@@ -57,7 +57,7 @@ const EditCategory = () => {
                 navigate("/managerCategories");
             })
             .catch((err) => {
-                alert(`🦄 Failed: ${err.response.data.message}`);
+                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
             });
         event.preventDefault();
     };

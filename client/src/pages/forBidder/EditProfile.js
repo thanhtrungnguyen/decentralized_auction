@@ -165,7 +165,7 @@ const EditProfile = () => {
                 navigate(`/profile/${id}`);
             })
             .catch((err) => {
-                alert(`🦄 Failed: ${err.response.data.message}`);
+                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
             });
         console.log(formData);
 

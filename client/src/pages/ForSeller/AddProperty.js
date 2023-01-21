@@ -153,7 +153,7 @@ const AddProperty = () => {
                     }
                 })
                 .catch((err) => {
-                    notify(err.response.data.message);
+                    notify(`${err.response.data.message} , ${err}`);
                 });
         }
 

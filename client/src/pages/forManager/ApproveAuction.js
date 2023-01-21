@@ -101,7 +101,7 @@ const PropertyDetail = () => {
                 navigate("/auctionListForManager");
             })
             .catch((err) => {
-                alert(`🦄 Failed: ${err.response.data.message}`);
+                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
             });
     };
     // const RejectAuction = () => {
