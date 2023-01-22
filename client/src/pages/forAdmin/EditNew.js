@@ -87,8 +87,8 @@ const EditNew = () => {
     const handleSubmit = (event) => {
         const formData = new FormData();
 
-        formData.append("title", title);
-        formData.append("content", content);
+        formData.append("title", title.trim());
+        formData.append("content", content.trim());
         if (avatar != null) {
             formData.append("avatar", avatar);
         }
