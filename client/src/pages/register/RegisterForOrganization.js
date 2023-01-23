@@ -4,7 +4,7 @@ import useLocationForm from "./useLocationForm";
 import Select from "react-select";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const Register = () => {
+    const axios = useAxiosPrivate();
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const navigate = useNavigate();
     const [message, setMessage] = useState(null);

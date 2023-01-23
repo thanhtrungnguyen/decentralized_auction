@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
 import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -19,6 +19,7 @@ import ActiveCategory from "../../components/popups/forManager/ActiveCategory";
 import PrivateCategory from "../../components/popups/forManager/PrivateCategory";
 import Time from "../../components/time/Time";
 const ManagerCategory = () => {
+    const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const [categoryName, setCategory] = useState(null);
     const [categoryName2, setCategory2] = useState(null);

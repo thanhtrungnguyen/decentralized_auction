@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { defaultConfig } from '../../config/constant-variables';
-import { createSession, findSessions, updateSession } from '../services/AuthService';
-import { validatePassword } from '../services/UserService';
-import { signJwt } from '../utils/jwt';
+import { createSession, findSessionById, signAccessToken, signRefreshToken, updateSession } from '../services/AuthService';
+import { getUser, validatePassword } from '../services/UserService';
+import { signJwt, verifyJwt } from '../utils/jwt';
 
 const createUserSessionHandler = async (req: Request, res: Response, next: NextFunction) => {
   const user = await validatePassword(req.body);
@@ -10,24 +10,9 @@ const createUserSessionHandler = async (req: Request, res: Response, next: NextF
     return res.status(401).send({ message: 'Invalid username or password' });
   }
 
-  const session = await createSession(user._id);
+  const accessToken = await signAccessToken(user);
 
-  const accessToken = await signJwt({ ...user, session: session._id }, defaultConfig.jwt.accessTokenPrivateKey, {
-    expiresIn: defaultConfig.jwt.accessTokenTtl
-  });
-
-  const refreshToken = await signJwt({ ...user, session: session._id }, defaultConfig.jwt.refreshTokenPrivateKey, {
-    expiresIn: defaultConfig.jwt.refreshTokenTtl
-  });
-
-  res.cookie('accessToken', accessToken, {
-    maxAge: 100000000,
-    httpOnly: true,
-    // domain: 'localhost',
-    path: '/',
-    sameSite: 'strict',
-    secure: false
-  });
+  const refreshToken = await signRefreshToken({ userId: user._id });
 
   res.cookie('refreshToken', refreshToken, {
     maxAge: 3.154e10, // 1 year
@@ -38,7 +23,32 @@ const createUserSessionHandler = async (req: Request, res: Response, next: NextF
     secure: false // development: false, // production: true
   });
 
-  return res.status(201).send({ accessToken, refreshToken, user });
+  return res.status(201).send({ accessToken, user });
+};
+
+const refreshAccessTokenHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const refreshToken = req?.cookies?.refreshToken;
+  if (!refreshToken) {
+    return res.status(401).send({ message: 'Refresh Token not found' });
+  }
+
+  const decoded = verifyJwt<{ session: string }>(refreshToken, defaultConfig.jwt.refreshTokenPublicKey);
+  if (!decoded) {
+    return res.status(401).send('Could not refresh access token');
+  }
+
+  const session = await findSessionById(decoded.session);
+  if (!session || !session.valid) {
+    return res.status(401).send('Could not refresh access token');
+  }
+  const user = await getUser({ _id: session.user });
+
+  if (!user) {
+    return res.status(401).send('Could not refresh access token');
+  }
+  const accessToken = await signAccessToken(user);
+
+  return res.status(200).send({ accessToken, user });
 };
 
 const getUserSessionHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -60,16 +70,7 @@ const deleteSessionHandler = async (req: Request, res: Response, next: NextFunct
   const session = res?.locals?.user?.session;
   return await updateSession({ _id: session }, { valid: false })
     .then((session) => {
-      res.clearCookie('accessToken', {
-        maxAge: 100000000,
-        httpOnly: true,
-        // domain: 'localhost',
-        path: '/',
-        sameSite: 'strict',
-        secure: false
-      });
       res.clearCookie('refreshToken', {
-        maxAge: 100000000,
         httpOnly: true,
         // domain: 'localhost',
         path: '/',
@@ -83,4 +84,4 @@ const deleteSessionHandler = async (req: Request, res: Response, next: NextFunct
     });
 };
 
-export { createUserSessionHandler, getUserSessionHandler, deleteSessionHandler };
+export { createUserSessionHandler, getUserSessionHandler, deleteSessionHandler, refreshAccessTokenHandler };

@@ -7,7 +7,7 @@ import SidebarManager from "../../components/sidebar_manager/SidebarManager";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "../../config/axiosConfig";
+// import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";

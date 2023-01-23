@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
 import styles from "../../styleCss/stylesComponents/time.module.css";
 
 export const LogoutButton = () => {
+    const axios = useAxiosPrivate();
     const navigate = useNavigate();
     const { setAuth } = useAuth();
 

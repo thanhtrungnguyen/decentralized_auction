@@ -2,7 +2,7 @@ import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from "../../../config/axiosConfig";
+import axios from "../../../hooks/useAxiosPrivate";
 const ActiveCategory = ({ idCategory }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);

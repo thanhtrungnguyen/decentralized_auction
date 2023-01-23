@@ -8,7 +8,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
-// import axios from "../../config/axiosConfig";
+// import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 // import Popup from "reactjs-popup";

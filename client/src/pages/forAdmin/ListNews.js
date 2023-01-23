@@ -12,9 +12,10 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import Time from "../../components/time/Time";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import moment from "moment";
 const ListNews = () => {
+    const axios = useAxiosPrivate();
     const [page, setPage] = useState(1);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -30,7 +31,7 @@ const ListNews = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            await axios.get('/session').then((resp) => {
+            await axios.get("/session").then((resp) => {
                 // console.log("axios get");
                 // setData(resp.data.news);
                 console.log(resp);

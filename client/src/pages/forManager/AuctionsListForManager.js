@@ -7,7 +7,6 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
 // import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -21,8 +20,10 @@ import Confetti from "react-confetti";
 import Select from "react-select";
 
 import moment from "moment";
-import useAuth from "../../hooks/useAuth";
+
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const AuctionsListForManager = () => {
+    const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const [sellerName, setSellerName] = useState(null);
     const [sellerName2, setSellerName2] = useState(null);
@@ -41,6 +42,7 @@ const AuctionsListForManager = () => {
     const navigate = useNavigate();
     const baseURLAuction = `/auction/auctions/manager/${page}/${status}/${auctionName}/${sellerName}`;
     const baseURLSeller = `/organization/seller`;
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -97,7 +99,7 @@ const AuctionsListForManager = () => {
         var users = null;
         const token = Cookies.get("access_token");
         if (!token) {
-            console.log("Not authenticated");
+            // console.log("Not authenticated");
         }
         jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
             users = user;

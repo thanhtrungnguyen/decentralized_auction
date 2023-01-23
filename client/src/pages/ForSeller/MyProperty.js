@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 // import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 // import { Button } from "@mui/material";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -24,6 +24,7 @@ import RequestAddProperty from "../../components/popups/forSeller/RequestAddProp
 import useAuth from "../../hooks/useAuth";
 import { useFetchData } from "../../hooks/useFetch";
 const MyProperty = () => {
+    const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState(null);
     const [category2, setCategory2] = useState(null);

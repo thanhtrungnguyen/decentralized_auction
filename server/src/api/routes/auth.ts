@@ -1,12 +1,13 @@
 import express from 'express';
 import { roles } from '../../config/roles';
-import { createUserSessionHandler, deleteSessionHandler, getUserSessionHandler } from '../controllers/AuthController';
+import { createUserSessionHandler, deleteSessionHandler, getUserSessionHandler, refreshAccessTokenHandler } from '../controllers/AuthController';
 import { requireRole } from '../middleware/requireRole';
 import { validateResource } from '../middleware/validateResource';
 import { UserSchema } from '../validations/UserSchema';
 const router = express.Router();
 
 router.post('/', validateResource(UserSchema.login), createUserSessionHandler);
+router.get('/refresh', refreshAccessTokenHandler);
 router.get('/', getUserSessionHandler);
 router.delete('/', deleteSessionHandler);
 // check authorization

@@ -6,7 +6,7 @@ import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
 // import { Outlet, Link } from "react-router-dom";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -14,6 +14,7 @@ import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 const AddCategory = () => {
+    const axios = useAxiosPrivate();
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);
     useEffect(() => {

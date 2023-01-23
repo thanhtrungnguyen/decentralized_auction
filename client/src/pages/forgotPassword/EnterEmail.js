@@ -1,11 +1,12 @@
 import styles from "../../styleCss/login.module.css";
 import { useState } from "react";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 const EnterEmail = () => {
+    const axios = useAxiosPrivate();
     const navigate = useNavigate();
 
     const [userName, setUserName] = useState("");

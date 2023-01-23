@@ -5,7 +5,7 @@ import useLocationForm from "./useLocationForm";
 import Select from "react-select";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
@@ -22,6 +22,7 @@ const eye = <FontAwesomeIcon icon={faEye} />;
 // axios.defaults.withCredentials = true;
 
 const Register = () => {
+    const axios = useAxiosPrivate();
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const navigate = useNavigate();
     const [message, setMessage] = useState(null);

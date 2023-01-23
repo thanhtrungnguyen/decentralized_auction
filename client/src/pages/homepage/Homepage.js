@@ -9,9 +9,10 @@ import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Loading from "../../components/loading/Loading";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import FooterCopy from "../../components/footer/FooterCopy";
 const HomePage = () => {
+    const axios = useAxiosPrivate();
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [status, setStatus] = useState(5);

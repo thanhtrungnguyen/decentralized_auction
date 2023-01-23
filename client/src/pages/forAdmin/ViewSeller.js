@@ -7,7 +7,7 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -16,6 +16,7 @@ import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
 import Time from "../../components/time/Time";
 const ViewSeller = () => {
+    const axios = useAxiosPrivate();
     const { id } = useParams();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
