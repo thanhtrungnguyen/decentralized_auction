@@ -210,13 +210,7 @@ const EditProfileOrganization = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
+            <Header />
             <NavBar />
             <PageName pageName={"Edit Profile"} link={`editProfile/${id}`} home={"homePage"} />
             <form onSubmit={handleSubmit}>

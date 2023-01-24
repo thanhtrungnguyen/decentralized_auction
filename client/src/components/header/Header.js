@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import { LogoutButton } from "../buttons/LogoutButton";
 const Header = () => {
-    const [type, setType] = useState("");
+    const [type, setType] = useState("CONTACT");
     const [id, setId] = useState();
 
     const navigate = useNavigate();
