@@ -13,9 +13,6 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
   if (decoded) {
     res.locals.user = decoded;
   }
-  if (!decoded) {
-    return res.sendStatus(403);
-  }
 
   return next();
 };

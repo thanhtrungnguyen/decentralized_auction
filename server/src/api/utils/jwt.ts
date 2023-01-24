@@ -18,8 +18,6 @@ const verifyJwt = <T>(token: string, key: string): T | null => {
     const decoded = jwt.verify(token, publicKey) as T;
     return decoded;
   } catch (error: any) {
-    console.log('token', token);
-    logger.error(error);
     return null;
   }
 };

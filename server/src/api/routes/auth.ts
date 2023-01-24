@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/', validateResource(UserSchema.login), createUserSessionHandler);
 router.get('/refresh', refreshAccessTokenHandler);
-router.get('/', getUserSessionHandler);
+router.get('/', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getUserSessionHandler);
 router.delete('/', deleteSessionHandler);
 // check authorization
 router.get('/admin', requireRole(roles.ADMIN), getUserSessionHandler);
