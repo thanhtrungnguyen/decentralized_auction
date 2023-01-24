@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -17,6 +17,7 @@ import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
 import Time from "../../components/time/Time";
 const ViewRegistrationForManager = () => {
+    const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const { id } = useParams();
     const [data, setData] = useState([]);

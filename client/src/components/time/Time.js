@@ -1,10 +1,11 @@
 import styles from "../../styleCss/stylesComponents/time.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { LogoutButton } from "../buttons/LogoutButton";
 
 const Time = () => {
+    const axios = useAxiosPrivate();
     const navigate = useNavigate();
 
     const locale = "en";

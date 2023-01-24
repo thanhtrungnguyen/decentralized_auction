@@ -14,10 +14,11 @@ const router = express.Router();
 import multer from 'multer';
 import { requireRole } from '../middleware/requireRole';
 import { defaultConfig } from '../../config/constant-variables';
+import { roles } from '../../config/roles';
 
 const upload = multer({ dest: 'uploads/' });
 
-router.use(requireRole('admin'));
+router.use(requireRole(roles.ADMIN));
 router.get('/news/:index/:status/:search', getAllNewsHandler);
 router.get('/:newsId', getNewsByIdHandler);
 router.post(

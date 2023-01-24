@@ -5,7 +5,7 @@ import Footer from "../../components/footer/Footer";
 import SidebarManager from "../../components/sidebar_manager/SidebarManager";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -16,6 +16,7 @@ import Time from "../../components/time/Time";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 const ChangePasswordSeller = () => {
+    const axios = useAxiosPrivate();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 

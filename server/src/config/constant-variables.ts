@@ -9,8 +9,8 @@ const REFRESH_TOKEN_TTL = '1y';
 
 const ACCESS_TOKEN_PRIVATE_KEY = process.env.ACCESS_TOKEN_PRIVATE_KEY || 'xxx';
 const ACCESS_TOKEN_PUBLIC_KEY = process.env.ACCESS_TOKEN_PUBLIC_KEY || 'xxx';
-const REFRESH_PRIVATE_KEY = process.env.REFRESH_PRIVATE_KEY || 'xxx';
-const REFRESH_PUBLIC_KEY = process.env.REFRESH_PUBLIC_KEY || 'xxx';
+const REFRESH_PRIVATE_KEY = process.env.REFRESH_PRIVATE_KEY || 'opop';
+const REFRESH_PUBLIC_KEY = process.env.REFRESH_PUBLIC_KEY || 'opop';
 
 const CHAIN_ID = '5';
 const CONTRACT_ABI = contractAbi;

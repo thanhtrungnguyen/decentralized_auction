@@ -15,13 +15,14 @@ import jwt from "jsonwebtoken";
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import FooterCopy from "../../components/footer/FooterCopy";
 import Time from "../../components/time/Time";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const ListForManagers = () => {
+    const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState(null);
-    const [email2, setEmail2] = useState('');
+    const [email2, setEmail2] = useState("");
     const [status, setStatus] = useState(null);
     const navigate = useNavigate();
 
@@ -56,8 +57,8 @@ const ListForManagers = () => {
     const handleSubmit = (event) => {
         if (email2.trim() === "") {
             //alert("Please enter email")
-            setEmail2('')
-            setEmail(null)
+            setEmail2("");
+            setEmail(null);
         } else setEmail(email2.trim());
         setPage(1);
         event.preventDefault();
@@ -172,7 +173,7 @@ const ListForManagers = () => {
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
                                 ></input>
-                                <button className={styles.btn} type="submit"   >
+                                <button className={styles.btn} type="submit">
                                     Search
                                 </button>
                             </form>

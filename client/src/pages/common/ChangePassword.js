@@ -1,6 +1,6 @@
 import styles from "../../styleCss/login.module.css";
 import { useEffect, useState } from "react";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const ChangePassword = () => {
+    const axios = useAxiosPrivate();
     const { id } = useParams();
     // const baseURL = `http://localhost:8800/api/user/${id}`;
     // const { data, loading, error } = useFetch(baseURL);

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import sessionRoutes from './session';
+import authRoutes from './auth';
 import propertyRoutes from './property';
 import auctionRoutes from './auction';
 import categoryRoutes from './category';
@@ -15,7 +15,7 @@ import informationOperatorRoutes from './informationOperator';
 
 const router = express.Router();
 
-router.use('/session', sessionRoutes);
+router.use('/session', authRoutes);
 router.use('/property', propertyRoutes);
 router.use('/auction', auctionRoutes);
 router.use('/category', categoryRoutes);

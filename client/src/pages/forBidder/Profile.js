@@ -12,10 +12,11 @@ import HeaderUser from "../../components/header/HeaderUser";
 import PageName from "../../components/header/PageName";
 import FooterCopy from "../../components/footer/FooterCopy";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { LogoutButton } from "../../components/buttons/LogoutButton";
 
 const Profile = () => {
+    const axios = useAxiosPrivate();
     const { id, propertyId } = useParams();
     const baseURL = `http://localhost:8800/api/user/${id}`;
     const { data, loading, error } = useFetch(baseURL);

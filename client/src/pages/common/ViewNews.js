@@ -1,6 +1,6 @@
 import styles from "../../styleCss/login.module.css";
 import { useEffect, useState } from "react";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
@@ -17,6 +17,7 @@ import { useFetch } from "../../hooks/useFetch";
 import createDOMPurify from "dompurify";
 // import { JSDOM } from "jsdom";
 const ViewNews = () => {
+    const axios = useAxiosPrivate();
     // const window = new JSDOM("").window;
     const DOMPurify = createDOMPurify();
 

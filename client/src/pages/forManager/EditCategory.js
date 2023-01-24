@@ -1,7 +1,7 @@
 import styles from "../../styleCss/stylesPages/forManagers/addCategory.module.css";
 import SideBarSeller from "../../components/sidebar_manager/SidebarManager";
 import React, { useEffect, useState } from "react";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -9,6 +9,7 @@ import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 const EditCategory = () => {
+    const axios = useAxiosPrivate();
     const [categoryName, setCategoryName] = useState(null);
     const [status, setStatus] = useState(null);
     const navigate = useNavigate();

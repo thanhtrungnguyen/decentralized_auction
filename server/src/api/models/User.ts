@@ -34,6 +34,8 @@ const userSchema: Schema = new Schema(
   { timestamps: true, versionKey: false }
 );
 
+export const privateFields = ['password', 'verificationCode', 'passwordResetCode', 'verified', '_v', 'createdAt', 'updatedAt'];
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();

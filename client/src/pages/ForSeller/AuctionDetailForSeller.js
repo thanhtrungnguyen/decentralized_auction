@@ -1,7 +1,7 @@
 import styles from "../../styleCss/stylesPages/forSellers/AuctionDetailForSeller.module.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "../../config/axiosConfig";
+// import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";

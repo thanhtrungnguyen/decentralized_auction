@@ -15,8 +15,9 @@ import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 import Time from "../../components/time/Time";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const ListSellers = () => {
+    const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const [role, setRole] = useState();
     const [data, setData] = useState([]);
@@ -54,8 +55,8 @@ const ListSellers = () => {
     const handleSubmit = (event) => {
         if (email2.trim() === "") {
             //alert("Please enter email")
-            setEmail2('')
-            setEmail(null)
+            setEmail2("");
+            setEmail(null);
         } else setEmail(email2.trim());
         setPage(1);
         event.preventDefault();
@@ -176,7 +177,7 @@ const ListSellers = () => {
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
                                 ></input>
-                                <button className={styles.btn} type="submit" >
+                                <button className={styles.btn} type="submit">
                                     Search
                                 </button>
                             </form>

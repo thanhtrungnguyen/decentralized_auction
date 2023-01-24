@@ -3,7 +3,7 @@ import styles from "../../styleCss/stylesPages/forAdmin/listManager.module.css";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Popup from "reactjs-popup";
 import BanedBidder from "../../components/popups/forAdmin/BanBidder";
 import ActiveBidder from "../../components/popups/forAdmin/ActiveBidder";
@@ -15,6 +15,7 @@ import Time from "../../components/time/Time";
 import { useNavigate } from "react-router-dom";
 
 const ListBidders = () => {
+    const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -58,8 +59,8 @@ const ListBidders = () => {
     const handleSubmit = (event) => {
         if (email2.trim() === "") {
             //alert("Please enter email")
-            setEmail2('')
-            setEmail(null)
+            setEmail2("");
+            setEmail(null);
         } else setEmail(email2.trim());
         setPage(1);
         event.preventDefault();
@@ -97,8 +98,11 @@ const ListBidders = () => {
                             <AiFillEye
                                 className={styles.iconView}
                                 onClick={() => {
-                                    if (item.user.type === 'individual') { navigate(`/bidderDetail/${item._id}`); }
-                                    else { navigate(`/bidderOrganizationDetail/${item._id}`) }
+                                    if (item.user.type === "individual") {
+                                        navigate(`/bidderDetail/${item._id}`);
+                                    } else {
+                                        navigate(`/bidderOrganizationDetail/${item._id}`);
+                                    }
                                 }}
                             />
                             {item.user.status === true ? (
@@ -158,7 +162,7 @@ const ListBidders = () => {
                                     value={email2}
                                     onChange={(e) => handleInputChange(e)}
                                 ></input>
-                                <button className={styles.btn} type="submit" >
+                                <button className={styles.btn} type="submit">
                                     Search
                                 </button>
                             </form>

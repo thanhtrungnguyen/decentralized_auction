@@ -2,7 +2,7 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import React, { useEffect, useState } from "react";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Loading from "../../components/loading/Loading";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -17,6 +17,7 @@ import Select from "react-select";
 // import "../../styleCss/stylesPages/forBidder/ProfileOrganization.css";
 import styles from "../../styleCss/stylesPages/forBidder/editProfile.module.css";
 const EditProfileOrganization = () => {
+    const axios = useAxiosPrivate();
     const { id } = useParams();
     const baseURL = `http://localhost:8800/api/user/${id}`;
     //const { data, loading, error } = useFetch(baseURL);
