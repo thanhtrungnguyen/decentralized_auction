@@ -6,7 +6,7 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 // import { Outlet, Link } from "react-router-dom";
 // import sPagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -31,17 +31,35 @@ const EditManager = () => {
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);
     const type = "operator";
+    const [data, setData] = useState([]);
+    const { managerId } = useParams();
     const navigate = useNavigate();
     useEffect(() => {
-        console.log(getUser());
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const res = await axios.get(`/informationOperator/getByUserId/${managerId}`);
+                setData(res.data.result);
+                setFirstName(res.data.result.firstName)
+                setLastName(res.data.result.lastName)
+                setPhone(res.data.result.phone)
+                setEmail(res.data.result.email)
+                setGender(res.data.result.gender)
+                setSpecificAddress(res.data.result.address)
+            } catch (error) {
+                console.log(error)
+            }
+            setLoading(false);
+        };
+        fetchData();
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-        setLoading(false);
+        // // console.log(getUser().type);
+        // if (getUser() != null) {
+        //     setRole(getUser().role);
+        // } else {
+        //     setRole("");
+        // }
+        // setLoading(false);
     }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -126,14 +144,6 @@ const EditManager = () => {
             notify("🦄 phone is empty");
         } else if (!specificAddress.trim()) {
             notify("🦄 specificAddress is empty");
-        } else if (!username.trim()) {
-            notify("🦄 username is empty");
-        } else if (!password.trim()) {
-            notify("🦄 password is empty");
-        } else if (!rePassword.trim()) {
-            notify("🦄 rePassword is empty");
-        } else if (isExist) {
-            notify("🦄 Username is exist");
         } else if (checkPhone) {
             notify("🦄 Phone is exist");
         } else if (checkEmail) {
@@ -142,18 +152,17 @@ const EditManager = () => {
             notify("🦄 rePassword is not same password");
         } else {
             axios
-                .post(
-                    "/informationOperator/create",
+                .patch(
+                    `/informationOperator/update/${data._id}`,
                     {
-                        username: username.trim(),
-                        password: password.trim(),
+                        // username: username.trim(),
+                        // password: password.trim(),
                         firstName: firstName.trim(),
                         lastName: lastName.trim(),
                         phone: phone.trim(),
                         email: email.trim(),
                         gender: gender.trim(),
                         address: specificAddress.trim(),
-                        role: "manager",
                         type: type,
                     },
                     { withCredentials: true }
@@ -161,7 +170,7 @@ const EditManager = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
-                    alert("Add manager successfully!!!");
+                    alert("Edit successfully!!!");
                     navigate("/listManagers");
                 })
                 .catch((err) => {
@@ -213,6 +222,7 @@ const EditManager = () => {
                             type="text"
                             onChange={(e) => handleInputChange(e)}
                             id="firstName"
+                            value={firstName}
                             pattern="[a-zA-Z\s]{1,50}"
                         ></input>
                         <p className={styles.txt}>Last Name</p>
@@ -221,13 +231,14 @@ const EditManager = () => {
                             pattern="[a-zA-Z\s]{1,50}"
                             type="text"
                             onChange={(e) => handleInputChange(e)}
+                            value={lastName}
                             id="lastName"
                         ></input>
                         <p className={styles.txt}>Gender</p>
-                        <select id="gender" className={styles.ip} onChange={(e) => handleInputChange(e)} placeholder="Gender" defaultValue="Male">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
+                        <select id="gender" className={styles.ip} onChange={(e) => handleInputChange(e)} placeholder="Gender" >
+                            <option value="Male" selected={gender === 'Male' ? true : false}>Male</option>
+                            <option value="Female" selected={gender === 'Female' ? true : false}>Female</option>
+                            <option value="Other" selected={gender === 'Other' ? true : false}>Other</option>
                         </select>
                         <p className={styles.txt}>Email</p>
                         <input
@@ -235,6 +246,7 @@ const EditManager = () => {
                             type="email"
                             onChange={(e) => handleInputChange(e)}
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                            value={email}
                             id="email"
                         ></input>
                         <p className={styles.txt}>Phone</p>
@@ -243,6 +255,7 @@ const EditManager = () => {
                             type="text"
                             onChange={(e) => handleInputChange(e)}
                             id="phone"
+                            value={phone}
                             pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
                         ></input>
                         <p className={styles.txt}>Address</p>
@@ -250,10 +263,11 @@ const EditManager = () => {
                             className={styles.ip}
                             type="text"
                             onChange={(e) => handleInputChange(e)}
+                            value={specificAddress}
                             pattern="^\s*([^\s]\s*){0,300}$"
                             id="specificAddress"
                         ></input>
-                        <p className={styles.if}>Account Information</p>
+                        {/* <p className={styles.if}>Account Information</p>
                         <p className={styles.txt}>Username</p>
                         <input
                             className={styles.ip}
@@ -262,7 +276,7 @@ const EditManager = () => {
                             id="username"
                             pattern="?=.{6,20}$"
                             readOnly
-                        ></input>
+                        ></input> */}
 
                         <label style={{ color: "red" }}>{message}</label>
                         <br />

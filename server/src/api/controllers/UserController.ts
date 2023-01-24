@@ -12,6 +12,7 @@ import {
 } from '../services/UserService';
 import sendEmail from '../utils/mailer';
 import { createIndividual, getIndividual } from '../services/IndividualService';
+const _ = require('lodash');
 export const getAllUsersHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllUsers()
     .then((users) => {
@@ -222,10 +223,14 @@ export const resetPasswordHandler = async (req: Request, res: Response, next: Ne
 
 export const changePasswordHandler = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
-  const { password } = req.body;
+  const { password, oldPassword } = req.body;
   const user = await getUser({ _id: userId });
   if (!user) {
     return res.status(404).json({ message: "User isn't found" });
+  }
+  const a = _.omit(oldPassword);
+  if (user.password === a) {
+    return res.status(409).json({ message: 'Old password is wrong' });
   }
   user.password = password;
   await await updateUser({ _id: user._id }, { password }, { new: true })
