@@ -68,17 +68,23 @@ export const updateInformationOperatorHandler = async (req: Request, res: Respon
   // console.log(req.body);
   const idOperator = req.params.id;
   const updateData = req.body;
+
   // const existUser = await getUser({ username: createData.username });
   // if (existUser) {
   //   return res.status(409).json({ message: 'User name has been exist!' });
   // }
-  const existEmail = await getInformationOperator({ email: updateData.email });
-  if (existEmail) {
-    return res.status(409).json({ message: 'Email has been exist!' });
+  var user = await getInformationOperator({ _id: idOperator });
+  if (updateData.email != user?.email) {
+    const existEmail = await getInformationOperator({ email: updateData.email });
+    if (existEmail) {
+      return res.status(409).json({ message: 'Email has been exist!' });
+    }
   }
-  const existPhone = await getInformationOperator({ phone: updateData.phone });
-  if (existPhone) {
-    return res.status(409).json({ message: 'Phone has been exist!' });
+  if (updateData.phone != user?.phone) {
+    const existPhone = await getInformationOperator({ phone: updateData.phone });
+    if (existPhone) {
+      return res.status(409).json({ message: 'Phone has been exist!' });
+    }
   }
 
   return await updateInformationOperator({ _id: idOperator }, updateData, { new: true })
