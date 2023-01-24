@@ -7,7 +7,7 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 // import axios from "axios";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -18,6 +18,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 const AddNews = () => {
+    const axios = useAxiosPrivate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [avatar, setAvatar] = useState(null);

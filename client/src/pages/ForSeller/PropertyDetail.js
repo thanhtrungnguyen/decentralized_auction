@@ -10,7 +10,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 // import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useFetcher, useParams } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -20,6 +20,7 @@ import Time from "../../components/time/Time";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 const PropertyDetail = () => {
+    const axios = useAxiosPrivate();
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),

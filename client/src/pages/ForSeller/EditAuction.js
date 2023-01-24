@@ -9,13 +9,14 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 // import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
 
 const EditAuction = () => {
+    const axios = useAxiosPrivate();
     // const [date, setDate] = useState([
     //   new DateObject().setDay(15),
     //   new DateObject().add(1, "month").setDay(15),

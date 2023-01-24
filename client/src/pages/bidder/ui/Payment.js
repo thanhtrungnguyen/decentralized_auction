@@ -12,18 +12,12 @@ import TransactionStatus from "../components/TransactionStatus";
 import ClosedAuction from "./ClosedAuction";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
 import { parseWei, parseEther } from "../../../utils/ethereumUnitConverter";
-const Payment = ({ auction, highestBid }) => {
+const Payment = ({ auction, amount }) => {
     const dispatch = useNotification();
     const { account, isWeb3Enabled } = useMoralis();
     const [transactionStatus, setTransactionStatus] = useState();
     const [bidAmount, setBidAmount] = useState(0);
-    const { runContractFunction: getHighestBidOfAuction } = useWeb3Contract({
-        abi: CONTRACT_ABI,
-        contractAddress: CONTRACT_ADDRESS, // your contract address here
-        functionName: "getHighestBidOfAuction",
-        params: { auctionId: auction.auctionId },
-    });
-    const amount = auction.depositAmount != null && bidAmount != "0" ? new Decimal(bidAmount).minus(auction.depositAmount).toString() : "0";
+    const paymentAmount = auction.depositAmount != null && amount != "0" ? new Decimal(amount).minus(auction.depositAmount).toString() : "0";
     console.log(amount);
     const {
         runContractFunction: payment,
@@ -35,16 +29,12 @@ const Payment = ({ auction, highestBid }) => {
         abi: CONTRACT_ABI,
         contractAddress: CONTRACT_ADDRESS, // your contract address here
         functionName: "payment",
-        msgValue: parseWei(amount),
+        msgValue: parseWei(paymentAmount),
         params: { auctionId: auction.auctionId },
     });
     if (error) console.log(error);
     console.log();
-    async function updateData() {
-        const amount = await getHighestBidOfAuction();
-        console.log(parseEther(amount));
-        setBidAmount(typeof amount == "object" ? parseEther(amount) : "0");
-    }
+    async function updateData() {}
     useEffect(() => {
         if (isWeb3Enabled) {
             updateData();

@@ -3,35 +3,60 @@ import { get, omit } from 'lodash';
 import { signJwt, verifyJwt } from '../utils/jwt';
 import { getUser } from './UserService';
 import { FilterQuery, UpdateQuery } from 'mongoose';
-import { IUserDocument } from '../models/User';
+import { IUserDocument, privateFields } from '../models/User';
 import { config } from '../../config/custom-environment-variables';
 import { defaultConfig } from '../../config/constant-variables';
+import logger from '../utils/logger';
 
-const createSession = async (userId: string) => {
-  const session = await Session.create({ user: userId });
-  return session;
+const createSession = async ({ userId }: { userId: string }) => {
+  try {
+    return await Session.create({ user: userId });
+  } catch (error) {
+    logger.error(error);
+  }
 };
 
-const findSessions = async (filter: FilterQuery<ISessionDocument>) => {
-  return await Session.find(filter).lean().populate('user');
+const findSessionById = async (id: string) => {
+  try {
+    return await Session.findById(id);
+  } catch (error) {
+    logger.error(error);
+  }
 };
 
 const updateSession = async (filter: FilterQuery<ISessionDocument>, update: UpdateQuery<ISessionDocument>) => {
-  return await Session.updateOne(filter, update);
+  try {
+    return await Session.updateOne(filter, update);
+  } catch (error) {
+    logger.error(error);
+  }
 };
 
-const reIssueAccessToken = async (refreshToken: any) => {
-  const { decoded } = verifyJwt(refreshToken, defaultConfig.jwt.refreshTokenPublicKey);
-  if (!decoded || !get(decoded, 'session')) return false;
+const signAccessToken = async (user: any) => {
+  try {
+    const payload = omit(user, privateFields);
 
-  const session = await Session.findById(get(decoded, 'session'));
-  if (!session || !session.valid) return false;
+    const accessToken = await signJwt(payload, defaultConfig.jwt.accessTokenPrivateKey, {
+      expiresIn: defaultConfig.jwt.accessTokenTtl
+    });
 
-  const user = getUser({ _id: session.user });
-  if (!user) return false;
-
-  const accessToken = signJwt({ ...user, session: session._id }, defaultConfig.jwt.accessTokenTtl);
-  return accessToken;
+    return accessToken;
+  } catch (error) {
+    logger.error(error);
+  }
 };
 
-export { createSession, findSessions, updateSession, reIssueAccessToken };
+const signRefreshToken = async ({ userId }: { userId: string }) => {
+  try {
+    const session = await createSession({ userId });
+    const refreshToken = signJwt({ session: session?._id }, defaultConfig.jwt.refreshTokenPrivateKey, {
+      expiresIn: defaultConfig.jwt.refreshTokenTtl
+    });
+    await updateSession({ _id: session?.id }, { refreshToken: refreshToken });
+    return refreshToken;
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
+export { createSession, findSessionById, updateSession, signAccessToken, signRefreshToken };

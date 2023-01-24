@@ -1,13 +1,11 @@
 import styles from "../../styleCss/login.module.css";
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import axios from "../../api/axios";
 import { useNotification } from "web3uikit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { AiFillHome } from "react-icons/ai";
-import { AiOutlineClose } from "react-icons/ai";
-import { BsCheckLg } from "react-icons/bs";
 import useAuth from "../../hooks/useAuth";
 
 const eye = <FontAwesomeIcon icon={faEye} />;
@@ -51,12 +49,10 @@ const Login = () => {
                 }
             )
             .then((response) => {
-                console.log("there");
                 if (response.status === 201) {
                     const user = response.data.user;
                     const accessToken = response.data.accessToken;
-                    const refreshToken = response.data.refreshToken;
-                    setAuth({ user, accessToken, refreshToken });
+                    setAuth({ user, accessToken });
                     setUsername("");
                     setPassword("");
 

@@ -7,7 +7,7 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 // import sPagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -17,6 +17,7 @@ import Time from "../../components/time/Time";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const AddManager = () => {
+    const axios = useAxiosPrivate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");

@@ -3,7 +3,7 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/auctionList.module.css";
 import React, { useEffect, useState } from "react";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 // import { Link } from "react-router-dom";
 // import Popup from "reactjs-popup";
 // import PlaceABid from "../../components/popups/PlaceABid";
@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/vi";
 const AuctionList = () => {
+    const axios = useAxiosPrivate();
     const navigate = useNavigate();
     // const [buttonPopup, setButtonPopup] = useState(false);
     const [data, setData] = useState([]);
@@ -28,7 +29,6 @@ const AuctionList = () => {
     // const [error, setError] = useState(false);
     const socket = io.connect("http://localhost:5000");
     //const baseURL = "http://localhost:8800/api/auction/";
-
 
     const [price, setPrice] = useState(null);
     const [name, setName] = useState(null);
@@ -39,24 +39,20 @@ const AuctionList = () => {
 
     const [auctions, setAuctions] = useState([]);
 
-
-
     const [page, setPage] = useState(1);
-    const [status, setStatus] = useState('all');
-    const [search, setSearch] = useState('');
+    const [status, setStatus] = useState("all");
+    const [search, setSearch] = useState("");
     const [sort, setSort] = useState(1);
     const [categories, setCategories] = useState([]);
     const [filterCategories, setFilterCategories] = useState([]);
     const [minValue, set_minValue] = useState(0);
     const [maxValue, set_maxValue] = useState(100);
 
-
     useEffect(() => {
-        axios.get('category/categories').then(resp => {
-            setCategories(resp.data.categories)
-        })
-    }, [])
-
+        axios.get("category/categories").then((resp) => {
+            setCategories(resp.data.categories);
+        });
+    }, []);
 
     const baseURLAuction = `/auction/auctions/bidder?page=${page}&status=${status}&search=${search}&sort=${sort}&category=${filterCategories}&minValue=${minValue}&maxValue=${maxValue}`;
     const handleInput = (e) => {
@@ -68,7 +64,6 @@ const AuctionList = () => {
             set_maxValue(value);
         }
     };
-
 
     const [role, setRole] = useState();
 
@@ -83,7 +78,6 @@ const AuctionList = () => {
     //     });
     //     return users;
     // };
-
 
     useEffect(() => {
         if (loading) {
@@ -131,57 +125,58 @@ const AuctionList = () => {
     const handleChangeStatus = (event) => {
         if (event.target.checked) {
             const state = [...filterCategories, event.target.value];
-            setFilterCategories(state)
+            setFilterCategories(state);
         } else {
-            const state = filterCategories.filter(item => item !== event.target.value)
-            setFilterCategories(state)
+            const state = filterCategories.filter((item) => item !== event.target.value);
+            setFilterCategories(state);
         }
     };
-    const handleApplyFilter = () => { };
+    const handleApplyFilter = () => {};
 
     const handleSort = (e) => {
         setSort(e.target.value);
         setPage(1);
     };
     function exportData(data) {
-        return <>
-            {data.listAuction.map((item) =>
-                <div className={styles.auction}>
-                    <img className={styles.img} src={`${item.property.mediaUrl[0]}`} alt="img" />
-                    <p className={styles.name}>{item.name}</p>
-                    <p className={styles.price}>{item.property.startBid} ETH</p>
-                    <p className={styles.status}>Status: {item.status} </p>
-                    <p className={styles.time}>
-                        <AiOutlineFieldTime className={styles.i} />
-                        <label className={styles.l}>
-                            Registration time: {moment(item.startRegistrationTime).format("L")},{" "}
-                            {moment(item.startRegistrationTime).format("LTS")} - {moment(item.endRegistrationTime).format("L")},{" "}
-                            {moment(item.endRegistrationTime).format("LTS")}
-                        </label>
-                    </p>
-                    <p className={styles.time}>
-                        <AiOutlineFieldTime className={styles.i} />
-                        <label className={styles.l}>
-                            Registration time: {moment(item.startAuctionTime).format("L")},{" "}
-                            {moment(item.startAuctionTime).format("LTS")} - {moment(item.endAuctionTime).format("L")},{" "}
-                            {moment(item.endAuctionTime).format("LTS")}
-                        </label>
-                    </p>
-                    <br />
-                    <br />
-                    <br />
+        return (
+            <>
+                {data.listAuction.map((item) => (
+                    <div className={styles.auction}>
+                        <img className={styles.img} src={`${item.property.mediaUrl[0]}`} alt="img" />
+                        <p className={styles.name}>{item.name}</p>
+                        <p className={styles.price}>{item.property.startBid} ETH</p>
+                        <p className={styles.status}>Status: {item.status} </p>
+                        <p className={styles.time}>
+                            <AiOutlineFieldTime className={styles.i} />
+                            <label className={styles.l}>
+                                Registration time: {moment(item.startRegistrationTime).format("L")},{" "}
+                                {moment(item.startRegistrationTime).format("LTS")} - {moment(item.endRegistrationTime).format("L")},{" "}
+                                {moment(item.endRegistrationTime).format("LTS")}
+                            </label>
+                        </p>
+                        <p className={styles.time}>
+                            <AiOutlineFieldTime className={styles.i} />
+                            <label className={styles.l}>
+                                Registration time: {moment(item.startAuctionTime).format("L")}, {moment(item.startAuctionTime).format("LTS")} -{" "}
+                                {moment(item.endAuctionTime).format("L")}, {moment(item.endAuctionTime).format("LTS")}
+                            </label>
+                        </p>
+                        <br />
+                        <br />
+                        <br />
 
-                    <button
-                        className={styles.btnDetail}
-                        onClick={() => {
-                            navigate(`/auctionDetail/${item._id}`);
-                        }}
-                    >
-                        Detail
-                    </button>
-                </div>
-            )}
-        </>
+                        <button
+                            className={styles.btnDetail}
+                            onClick={() => {
+                                navigate(`/auctionDetail/${item._id}`);
+                            }}
+                        >
+                            Detail
+                        </button>
+                    </div>
+                ))}
+            </>
+        );
     }
     return loading ? (
         <Loading />
@@ -309,11 +304,14 @@ const AuctionList = () => {
                             </option> */}
                         </select>
                     </div>
-                    <div className={styles.auctions}>
-                        {exportData(auctions)}
-                    </div>
-                    <Pagination className={styles.pagi} hidden={auctions.count === 0 ? true : false}
-                        count={Math.ceil(auctions.count / 5)} page={page} onChange={handleChange} />
+                    <div className={styles.auctions}>{exportData(auctions)}</div>
+                    <Pagination
+                        className={styles.pagi}
+                        hidden={auctions.count === 0 ? true : false}
+                        count={Math.ceil(auctions.count / 5)}
+                        page={page}
+                        onChange={handleChange}
+                    />
                 </div>
             </div>
 

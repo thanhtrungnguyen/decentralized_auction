@@ -8,7 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
 // import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -17,6 +17,7 @@ import Loading from "../../components/loading/Loading";
 import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import Time from "../../components/time/Time";
 const MyAuctions = () => {
+    const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const [category, setCategory] = useState(null);
     const [category2, setCategory2] = useState(null);

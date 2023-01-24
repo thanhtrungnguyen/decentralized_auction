@@ -20,7 +20,7 @@ import ClosedAuction from "../ClosedAuction";
 import { ConfirmAuctionResult } from "../../components/ConfirmAuctionResult";
 import { getNativeBalanceOfBidder } from "../../nativeBalance";
 
-const ResultForFirstBidder = ({ auction, highestBid, rank, accountBidInformation }) => {
+const ResultForFirstBidder = ({ auction, amount }) => {
     const dispatch = useNotification();
     const [transactionStatus, setTransactionStatus] = useState();
     const [goPayment, setGoPayment] = useState();
@@ -72,15 +72,13 @@ const ResultForFirstBidder = ({ auction, highestBid, rank, accountBidInformation
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
             setShowConfirmation(false);
-            return <ClosedAuction />;
+            return <Payment auction={auction} amount={amount} />;
         } else {
             return (
                 <div>
                     <div>
                         {showConfirmation ? (
                             <>
-                                <p className={styles.title}>Result:</p>
-                                <p className={styles.txtT}>Your place: 1</p>
                                 <p className={styles.txtT}>Do you agree with this result?</p>
                                 <p className={styles.txtNormal}>
                                     <span>
@@ -125,7 +123,15 @@ const ResultForFirstBidder = ({ auction, highestBid, rank, accountBidInformation
         }
     };
     console.log(auction.endAuctionTime + 360000);
-    return <>{goPayment ? <Payment auction={auction} /> : <Countdown date={auction.endAuctionTime * 1000 + 360000} renderer={renderer} />}</>;
+    return (
+        <>
+            {goPayment ? (
+                <Payment auction={auction} amount={amount} />
+            ) : (
+                <Countdown date={auction.endAuctionTime * 1000 + 360000} renderer={renderer} />
+            )}
+        </>
+    );
 };
 
 export default ResultForFirstBidder;

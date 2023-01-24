@@ -1,6 +1,6 @@
 import styles from "../../styleCss/login.module.css";
 import { useState } from "react";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const NewPassword = () => {
+    const axios = useAxiosPrivate();
     const { userId, token } = useParams();
 
     const navigate = useNavigate();

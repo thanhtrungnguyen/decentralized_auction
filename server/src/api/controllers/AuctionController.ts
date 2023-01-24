@@ -129,9 +129,13 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
-  await updateProperty({ _id: propertyId }, { status: 'Approved' }, { new: true }).catch((error) => {
-    res.status(500).json({ error });
-  });
+  await updateProperty({ _id: propertyId }, { status: 'Approved' }, { new: true })
+    .then((auction) => {
+      res.status(201).json({ auction });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
 
   return await updateAuction({ _id: auctionId }, update, { new: true })
     .then(async (auction) => {
@@ -147,8 +151,17 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
         startBid: property?.startBid,
         priceStep: property?.priceStep
       };
-      const result = await createAuctionOnContract(objectAuction);
-      res.status(201).json({ auction, result });
+      const tx = await createAuctionOnContract(objectAuction);
+      if (tx?.error) {
+        await updateAuction({ _id: auctionId }, { status: 'Defected' }, { new: true })
+          .then((auction) => {
+            res.status(201).json({ auction });
+          })
+          .catch((error) => {
+            res.status(500).json({ error });
+          });
+      }
+      res.status(201).json({ auction, tx });
     })
     .catch((error) => {
       res.status(500).json({ error });

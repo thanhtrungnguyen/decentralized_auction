@@ -1,6 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { MoralisProvider } from "react-moralis";
-import { NotificationProvider } from "web3uikit";
+import { Routes, Route } from "react-router-dom";
 
 import Homepage from "./pages/homepage/Homepage";
 import Login from "./pages/login/Login";
@@ -63,7 +61,9 @@ import EditSeller from "./pages/forAdmin/EditSeller";
 import ProfileAdmin from "./pages/forAdmin/ProfileAdmin";
 import ChangePasswordAdmin from "./pages/forAdmin/ChangePassword";
 import EditProfileAdmin from "./pages/forAdmin/EditProfileAdmin";
-import { AuthProvider } from "./context/AuthProvider";
+import RequireAuth from "./pages/common/RequireAuth";
+import { roles } from "./config/rolesConfig";
+import Unauthorized from "./pages/error/Unauthorized";
 function App() {
     return (
         <Routes>
@@ -73,6 +73,15 @@ function App() {
             <Route path="homePage" element={<Homepage />} />
             <Route path="register" element={<Register />} />
             <Route path="registerForO" element={<RegisterForO />} />
+            <Route path="unauthorized" element={<Unauthorized />} />
+
+            <Route element={<RequireAuth allowedRoles={[roles.ADMIN]} />}>
+                <Route path="addNew" element={<AddNew />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={[roles.MANAGER]} />}></Route>
+            <Route element={<RequireAuth allowedRoles={[roles.SELLER]} />}></Route>
+            <Route element={<RequireAuth allowedRoles={[roles.BIDDER]} />}></Route>
+
             <Route path="auctionDetail/:id" element={<AuctionDetail />} />
             <Route path="auctionDetail" element={<AuctionDetail />} />
             <Route path="auctionList" element={<AuctionList />} />
@@ -114,7 +123,7 @@ function App() {
             <Route path="bidderDetail/:id" element={<BidderDetail />} />
             <Route path="editNews/:id" element={<EditNew />} />
             <Route path="editNews" element={<EditNew />} />
-            <Route path="addNew" element={<AddNew />} />
+
             <Route path="listNews/:index" element={<ListNews />} />
             <Route path="listNews" element={<ListNews />} />
             <Route path="viewManager" element={<ViewManager />} />

@@ -7,7 +7,7 @@ import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 // import Pagination from "@mui/material/Pagination";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../config/axiosConfig";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -19,6 +19,7 @@ import { useParams } from "react-router-dom";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 const EditNew = () => {
+    const axios = useAxiosPrivate();
     const { id } = useParams();
     const baseURL = `http://localhost:5000/api/news/${id}`;
     const [role, setRole] = useState();

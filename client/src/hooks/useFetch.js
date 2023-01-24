@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from "../config/axiosConfig";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import io from "socket.io-client";
 
 // const socket = io.connect("http://localhost:8800");
 export const useFetch = (url) => {
+    const axios = useAxiosPrivate();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -36,6 +37,7 @@ export const useFetch = (url) => {
 };
 
 export const useFetchAuction = (url) => {
+    const axios = useAxiosPrivate();
     const [listAuction, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -72,6 +74,7 @@ export const useFetchAuction = (url) => {
     return { listAuction, loading, error, reFetch };
 };
 export const useFetchAuctionDetail = (url) => {
+    const axios = useAxiosPrivate();
     const [auction, setAuction] = useState(null);
     const [auctionLoading, setLoading] = useState(true);
     const [auctionError, setError] = useState(false);
@@ -94,6 +97,7 @@ export const useFetchAuctionDetail = (url) => {
     return { auction, auctionLoading, auctionError };
 };
 export const useFetchPagination = (url, page) => {
+    const axios = useAxiosPrivate();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -126,6 +130,7 @@ export const useFetchPagination = (url, page) => {
 };
 
 export const useFetchData = (url) => {
+    const axios = useAxiosPrivate();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState();
     const [error, setError] = useState();
