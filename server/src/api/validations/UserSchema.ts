@@ -28,6 +28,7 @@ export const UserSchema = {
     username: Joi.string().trim().required()
   }),
   changePassword: Joi.object<object>({
+    oldPassword: Joi.string().min(3).max(15).required(),
     password: Joi.string().min(3).max(15).required().label('Password'),
     passwordConfirmation: Joi.any()
       .equal(Joi.ref('password'))

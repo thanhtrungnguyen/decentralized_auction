@@ -15,11 +15,12 @@ import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
 const ChangePasswordAdmin = () => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
-
+    const [loading, setLoading] = useState(true);
+    const { auth } = useAuth();
     const [oldPassword, setOldPassword] = useState(null);
     const [newPassword, setNewPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
@@ -56,21 +57,18 @@ const ChangePasswordAdmin = () => {
             notify("🦄 newPassword is empty");
         } else if (!rePassword) {
             notify("🦄 rePassword is empty");
-        } else if (rePassword != newPassword) {
+        } else if (rePassword !== newPassword) {
             notify("🦄 rePassword is not same password");
         } else {
             const formData = new FormData();
 
             formData.append("oldPassword", oldPassword);
-            formData.append("newPassword", newPassword);
-
+            formData.append("password", newPassword);
+            formData.append("passwordConfirmation", rePassword);
             axios
                 .post(
-                    "/organization/create",
+                    `/user/changePassword/${auth.user._id}`,
                     formData,
-                    {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    },
                     {
                         withCredentials: true,
                     }
@@ -79,7 +77,7 @@ const ChangePasswordAdmin = () => {
                     console.log(res);
                     console.log(res.data);
                     alert("Change password successfully!!!");
-                    navigate("/profileSeller");
+                    navigate("/profileAdmin");
                 })
                 .catch((err) => {
                     console.error(err.response.data.message);
@@ -113,9 +111,7 @@ const ChangePasswordAdmin = () => {
     //     }
     //     setLoading(false);
     // }, []);
-    return loading ? (
-        <Loading />
-    ) : (
+    return (
         <>
             <form onSubmit={handleSubmit}>
                 <div className={styles.container2}>
@@ -148,7 +144,7 @@ const ChangePasswordAdmin = () => {
                                 className={styles.inputEP}
                                 type="text"
                                 pattern="?=.{8,20}$"
-                                value="Username"
+                                value={auth.user.username}
                                 onChange={(e) => handleInputChange(e)}
                                 id="userName"
                                 placeholder="Username"
@@ -162,12 +158,12 @@ const ChangePasswordAdmin = () => {
                             <input
                                 className={styles.inputEP}
                                 type="oldPassword"
-                                pattern="^\s*(?:\S\s*){8,}$"
+                                //pattern="^\s*(?:\S\s*){8,}$"
                                 value={oldPassword}
                                 onChange={(e) => handleInputChange(e)}
-                                id="password"
+                                id="oldPassword"
                                 placeholder="Old Password"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />
@@ -180,7 +176,7 @@ const ChangePasswordAdmin = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="newPassword"
                                 placeholder="Enter the new password"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />
@@ -193,7 +189,7 @@ const ChangePasswordAdmin = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="rePassword"
                                 placeholder="Confirm new Password"
-                                //required
+                            //required
                             ></input>
                             <br />
                             <br />

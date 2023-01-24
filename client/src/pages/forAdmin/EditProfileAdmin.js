@@ -14,13 +14,12 @@ import jwt from "jsonwebtoken";
 import FooterCopy from "../../components/footer/FooterCopy";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
+import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const EditProfileAdmin = () => {
     const axios = useAxiosPrivate();
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [rePassword, setRePassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [gender, setGender] = useState("Male");
@@ -31,28 +30,41 @@ const EditProfileAdmin = () => {
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);
     const type = "operator";
+    const { adminId } = useParams();
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        console.log(getUser());
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const res = await axios.get(`/informationOperator/getByUserId/${adminId}`);
+                setData(res.data.result);
+                setFirstName(res.data.result.firstName)
+                setLastName(res.data.result.lastName)
+                setPhone(res.data.result.phone)
+                setEmail(res.data.result.email)
+                setGender(res.data.result.gender)
+                setSpecificAddress(res.data.result.address)
+            } catch (error) {
+                setError(error);
+            }
+            setLoading(false);
+        };
+        fetchData();
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-        setLoading(false);
+        // // console.log(getUser().type);
+        // if (getUser() != null) {
+        //     setRole(getUser().role);
+        // } else {
+        //     setRole("");
+        // }
+        // setLoading(false);
     }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "username") {
             setUsername(value);
-        }
-        if (id === "password") {
-            setPassword(value);
-        }
-        if (id === "rePassword") {
-            setRePassword(value);
         }
         if (id === "firstName") {
             setFirstName(value);
@@ -126,46 +138,46 @@ const EditProfileAdmin = () => {
             notify("🦄 phone is empty");
         } else if (!specificAddress.trim()) {
             notify("🦄 specificAddress is empty");
-        } else if (!username.trim()) {
-            notify("🦄 username is empty");
-        } else if (!password.trim()) {
-            notify("🦄 password is empty");
-        } else if (!rePassword.trim()) {
-            notify("🦄 rePassword is empty");
-        } else if (isExist) {
-            notify("🦄 Username is exist");
+            // } else if (!username.trim()) {
+            //     notify("🦄 username is empty");
+            // } else if (!password.trim()) {
+            //     notify("🦄 password is empty");
+            // } else if (!rePassword.trim()) {
+            //     notify("🦄 rePassword is empty");
+            // } else if (isExist) {
+            //     notify("🦄 Username is exist");
         } else if (checkPhone) {
             notify("🦄 Phone is exist");
         } else if (checkEmail) {
             notify("🦄 Email is exist");
-        } else if (rePassword != password) {
-            notify("🦄 rePassword is not same password");
+            // } else if (rePassword !== password) {
+            //     notify("🦄 rePassword is not same password");
         } else {
             axios
-                .post(
-                    "/informationOperator/create",
+                .patch(
+                    `/informationOperator/update/${data._id}`,
                     {
-                        username: username.trim(),
-                        password: password.trim(),
+                        // username: username.trim(),
+                        // password: password.trim(),
                         firstName: firstName.trim(),
                         lastName: lastName.trim(),
                         phone: phone.trim(),
                         email: email.trim(),
                         gender: gender.trim(),
                         address: specificAddress.trim(),
-                        role: "manager",
                         type: type,
                     },
                     { withCredentials: true }
                 )
                 .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                    alert("Add manager successfully!!!");
+                    // console.log(res);
+                    // console.log(res.data);
+                    alert("Edit successfully!!!");
                     navigate("/listManagers");
                 })
                 .catch((err) => {
-                    notify(`🦄 Create Failed: ${err.response.data.message} , ${err}`);
+                    console.log(err)
+                    notify(`🦄 Edit Failed: ${err.response.data.message}`);
                 });
         }
 
@@ -213,6 +225,7 @@ const EditProfileAdmin = () => {
                             type="text"
                             onChange={(e) => handleInputChange(e)}
                             id="firstName"
+                            value={firstName}
                             pattern="[a-zA-Z\s]{1,50}"
                         ></input>
                         <p className={styles.txt}>Last Name</p>
@@ -221,13 +234,14 @@ const EditProfileAdmin = () => {
                             pattern="[a-zA-Z\s]{1,50}"
                             type="text"
                             onChange={(e) => handleInputChange(e)}
+                            value={lastName}
                             id="lastName"
                         ></input>
                         <p className={styles.txt}>Gender</p>
                         <select id="gender" className={styles.ip} onChange={(e) => handleInputChange(e)} placeholder="Gender" defaultValue="Male">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
+                            <option value="Male" selected={gender === 'Male' ? true : false}>Male</option>
+                            <option value="Female" selected={gender === 'Female' ? true : false}>Female</option>
+                            <option value="Other" selected={gender === 'Other' ? true : false}>Other</option>
                         </select>
                         <p className={styles.txt}>Email</p>
                         <input
@@ -235,6 +249,7 @@ const EditProfileAdmin = () => {
                             type="email"
                             onChange={(e) => handleInputChange(e)}
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                            value={email}
                             id="email"
                         ></input>
                         <p className={styles.txt}>Phone</p>
@@ -243,6 +258,7 @@ const EditProfileAdmin = () => {
                             type="text"
                             onChange={(e) => handleInputChange(e)}
                             id="phone"
+                            value={phone}
                             pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
                         ></input>
                         <p className={styles.txt}>Address</p>
@@ -250,10 +266,11 @@ const EditProfileAdmin = () => {
                             className={styles.ip}
                             type="text"
                             onChange={(e) => handleInputChange(e)}
+                            value={specificAddress}
                             pattern="^\s*([^\s]\s*){0,300}$"
                             id="specificAddress"
                         ></input>
-                        <p className={styles.if}>Account Information</p>
+                        {/* <p className={styles.if}>Account Information</p>
                         <p className={styles.txt}>Username</p>
                         <input
                             className={styles.ip}
@@ -262,14 +279,14 @@ const EditProfileAdmin = () => {
                             id="username"
                             pattern="?=.{6,20}$"
                             readOnly
-                        ></input>
+                        ></input> */}
 
                         <label style={{ color: "red" }}>{message}</label>
                         <br />
                         <br />
                         <br />
                         <br />
-                        <input className={styles.btnAdd} type="submit" value="Add"></input>
+                        <input className={styles.btnAdd} type="submit" value="Save"></input>
                         <button
                             className={styles.btnCancel}
                             onClick={() => {

@@ -1,4 +1,4 @@
-import { FilterQuery, QueryOptions } from 'mongoose';
+import { FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
 import InformationOperator, { IInformationOperator, IInformationOperatorDocument } from '../models/InformationOperator';
 import logger from '../utils/logger';
 
@@ -26,4 +26,15 @@ const createInformationOperator = async (informationOperation: IInformationOpera
     logger.error(error);
   }
 };
-export { getAllInformationOperator, getInformationOperator, createInformationOperator };
+const updateInformationOperator = async (
+  filter: FilterQuery<IInformationOperatorDocument>,
+  update: UpdateQuery<IInformationOperatorDocument>,
+  options: QueryOptions
+) => {
+  try {
+    return await InformationOperator.findOneAndUpdate(filter, update, options);
+  } catch (error) {
+    logger.error(error);
+  }
+};
+export { getAllInformationOperator, getInformationOperator, createInformationOperator, updateInformationOperator };

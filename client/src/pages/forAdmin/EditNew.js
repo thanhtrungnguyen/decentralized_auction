@@ -21,7 +21,7 @@ import Time from "../../components/time/Time";
 const EditNew = () => {
     const axios = useAxiosPrivate();
     const { id } = useParams();
-    const baseURL = `http://localhost:5000/api/news/${id}`;
+    const baseURL = `/news/${id}`;
     const [role, setRole] = useState();
     //const { data, loading, error } = useFetch(baseURL);
     const [loading, setLoading] = useState(true);
