@@ -36,6 +36,7 @@ const Profile = () => {
         <Loading />
     ) : (
         <>
+            <Header />
             <NavBar />
             <PageName pageName={"Profile"} link={`profile/${id}`} home={"homePage"} />
 
@@ -188,7 +189,7 @@ const Profile = () => {
                     <br />
                     <br />
                     <br />
-                    <LogoutButton />
+                    {/* <LogoutButton /> */}
                     <button
                         className={styles.btn2}
                         onClick={() => {

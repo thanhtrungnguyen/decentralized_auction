@@ -82,13 +82,7 @@ const ViewNews = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser userName={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
+            <Header />
             <NavBar />
             <div className={styles.box}>
                 <h1>{data.Name}</h1>

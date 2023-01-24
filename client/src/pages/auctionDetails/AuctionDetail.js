@@ -46,13 +46,7 @@ const AuctionDetail = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    // return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
+            <Header />
             <NavBar />
             <PageName pageName={"Auction Detail"} link={"auctionDetail"} home={"homePage"} />
 

@@ -240,7 +240,7 @@ const ProfileOrganization = () => {
                     <br />
                     <br />
                     <br />
-                    <LogoutButton />
+                    {/* <LogoutButton /> */}
                     <button
                         className={styles.btn2}
                         onClick={() => {
