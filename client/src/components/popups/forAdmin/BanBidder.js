@@ -1,11 +1,10 @@
 import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module.css";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import axios from "../../../hooks/useAxiosPrivate";
-import { useFetch } from "../../../hooks/useFetch";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+
 const BanedBidder = ({ idBidder }) => {
-    const navigate = useNavigate();
+    const axios = useAxiosPrivate();
     const [expanded, setExpanded] = useState(true);
     const [loading, setLoading] = useState(true);
     const handleSubmit = (event) => {
@@ -16,9 +15,8 @@ const BanedBidder = ({ idBidder }) => {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
-
+                // console.log(res);
+                // console.log(res.data);
                 //navigate("/listBidders");
                 window.location.reload(false);
             });

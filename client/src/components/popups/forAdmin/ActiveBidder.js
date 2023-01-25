@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "../../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 const ActiveBidder = ({ idBidder }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
-
+    const axios = useAxiosPrivate();
     const handleSubmit = (event) => {
         console.log(idBidder);
 

@@ -3,12 +3,14 @@ import styles from "../../styleCss/stylesComponents/forAdmin/sidebar_admin.modul
 import { Link, useNavigate } from "react-router-dom";
 import { BiBookHeart, BiDizzy, BiDonateHeart, BiNews } from "react-icons/bi";
 import useAuth from "../../hooks/useAuth";
-import { useFetch } from "../../hooks/useFetch";
+import { useFetchData } from "../../hooks/useFetch";
 import Loading from "../loading/Loading";
 const SidebarAdmin = () => {
     const navigate = useNavigate();
-    const { auth } = useAuth();
-    // console.log(auth.user)
+    //const { auth } = useAuth();
+    // const [loading, data, error] = useFetchData('/session')
+    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    console.log(data2)
     return (
         <>
             <div className={styles.container}>
@@ -21,10 +23,10 @@ const SidebarAdmin = () => {
                 <p
                     className={styles.txt2}
                     onClick={() => {
-                        navigate(`/profileAdmin/${auth.user._id}`);
+                        navigate(`/profileAdmin/${data2?.user._id}`);
                     }}
                 >
-                    {auth.user.username}
+                    {data2?.user.username}
                 </p>
                 <br />
                 <br />

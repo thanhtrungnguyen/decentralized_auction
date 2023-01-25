@@ -2,11 +2,11 @@ import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from "../../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 const BanedManager = ({ idManager }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
-
+    const axios = useAxiosPrivate();
     const handleSubmit = (event) => {
         console.log(idManager);
         axios
