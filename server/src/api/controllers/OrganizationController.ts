@@ -1,7 +1,14 @@
 import { createUser, getUser } from '../services/UserService';
 import { Request, Response, NextFunction } from 'express';
 import { createIndividual, getIndividual, updateIndividual } from '../services/IndividualService';
-import { createOrganization, getAllOrganizations, getAllSellers, getOrganization, updateOrganization } from '../services/OrganizationService';
+import {
+  createOrganization,
+  getAllOrganizations,
+  getAllSellers,
+  getOrganization,
+  getOrganizationByUserId,
+  updateOrganization
+} from '../services/OrganizationService';
 
 export const createSellerHandler = async (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body);
@@ -112,6 +119,16 @@ export const getAllHandler = async (req: Request, res: Response, next: NextFunct
 export const getSellerByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.idIndividual;
   return await getOrganization({ individual: id })
+    .then((result: any) => {
+      res.status(201).json({ result });
+    })
+    .catch((error: any) => {
+      res.status(500).json({ error });
+    });
+};
+export const getByUserIdHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.params.userId;
+  return await getOrganizationByUserId(userId)
     .then((result: any) => {
       res.status(201).json({ result });
     })

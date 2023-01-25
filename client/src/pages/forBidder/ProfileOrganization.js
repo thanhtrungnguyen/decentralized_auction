@@ -21,13 +21,12 @@ import { LogoutButton } from "../../components/buttons/LogoutButton";
 const ProfileOrganization = () => {
     const axios = useAxiosPrivate();
     const { id } = useParams();
-    const baseURL = `http://localhost:8800/api/user/${id}`;
+    const baseURL = `/organization/getByUserId/${id}`;
     const { data, loading, error } = useFetch(baseURL);
     const navigate = useNavigate();
     const [role, setRole] = useState();
-    useEffect(() => {}, []);
     console.log(data);
-    console.log(loading);
+
     const handleClick = () => {
         navigate(`/editProfileOrganization/${id}`);
     };
@@ -241,6 +240,12 @@ const ProfileOrganization = () => {
                     <br />
                     <br />
                     {/* <LogoutButton /> */}
+                    <button className={styles.btn2} >
+                        Back
+                    </button>
+                    <button className={styles.btn2} >
+                        Change Password
+                    </button>
                     <button
                         className={styles.btn2}
                         onClick={() => {

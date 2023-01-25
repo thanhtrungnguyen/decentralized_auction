@@ -9,7 +9,7 @@ const PageName = ({ home, pageName, link }) => {
                     <Link className={styles.txt} to={`/${home}`}>
                         Home
                     </Link>
-                    <label>/</label>
+                    <label>/ </label>
                     <Link to={`/${link}`} className={styles.txtR}>
                         {pageName}
                     </Link>

@@ -21,6 +21,16 @@ export const getIndividualByIdHandler = async (req: Request, res: Response, next
       res.status(500).json({ error });
     });
 };
+export const getIndividualByUserIdHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.params.userId;
+  return await getIndividual({ user: userId })
+    .then((individual) => {
+      res.status(200).json({ individual });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
 
 export const createIndividualHandler = async (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body);

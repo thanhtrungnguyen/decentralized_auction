@@ -2,6 +2,7 @@ import express from 'express';
 import {
   createSellerHandler,
   getAllHandler,
+  getByUserIdHandler,
   getSellerByIdHandler,
   getSellerHandler,
   updateSellerHandler
@@ -50,5 +51,5 @@ router.patch(
 router.get('/seller', getSellerHandler);
 router.get('/getAll', getAllHandler);
 router.get('/getById/:idIndividual', getSellerByIdHandler);
-
+router.get('/getByUserId/:userId', getByUserIdHandler);
 export default router;

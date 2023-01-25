@@ -49,6 +49,24 @@ const getOrganization = async (filter: FilterQuery<IOrganizationDocument>, optio
     logger.error(error);
   }
 };
+const getOrganizationByUserId = async (userId: any) => {
+  try {
+    let data = await Organization.findOne().populate({
+      path: 'individual',
+      match: {
+        user: userId
+      }
+    });
+    // if (data?.individual === null) {
+    //   return null;
+    // } else {
+    //   return data;
+    // }
+    return data;
+  } catch (error) {
+    logger.error(error);
+  }
+};
 
 const createOrganization = async (organization: IOrganization) => {
   try {
@@ -74,4 +92,4 @@ const deleteOrganization = async (filter: FilterQuery<IOrganization>) => {
   }
 };
 
-export { getAllOrganizations, getOrganization, createOrganization, updateOrganization, deleteOrganization, getAllSellers };
+export { getAllOrganizations, getOrganization, createOrganization, updateOrganization, deleteOrganization, getAllSellers, getOrganizationByUserId };

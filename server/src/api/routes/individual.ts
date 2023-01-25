@@ -4,7 +4,8 @@ import {
   getIndividualByIdHandler,
   createIndividualHandler,
   updateIndividualHandler,
-  deleteIndividualHandler
+  deleteIndividualHandler,
+  getIndividualByUserIdHandler
 } from '../controllers/IndividualController';
 import { validateResource } from '../middleware/validateResource';
 import { IndividualSchema } from '../validations/IndividualSchema';
@@ -15,6 +16,7 @@ import multer from 'multer';
 const upload = multer({ dest: 'uploads/' });
 router.get('/individuals', getAllIndividualsHandler);
 router.get('/getById/:individualId', getIndividualByIdHandler);
+router.get('/getByUserId/:userId', getIndividualByUserIdHandler);
 router.post(
   '/create',
   upload.fields([
