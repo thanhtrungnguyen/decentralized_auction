@@ -44,7 +44,29 @@ router.post(
 
   createPropertyHandler
 );
-router.patch('/update/:propertyId', updatePropertyHandler);
+router.patch(
+  '/update/:propertyId',
+  upload.fields([
+    {
+      name: 'propertyImage1',
+      maxCount: 1
+    },
+    {
+      name: 'propertyImage2',
+      maxCount: 1
+    },
+    {
+      name: 'propertyImage3',
+      maxCount: 1
+    },
+    {
+      name: 'propertyVideo',
+      maxCount: 1
+    }
+  ]),
+  validateResource(PropertySchema.create),
+  updatePropertyHandler
+);
 router.delete('/delete/:propertyId', deletePropertyHandler);
 
 export default router;

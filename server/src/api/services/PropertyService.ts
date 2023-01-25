@@ -1,3 +1,4 @@
+import { string } from 'joi';
 import { FilterQuery, ObjectId, QueryOptions, UpdateQuery } from 'mongoose';
 import { uploadFile } from '../../s3';
 import Property, { IProperty, IPropertyDocument } from '../models/Property';
@@ -73,7 +74,46 @@ const createProperty = async (property: IProperty, files: { [fieldname: string]:
   }
 };
 
-const updateProperty = async (filter: FilterQuery<IPropertyDocument>, update: UpdateQuery<IPropertyDocument>, options: QueryOptions) => {
+const updateProperty = async (
+  filter: FilterQuery<IPropertyDocument>,
+  update: UpdateQuery<IPropertyDocument>,
+  options: QueryOptions,
+  files: { [fieldname: string]: Express.Multer.File[] }
+) => {
+  const propertymedia = await Property.findOne({ _id: filter._id });
+  var mediaUrl: any;
+  mediaUrl = propertymedia?.mediaUrl;
+  if (files) {
+    const file1 = files['propertyImage1'];
+    const file2 = files['propertyImage2'];
+    const file3 = files['propertyImage3'];
+    const file4 = files['propertyVideo'];
+    if (file1 != undefined) {
+      var img1 = await (await uploadFile(file1[0])).data;
+      mediaUrl[0] = img1;
+    }
+    if (file2 != undefined) {
+      var img2 = await (await uploadFile(file2[0])).data;
+      mediaUrl[1] = img2;
+    }
+    if (file3 != undefined) {
+      var img3 = await (await uploadFile(file3[0])).data;
+      mediaUrl[2] = img3;
+    }
+    if (file4 != undefined) {
+      var video = await (await uploadFile(file4[0])).data;
+      mediaUrl[3] = video;
+    }
+    update.mediaUrl = mediaUrl;
+  }
+
+  try {
+    return await Property.findOneAndUpdate(filter, update, options);
+  } catch (error) {
+    logger.error(error);
+  }
+};
+const updatePropertyStatus = async (filter: FilterQuery<IPropertyDocument>, update: UpdateQuery<IPropertyDocument>, options: QueryOptions) => {
   try {
     return await Property.findOneAndUpdate(filter, update, options);
   } catch (error) {
@@ -92,4 +132,4 @@ const deleteProperty = async (filter: FilterQuery<IProperty>) => {
 //   return await PropertyMedia.findOne({ property: propertyId });
 // };
 
-export { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty, getPropertiesByUser };
+export { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty, getPropertiesByUser, updatePropertyStatus };

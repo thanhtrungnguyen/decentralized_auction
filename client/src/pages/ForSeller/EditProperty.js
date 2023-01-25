@@ -42,52 +42,38 @@ const EditProperty = () => {
     const { id } = useParams();
 
     const navigate = useNavigate();
-    const baseURLCategory = `/category`;
+    const baseURLCategory = "http://localhost:5000/api/category/categories";
     const [role, setRole] = useState();
+    const [error, setError] = useState(false);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         await axios.get(baseURLCategory).then((resp) => {
-    //             console.log(resp.data);
-    //             console.log("axios get");
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURLCategory).then((resp) => {
+                console.log(resp.data);
+                setlistCategory(resp.data);
+            });
+            await axios.get(baseURLProperty).then((resp) => {
+                console.log(resp.data);
+                setData(resp.data);
+                setPropertyName(resp.data.property.name);
+                setCategory(resp.data.property.category._id);
+                // setPropertyVideo(resp.data.property.mediaUrl[3]);
+                setPropertyDescription(resp.data.property.description);
+                setStartBid(resp.data.property.startBid);
+                setDeposit(resp.data.property.depositAmount);
+                setPriceStep(resp.data.property.priceStep);
+                setPlaceViewProperty(resp.data.property.placeViewProperty);
+                // setStatus(resp.data.Status__c);
+                setViewPropertyTime([new Date(resp.data.property.startViewPropertyTime), new Date(resp.data.property.endViewPropertyTime)]);
+            });
 
-    //             setlistCategory(resp.data);
-    //         });
-    //         await axios.get(baseURLProperty).then((resp) => {
-    //             console.log(resp.data);
-    //             setPropertyName(resp.data.Name);
-    //             setCategory(resp.data.Category_Id__r.Name);
-    //             setPropertyVideo(resp.data.Properties_Media__r.records[3].Name);
-    //             setPropertyDescription(resp.data.Description__c);
-    //             setStartBid(resp.data.Start_Bid__c);
-    //             setDeposit(resp.data.Deposit_Amount__c);
-    //             setPriceStep(resp.data.Price_Step__c);
-    //             setPlaceViewProperty(resp.data.Place_View_Property__c);
-    //             setStatus(resp.data.Status__c);
-    //             setViewPropertyTime([
-    //                 new Date(resp.data.Start_View_Property_Time__c).setTime(
-    //                     new Date(resp.data.Start_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-    //                 ),
-    //                 new Date(resp.data.End_View_Property_Time__c).setTime(
-    //                     new Date(resp.data.End_View_Property_Time__c).getTime() - 7 * 60 * 60 * 1000
-    //                 ),
-    //             ]);
-    //             setData(resp.data);
-    //         });
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
 
-    //         if (getUser() != null) {
-    //             setRole(getUser().role);
-    //         } else {
-    //             setRole("");
-    //         }
-
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    // }, [baseURLCategory]);
-
-    const baseURLProperty = `http://localhost:8800/api/property/getById/${id}`;
+    const baseURLProperty = `http://localhost:5000/api/property/${id}`;
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -141,22 +127,29 @@ const EditProperty = () => {
         formData.append("propertyImage2", propertyImage2);
         formData.append("propertyImage3", propertyImage3);
         formData.append("propertyVideo", propertyVideo);
-        formData.append("propertyName", propertyName);
+        formData.append("name", propertyName);
         formData.append("category", category);
-        formData.append("propertyDescription", propertyDescription);
-        formData.append("viewPropertyTime", viewPropertyTime);
+        formData.append("description", propertyDescription);
+        formData.append("startViewPropertyTime", viewPropertyTime[0]);
+        formData.append("endViewPropertyTime", viewPropertyTime[1]);
         formData.append("startBid", startBid);
-        formData.append("deposit", deposit);
+        formData.append("depositAmount", deposit);
         formData.append("priceStep", priceStep);
         formData.append("placeViewProperty", placeViewProperty);
-        formData.append("_method", "PUT");
-        formData.append("status", status);
+
         // formData.append("startBid", startBid);
         // formData.append("biddingPreiod", biddingPreiod);
         axios
-            .put(`http://localhost:8800/api/property/${id}`, formData, {
-                withCredentials: true,
-            })
+            .patch(
+                `http://localhost:5000/api/property/update/${id}`,
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                },
+                {
+                    withCredentials: true,
+                }
+            )
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -180,7 +173,7 @@ const EditProperty = () => {
         });
         return users;
     };
-    return !loading ? (
+    return loading ? (
         <Loading />
     ) : (
         <>
@@ -197,34 +190,26 @@ const EditProperty = () => {
                                     <p className={styles.lable}>Property Image</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <input
-                                        className={styles.inputImg}
-                                        id="propertyImage1"
-                                        onChange={(e) => handleInputChange(e)}
-                                        type="file"
-                                        required
-                                    ></input>
-                                    <input
-                                        className={styles.inputImg}
-                                        id="propertyImage2"
-                                        onChange={(e) => handleInputChange(e)}
-                                        type="file"
-                                        required
-                                    ></input>
-                                    <input
-                                        className={styles.inputImg}
-                                        id="propertyImage3"
-                                        onChange={(e) => handleInputChange(e)}
-                                        type="file"
-                                        required
-                                    ></input>
+                                    <input className={styles.inputImg} id="propertyImage1" onChange={(e) => handleInputChange(e)} type="file"></input>
+                                    <input className={styles.inputImg} id="propertyImage2" onChange={(e) => handleInputChange(e)} type="file"></input>
+                                    <input className={styles.inputImg} id="propertyImage3" onChange={(e) => handleInputChange(e)} type="file"></input>
                                     <div className={styles.conImg}>
                                         {" "}
-                                        {propertyImage1 && (
+                                        {propertyImage1 == null ? (
+                                            <img src={data.property.mediaUrl[0]} className={styles.image} alt="Thumb" />
+                                        ) : (
                                             <img src={URL.createObjectURL(propertyImage1)} className={styles.image} alt="Thumb" />
                                         )}{" "}
-                                        {propertyImage2 && <img src={URL.createObjectURL(propertyImage2)} className={styles.image} alt="Thumb" />}{" "}
-                                        {propertyImage3 && <img src={URL.createObjectURL(propertyImage3)} className={styles.image} alt="Thumb" />}
+                                        {propertyImage2 == null ? (
+                                            <img src={data.property.mediaUrl[1]} className={styles.image} alt="Thumb" />
+                                        ) : (
+                                            <img src={URL.createObjectURL(propertyImage2)} className={styles.image} alt="Thumb" />
+                                        )}{" "}
+                                        {propertyImage3 == null ? (
+                                            <img src={data.property.mediaUrl[2]} className={styles.image} alt="Thumb" />
+                                        ) : (
+                                            <img src={URL.createObjectURL(propertyImage3)} className={styles.image} alt="Thumb" />
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -233,15 +218,25 @@ const EditProperty = () => {
                                     <p className={styles.lable}>Property Video</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <input
-                                        className={styles.inputImg}
-                                        id="propertyVideo"
-                                        onChange={(e) => handleInputChange(e)}
-                                        type="file"
-                                        required
-                                    ></input>
+                                    <input className={styles.inputImg} id="propertyVideo" onChange={(e) => handleInputChange(e)} type="file"></input>
                                     <div className={styles.conImg}>
-                                        {propertyVideo && <video src={URL.createObjectURL(propertyVideo)} className={styles.video} controls />}
+                                        {propertyVideo == null ? (
+                                            <video
+                                                src={data.property.mediaUrl[3]}
+                                                playing={true}
+                                                controls={true}
+                                                loop={true}
+                                                muted={true}
+                                                playsinline={true}
+                                                onReady={true}
+                                                width="40%"
+                                                height="90%"
+                                                className={styles.image}
+                                                alt="Thumb"
+                                            />
+                                        ) : (
+                                            <video src={URL.createObjectURL(propertyVideo)} className={styles.video} controls />
+                                        )}
                                     </div>
                                     <br />
                                     <br />
@@ -277,11 +272,11 @@ const EditProperty = () => {
                                         onChange={(e) => handleInputChange(e)}
                                         id="category"
                                         placeholder="Category"
-                                        defaultValue="Chair"
+                                        defaultValue={data.property.category._id}
                                     >
-                                        {/* {data?.categories.map((item) => (
-                                        <option value={item.name}>{item.name}</option>
-                                    ))} */}
+                                        {listCategory?.categories.map((item) => (
+                                            <option value={item._id}>{item.name}</option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>

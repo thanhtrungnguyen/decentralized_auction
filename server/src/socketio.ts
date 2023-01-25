@@ -5,7 +5,7 @@ import { config } from './config/custom-environment-variables';
 import cron from 'node-cron';
 import logger from './api/utils/logger';
 import { getAllAuctions, updateAuction } from './api/services/AuctionService';
-import { updateProperty } from './api/services/PropertyService';
+import { updateProperty, updatePropertyStatus } from './api/services/PropertyService';
 import { getCountPlacedBidAndRetracted } from './api/services/ContractInteractionService';
 
 export const connectSocket = (app: any) => {
@@ -37,7 +37,7 @@ export const connectSocket = (app: any) => {
       if (currentTime - timeStartRegistrationFN >= 0 && currentTime - timeEndRegistrationFN <= 0) {
         if (auction.status != 'RegistrationTime') {
           await updateAuction({ _id: auction._id }, { status: 'RegistrationTime' }, { new: true });
-          await updateProperty({ _id: auction.property._id }, { status: 'RegistrationTime' }, { new: true });
+          await updatePropertyStatus({ _id: auction.property._id }, { status: 'RegistrationTime' }, { new: true });
           i = i + 1;
           io.emit('data', i);
         }
@@ -45,7 +45,7 @@ export const connectSocket = (app: any) => {
       if (currentTime - timeEndRegistrationFN > 0 && currentTime - timeStartAuctionFN < 0) {
         if (auction.status != 'UpcomingForBid') {
           await updateAuction({ _id: auction._id }, { status: 'UpcomingForBid' }, { new: true });
-          await updateProperty({ _id: auction.property._id }, { status: 'UpcomingForBid' }, { new: true });
+          await updatePropertyStatus({ _id: auction.property._id }, { status: 'UpcomingForBid' }, { new: true });
           i = i + 1;
           io.emit('data', i);
         }
@@ -54,7 +54,7 @@ export const connectSocket = (app: any) => {
       if (currentTime - timeStartAuctionFN >= 0 && currentTime - timeEndAuctionFN <= 0) {
         if (auction.status != 'Bidding') {
           await updateAuction({ _id: auction._id }, { status: 'Bidding' }, { new: true });
-          await updateProperty({ _id: auction.property._id }, { status: 'Bidding' }, { new: true });
+          await updatePropertyStatus({ _id: auction.property._id }, { status: 'Bidding' }, { new: true });
 
           i = i + 1;
           io.emit('data', i);
@@ -64,7 +64,7 @@ export const connectSocket = (app: any) => {
       if (currentTime - timeEndAuctionFN > 0 && currentTime - duePaymentTimeFN <= 0) {
         if (auction.status != 'Closed') {
           await updateAuction({ _id: auction._id }, { status: 'Closed' }, { new: true });
-          await updateProperty({ _id: auction.property._id }, { status: 'Closed' }, { new: true });
+          await updatePropertyStatus({ _id: auction.property._id }, { status: 'Closed' }, { new: true });
 
           i = i + 1;
           io.emit('data', i);
