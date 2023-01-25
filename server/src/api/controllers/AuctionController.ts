@@ -9,7 +9,7 @@ import {
   getListAuctionsForBidder,
   getListAuctionsForSeller
 } from '../services/AuctionService';
-import { getProperty, updateProperty } from '../services/PropertyService';
+import { getProperty, updateProperty, updatePropertyStatus } from '../services/PropertyService';
 import { createAuctionOnContract } from '../utils/runContractFunction';
 
 export const getAllAuctionsHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -81,7 +81,7 @@ export const createAuctionHandler = async (req: Request, res: Response, next: Ne
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
-  await updateProperty({ _id: propertyId }, { status: 'Request' }, { new: true }).catch((error) => {
+  await updatePropertyStatus({ _id: propertyId }, { status: 'Request' }, { new: true }).catch((error) => {
     res.status(500).json({ error });
   });
   return await createAuction({ property: propertyId, status: 'Request' })
@@ -129,7 +129,7 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
-  await updateProperty({ _id: propertyId }, { status: 'Approved' }, { new: true })
+  await updatePropertyStatus({ _id: propertyId }, { status: 'Approved' }, { new: true })
     .then((auction) => {
       res.status(201).json({ auction });
     })
