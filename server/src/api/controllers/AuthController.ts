@@ -9,6 +9,9 @@ const createUserSessionHandler = async (req: Request, res: Response, next: NextF
   if (!user) {
     return res.status(401).send({ message: 'Invalid username or password' });
   }
+  if (!user.status) {
+    return res.status(403).send({ message: 'User is inactive' });
+  }
 
   const accessToken = await signAccessToken(user);
 

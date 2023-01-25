@@ -4,7 +4,7 @@ import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
@@ -44,7 +44,6 @@ const EditSeller = () => {
     const [userName, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
-    const [position, setPosition] = useState(null);
     const role = "seller";
     const userType = "organization";
     const [fileBack, setFileBack] = useState(0);
@@ -54,9 +53,7 @@ const EditSeller = () => {
         if (id === "organizationName") {
             setOrganizationName(value);
         }
-        if (id === "position") {
-            setPosition(value);
-        }
+
         if (id === "taxCode") {
             setTaxCode(value);
         }
@@ -69,7 +66,6 @@ const EditSeller = () => {
         if (id === "specificAddressOrganization") {
             setSpecificAddressOrganization(value);
         }
-
         if (id === "firstName") {
             setFirstName(value);
         }
@@ -134,7 +130,35 @@ const EditSeller = () => {
         });
     };
     const [listUsername, setListUsername] = useState([]);
-    const baseURL = `http://localhost:5000/api/user/users`;
+    const { id } = useParams();
+    const baseURL = `/organization/getById/${id}`;
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                setOrganizationName(resp.data.result.name)
+                setTaxCode(resp.data.result.taxCode)
+                setTaxCodeGrantedDate(resp.data.result.taxCodeGrantedDate)
+                setTaxCodeGrantedPlace(resp.data.result.taxCodeGrantedPlace)
+                setSpecificAddressOrganization(resp.data.result.addressOrganization)
+                setFirstName(resp.data.result.individual.firstName)
+                setLastName(resp.data.result.individual.lastName)
+                setGender(resp.data.result.individual.gender)
+                setdateOfBirth(resp.data.result.individual.dateOfBirth)
+                setEmail(resp.data.result.individual.email)
+                setPhone(resp.data.result.individual.phone)
+                setSpecificAddress(resp.data.result.individual.address)
+                setCardNumber(resp.data.result.individual.cardNumber)
+                setCardGrantedPlace(resp.data.result.individual.cardGrantedPlace)
+                setdateRangeCard(resp.data.result.individual.cardGrantedDate)
+                setCardFront(resp.data.result.individual.frontSideImage)
+                setCardBack(resp.data.result.individual.backSideImage)
+            });
+
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
     const handleSubmit = (event) => {
         const fsizeBack = cardBack.size;
         const fileBack = Math.round(fsizeBack / 1024);
@@ -181,8 +205,6 @@ const EditSeller = () => {
             notify("🦄 Email is empty");
         } else if (!phone) {
             notify("🦄 phone is empty");
-        } else if (!position) {
-            notify("🦄 position is empty");
         } else if (!cityId) {
             notify("🦄 city is empty");
         } else if (!districtId) {
@@ -205,16 +227,6 @@ const EditSeller = () => {
             notify("🦄 File card back, please select a file less than 2mb");
         } else if (fileFront > 2048) {
             notify("🦄 File card front, please select a file less than 2mb");
-        } else if (!userName) {
-            notify("🦄 username is empty");
-        } else if (!password) {
-            notify("🦄 password is empty");
-        } else if (!rePassword) {
-            notify("🦄 rePassword is empty");
-        } else if (isExist) {
-            notify("🦄 Username is exist");
-        } else if (rePassword != password) {
-            notify("🦄 rePassword is not same password");
         } else {
             const formData = new FormData();
 
@@ -230,7 +242,6 @@ const EditSeller = () => {
             formData.append("dateOfBirth", dateOfBirth.trim());
             formData.append("email", email.trim());
             formData.append("phone", phone.trim());
-            formData.append("position", position.trim());
             formData.append("cityId", cityId);
             formData.append("city", selectedCity.label);
             formData.append("districtId", districtId);
@@ -243,13 +254,12 @@ const EditSeller = () => {
             formData.append("cardGrantedPlace", cardGrantedPlace.trim());
             formData.append("frontSideImage", cardFront);
             formData.append("backSideImage", cardBack);
-            formData.append("username", userName.trim());
-            formData.append("password", password).trim();
+
             formData.append("role", role.trim());
             formData.append("type", userType.trim());
             axios
-                .post(
-                    "/organization/create",
+                .patch(
+                    `/organization/update/${id}`,
                     formData,
                     {
                         headers: { "Content-Type": "multipart/form-data" },
@@ -261,7 +271,7 @@ const EditSeller = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
-                    alert("Add seller successfully!!!");
+                    alert("Edit seller successfully!!!");
                     navigate("/listSellers");
                 })
                 .catch((err) => {
@@ -407,9 +417,9 @@ const EditSeller = () => {
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
+                                <option value="Male" selected={gender === 'Male' ? true : false}>Male</option>
+                                <option value="Female" selected={gender === 'Female' ? true : false}>Female</option>
+                                <option value="Other" selected={gender === 'Other' ? true : false}>Other</option>
                             </select>
                             <p className={styles.txtBlack}>Date of birth</p>
                             <input
@@ -442,18 +452,6 @@ const EditSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="phone"
                                 maxLength={10}
-                                required
-                            ></input>
-                            <br />
-                            <br />
-                            <input
-                                className={styles.inputT}
-                                type="text"
-                                pattern="^\s*([^\s]\s*){0,100}$"
-                                placeholder="Position"
-                                value={position}
-                                onChange={(e) => handleInputChange(e)}
-                                id="position"
                                 required
                             ></input>
                             <br />
@@ -543,7 +541,7 @@ const EditSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                required
+
                             />
                             <input
                                 id="cardBack"
@@ -552,25 +550,28 @@ const EditSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                required
+
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
-                                    {cardFront && <img src={URL.createObjectURL(cardFront)} className={styles.img} alt="Thumb" />}
+
+                                    {cardFront && <img src={cardFront} className={styles.img} alt="Thumb" />}
                                     {/* <img
-                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                        src={cardFront}
                                         className={styles.img}
+                                        alt='Thumb'
                                     ></img> */}
                                 </div>
                                 <div className={styles.r}>
                                     {/* <img
-                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                        src={cardBack}
                                         className={styles.img}
+                                        alt='Thumb'
                                     ></img> */}
-                                    {cardBack && <img src={URL.createObjectURL(cardBack)} className={styles.img} alt="Thumb" />}
+                                    {cardBack && <img src={cardBack} className={styles.img} alt="Thumb" />}
                                 </div>
                             </div>
-                            <p className={styles.textBlue}>Account Information</p>
+                            {/* <p className={styles.textBlue}>Account Information</p>
                             <input
                                 className={styles.inputEP}
                                 type="text"
@@ -580,10 +581,10 @@ const EditSeller = () => {
                                 id="userName"
                                 placeholder="Username"
                                 readOnly
-                            ></input>
+                            ></input> */}
                             <br />
                             <br />
-                            <input className={styles.btnAdd} type="submit" value="Add"></input>
+                            <input className={styles.btnAdd} type="submit" value="Save"></input>
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {

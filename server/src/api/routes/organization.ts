@@ -1,5 +1,11 @@
 import express from 'express';
-import { createSellerHandler, getAllHandler, getSellerByIdHandler, getSellerHandler } from '../controllers/OrganizationController';
+import {
+  createSellerHandler,
+  getAllHandler,
+  getSellerByIdHandler,
+  getSellerHandler,
+  updateSellerHandler
+} from '../controllers/OrganizationController';
 import { validateResource } from '../middleware/validateResource';
 import { IndividualSchema } from '../validations/IndividualSchema';
 import { UserSchema } from '../validations/UserSchema';
@@ -24,6 +30,22 @@ router.post(
   validateResource(IndividualSchema.create),
   validateResource(UserSchema.createBidder),
   createSellerHandler
+);
+router.patch(
+  '/update/:id',
+  upload.fields([
+    {
+      name: 'frontSideImage',
+      maxCount: 1
+    },
+    {
+      name: 'backSideImage',
+      maxCount: 1
+    }
+  ]),
+  // validateResource(OrganizationSchema.create),
+  // validateResource(IndividualSchema.create),
+  updateSellerHandler
 );
 router.get('/seller', getSellerHandler);
 router.get('/getAll', getAllHandler);

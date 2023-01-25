@@ -31,7 +31,20 @@ router.post(
   validateResource(UserSchema.createBidder),
   createIndividualHandler
 );
-router.patch('/update/:individualId', updateIndividualHandler);
+router.patch(
+  '/update/:individualId',
+  upload.fields([
+    {
+      name: 'frontSideImage',
+      maxCount: 1
+    },
+    {
+      name: 'backSideImage',
+      maxCount: 1
+    }
+  ]),
+  updateIndividualHandler
+);
 router.delete('/delete/:individualId', deleteIndividualHandler);
 
 export default router;
