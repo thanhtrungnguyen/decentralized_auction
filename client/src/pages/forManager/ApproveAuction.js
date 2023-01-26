@@ -15,8 +15,7 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 // import Popup from "reactjs-popup";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import "../../styleCss/stylesPages/forManagers/Approve.css";
 import Popup from "reactjs-popup";
 import Loading from "../../components/loading/Loading";
@@ -87,16 +86,13 @@ const PropertyDetail = () => {
     const AprroveAuction = () => {
         // alert(name + registrationFee + timeRegistration + auctionTime);
         axios
-            .put(
-                "/auction/approve/" + id,
-                {
-                    registrationFee: registrationFee,
-                    timeRegistration: timeRegistration,
-                    auctionTime: auctionTime,
-                    name: name,
-                    paymentTime: paymentTime,
-                }
-            )
+            .put("/auction/approve/" + id, {
+                registrationFee: registrationFee,
+                timeRegistration: timeRegistration,
+                auctionTime: auctionTime,
+                name: name,
+                paymentTime: paymentTime,
+            })
             .then((res) => {
                 // console.log(res);
                 // console.log(res.data);

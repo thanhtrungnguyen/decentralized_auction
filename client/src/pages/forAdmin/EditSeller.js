@@ -7,8 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Select from "react-select";
 import useLocationForm from "../register/useLocationForm";
 import Loading from "../../components/loading/Loading";
@@ -136,23 +135,23 @@ const EditSeller = () => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
-                setOrganizationName(resp.data.result.name)
-                setTaxCode(resp.data.result.taxCode)
-                setTaxCodeGrantedDate(resp.data.result.taxCodeGrantedDate)
-                setTaxCodeGrantedPlace(resp.data.result.taxCodeGrantedPlace)
-                setSpecificAddressOrganization(resp.data.result.addressOrganization)
-                setFirstName(resp.data.result.individual.firstName)
-                setLastName(resp.data.result.individual.lastName)
-                setGender(resp.data.result.individual.gender)
-                setdateOfBirth(resp.data.result.individual.dateOfBirth)
-                setEmail(resp.data.result.individual.email)
-                setPhone(resp.data.result.individual.phone)
-                setSpecificAddress(resp.data.result.individual.address)
-                setCardNumber(resp.data.result.individual.cardNumber)
-                setCardGrantedPlace(resp.data.result.individual.cardGrantedPlace)
-                setdateRangeCard(resp.data.result.individual.cardGrantedDate)
-                setCardFront(resp.data.result.individual.frontSideImage)
-                setCardBack(resp.data.result.individual.backSideImage)
+                setOrganizationName(resp.data.result.name);
+                setTaxCode(resp.data.result.taxCode);
+                setTaxCodeGrantedDate(resp.data.result.taxCodeGrantedDate);
+                setTaxCodeGrantedPlace(resp.data.result.taxCodeGrantedPlace);
+                setSpecificAddressOrganization(resp.data.result.addressOrganization);
+                setFirstName(resp.data.result.individual.firstName);
+                setLastName(resp.data.result.individual.lastName);
+                setGender(resp.data.result.individual.gender);
+                setdateOfBirth(resp.data.result.individual.dateOfBirth);
+                setEmail(resp.data.result.individual.email);
+                setPhone(resp.data.result.individual.phone);
+                setSpecificAddress(resp.data.result.individual.address);
+                setCardNumber(resp.data.result.individual.cardNumber);
+                setCardGrantedPlace(resp.data.result.individual.cardGrantedPlace);
+                setdateRangeCard(resp.data.result.individual.cardGrantedDate);
+                setCardFront(resp.data.result.individual.frontSideImage);
+                setCardBack(resp.data.result.individual.backSideImage);
             });
 
             setLoading(false);
@@ -405,9 +404,15 @@ const EditSeller = () => {
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
-                                <option value="Male" selected={gender === 'Male' ? true : false}>Male</option>
-                                <option value="Female" selected={gender === 'Female' ? true : false}>Female</option>
-                                <option value="Other" selected={gender === 'Other' ? true : false}>Other</option>
+                                <option value="Male" selected={gender === "Male" ? true : false}>
+                                    Male
+                                </option>
+                                <option value="Female" selected={gender === "Female" ? true : false}>
+                                    Female
+                                </option>
+                                <option value="Other" selected={gender === "Other" ? true : false}>
+                                    Other
+                                </option>
                             </select>
                             <p className={styles.txtBlack}>Date of birth</p>
                             <input
@@ -529,7 +534,6 @@ const EditSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-
                             />
                             <input
                                 id="cardBack"
@@ -538,11 +542,9 @@ const EditSeller = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
-
                                     {cardFront && <img src={cardFront} className={styles.img} alt="Thumb" />}
                                     {/* <img
                                         src={cardFront}

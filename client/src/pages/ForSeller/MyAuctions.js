@@ -10,8 +10,7 @@ import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 // import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";

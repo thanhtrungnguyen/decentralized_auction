@@ -11,8 +11,7 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { ToastContainer, toast } from "react-toastify";
 import Time from "../../components/time/Time";
 const EditProperty = () => {

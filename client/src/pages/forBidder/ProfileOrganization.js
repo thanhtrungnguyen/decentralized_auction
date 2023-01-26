@@ -7,8 +7,7 @@ import Footer from "../../components/footer/Footer";
 import React, { useEffect, useState } from "react";
 // import axios from "axios";
 import Loading from "../../components/loading/Loading";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
@@ -222,18 +221,10 @@ const ProfileOrganization = () => {
                     <br />
                     <div className={styles.fl}>
                         <div className={styles.l}>
-                            <img
-                                src={data?.result.individual.frontSideImage}
-                                className={styles.img}
-                                alt='img'
-                            ></img>
+                            <img src={data?.result.individual.frontSideImage} className={styles.img} alt="img"></img>
                         </div>
                         <div className={styles.r}>
-                            <img
-                                src={data?.result.individual.backSideImage}
-                                className={styles.img}
-                                alt='img'
-                            ></img>
+                            <img src={data?.result.individual.backSideImage} className={styles.img} alt="img"></img>
                         </div>
                     </div>
                     <br />
@@ -242,14 +233,15 @@ const ProfileOrganization = () => {
                     <br />
                     <br />
                     {/* <LogoutButton /> */}
-                    <button className={styles.btn2} onClick={() => {
-                        navigate("/homePage");
-                    }}>
+                    <button
+                        className={styles.btn2}
+                        onClick={() => {
+                            navigate("/homePage");
+                        }}
+                    >
                         Back
                     </button>
-                    <button className={styles.btn2} >
-                        Change Password
-                    </button>
+                    <button className={styles.btn2}>Change Password</button>
                     <button
                         className={styles.btn2}
                         onClick={() => {

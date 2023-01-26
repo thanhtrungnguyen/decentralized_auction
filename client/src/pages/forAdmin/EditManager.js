@@ -9,8 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import FooterCopy from "../../components/footer/FooterCopy";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
@@ -54,11 +53,7 @@ const EditManager = () => {
         fetchData();
 
         // // console.log(getUser().type);
-        // if (getUser() != null) {
-        //     setRole(getUser().role);
-        // } else {
-        //     setRole("");
-        // }
+
         // setLoading(false);
     }, []);
     const handleInputChange = (e) => {

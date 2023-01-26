@@ -9,8 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Loading from "../../components/loading/Loading";
 // import { useFetch } from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
@@ -36,12 +35,6 @@ const ProfileSeller = () => {
                 });
             } catch (error) {
                 setError(error);
-            }
-
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
             }
 
             setLoading(false);

@@ -8,8 +8,6 @@ import "../../styleCss/error.css";
 import { useEffect, useState } from "react";
 import Loading from "../../components/loading/Loading";
 
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
 const ErrorPage = ({ error }) => {
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);

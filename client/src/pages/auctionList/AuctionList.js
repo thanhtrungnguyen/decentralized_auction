@@ -9,8 +9,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 // import PlaceABid from "../../components/popups/PlaceABid";
 import Pagination from "@mui/material/Pagination";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import io from "socket.io-client";
 import Loading from "../../components/loading/Loading";
 import PageName from "../../components/header/PageName";
@@ -67,8 +66,6 @@ const AuctionList = () => {
 
     const [role, setRole] = useState();
 
-
-
     useEffect(() => {
         if (loading) {
             fetchPostList();
@@ -84,11 +81,7 @@ const AuctionList = () => {
             console.log(resp.data.auctions);
             // socket.off();
         });
-        // if (getUser() != null) {
-        //     setRole(getUser().role);
-        // } else {
-        //     setRole("");
-        // }
+
         setLoading(false);
     }
     const fetchDataStatus = async () => {

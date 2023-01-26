@@ -7,8 +7,7 @@ import { useFetch } from "../../hooks/useFetch";
 import SideBarSeller from "../../components/sidebar_seller/SidebarSeller";
 import ReactPlayer from "react-player";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Loading from "../../components/loading/Loading";
 import Pagination from "@mui/material/Pagination";
 import Time from "../../components/time/Time";

@@ -10,8 +10,7 @@ import PlaceABid from "../../components/popups/PlaceABid";
 import { useFetch } from "../../hooks/useFetch";
 import ReactPlayer from "react-player";
 import { Player } from "video-react";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import HeaderUser from "../../components/header/HeaderUser";
 import Loading from "../../components/loading/Loading";
 import BidModal from "../bidder/BidModal";

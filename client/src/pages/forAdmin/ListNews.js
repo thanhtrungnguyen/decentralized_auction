@@ -8,8 +8,7 @@ import Popup from "reactjs-popup";
 import PublishNews from "../../components/popups/forAdmin/PublishNews";
 import PrivateNews from "../../components/popups/forAdmin/PrivateNews";
 import Loading from "../../components/loading/Loading";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import Time from "../../components/time/Time";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -77,9 +76,7 @@ const ListNews = () => {
                             {moment(item.createdAt).format("L")} - {moment(item.createdAt).format("LTS")}{" "}
                         </td>
                         <td>{item.status === "Activate" ? "Activate" : "Deactivate"}</td>
-                        <td>
-
-                        </td>
+                        <td></td>
                         <td>
                             <AiTwotoneEdit
                                 className={styles.iconView}

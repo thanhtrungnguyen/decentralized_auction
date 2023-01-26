@@ -13,8 +13,7 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 // import Popup from "reactjs-popup";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 const AuctionDetailForManager = () => {

@@ -7,8 +7,7 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import FooterCopy from "../../components/footer/FooterCopy";
 import HeaderUser from "../../components/header/HeaderUser";
 // import { useFetch } from "../../hooks/useFetch";
@@ -35,17 +34,6 @@ const ChangePassword = () => {
     const [passwordShown3, setPasswordShown3] = useState(false);
     //const [match, setMatch] = useState(null);
 
-    useEffect(() => {
-        console.log(getUser());
-
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-        setLoading(false);
-    }, []);
     const toggleOldPasswordVisibility = () => {
         setPasswordShown1(passwordShown1 ? false : true);
     };
@@ -70,32 +58,32 @@ const ChangePassword = () => {
     const handleSubmit = async (event) => {
         // const formData = new FormData();
 
-        if (rePassword !== password) {
-            setMessage("Please enter match the password");
-        } else {
-            await axios
-                .put(
-                    "http://localhost:8800/api/auth/changePassword",
-                    {
-                        oldPassword: oldPassword,
-                        newPassword: password,
-                        rePassword: rePassword,
-                        userName: getUser().userName,
-                    },
-                    { withCredentials: true }
-                )
-                .then((res) => {
-                    // console.log(res);
-                    // console.log(res.data);
-                    alert("Change password successfully!!!");
-                    navigate(`/homePage`);
-                })
-                .catch((error) => {
-                    alert("Change password Failure!!!");
-                    navigate(`/changePassword/${id}`);
-                });
-            event.preventDefault();
-        }
+        // if (rePassword !== password) {
+        //     setMessage("Please enter match the password");
+        // } else {
+        //     await axios
+        //         .put(
+        //             "http://localhost:8800/api/auth/changePassword",
+        //             {
+        //                 oldPassword: oldPassword,
+        //                 newPassword: password,
+        //                 rePassword: rePassword,
+        //                 userName: getUser().userName,
+        //             },
+        //             { withCredentials: true }
+        //         )
+        //         .then((res) => {
+        //             // console.log(res);
+        //             // console.log(res.data);
+        //             alert("Change password successfully!!!");
+        //             navigate(`/homePage`);
+        //         })
+        //         .catch((error) => {
+        //             alert("Change password Failure!!!");
+        //             navigate(`/changePassword/${id}`);
+        //         });
+        //     event.preventDefault();
+        // }
     };
 
     return loading ? (

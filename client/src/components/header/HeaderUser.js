@@ -2,9 +2,9 @@ import styles from "../../styleCss/stylesComponents/header.module.css";
 import { BiMessageDetail, BiBell } from "react-icons/bi";
 import { Outlet, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+
 import { useEffect, useState } from "react";
-import jwt from "jsonwebtoken";
+
 import { BsFillPersonFill } from "react-icons/bs";
 
 const Header = ({ username }) => {
@@ -12,7 +12,7 @@ const Header = ({ username }) => {
 
     const [type, setType] = useState("");
     const [id, setId] = useState();
-    useEffect(() => { }, []);
+    useEffect(() => {}, []);
     return (
         <>
             <div className={styles.header}>

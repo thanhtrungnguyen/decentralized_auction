@@ -8,12 +8,10 @@ import "../../styleCss/stylesPages/common/AboutUs.css";
 import Loading from "../../components/loading/Loading";
 
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 const AboutUs = () => {
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
-
 
     return loading ? (
         <Loading />

@@ -5,10 +5,10 @@ import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/stylesPages/news.module.css";
 import { BsPencil, BsCalendar3, BsSearch } from "react-icons/bs";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
+
 import { useState } from "react";
 import Loading from "../../components/loading/Loading";
-import jwt from "jsonwebtoken";
+
 import { useFetchPagination } from "../../hooks/useFetch";
 import moment from "moment";
 import { Pagination } from "@mui/material";
@@ -70,7 +70,7 @@ const News = () => {
         <>
             {(() => {
                 if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
+                    return <HeaderUser username={""} />;
                 } else {
                     return <Header />;
                 }

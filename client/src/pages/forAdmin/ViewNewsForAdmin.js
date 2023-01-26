@@ -8,8 +8,7 @@ import NavBar from "../../components/navbar/NavBarAdmin";
 import Footer from "../../components/footer/Footer";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import FooterCopy from "../../components/footer/FooterCopy";
 import HeaderUser from "../../components/header/HeaderUser";
 // import { useFetch } from "../../hooks/useFetch";

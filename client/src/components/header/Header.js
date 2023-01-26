@@ -1,10 +1,10 @@
 import styles from "../../styleCss/stylesComponents/header.module.css";
 import { Outlet, Link } from "react-router-dom";
 import { BsFillPersonFill } from "react-icons/bs";
-import Cookies from "js-cookie";
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import jwt from "jsonwebtoken";
+
 import { LogoutButton } from "../buttons/LogoutButton";
 import useAuth from "../../hooks/useAuth";
 import { useFetchData } from "../../hooks/useFetch";
@@ -16,7 +16,6 @@ const Header = () => {
     const { loading: loading2, data: data2, error } = useFetchData("/session");
     return (
         <>
-
             <div className={styles.header}>
                 <div className={styles.left}>
                     {(() => {

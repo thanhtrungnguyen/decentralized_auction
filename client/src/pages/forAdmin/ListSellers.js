@@ -9,8 +9,7 @@ import BanedSeller from "../../components/popups/forAdmin/BanSeller";
 import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
 import { useFetchPagination } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
@@ -35,11 +34,6 @@ const ListSellers = () => {
                 setData(resp.data.user);
                 console.log(resp);
             });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
 
             setLoading(false);
         };
