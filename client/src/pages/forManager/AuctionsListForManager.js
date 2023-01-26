@@ -157,7 +157,7 @@ const AuctionsListForManager = () => {
                                             <AiFillEye
                                                 className={styles.iconView}
                                                 onClick={() => {
-                                                    navigate("/auctionDetailForManager");
+                                                    navigate(`/auctionDetailForManager/${auction._id}`);
                                                 }}
                                             />
                                             <Link className={styles.link2} to={`/viewRegistrationForManager/${auction._id}`}>
