@@ -42,8 +42,11 @@ const Header = () => {
                         } else {
                             return (
                                 <>
-                                    <Link className={styles.label2} to="/login">
+                                    <Link className={styles.label3} to="/login">
                                         Login
+                                    </Link>
+                                    <Link className={styles.label2} to="/register">
+                                        Register
                                     </Link>
                                 </>
                             );
