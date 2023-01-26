@@ -243,7 +243,7 @@ const AddSeller = () => {
             formData.append("frontSideImage", cardFront);
             formData.append("backSideImage", cardBack);
             formData.append("username", userName.trim());
-            formData.append("password", password).trim();
+            formData.append("password", password.trim());
             formData.append("role", role.trim());
             formData.append("type", userType.trim());
             axios
