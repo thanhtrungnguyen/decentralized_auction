@@ -45,6 +45,8 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
     const handleSubmit = (event) => {
         if (!registrationFee.trim()) {
             notify("🦄 registrationFee is empty");
+        } else if (!name.trim()) {
+            notify("🦄 name is empty");
         } else {
             axios
                 .patch(`http://localhost:5000/api/auction/approve/${auctionId}`, {
