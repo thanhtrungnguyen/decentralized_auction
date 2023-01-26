@@ -75,7 +75,7 @@ const Login = () => {
                     setErrorMassage("No server response");
                 } else if (error.response?.status === 422) {
                     setErrorMassage("Unprocessable Entity");
-                } else if (error.response?.status === 401) {
+                } else if (error.response?.status === 401 || 403) {
                     setErrorMassage(error.response?.data?.message);
                 } else {
                     setErrorMassage("Login Failed");

@@ -89,6 +89,21 @@ const ListNews = () => {
                         </td>
                         <td>{item.status === "Activate" ? "Activate" : "Deactivate"}</td>
                         <td>
+
+                        </td>
+                        <td>
+                            <AiTwotoneEdit
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate(`/editNews/${item._id}`);
+                                }}
+                            />
+                            <AiFillEye
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate(`/viewNewsForAdmin/${item._id}`);
+                                }}
+                            />
                             {item.status === "Activate" ? (
                                 <Popup
                                     trigger={
@@ -112,20 +127,6 @@ const ListNews = () => {
                                     <PublishNews idNews={item._id} />
                                 </Popup>
                             )}
-                        </td>
-                        <td>
-                            <AiTwotoneEdit
-                                className={styles.iconView}
-                                onClick={() => {
-                                    navigate(`/editNews/${item._id}`);
-                                }}
-                            />
-                            <AiFillEye
-                                className={styles.iconView}
-                                onClick={() => {
-                                    navigate(`/viewNewsForAdmin/${item._id}`);
-                                }}
-                            />
                         </td>
                     </tr>
                 ))}
@@ -180,8 +181,8 @@ const ListNews = () => {
                                 <th className={styles.th}>Created At</th>
 
                                 <th className={styles.th}>Status</th>
-                                <th className={styles.th}>Action</th>
                                 <th className={styles.th}></th>
+                                <th className={styles.th}>Action</th>
                             </tr>
                             {exportData(data)}
                         </table>

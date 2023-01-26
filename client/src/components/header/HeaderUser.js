@@ -12,7 +12,7 @@ const Header = ({ username }) => {
 
     const [type, setType] = useState("");
     const [id, setId] = useState();
-    useEffect(() => {}, []);
+    useEffect(() => { }, []);
     return (
         <>
             <div className={styles.header}>
@@ -41,10 +41,10 @@ const Header = ({ username }) => {
                         }
                     })()}
 
-                    <select id="language" className={styles.select}>
+                    {/* <select id="language" className={styles.select}>
                         <option value="english">EN</option>
                         <option value="vietnamese">VN</option>
-                    </select>
+                    </select> */}
                 </div>
                 <hr />
             </div>
