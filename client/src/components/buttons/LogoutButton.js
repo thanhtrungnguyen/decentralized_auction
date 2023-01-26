@@ -18,7 +18,6 @@ export const LogoutButton = () => {
             .then(navigate("/login"))
             .catch((error) => {
                 console.log("Logout error:", error);
-                alert("Ủa???");
             });
     };
 

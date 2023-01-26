@@ -18,9 +18,11 @@ const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
 router.get('/properties', getAllPropertiesHandler);
-router.get('/myProperty/:index/:status/:search', getPropertiesByUserHandler);
+
 router.get('/:propertyId', getPropertyByIdHandler);
 router.use(requireRole(roles.SELLER));
+router.get('/myProperty/:index/:status/:search', getPropertiesByUserHandler);
+
 router.post(
   '/create',
   upload.fields([

@@ -44,13 +44,15 @@ createAuction = async (
     // let decodedData = iface.parseTransaction({ data: tx.data, value: tx.value });
     // console.log("decodedData");
     // console.log(decodedData);
+    console.log("====================");
+    console.log(tx);
 
     if (network.config.chainId == "31337") {
         await moveBlocks(2, (sleepAmount = 1000));
     }
 };
 
-const auctionId = "63bfc0488059a4gffds222c499";
+const auctionId = "63bfcfdf499";
 const startRegistrationTime = getEpoch("January 14, 2033 22:04:19");
 const endRegistrationTime = getEpoch("January 14, 2033 22:10:00");
 const startAuctionTime = getEpoch("January 14, 2033 22:10:10");
