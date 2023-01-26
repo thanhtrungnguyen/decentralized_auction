@@ -14,8 +14,8 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
-    const [registrationFee, setRegistrationFee] = useState(null);
-    const [name, setName] = useState(null);
+    const [registrationFee, setRegistrationFee] = useState("");
+    const [name, setName] = useState("");
     const [startRegistrationTime, setStartRegistrationTime] = useState(new Date());
     const [endRegistrationTime, setEndRegistrationTime] = useState(new Date());
     const [startAuctionTime, setStartAuctionTime] = useState(new Date());
@@ -49,13 +49,14 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
             notify("🦄 name is empty");
         } else {
             axios
-                .patch(`/auction/approve/${auctionId}`, {
-                    name: name,
+                .patch(`http://localhost:5000/api/auction/approve/${auctionId}`, {
+                    name: name.trim(),
                     startRegistrationTime: new Date(startRegistrationTime),
                     endRegistrationTime: new Date(endRegistrationTime),
                     startAuctionTime: new Date(startAuctionTime),
                     endAuctionTime: new Date(endAuctionTime),
                     duePaymentTime: new Date(duePaymentTime),
+
                     registrationFee: registrationFee.trim(),
                     property: propertyId,
                 })
@@ -67,7 +68,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                     navigate("/auctionListForManager");
                 })
                 .catch((err) => {
-                    notify(`🦄 Create Failed: ${err.response.data.message}, ${err}`);
+                    notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
         event.preventDefault();
