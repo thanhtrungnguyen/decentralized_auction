@@ -27,7 +27,7 @@ router.get('/:auctionId', requireRole(roles.MANAGER), getAuctionByIdHandler);
 
 router.post('/create', createAuctionHandler);
 router.patch('/update/:auctionId', requireRole(roles.SELLER), validateResource(AuctionSchema.update), updateAuctionHandler);
-router.patch('/approve/:auctionId', requireRole(roles.MANAGER), validateResource(AuctionSchema.update), approveAuctionHandler);
+router.patch('/approve/:auctionId', requireRole(roles.MANAGER), validateResource(AuctionSchema.approve), approveAuctionHandler);
 router.patch('/reject/:auctionId', requireRole(roles.MANAGER), validateResource(AuctionSchema.reject), rejectAuctionHandler);
 router.delete('/delete/:auctionId', deleteAuctionHandler);
 //validateResource(AuctionSchema.create),

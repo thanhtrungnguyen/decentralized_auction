@@ -47,23 +47,16 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
             notify("🦄 registrationFee is empty");
         } else {
             axios
-                .patch(
-                    `http://localhost:5000/api/auction/approve/${auctionId}`,
-                    {
-                        name: name,
-                        startRegistrationTime: new Date(startRegistrationTime),
-                        endRegistrationTime: new Date(endRegistrationTime),
-                        startAuctionTime: new Date(startAuctionTime),
-                        endAuctionTime: new Date(endAuctionTime),
-                        duePaymentTime: new Date(duePaymentTime),
-                        registrationFee: registrationFee.trim(),
-                        status: "Approved",
-                        property: propertyId,
-                    },
-                    {
-                        withCredentials: true,
-                    }
-                )
+                .patch(`http://localhost:5000/api/auction/approve/${auctionId}`, {
+                    name: name,
+                    startRegistrationTime: new Date(startRegistrationTime),
+                    endRegistrationTime: new Date(endRegistrationTime),
+                    startAuctionTime: new Date(startAuctionTime),
+                    endAuctionTime: new Date(endAuctionTime),
+                    duePaymentTime: new Date(duePaymentTime),
+                    registrationFee: registrationFee.trim(),
+                    property: propertyId,
+                })
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
