@@ -39,8 +39,29 @@ const createIndividual = async (individual: IIndividual, files: { [fieldName: st
   }
 };
 
-const updateIndividual = async (filter: FilterQuery<IIndividualDocument>, update: UpdateQuery<IIndividualDocument>, options: QueryOptions) => {
+function isEmptyObject(obj: Object) {
+  return JSON.stringify(obj) === '{}';
+}
+const updateIndividual = async (
+  filter: FilterQuery<IIndividualDocument>,
+  update: UpdateQuery<IIndividualDocument>,
+  options: QueryOptions,
+  files: { [fieldName: string]: Express.Multer.File[] }
+) => {
   try {
+    var img1, img2;
+    if (!isEmptyObject(files)) {
+      const file1 = files['frontSideImage'][0];
+      const file2 = files['backSideImage'][0];
+      if (file1 && file2) {
+        img1 = await (await uploadFile(file1)).data;
+        img2 = await (await uploadFile(file2)).data;
+        update.frontSideImage = img1;
+        update.backSideImage = img2;
+      } else {
+        return { success: false, message: 'Upload avatar fail!!!' };
+      }
+    }
     return await Individual.findOneAndUpdate(filter, update, options);
   } catch (error) {
     logger.error(error);

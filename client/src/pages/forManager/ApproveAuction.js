@@ -48,8 +48,11 @@ const PropertyDetail = () => {
     const { data, loading } = useFetch(baseURL);
     const onClick = () => {
         //console.log(show);
-
-        setShow(false);
+        if (show) {
+            setShow(false);
+        } else {
+            setShow(true);
+        }
     };
 
     const onTrue = () => {
@@ -57,9 +60,11 @@ const PropertyDetail = () => {
         console.log(show);
     };
     const onClick2 = () => {
-        console.log(show);
-
-        setShow2(false);
+        if (show2) {
+            setShow2(false);
+        } else {
+            setShow2(true);
+        }
     };
 
     const onTrue2 = () => {
@@ -231,7 +236,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Description</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>{data.auction.property.description}</p>
+                                    <p className={styles.txt2}>{data.auction.property.description}</p>
                                 </div>
                             </div>
                         </div>
@@ -239,12 +244,31 @@ const PropertyDetail = () => {
 
                     <div className={styles.btn}></div>
                     <div className={styles.btn}>
-                        <Popup trigger={<label className={styles.btnSave}> Approve</label>} position="right center">
+                        <label
+                            className={styles.btnSave}
+                            onClick={() => {
+                                onClick();
+                            }}
+                        >
+                            Approve
+                        </label>
+                        {show && <ApproveAuction auctionId={data.auction._id} propertyId={data.auction.property._id} />}
+                        <label
+                            className={styles.btnSave2}
+                            onClick={() => {
+                                onClick2();
+                            }}
+                        >
+                            Reject
+                        </label>
+                        {show2 && <RejectAuction auctionId={data.auction._id} propertyId={data.auction.property._id} />}
+
+                        {/* <Popup trigger={<label className={styles.btnSave}> Approve</label>} position="right center">
                             <ApproveAuction auctionId={data.auction._id} propertyId={data.auction.property._id} />
-                        </Popup>
-                        <Popup trigger={<label className={styles.btnSave2}> Reject</label>} position="right center">
+                        </Popup> */}
+                        {/* <Popup trigger={<label className={styles.btnSave2}> Reject</label>} position="right center">
                             <RejectAuction auctionId={data.auction._id} propertyId={data.auction.property._id} />
-                        </Popup>
+                        </Popup> */}
 
                         <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
                     </div>

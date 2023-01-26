@@ -1,5 +1,12 @@
 import express from 'express';
-import { createSellerHandler, getAllHandler, getSellerByIdHandler, getSellerHandler } from '../controllers/OrganizationController';
+import {
+  createSellerHandler,
+  getAllHandler,
+  getByUserIdHandler,
+  getSellerByIdHandler,
+  getSellerHandler,
+  updateSellerHandler
+} from '../controllers/OrganizationController';
 import { validateResource } from '../middleware/validateResource';
 import { IndividualSchema } from '../validations/IndividualSchema';
 import { UserSchema } from '../validations/UserSchema';
@@ -29,6 +36,22 @@ router.post(
 );
 
 router.use(requireRole(roles.SELLER));
+router.patch(
+  '/update/:id',
+  upload.fields([
+    {
+      name: 'frontSideImage',
+      maxCount: 1
+    },
+    {
+      name: 'backSideImage',
+      maxCount: 1
+    }
+  ]),
+  // validateResource(OrganizationSchema.create),
+  // validateResource(IndividualSchema.create),
+  updateSellerHandler
+);
 router.get('/seller', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getSellerHandler);
 router.get('/getAll', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getAllHandler);
 router.get('/getById/:idIndividual', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getSellerByIdHandler);

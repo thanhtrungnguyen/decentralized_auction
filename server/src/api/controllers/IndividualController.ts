@@ -21,6 +21,16 @@ export const getIndividualByIdHandler = async (req: Request, res: Response, next
       res.status(500).json({ error });
     });
 };
+export const getIndividualByUserIdHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.params.userId;
+  return await getIndividual({ user: userId })
+    .then((individual) => {
+      res.status(200).json({ individual });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
 
 export const createIndividualHandler = async (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body);
@@ -57,11 +67,13 @@ export const createIndividualHandler = async (req: Request, res: Response, next:
 export const updateIndividualHandler = async (req: Request, res: Response, next: NextFunction) => {
   const individualId = req.params.individualId;
   const update = req.body;
+  const files = req.files as { [fieldName: string]: Express.Multer.File[] };
   const individual = await getIndividual({ _id: individualId });
+
   if (!individual) {
     return res.status(404).json({ message: "Individual isn't found" });
   }
-  return await updateIndividual({ _id: individualId }, update, { new: true })
+  return await updateIndividual({ _id: individualId }, update, { new: true }, files)
     .then((individual) => {
       res.status(201).json({ individual });
     })

@@ -114,12 +114,6 @@ const ListSellers = () => {
                                     navigate(`/editSeller/${item._id}`);
                                 }}
                             />
-                            {/* <AiTwotoneEdit
-                                className={styles.iconView}
-                                onClick={() => {
-                                    navigate(`/editNews/${item._id}`);
-                                }}
-                            /> */}
                             {item.user.status === true ? (
                                 <Popup
                                     trigger={

@@ -18,13 +18,11 @@ import { LogoutButton } from "../../components/buttons/LogoutButton";
 const Profile = () => {
     const axios = useAxiosPrivate();
     const { id, propertyId } = useParams();
-    const baseURL = `http://localhost:8800/api/user/${id}`;
+    const baseURL = `/individual/getByUserId/${id}`;
     const { data, loading, error } = useFetch(baseURL);
+    console.log(data)
     const navigate = useNavigate();
     const [role, setRole] = useState();
-    useEffect(() => {}, []);
-    console.log(data);
-    console.log(loading);
     const handleClick = () => {
         navigate(`/editProfile/${id}`);
     };
@@ -49,7 +47,7 @@ const Profile = () => {
                             <label className={styles.txt}>First Name</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Mr</label>
+                            <label className={styles.txt2}>{data?.individual.firstName}</label>
                         </div>
                     </div>
                     <br />
@@ -58,7 +56,7 @@ const Profile = () => {
                             <label className={styles.txt}>Last Name</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Hero</label>
+                            <label className={styles.txt2}>{data?.individual.lastName}</label>
                         </div>
                     </div>
                     <br />
@@ -68,7 +66,7 @@ const Profile = () => {
                             <label className={styles.txt}>Gender</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Male</label>
+                            <label className={styles.txt2}>{data?.individual.gender}</label>
                         </div>
                     </div>
                     <br />
@@ -78,7 +76,7 @@ const Profile = () => {
                             <label className={styles.txt}>Date Of Birth</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>02/06/2000</label>
+                            <label className={styles.txt2}>{data?.individual.dateOfBirth}</label>
                         </div>
                     </div>
                     <br />
@@ -88,7 +86,7 @@ const Profile = () => {
                             <label className={styles.txt}>Email</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>abcxyz@gmail.com</label>
+                            <label className={styles.txt2}>{data?.individual.email}</label>
                         </div>
                     </div>
                     <br />
@@ -98,7 +96,7 @@ const Profile = () => {
                             <label className={styles.txt}>Phone</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>0987654321</label>
+                            <label className={styles.txt2}>{data?.individual.phone}</label>
                         </div>
                     </div>
                     <p className={styles.if}>Address</p>
@@ -107,7 +105,7 @@ const Profile = () => {
                             <label className={styles.txt}>Province/City</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Mr</label>
+                            <label className={styles.txt2}>{data?.individual.city}</label>
                         </div>
                     </div>
                     <br />
@@ -116,7 +114,7 @@ const Profile = () => {
                             <label className={styles.txt}>District</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Hero</label>
+                            <label className={styles.txt2}>{data?.individual.district}</label>
                         </div>
                     </div>
                     <br />
@@ -126,7 +124,7 @@ const Profile = () => {
                             <label className={styles.txt}>Wards</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Male</label>
+                            <label className={styles.txt2}>{data?.individual.wards}</label>
                         </div>
                     </div>
                     <br />
@@ -136,7 +134,7 @@ const Profile = () => {
                             <label className={styles.txt}>Specific Address</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>02/06/2000</label>
+                            <label className={styles.txt2}>{data?.individual.address}</label>
                         </div>
                     </div>
                     <br />
@@ -147,7 +145,7 @@ const Profile = () => {
                             <label className={styles.txt}>Card Number </label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Mr</label>
+                            <label className={styles.txt2}>{data?.individual.cardNumber}</label>
                         </div>
                     </div>
                     <br />
@@ -156,7 +154,7 @@ const Profile = () => {
                             <label className={styles.txt}>Card Granted Date</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Hero</label>
+                            <label className={styles.txt2}>{data?.individual.cardGrantedDate}</label>
                         </div>
                     </div>
                     <br />
@@ -166,21 +164,23 @@ const Profile = () => {
                             <label className={styles.txt}>Card Granted Place</label>
                         </div>
                         <div className={styles.r}>
-                            <label className={styles.txt2}>Male</label>
+                            <label className={styles.txt2}>{data?.individual.cardGrantedPlace}</label>
                         </div>
                     </div>
                     <br />
                     <div className={styles.fl}>
                         <div className={styles.l}>
                             <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                src={data?.individual.frontSideImage}
                                 className={styles.img}
+                                alt='img'
                             ></img>
                         </div>
                         <div className={styles.r}>
                             <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
+                                src={data?.individual.backSideImage}
                                 className={styles.img}
+                                alt='img'
                             ></img>
                         </div>
                     </div>
@@ -190,6 +190,14 @@ const Profile = () => {
                     <br />
                     <br />
                     {/* <LogoutButton /> */}
+                    <button className={styles.btn2} onClick={() => {
+                        navigate("/homePage");
+                    }} >
+                        Back
+                    </button>
+                    <button className={styles.btn2} >
+                        Change Password
+                    </button>
                     <button
                         className={styles.btn2}
                         onClick={() => {
@@ -198,6 +206,7 @@ const Profile = () => {
                     >
                         Edit
                     </button>
+
                 </div>
                 <Footer />
                 <FooterCopy />
