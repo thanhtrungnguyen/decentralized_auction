@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 // import Ft from "react-multi-date-picker/plugins/range_picker_footer";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
-import axios from "../../../hooks/useAxiosPrivate";
+
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import "./styles.css";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { ToastContainer, toast } from "react-toastify";
 
 const ApproveAuction = ({ auctionId, propertyId }) => {
+    const axios = useAxiosPrivate();
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
     const [registrationFee, setRegistrationFee] = useState(null);
