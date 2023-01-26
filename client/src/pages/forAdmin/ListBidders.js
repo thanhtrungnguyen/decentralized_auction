@@ -32,7 +32,6 @@ const ListBidders = () => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
-                // console.log("axios get");
                 setData(resp.data.user);
                 console.log(resp);
             });

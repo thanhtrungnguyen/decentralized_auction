@@ -112,13 +112,7 @@ const ChangePassword = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser userName={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
+            <Header />
             <NavBar />
             <div>
                 <form onSubmit={handleSubmit}>

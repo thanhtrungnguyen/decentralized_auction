@@ -34,7 +34,6 @@ const ListForManagers = () => {
             await axios.get(baseURL).then((resp) => {
                 // console.log("axios get");
                 setData(resp.data.user);
-                console.log(resp);
             });
             if (getUser() != null) {
                 setRole(getUser().role);
@@ -91,7 +90,7 @@ const ListForManagers = () => {
                             <AiTwotoneEdit
                                 className={styles.iconView}
                                 onClick={() => {
-                                    navigate(`/editManager/${item._id}`);
+                                    navigate(`/editManager/${item.user._id}`);
                                 }}
                             />
                             {item.user.status === true ? (

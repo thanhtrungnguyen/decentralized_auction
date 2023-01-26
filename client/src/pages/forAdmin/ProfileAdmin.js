@@ -17,13 +17,12 @@ import { useParams } from "react-router-dom";
 import Time from "../../components/time/Time";
 
 const ProfileAdmin = () => {
-    const { id } = useParams();
+    const { adminId } = useParams();
 
-    const baseURL = `/informationOperator/${id}`;
+    const baseURL = `/informationOperator/getByUserId/${adminId}`;
 
     const navigate = useNavigate();
     const { data, loading } = useFetch(baseURL);
-
     const cancel = () => {
         navigate("/listManagers");
     };
@@ -69,27 +68,27 @@ const ProfileAdmin = () => {
                             <br />
 
                             <p className={styles.txt}>First Name: </p>
-                            <p className={styles.txt}>{/* {data.result.firstName} */}</p>
+                            <p className={styles.txt}>{data.result.firstName}</p>
                             <p className={styles.txt}>Last Name:</p>
-                            <p className={styles.txt}>{/* {data.result.lastName} */}</p>
+                            <p className={styles.txt}>{data.result.lastName}</p>
                             <p className={styles.txt}>Gender:</p>
-                            <p className={styles.txt}>{/* {data.result.gender} */}</p>
+                            <p className={styles.txt}>{data.result.gender}</p>
 
                             <p className={styles.txt}>Email:</p>
-                            <p className={styles.txt}>{/* {data.result.email} */}</p>
+                            <p className={styles.txt}>{data.result.email}</p>
                             <p className={styles.txt}>Phone:</p>
-                            <p className={styles.txt}>{/* {data.result.phone} */}</p>
+                            <p className={styles.txt}>{data.result.phone}</p>
                             <p className={styles.txt}>Address:</p>
-                            <p className={styles.txt}>{/* {data.result.address} */}</p>
+                            <p className={styles.txt}>{data.result.address}</p>
                             <br />
 
                             <br />
 
-                            <p className={styles.if}>Account Information</p>
+                            {/* <p className={styles.if}>Account Information</p>
                             <br />
 
                             <p className={styles.txt}>Username:</p>
-                            <p className={styles.txt}>abcxyz</p>
+                            <p className={styles.txt}>abcxyz</p> */}
                             {/* <p className={styles.txt}>Password:</p>
                             <p className={styles.txt}>**********</p> */}
 
@@ -102,7 +101,7 @@ const ProfileAdmin = () => {
                                 value="Edit"
                                 className={styles.btnAdd}
                                 onClick={() => {
-                                    navigate("/editProfileAdmin");
+                                    navigate(`/editProfileAdmin/${data.result.user}`);
                                 }}
                             ></input>
                             <input
@@ -110,7 +109,7 @@ const ProfileAdmin = () => {
                                 value="Change Password"
                                 className={styles.btnChange}
                                 onClick={() => {
-                                    navigate("/changePasswordAdmin");
+                                    navigate(`/changePasswordAdmin/${data.result.user}`);
                                 }}
                             ></input>
 

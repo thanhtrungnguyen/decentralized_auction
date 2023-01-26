@@ -133,24 +133,24 @@ const EditSeller = () => {
             theme: "light",
         });
     };
-    // const [listUsername, setListUsername] = useState([]);
-    // const baseURL = `http://localhost:5000/api/user/users`;
+    const [listUsername, setListUsername] = useState([]);
+    const baseURL = `http://localhost:5000/api/user/users`;
     const handleSubmit = (event) => {
-        // const fsizeBack = cardBack.size;
-        // const fileBack = Math.round(fsizeBack / 1024);
-        // const fsizeFront = cardFront.size;
-        // const fileFront = Math.round(fsizeFront / 1024);
-        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
-        //     setListUsername(resp.data.users);
-        //     listUsername.map((item) => {
-        //         if (item.username === userName) {
-        //             setIsExit(true);
-        //             console.log(item.username);
-        //         } else {
-        //             setIsExit(false);
-        //         }
-        //     });
-        // });
+        const fsizeBack = cardBack.size;
+        const fileBack = Math.round(fsizeBack / 1024);
+        const fsizeFront = cardFront.size;
+        const fileFront = Math.round(fsizeFront / 1024);
+        axios.get(baseURL, { withCredentials: true }).then((resp) => {
+            setListUsername(resp.data.users);
+            listUsername.map((item) => {
+                if (item.username === userName) {
+                    setIsExit(true);
+                    console.log(item.username);
+                } else {
+                    setIsExit(false);
+                }
+            });
+        });
         let cityId = selectedCity.value;
         let city = selectedCity.label;
         let districtId = selectedDistrict.value;
@@ -201,13 +201,11 @@ const EditSeller = () => {
             notify("🦄 cardFront is empty");
         } else if (!cardBack) {
             notify("🦄 cardBack is empty");
-        }
-        //  else if (fileBack > 2048) {
-        //     notify("🦄 File card back, please select a file less than 2mb");
-        // } else if (fileFront > 2048) {
-        //     notify("🦄 File card front, please select a file less than 2mb");
-        // }
-        else if (!userName) {
+        } else if (fileBack > 2048) {
+            notify("🦄 File card back, please select a file less than 2mb");
+        } else if (fileFront > 2048) {
+            notify("🦄 File card front, please select a file less than 2mb");
+        } else if (!userName) {
             notify("🦄 username is empty");
         } else if (!password) {
             notify("🦄 password is empty");

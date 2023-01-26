@@ -60,10 +60,12 @@ export const updatePropertyHandler = async (req: Request, res: Response, next: N
   const propertyId = req.params.propertyId;
   const update = req.body;
   const property = await getProperty({ _id: propertyId });
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
   }
-  return await updateProperty({ _id: propertyId }, update, { new: true })
+  return await updateProperty({ _id: propertyId }, update, { new: true }, files)
     .then((property) => {
       res.status(201).json({ property });
     })

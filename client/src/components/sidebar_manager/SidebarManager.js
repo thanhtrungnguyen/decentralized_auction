@@ -2,25 +2,26 @@ import styles from "../../styleCss/stylesComponents/sidebar_seller.module.css";
 
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { BiBookHeart, BiDizzy, BiDonateHeart, BiNews } from "react-icons/bi";
-
+import useAuth from "../../hooks/useAuth";
 const SidebarManager = () => {
     const navigate = useNavigate();
-
+    const { auth } = useAuth();
     return (
         <>
             <div className={styles.container}>
                 <img
                     className={styles.avt}
-                    src="https://upload.wikimedia.org/wikipedia/commons/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg"
+                    src="https://img.freepik.com/free-icon/user_318-875902.jpg"
+                    alt="img"
                 />
                 <p className={styles.txt2}>Manager</p>
                 <p
                     className={styles.txt2}
                     onClick={() => {
-                        navigate("/profileManager");
+                        navigate(`/profileManager/${auth.user._id}`);
                     }}
                 >
-                    mark zuckerberg
+                    {auth.user.username}
                 </p>
                 <br />
                 <br />

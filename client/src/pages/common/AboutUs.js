@@ -41,13 +41,7 @@ const AboutUs = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
+            <Header />
             <NavBar />
             <PageName pageName={"About Us"} link={"/aboutUs"} home={"homePage"} />
             <p className="t">DAP is Decentralized Auction Platform</p>

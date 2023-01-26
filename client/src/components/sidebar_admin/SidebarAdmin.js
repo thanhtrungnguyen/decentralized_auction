@@ -1,25 +1,32 @@
 import styles from "../../styleCss/stylesComponents/forAdmin/sidebar_admin.module.css";
 
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiBookHeart, BiDizzy, BiDonateHeart, BiNews } from "react-icons/bi";
+import useAuth from "../../hooks/useAuth";
+import { useFetchData } from "../../hooks/useFetch";
+import Loading from "../loading/Loading";
 const SidebarAdmin = () => {
     const navigate = useNavigate();
-
+    //const { auth } = useAuth();
+    // const [loading, data, error] = useFetchData('/session')
+    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    console.log(data2)
     return (
         <>
             <div className={styles.container}>
                 <img
                     className={styles.avt}
-                    src="https://upload.wikimedia.org/wikipedia/commons/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg"
+                    src="https://img.freepik.com/free-icon/user_318-875902.jpg"
+                    alt="img"
                 />
                 <p className={styles.txt2}>Admin</p>
                 <p
                     className={styles.txt2}
                     onClick={() => {
-                        navigate("/profileAdmin");
+                        navigate(`/profileAdmin/${data2?.user._id}`);
                     }}
                 >
-                    mark zuckerberg
+                    {data2?.user.username}
                 </p>
                 <br />
                 <br />

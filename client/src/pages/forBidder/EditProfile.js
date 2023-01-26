@@ -16,6 +16,7 @@ import useLocationForm from "../register/useLocationForm";
 import Select from "react-select";
 // import "../../styleCss/stylesPages/forBidder/Profile.css";
 import styles from "../../styleCss/stylesPages/forBidder/editProfile.module.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const EditProfile = () => {
     const axios = useAxiosPrivate();
@@ -131,28 +132,40 @@ const EditProfile = () => {
             setCardBack(e.target.files[0]);
         }
     };
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleSubmit = (event) => {
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
 
         const formData = new FormData();
-        formData.append("firstName", firstName);
-        formData.append("lastName", lastName);
-        formData.append("gender", gender);
-        formData.append("dateOfBirth", dateOfBirth);
-        formData.append("email", email);
-        formData.append("phone", phone);
+        formData.append("firstName", firstName.trim());
+        formData.append("lastName", lastName.trim());
+        formData.append("gender", gender.trim());
+        formData.append("dateOfBirth", dateOfBirth.trim());
+        formData.append("email", email.trim());
+        formData.append("phone", phone.trim());
         formData.append("cityId", cityId);
         formData.append("city", selectedCity.label);
         formData.append("districtId", districtId);
         formData.append("district", selectedDistrict.label);
         formData.append("wardId", wardId);
         formData.append("ward", selectedWard.label);
-        formData.append("specificAddress", specificAddress);
-        formData.append("cardNumber", cardNumber);
-        formData.append("dateRangeCard", dateRangeCard);
-        formData.append("cardGrantedPlace", cardGrantedPlace);
+        formData.append("specificAddress", specificAddress.trim());
+        formData.append("cardNumber", cardNumber.trim());
+        formData.append("dateRangeCard", dateRangeCard.trim());
+        formData.append("cardGrantedPlace", cardGrantedPlace.trim());
         formData.append("cardFront", cardFront);
         formData.append("cardBack", cardBack);
         // formData.append('_method', 'PUT')
@@ -192,16 +205,24 @@ const EditProfile = () => {
         <Loading />
     ) : (
         <>
-            {(() => {
-                if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
-                } else {
-                    return <Header />;
-                }
-            })()}
+            <Header />
             <NavBar />
             <PageName pageName={"Edit Profile"} link={`editProfile/${id}`} home={"homePage"} />
             <form onSubmit={handleSubmit}>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
+                {/* Same as */}
+                <ToastContainer />
                 <div className={styles.container}>
                     <div className={styles.content}>
                         <div className={styles.add}>
