@@ -11,10 +11,12 @@ import { IndividualSchema } from '../validations/IndividualSchema';
 import { UserSchema } from '../validations/UserSchema';
 const router = express.Router();
 import multer from 'multer';
+import { requireRole } from '../middleware/requireRole';
+import { roles } from '../../config/roles';
 
 const upload = multer({ dest: 'uploads/' });
-router.get('/individuals', getAllIndividualsHandler);
-router.get('/getById/:individualId', getIndividualByIdHandler);
+router.get('/individuals', requireRole(roles.ADMIN, roles.MANAGER), getAllIndividualsHandler);
+router.get('/getById/:individualId', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getIndividualByIdHandler);
 router.post(
   '/create',
   upload.fields([
@@ -31,7 +33,7 @@ router.post(
   validateResource(UserSchema.createBidder),
   createIndividualHandler
 );
-router.patch('/update/:individualId', updateIndividualHandler);
-router.delete('/delete/:individualId', deleteIndividualHandler);
+router.patch('/update/:individualId', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), updateIndividualHandler);
+router.delete('/delete/:individualId', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), deleteIndividualHandler);
 
 export default router;
