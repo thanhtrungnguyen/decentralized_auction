@@ -94,33 +94,14 @@ const AuctionDetailForManager = () => {
     const Cancel = () => {
         navigate("/auctionListForManager");
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     const convertDateTime = (time) => {
         var startRegistrationTime = new Date(time);
         var startRegistrationTimeVN = startRegistrationTime.setTime(startRegistrationTime.getTime() - 7 * 60 * 60 * 1000);
 
         return new Date(new Date(startRegistrationTimeVN).toUTCString());
     };
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
     return loading ? (
         <Loading />
     ) : (

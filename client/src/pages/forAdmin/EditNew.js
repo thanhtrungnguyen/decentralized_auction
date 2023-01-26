@@ -64,17 +64,7 @@ const EditNew = () => {
     // }, []);
 
     const navigate = useNavigate();
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "title") {

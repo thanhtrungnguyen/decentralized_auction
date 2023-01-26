@@ -26,28 +26,9 @@ const ProfileAdmin = () => {
     const cancel = () => {
         navigate("/listManagers");
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-    const [role, setRole] = useState();
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
+    const [role, setRole] = useState();
+
     return loading ? (
         <Loading />
     ) : (

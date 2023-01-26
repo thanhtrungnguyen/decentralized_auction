@@ -34,17 +34,7 @@ const ChangePassword = () => {
     const [passwordShown2, setPasswordShown2] = useState(false);
     const [passwordShown3, setPasswordShown3] = useState(false);
     //const [match, setMatch] = useState(null);
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     useEffect(() => {
         console.log(getUser());
 

@@ -69,17 +69,7 @@ const ListBidders = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     function exportData(data) {
         return (
             <>

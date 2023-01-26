@@ -37,17 +37,7 @@ const PropertyDetail = () => {
     const { data, loading, error } = useFetch(baseURL);
 
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
-    // const getUser = () => {
-    //     var users = null;
-    //     const token = Cookies.get("access_token");
-    //     if (!token) {
-    //         console.log("Not authenticated");
-    //     }
-    //     jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-    //         users = user;
-    //     });
-    //     return users;
-    // };
+
     return loading ? (
         <Loading />
     ) : (

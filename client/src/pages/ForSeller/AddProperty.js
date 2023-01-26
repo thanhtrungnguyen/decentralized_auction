@@ -42,16 +42,7 @@ const AddProperty = () => {
     const baseURL = "http://localhost:5000/api/category/categories";
     const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
     const notify = (message) => {
         toast(message, {
             position: "top-right",
@@ -198,17 +189,7 @@ const AddProperty = () => {
     //         setSelectedImage(e.target.files[0]);
     //     }
     // };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     return loading ? (
         <Loading />
     ) : (

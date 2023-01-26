@@ -62,17 +62,6 @@ const ListNews = () => {
     const handleChange = (event, page) => {
         setPage(page);
     };
-    // const getUser = () => {
-    //     var users = null;
-    //     const token = Cookies.get("access_token");
-    //     if (!token) {
-    //         console.log("Not authenticated");
-    //     }
-    //     jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-    //         users = user;
-    //     });
-    //     return users;
-    // };
     const handleChangeStatus = (e) => {
         setStatus(e.target.value);
         setPage(1);

@@ -18,29 +18,10 @@ const AuctionDetailForSeller = () => {
     const baseURL = `http://localhost:8800/api/auction/auctiondetailForSeller/${id}`;
     const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
     console.log(data);
     console.log(loading);
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     const Cancel = () => {
         navigate("/myAuctions");
     };
