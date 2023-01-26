@@ -107,7 +107,7 @@ const AddSeller = () => {
         }
         if (id === "cardBack") {
             setCardBack(e.target.files[0]);
-            const fsizeBack = cardBack.size;
+            // const fsizeBack = cardBack.size;
             // setFileBack(Math.round(fsizeBack / 1024));
             // console.log(fileBack);
         }
