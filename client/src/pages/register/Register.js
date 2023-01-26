@@ -148,15 +148,15 @@ const Register = () => {
 
         if (!firstName) {
             notify("🦄 FirstName is empty");
-        } else if (!lastName) {
+        } else if (!lastName.trim()) {
             notify("🦄 LastName is empty");
         } else if (!gender) {
             notify("🦄 Gender is empty");
-        } else if (!dateOfBirth) {
+        } else if (!dateOfBirth.trim()) {
             notify("🦄 Date Of Birth is empty");
-        } else if (!email) {
+        } else if (!email.trim()) {
             notify("🦄 Email is empty");
-        } else if (!phone) {
+        } else if (!phone.trim()) {
             notify("🦄 phone is empty");
         } else if (!cityId) {
             notify("🦄 city is empty");
@@ -164,27 +164,27 @@ const Register = () => {
             notify("🦄 district is empty");
         } else if (!wardId) {
             notify("🦄 ward is empty");
-        } else if (!specificAddress) {
+        } else if (!specificAddress.trim()) {
             notify("🦄 specificAddress is empty");
-        } else if (!cardNumber) {
+        } else if (!cardNumber.trim()) {
             notify("🦄 cardNumber is empty");
-        } else if (!dateRangeCard) {
+        } else if (!dateRangeCard.trim()) {
             notify("🦄 dateRangeCard is empty");
-        } else if (!cardGrantedPlace) {
+        } else if (!cardGrantedPlace.trim()) {
             notify("🦄 cardGrantedPlace is empty");
-        } else if (!cardFront) {
+        } else if (!cardFront.trim()) {
             notify("🦄 cardFront is empty");
         } else if (fileBack > 2048) {
             notify("🦄 File card back, please select a file less than 2mb");
         } else if (fileFront > 2048) {
             notify("🦄 File card front, please select a file less than 2mb");
-        } else if (!cardBack) {
+        } else if (!cardBack.trim()) {
             notify("🦄 cardBack is empty");
-        } else if (!username) {
+        } else if (!username.trim()) {
             notify("🦄 username is empty");
-        } else if (!password) {
+        } else if (!password.trim()) {
             notify("🦄 password is empty");
-        } else if (!rePassword) {
+        } else if (!rePassword.trim()) {
             notify("🦄 rePassword is empty");
         } else if (isExist) {
             notify("🦄 Username is exist");

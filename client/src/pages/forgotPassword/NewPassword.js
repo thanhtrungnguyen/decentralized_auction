@@ -7,6 +7,7 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ToastContainer, toast } from "react-toastify";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const NewPassword = () => {
@@ -27,10 +28,25 @@ const NewPassword = () => {
     const toggleRePasswordVisibility = () => {
         setPasswordShown2(passwordShown2 ? false : true);
     };
-
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleSubmit = async (event) => {
         if (rePassword !== password) {
-            setMessage("Please enter match the password");
+            notify("🦄 Please enter match the password");
+        } else if (!password.trim()) {
+            notify("🦄 password is empty");
+        } else if (!rePassword.trim()) {
+            notify("🦄 rePassword is empty");
         } else {
             await axios
                 .post("/auth/reset-password", { password1: password, password2: rePassword, userId: userId, token: token }, { withCredentials: true })
@@ -54,6 +70,21 @@ const NewPassword = () => {
             <NavBar />
             <div>
                 <form onSubmit={handleSubmit}>
+                    {" "}
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
+                    {/* Same as */}
+                    <ToastContainer />
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Forgot Password</p>

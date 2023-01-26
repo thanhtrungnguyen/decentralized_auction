@@ -159,29 +159,29 @@ const EditSeller = () => {
         let ward = selectedWard.label;
         let cardfront = cardFront.name;
         let cardback = cardBack.name;
-        if (!organizationName) {
+        if (!organizationName.trim()) {
             notify("🦄 organizationName is empty");
-        } else if (!taxCode) {
+        } else if (!taxCode.trim()) {
             notify("🦄 taxCode is empty");
-        } else if (!taxCodeGrantedDate) {
+        } else if (!taxCodeGrantedDate.trim()) {
             notify("🦄 taxCodeGrantedDate is empty");
-        } else if (!taxCodeGrantedPlace) {
+        } else if (!taxCodeGrantedPlace.trim()) {
             notify("🦄 taxCodeGrantedPlace is empty");
-        } else if (!specificAddressOrganization) {
+        } else if (!specificAddressOrganization.trim()) {
             notify("🦄 specificAddressOrganization is empty");
-        } else if (!firstName) {
+        } else if (!firstName.trim()) {
             notify("🦄 FirstName is empty");
-        } else if (!lastName) {
+        } else if (!lastName.trim()) {
             notify("🦄 LastName is empty");
         } else if (!gender) {
             notify("🦄 Gender is empty");
-        } else if (!dateOfBirth) {
+        } else if (!dateOfBirth.trim()) {
             notify("🦄 Date Of Birth is empty");
-        } else if (!email) {
+        } else if (!email.trim()) {
             notify("🦄 Email is empty");
-        } else if (!phone) {
+        } else if (!phone.trim()) {
             notify("🦄 phone is empty");
-        } else if (!position) {
+        } else if (!position.trim()) {
             notify("🦄 position is empty");
         } else if (!cityId) {
             notify("🦄 city is empty");
@@ -189,13 +189,13 @@ const EditSeller = () => {
             notify("🦄 district is empty");
         } else if (!wardId) {
             notify("🦄 ward is empty");
-        } else if (!specificAddress) {
+        } else if (!specificAddress.trim()) {
             notify("🦄 specificAddress is empty");
-        } else if (!cardNumber) {
+        } else if (!cardNumber.trim()) {
             notify("🦄 cardNumber is empty");
-        } else if (!dateRangeCard) {
+        } else if (!dateRangeCard.trim()) {
             notify("🦄 dateRangeCard is empty");
-        } else if (!cardGrantedPlace) {
+        } else if (!cardGrantedPlace.trim()) {
             notify("🦄 cardGrantedPlace is empty");
         } else if (!cardFront) {
             notify("🦄 cardFront is empty");
@@ -205,11 +205,11 @@ const EditSeller = () => {
             notify("🦄 File card back, please select a file less than 2mb");
         } else if (fileFront > 2048) {
             notify("🦄 File card front, please select a file less than 2mb");
-        } else if (!userName) {
+        } else if (!userName.trim()) {
             notify("🦄 username is empty");
-        } else if (!password) {
+        } else if (!password.trim()) {
             notify("🦄 password is empty");
-        } else if (!rePassword) {
+        } else if (!rePassword.trim()) {
             notify("🦄 rePassword is empty");
         } else if (isExist) {
             notify("🦄 Username is exist");

@@ -51,28 +51,24 @@ const ChangePasswordAdmin = () => {
     };
 
     const handleSubmit = (event) => {
-        if (!oldPassword) {
+        if (!oldPassword.trim()) {
             notify("🦄 oldPassword is empty");
-        } else if (!newPassword) {
+        } else if (!newPassword.trim()) {
             notify("🦄 newPassword is empty");
-        } else if (!rePassword) {
+        } else if (!rePassword.trim()) {
             notify("🦄 rePassword is empty");
         } else if (rePassword !== newPassword) {
             notify("🦄 rePassword is not same password");
         } else {
             const formData = new FormData();
 
-            formData.append("oldPassword", oldPassword);
-            formData.append("password", newPassword);
-            formData.append("passwordConfirmation", rePassword);
+            formData.append("oldPassword", oldPassword.trim());
+            formData.append("password", newPassword.trim());
+            formData.append("passwordConfirmation", rePassword.trim());
             axios
-                .post(
-                    `/user/changePassword/${auth.user._id}`,
-                    formData,
-                    {
-                        withCredentials: true,
-                    }
-                )
+                .post(`/user/changePassword/${auth.user._id}`, formData, {
+                    withCredentials: true,
+                })
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
@@ -163,7 +159,7 @@ const ChangePasswordAdmin = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="oldPassword"
                                 placeholder="Old Password"
-                            //required
+                                //required
                             ></input>
                             <br />
                             <br />
@@ -176,7 +172,7 @@ const ChangePasswordAdmin = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="newPassword"
                                 placeholder="Enter the new password"
-                            //required
+                                //required
                             ></input>
                             <br />
                             <br />
@@ -189,7 +185,7 @@ const ChangePasswordAdmin = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="rePassword"
                                 placeholder="Confirm new Password"
-                            //required
+                                //required
                             ></input>
                             <br />
                             <br />

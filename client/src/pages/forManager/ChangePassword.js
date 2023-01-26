@@ -50,19 +50,19 @@ const ChangePasswordSeller = () => {
     };
 
     const handleSubmit = (event) => {
-        if (!oldPassword) {
+        if (!oldPassword.trim()) {
             notify("🦄 oldPassword is empty");
-        } else if (!newPassword) {
+        } else if (!newPassword.trim()) {
             notify("🦄 newPassword is empty");
-        } else if (!rePassword) {
+        } else if (!rePassword.trim()) {
             notify("🦄 rePassword is empty");
         } else if (rePassword != newPassword) {
             notify("🦄 rePassword is not same password");
         } else {
             const formData = new FormData();
 
-            formData.append("oldPassword", oldPassword);
-            formData.append("newPassword", newPassword);
+            formData.append("oldPassword", oldPassword.trim());
+            formData.append("newPassword", newPassword.trim());
 
             axios
                 .post(
