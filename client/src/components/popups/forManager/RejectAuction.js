@@ -2,9 +2,11 @@ import styles from "../../../styleCss/stylesComponents/forManager/rejectAuction.
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-import axios from "../../../hooks/useAxiosPrivate";
-const RejectAuction = ({ idProperty }) => {
+const RejectAuction = ({ auctionId, propertyId }) => {
+    const axios = useAxiosPrivate();
+
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
     const [comment, setComment] = useState(null);
@@ -30,16 +32,24 @@ const RejectAuction = ({ idProperty }) => {
         if (!comment.trim()) {
             notify("🦄 comment is empty");
         } else {
-            console.log(idProperty);
+            console.log(propertyId);
             axios
-                .put(`/category/changeStatus/${idProperty}`, idProperty, {
-                    withCredentials: true,
-                })
+                .patch(
+                    `http://localhost:5000/api/auction/reject/${auctionId}`,
+                    {
+                        message: comment,
+                        status: "Rejected",
+                        property: propertyId,
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                )
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
                     //navigate("/listBidders");
-                    window.location.reload(false);
+                    navigate("/auctionListForManager");
                     setExpanded(false);
                 })
                 .catch((err) => {

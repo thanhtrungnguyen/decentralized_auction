@@ -161,6 +161,35 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
       });
   }
 };
+export const rejectAuctionHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const auctionId = req.params.auctionId;
+  const update = req.body;
+  const propertyId = req.body.property;
+
+  const auction = await getAuction({ _id: auctionId });
+  if (!auction) {
+    return res.status(404).json({ message: "Auction isn't found" });
+  }
+
+  const property = await getProperty({ _id: propertyId });
+  if (!property) {
+    return res.status(404).json({ message: "Property isn't found" });
+  }
+
+  return await updateAuction({ _id: auctionId }, update, { new: true })
+    .then(async (auction) => {
+      await updatePropertyStatus({ _id: propertyId }, { status: 'Rejected' }, { new: true })
+        .then((property) => {
+          res.status(201).json({ auction, property });
+        })
+        .catch((error) => {
+          res.status(500).json({ error });
+        });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
 
 export const deleteAuctionHandler = async (req: Request, res: Response, next: NextFunction) => {
   const auctionId = req.params.auctionId;

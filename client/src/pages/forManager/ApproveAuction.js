@@ -267,7 +267,7 @@ const PropertyDetail = () => {
                             <ApproveAuction auctionId={data.auction._id} propertyId={data.auction.property._id} />
                         </Popup>
                         <Popup trigger={<label className={styles.btnSave2}> Reject</label>} position="right center">
-                            <RejectAuction auctionId={data.auction._id} />
+                            <RejectAuction auctionId={data.auction._id} propertyId={data.auction.property._id} />
                         </Popup>
 
                         <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
