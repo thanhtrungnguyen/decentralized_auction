@@ -16,6 +16,7 @@ import { getBidderState } from "../../../utils/getBidderState";
 import Loader from "../components/Loader";
 import Decimal from "decimal.js";
 import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
+import io from "socket.io-client";
 function PlaceBid({ auction, property }) {
     const dispatch = useNotification();
     const { account, isWeb3Enabled } = useMoralis();
@@ -24,7 +25,7 @@ function PlaceBid({ auction, property }) {
     const [transactionStatus, setTransactionStatus] = useState();
 
     const [minBidAmount, setMinBidAmount] = useState();
-
+    const socket = io.connect("http://localhost:5000");
     const {
         runContractFunction: getBidInformationByAuctionId,
         data: bidInformationData,
@@ -83,15 +84,25 @@ function PlaceBid({ auction, property }) {
             auctionId: auction.auctionId,
         },
     });
+    socket.on("receive_message", (data) => {
+        if (auction.auctionId == data.auction) {
+            if (data.highest > parseFloat(highestBid)) {
+                setHighestBid(data.highest + "");
+            }
+        }
+
+        // setMessageReceived(data.message);
+    });
 
     const updateUI = async () => {
         setTransactionStatus();
         await getBidInformationByAuctionId();
         // await getHighestBidOfAuction();
         // setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
-        // setMinBidAmount(
-        //     highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
-        // );
+        socket.emit("send_message", { message: "message", auctionId: auction.auctionId });
+        setMinBidAmount(
+            highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
+        );
     };
     // const updateCurrentAuction = async () => {
     //     await getHighestBidOfAuction();
@@ -113,7 +124,7 @@ function PlaceBid({ auction, property }) {
             updateUI();
             // updateCurrentAuction();
         }
-    }, [isWeb3Enabled, account, bidInformationData?.length]);
+    }, [isWeb3Enabled, account, bidInformationData?.length, highestBid]);
 
     //============================================================================================
     const placeBidHandleSuccess = async (tx) => {
@@ -121,6 +132,7 @@ function PlaceBid({ auction, property }) {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            socket.emit("send_message", { message: "message", auctionId: auction.auctionId });
             dispatch({
                 type: "success",
                 title: "Place Bid Notification",

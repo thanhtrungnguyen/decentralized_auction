@@ -1,9 +1,11 @@
 import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../../hooks/useAxiosPrivate";
+
 import { useFetch } from "../../../hooks/useFetch";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 const RequestAddProperty = ({ idProperty }) => {
+    const axios = useAxiosPrivate();
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
     const [loading, setLoading] = useState(true);

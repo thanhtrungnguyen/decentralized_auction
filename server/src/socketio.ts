@@ -6,7 +6,7 @@ import cron from 'node-cron';
 import logger from './api/utils/logger';
 import { getAllAuctions, updateAuction } from './api/services/AuctionService';
 import { updateProperty, updatePropertyStatus } from './api/services/PropertyService';
-import { getCountPlacedBidAndRetracted } from './api/services/ContractInteractionService';
+import { getCountPlacedBidAndRetracted, getHighestBidByAuctionId } from './api/services/ContractInteractionService';
 
 export const connectSocket = (app: any) => {
   const server = http.createServer(app);
@@ -17,7 +17,14 @@ export const connectSocket = (app: any) => {
       credentials: true
     }
   });
-  io.on('connection', (socket) => {});
+  io.on('connection', (socket) => {
+    socket.on('send_message', async (data) => {
+      var highest: any;
+      highest = await getHighestBidByAuctionId(data.auctionId);
+
+      socket.emit('receive_message', { auction: data.auctionId, highest: highest });
+    });
+  });
   io.on('error', (err) => {
     console.log('Caught flash policy server socket error: ');
     console.log(err.stack);
