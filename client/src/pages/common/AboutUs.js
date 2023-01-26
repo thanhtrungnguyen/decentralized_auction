@@ -10,7 +10,7 @@ import Loading from "../../components/loading/Loading";
 import { useEffect, useState } from "react";
 
 const AboutUs = () => {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [role, setRole] = useState();
 
     return loading ? (
