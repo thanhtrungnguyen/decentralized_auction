@@ -7,6 +7,8 @@ import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import axios from "../../../hooks/useAxiosPrivate";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import "./styles.css";
+import { ToastContainer, toast } from "react-toastify";
+
 const ApproveAuction = ({ auctionId, propertyId }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
@@ -26,33 +28,51 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
             setName(value);
         }
     };
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleSubmit = (event) => {
-        axios
-            .patch(
-                `http://localhost:5000/api/auction/approve/${auctionId}`,
-                {
-                    name: name,
-                    startRegistrationTime: new Date(startRegistrationTime),
-                    endRegistrationTime: new Date(endRegistrationTime),
-                    startAuctionTime: new Date(startAuctionTime),
-                    endAuctionTime: new Date(endAuctionTime),
-                    duePaymentTime: new Date(duePaymentTime),
-                    registrationFee: registrationFee,
-                    status: "Approved",
-                    property: propertyId,
-                },
-                {
-                    withCredentials: true,
-                }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                //navigate("/listBidders");
-                window.location.reload(false);
-            });
-        setExpanded(false);
-
+        if (!registrationFee.trim()) {
+            notify("🦄 registrationFee is empty");
+        } else {
+            axios
+                .patch(
+                    `http://localhost:5000/api/auction/approve/${auctionId}`,
+                    {
+                        name: name,
+                        startRegistrationTime: new Date(startRegistrationTime),
+                        endRegistrationTime: new Date(endRegistrationTime),
+                        startAuctionTime: new Date(startAuctionTime),
+                        endAuctionTime: new Date(endAuctionTime),
+                        duePaymentTime: new Date(duePaymentTime),
+                        registrationFee: registrationFee.trim(),
+                        status: "Approved",
+                        property: propertyId,
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    //navigate("/listBidders");
+                    window.location.reload(false);
+                    setExpanded(false);
+                })
+                .catch((err) => {
+                    notify(`🦄 Create Failed: ${err.response.data.message}, ${err}`);
+                });
+        }
         event.preventDefault();
     };
     const handCancel = () => {
@@ -63,6 +83,20 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
             {expanded ? (
                 <div className={styles.container}>
                     <form onSubmit={handleSubmit}>
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                        />
+                        {/* Same as */}
+                        <ToastContainer />
                         <p className={styles.title}>Approve Auction</p>
                         <p className={styles.txt}>Auction Name</p>
                         <input className={styles.input} id="name" type="text" value={name} onChange={(e) => handleInputChange(e)} required></input>

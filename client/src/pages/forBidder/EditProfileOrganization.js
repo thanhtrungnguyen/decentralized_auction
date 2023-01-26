@@ -14,6 +14,8 @@ import FooterCopy from "../../components/footer/FooterCopy";
 import { useNavigate } from "react-router-dom";
 import useLocationForm from "../register/useLocationForm";
 import Select from "react-select";
+import { ToastContainer, toast } from "react-toastify";
+
 // import "../../styleCss/stylesPages/forBidder/ProfileOrganization.css";
 import styles from "../../styleCss/stylesPages/forBidder/editProfile.module.css";
 const EditProfileOrganization = () => {
@@ -143,51 +145,113 @@ const EditProfileOrganization = () => {
             setCardBack(e.target.files[0]);
         }
     };
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleSubmit = (event) => {
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
+        const fsizeBack = cardBack.size;
+        const fileBack = Math.round(fsizeBack / 1024);
+        const fsizeFront = cardFront.size;
+        const fileFront = Math.round(fsizeFront / 1024);
+        if (!organizationName.trim()) {
+            notify("🦄 organizationName is empty");
+        } else if (!taxCode.trim()) {
+            notify("🦄 taxCode is empty");
+        } else if (!taxCodeGrantedDate.trim()) {
+            notify("🦄 taxCodeGrantedDate is empty");
+        } else if (!taxCodeGrantedPlace.trim()) {
+            notify("🦄 taxCodeGrantedPlace is empty");
+        } else if (!specificAddressOrganization.trim()) {
+            notify("🦄 specificAddressOrganization is empty");
+        } else if (!firstName.trim()) {
+            notify("🦄 FirstName is empty");
+        } else if (!lastName.trim()) {
+            notify("🦄 LastName is empty");
+        } else if (!gender) {
+            notify("🦄 Gender is empty");
+        } else if (!dateOfBirth.trim()) {
+            notify("🦄 Date Of Birth is empty");
+        } else if (!email.trim()) {
+            notify("🦄 Email is empty");
+        } else if (!phone.trim()) {
+            notify("🦄 phone is empty");
+        } else if (!position.trim()) {
+            notify("🦄 position is empty");
+        } else if (!cityId) {
+            notify("🦄 city is empty");
+        } else if (!districtId) {
+            notify("🦄 district is empty");
+        } else if (!wardId) {
+            notify("🦄 ward is empty");
+        } else if (!specificAddress.trim()) {
+            notify("🦄 specificAddress is empty");
+        } else if (!cardNumber.trim()) {
+            notify("🦄 cardNumber is empty");
+        } else if (!dateRangeCard.trim()) {
+            notify("🦄 dateRangeCard is empty");
+        } else if (!cardGrantedPlace.trim()) {
+            notify("🦄 cardGrantedPlace is empty");
+        } else if (!cardFront) {
+            notify("🦄 cardFront is empty");
+        } else if (!cardBack) {
+            notify("🦄 cardBack is empty");
+        } else if (fileBack > 2048) {
+            notify("🦄 File card back, please select a file less than 2mb");
+        } else if (fileFront > 2048) {
+            notify("🦄 File card front, please select a file less than 2mb");
+        } else {
+            const formData = new FormData();
+            formData.append("organizationName", organizationName);
+            formData.append("taxCode", taxCode);
+            formData.append("taxCodeGrantedDate", taxCodeGrantedDate);
+            formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace);
+            formData.append("specificAddressOrganization", specificAddressOrganization);
+            formData.append("position", position);
 
-        const formData = new FormData();
-        formData.append("organizationName", organizationName);
-        formData.append("taxCode", taxCode);
-        formData.append("taxCodeGrantedDate", taxCodeGrantedDate);
-        formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace);
-        formData.append("specificAddressOrganization", specificAddressOrganization);
-        formData.append("position", position);
+            formData.append("firstName", firstName);
+            formData.append("lastName", lastName);
+            formData.append("gender", gender);
+            formData.append("dateOfBirth", dateOfBirth);
+            formData.append("email", email);
+            formData.append("phone", phone);
+            formData.append("cityId", cityId);
+            formData.append("city", selectedCity.label);
+            formData.append("districtId", districtId);
+            formData.append("district", selectedDistrict.label);
+            formData.append("wardId", wardId);
+            formData.append("ward", selectedWard.label);
+            formData.append("specificAddress", specificAddress);
+            formData.append("cardNumber", cardNumber);
+            formData.append("dateRangeCard", dateRangeCard);
+            formData.append("cardGrantedPlace", cardGrantedPlace);
+            formData.append("cardFront", cardFront);
+            formData.append("cardBack", cardBack);
 
-        formData.append("firstName", firstName);
-        formData.append("lastName", lastName);
-        formData.append("gender", gender);
-        formData.append("dateOfBirth", dateOfBirth);
-        formData.append("email", email);
-        formData.append("phone", phone);
-        formData.append("cityId", cityId);
-        formData.append("city", selectedCity.label);
-        formData.append("districtId", districtId);
-        formData.append("district", selectedDistrict.label);
-        formData.append("wardId", wardId);
-        formData.append("ward", selectedWard.label);
-        formData.append("specificAddress", specificAddress);
-        formData.append("cardNumber", cardNumber);
-        formData.append("dateRangeCard", dateRangeCard);
-        formData.append("cardGrantedPlace", cardGrantedPlace);
-        formData.append("cardFront", cardFront);
-        formData.append("cardBack", cardBack);
-
-        axios
-            .put(`/user/updateProfile/${id}`, formData, { withCredentials: true })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert("Edit profile successfully!!!");
-                navigate(`profile/${id}`);
-            })
-            .catch((err) => {
-                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
-            });
-        console.log(formData);
-
+            axios
+                .put(`/user/updateProfile/${id}`, formData, { withCredentials: true })
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    alert("Edit profile successfully!!!");
+                    navigate(`profile/${id}`);
+                })
+                .catch((err) => {
+                    alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
+                });
+            console.log(formData);
+        }
         event.preventDefault();
     };
 

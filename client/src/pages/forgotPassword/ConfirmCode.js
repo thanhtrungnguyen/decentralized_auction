@@ -6,6 +6,7 @@ import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const ConfirmCode = () => {
     const axios = useAxiosPrivate();
@@ -14,10 +15,24 @@ const ConfirmCode = () => {
     const navigate = useNavigate();
 
     const [code, setCode] = useState("");
-
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleSubmit = async (event) => {
-        navigate(`/newPassword/${email}`);
-
+        if (!code.trim()) {
+            notify("🦄 code is empty");
+        } else {
+            navigate(`/newPassword/${email.trim()}`);
+        }
         event.preventDefault();
         // axios
         //   .post(
@@ -39,6 +54,20 @@ const ConfirmCode = () => {
             <NavBar />
             <div>
                 <form onSubmit={handleSubmit}>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
+                    {/* Same as */}
+                    <ToastContainer />
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Forgot Password</p>

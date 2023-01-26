@@ -40,12 +40,12 @@ const EditProfileAdmin = () => {
             try {
                 const res = await axios.get(`/informationOperator/getByUserId/${adminId}`);
                 setData(res.data.result);
-                setFirstName(res.data.result.firstName)
-                setLastName(res.data.result.lastName)
-                setPhone(res.data.result.phone)
-                setEmail(res.data.result.email)
-                setGender(res.data.result.gender)
-                setSpecificAddress(res.data.result.address)
+                setFirstName(res.data.result.firstName);
+                setLastName(res.data.result.lastName);
+                setPhone(res.data.result.phone);
+                setEmail(res.data.result.email);
+                setGender(res.data.result.gender);
+                setSpecificAddress(res.data.result.address);
             } catch (error) {
                 setError(error);
             }
@@ -138,14 +138,6 @@ const EditProfileAdmin = () => {
             notify("🦄 phone is empty");
         } else if (!specificAddress.trim()) {
             notify("🦄 specificAddress is empty");
-            // } else if (!username.trim()) {
-            //     notify("🦄 username is empty");
-            // } else if (!password.trim()) {
-            //     notify("🦄 password is empty");
-            // } else if (!rePassword.trim()) {
-            //     notify("🦄 rePassword is empty");
-            // } else if (isExist) {
-            //     notify("🦄 Username is exist");
         } else if (checkPhone) {
             notify("🦄 Phone is exist");
         } else if (checkEmail) {
@@ -176,7 +168,7 @@ const EditProfileAdmin = () => {
                     navigate("/listManagers");
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log(err);
                     notify(`🦄 Edit Failed: ${err.response.data.message}`);
                 });
         }
@@ -239,9 +231,15 @@ const EditProfileAdmin = () => {
                         ></input>
                         <p className={styles.txt}>Gender</p>
                         <select id="gender" className={styles.ip} onChange={(e) => handleInputChange(e)} placeholder="Gender" defaultValue="Male">
-                            <option value="Male" selected={gender === 'Male' ? true : false}>Male</option>
-                            <option value="Female" selected={gender === 'Female' ? true : false}>Female</option>
-                            <option value="Other" selected={gender === 'Other' ? true : false}>Other</option>
+                            <option value="Male" selected={gender === "Male" ? true : false}>
+                                Male
+                            </option>
+                            <option value="Female" selected={gender === "Female" ? true : false}>
+                                Female
+                            </option>
+                            <option value="Other" selected={gender === "Other" ? true : false}>
+                                Other
+                            </option>
                         </select>
                         <p className={styles.txt}>Email</p>
                         <input

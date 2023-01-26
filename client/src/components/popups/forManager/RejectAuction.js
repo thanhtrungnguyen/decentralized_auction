@@ -1,6 +1,7 @@
 import styles from "../../../styleCss/stylesComponents/forManager/rejectAuction.module.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 import axios from "../../../hooks/useAxiosPrivate";
 const RejectAuction = ({ idProperty }) => {
@@ -13,20 +14,38 @@ const RejectAuction = ({ idProperty }) => {
             setComment(value);
         }
     };
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleSubmit = (event) => {
-        console.log(idProperty);
-        axios
-            .put(`/category/changeStatus/${idProperty}`, idProperty, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                //navigate("/listBidders");
-                window.location.reload(false);
-            });
-        setExpanded(false);
-
+        if (!comment.trim()) {
+            notify("🦄 comment is empty");
+        } else {
+            console.log(idProperty);
+            axios
+                .put(`/category/changeStatus/${idProperty}`, idProperty, {
+                    withCredentials: true,
+                })
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    //navigate("/listBidders");
+                    window.location.reload(false);
+                    setExpanded(false);
+                })
+                .catch((err) => {
+                    notify(`🦄 Create Failed: ${err.response.data.message}, ${err}`);
+                });
+        }
         event.preventDefault();
     };
     const handCancel = () => {
@@ -37,6 +56,20 @@ const RejectAuction = ({ idProperty }) => {
             {expanded ? (
                 <div className={styles.container}>
                     <form onSubmit={handleSubmit}>
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                        />
+                        {/* Same as */}
+                        <ToastContainer />
                         <p className={styles.title}>Reject Auction</p>
                         <p className={styles.txt}>Comment</p>
                         <textarea id="comment" className={styles.textarea} onChange={(e) => handleInputChange(e)} value={comment} required></textarea>
