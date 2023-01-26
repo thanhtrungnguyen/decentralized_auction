@@ -8,7 +8,7 @@ import Popup from "reactjs-popup";
 import BanedManager from "../../components/popups/forAdmin/BanManager";
 import ActiveManager from "../../components/popups/forAdmin/ActiveManager";
 import Loading from "../../components/loading/Loading";
-import { useFetchPagination } from "../../hooks/useFetch";
+import { useFetchData, useFetchPagination } from "../../hooks/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
@@ -27,7 +27,6 @@ const ListForManagers = () => {
     const navigate = useNavigate();
 
     const [role, setRole] = useState();
-
     const baseURL = `/user/users/manager/${page}/${status}/${email}`;
     useEffect(() => {
         const fetchData = async () => {

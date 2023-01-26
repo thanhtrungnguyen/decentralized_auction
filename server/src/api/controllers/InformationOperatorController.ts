@@ -39,7 +39,7 @@ export const createInformationOperatorHandler = async (req: Request, res: Respon
   }
 
   const userCreated: any = await createUser({ ...createData, role: createData.role });
-  if (userCreated._id) {
+  if (userCreated?._id) {
     return await createInformationOperator({ ...createData, user: userCreated._id })
       .then((result: any) => {
         res.status(201).json({ result });

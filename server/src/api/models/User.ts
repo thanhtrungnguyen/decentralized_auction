@@ -46,18 +46,19 @@ userSchema.pre('save', async function (next) {
 });
 
 // https://stackoverflow.com/questions/62066921/hashed-password-update-with-mongoose-express
-// userSchema.pre('findOneAndUpdate', async function (next) {
-//   try {
-//     const p = this.get
-//     if (this._update.password) {
-//       const hashed = await bcrypt.hash(this._update.password, 10);
-//       this._update.password = hashed;
-//     }
-//     next();
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
+userSchema.pre('findOneAndUpdate', async function (next) {
+  try {
+    let data = this as any;
+    if (data._update.password) {
+      const salt = await bcrypt.genSalt(defaultConfig.jwt.saltWorkFactor);
+      const hashed = await bcrypt.hash(data._update.password, salt);
+      data._update.password = hashed;
+    }
+    next();
+  } catch (err) {
+    return next();
+  }
+});
 
 userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
   return bcrypt.compareSync(candidatePassword, this.password);
