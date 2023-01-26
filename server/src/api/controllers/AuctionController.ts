@@ -145,21 +145,21 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
   const tx = await createAuctionOnContract(objectAuction);
   if (tx?.error) {
     res.status(401).json({ message: 'Can not create auction' });
+  } else {
+    return await updateAuction({ _id: auctionId }, update, { new: true })
+      .then(async (auction) => {
+        await updatePropertyStatus({ _id: propertyId }, { status: 'Approved' }, { new: true })
+          .then((property) => {
+            res.status(201).json({ auction, property, tx });
+          })
+          .catch((error) => {
+            res.status(500).json({ error });
+          });
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
   }
-
-  return await updateAuction({ _id: auctionId }, update, { new: true })
-    .then(async (auction) => {
-      await updatePropertyStatus({ _id: propertyId }, { status: 'Approved' }, { new: true })
-        .then((property) => {
-          res.status(201).json({ auction, property, tx });
-        })
-        .catch((error) => {
-          res.status(500).json({ error });
-        });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
 };
 
 export const deleteAuctionHandler = async (req: Request, res: Response, next: NextFunction) => {
