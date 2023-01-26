@@ -265,7 +265,7 @@ const AddSeller = () => {
                 })
                 .catch((err) => {
                     console.error(err.response.data.message);
-                    notify(`🦄 Register Failed: ${err.response.data.message} , ${err}`);
+                    notify(`🦄 Add Failed: ${err.response.data.message} , ${err}`);
                 });
         }
         event.preventDefault();
