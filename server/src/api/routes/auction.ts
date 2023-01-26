@@ -21,8 +21,8 @@ const router = express.Router();
 router.get('/auctions', getAllAuctionsHandler);
 router.get('/auctions/manager/:index/:status/:search/:sellerName', getListAuctionsHandler);
 router.get('/auctions/bidder', getListAuctionsByBidderHandler);
-router.get('/auctions/seller/:index/:status/:search', getListAuctionsBySellerHandler);
-router.get('/:auctionId', getAuctionByIdHandler);
+router.get('/auctions/seller/:index/:status/:search', requireRole(roles.SELLER), getListAuctionsBySellerHandler);
+router.get('/:auctionId', requireRole(roles.MANAGER), getAuctionByIdHandler);
 
 router.post('/create', createAuctionHandler);
 router.patch('/update/:auctionId', requireRole(roles.SELLER), validateResource(AuctionSchema.update), updateAuctionHandler);

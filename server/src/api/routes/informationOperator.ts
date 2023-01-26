@@ -1,4 +1,5 @@
 import express from 'express';
+import { roles } from '../../config/roles';
 import {
   createInformationOperatorHandler,
   getAllInformationOperatorHandler,
@@ -6,6 +7,7 @@ import {
   getInformationOperatorHandler,
   updateInformationOperatorHandler
 } from '../controllers/InformationOperatorController';
+import { requireRole } from '../middleware/requireRole';
 
 import { validateResource } from '../middleware/validateResource';
 import { InformationOperatorSchema } from '../validations/InformationOperatorSchema';
@@ -13,9 +15,9 @@ import { InformationOperatorSchema } from '../validations/InformationOperatorSch
 import { UserSchema } from '../validations/UserSchema';
 const router = express.Router();
 
-router.get('/getAll', getAllInformationOperatorHandler);
-router.get('/:individualId', getInformationOperatorHandler);
-router.get('/getByUserId/:id', getInformationOperatorByUserIdHandler);
+router.get('/getAll', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getAllInformationOperatorHandler);
+router.get('/:individualId', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getInformationOperatorHandler);
+router.get('/getByUserId/:id', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getInformationOperatorByUserIdHandler);
 router.post(
   '/create',
   validateResource(InformationOperatorSchema.create),
@@ -25,6 +27,7 @@ router.post(
 router.patch(
   '/update/:id',
   validateResource(InformationOperatorSchema.update),
+  requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER),
   // validateResource(UserSchema.createBidder),
   updateInformationOperatorHandler
 );

@@ -14,6 +14,8 @@ import {
 } from '../controllers/UserController';
 import { UserSchema } from '../validations/UserSchema';
 import { validateResource } from '../middleware/validateResource';
+import { requireRole } from '../middleware/requireRole';
+import { roles } from '../../config/roles';
 const router = express.Router();
 
 router.get('/users', getAllUsersHandler);
@@ -27,6 +29,6 @@ router.post('/changePassword/:userId', validateResource(UserSchema.changePasswor
 router.post('/verify/:userId/:verificationCode', verifyUserHandler);
 router.post('/resetPassword/:userId/:passwordResetCode', validateResource(UserSchema.changePassword), resetPasswordHandler);
 //
-router.get('/users/:role/:index/:status/:search', getUserByRoleHandler);
+router.get('/users/:role/:index/:status/:search', requireRole(roles.ADMIN), getUserByRoleHandler);
 
 export default router;

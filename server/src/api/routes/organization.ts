@@ -6,6 +6,8 @@ import { UserSchema } from '../validations/UserSchema';
 const router = express.Router();
 import multer from 'multer';
 import { OrganizationSchema } from '../validations/OrganizationSchema';
+import { requireRole } from '../middleware/requireRole';
+import { roles } from '../../config/roles';
 
 const upload = multer({ dest: 'uploads/' });
 router.post(
@@ -25,8 +27,10 @@ router.post(
   validateResource(UserSchema.createBidder),
   createSellerHandler
 );
-router.get('/seller', getSellerHandler);
-router.get('/getAll', getAllHandler);
-router.get('/getById/:idIndividual', getSellerByIdHandler);
+
+router.use(requireRole(roles.SELLER));
+router.get('/seller', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getSellerHandler);
+router.get('/getAll', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getAllHandler);
+router.get('/getById/:idIndividual', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getSellerByIdHandler);
 
 export default router;

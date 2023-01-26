@@ -12,14 +12,15 @@ import { PropertySchema } from '../validations/PropertySchema';
 import multer from 'multer';
 import { requireRole } from '../middleware/requireRole';
 import { defaultConfig } from '../../config/constant-variables';
+import { roles } from '../../config/roles';
 
 const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
-router.use(requireRole('seller'));
 router.get('/properties', getAllPropertiesHandler);
 router.get('/myProperty/:index/:status/:search', getPropertiesByUserHandler);
 router.get('/:propertyId', getPropertyByIdHandler);
+router.use(requireRole(roles.SELLER));
 router.post(
   '/create',
   upload.fields([
