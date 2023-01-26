@@ -67,9 +67,9 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
-                    //navigate("/listBidders");
                     window.location.reload(false);
                     setExpanded(false);
+                    navigate("/auctionListForManager");
                 })
                 .catch((err) => {
                     notify(`🦄 Create Failed: ${err.response.data.message}, ${err}`);
