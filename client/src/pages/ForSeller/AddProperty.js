@@ -131,8 +131,8 @@ const AddProperty = () => {
             notify("🦄 Image 2, please select a file less than 2mb");
         } else if (fI3 > 2048) {
             notify("🦄 Image 3, please select a file less than 2mb");
-        } else if (fV > 4096) {
-            notify("🦄 Video, please select a file less than 4mb");
+        } else if (fV > 10240) {
+            notify("🦄 Video, please select a file less than 10mb");
         } else {
             const formData = new FormData();
             formData.append("propertyImage1", propertyImage1);
