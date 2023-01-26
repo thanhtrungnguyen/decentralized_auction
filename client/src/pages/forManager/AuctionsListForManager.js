@@ -97,9 +97,9 @@ const AuctionsListForManager = () => {
                         auction.property.user._id === seller.individual.user._id ? (
                             <tr>
                                 <td>{seller.name}</td>
-                                <td>{auction.status === "Request" ? "___________" : auction.name}</td>
+                                <td>{auction.status === "Request" || auction.status === "Rejected" ? "___________" : auction.name}</td>
                                 <td>
-                                    {auction.status === "Request" ? (
+                                    {auction.status === "Request" || auction.status === "Rejected" ? (
                                         "___________"
                                     ) : (
                                         <>
@@ -110,7 +110,7 @@ const AuctionsListForManager = () => {
                                     )}
                                 </td>
                                 <td>
-                                    {auction.status === "Request" ? (
+                                    {auction.status === "Request" || auction.status === "Rejected" ? (
                                         "___________"
                                     ) : (
                                         <>

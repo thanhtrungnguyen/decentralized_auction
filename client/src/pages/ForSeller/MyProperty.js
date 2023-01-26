@@ -150,7 +150,7 @@ const MyProperty = () => {
                                     <AiTwotoneEdit
                                         className={styles.iconView}
                                         onClick={() => {
-                                            navigate("/editProperty");
+                                            navigate("/editProperty/" + `${item._id}`);
                                         }}
                                     />
                                     <AiFillEye
