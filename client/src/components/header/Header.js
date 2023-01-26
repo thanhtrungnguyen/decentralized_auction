@@ -26,6 +26,7 @@ const Header = () => {
                                         My Profile
                                     </Link>
                                     <BsFillPersonFill className={styles.icon} />
+                                    <LogoutButton />
                                 </>
                             );
                         } else if (data2?.user.type === "organization") {
@@ -35,10 +36,17 @@ const Header = () => {
                                         My Profile
                                     </Link>
                                     <BsFillPersonFill className={styles.icon} />
+                                    <LogoutButton />
                                 </>
                             );
                         } else {
-                            return <></>;
+                            return (
+                                <>
+                                    <Link className={styles.label2} to="/login">
+                                        Login
+                                    </Link>
+                                </>
+                            );
                         }
                     })()}
 
@@ -46,7 +54,6 @@ const Header = () => {
                         <option value="english">EN</option>
                         <option value="vietnamese">VN</option>
                     </select> */}
-                    <LogoutButton />
                 </div>
                 <hr />
             </div>
