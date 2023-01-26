@@ -7,8 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Select from "react-select";
 import useLocationForm from "../register/useLocationForm";
 import Loading from "../../components/loading/Loading";
@@ -85,28 +84,6 @@ const ChangePasswordAdmin = () => {
     const Cancel = () => {
         navigate("/listSellers");
     };
-    // const getUser = () => {
-    //     var users = null;
-    //     const token = Cookies.get("access_token");
-    //     if (!token) {
-    //         console.log("Not authenticated");
-    //     }
-    //     jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-    //         users = user;
-    //     });
-    //     return users;
-    // };
-    // useEffect(() => {
-    //     console.log(getUser());
-
-    //     // console.log(getUser().type);
-    //     if (getUser() != null) {
-    //         setRo(getUser().role);
-    //     } else {
-    //         setRo("");
-    //     }
-    //     setLoading(false);
-    // }, []);
     return (
         <>
             <form onSubmit={handleSubmit}>

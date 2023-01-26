@@ -9,8 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import FooterCopy from "../../components/footer/FooterCopy";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
@@ -40,25 +39,21 @@ const EditManager = () => {
             try {
                 const res = await axios.get(`/informationOperator/getByUserId/${managerId}`);
                 setData(res.data.result);
-                setFirstName(res.data.result.firstName)
-                setLastName(res.data.result.lastName)
-                setPhone(res.data.result.phone)
-                setEmail(res.data.result.email)
-                setGender(res.data.result.gender)
-                setSpecificAddress(res.data.result.address)
+                setFirstName(res.data.result.firstName);
+                setLastName(res.data.result.lastName);
+                setPhone(res.data.result.phone);
+                setEmail(res.data.result.email);
+                setGender(res.data.result.gender);
+                setSpecificAddress(res.data.result.address);
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
             setLoading(false);
         };
         fetchData();
 
         // // console.log(getUser().type);
-        // if (getUser() != null) {
-        //     setRole(getUser().role);
-        // } else {
-        //     setRole("");
-        // }
+
         // setLoading(false);
     }, []);
     const handleInputChange = (e) => {
@@ -180,17 +175,7 @@ const EditManager = () => {
 
         event.preventDefault();
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     return loading ? (
         <Loading />
     ) : (
@@ -235,10 +220,16 @@ const EditManager = () => {
                             id="lastName"
                         ></input>
                         <p className={styles.txt}>Gender</p>
-                        <select id="gender" className={styles.ip} onChange={(e) => handleInputChange(e)} placeholder="Gender" >
-                            <option value="Male" selected={gender === 'Male' ? true : false}>Male</option>
-                            <option value="Female" selected={gender === 'Female' ? true : false}>Female</option>
-                            <option value="Other" selected={gender === 'Other' ? true : false}>Other</option>
+                        <select id="gender" className={styles.ip} onChange={(e) => handleInputChange(e)} placeholder="Gender">
+                            <option value="Male" selected={gender === "Male" ? true : false}>
+                                Male
+                            </option>
+                            <option value="Female" selected={gender === "Female" ? true : false}>
+                                Female
+                            </option>
+                            <option value="Other" selected={gender === "Other" ? true : false}>
+                                Other
+                            </option>
                         </select>
                         <p className={styles.txt}>Email</p>
                         <input

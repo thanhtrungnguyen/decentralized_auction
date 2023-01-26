@@ -8,8 +8,7 @@ import Popup from "reactjs-popup";
 import BanedBidder from "../../components/popups/forAdmin/BanBidder";
 import ActiveBidder from "../../components/popups/forAdmin/ActiveBidder";
 import Loading from "../../components/loading/Loading";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import Time from "../../components/time/Time";
 import { useNavigate } from "react-router-dom";
@@ -35,11 +34,6 @@ const ListBidders = () => {
                 setData(resp.data.user);
                 console.log(resp);
             });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
 
             setLoading(false);
         };
@@ -69,17 +63,7 @@ const ListBidders = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     function exportData(data) {
         return (
             <>

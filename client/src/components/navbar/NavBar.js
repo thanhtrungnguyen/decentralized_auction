@@ -1,8 +1,7 @@
 import styles from "../../styleCss/stylesComponents/navbar.module.css";
 import { Outlet, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { useEffect, useState } from "react";
 import img from "../../imgs/logo.png";
 const NavBar = () => {

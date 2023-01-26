@@ -12,8 +12,6 @@ import Loading from "./components/Loader";
 import { SUPPORT_CHAINS, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../config/blockchainConfig";
 import AuctionResult from "./ui/auctionResult/AuctionResult";
 import { useFetchBidding } from "../../hooks/useFetch";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
 
 const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
     const { chainId, isWeb3Enabled, account } = useMoralis();
@@ -23,15 +21,6 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             setHasMetamask(true);
         }
     }, [isWeb3Enabled, account]);
-    // const checkUserRegistered = () => {
-    //     let wallet;
-    //     auctionRegistration?.map((element) => {
-    //         if (element.bidderId == getUser().id) {
-    //             wallet = element.wallet;
-    //         }
-    //     });
-    //     return wallet;
-    // };
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
         // const registeredWallet = checkUserRegistered();

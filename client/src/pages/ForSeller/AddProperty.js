@@ -11,8 +11,7 @@ import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
@@ -42,16 +41,7 @@ const AddProperty = () => {
     const baseURL = "http://localhost:5000/api/category/categories";
     const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
     const notify = (message) => {
         toast(message, {
             position: "top-right",
@@ -140,8 +130,8 @@ const AddProperty = () => {
             notify("🦄 Image 2, please select a file less than 2mb");
         } else if (fI3 > 2048) {
             notify("🦄 Image 3, please select a file less than 2mb");
-        } else if (fV > 4096) {
-            notify("🦄 Video, please select a file less than 4mb");
+        } else if (fV > 10240) {
+            notify("🦄 Video, please select a file less than 10mb");
         } else {
             const formData = new FormData();
             formData.append("propertyImage1", propertyImage1);
@@ -198,17 +188,7 @@ const AddProperty = () => {
     //         setSelectedImage(e.target.files[0]);
     //     }
     // };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     return loading ? (
         <Loading />
     ) : (

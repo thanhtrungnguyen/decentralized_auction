@@ -9,6 +9,7 @@ import connectMongo from './api/utils/connectMongo';
 import deserializeUser from './api/middleware/deserializeUser';
 import { connectSocket } from './socketio';
 import { config } from './config/custom-environment-variables';
+import { corsOptions } from './config/cors-options';
 const app = express();
 
 connectMongo()
@@ -30,13 +31,7 @@ export const startServer = () => {
     next();
   });
 
-  app.use(
-    cors({
-      origin: config.client.address,
-      methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
-      credentials: true
-    })
-  );
+  app.use(cors(corsOptions));
   app.use(cookieParser());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());

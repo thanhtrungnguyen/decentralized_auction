@@ -10,8 +10,7 @@ import ActiveManager from "../../components/popups/forAdmin/ActiveManager";
 import Loading from "../../components/loading/Loading";
 import { useFetchData, useFetchPagination } from "../../hooks/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import FooterCopy from "../../components/footer/FooterCopy";
 import Time from "../../components/time/Time";
@@ -35,11 +34,6 @@ const ListForManagers = () => {
                 // console.log("axios get");
                 setData(resp.data.user);
             });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
 
             setLoading(false);
         };
@@ -123,17 +117,6 @@ const ListForManagers = () => {
             </>
         );
     }
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
 
     return loading ? (
         <Loading />

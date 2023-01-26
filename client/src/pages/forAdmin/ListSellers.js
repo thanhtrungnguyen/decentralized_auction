@@ -9,8 +9,7 @@ import BanedSeller from "../../components/popups/forAdmin/BanSeller";
 import ActiveSeller from "../../components/popups/forAdmin/ActiveSeller";
 import { useFetchPagination } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
@@ -35,11 +34,6 @@ const ListSellers = () => {
                 setData(resp.data.user);
                 console.log(resp);
             });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
 
             setLoading(false);
         };
@@ -67,27 +61,7 @@ const ListSellers = () => {
     const handleChangeStatus = (e) => {
         setStatus(e.target.value);
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
     const navigate = useNavigate();
     function exportData(data) {
         return (
@@ -114,12 +88,6 @@ const ListSellers = () => {
                                     navigate(`/editSeller/${item._id}`);
                                 }}
                             />
-                            {/* <AiTwotoneEdit
-                                className={styles.iconView}
-                                onClick={() => {
-                                    navigate(`/editNews/${item._id}`);
-                                }}
-                            /> */}
                             {item.user.status === true ? (
                                 <Popup
                                     trigger={

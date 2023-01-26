@@ -147,7 +147,7 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
   if (!result?.events) {
     return res.status(409).json({ result, message: 'Can not create auction' });
   }
-  return await updateAuction({ _id: auctionId }, update, { new: true })
+  return await updateAuction({ _id: auctionId }, { ...update, status: 'Approved' }, { new: true })
     .then(async (auction) => {
       await updatePropertyStatus({ _id: propertyId }, { status: 'Approved' }, { new: true })
         .then((property) => {

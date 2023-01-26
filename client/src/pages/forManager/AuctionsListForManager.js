@@ -8,8 +8,7 @@ import React, { useEffect, useState } from "react";
 // import { BsFillCheckSquareFill } from "react-icons/bs";
 // import { useNavigate } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 // import { set } from "mongoose";
 import Loading from "../../components/loading/Loading";
 import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
@@ -57,12 +56,6 @@ const AuctionsListForManager = () => {
                 setListAuction(resp.data.auctions);
             });
 
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
-
             setLoading(false);
         };
         fetchData();
@@ -94,17 +87,6 @@ const AuctionsListForManager = () => {
     };
     const handleChange = (event, value) => {
         setPage(value);
-    };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            // console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
     };
 
     function exportData(auctions, sellers) {

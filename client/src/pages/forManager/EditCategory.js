@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import { ToastContainer, toast } from "react-toastify";
@@ -29,12 +28,6 @@ const EditCategory = () => {
                 setCategoryName(resp.data.category.name);
                 setStatus(resp.data.category.status);
             });
-
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
 
             setLoading(false);
         };
@@ -80,17 +73,7 @@ const EditCategory = () => {
         }
         event.preventDefault();
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "categoryName") {

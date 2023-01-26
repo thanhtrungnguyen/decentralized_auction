@@ -11,8 +11,7 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 // import { Button } from "@mui/material";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 // import { useFetch, useFetchPagination } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
@@ -53,11 +52,7 @@ const MyProperty = () => {
                 // console.log("axios get");
                 setListProperty(resp.data.properties);
             });
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
+
             setLoading(false);
         };
         fetchData();
@@ -98,17 +93,7 @@ const MyProperty = () => {
         setPage(1);
         event.preventDefault();
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     const navigate = useNavigate();
     function exportData(data) {
         return (

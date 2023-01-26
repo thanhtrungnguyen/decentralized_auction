@@ -1,4 +1,5 @@
 import { FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
+import Individual from '../models/Individual';
 import Organization, { IOrganization, IOrganizationDocument } from '../models/Organization';
 import logger from '../utils/logger';
 
@@ -49,6 +50,15 @@ const getOrganization = async (filter: FilterQuery<IOrganizationDocument>, optio
     logger.error(error);
   }
 };
+const getOrganizationByUserId = async (userId: string) => {
+  try {
+    const idIndividual = await Individual.findOne({ user: userId });
+    const data = await Organization.findOne({ individual: idIndividual }).populate('individual');
+    return data;
+  } catch (error) {
+    logger.error(error);
+  }
+};
 
 const createOrganization = async (organization: IOrganization) => {
   try {
@@ -74,4 +84,4 @@ const deleteOrganization = async (filter: FilterQuery<IOrganization>) => {
   }
 };
 
-export { getAllOrganizations, getOrganization, createOrganization, updateOrganization, deleteOrganization, getAllSellers };
+export { getAllOrganizations, getOrganization, createOrganization, updateOrganization, deleteOrganization, getAllSellers, getOrganizationByUserId };

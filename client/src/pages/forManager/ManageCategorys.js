@@ -11,8 +11,7 @@ import { AiFillEye, AiTwotoneEdit, AiOutlineDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Loading from "../../components/loading/Loading";
 import Popup from "reactjs-popup";
 import ActiveCategory from "../../components/popups/forManager/ActiveCategory";
@@ -39,11 +38,6 @@ const ManagerCategory = () => {
                 setData(resp.data.categories);
             });
 
-            if (getUser() != null) {
-                setRole(getUser().role);
-            } else {
-                setRole("");
-            }
 
             setLoading(false);
         };
@@ -69,17 +63,7 @@ const ManagerCategory = () => {
         setStatus(e.target.value);
         setPage(1);
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     function exportData(data) {
         return (
             <>

@@ -7,15 +7,12 @@ import logger from './api/utils/logger';
 import { getAllAuctions, updateAuction } from './api/services/AuctionService';
 import { updateProperty, updatePropertyStatus } from './api/services/PropertyService';
 import { getCountPlacedBidAndRetracted, getHighestBidByAuctionId } from './api/services/ContractInteractionService';
+import { corsOptions } from './config/cors-options';
 
 export const connectSocket = (app: any) => {
   const server = http.createServer(app);
   const io = new Server(server, {
-    cors: {
-      origin: config.client.address,
-      methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
-      credentials: true
-    }
+    cors: corsOptions
   });
   io.on('connection', (socket) => {
     socket.on('send_message', async (data) => {

@@ -4,8 +4,7 @@ import Footer from "../../components/footer/Footer";
 import React, { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Loading from "../../components/loading/Loading";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { useParams } from "react-router-dom";
 // import { useFetch } from "../../hooks/useFetch";
 import HeaderUser from "../../components/header/HeaderUser";
@@ -253,18 +252,6 @@ const EditProfileOrganization = () => {
             console.log(formData);
         }
         event.preventDefault();
-    };
-
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
     };
 
     const Cancel = () => {

@@ -14,8 +14,8 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
-    const [registrationFee, setRegistrationFee] = useState(null);
-    const [name, setName] = useState(null);
+    const [registrationFee, setRegistrationFee] = useState("");
+    const [name, setName] = useState("");
     const [startRegistrationTime, setStartRegistrationTime] = useState(new Date());
     const [endRegistrationTime, setEndRegistrationTime] = useState(new Date());
     const [startAuctionTime, setStartAuctionTime] = useState(new Date());
@@ -45,34 +45,30 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
     const handleSubmit = (event) => {
         if (!registrationFee.trim()) {
             notify("🦄 registrationFee is empty");
+        } else if (!name.trim()) {
+            notify("🦄 name is empty");
         } else {
             axios
-                .patch(
-                    `http://localhost:5000/api/auction/approve/${auctionId}`,
-                    {
-                        name: name,
-                        startRegistrationTime: new Date(startRegistrationTime),
-                        endRegistrationTime: new Date(endRegistrationTime),
-                        startAuctionTime: new Date(startAuctionTime),
-                        endAuctionTime: new Date(endAuctionTime),
-                        duePaymentTime: new Date(duePaymentTime),
-                        registrationFee: registrationFee.trim(),
-                        status: "Approved",
-                        property: propertyId,
-                    },
-                    {
-                        withCredentials: true,
-                    }
-                )
+                .patch(`http://localhost:5000/api/auction/approve/${auctionId}`, {
+                    name: name.trim(),
+                    startRegistrationTime: new Date(startRegistrationTime),
+                    endRegistrationTime: new Date(endRegistrationTime),
+                    startAuctionTime: new Date(startAuctionTime),
+                    endAuctionTime: new Date(endAuctionTime),
+                    duePaymentTime: new Date(duePaymentTime),
+
+                    registrationFee: registrationFee.trim(),
+                    property: propertyId,
+                })
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
-                    window.location.reload(false);
+                    // window.location.reload(false);
                     setExpanded(false);
                     navigate("/auctionListForManager");
                 })
                 .catch((err) => {
-                    notify(`🦄 Create Failed: ${err.response.data.message}, ${err}`);
+                    notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
         event.preventDefault();
@@ -106,7 +102,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                         <input
                             className={styles.input}
                             id="registrationFee"
-                            type="text"
+                            type="number"
                             value={registrationFee}
                             onChange={(e) => handleInputChange(e)}
                             required
@@ -119,7 +115,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                                 onChange={setStartRegistrationTime}
                                 value={startRegistrationTime}
                                 format="MM/DD/YYYY HH:mm:ss"
-                                plugins={[<TimePicker position="bottom" />]}
+                                plugins={[<TimePicker position="right" />]}
                                 required
                             />
                             <label className={styles.lb}>To:</label>
@@ -128,7 +124,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                                 onChange={setEndRegistrationTime}
                                 value={endRegistrationTime}
                                 format="MM/DD/YYYY HH:mm:ss"
-                                plugins={[<TimePicker position="bottom" />]}
+                                plugins={[<TimePicker position="right" />]}
                                 required
                             />
                         </div>
@@ -141,7 +137,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                                 value={startAuctionTime}
                                 format="MM/DD/YYYY HH:mm:ss"
                                 required
-                                plugins={[<TimePicker position="bottom" />]}
+                                plugins={[<TimePicker position="right" />]}
                             />
                             <label className={styles.lb}>To:</label>
                             <DatePicker
@@ -149,7 +145,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                                 onChange={setEndAuctionTime}
                                 value={endAuctionTime}
                                 format="MM/DD/YYYY HH:mm:ss"
-                                plugins={[<TimePicker position="bottom" />]}
+                                plugins={[<TimePicker position="right" />]}
                                 required
                             />
                         </div>
@@ -161,7 +157,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                                 onChange={setDuePaymentTime}
                                 value={duePaymentTime}
                                 format="MM/DD/YYYY HH:mm:ss"
-                                plugins={[<TimePicker position="bottom" />]}
+                                plugins={[<TimePicker position="right" />]}
                                 required
                             />
                         </div>

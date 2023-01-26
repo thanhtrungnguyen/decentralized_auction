@@ -53,7 +53,7 @@ const RejectAuction = ({ auctionId, propertyId }) => {
                     setExpanded(false);
                 })
                 .catch((err) => {
-                    notify(`🦄 Create Failed: ${err.response.data.message}, ${err}`);
+                    notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
         event.preventDefault();

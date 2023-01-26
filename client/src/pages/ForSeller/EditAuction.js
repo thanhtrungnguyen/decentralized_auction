@@ -11,8 +11,7 @@ import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Loading from "../../components/loading/Loading";
 
 const EditAuction = () => {
@@ -31,17 +30,6 @@ const EditAuction = () => {
     const navigate = useNavigate();
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        console.log(getUser());
-
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-        setLoading(false);
-    }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "propertyImage") {
@@ -96,17 +84,7 @@ const EditAuction = () => {
 
         event.preventDefault();
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     return loading ? (
         <Loading />
     ) : (

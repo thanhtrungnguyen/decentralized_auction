@@ -166,7 +166,7 @@ function App() {
             <Route path="editManager" element={<EditManager />} />
             <Route path="editManager/:managerId" element={<EditManager />} />
             <Route path="editSeller" element={<EditSeller />} />
-            <Route path="editSeller/:sellerId" element={<EditSeller />} />
+            <Route path="editSeller/:id" element={<EditSeller />} />
             <Route path="changePasswordAdmin" element={<ChangePasswordAdmin />} />
             <Route path="changePasswordAdmin/:adminId" element={<ChangePasswordAdmin />} />
             <Route path="profileAdmin" element={<ProfileAdmin />} />

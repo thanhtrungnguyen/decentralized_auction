@@ -8,8 +8,7 @@ import Popup from "reactjs-popup";
 import PublishNews from "../../components/popups/forAdmin/PublishNews";
 import PrivateNews from "../../components/popups/forAdmin/PrivateNews";
 import Loading from "../../components/loading/Loading";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import { AiFillEye, AiTwotoneEdit } from "react-icons/ai";
 import Time from "../../components/time/Time";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -62,17 +61,6 @@ const ListNews = () => {
     const handleChange = (event, page) => {
         setPage(page);
     };
-    // const getUser = () => {
-    //     var users = null;
-    //     const token = Cookies.get("access_token");
-    //     if (!token) {
-    //         console.log("Not authenticated");
-    //     }
-    //     jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-    //         users = user;
-    //     });
-    //     return users;
-    // };
     const handleChangeStatus = (e) => {
         setStatus(e.target.value);
         setPage(1);
@@ -88,7 +76,20 @@ const ListNews = () => {
                             {moment(item.createdAt).format("L")} - {moment(item.createdAt).format("LTS")}{" "}
                         </td>
                         <td>{item.status === "Activate" ? "Activate" : "Deactivate"}</td>
+                        <td></td>
                         <td>
+                            <AiTwotoneEdit
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate(`/editNews/${item._id}`);
+                                }}
+                            />
+                            <AiFillEye
+                                className={styles.iconView}
+                                onClick={() => {
+                                    navigate(`/viewNewsForAdmin/${item._id}`);
+                                }}
+                            />
                             {item.status === "Activate" ? (
                                 <Popup
                                     trigger={
@@ -112,20 +113,6 @@ const ListNews = () => {
                                     <PublishNews idNews={item._id} />
                                 </Popup>
                             )}
-                        </td>
-                        <td>
-                            <AiTwotoneEdit
-                                className={styles.iconView}
-                                onClick={() => {
-                                    navigate(`/editNews/${item._id}`);
-                                }}
-                            />
-                            <AiFillEye
-                                className={styles.iconView}
-                                onClick={() => {
-                                    navigate(`/viewNewsForAdmin/${item._id}`);
-                                }}
-                            />
                         </td>
                     </tr>
                 ))}
@@ -180,8 +167,8 @@ const ListNews = () => {
                                 <th className={styles.th}>Created At</th>
 
                                 <th className={styles.th}>Status</th>
-                                <th className={styles.th}>Action</th>
                                 <th className={styles.th}></th>
+                                <th className={styles.th}>Action</th>
                             </tr>
                             {exportData(data)}
                         </table>

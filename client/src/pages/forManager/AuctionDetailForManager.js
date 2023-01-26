@@ -13,8 +13,7 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 // import Popup from "reactjs-popup";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 const AuctionDetailForManager = () => {
@@ -94,33 +93,14 @@ const AuctionDetailForManager = () => {
     const Cancel = () => {
         navigate("/auctionListForManager");
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     const convertDateTime = (time) => {
         var startRegistrationTime = new Date(time);
         var startRegistrationTimeVN = startRegistrationTime.setTime(startRegistrationTime.getTime() - 7 * 60 * 60 * 1000);
 
         return new Date(new Date(startRegistrationTimeVN).toUTCString());
     };
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-    }, []);
     return loading ? (
         <Loading />
     ) : (
@@ -227,7 +207,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Property Description</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>{data.auction.property.description}</p>
+                                    <p className={styles.txt2}>{data.auction.property.description}</p>
                                 </div>
                             </div>
                             <p className={styles.title}>Auction Information</p>

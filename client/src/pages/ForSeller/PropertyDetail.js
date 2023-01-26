@@ -13,8 +13,7 @@ import ReactPlayer from "react-player";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useFetcher, useParams } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import { useNavigate } from "react-router-dom";
@@ -37,17 +36,7 @@ const PropertyDetail = () => {
     const { data, loading, error } = useFetch(baseURL);
 
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
-    // const getUser = () => {
-    //     var users = null;
-    //     const token = Cookies.get("access_token");
-    //     if (!token) {
-    //         console.log("Not authenticated");
-    //     }
-    //     jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-    //         users = user;
-    //     });
-    //     return users;
-    // };
+
     return loading ? (
         <Loading />
     ) : (
@@ -154,7 +143,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Description</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>{data.property.description}</p>
+                                    <p className={styles.txt2}>{data.property.description}</p>
                                 </div>
                             </div>
                         </div>

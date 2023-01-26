@@ -9,8 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import FooterCopy from "../../components/footer/FooterCopy";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
@@ -32,17 +31,7 @@ const AddManager = () => {
     const [loading, setLoading] = useState(true);
     const type = "operator";
     const navigate = useNavigate();
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-        setLoading(false);
-    }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "username") {
@@ -171,17 +160,7 @@ const AddManager = () => {
 
         event.preventDefault();
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     return loading ? (
         <Loading />
     ) : (

@@ -12,6 +12,7 @@
     "moralis",
     "openapi",
     "pino",
+    "ruleset",
     "tsbuildinfo",
     "tsconfigs",
     "unist"

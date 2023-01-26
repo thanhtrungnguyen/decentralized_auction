@@ -5,9 +5,9 @@ import HeaderUser from "../../components/header/HeaderUser";
 import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/stylesPages/hompage.module.css";
-import jwt from "jsonwebtoken";
+
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+
 import Loading from "../../components/loading/Loading";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import FooterCopy from "../../components/footer/FooterCopy";
@@ -87,25 +87,13 @@ const HomePage = () => {
         );
     }
 
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
-
     return loading ? (
         <Loading />
     ) : (
         <>
             {(() => {
                 if (role === "BIDDER" || role === "SELLER" || role === "MANAGER" || role === "ADMIN") {
-                    return <HeaderUser username={getUser().userName} />;
+                    return <HeaderUser username={""} />;
                 } else {
                     return <Header />;
                 }

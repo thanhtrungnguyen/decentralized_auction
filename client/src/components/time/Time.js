@@ -12,10 +12,10 @@ const Time = () => {
     const [today, setDate] = useState(new Date()); // Save the current date to be able to trigger an update
 
     const day = today.toLocaleDateString(locale, { weekday: "long" });
-    const date = `${day}, ${today.getDate()} ${today.toLocaleDateString(locale, { month: "long" })}\n\n`;
+    const date = `${day}, ${today.getDate()} ${today.toLocaleDateString(locale, { month: "long" })}`;
 
     const hour = today.getHours();
-    const wish = `Good ${(hour < 12 && "Morning") || (hour < 17 && "Afternoon") || "Evening"}, `;
+    const wish = `Good ${(hour < 12 && "Morning") || (hour < 17 && "Afternoon") || "Evening"},  `;
 
     const time = today.toLocaleTimeString(locale, { hour: "numeric", hour12: true, minute: "numeric" });
     useEffect(() => {
@@ -33,7 +33,7 @@ const Time = () => {
         <>
             <div className={styles.time}>
                 <label className={styles.label}>
-                    {date},{time},{wish}
+                    {date}, {time}, {wish}
                 </label>
                 <LogoutButton />
             </div>

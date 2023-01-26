@@ -9,8 +9,7 @@ import React, { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import HeaderUser from "../../components/header/HeaderUser";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,17 +18,7 @@ const AddCategory = () => {
     const axios = useAxiosPrivate();
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        console.log(getUser());
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-        setLoading(false);
-    }, []);
     const [categoryName, setCategoryName] = useState(null);
     const navigate = useNavigate();
     // const baseURL = "http://localhost:8800/api/property/";
@@ -76,17 +65,7 @@ const AddCategory = () => {
         }
         event.preventDefault();
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     return loading ? (
         <Loading />
     ) : (
