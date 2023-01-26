@@ -1,4 +1,5 @@
 import { FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
+import Individual from '../models/Individual';
 import Organization, { IOrganization, IOrganizationDocument } from '../models/Organization';
 import logger from '../utils/logger';
 
@@ -49,19 +50,10 @@ const getOrganization = async (filter: FilterQuery<IOrganizationDocument>, optio
     logger.error(error);
   }
 };
-const getOrganizationByUserId = async (userId: any) => {
+const getOrganizationByUserId = async (userId: string) => {
   try {
-    let data = await Organization.findOne().populate({
-      path: 'individual',
-      match: {
-        user: userId
-      }
-    });
-    // if (data?.individual === null) {
-    //   return null;
-    // } else {
-    //   return data;
-    // }
+    const idIndividual = await Individual.findOne({ user: userId });
+    const data = await Organization.findOne({ individual: idIndividual }).populate('individual');
     return data;
   } catch (error) {
     logger.error(error);
