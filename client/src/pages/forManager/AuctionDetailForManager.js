@@ -227,7 +227,7 @@ const AuctionDetailForManager = () => {
                                     <p className={styles.lable}>Property Description</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>{data.auction.property.description}</p>
+                                    <p className={styles.txt2}>{data.auction.property.description}</p>
                                 </div>
                             </div>
                             <p className={styles.title}>Auction Information</p>
