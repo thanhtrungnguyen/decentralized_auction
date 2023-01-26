@@ -17,26 +17,29 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
+import { ToastContainer, toast } from "react-toastify";
+
 const AddNews = () => {
     const axios = useAxiosPrivate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [avatar, setAvatar] = useState(null);
     const [role, setRole] = useState();
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        console.log(getUser());
+    const [loading, setLoading] = useState(false);
 
-        // console.log(getUser().type);
-        if (getUser() != null) {
-            setRole(getUser().role);
-        } else {
-            setRole("");
-        }
-        setLoading(false);
-    }, []);
     const navigate = useNavigate();
-
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "title") {
@@ -50,46 +53,44 @@ const AddNews = () => {
         }
     };
     const handleSubmit = (event) => {
-        const formData = new FormData();
+        if (!title.trim()) {
+            notify("🦄 title is empty");
+        } else if (!content.trim()) {
+            notify("🦄 content is empty");
+        } else if (!avatar) {
+            notify("🦄 avatar is empty");
+        } else {
+            const formData = new FormData();
 
-        formData.append("title", title);
-        formData.append("content", content);
-        formData.append("avatar", avatar);
-        //console.log(formData.get("avatar"));
-        axios
-            .post(
-                "http://localhost:5000/api/news/create",
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                },
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert("Add new successfully!!!");
-                navigate("/listNews");
-            })
-            .catch((err) => {
-                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
-            });
+            formData.append("title", title.trim());
+            formData.append("content", content.trim());
+            formData.append("avatar", avatar);
+            //console.log(formData.get("avatar"));
+            axios
+                .post(
+                    "http://localhost:5000/api/news/create",
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    },
+                    { withCredentials: true }
+                )
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    alert("Add new successfully!!!");
+                    navigate("/listNews");
+                })
+                .catch((err) => {
+                    alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
+                });
+        }
         event.preventDefault();
     };
     const cancel = () => {
         navigate("/listNews");
     };
-    const getUser = () => {
-        var users = null;
-        const token = Cookies.get("access_token");
-        if (!token) {
-            console.log("Not authenticated");
-        }
-        jwt.verify(token, process.env.REACT_APP_JWT, (err, user) => {
-            users = user;
-        });
-        return users;
-    };
+
     return loading ? (
         <Loading />
     ) : (
@@ -98,6 +99,20 @@ const AddNews = () => {
                 <div className={styles.container}>
                     <SideBarAdmin />
                     <Time />
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
+                    {/* Same as */}
+                    <ToastContainer />
                     <div className={styles.content}>
                         <p className={styles.title}>Add News</p>
                         <label className={styles.label}>Title</label>

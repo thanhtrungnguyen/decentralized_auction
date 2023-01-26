@@ -109,24 +109,54 @@ const AddProperty = () => {
     const Cancel = () => {
         navigate("/myProperty");
     };
+
     const handleSubmit = (event) => {
+        const fpropertyImage1 = propertyImage1.size;
+        const fI1 = Math.round(fpropertyImage1 / 1024);
+        const fpropertyImage2 = propertyImage2.size;
+        const fI2 = Math.round(fpropertyImage2 / 1024);
+        const fpropertyImage3 = propertyImage3.size;
+        const fI3 = Math.round(fpropertyImage3 / 1024);
+        const fpropertyVideo = propertyVideo.size;
+        const fV = Math.round(fpropertyVideo / 1024);
+
         if (category === "null") {
             notify("🦄 Please select category");
+        } else if (!propertyName.trim()) {
+            notify("🦄 propertyName is empty");
+        } else if (!propertyDescription.trim()) {
+            notify("🦄 propertyDescription is empty");
+        } else if (!startBid.trim()) {
+            notify("🦄 startBid is empty");
+        } else if (!deposit.trim()) {
+            notify("🦄 deposit is empty");
+        } else if (!priceStep.trim()) {
+            notify("🦄 priceStep is empty");
+        } else if (!placeViewProperty.trim()) {
+            notify("🦄 placeViewProperty is empty");
+        } else if (fI1 > 2048) {
+            notify("🦄 Image 1, please select a file less than 2mb");
+        } else if (fI2 > 2048) {
+            notify("🦄 Image 2, please select a file less than 2mb");
+        } else if (fI3 > 2048) {
+            notify("🦄 Image 3, please select a file less than 2mb");
+        } else if (fV > 4096) {
+            notify("🦄 Video, please select a file less than 4mb");
         } else {
             const formData = new FormData();
             formData.append("propertyImage1", propertyImage1);
             formData.append("propertyImage2", propertyImage2);
             formData.append("propertyImage3", propertyImage3);
             formData.append("propertyVideo", propertyVideo);
-            formData.append("name", propertyName);
+            formData.append("name", propertyName.trim());
             formData.append("category", category);
-            formData.append("description", propertyDescription);
+            formData.append("description", propertyDescription.trim());
             formData.append("startViewPropertyTime", viewPropertyTime[0]);
             formData.append("endViewPropertyTime", viewPropertyTime[1]);
-            formData.append("startBid", startBid);
-            formData.append("depositAmount", deposit);
-            formData.append("priceStep", priceStep);
-            formData.append("placeViewProperty", placeViewProperty);
+            formData.append("startBid", startBid.trim());
+            formData.append("depositAmount", deposit.trim());
+            formData.append("priceStep", priceStep.trim());
+            formData.append("placeViewProperty", placeViewProperty.trim());
             formData.append("user", "63bd8531cc9d75cd8780454c");
 
             // formData.append("startBid", startBid);
@@ -184,23 +214,23 @@ const AddProperty = () => {
     ) : (
         <>
             <form onSubmit={handleSubmit}>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="light"
-                />
-                {/* Same as */}
-                <ToastContainer />
                 <div className={styles.root}>
                     <SideBarSeller />
                     <Time />
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
+                    {/* Same as */}
+                    <ToastContainer />
                     <div className={styles.info}>
                         <div>
                             <p className={styles.title}>Basic Information</p>

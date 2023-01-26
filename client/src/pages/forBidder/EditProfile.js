@@ -148,41 +148,80 @@ const EditProfile = () => {
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
+        const fsizeBack = cardBack.size;
+        const fileBack = Math.round(fsizeBack / 1024);
+        const fsizeFront = cardFront.size;
+        const fileFront = Math.round(fsizeFront / 1024);
 
         const formData = new FormData();
-        formData.append("firstName", firstName.trim());
-        formData.append("lastName", lastName.trim());
-        formData.append("gender", gender.trim());
-        formData.append("dateOfBirth", dateOfBirth.trim());
-        formData.append("email", email.trim());
-        formData.append("phone", phone.trim());
-        formData.append("cityId", cityId);
-        formData.append("city", selectedCity.label);
-        formData.append("districtId", districtId);
-        formData.append("district", selectedDistrict.label);
-        formData.append("wardId", wardId);
-        formData.append("ward", selectedWard.label);
-        formData.append("specificAddress", specificAddress.trim());
-        formData.append("cardNumber", cardNumber.trim());
-        formData.append("dateRangeCard", dateRangeCard.trim());
-        formData.append("cardGrantedPlace", cardGrantedPlace.trim());
-        formData.append("cardFront", cardFront);
-        formData.append("cardBack", cardBack);
-        // formData.append('_method', 'PUT')
-        console.log(selectedDistrict);
-        axios
-            .put(`/user/updateProfile/${id}`, formData, { withCredentials: true })
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                alert("Update Successful");
-                navigate(`/profile/${id}`);
-            })
-            .catch((err) => {
-                alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
-            });
-        console.log(formData);
-
+        if (!firstName.trim()) {
+            notify("🦄 FirstName is empty");
+        } else if (!lastName.trim()) {
+            notify("🦄 LastName is empty");
+        } else if (!gender) {
+            notify("🦄 Gender is empty");
+        } else if (!dateOfBirth.trim()) {
+            notify("🦄 Date Of Birth is empty");
+        } else if (!email.trim()) {
+            notify("🦄 Email is empty");
+        } else if (!phone.trim()) {
+            notify("🦄 phone is empty");
+        } else if (!cityId) {
+            notify("🦄 city is empty");
+        } else if (!districtId) {
+            notify("🦄 district is empty");
+        } else if (!wardId) {
+            notify("🦄 ward is empty");
+        } else if (!specificAddress.trim()) {
+            notify("🦄 specificAddress is empty");
+        } else if (!cardNumber.trim()) {
+            notify("🦄 cardNumber is empty");
+        } else if (!dateRangeCard.trim()) {
+            notify("🦄 dateRangeCard is empty");
+        } else if (!cardGrantedPlace.trim()) {
+            notify("🦄 cardGrantedPlace is empty");
+        } else if (!cardFront) {
+            notify("🦄 cardFront is empty");
+        } else if (!cardBack) {
+            notify("🦄 cardBack is empty");
+        } else if (fileBack > 2048) {
+            notify("🦄 File card back, please select a file less than 2mb");
+        } else if (fileFront > 2048) {
+            notify("🦄 File card front, please select a file less than 2mb");
+        } else {
+            formData.append("firstName", firstName.trim());
+            formData.append("lastName", lastName.trim());
+            formData.append("gender", gender.trim());
+            formData.append("dateOfBirth", dateOfBirth.trim());
+            formData.append("email", email.trim());
+            formData.append("phone", phone.trim());
+            formData.append("cityId", cityId);
+            formData.append("city", selectedCity.label);
+            formData.append("districtId", districtId);
+            formData.append("district", selectedDistrict.label);
+            formData.append("wardId", wardId);
+            formData.append("ward", selectedWard.label);
+            formData.append("specificAddress", specificAddress.trim());
+            formData.append("cardNumber", cardNumber.trim());
+            formData.append("dateRangeCard", dateRangeCard.trim());
+            formData.append("cardGrantedPlace", cardGrantedPlace.trim());
+            formData.append("cardFront", cardFront);
+            formData.append("cardBack", cardBack);
+            // formData.append('_method', 'PUT')
+            console.log(selectedDistrict);
+            axios
+                .put(`/user/updateProfile/${id}`, formData, { withCredentials: true })
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    alert("Update Successful");
+                    navigate(`/profile/${id}`);
+                })
+                .catch((err) => {
+                    alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
+                });
+            console.log(formData);
+        }
         event.preventDefault();
     };
 

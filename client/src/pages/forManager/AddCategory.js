@@ -13,6 +13,8 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
+import { ToastContainer, toast } from "react-toastify";
+
 const AddCategory = () => {
     const axios = useAxiosPrivate();
     const [role, setRole] = useState();
@@ -37,25 +39,41 @@ const AddCategory = () => {
             setCategoryName(value);
         }
     };
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleSubmit = (event) => {
-        axios
-            .post(
-                `/category/create`,
-                { name: categoryName },
-                {
-                    withCredentials: true,
-                }
-            )
-            .then((res) => {
-                // console.log(res);
-                // console.log(res.data);
-                alert("Add Category Successful");
-                navigate("/managerCategories");
-            })
-            .catch((err) => {
-                // console.log(err.response.data.mess);
-                alert(`${err.response.data.mess}, ${err} `);
-            });
+        if (!categoryName.trim()) {
+            notify("🦄 categoryName is empty");
+        } else {
+            axios
+                .post(
+                    `/category/create`,
+                    { name: categoryName },
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .then((res) => {
+                    // console.log(res);
+                    // console.log(res.data);
+                    alert("Add Category Successful");
+                    navigate("/managerCategories");
+                })
+                .catch((err) => {
+                    // console.log(err.response.data.mess);
+                    alert(`${err.response.data.mess}, ${err} `);
+                });
+        }
         event.preventDefault();
     };
     const getUser = () => {
@@ -77,6 +95,20 @@ const AddCategory = () => {
                 <div className={styles.container}>
                     <SideBarSeller />
                     <Time />
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
+                    {/* Same as */}
+                    <ToastContainer />
                     <div className={styles.detail}>
                         <label className={styles.title}>Add a New Category</label>
                         <label className={styles.txt}>Category Name</label>
