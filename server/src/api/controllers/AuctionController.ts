@@ -144,7 +144,7 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
   };
   const tx = await createAuctionOnContract(objectAuction);
   if (tx?.error) {
-    res.status(401).json({ message: 'Can not create auction' });
+    return res.status(401).json({ message: 'Can not create auction' });
   } else {
     return await updateAuction({ _id: auctionId }, update, { new: true })
       .then(async (auction) => {

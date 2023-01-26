@@ -48,7 +48,9 @@ export const createAuctionOnContract = async (objectAuction: any) => {
       formattedAuction.startBid,
       formattedAuction.priceStep
     );
-    return tx.transactionHash;
+    const result = await tx.wait(1);
+
+    return result.transactionHash;
   } catch (error) {
     return error;
   }
