@@ -55,5 +55,6 @@ router.patch(
 router.get('/seller', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getSellerHandler);
 router.get('/getAll', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getAllHandler);
 router.get('/getById/:idIndividual', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getSellerByIdHandler);
+router.get('/getByUserId/:userId', requireRole(roles.BIDDER), getByUserIdHandler);
 
 export default router;
