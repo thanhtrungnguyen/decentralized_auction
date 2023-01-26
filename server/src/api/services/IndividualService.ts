@@ -50,16 +50,22 @@ const updateIndividual = async (
 ) => {
   try {
     var img1, img2;
-    if (!isEmptyObject(files)) {
-      const file1 = files['frontSideImage'][0];
-      const file2 = files['backSideImage'][0];
-      if (file1 && file2) {
-        img1 = await (await uploadFile(file1)).data;
-        img2 = await (await uploadFile(file2)).data;
+    if (files) {
+      const file1 = files['frontSideImage'];
+      const file2 = files['backSideImage'];
+      if (file1) {
+        img1 = await (await uploadFile(file1[0])).data;
         update.frontSideImage = img1;
+        if (!img1) {
+          return { success: false, message: 'Upload frontSideImage fail!!!' };
+        }
+      }
+      if (file2) {
+        img2 = await (await uploadFile(file2[0])).data;
         update.backSideImage = img2;
-      } else {
-        return { success: false, message: 'Upload avatar fail!!!' };
+        if (!img1) {
+          return { success: false, message: 'Upload backSideImage fail!!!' };
+        }
       }
     }
     return await Individual.findOneAndUpdate(filter, update, options);

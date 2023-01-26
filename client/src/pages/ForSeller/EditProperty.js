@@ -133,14 +133,23 @@ const EditProperty = () => {
         });
     };
     const handleSubmit = (event) => {
-        const fpropertyImage1 = propertyImage1.size;
-        const fI1 = Math.round(fpropertyImage1 / 1024);
-        const fpropertyImage2 = propertyImage2.size;
-        const fI2 = Math.round(fpropertyImage2 / 1024);
-        const fpropertyImage3 = propertyImage3.size;
-        const fI3 = Math.round(fpropertyImage3 / 1024);
-        const fpropertyVideo = propertyVideo.size;
-        const fV = Math.round(fpropertyVideo / 1024);
+        var fI1, fI2, fI3, fV;
+        if (propertyImage1) {
+            const fpropertyImage1 = propertyImage1.size;
+            fI1 = Math.round(fpropertyImage1 / 1024);
+        }
+        if (propertyImage2) {
+            const fpropertyImage2 = propertyImage2.size;
+            fI2 = Math.round(fpropertyImage2 / 1024);
+        }
+        if (propertyImage3) {
+            const fpropertyImage3 = propertyImage3.size;
+            fI3 = Math.round(fpropertyImage3 / 1024);
+        }
+        if (propertyVideo) {
+            const fpropertyVideo = propertyVideo.size;
+            fV = Math.round(fpropertyVideo / 1024);
+        }
 
         if (category === "null") {
             notify("🦄 Please select category");
