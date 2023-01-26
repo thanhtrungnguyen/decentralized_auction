@@ -154,7 +154,7 @@ const PropertyDetail = () => {
                                     <p className={styles.lable}>Property Description</p>
                                 </div>
                                 <div className={styles.r}>
-                                    <p className={styles.txt}>{data.property.description}</p>
+                                    <p className={styles.txt2}>{data.property.description}</p>
                                 </div>
                             </div>
                         </div>
