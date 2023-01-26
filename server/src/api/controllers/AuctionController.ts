@@ -119,6 +119,7 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
   const auctionId = req.params.auctionId;
   const update = req.body;
   const propertyId = req.body.property;
+  const { startRegistrationTime, endRegistrationTime, startAuctionTime, endAuctionTime, duePaymentTime, registrationFee } = req.body;
 
   const auction = await getAuction({ _id: auctionId });
   if (!auction) {
@@ -132,34 +133,33 @@ export const approveAuctionHandler = async (req: Request, res: Response, next: N
 
   const objectAuction = {
     auctionId: auction?._id,
-    startRegistrationTime: auction?.startRegistrationTime,
-    endRegistrationTime: auction?.endRegistrationTime,
-    startAuctionTime: auction?.startAuctionTime,
-    endAuctionTime: auction?.endAuctionTime,
-    duePaymentTime: auction?.duePaymentTime,
-    registrationFee: auction?.registrationFee,
+    startRegistrationTime,
+    endRegistrationTime,
+    startAuctionTime,
+    endAuctionTime,
+    duePaymentTime,
+    registrationFee,
     depositAmount: property?.depositAmount,
     startBid: property?.startBid,
     priceStep: property?.priceStep
   };
-  const tx = await createAuctionOnContract(objectAuction);
-  if (tx?.error) {
-    return res.status(401).json({ message: 'Can not create auction' });
-  } else {
-    return await updateAuction({ _id: auctionId }, update, { new: true })
-      .then(async (auction) => {
-        await updatePropertyStatus({ _id: propertyId }, { status: 'Approved' }, { new: true })
-          .then((property) => {
-            res.status(201).json({ auction, property, tx });
-          })
-          .catch((error) => {
-            res.status(500).json({ error });
-          });
-      })
-      .catch((error) => {
-        res.status(500).json({ error });
-      });
+  const result = await createAuctionOnContract(objectAuction);
+  if (!result?.events) {
+    return res.status(409).json({ result, message: 'Can not create auction' });
   }
+  return await updateAuction({ _id: auctionId }, update, { new: true })
+    .then(async (auction) => {
+      await updatePropertyStatus({ _id: propertyId }, { status: 'Approved' }, { new: true })
+        .then((property) => {
+          res.status(201).json({ auction, property, result });
+        })
+        .catch((error) => {
+          res.status(500).json({ error });
+        });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
 };
 
 export const deleteAuctionHandler = async (req: Request, res: Response, next: NextFunction) => {

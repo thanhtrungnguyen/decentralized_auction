@@ -22,6 +22,7 @@ router.get('/properties', getAllPropertiesHandler);
 router.get('/:propertyId', getPropertyByIdHandler);
 router.use(requireRole(roles.SELLER));
 router.get('/myProperty/:index/:status/:search', getPropertiesByUserHandler);
+
 router.post(
   '/create',
   upload.fields([
