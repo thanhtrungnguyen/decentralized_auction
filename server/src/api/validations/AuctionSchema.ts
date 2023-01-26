@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { reject } from 'lodash';
 import { IAuction } from '../models/Auction';
 
 export const AuctionSchema = {
@@ -21,6 +22,11 @@ export const AuctionSchema = {
     endAuctionTime: Joi.string().trim().required(),
     duePaymentTime: Joi.string().trim().required(),
     registrationFee: Joi.string().trim().required(),
+    status: Joi.string().trim().required(),
+    property: Joi.string().trim().required()
+  }),
+  reject: Joi.object<IAuction>({
+    message: Joi.string().trim().required(),
     status: Joi.string().trim().required(),
     property: Joi.string().trim().required()
   })
