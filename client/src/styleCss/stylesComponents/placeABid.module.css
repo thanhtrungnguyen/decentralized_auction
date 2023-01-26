@@ -156,7 +156,22 @@
     color: #a92525;
 }
 .btn {
-    width: 382px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 180%;
+    /* identical to box height, or 36px */
+
+    letter-spacing: 0.5px;
+    color: #40bfff;
+    width: 200px;
+    height: 60px;
+    margin-left: 40px;
+    border: none;
+    border-radius: 15px;
+    background: #d1e3f3;
+    /* width: 382px;
     height: 36px;
     left: 1025px;
     top: 900px;
@@ -175,7 +190,7 @@
 
     flex: none;
     order: 0;
-    flex-grow: 0;
+    flex-grow: 0; */
 }
 .btnClose {
     width: 82px;

@@ -111,7 +111,7 @@ const AuctionDetail = () => {
                             <br />
                             <br />
                             <BidModalButton auctionId={data.auction._id} propertyId={data.auction.property} />
-                            <button className={styles.btn}>Place Bid</button>
+                            {/* <button className={styles.btn}>Place Bid</button> */}
                         </div>
                     </div>
                     <div className={styles.video}>
