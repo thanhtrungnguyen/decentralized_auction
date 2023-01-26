@@ -133,10 +133,10 @@ const ListNews = () => {
                             <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
                                 All
                             </button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="activate">
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Activate">
                                 Activate
                             </button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="deactivate">
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Deactivate">
                                 Deactivate
                             </button>
                             <form onSubmit={handleSubmit}>

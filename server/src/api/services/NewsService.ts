@@ -16,7 +16,7 @@ const getAllNews = async (index: any, status: any, search: any) => {
       : status != 'null' && search == 'null'
       ? (filter = { status: status })
       : (filter = { status: status, title: { $regex: search, $options: 'i' } });
-    var arr = await News.find(filter).skip(skip).limit(pase_size);
+    var arr = await News.find(filter).sort({ createdAt: -1 }).skip(skip).limit(pase_size);
     var count = await News.find(filter).count();
     return { listNews: arr, count: count };
   } catch (error) {
@@ -58,13 +58,14 @@ const updateNews = async (
 ) => {
   var img1;
   try {
-    if (!isEmptyObject(files)) {
-      const file1 = files['avatar'][0];
+    if (files) {
+      const file1 = files['avatar'];
       if (file1) {
-        img1 = await (await uploadFile(file1)).data;
+        img1 = await (await uploadFile(file1[0])).data;
         update.avatar = img1;
-      } else {
-        return { success: false, message: 'Upload avatar fail!!!' };
+        if (!img1) {
+          return { success: false, message: 'Upload avatar fail!!!' };
+        }
       }
     }
     return await News.findOneAndUpdate(filter, update, options);
