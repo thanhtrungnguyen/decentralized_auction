@@ -9,6 +9,7 @@ export interface IAuction {
   endAuctionTime: string;
   duePaymentTime: string;
   registrationFee: string;
+  message: string;
   status: string;
   property: IPropertyDocument['_id'];
 }
@@ -27,6 +28,7 @@ const auctionSchema: Schema = new Schema(
     endAuctionTime: { type: String },
     duePaymentTime: { type: String },
     registrationFee: { type: String },
+    message: { type: String, default: null },
     status: { type: String, required: true },
     property: { type: Schema.Types.ObjectId, required: true, ref: 'Property' }
   },
