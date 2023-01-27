@@ -5,7 +5,7 @@ RUN rm -rf build
 RUN npm cache clean
 RUN npm config rm proxy
 RUN npm config rm https-proxy
-RUN cd /tmp && npm install --force
+RUN cd /tmp && npm install --cache /tmp/empty-cache --force
 ADD ./ /src
 RUN rm -rf src/node_modules && cp -a /tmp/node_modules /src/
 WORKDIR /src
