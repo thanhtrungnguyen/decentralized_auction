@@ -2,7 +2,6 @@ import React from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import { useNotification } from "web3uikit";
 import { useMoralis, useWeb3Contract } from "react-moralis";
-import { ethers } from "ethers";
 import Countdown from "react-countdown";
 import Decimal from "decimal.js";
 import { BsCheckLg } from "react-icons/bs";

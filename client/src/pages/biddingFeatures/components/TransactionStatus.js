@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 
 function TransactionStatus({ transactionStatus }) {
