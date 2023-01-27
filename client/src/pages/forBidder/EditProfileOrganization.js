@@ -20,8 +20,7 @@ import styles from "../../styleCss/stylesPages/forBidder/editProfile.module.css"
 const EditProfileOrganization = () => {
     const axios = useAxiosPrivate();
     const { id } = useParams();
-    const baseURL = `http://localhost:8800/api/user/${id}`;
-    //const { data, loading, error } = useFetch(baseURL);
+
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
@@ -36,8 +35,6 @@ const EditProfileOrganization = () => {
     const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null);
     const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null);
     const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null);
-    const [position, setPosition] = useState(null);
-
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [gender, setGender] = useState("Male");
@@ -50,50 +47,39 @@ const EditProfileOrganization = () => {
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         await axios.get(baseURL).then((resp) => {
-    //             console.log(resp.data);
-    //             console.log("axios get");
-    //             setFirstName(resp.data.contact.First_Name__c);
-    //             setLastName(resp.data.contact.Last_Name__c);
-    //             setGender(resp.data.contact.Gender__c);
-    //             setDateOfBirth(resp.data.contact.Date_Of_Birth__c);
-    //             setEmail(resp.data.contact.Email__c);
-    //             setPhone(resp.data.contact.Phone__c);
-    //             setSpecificAddress(resp.data.contact.Address__c);
-    //             setCardNumber(resp.data.contact.Card_Number__c);
-    //             setCardGrantedPlace(resp.data.contact.Card_Granted_Place__c);
-    //             setDateRangeCard(resp.data.contact.Card_Granted_Date__c);
 
-    //             setOrganizationName(resp.data.account.Name);
-    //             setTaxCode(resp.data.account.Tax_Code__c);
-    //             setTaxCodeGrantedDate(resp.data.account.Tax_Code_Granted_Date__c);
-    //             setTaxCodeGrantedPlace(resp.data.account.Tax_Code_Granted_Place__c);
-    //             setSpecificAddressOrganization(resp.data.account.Specific_Address__c);
-    //             setPosition(resp.data.position);
+    const baseURL = `/organization/getByUserId/${id}`;
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                setOrganizationName(resp.data.result.name);
+                setTaxCode(resp.data.result.taxCode);
+                setTaxCodeGrantedDate(resp.data.result.taxCodeGrantedDate);
+                setTaxCodeGrantedPlace(resp.data.result.taxCodeGrantedPlace);
+                setSpecificAddressOrganization(resp.data.result.addressOrganization);
+                setFirstName(resp.data.result.individual.firstName);
+                setLastName(resp.data.result.individual.lastName);
+                setGender(resp.data.result.individual.gender);
+                setDateOfBirth(resp.data.result.individual.dateOfBirth);
+                setEmail(resp.data.result.individual.email);
+                setPhone(resp.data.result.individual.phone);
+                setSpecificAddress(resp.data.result.individual.address);
+                setCardNumber(resp.data.result.individual.cardNumber);
+                setCardGrantedPlace(resp.data.result.individual.cardGrantedPlace);
+                setDateRangeCard(resp.data.result.individual.cardGrantedDate);
+                setCardFront(resp.data.result.individual.frontSideImage);
+                setCardBack(resp.data.result.individual.backSideImage);
+            });
 
-    //             setData(resp.data);
-    //         });
-
-    //         if (getUser() != null) {
-    //             setRole(getUser().role);
-    //         } else {
-    //             setRole("");
-    //         }
-
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    // }, [baseURL]);
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {
             setOrganizationName(value);
-        }
-        if (id === "position") {
-            setPosition(value);
         }
         if (id === "taxCode") {
             setTaxCode(value);
@@ -186,8 +172,6 @@ const EditProfileOrganization = () => {
             notify("🦄 Email is empty");
         } else if (!phone.trim()) {
             notify("🦄 phone is empty");
-        } else if (!position.trim()) {
-            notify("🦄 position is empty");
         } else if (!cityId) {
             notify("🦄 city is empty");
         } else if (!districtId) {
@@ -212,44 +196,45 @@ const EditProfileOrganization = () => {
             notify("🦄 File card front, please select a file less than 2mb");
         } else {
             const formData = new FormData();
-            formData.append("organizationName", organizationName);
-            formData.append("taxCode", taxCode);
-            formData.append("taxCodeGrantedDate", taxCodeGrantedDate);
-            formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace);
-            formData.append("specificAddressOrganization", specificAddressOrganization);
-            formData.append("position", position);
+            formData.append("name", organizationName.trim());
+            formData.append("taxCode", taxCode.trim());
+            formData.append("taxCodeGrantedDate", taxCodeGrantedDate.trim());
+            formData.append("taxCodeGrantedPlace", taxCodeGrantedPlace.trim());
+            formData.append("addressOrganization", specificAddressOrganization.trim());
 
-            formData.append("firstName", firstName);
-            formData.append("lastName", lastName);
+            formData.append("firstName", firstName.trim());
+            formData.append("lastName", lastName.trim());
             formData.append("gender", gender);
-            formData.append("dateOfBirth", dateOfBirth);
-            formData.append("email", email);
-            formData.append("phone", phone);
+            formData.append("dateOfBirth", dateOfBirth.trim());
+            formData.append("email", email.trim());
+            formData.append("phone", phone.trim());
             formData.append("cityId", cityId);
             formData.append("city", selectedCity.label);
             formData.append("districtId", districtId);
             formData.append("district", selectedDistrict.label);
-            formData.append("wardId", wardId);
-            formData.append("ward", selectedWard.label);
-            formData.append("specificAddress", specificAddress);
-            formData.append("cardNumber", cardNumber);
-            formData.append("dateRangeCard", dateRangeCard);
-            formData.append("cardGrantedPlace", cardGrantedPlace);
-            formData.append("cardFront", cardFront);
-            formData.append("cardBack", cardBack);
+            formData.append("wardsId", wardId);
+            formData.append("wards", selectedWard.label);
+            formData.append("address", specificAddress.trim());
+            formData.append("cardNumber", cardNumber.trim());
+            formData.append("cardGrantedDate", dateRangeCard.trim());
+            formData.append("cardGrantedPlace", cardGrantedPlace.trim());
+            formData.append("frontSideImage", cardFront);
+            formData.append("backSideImage", cardBack);
+
 
             axios
-                .put(`/user/updateProfile/${id}`, formData, { withCredentials: true })
+                .patch(`/organization/update/bidder/${id}`, formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }, { withCredentials: true })
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
                     alert("Edit profile successfully!!!");
-                    navigate(`profile/${id}`);
+                    navigate(`/profileOrganization/${id}`);
                 })
                 .catch((err) => {
                     alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
                 });
-            console.log(formData);
         }
         event.preventDefault();
     };
@@ -353,9 +338,15 @@ const EditProfileOrganization = () => {
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
+                                <option value="Male" selected={gender === "Male" ? true : false}>
+                                    Male
+                                </option>
+                                <option value="Female" selected={gender === "Female" ? true : false}>
+                                    Female
+                                </option>
+                                <option value="Other" selected={gender === "Other" ? true : false}>
+                                    Other
+                                </option>
                             </select>
                             <p className={styles.txtBlack}>Date of birth</p>
                             <input
@@ -489,7 +480,7 @@ const EditProfileOrganization = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                required
+
                             />
                             <input
                                 id="cardBack"
@@ -498,11 +489,11 @@ const EditProfileOrganization = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                required
+
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
-                                    {cardFront && <img src={URL.createObjectURL(cardFront)} className={styles.img} alt="Thumb" />}
+                                    {cardFront && <img src={(cardFront)} className={styles.img} alt="Thumb" />}
                                     {/* <img
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
                                         className={styles.img}
@@ -513,7 +504,7 @@ const EditProfileOrganization = () => {
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
                                         className={styles.img}
                                     ></img> */}
-                                    {cardBack && <img src={URL.createObjectURL(cardBack)} className={styles.img} alt="Thumb" />}
+                                    {cardBack && <img src={(cardBack)} className={styles.img} alt="Thumb" />}
                                 </div>
                             </div>
                             <br />
@@ -524,7 +515,7 @@ const EditProfileOrganization = () => {
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
-                                    navigate("/profileOrganization");
+                                    navigate(`/profileOrganization/${id}`);
                                 }}
                             >
                                 Cancel

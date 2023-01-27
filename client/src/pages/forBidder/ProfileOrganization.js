@@ -245,7 +245,7 @@ const ProfileOrganization = () => {
                     <button
                         className={styles.btn2}
                         onClick={() => {
-                            navigate("/editProfileOrganization");
+                            navigate(`/editProfileOrganization/${id}`);
                         }}
                     >
                         Edit
