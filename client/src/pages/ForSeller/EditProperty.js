@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
 import HeaderUser from "../../components/header/HeaderUser";
-
+import Comments from "./components/comment";
 import { ToastContainer, toast } from "react-toastify";
 import Time from "../../components/time/Time";
 const EditProperty = () => {
@@ -238,6 +238,7 @@ const EditProperty = () => {
                     />
                     {/* Same as */}
                     <ToastContainer />
+                    <Comments />
                     <div className={styles.info}>
                         <div>
                             <p className={styles.title}>Basic Information</p>
@@ -288,7 +289,7 @@ const EditProperty = () => {
                                                 onReady={true}
                                                 width="40%"
                                                 height="90%"
-                                                className={styles.image}
+                                                className={styles.video}
                                                 alt="Thumb"
                                             />
                                         ) : (
@@ -378,7 +379,7 @@ const EditProperty = () => {
                                 <div className={styles.r}>
                                     <input
                                         id="priceStep"
-                                        type="number"
+                                        type="text"
                                         pattern="^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$"
                                         placeholder="Enter Price Step"
                                         className={styles.inputText}
@@ -411,6 +412,7 @@ const EditProperty = () => {
                                 </div>
                                 <div className={styles.r}>
                                     <DatePicker
+                                        style={{ with: "752px" }}
                                         id="viewPropertyTime"
                                         // onChange={(e) => handleInputChange(e)}
                                         onChange={setViewPropertyTime}

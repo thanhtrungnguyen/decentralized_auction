@@ -43,7 +43,7 @@ import ProfileOrganization from "./pages/forBidder/ProfileOrganization";
 import EditProfile from "./pages/forBidder/EditProfile";
 import EditProfileOrganization from "./pages/forBidder/EditProfileOrganization";
 import AboutUs from "./pages/common/AboutUs";
-import ConfirmPayment from "./pages/bidder/ui/ConfirmPayment";
+// import ConfirmPayment from "./pages/bidder/ui/ConfirmPayment";
 import ChangePassword from "./pages/common/ChangePassword";
 import ViewBiddingForManager from "./pages/forManager/ViewBiddingForManager";
 import ViewRegistrationForManager from "./pages/forManager/ViewRegistrationForManager";
@@ -51,7 +51,7 @@ import AuctionResult from "./pages/forManager/AuctionResult";
 import ViewNews from "./pages/common/ViewNews";
 import ViewNewsForAdmin from "./pages/forAdmin/ViewNewsForAdmin";
 import BidderOrganizationDetail from "./pages/forAdmin/BidderOrganizationDetail";
-import FakeAuctionDetail from "./pages/bidder/FakeAuctionDetail";
+// import FakeAuctionDetail from "./pages/bidder/FakeAuctionDetail";
 import EditProfileSeller from "./pages/ForSeller/EditProfile";
 import ProfileSeller from "./pages/ForSeller/ProfileSeller";
 import ProfileManager from "./pages/forManager/Profile";
@@ -139,7 +139,7 @@ function App() {
             <Route path="editProfileOrganization/:id" element={<EditProfileOrganization />} />
             <Route path="editProfileOrganization" element={<EditProfileOrganization />} />
             <Route path="aboutUs" element={<AboutUs />} />
-            <Route path="payment/:id" element={<ConfirmPayment />} />
+            {/* <Route path="payment/:id" element={<ConfirmPayment />} /> */}
             <Route path="changePassword/:id" element={<ChangePassword />} />
             <Route path="changePassword" element={<ChangePassword />} />
             <Route path="viewBiddingForManager/:id" element={<ViewBiddingForManager />} />
@@ -154,7 +154,7 @@ function App() {
             <Route path="viewNewsForAdmin" element={<ViewNewsForAdmin />} />
             <Route path="bidderOrganizationDetail/:id" element={<BidderOrganizationDetail />} />
             <Route path="bidderOrganizationDetail" element={<BidderOrganizationDetail />} />
-            <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
+            {/* <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} /> */}
             <Route path="profileSeller/:sellerId" element={<ProfileSeller />} />
             <Route path="editProfileSeller/:sellerId" element={<EditProfileSeller />} />
             <Route path="profileSeller" element={<ProfileSeller />} />
