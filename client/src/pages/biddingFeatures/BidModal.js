@@ -9,9 +9,8 @@ import PlaceBid from "./ui/PlaceBid";
 import NotYetRegistrationTime from "./ui/NotYetRegistrationTime";
 import WaitingForAuctionTime from "./ui/WaitingForAuctionTime";
 import Loading from "./components/Loader";
-import { SUPPORT_CHAINS, CHAIN_ID, CONTRACT_ABI, CONTRACT_ADDRESS } from "../../config/blockchainConfig";
+import { SUPPORT_CHAINS } from "../../config/blockchainConfig";
 import AuctionResult from "./ui/auctionResult/AuctionResult";
-import { useFetchBidding } from "../../hooks/useFetch";
 
 const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
     const { chainId, isWeb3Enabled, account } = useMoralis();

@@ -1,12 +1,9 @@
 import styles from "../../styleCss/stylesPages/forAdmin/addSeller.module.css";
-import Header from "../../components/header/Header";
-import NavBar from "../../components/navbar/NavBarAdmin";
-import Footer from "../../components/footer/Footer";
 import SideBarAdmin from "../../components/sidebar_admin/SidebarAdmin";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import HeaderUser from "../../components/header/HeaderUser";
+
 
 import Select from "react-select";
 import useLocationForm from "../register/useLocationForm";
@@ -153,7 +150,6 @@ const EditSeller = () => {
                 setCardFront(resp.data.result.individual.frontSideImage);
                 setCardBack(resp.data.result.individual.backSideImage);
             });
-
             setLoading(false);
         };
         fetchData();

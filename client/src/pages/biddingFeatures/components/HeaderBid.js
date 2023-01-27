@@ -1,9 +1,7 @@
 // import { Button } from "@mui/material";
 import React from "react";
 import { ConnectButton } from "web3uikit";
-// import { AiOutlineClose } from "react-icons/ai";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import { useMoralis } from "react-moralis";
 
 const HeaderBid = ({ setOpenModal }) => {
     return (

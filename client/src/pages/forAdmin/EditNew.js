@@ -93,12 +93,16 @@ const EditNew = () => {
 
             formData.append("title", title.trim());
             formData.append("content", content.trim());
-            if (avatar != null) {
+            if (avatar !== null) {
                 formData.append("avatar", avatar);
             }
 
+
+
             axios
-                .put(`/news/update/${id}`, formData, { withCredentials: true })
+                .patch(`/news/update/${id}`, formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }, { withCredentials: true })
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);

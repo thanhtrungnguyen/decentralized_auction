@@ -32,7 +32,7 @@ router.post(
   //validateResource(NewsSchema.create),
   createNewsHandler
 );
-router.put(
+router.patch(
   '/update/:newsId',
   upload.fields([
     {

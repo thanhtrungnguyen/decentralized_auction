@@ -20,8 +20,8 @@ import { ToastContainer, toast } from "react-toastify";
 const EditProfile = () => {
     const axios = useAxiosPrivate();
     const { id, propertyId } = useParams();
-    const baseURL = `http://localhost:8800/api/user/${id}`;
-    const [loading, setLoading] = useState(false);
+    const baseURL = `/individual/getByUserId/${id}`;
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
 
@@ -42,55 +42,50 @@ const EditProfile = () => {
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         await axios.get(baseURL).then((resp) => {
-    //             console.log(resp.data);
-    //             console.log("axios get");
-    //             setFirstName(resp.data.contact.First_Name__c);
-    //             setLastName(resp.data.contact.Last_Name__c);
-    //             setGender(resp.data.contact.Gender__c);
-    //             setDateOfBirth(resp.data.contact.Date_Of_Birth__c);
-    //             setEmail(resp.data.contact.Email__c);
-    //             setPhone(resp.data.contact.Phone__c);
-    //             setSpecificAddress(resp.data.contact.Address__c);
-    //             setCardNumber(resp.data.contact.Card_Number__c);
-    //             setCardGrantedPlace(resp.data.contact.Card_Granted_Place__c);
-    //             setDateRangeCard(resp.data.contact.Card_Granted_Date__c);
-    //             setData(resp.data);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                setFirstName(resp.data.individual.firstName);
+                setLastName(resp.data.individual.lastName);
+                setGender(resp.data.individual.gender);
+                setDateOfBirth(resp.data.individual.dateOfBirth);
+                setEmail(resp.data.individual.email);
+                setPhone(resp.data.individual.phone);
+                setSpecificAddress(resp.data.individual.address);
+                setCardNumber(resp.data.individual.cardNumber);
+                setCardGrantedPlace(resp.data.individual.cardGrantedPlace);
+                setDateRangeCard(resp.data.individual.cardGrantedDate);
+                setCardFront(resp.data.individual.frontSideImage);
+                setCardBack(resp.data.individual.backSideImage);
 
-    //             // onCitySelect(sCity);
-    //             // onDistrictSelect(sDistrict);
-    //             // onWardSelect(sWard);
-    //         });
+                setData(resp.data);
 
-    //         if (getUser() != null) {
-    //             setRole(getUser().role);
-    //         } else {
-    //             setRole("");
-    //         }
-
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    // }, [baseURL]);
+                // onCitySelect(sCity);
+                // onDistrictSelect(sDistrict);
+                // onWardSelect(sWard);
+            });
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
 
     console.log(data);
-    // const city_Id = data.contact.City_Id__c
-    // const city_name = data.contact.City__c
-    const sCity = {
-        // value: city_Id,
-        // label: city_name,
-    };
-    const sDistrict = {
-        // value: `${data.contact.District_Id__c}`,
-        // label: `${data.contact.District__c}`
-    };
-    const sWard = {
-        // value: `${data.contact.Wards_Id__c}`,
-        // label: `${data.contact.Wards__c}`,
-    };
+    // const city_Id = data.individual.cityId
+    // const city_name = data.individual.city
+    // const sCity = {
+    //     value: city_Id,
+    //     label: city_name,
+    // };
+    // const sDistrict = {
+    //     value: `${data.individual.districtId}`,
+    //     label: `${data.individual.district}`
+    // };
+    // const sWard = {
+    //     value: `${data.individual.wardsId}`,
+    //     label: `${data.individual.wards}`,
+    // };
     console.log(selectedCity);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -190,7 +185,7 @@ const EditProfile = () => {
         } else {
             formData.append("firstName", firstName.trim());
             formData.append("lastName", lastName.trim());
-            formData.append("gender", gender.trim());
+            formData.append("gender", gender);
             formData.append("dateOfBirth", dateOfBirth.trim());
             formData.append("email", email.trim());
             formData.append("phone", phone.trim());
@@ -198,18 +193,23 @@ const EditProfile = () => {
             formData.append("city", selectedCity.label);
             formData.append("districtId", districtId);
             formData.append("district", selectedDistrict.label);
-            formData.append("wardId", wardId);
-            formData.append("ward", selectedWard.label);
-            formData.append("specificAddress", specificAddress.trim());
+            formData.append("wardsId", wardId);
+            formData.append("wards", selectedWard.label);
+            formData.append("address", specificAddress.trim());
             formData.append("cardNumber", cardNumber.trim());
-            formData.append("dateRangeCard", dateRangeCard.trim());
+            formData.append("cardGrantedDate", dateRangeCard.trim());
             formData.append("cardGrantedPlace", cardGrantedPlace.trim());
-            formData.append("cardFront", cardFront);
-            formData.append("cardBack", cardBack);
+            formData.append("frontSideImage", cardFront);
+            formData.append("backSideImage", cardBack);
+
+            // formData.append("role", role.trim());
+            // formData.append("type", userType.trim());
             // formData.append('_method', 'PUT')
             console.log(selectedDistrict);
             axios
-                .put(`/user/updateProfile/${id}`, formData, { withCredentials: true })
+                .patch(`/individual/update/${data.individual._id}`, formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }, { withCredentials: true })
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
@@ -281,9 +281,15 @@ const EditProfile = () => {
                             ></input>
                             <p className={styles.txtBlack}></p>
                             <select id="gender" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
+                                <option value="Male" selected={gender === "Male" ? true : false}>
+                                    Male
+                                </option>
+                                <option value="Female" selected={gender === "Female" ? true : false}>
+                                    Female
+                                </option>
+                                <option value="Other" selected={gender === "Other" ? true : false}>
+                                    Other
+                                </option>
                             </select>
                             <p className={styles.txtBlack}>Date of birth</p>
                             <input
@@ -417,7 +423,7 @@ const EditProfile = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                required
+
                             />
                             <input
                                 id="cardBack"
@@ -426,11 +432,11 @@ const EditProfile = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-                                required
+
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
-                                    {cardFront && <img src={URL.createObjectURL(cardFront)} className={styles.img} alt="Thumb" />}
+                                    {cardFront && <img src={(cardFront)} className={styles.img} alt="Thumb" />}
                                     {/* <img
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
                                         className={styles.img}
@@ -441,7 +447,7 @@ const EditProfile = () => {
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
                                         className={styles.img}
                                     ></img> */}
-                                    {cardBack && <img src={URL.createObjectURL(cardBack)} className={styles.img} alt="Thumb" />}
+                                    {cardBack && <img src={(cardBack)} className={styles.img} alt="Thumb" />}
                                 </div>
                             </div>
                             <br />
@@ -452,7 +458,7 @@ const EditProfile = () => {
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
-                                    navigate("/profile");
+                                    navigate(`/profile/${id}`);
                                 }}
                             >
                                 Cancel

@@ -5,6 +5,7 @@ import {
   getByUserIdHandler,
   getSellerByIdHandler,
   getSellerHandler,
+  updateBidderHandler,
   updateSellerHandler
 } from '../controllers/OrganizationController';
 import { validateResource } from '../middleware/validateResource';
@@ -52,8 +53,25 @@ router.patch(
   // validateResource(IndividualSchema.create),
   updateSellerHandler
 );
+router.patch(
+  '/update/bidder/:id',
+  upload.fields([
+    {
+      name: 'frontSideImage',
+      maxCount: 1
+    },
+    {
+      name: 'backSideImage',
+      maxCount: 1
+    }
+  ]),
+  // validateResource(OrganizationSchema.create),
+  // validateResource(IndividualSchema.create),
+  updateBidderHandler
+);
 router.get('/seller', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getSellerHandler);
 router.get('/getAll', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getAllHandler);
 router.get('/getById/:idIndividual', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getSellerByIdHandler);
+router.get('/getByUserId/:userId', requireRole(roles.BIDDER), getByUserIdHandler);
 
 export default router;

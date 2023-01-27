@@ -28,7 +28,7 @@ const AddManager = () => {
     const [specificAddress, setSpecificAddress] = useState("");
     const [message, setMessage] = useState("");
     const [role, setRole] = useState();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const type = "operator";
     const navigate = useNavigate();
 
