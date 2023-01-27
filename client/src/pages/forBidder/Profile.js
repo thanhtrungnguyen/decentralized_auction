@@ -201,7 +201,7 @@ const Profile = () => {
                     <button
                         className={styles.btn2}
                         onClick={() => {
-                            navigate("/editProfile");
+                            navigate(`/editProfile/${id}`);
                         }}
                     >
                         Edit

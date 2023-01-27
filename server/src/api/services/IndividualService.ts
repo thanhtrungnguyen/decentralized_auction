@@ -63,7 +63,7 @@ const updateIndividual = async (
       if (file2) {
         img2 = await (await uploadFile(file2[0])).data;
         update.backSideImage = img2;
-        if (!img1) {
+        if (!img2) {
           return { success: false, message: 'Upload backSideImage fail!!!' };
         }
       }
