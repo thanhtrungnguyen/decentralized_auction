@@ -43,10 +43,21 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
         });
     };
     const handleSubmit = (event) => {
+        const now = Date.now();
         if (!registrationFee.trim()) {
             notify("🦄 registrationFee is empty");
         } else if (!name.trim()) {
             notify("🦄 name is empty");
+        } else if (now >= startRegistrationTime) {
+            notify("🦄 Start Registration Time must after now");
+        } else if (startRegistrationTime >= endRegistrationTime) {
+            notify("🦄 End Registration Time must after Start Registration Time   ");
+        } else if (endRegistrationTime >= startAuctionTime) {
+            notify("🦄 start Auction Time must after End Registration Time");
+        } else if (startAuctionTime >= endAuctionTime) {
+            notify("🦄 End Auction Time must after Start Auction Time");
+        } else if (endAuctionTime >= duePaymentTime) {
+            notify("🦄 Due Payment Time must after End Auction Time");
         } else {
             axios
                 .patch(`http://localhost:5000/api/auction/approve/${auctionId}`, {

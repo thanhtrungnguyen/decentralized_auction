@@ -140,6 +140,7 @@ function App() {
             <Route path="editProfileOrganization" element={<EditProfileOrganization />} />
             <Route path="aboutUs" element={<AboutUs />} />
             {/* <Route path="payment/:id" element={<ConfirmPayment />} /> */}
+            {/* <Route path="payment/:id" element={<ConfirmPayment />} /> */}
             <Route path="changePassword/:id" element={<ChangePassword />} />
             <Route path="changePassword" element={<ChangePassword />} />
             <Route path="viewBiddingForManager/:id" element={<ViewBiddingForManager />} />
@@ -154,7 +155,7 @@ function App() {
             <Route path="viewNewsForAdmin" element={<ViewNewsForAdmin />} />
             <Route path="bidderOrganizationDetail/:id" element={<BidderOrganizationDetail />} />
             <Route path="bidderOrganizationDetail" element={<BidderOrganizationDetail />} />
-            <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
+            {/* <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} /> */}
             <Route path="profileSeller/:sellerId" element={<ProfileSeller />} />
             <Route path="changePasswordForSeller/:sellerId" element={<ChangePasswordSeller />} />
             <Route path="profileSeller" element={<ProfileSeller />} />
