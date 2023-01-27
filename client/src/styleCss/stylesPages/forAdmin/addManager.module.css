@@ -1,0 +1,130 @@
+.container {
+    width: 100%;
+    height: 160%;
+    position: absolute;
+    background: #f9fafb;
+}
+
+.add {
+    position: absolute;
+    width: 850px;
+    height: 1350px;
+    left: 50%;
+    border: 1px solid #e5e7eb;
+
+    margin-left: -400px;
+    margin-top: 80px;
+    background: #ffffff;
+}
+.title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 32px;
+    margin-left: 20px;
+    color: #111827;
+}
+.if {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    margin-left: 20px;
+    color: #111827;
+}
+.txt {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 32px;
+    margin-left: 20px;
+    color: #111827;
+}
+.ip {
+    width: 800px;
+    height: 39px;
+
+    background: #f9fafb;
+    margin-left: 20px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    /* identical to box height, or 171% */
+
+    /* Grey/Grey 90 */
+
+    color: #111827;
+}
+.btnCancel {
+    width: 118px;
+    height: 54px;
+
+    margin-left: 20px;
+
+    float: right;
+    background: #ffffff;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+
+    margin-right: 20px;
+    /* identical to box height, or 150% */
+
+    /* Grey/Grey 90 */
+
+    color: #111827;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+.btnChange {
+    width: 150px;
+    height: 54px;
+
+    margin-left: 20px;
+
+    float: right;
+    background: violet;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+
+    margin-right: 20px;
+    /* identical to box height, or 150% */
+
+    /* Grey/Grey 90 */
+
+    color: #111827;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+.btnAdd {
+    width: 119px;
+    height: 54px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    /* Grey/Grey 0 */
+
+    color: #ffffff;
+    float: right;
+    margin-right: 20px;
+    margin-left: 20px;
+    background: #7c3aed;
+    border-radius: 8px;
+}

@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  nginx:
+    depends_on:
+      - server
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+  server:
+    container_name: dap-server
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+  client:
+    container_name: dap-client
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - /app/node_modules
+      - ./client:/app

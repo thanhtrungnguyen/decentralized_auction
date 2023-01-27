@@ -1,0 +1,47 @@
+.header {
+    width: 100%;
+    height: 80px;
+    background: #f6f7f8;
+    position: relative;
+}
+
+.pageName {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 36px;
+    /* identical to box height */
+    left: 20%;
+    top: 20%;
+    color: #101750;
+    position: absolute;
+}
+.Link {
+    position: absolute;
+    left: 40%;
+    top: 30%;
+}
+.txt {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    text-decoration: none;
+    color: #33a0ff;
+    position: relative;
+    margin-left: 10px;
+}
+.txtR {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    text-decoration: none;
+
+    color: #262626;
+    position: relative;
+    margin-right: 50px;
+}

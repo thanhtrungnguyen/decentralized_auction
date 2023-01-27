@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "default": "dap-calls-api"
+  },
+  "targets": {},
+  "etags": {
+    "dap-calls-api": {
+      "extensionInstances": {
+        "moralis-streams": "f50939607fec52859165c52e19e0c3fd7ef11b9d0a73b8d3db4ec05ad62361d6"
+      }
+    }
+  }
+}

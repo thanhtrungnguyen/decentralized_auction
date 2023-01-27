@@ -1,0 +1,421 @@
+.con {
+    width: 100%;
+    display: flex;
+}
+.container {
+    width: 100%;
+}
+.info {
+    margin-top: 40px;
+    width: 1200px;
+    height: 600px;
+    margin-left: 100px;
+    display: flex;
+    margin-bottom: 100px;
+}
+.media {
+    width: 504px;
+    height: 630px;
+}
+.show {
+    width: 504px;
+    height: 500px;
+    float: left;
+    border-radius: 5px;
+}
+.content {
+    float: right;
+}
+.title {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 36px;
+    margin-top: 0;
+    color: #22262a;
+    margin-left: 40px;
+    font-weight: bold;
+}
+.hr {
+    background: #f6f7f8;
+    margin-left: 40px;
+    width: 550px;
+}
+.price {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 180%;
+    /* identical to box height, or 36px */
+
+    letter-spacing: 0.5px;
+    margin-left: 40px;
+
+    /* Primary/Blue */
+
+    color: #40bfff;
+}
+.price2 {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 180%;
+    /* identical to box height, or 36px */
+
+    letter-spacing: 0.5px;
+    text-align: center;
+    /* Primary/Blue */
+    width: 100%;
+    color: #40bfff;
+}
+.time {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    margin-left: 40px;
+
+    color: #262626;
+}
+.btn {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 180%;
+    /* identical to box height, or 36px */
+
+    letter-spacing: 0.5px;
+    color: #40bfff;
+    width: 200px;
+    height: 60px;
+    margin-left: 40px;
+    border: none;
+    border-radius: 15px;
+    background: #d1e3f3;
+}
+.btn2 {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 180%;
+    /* identical to box height, or 36px */
+
+    letter-spacing: 0.5px;
+    color: #40bfff;
+    width: 150px;
+    height: 35px;
+    margin-left: 110px;
+    border: none;
+    border-radius: 10px;
+    background: #d1e3f3;
+}
+.choose {
+    /* display: flex; */
+}
+.img {
+    width: 29%;
+    height: 110px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.video {
+    margin-top: 40px;
+
+    width: 500px;
+    height: 400px;
+    float: right;
+    border-radius: 5px;
+}
+.des {
+    width: 1200px;
+    height: 500px;
+    margin-left: 100px;
+    margin-bottom: 100px;
+    background: #fafafb;
+}
+.text {
+    margin-left: 100px;
+    margin-right: 100px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 180%;
+    /* or 22px */
+
+    letter-spacing: 0.5px;
+
+    /* Neutral/Grey */
+    width: 1000px;
+    height: 300px;
+    color: #9098b1;
+    overflow: scroll;
+}
+.related {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 52px;
+
+    color: #22262a;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 100px;
+}
+.auctions {
+    width: 100%;
+    display: flex;
+    margin-bottom: 150px;
+}
+.auction {
+    width: 385px;
+    height: 520px;
+    border: 3px solid #f6f7f8;
+    margin-left: 60px;
+}
+.image {
+    width: 383px;
+    height: 350px;
+    border-radius: 5px;
+}
+.t {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 150%;
+    /* or 27px */
+
+    letter-spacing: 0.5px;
+
+    /* Neutral/Dark */
+    text-align: center;
+    width: 100%;
+    color: #223263;
+}
+/* .container {
+    position: relative;
+    width: 1100px;
+    height: 509px;
+    left: 50%;
+    margin-left: -550px;
+    background: #ffffff;
+    box-shadow: 0px 0px 25px 10px #f6f4fd;
+    border-radius: 2px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: table;
+}
+.btn {
+    width: 108px;
+    height: 36px;
+    background: #4c34c2;
+    border-radius: 4px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    /color: #ffffff;
+}
+.col1 {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+.col3 {
+    position: absolute;
+    width: 30%;
+    height: 100%;
+    float: left;
+}
+.col2 {
+    width: 50%;
+    height: 100%;
+
+    padding: 10px;
+    float: right;
+    position: relative;
+}
+.col4 {
+    width: 70%;
+    height: 100%;
+
+    padding: 10px;
+    float: right;
+    position: relative;
+}
+.row {
+    width: 90%;
+    height: 30%;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.conI {
+    width: 100%;
+    height: 100%;
+}
+.des {
+    width: 100%;
+    height: 649px;
+    background: #f9f8fe;
+    padding-top: 100px;
+    position: relative;
+}
+.cont {
+    position: relative;
+    width: 1100px;
+    height: 100%;
+    left: 50%;
+    margin-left: -550px;
+    display: table;
+}
+
+.txtDesBold {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 24px;
+
+    text-decoration-line: underline;
+
+    color: #151875;
+}
+.txtDes {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+
+    color: #3f509e;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.colcont1 {
+    position: relative;
+    width: 40%;
+    height: 100%;
+    display: table-cell;
+}
+.colcont2 {
+    position: relative;
+    width: 60%;
+    height: 100%;
+    display: table-cell;
+}
+.RelatedAuctions {
+    position: relative;
+    width: 1100px;
+    height: 400px;
+    left: 50%;
+    margin-left: -550px;
+    background: #ffffff;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.tb {
+    width: 1100px;
+    height: 300px;
+    display: table;
+    position: absolute;
+}
+.col {
+    width: 25%;
+    height: 100%;
+    display: table-cell;
+}
+.img {
+    width: 100%;
+    height: 100%;
+}
+.img2 {
+    width: 85%;
+    height: 95%;
+    margin-left: 5%;
+}
+.video {
+    position: absolute;
+    width: 85%;
+    height: 95%;
+    margin-left: 5%;
+}
+.img:hover {
+    transform: scale(1.2);
+}
+.img2:hover {
+    transform: scale(1.2);
+}
+.title {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 36px;
+    color: #0d134e;
+}
+.area {
+    position: relative;
+    width: 700px;
+    height: 400px;
+
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 29px;
+
+    color: #000000;
+}
+.txtBold {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 29px;
+
+    text-transform: capitalize;
+
+    color: #151875;
+}
+
+.txt {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+
+    color: #9295aa;
+}
+.txtImg {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+
+    color: #151875;
+    margin: 10%;
+}
+.txtImgS {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 13px;
+
+    color: #151875;
+    margin: 10%;
+} */

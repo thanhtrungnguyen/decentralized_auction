@@ -1,0 +1,1431 @@
+{
+  "info": {
+    "_postman_id": "3934e325-b893-4137-ba22-99015b102595",
+    "name": "DAPv2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "25203032"
+  },
+  "item": [
+    {
+      "name": "session",
+      "item": [
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "manager",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "manager",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/session",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "session"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get current session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2M2YmE3MjdiMTU5Y2Y1YzRlZmQ5ZmYiLCJ1c2VybmFtZSI6ImFkbWluIiwidmVyaWZpY2F0aW9uQ29kZSI6IjA2MmU5MDExLWJmZDQtNGNjOC05M2ViLTUyODhmNzM2MTM2NSIsInZlcmlmaWVkIjpmYWxzZSwic3RhdHVzIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJjcmVhdGVkQXQiOiIyMDIzLTAxLTE3VDE1OjEwOjQyLjA2N1oiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTE3VDE1OjEwOjQyLjA2N1oiLCJ0eXBlIjoib3BlcmF0b3IiLCJzZXNzaW9uIjoiNjNjOTBiNThhMjFjMTczY2EyZTllNmY3IiwiaWF0IjoxNjc0MTIwMDI0LCJleHAiOjE3MDU2Nzc2MjR9.CjpPZQUecmqJs9pxYU610qnvAI8FRtpT0o5Xuz4H_gY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2I5MmQyMmMyMWRhMWI4YmY3ZWY0ODQiLCJlbWFpbCI6InRoYW5odHJ1bmc2OTJrQGdtYWlsLmNvbSIsInZlcmlmaWNhdGlvbkNvZGUiOiI2NDg1YjA3MS04OGFlLTQ5NjMtOWJiMi1lOTkwOTAzNTIwNTkiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6ImJpZGRlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMDdUMDg6Mjg6MTguNTU2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMDdUMDg6Mjg6MTguNTU2WiIsInNlc3Npb24iOiI2M2I5NDZiOGQ5NjYwZDUxYmM5OGZkY2YiLCJpYXQiOjE2NzMwODY2NDgsImV4cCI6MTY3MzA4NzU0OH0.u4GTpenRBW4n9Cbfg2KcmiCrdPpltPqMcx09WRmch4E\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/session",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "session"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2MwMzk0MzdhODcyOGRiZTA2NTg1ZmQiLCJ1c2VybmFtZSI6ImJpZGRlciIsInZlcmlmaWNhdGlvbkNvZGUiOiJhZGQyNjM3Mi0wNjZiLTRiNzctYTNlYy02NDQ1NmIyMmMyNTciLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6ImJpZGRlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTJUMTY6NDU6NTUuMTY2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTJUMTY6NDU6NTUuMTY2WiIsInNlc3Npb24iOiI2M2M0MTE2MDk0N2ZmOTkxN2NjOWU2NDgiLCJpYXQiOjE2NzM3OTM4ODgsImV4cCI6MTcwNTM1MTQ4OH0.3OwdGqUcYbywewxkIsrsP22VPvZwCQkdT21LjujZ2Ak",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/session",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "session"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "require manager",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2M2YmE3MjdiMTU5Y2Y1YzRlZmQ5ZmYiLCJ1c2VybmFtZSI6ImFkbWluIiwidmVyaWZpY2F0aW9uQ29kZSI6IjA2MmU5MDExLWJmZDQtNGNjOC05M2ViLTUyODhmNzM2MTM2NSIsInZlcmlmaWVkIjpmYWxzZSwic3RhdHVzIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJjcmVhdGVkQXQiOiIyMDIzLTAxLTE3VDE1OjEwOjQyLjA2N1oiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTE3VDE1OjEwOjQyLjA2N1oiLCJ0eXBlIjoib3BlcmF0b3IiLCJzZXNzaW9uIjoiNjNjOTBiNThhMjFjMTczY2EyZTllNmY3IiwiaWF0IjoxNjc0MTIwMDI0LCJleHAiOjE3MDU2Nzc2MjR9.CjpPZQUecmqJs9pxYU610qnvAI8FRtpT0o5Xuz4H_gY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/session/manager",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "session", "manager"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "require admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2M2YmJjMjE3ZGUyNzJlMzdjMjUxZDIiLCJ1c2VybmFtZSI6Im1hbmFnZXIiLCJ2ZXJpZmljYXRpb25Db2RlIjoiZmRlMjQxY2QtNzNmYy00YTZiLWJhMzUtZTRlMTVkNmZmMzk3IiwidmVyaWZpZWQiOmZhbHNlLCJzdGF0dXMiOnRydWUsInJvbGUiOiJtYW5hZ2VyIiwiY3JlYXRlZEF0IjoiMjAyMy0wMS0xN1QxNToxNjoxOC4xOTdaIiwidXBkYXRlZEF0IjoiMjAyMy0wMS0xN1QxNzoyOTo1NS42OTFaIiwidHlwZSI6Im9wZXJhdG9yIiwic2Vzc2lvbiI6IjYzYzkwYzk2NzFhMTg1MDhlY2U5MzhlYSIsImlhdCI6MTY3NDEyMDM0MiwiZXhwIjoxNzA1Njc3OTQyfQ.F13s3BdjmhHiQAYrIhXvNnfU7mVWzNp8ybJwWshlN_4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/session/admin",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "session", "admin"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "require seller",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2JkODUzMWNjOWQ3NWNkODc4MDQ1NGMiLCJ1c2VybmFtZSI6InNlbGxlcjZAZnB0LmVkdS52biIsInZlcmlmaWNhdGlvbkNvZGUiOiI5NzJkZWZlNC01MTQzLTQxOTYtYWZkMC05YzZhZDdmNDUxNWMiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6InNlbGxlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInNlc3Npb24iOiI2M2JlNzJhYmM1ZjliYjEwMjZhOTYwNDgiLCJpYXQiOjE2NzM0MjU1NzksImV4cCI6MTY3MzQyNjQ3OX0.oU1wPOqG99vgpnNhxwwsfFEOOT8vuUdKNQACYL14ZO8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/session/seller",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "session", "seller"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "require bidder",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2JkODUzMWNjOWQ3NWNkODc4MDQ1NGMiLCJ1c2VybmFtZSI6InNlbGxlcjZAZnB0LmVkdS52biIsInZlcmlmaWNhdGlvbkNvZGUiOiI5NzJkZWZlNC01MTQzLTQxOTYtYWZkMC05YzZhZDdmNDUxNWMiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6InNlbGxlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInNlc3Npb24iOiI2M2JlNmYwMmI0OGE2YmFlM2E5M2M0YTgiLCJpYXQiOjE2NzM0MjQ2NDIsImV4cCI6MTY3MzQyNTU0Mn0.hsPEUFCA2AWb65wPatHpeVK94DXMa0VoSZDFPt5kg-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/session/bidder",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "session", "bidder"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "get all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/user/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User By Role",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/user/users/:role/:index/:status/:search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "users", ":role", ":index", ":status", ":search"],
+              "variable": [
+                {
+                  "key": "role",
+                  "value": "bidder"
+                },
+                {
+                  "key": "index",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "null"
+                },
+                {
+                  "key": "search",
+                  "value": "null"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get one",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/user/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "63b92d22c21da1b8bf7ef484"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create one",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n            \"username\": \"seller1\",\r\n            \"password\": \"seller\",\r\n            \"passwordConfirmation\":\"seller\",\r\n            \"role\": \"seller\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/user/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "verify user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/user/verify/63b9260db72a1b00ff19216c/ba4e22d2-e6f7-49e2-a6d5-717ee9845374",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "verify", "63b9260db72a1b00ff19216c", "ba4e22d2-e6f7-49e2-a6d5-717ee9845374"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/user/changeStatus/:userId/:status",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "changeStatus", ":userId", ":status"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "63bed49d5760ca202b4d2d35"
+                },
+                {
+                  "key": "status",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "change password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"password\":\"22d2\",\r\n    \"passwordConfirmation\":\"22d2\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/user/changePassword/63b9260db72a1b00ff19216c",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "changePassword", "63b9260db72a1b00ff19216c"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "forgot password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"trungnthe141289@fpt.edu.vn\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/user/forgotPassword",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "forgotPassword"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reset password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"password\":\"222\",\r\n    \"passwordConfirmation\":\"222\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/user/resetPassword/63b9260db72a1b00ff19216c/714e2afb-9188-4810-879c-a691844a45d9",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "user", "resetPassword", "63b9260db72a1b00ff19216c", "714e2afb-9188-4810-879c-a691844a45d9"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "individual",
+      "item": [
+        {
+          "name": "create one",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \r\n    \"firstName\": \"firstName\",\r\n    \"lastName\": \"lastName\",\r\n    \"phone\": \"bidder4\",\r\n    \"email\": \"bidder4@gmail.com\",\r\n    \"dateOfBirth\": \"dateOfBirth\",\r\n    \"province\": \"province\",\r\n    \"district\": \"district\",\r\n    \"wards\": \"wards\",\r\n    \"address\": \"address\",\r\n    \"cardNumber\": \"bidder4\",\r\n    \"cardGrantedDate\": \"cardGrantedDate\",\r\n    \"cardGrantedPlace\": \"cardGrantedPlace\",\r\n    \"frontSideImage\": \"frontSideImage\",\r\n    \"backSideImage\": \"backSideImage\",\r\n    \"password\": \"password\"\r\n\r\n       \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/individual/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "individual", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get one",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/individual/getById/63c6c5950dc07bc9bcbd6a05",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "individual", "getById", "63c6c5950dc07bc9bcbd6a05"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/individual/individuals",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "individual", "individuals"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update one",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \r\n    \"firstName\": \"firstName\",\r\n    \"lastName\": \"lastName\",\r\n    \"phone\": \"phone\",\r\n    \"email\": \"email\",\r\n    \"dateOfBirth\": \"dadteOfBirth\",\r\n    \"province\": \"province\",\r\n    \"district\": \"district\",\r\n    \"wards\": \"wards\",\r\n    \"address\": \"address\",\r\n    \"cardNumber\": \"cardNumber\",\r\n    \"cardGrantedDate\": \"cardGrantedDate\",\r\n    \"cardGrantedPlace\": \"cardGrantedPlace\",\r\n    \"frontSideImage\": \"frontSideImage\",\r\n    \"backSideImage\": \"backSideImage\",\r\n    \"username\": \"usernamedf6\",\r\n    \"password\": \"password\"\r\n\r\n       \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/individual/update/63b58ea6a72368d16fc1a1bb",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "individual", "update", "63b58ea6a72368d16fc1a1bb"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete one",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/individual/delete/63b58ea6a72368d16fc1a1bb",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "individual", "delete", "63b58ea6a72368d16fc1a1bb"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Organization",
+      "item": [
+        {
+          "name": "CreateSeller",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n            \"username\": \"seller6@fpt.edu.vn\",\r\n            \"password\": \"111\",\r\n            \"passwordConfirmation\":\"111\",\r\n            \"role\": \"seller\",\r\n            \"name\": \"FPT\",\r\n            \"taxCode\": \"0123456789\",\r\n            \"taxCodeGrantedDate\":\"03-07-2000\",\r\n            \"taxCodeGrantedPlace\": \"Ha Noi\",\r\n            \"addressOrganization\": \"Ha Noi\",\r\n            \"firstName\":\"Ta\",\r\n            \"lastName\":\"Cong\",\r\n            \"phone\":\"0123456789\",\r\n            \"email\":\"congtm20@gmail.com\",\r\n            \"dateOfBirth\":\"03-07-2000\",\r\n            \"gender\":\"Male\",\r\n            \"city\":\"Pho Yen\",\r\n            \"cityId\":\"1\",\r\n            \"province\":\"Thai Nguyen\",\r\n            \"district\":\"Ba hang\",\r\n            \"districtId\":\"1\",\r\n            \"wards\":\"TDP2\",\r\n            \"wardsId\":\"1\",\r\n            \"cardNumber\":\"0123456789\",\r\n            \"address\":\"Ha Noi\",\r\n            \"cardGrantedDate\":\"01-01-2000\",\r\n            \"cardGrantedPlace\":\"Ha Noi\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/organization/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "organization", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Seller",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/organization/seller",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "organization", "seller"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Organixation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/organization/getAll",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "organization", "getAll"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/organization/getById/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "organization", "getById", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "63c6bd3f17de272e37c2526f"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "category",
+      "item": [
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"category 2\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/category/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "category", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/category/categories",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "category", "categories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get one",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/category/63b7edff336d17f31f9495b2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "category", "63b7edff336d17f31f9495b2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update one",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"dsagtgas\",\"status\":false}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/category/update/63b7edff336d17f31f9495b2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "category", "update", "63b7edff336d17f31f9495b2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete one",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/category/delete/63b7d8303e7f5580efab745a",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "category", "delete", "63b7d8303e7f5580efab745a"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get list category for manager",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/category/categories/:index/:status/:search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "category", "categories", ":index", ":status", ":search"],
+              "variable": [
+                {
+                  "key": "index",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "null"
+                },
+                {
+                  "key": "search",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "property",
+      "item": [
+        {
+          "name": "get all",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2JkODUzMWNjOWQ3NWNkODc4MDQ1NGMiLCJ1c2VybmFtZSI6InNlbGxlcjZAZnB0LmVkdS52biIsInZlcmlmaWNhdGlvbkNvZGUiOiI5NzJkZWZlNC01MTQzLTQxOTYtYWZkMC05YzZhZDdmNDUxNWMiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6InNlbGxlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInNlc3Npb24iOiI2M2MwMWQxMDNhOTRjNWUzYjg5ZDFiZDAiLCJpYXQiOjE2NzM1MzQ3MzYsImV4cCI6MTcwNTA5MjMzNn0.wMQr7xalIma72IxCS73aEGmWu889EC7N5KO-dApAgmY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/property/properties",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "property", "properties"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get one",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2JkODUzMWNjOWQ3NWNkODc4MDQ1NGMiLCJ1c2VybmFtZSI6InNlbGxlcjZAZnB0LmVkdS52biIsInZlcmlmaWNhdGlvbkNvZGUiOiI5NzJkZWZlNC01MTQzLTQxOTYtYWZkMC05YzZhZDdmNDUxNWMiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6InNlbGxlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInNlc3Npb24iOiI2M2MwNDU4OTMzYzMyNDYzYmEwZGZiYmQiLCJpYXQiOjE2NzM1NDUwOTcsImV4cCI6MTcwNTEwMjY5N30.4qAQxFRoMRkMiUYeP54FHkrCMBeWK4kEQsO3NoeqBMM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/property/63c10f2089e7c23aa3cb0a51",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "property", "63c10f2089e7c23aa3cb0a51"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update one",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "iyuti000000fds000      fdas",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/property/update/63b7ab7f075bc7c5653d874c",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "property", "update", "63b7ab7f075bc7c5653d874c"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete one",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/property/delete/63b7ab7f075bc7c5653d874c",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "property", "delete", "63b7ab7f075bc7c5653d874c"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create one",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2JkODUzMWNjOWQ3NWNkODc4MDQ1NGMiLCJ1c2VybmFtZSI6InNlbGxlcjZAZnB0LmVkdS52biIsInZlcmlmaWNhdGlvbkNvZGUiOiI5NzJkZWZlNC01MTQzLTQxOTYtYWZkMC05YzZhZDdmNDUxNWMiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6InNlbGxlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInNlc3Npb24iOiI2M2JmY2Q1MTY1MjViNjE3YmVjMjc2NDYiLCJpYXQiOjE2NzM1MTQzMjEsImV4cCI6MTcwNTA3MTkyMX0.GtaqUaKT2Bd6PJEo-utub0U4lDsuxaA0pKC5B9eRUFk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n        \"name\": \"property 111\",\r\n        \"description\": \"strin asdfasd g\",\r\n        \"status\": \"string\",\r\n        \"depositAmount\": \"24\",\r\n        \"priceStep\": \"43\",\r\n        \"startBid\": \"d24\",\r\n        \"placeViewProperty\": \"string\",\r\n        \"startViewPropertyTime\": \"1995-12-16T20:24:00.000Z\",\r\n        \"endViewPropertyTime\": \"1995-12-16T20:24:00.000Z\",\r\n        \"category\": \"63b97591ba64545958a46800\",\r\n        \"user\": \"63b92d22c21da1b8bf7ef484\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/property/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "property", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property List",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2JkODUzMWNjOWQ3NWNkODc4MDQ1NGMiLCJ1c2VybmFtZSI6InNlbGxlcjZAZnB0LmVkdS52biIsInZlcmlmaWNhdGlvbkNvZGUiOiI5NzJkZWZlNC01MTQzLTQxOTYtYWZkMC05YzZhZDdmNDUxNWMiLCJ2ZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6dHJ1ZSwicm9sZSI6InNlbGxlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDEtMTBUMTU6MzM6MDUuNDE2WiIsInNlc3Npb24iOiI2M2MwNDU4OTMzYzMyNDYzYmEwZGZiYmQiLCJpYXQiOjE2NzM1NDUwOTcsImV4cCI6MTcwNTEwMjY5N30.4qAQxFRoMRkMiUYeP54FHkrCMBeWK4kEQsO3NoeqBMM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/property/myProperty/:index/:status/:search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "property", "myProperty", ":index", ":status", ":search"],
+              "variable": [
+                {
+                  "key": "index",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "null"
+                },
+                {
+                  "key": "search",
+                  "value": "null"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "auction",
+      "item": [
+        {
+          "name": "get all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auction/auctions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auction", "auctions"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create one",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"name\": \"fdasfds\",\r\n  \"startRegistrationTime\": \"December 17, 1995 03:24:00\",\r\n  \"endRegistrationTime\": \"December 17, 1995 03:24:00\",\r\n  \"startAuctionTime\": \"December 17, 1995 03:24:00\",\r\n  \"endAuctionTime\": \"December 17, 1995 03:24:00\",\r\n  \"duePaymentTime\": \"December 17, 1995 03:24:00\",\r\n  \"registrationFee\": \"1\",\r\n  \"status\": \"string\",\r\n  \"property\": \"63be8efa857db764562d0ec4\"\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auction/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auction", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Auction By Id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": []
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auction/63b97641f66fc6be65fcaf78",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auction", "63b97641f66fc6be65fcaf78"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update one",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"name\": \"fdasfds\",\r\n  \"startRegistrationTime\": \"December 17, 1995 21:24:00\",\r\n  \"endRegistrationTime\": \"December 17, 1995 03:24:00\",\r\n  \"startAuctionTime\": \"December 17, 1995 03:24:00\",\r\n  \"endAuctionTime\": \"December 17, 1995 03:24:00\",\r\n  \"duePaymentTime\": \"December 17, 1dasfasd995 03:24:00\",\r\n  \"registrationFee\": \"1\",\r\n  \"status\": \"string\",\r\n  \"property\": \"63b975d5ba64545958a46806\"\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auction/update/63b97641f66fc6be65fcaf78",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auction", "update", "63b97641f66fc6be65fcaf78"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Auction List For Manager",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auction/auctions/manager/:index/:status/:search/:sellerName",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auction", "auctions", "manager", ":index", ":status", ":search", ":sellerName"],
+              "variable": [
+                {
+                  "key": "index",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "null"
+                },
+                {
+                  "key": "search",
+                  "value": "null"
+                },
+                {
+                  "key": "sellerName",
+                  "value": "null"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Auction List For Bidder",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auction/auctions/bidder/:index/:status/:search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auction", "auctions", "bidder", ":index", ":status", ":search"],
+              "variable": [
+                {
+                  "key": "index",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "null"
+                },
+                {
+                  "key": "search",
+                  "value": "null"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Auction List For Seller",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2M2YmQzZDE3ZGUyNzJlMzdjMjUyNmQiLCJ1c2VybmFtZSI6InNlbGxlckBnbWFpbC5jb20iLCJ2ZXJpZmljYXRpb25Db2RlIjoiZmRlMjQxY2QtNzNmYy00YTZiLWJhMzUtZTRlMTVkNmZmMzk3IiwidmVyaWZpZWQiOmZhbHNlLCJzdGF0dXMiOnRydWUsInJvbGUiOiJzZWxsZXIiLCJjcmVhdGVkQXQiOiIyMDIzLTAxLTE3VDE1OjIyOjM3LjU1MFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTE3VDE1OjIyOjM3LjU1MFoiLCJzZXNzaW9uIjoiNjNjN2FiMWUyYTNiY2I0NWQzMmRlMDlmIiwiaWF0IjoxNjc0MDI5ODU1LCJleHAiOjE3MDU1ODc0NTV9.3acX8cvaZEodfCAKmI5GimiQ6j3dekiUj3gP0pB8YLk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auction/auctions/seller/:index/:status/:search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auction", "auctions", "seller", ":index", ":status", ":search"],
+              "variable": [
+                {
+                  "key": "index",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "null"
+                },
+                {
+                  "key": "search",
+                  "value": "null"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "news",
+      "item": [
+        {
+          "name": "create one",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"title\": \"title20\",\r\n  \"avatar\": \" image\",\r\n  \"content\": \"Du thuyền FLC Albatross của Tập đoàn FLC sẽ được tổ chức đấu giá công khai tại TP.HCM vào ngày 1/11 với giá khởi điểm hơn 35 tỷ đồng.Công ty đấu giá hợp danh Minh Pháp vừa thông báo đấu giá chiếc du thuyền FLC Albatross, giấy tờ đứng tên là Công ty Cổ phần tập đoàn FLC. Hiện du thuyền này được neo tại Công ty TNHH Câu lạc bộ Du Thuyền Việt Nam (TP Thủ Đức, TP.HCM).Du thuyền FLC Albatross mang biển kiểm soát HN-2014 của Công ty Cổ phần Tập đoàn FLC được đóng mới ở Ba Lan năm 2017, sức chứa 12 người. Tài sản này đang thế chấp tại Ngân hàng TMCP Đầu Tư và Phát Triển Việt Nam (BIDV) chi nhánh Quy Nhơn, đã qua sử dụng, được đưa ra đấu giá để xử lý thu hồi nợ.Du thuyền có chiều dài thiết kế 16,62 m; chiều dài lớn nhất 21,95 m; chiều rộng thiết kế 4,88 m; chiều rộng lớn nhất 5,25 m; chiều cao mạn 3,15 m; chiều chìm 1,15 m (Mạn khô 2,000 m; Vật liệu vỏ FRP).Theo công ty đấu giá, chiếc du thuyền này có mức giá khởi điểm 35,7 tỷ đồng, người tham gia đấu giá phải cọc trước 3,5 tỷ đồng (10%) và mỗi bước giá tối thiểu 100 triệu đồng. Hình thức là đấu giá trực tiếp bằng lời nói tại cuộc đấu giá.Tài sản hiện do Công ty Cổ Phần Tập Đoàn FLC quản lý và bảo quản. Ảnh: Công ty đấu giá Minh Pháp.Giá khởi điểm không bao gồm các chi phí liên quan đến việc chuyển quyền sở hữu/sử dụng tài sản, lệ phí trước bạ, phí công chứng, phí đăng ký và các chi phí khác (nếu có) khi thực hiện mua tài sản, các chi phí này do người trúng đấu giá chịu, công ty đấu giá cho biết.Bên cạnh đó, công ty này cho biết tài sản được đấu giá theo nguyên trạng (bao gồm tài sản, tình trạng pháp lý và các rủi ro tiềm ẩn) và theo phương thức có sao bán vậy. Người tham gia đấu giá tài sản có trách nhiệm xem xét, tìm hiểu hồ sơ tài sản đấu giá và tự xác định tình trạng của tài sản theo hiện trạng thực tế và các hồ sơ pháp lý được BIDV chi nhánh Quy Nhơn cung cấp.Trước đó ngày 8/9, ngân hàng BIDV Quy Nhơn cũng thu giữ tài sản bảo đảm là ôtô con 5 chỗ hiệu Rolls-Royce của Công ty CP Xây dựng FLC Faros (ROS) để xử lý nợ và đấu giá khởi điểm 10 tỷ đồng.\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/news/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "news", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update one",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n                \"title\": \"demo\",\r\n                \"avatar\": \"https://dap-project.s3.ap-southeast-1.amazonaws.com/4717bf319dedfc966c69ac6f75e4cdc5\",\r\n                \"content\": \"<p>Trong đó, thời Gia Long (1802-1820) có 12 chiếc; thời Minh Mạng (1820-1840) có 15 chiếc; thời Thiệu Trị (1841-1847) có 10 chiếc; thời Tự Đức (1848-1883) có 15 chiếc; thời Kiến Phúc (1884) và Hàm Nghi (1885) đều có 1 chiếc; thời Đồng Khánh (1885-1888) có 5 chiếc; thời Thành Thái (1889-1907) có 10 chiếc; thời Khải Định (1916-1924) có 12 chiếc và thời Bảo Đại (1925-1945) có 8 chiếc.</p><figure class=\\\"image\\\"><img src=\\\"https://ckeditor.com/apps/ckfinder/userfiles/files/an-hoang-de-ton-chi-bao-1461406962.jpg\\\"></figure><p>Trong đó, thời Gia Long (1802-1820) có 12 chiếc; thời Minh Mạng (1820-1840) có 15 chiếc; thời Thiệu Trị (1841-1847) có 10 chiếc; thời Tự Đức (1848-1883) có 15 chiếc; thời Kiến Phúc (1884) và Hàm Nghi (1885) đều có 1 chiếc; thời Đồng Khánh (1885-1888) có 5 chiếc; thời Thành Thái (1889-1907) có 10 chiếc; thời Khải Định (1916-1924) có 12 chiếc và thời Bảo Đại (1925-1945) có 8 chiếc.</p><figure class=\\\"image\\\"><img src=\\\"https://ckeditor.com/apps/ckfinder/userfiles/files/kim-an-1-7329-1461397025(1).jpg\\\"></figure>\",\r\n                \"status\": \"deactivate\"\r\n            }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/news/update/63bd9037d0c788679b548e36",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "news", "update", "63bd9037d0c788679b548e36"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get one",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/news/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "news", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "63bd8ff5d0c788679b548e06"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2M2YmE3MjdiMTU5Y2Y1YzRlZmQ5ZmYiLCJ1c2VybmFtZSI6ImFkbWluIiwidmVyaWZpY2F0aW9uQ29kZSI6IjA2MmU5MDExLWJmZDQtNGNjOC05M2ViLTUyODhmNzM2MTM2NSIsInZlcmlmaWVkIjpmYWxzZSwic3RhdHVzIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJjcmVhdGVkQXQiOiIyMDIzLTAxLTE3VDE1OjEwOjQyLjA2N1oiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTE3VDE1OjEwOjQyLjA2N1oiLCJzZXNzaW9uIjoiNjNjNmMwYmQxNDYzNWE5ZjE4MTM0YTBjIiwiaWF0IjoxNjczOTY5ODUzLCJleHAiOjE3MDU1Mjc0NTN9.AQWdwXk7EYiYJBKKyxOp0vG5xTIiiNZavWURlJ7HmUE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/news/news/:index/:status/:search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "news", "news", ":index", ":status", ":search"],
+              "variable": [
+                {
+                  "key": "index",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "null"
+                },
+                {
+                  "key": "search",
+                  "value": "null"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete one",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/news/delete/63b7a6885526fb572485a6b6",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "news", "delete", "63b7a6885526fb572485a6b6"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "auction registration",
+      "item": [
+        {
+          "name": "get all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auctionRegistration/auctionRegistrations",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auctionRegistration", "auctionRegistrations"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get by auctionId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auctionRegistration/63bfc0488059a4222c423e50",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auctionRegistration", "63bfc0488059a4222c423e50"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "logs",
+      "item": [
+        {
+          "name": "get all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/contractInteraction/logs",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "contractInteraction", "logs"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get created auction",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/contractInteraction/createdAuction/63bfc0488059a4222c423e99",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "contractInteraction", "createdAuction", "63bfc0488059a4222c423e99"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get placed bid",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/contractInteraction/placedBid/63c6529d8add99d244fa30c4",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "contractInteraction", "placedBid", "63c6529d8add99d244fa30c4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Information Operator",
+      "item": [
+        {
+          "name": "get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/informationOperator/getAll",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "informationOperator", "getAll"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add manager",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n            \"username\": \"admin\",\r\n            \"password\": \"admin\",\r\n            \"firstName\":\"Ta\",\r\n            \"lastName\":\"Cong\",\r\n            \"phone\":\"0123456789\",\r\n            \"email\":\"congtm20@gmail.com\",\r\n            \"gender\":\"Male\",\r\n            \"address\":\"Ha Noi\",\r\n            \"role\": \"admin\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/informationOperator/create",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "informationOperator", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/informationOperator/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "informationOperator", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "63c6bbc217de272e37c251d5"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Get Auction By Id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auction/63c0465033c32463ba0dfc53",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auction", "63c0465033c32463ba0dfc53"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

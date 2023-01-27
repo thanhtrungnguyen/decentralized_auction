@@ -1,0 +1,80 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+}
+hr {
+    background: #fafafb;
+    margin: 0;
+    padding: 0;
+}
+.navbar {
+    width: 80%;
+    height: 80px;
+    background-color: white;
+    margin-left: 10%;
+    margin-top: 20px;
+    position: relative;
+}
+.dap {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 60px;
+    position: absolute;
+    margin-left: 55px;
+    margin-top: 10px;
+    color: #22262a;
+}
+.logo {
+    width: 56px;
+    height: 56px;
+    margin-top: 10px;
+    background: #40bfff;
+    border-radius: 16px;
+    position: absolute;
+}
+.home {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+
+    color: #40bfff;
+    position: relative;
+    text-decoration: none;
+}
+.right {
+    margin-top: 20px;
+    margin-left: 300px;
+    /* float: right; */
+    position: absolute;
+}
+.link {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+    text-decoration: none;
+    margin-left: 80px;
+    color: #22262a;
+    position: relative;
+}
+.ip {
+    width: 200px;
+    height: 25px;
+    position: relative;
+}
+.icon {
+    width: 25px;
+    height: 20px;
+    padding: 5px;
+    /* margin-top: -5px; */
+    color: white;
+    background: #111c85;
+    position: absolute;
+}

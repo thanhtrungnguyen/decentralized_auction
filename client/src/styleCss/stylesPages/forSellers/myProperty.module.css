@@ -1,0 +1,212 @@
+.r {
+    position: relative;
+}
+.select {
+    width: 250px;
+    height: 40px;
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-left: 20px;
+    /* border: none; */
+    /* border: 1px solid darkgrey; */
+    /* overflow: scroll; */
+}
+.lb {
+    font-family: "Josefin Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #5a5c7e;
+    margin-left: 50px;
+}
+.container {
+    background: #f9fafb;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.con {
+    width: 1400px;
+    height: 751px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-top: 100px;
+    margin-left: 380px;
+    position: absolute;
+    margin-bottom: 100px;
+}
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th,
+td {
+    text-align: left;
+    padding: 18px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+th {
+    background-color: #bcddfe;
+    color: white;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    /* identical to box height, or 185% */
+
+    /* Grey/Grey 90 */
+
+    color: #111827;
+}
+.btns {
+    width: 100%;
+    height: 70px;
+    display: flex;
+}
+.btn {
+    width: 80px;
+    height: 40px;
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-left: 20px;
+    border: 1px solid darkgrey;
+}
+.btn:hover {
+    background-color: aqua;
+}
+.btn2 {
+    height: 40px;
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-left: 20px;
+    border: 1px solid darkgrey;
+}
+.btn2:hover {
+    background-color: aqua;
+}
+.ip {
+    margin-top: 13px;
+    border-radius: 15px;
+    border: 1px solid darkgrey;
+    width: 200px;
+    height: 40px;
+    margin-left: 80px;
+}
+.ip2 {
+    margin-top: 13px;
+    border-radius: 15px;
+    border: 1px solid darkgrey;
+    width: 200px;
+    height: 40px;
+    margin-left: 750px;
+}
+.ip3 {
+    margin-top: 13px;
+    border-radius: 15px;
+    border: 1px solid darkgrey;
+    width: 200px;
+    height: 40px;
+    margin-left: 450px;
+}
+.iconView {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+}
+.iconView:hover {
+    color: aqua;
+}
+.Pagination {
+    margin-top: 15px;
+    float: right;
+}
+.link {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
+    margin-left: 15px;
+    color: #33a0ff;
+    margin-top: 6px;
+    position: absolute;
+    /* margin-left: 60px; */
+}
+.link1 {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
+    margin-left: 15px;
+    color: #33a0ff;
+    margin-top: 6px;
+    position: absolute;
+}
+
+.link2 {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    margin-left: 15px;
+    color: #33a0ff;
+    text-decoration: none;
+}
+.title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 35px;
+    line-height: 20px;
+    /* or 80% */
+    margin-left: 50px;
+    color: #000000;
+}
+.fl {
+    display: flex;
+    width: 1280px;
+}
+.fl2 {
+    display: flex;
+}
+.r {
+    width: 70%;
+    /* float: right; */
+}
+.l {
+    width: 30%;
+    float: left;
+}
+.label {
+    width: 100%;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: right;
+}
+.txt {
+    margin-left: 40px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}

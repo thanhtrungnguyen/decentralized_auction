@@ -1,0 +1,106 @@
+.container {
+    position: fixed;
+    width: 775px;
+    height: 820px;
+    left: 50%;
+    top: 50%;
+    margin-left: -300px;
+    margin-top: -480px;
+    background: #ffffff;
+    border: 1px solid #ddeafb;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    z-index: 10000;
+}
+.fl {
+    display: flex;
+}
+.lb {
+    font-size: 18px;
+    margin-left: 50px;
+    line-height: 77px;
+}
+.title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 20px;
+    /* identical to box height, or 67% */
+    position: relative;
+    margin-top: 40px;
+    margin-left: 50px;
+    color: #7c3aed;
+}
+.txt {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 20px;
+    /* identical to box height, or 83% */
+
+    position: relative;
+
+    color: #000000;
+    margin-left: 50px;
+}
+.input {
+    width: 566px;
+    height: 39px;
+    margin-left: 50px;
+
+    /* Grey/Grey 5 */
+    font-size: 18px;
+
+    background: #f9fafb;
+    /* Grey/Grey 20 */
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.btnOK {
+    position: absolute;
+    width: 79px;
+    height: 36px;
+
+    width: 115px;
+    height: 56px;
+
+    /* Violet/Violet 60 */
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    /* Grey/Grey 0 */
+
+    color: #ffffff;
+    background: #7c3aed;
+    border-radius: 8px;
+    position: relative;
+    margin-left: 400px;
+    margin-right: 30px;
+}
+.btnCancel {
+    width: 115px;
+    height: 56px;
+    position: relative;
+
+    /* Violet/Violet 60 */
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    /* Grey/Grey 90 */
+
+    color: #111827;
+    background: #ffffff;
+    border-radius: 8px;
+}

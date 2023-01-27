@@ -1,0 +1,103 @@
+.container {
+    width: 100%;
+    height: 260%;
+    background: #f9fafb;
+    position: absolute;
+}
+.content {
+    border: 1px solid #e5e7eb;
+    width: 1200px;
+    height: 2240px;
+    left: 50%;
+    margin-left: -500px;
+    position: absolute;
+    margin-top: 50px;
+    background: #ffffff;
+}
+.image {
+    width: 400px;
+    height: 200px;
+    margin-left: 110px;
+}
+.title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 20px;
+    /* or 80% */
+
+    color: #000000;
+    margin-left: 20px;
+}
+.label {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    /* Gray/800 */
+    margin-left: 20px;
+    color: #3f3f3f;
+}
+.ip {
+    width: 1000px;
+    height: 32px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-left: 40px;
+}
+.file {
+    margin-left: 40px;
+}
+.ck {
+    width: 1000px;
+    height: 1600px;
+    margin-left: 90px;
+
+    background: #ffffff;
+    border: 1px solid #d2d2d2;
+    position: absolute;
+}
+.btnCancel {
+    position: absolute;
+    width: 118px;
+    height: 54px;
+
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+
+    color: #111827;
+    background: #f7f5ff;
+    margin-left: 740px;
+    margin-top: 1730px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+.btnSubmit {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 143% */
+
+    /* Gray_02/100 */
+    position: absolute;
+    width: 119px;
+    height: 54px;
+
+    margin-left: 880px;
+    margin-top: 1730px;
+    background: #7c3aed;
+    border-radius: 8px;
+    color: #ffffff;
+}

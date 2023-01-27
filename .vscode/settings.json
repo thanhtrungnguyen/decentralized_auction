@@ -1,0 +1,24 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.wordWrap": "on",
+  "git.ignoreLimitWarning": true,
+  "cSpell.words": [
+    "ckeditor",
+    "codepaths",
+    "emerg",
+    "moralis",
+    "openapi",
+    "pino",
+    "ruleset",
+    "tsbuildinfo",
+    "tsconfigs",
+    "unist"
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.ignoreWords": ["firestore"]
+}

@@ -1,0 +1,91 @@
+.container {
+    position: fixed;
+    width: 775px;
+    height: 247px;
+    left: 50%;
+    top: 50%;
+    margin-left: -300px;
+    margin-top: -100px;
+    background: #ffffff;
+    border: 1px solid #ddeafb;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 20px;
+    /* identical to box height, or 67% */
+    position: absolute;
+    margin-top: 50px;
+    margin-left: 150px;
+    color: #000000;
+}
+.txt {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 20px;
+    /* identical to box height, or 83% */
+
+    position: absolute;
+
+    color: #000000;
+    margin-top: 70px;
+    margin-left: 150px;
+}
+.btnOK {
+    position: absolute;
+    width: 79px;
+    height: 36px;
+
+    /* Primary / Hover
+
+3817D8
+*/
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
+
+    /* Gray_02/100 */
+
+    color: #ffffff;
+    background: #3918d9;
+    border-radius: 4px;
+    margin-top: 100px;
+    margin-left: 350px;
+}
+.btnCancel {
+    position: absolute;
+    width: 79px;
+    height: 36px;
+
+    /* Primary / Secondary
+
+F7F4FF
+*/
+    background: #f7f5ff;
+    /* Primary / Hover
+
+3817D8
+*/
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
+
+    /* Primary / Hover */
+
+    color: #3918d9;
+    border: 1px solid #3918d9;
+    border-radius: 4px;
+    margin-top: 100px;
+    margin-left: 450px;
+}
