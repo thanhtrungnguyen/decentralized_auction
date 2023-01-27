@@ -52,7 +52,7 @@ import ViewNews from "./pages/common/ViewNews";
 import ViewNewsForAdmin from "./pages/forAdmin/ViewNewsForAdmin";
 import BidderOrganizationDetail from "./pages/forAdmin/BidderOrganizationDetail";
 import FakeAuctionDetail from "./pages/biddingFeatures/FakeAuctionDetail";
-import EditProfileSeller from "./pages/ForSeller/EditProfile";
+import ChangePasswordSeller from "./pages/ForSeller/EditProfile";
 import ProfileSeller from "./pages/ForSeller/ProfileSeller";
 import ProfileManager from "./pages/forManager/Profile";
 import ChangePasswordManager from "./pages/forManager/ChangePassword";
@@ -156,9 +156,9 @@ function App() {
             <Route path="bidderOrganizationDetail" element={<BidderOrganizationDetail />} />
             <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} />
             <Route path="profileSeller/:sellerId" element={<ProfileSeller />} />
-            <Route path="editProfileSeller/:sellerId" element={<EditProfileSeller />} />
+            <Route path="changePasswordForSeller/:sellerId" element={<ChangePasswordSeller />} />
             <Route path="profileSeller" element={<ProfileSeller />} />
-            <Route path="editProfileSeller" element={<EditProfileSeller />} />
+            <Route path="changePasswordForSeller" element={<ChangePasswordSeller />} />
             <Route path="profileManager/:managerId" element={<ProfileManager />} />
             <Route path="changePasswordManager/:managerId" element={<ChangePasswordManager />} />
             <Route path="profileManager" element={<ProfileManager />} />

@@ -255,7 +255,7 @@ const ProfileSeller = () => {
                         <button
                             className={styles.btn}
                             onClick={() => {
-                                navigate("/editProfileSeller");
+                                navigate("/changePasswordForSeller");
                             }}
                         >
                             Change Password

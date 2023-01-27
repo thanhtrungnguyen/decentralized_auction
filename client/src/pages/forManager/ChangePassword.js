@@ -14,15 +14,29 @@ import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import { useFetchData } from "../../hooks/useFetch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon icon={faEye} />;
 const ChangePasswordSeller = () => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
-
-    const [oldPassword, setOldPassword] = useState(null);
-    const [newPassword, setNewPassword] = useState(null);
-    const [rePassword, setRePassword] = useState(null);
-
+    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [rePassword, setRePassword] = useState('');
+    const [passwordShown1, setPasswordShown1] = useState(false);
+    const [passwordShown2, setPasswordShown2] = useState(false);
+    const [passwordShown3, setPasswordShown3] = useState(false);
+    const toggleOldPasswordVisibility = () => {
+        setPasswordShown1(passwordShown1 ? false : true);
+    };
+    const toggleNewPasswordVisibility = () => {
+        setPasswordShown2(passwordShown2 ? false : true);
+    };
+    const toggleRePasswordVisibility = () => {
+        setPasswordShown3(passwordShown3 ? false : true);
+    };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "oldPassword") {
@@ -49,39 +63,38 @@ const ChangePasswordSeller = () => {
     };
 
     const handleSubmit = (event) => {
+
         if (!oldPassword.trim()) {
             notify("🦄 oldPassword is empty");
         } else if (!newPassword.trim()) {
             notify("🦄 newPassword is empty");
         } else if (!rePassword.trim()) {
             notify("🦄 rePassword is empty");
-        } else if (rePassword != newPassword) {
+        } else if (rePassword !== newPassword) {
             notify("🦄 rePassword is not same password");
         } else {
             const formData = new FormData();
 
             formData.append("oldPassword", oldPassword.trim());
-            formData.append("newPassword", newPassword.trim());
+            formData.append("password", newPassword.trim());
+            formData.append("passwordConfirmation", rePassword.trim());
 
             axios
                 .post(
-                    "/organization/create",
+                    `/user/changePassword/${data2.user._id}`,
                     formData,
-                    {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    },
                     {
                         withCredentials: true,
                     }
                 )
                 .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
+                    // console.log(res);
+                    // console.log(res.data);
                     alert("Change password successfully!!!");
-                    navigate("/profileSeller");
+                    navigate(`/profileManager/${data2?.user._id}`);
                 })
                 .catch((err) => {
-                    console.error(err.response.data.message);
+                    //console.error(err.response.data.message);
                     notify(`🦄 Change password Failed: ${err.response.data.message} , ${err}`);
                 });
         }
@@ -90,7 +103,7 @@ const ChangePasswordSeller = () => {
     const Cancel = () => {
         navigate("/listSellers");
     };
-    return loading ? (
+    return loading2 ? (
         <Loading />
     ) : (
         <>
@@ -124,8 +137,8 @@ const ChangePasswordSeller = () => {
                             <input
                                 className={styles.inputEP}
                                 type="text"
-                                pattern="?=.{8,20}$"
-                                value="Username"
+                                //pattern="?=.{8,20}$"
+                                value={data2?.user.username}
                                 onChange={(e) => handleInputChange(e)}
                                 id="userName"
                                 placeholder="Username"
@@ -136,42 +149,53 @@ const ChangePasswordSeller = () => {
                             <br />
                             <p className={styles.textBlue}>Old password</p>
 
-                            <input
-                                className={styles.inputEP}
-                                type="oldPassword"
-                                pattern="^\s*(?:\S\s*){8,}$"
-                                value={oldPassword}
-                                onChange={(e) => handleInputChange(e)}
-                                id="password"
-                                placeholder="Old Password"
+                            <div>
+                                <input
+                                    className={styles.inputEP}
+                                    type={passwordShown1 ? "text" : "password"}
+                                    //pattern="^\s*(?:\S\s*){8,}$"
+                                    value={oldPassword}
+                                    onChange={(e) => handleInputChange(e)}
+                                    id="oldPassword"
+                                    placeholder="Old Password"
                                 //required
-                            ></input>
+                                ></input>
+                                <i onClick={toggleOldPasswordVisibility}>{eye}</i>
+                            </div>
                             <br />
                             <br />
                             <p className={styles.textBlue}>New Password</p>
 
-                            <input
-                                className={styles.inputEP}
-                                type="password"
-                                value={newPassword}
-                                onChange={(e) => handleInputChange(e)}
-                                id="newPassword"
-                                placeholder="Enter the new password"
+                            <div>
+
+                                <input
+                                    className={styles.inputEP}
+                                    type={passwordShown2 ? "text" : "password"}
+                                    value={newPassword}
+                                    onChange={(e) => handleInputChange(e)}
+                                    id="newPassword"
+                                    placeholder="Enter the new password"
                                 //required
-                            ></input>
+                                ></input>
+                                <i onClick={toggleNewPasswordVisibility}>{eye}</i>
+                            </div>
                             <br />
                             <br />
                             <p className={styles.textBlue}>Confirm new Password</p>
 
-                            <input
-                                className={styles.inputEP}
-                                type="password"
-                                value={rePassword}
-                                onChange={(e) => handleInputChange(e)}
-                                id="rePassword"
-                                placeholder="Confirm new Password"
+                            <div>
+
+                                <input
+                                    className={styles.inputEP}
+                                    type={passwordShown3 ? "text" : "password"}
+                                    value={rePassword}
+                                    onChange={(e) => handleInputChange(e)}
+                                    id="rePassword"
+                                    placeholder="Confirm new Password"
                                 //required
-                            ></input>
+                                ></input>
+                                <i onClick={toggleRePasswordVisibility}>{eye}</i>
+                            </div>
                             <br />
                             <br />
                             <input className={styles.btnAdd} type="submit" value="Save"></input>
