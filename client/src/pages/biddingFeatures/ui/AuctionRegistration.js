@@ -14,6 +14,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig
 import Loader from "../components/Loader";
 import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
 import { getBidderState } from "../../../utils/getBidderState";
+import { usePostRequest } from "../../../hooks/usePost";
 
 function AuctionRegistration({ auction, property }) {
     const { account, isWeb3Enabled } = useMoralis();
@@ -69,6 +70,8 @@ function AuctionRegistration({ auction, property }) {
     const handleSuccess = async (tx) => {
         try {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const { loading, data, error } = usePostRequest("/api/auctionRegistration/create", { auction: auction._id, walletAddress: account });
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
             updateUI();
@@ -151,35 +154,6 @@ function AuctionRegistration({ auction, property }) {
                                 <p className={styles.title}>Registration details:</p>
                                 <p className={styles.txtT}>Registration Fee: {auction.registrationFee} ETH</p>
                                 <p className={styles.txtT}>Deposit Amount: {auction.depositAmount} ETH</p>
-                                {/* {isBidInformationFetching || isBidInformationLoading ? (
-                                    <Loader />
-                                ) : !isRegistered ? (
-                                    <>
-                                        <p className={styles.txtT}>
-                                            Total amount you must to pay:
-                                            {parseEther(amount)}
-                                            ETH
-                                        </p>
-                                        <button
-                                            disabled={isRegisterToBidFetching || isRegisterToBidLoading}
-                                            className={styles.btn}
-                                            onClick={async () =>
-                                                await registerToBid({
-                                                    onSuccess: handleSuccess,
-                                                    onError: handleError,
-                                                })
-                                            }
-                                        >
-                                            {isRegisterToBidFetching || isRegisterToBidLoading ? (
-                                                <div>Loading...</div>
-                                            ) : (
-                                                <div>Register for auction</div>
-                                            )}
-                                        </button>
-                                    </>
-                                ) : (
-                                    <p className={styles.title}>You have Registered The Auction</p>
-                                )} */}
                                 {renderCurrentBidderState()}
                                 <TransactionStatus transactionStatus={transactionStatus} />
                             </div>

@@ -38,12 +38,6 @@ const updateAuctionRegistration = async (
   }
 };
 
-const deleteAuctionRegistration = async (filter: FilterQuery<IAuctionRegistration>) => {
-  try {
-    return await AuctionRegistration.deleteOne(filter);
-  } catch (error) {
-    logger.error(error);
-  }
-};
 
-export { getAllAuctionRegistrations, getAuctionRegistration, createAuctionRegistration, updateAuctionRegistration, deleteAuctionRegistration };
+
+export { getAllAuctionRegistrations, getAuctionRegistration, createAuctionRegistration, updateAuctionRegistration };
