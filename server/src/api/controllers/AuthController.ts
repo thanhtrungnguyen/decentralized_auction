@@ -4,7 +4,7 @@ import { createSession, findSessionById, signAccessToken, signRefreshToken, upda
 import { getUser, validatePassword } from '../services/UserService';
 import { signJwt, verifyJwt } from '../utils/jwt';
 
-const createUserSessionHandler = async (req: Request, res: Response, next: NextFunction) => {
+const login = async (req: Request, res: Response, next: NextFunction) => {
   const user = await validatePassword(req.body);
   if (!user) {
     return res.status(401).send({ message: 'Invalid username or password' });
@@ -87,4 +87,4 @@ const deleteSessionHandler = async (req: Request, res: Response, next: NextFunct
     });
 };
 
-export { createUserSessionHandler, getUserSessionHandler, deleteSessionHandler, refreshAccessTokenHandler };
+export { login, getUserSessionHandler, deleteSessionHandler, refreshAccessTokenHandler };
