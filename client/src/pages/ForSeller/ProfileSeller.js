@@ -16,11 +16,11 @@ import { useParams } from "react-router-dom";
 import Time from "../../components/time/Time";
 const ProfileSeller = () => {
     const axios = useAxiosPrivate();
-    const { id } = useParams();
+    const { sellerId } = useParams();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [setError] = useState(false);
-    const baseURL = `/organization/getById/${id}`;
+    const baseURL = `/organization/getByUserId/${sellerId}`;
     const [role, setRole] = useState();
 
     const navigate = useNavigate();
@@ -61,7 +61,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Organization Name</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.name} */}</label>
+                                <label className={styles.txt2}>{data.name}</label>
                             </div>
                         </div>
                         <br />
@@ -70,7 +70,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Tax Code</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.taxCode} */}</label>
+                                <label className={styles.txt2}>{data.taxCode}</label>
                             </div>
                         </div>
                         <br />
@@ -80,7 +80,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Tax Code Granted Date</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.taxCodeGrantedDate} */}</label>
+                                <label className={styles.txt2}>{data.taxCodeGrantedDate}</label>
                             </div>
                         </div>
                         <br />
@@ -90,7 +90,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Tax Code Granted Place</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.taxCodeGrantedPlace} */}</label>
+                                <label className={styles.txt2}>{data.taxCodeGrantedPlace}</label>
                             </div>
                         </div>
                         <br />
@@ -100,7 +100,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Organization Specific Address</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.addressOrganization} */}</label>
+                                <label className={styles.txt2}>{data.addressOrganization}</label>
                             </div>
                         </div>
 
@@ -111,7 +111,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>First Name</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.firstName} */}</label>
+                                <label className={styles.txt2}>{data.individual.firstName}</label>
                             </div>
                         </div>
                         <br />
@@ -120,7 +120,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Last Name</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.lastName} */}</label>
+                                <label className={styles.txt2}>{data.individual.lastName}</label>
                             </div>
                         </div>
                         <br />
@@ -130,7 +130,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Gender</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.gender} */}</label>
+                                <label className={styles.txt2}>{data.individual.gender}</label>
                             </div>
                         </div>
                         <br />
@@ -140,7 +140,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Date Of Birth</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.dateOfBirth} */}</label>
+                                <label className={styles.txt2}>{data.individual.dateOfBirth}</label>
                             </div>
                         </div>
                         <br />
@@ -150,7 +150,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Email</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.email} */}</label>
+                                <label className={styles.txt2}>{data.individual.email}</label>
                             </div>
                         </div>
                         <br />
@@ -160,7 +160,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Phone</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.phone} */}</label>
+                                <label className={styles.txt2}>{data.individual.phone}</label>
                             </div>
                         </div>
                         <p className={styles.if}>Address</p>
@@ -169,7 +169,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Province/City</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.city} */}</label>
+                                <label className={styles.txt2}>{data.individual.city}</label>
                             </div>
                         </div>
                         <br />
@@ -178,7 +178,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>District</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.district} */}</label>
+                                <label className={styles.txt2}>{data.individual.district}</label>
                             </div>
                         </div>
                         <br />
@@ -188,7 +188,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Wards</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.wards} */}</label>
+                                <label className={styles.txt2}>{data.individual.wards}</label>
                             </div>
                         </div>
                         <br />
@@ -198,7 +198,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Specific Address</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.address} */}</label>
+                                <label className={styles.txt2}>{data.individual.address}</label>
                             </div>
                         </div>
                         <br />
@@ -209,7 +209,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Card Number </label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.cardNumber} */}</label>
+                                <label className={styles.txt2}>{data.individual.cardNumber}</label>
                             </div>
                         </div>
                         <br />
@@ -218,7 +218,7 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Card Granted Date</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.cardGrantedDate} */}</label>
+                                <label className={styles.txt2}>{data.individual.cardGrantedDate}</label>
                             </div>
                         </div>
                         <br />
@@ -228,23 +228,23 @@ const ProfileSeller = () => {
                                 <label className={styles.txt}>Card Granted Place</label>
                             </div>
                             <div className={styles.r}>
-                                <label className={styles.txt2}>{/* {data.individual.cardGrantedPlace} */}</label>
+                                <label className={styles.txt2}>{data.individual.cardGrantedPlace}</label>
                             </div>
                         </div>
                         <br />
                         <div className={styles.fl}>
                             <div className={styles.l}>
                                 <img
-                                    src=""
-                                    // {data.individual.frontSideImage}
+                                    src=
+                                    {data.individual.frontSideImage}
                                     className={styles.img}
                                     alt="img"
                                 ></img>
                             </div>
                             <div className={styles.r}>
                                 <img
-                                    src=""
-                                    // {data.individual.backSideImage}
+                                    src=
+                                    {data.individual.backSideImage}
                                     className={styles.img}
                                     alt="img"
                                 ></img>
@@ -255,7 +255,7 @@ const ProfileSeller = () => {
                         <button
                             className={styles.btn}
                             onClick={() => {
-                                navigate("/editProfileSeller");
+                                navigate("/changePasswordForSeller");
                             }}
                         >
                             Change Password

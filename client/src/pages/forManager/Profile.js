@@ -81,7 +81,7 @@ const ProfileManager = () => {
                                 value="Change Password"
                                 className={styles.btnChange}
                                 onClick={() => {
-                                    navigate("/changePasswordManager");
+                                    navigate(`/changePasswordManager/${data.result._id}`);
                                 }}
                             ></input>
 
