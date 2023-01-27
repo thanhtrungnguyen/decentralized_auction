@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import BidModal from "../BidModal";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";

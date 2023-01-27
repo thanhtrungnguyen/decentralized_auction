@@ -6,7 +6,6 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../config/blockchainCon
 import { getBidderState } from "../../../../utils/getBidderState";
 import { getBidAmountOfBidder, getBidderRank, getHighestBid } from "../../../../utils/getBidderRank";
 import Loader from "../../components/Loader";
-import { parseEther } from "../../../../utils/ethereumUnitConverter";
 import ResultForFirstBidder from "./ResultForFirstBidder";
 import SecondWaitForFirst from "./SecondWaitForFirst";
 import ResultForOtherBidders from "./ResultForOtherBidders";
