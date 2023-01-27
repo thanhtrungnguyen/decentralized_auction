@@ -2,6 +2,8 @@ FROM node:16 as builder
 WORKDIR /app
 COPY ./package.json ./
 RUN rm -rf build
+RUN npm config rm proxy
+RUN npm config rm https-proxy
 RUN npm cache clear --force
 RUN npm install --force
 COPY . .
