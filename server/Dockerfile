@@ -4,7 +4,7 @@ ADD package-lock.json /tmp/package-lock.json
 RUN rm -rf build
 RUN npm config rm proxy
 RUN npm config rm https-proxy
-RUN cd /tmp && npm install --legacy-peer-deps
+RUN cd /tmp && npm install --no-bin-links
 ADD ./ /src
 RUN rm -rf src/node_modules && cp -a /tmp/node_modules /src/
 WORKDIR /src
