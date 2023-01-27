@@ -22,7 +22,7 @@
     height: 1500px;
     background: #ffffff;
     left: 50%;
-    margin-left: -500px;
+    margin-left: -600px;
     position: absolute;
     border: 1px solid #e5e7eb;
     margin-top: 40px;
@@ -377,6 +377,6 @@
     width: 20%;
     float: left;
 }
-.rmdp-input {
+.rmdp-container {
     width: 700px;
 }
