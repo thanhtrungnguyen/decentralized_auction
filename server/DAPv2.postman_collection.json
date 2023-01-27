@@ -3,7 +3,7 @@
     "_postman_id": "3934e325-b893-4137-ba22-99015b102595",
     "name": "DAPv2",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "25203032"
+    "_exporter_id": "25203105"
   },
   "item": [
     {
@@ -15,7 +15,9 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [""],
+                "exec": [
+                  ""
+                ],
                 "type": "text/javascript"
               }
             }
@@ -28,12 +30,12 @@
               "urlencoded": [
                 {
                   "key": "username",
-                  "value": "manager",
+                  "value": "seller@gmail.com",
                   "type": "text"
                 },
                 {
                   "key": "password",
-                  "value": "manager",
+                  "value": "@Seller1",
                   "type": "text"
                 }
               ]
@@ -41,9 +43,14 @@
             "url": {
               "raw": "http://localhost:5000/api/session",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "session"]
+              "path": [
+                "api",
+                "session"
+              ]
             }
           },
           "response": []
@@ -54,7 +61,9 @@
             {
               "listen": "test",
               "script": {
-                "exec": [""],
+                "exec": [
+                  ""
+                ],
                 "type": "text/javascript"
               }
             }
@@ -87,9 +96,14 @@
             "url": {
               "raw": "http://localhost:5000/api/session",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "session"]
+              "path": [
+                "api",
+                "session"
+              ]
             }
           },
           "response": []
@@ -112,9 +126,14 @@
             "url": {
               "raw": "http://localhost:5000/api/session",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "session"]
+              "path": [
+                "api",
+                "session"
+              ]
             }
           },
           "response": []
@@ -137,9 +156,15 @@
             "url": {
               "raw": "http://localhost:5000/api/session/manager",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "session", "manager"]
+              "path": [
+                "api",
+                "session",
+                "manager"
+              ]
             }
           },
           "response": []
@@ -162,9 +187,15 @@
             "url": {
               "raw": "http://localhost:5000/api/session/admin",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "session", "admin"]
+              "path": [
+                "api",
+                "session",
+                "admin"
+              ]
             }
           },
           "response": []
@@ -187,9 +218,15 @@
             "url": {
               "raw": "http://localhost:5000/api/session/seller",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "session", "seller"]
+              "path": [
+                "api",
+                "session",
+                "seller"
+              ]
             }
           },
           "response": []
@@ -212,9 +249,15 @@
             "url": {
               "raw": "http://localhost:5000/api/session/bidder",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "session", "bidder"]
+              "path": [
+                "api",
+                "session",
+                "bidder"
+              ]
             }
           },
           "response": []
@@ -232,9 +275,15 @@
             "url": {
               "raw": "http://localhost:5000/api/user/users",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "user", "users"]
+              "path": [
+                "api",
+                "user",
+                "users"
+              ]
             }
           },
           "response": []
@@ -247,9 +296,19 @@
             "url": {
               "raw": "http://localhost:5000/api/user/users/:role/:index/:status/:search",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "user", "users", ":role", ":index", ":status", ":search"],
+              "path": [
+                "api",
+                "user",
+                "users",
+                ":role",
+                ":index",
+                ":status",
+                ":search"
+              ],
               "variable": [
                 {
                   "key": "role",
@@ -287,9 +346,15 @@
             "url": {
               "raw": "http://localhost:5000/api/user/:id",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "user", ":id"],
+              "path": [
+                "api",
+                "user",
+                ":id"
+              ],
               "variable": [
                 {
                   "key": "id",
@@ -317,9 +382,15 @@
             "url": {
               "raw": "http://localhost:5000/api/user/create",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "user", "create"]
+              "path": [
+                "api",
+                "user",
+                "create"
+              ]
             }
           },
           "response": []
@@ -332,9 +403,17 @@
             "url": {
               "raw": "http://localhost:5000/api/user/verify/63b9260db72a1b00ff19216c/ba4e22d2-e6f7-49e2-a6d5-717ee9845374",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "user", "verify", "63b9260db72a1b00ff19216c", "ba4e22d2-e6f7-49e2-a6d5-717ee9845374"]
+              "path": [
+                "api",
+                "user",
+                "verify",
+                "63b9260db72a1b00ff19216c",
+                "ba4e22d2-e6f7-49e2-a6d5-717ee9845374"
+              ]
             }
           },
           "response": []
@@ -356,9 +435,17 @@
             "url": {
               "raw": "http://localhost:5000/api/user/changeStatus/:userId/:status",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "user", "changeStatus", ":userId", ":status"],
+              "path": [
+                "api",
+                "user",
+                "changeStatus",
+                ":userId",
+                ":status"
+              ],
               "variable": [
                 {
                   "key": "userId",
@@ -390,9 +477,16 @@
             "url": {
               "raw": "http://localhost:5000/api/user/changePassword/63b9260db72a1b00ff19216c",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "user", "changePassword", "63b9260db72a1b00ff19216c"]
+              "path": [
+                "api",
+                "user",
+                "changePassword",
+                "63b9260db72a1b00ff19216c"
+              ]
             }
           },
           "response": []
@@ -414,9 +508,15 @@
             "url": {
               "raw": "http://localhost:5000/api/user/forgotPassword",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "user", "forgotPassword"]
+              "path": [
+                "api",
+                "user",
+                "forgotPassword"
+              ]
             }
           },
           "response": []
@@ -438,9 +538,17 @@
             "url": {
               "raw": "http://localhost:5000/api/user/resetPassword/63b9260db72a1b00ff19216c/714e2afb-9188-4810-879c-a691844a45d9",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "user", "resetPassword", "63b9260db72a1b00ff19216c", "714e2afb-9188-4810-879c-a691844a45d9"]
+              "path": [
+                "api",
+                "user",
+                "resetPassword",
+                "63b9260db72a1b00ff19216c",
+                "714e2afb-9188-4810-879c-a691844a45d9"
+              ]
             }
           },
           "response": []
@@ -467,9 +575,15 @@
             "url": {
               "raw": "http://localhost:5000/api/individual/create",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "individual", "create"]
+              "path": [
+                "api",
+                "individual",
+                "create"
+              ]
             }
           },
           "response": []
@@ -482,9 +596,38 @@
             "url": {
               "raw": "http://localhost:5000/api/individual/getById/63c6c5950dc07bc9bcbd6a05",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "individual", "getById", "63c6c5950dc07bc9bcbd6a05"]
+              "path": [
+                "api",
+                "individual",
+                "getById",
+                "63c6c5950dc07bc9bcbd6a05"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get one by user id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/individual/getById/63c6c5950dc07bc9bcbd6a05",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "individual",
+                "getById",
+                "63c6c5950dc07bc9bcbd6a05"
+              ]
             }
           },
           "response": []
@@ -497,9 +640,15 @@
             "url": {
               "raw": "http://localhost:5000/api/individual/individuals",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "individual", "individuals"]
+              "path": [
+                "api",
+                "individual",
+                "individuals"
+              ]
             }
           },
           "response": []
@@ -521,9 +670,16 @@
             "url": {
               "raw": "http://localhost:5000/api/individual/update/63b58ea6a72368d16fc1a1bb",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "individual", "update", "63b58ea6a72368d16fc1a1bb"]
+              "path": [
+                "api",
+                "individual",
+                "update",
+                "63b58ea6a72368d16fc1a1bb"
+              ]
             }
           },
           "response": []
@@ -536,9 +692,16 @@
             "url": {
               "raw": "http://localhost:5000/api/individual/delete/63b58ea6a72368d16fc1a1bb",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "individual", "delete", "63b58ea6a72368d16fc1a1bb"]
+              "path": [
+                "api",
+                "individual",
+                "delete",
+                "63b58ea6a72368d16fc1a1bb"
+              ]
             }
           },
           "response": []
@@ -565,9 +728,15 @@
             "url": {
               "raw": "http://localhost:5000/api/organization/create",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "organization", "create"]
+              "path": [
+                "api",
+                "organization",
+                "create"
+              ]
             }
           },
           "response": []
@@ -580,9 +749,15 @@
             "url": {
               "raw": "http://localhost:5000/api/organization/seller",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "organization", "seller"]
+              "path": [
+                "api",
+                "organization",
+                "seller"
+              ]
             }
           },
           "response": []
@@ -595,9 +770,147 @@
             "url": {
               "raw": "http://localhost:5000/api/organization/getAll",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "organization", "getAll"]
+              "path": [
+                "api",
+                "organization",
+                "getAll"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2M2YmQzZDE3ZGUyNzJlMzdjMjUyNmQiLCJ1c2VybmFtZSI6InNlbGxlckBnbWFpbC5jb20iLCJzdGF0dXMiOnRydWUsInJvbGUiOiJzZWxsZXIiLCJ0eXBlIjoib3JnYW5pemF0aW9uIiwiaWF0IjoxNjc0Nzk3NTYxLCJleHAiOjE3MDYzNTUxNjF9.PDT2VUlJ7WHwVTsx3qvxVR-_dLYyAyty9sYNraRKVxA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/organization/getById/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "organization",
+                "getById",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "63c6bd3d17de272e37c2526d"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by Id User Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2M2YmQzZDE3ZGUyNzJlMzdjMjUyNmQiLCJ1c2VybmFtZSI6InNlbGxlckBnbWFpbC5jb20iLCJzdGF0dXMiOnRydWUsInJvbGUiOiJzZWxsZXIiLCJ0eXBlIjoib3JnYW5pemF0aW9uIiwiaWF0IjoxNjc0Nzk3NTYxLCJleHAiOjE3MDYzNTUxNjF9.PDT2VUlJ7WHwVTsx3qvxVR-_dLYyAyty9sYNraRKVxA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/organization/getByUserId/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "organization",
+                "getByUserId",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "63c6bd3d17de272e37c2526d"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Information Operator",
+      "item": [
+        {
+          "name": "get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/informationOperator/getAll",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "informationOperator",
+                "getAll"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add manager",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n            \"username\": \"admin\",\r\n            \"password\": \"admin\",\r\n            \"firstName\":\"Ta\",\r\n            \"lastName\":\"Cong\",\r\n            \"phone\":\"0123456789\",\r\n            \"email\":\"congtm20@gmail.com\",\r\n            \"gender\":\"Male\",\r\n            \"address\":\"Ha Noi\",\r\n            \"role\": \"admin\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/informationOperator/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "informationOperator",
+                "create"
+              ]
             }
           },
           "response": []
@@ -608,18 +921,32 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/api/organization/getById/:id",
+              "raw": "http://localhost:5000/api/informationOperator/:id",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "organization", "getById", ":id"],
+              "path": [
+                "api",
+                "informationOperator",
+                ":id"
+              ],
               "variable": [
                 {
                   "key": "id",
-                  "value": "63c6bd3f17de272e37c2526f"
+                  "value": "63c6bbc217de272e37c251d5"
                 }
               ]
             }
+          },
+          "response": []
+        },
+        {
+          "name": "Get by User Id",
+          "request": {
+            "method": "GET",
+            "header": []
           },
           "response": []
         }
@@ -645,9 +972,15 @@
             "url": {
               "raw": "http://localhost:5000/api/category/create",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "category", "create"]
+              "path": [
+                "api",
+                "category",
+                "create"
+              ]
             }
           },
           "response": []
@@ -660,9 +993,15 @@
             "url": {
               "raw": "http://localhost:5000/api/category/categories",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "category", "categories"]
+              "path": [
+                "api",
+                "category",
+                "categories"
+              ]
             }
           },
           "response": []
@@ -682,9 +1021,15 @@
             "url": {
               "raw": "http://localhost:5000/api/category/63b7edff336d17f31f9495b2",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "category", "63b7edff336d17f31f9495b2"]
+              "path": [
+                "api",
+                "category",
+                "63b7edff336d17f31f9495b2"
+              ]
             }
           },
           "response": []
@@ -706,9 +1051,16 @@
             "url": {
               "raw": "http://localhost:5000/api/category/update/63b7edff336d17f31f9495b2",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "category", "update", "63b7edff336d17f31f9495b2"]
+              "path": [
+                "api",
+                "category",
+                "update",
+                "63b7edff336d17f31f9495b2"
+              ]
             }
           },
           "response": []
@@ -721,9 +1073,16 @@
             "url": {
               "raw": "http://localhost:5000/api/category/delete/63b7d8303e7f5580efab745a",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "category", "delete", "63b7d8303e7f5580efab745a"]
+              "path": [
+                "api",
+                "category",
+                "delete",
+                "63b7d8303e7f5580efab745a"
+              ]
             }
           },
           "response": []
@@ -736,9 +1095,18 @@
             "url": {
               "raw": "http://localhost:5000/api/category/categories/:index/:status/:search",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "category", "categories", ":index", ":status", ":search"],
+              "path": [
+                "api",
+                "category",
+                "categories",
+                ":index",
+                ":status",
+                ":search"
+              ],
               "variable": [
                 {
                   "key": "index",
@@ -780,9 +1148,15 @@
             "url": {
               "raw": "http://localhost:5000/api/property/properties",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "property", "properties"]
+              "path": [
+                "api",
+                "property",
+                "properties"
+              ]
             }
           },
           "response": []
@@ -805,9 +1179,15 @@
             "url": {
               "raw": "http://localhost:5000/api/property/63c10f2089e7c23aa3cb0a51",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "property", "63c10f2089e7c23aa3cb0a51"]
+              "path": [
+                "api",
+                "property",
+                "63c10f2089e7c23aa3cb0a51"
+              ]
             }
           },
           "response": []
@@ -830,9 +1210,16 @@
             "url": {
               "raw": "http://localhost:5000/api/property/update/63b7ab7f075bc7c5653d874c",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "property", "update", "63b7ab7f075bc7c5653d874c"]
+              "path": [
+                "api",
+                "property",
+                "update",
+                "63b7ab7f075bc7c5653d874c"
+              ]
             }
           },
           "response": []
@@ -845,9 +1232,16 @@
             "url": {
               "raw": "http://localhost:5000/api/property/delete/63b7ab7f075bc7c5653d874c",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "property", "delete", "63b7ab7f075bc7c5653d874c"]
+              "path": [
+                "api",
+                "property",
+                "delete",
+                "63b7ab7f075bc7c5653d874c"
+              ]
             }
           },
           "response": []
@@ -879,9 +1273,15 @@
             "url": {
               "raw": "http://localhost:5000/api/property/create",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "property", "create"]
+              "path": [
+                "api",
+                "property",
+                "create"
+              ]
             }
           },
           "response": []
@@ -904,9 +1304,18 @@
             "url": {
               "raw": "http://localhost:5000/api/property/myProperty/:index/:status/:search",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "property", "myProperty", ":index", ":status", ":search"],
+              "path": [
+                "api",
+                "property",
+                "myProperty",
+                ":index",
+                ":status",
+                ":search"
+              ],
               "variable": [
                 {
                   "key": "index",
@@ -938,9 +1347,15 @@
             "url": {
               "raw": "http://localhost:5000/api/auction/auctions",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "auction", "auctions"]
+              "path": [
+                "api",
+                "auction",
+                "auctions"
+              ]
             }
           },
           "response": []
@@ -962,9 +1377,15 @@
             "url": {
               "raw": "http://localhost:5000/api/auction/create",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "auction", "create"]
+              "path": [
+                "api",
+                "auction",
+                "create"
+              ]
             }
           },
           "response": []
@@ -984,9 +1405,15 @@
             "url": {
               "raw": "http://localhost:5000/api/auction/63b97641f66fc6be65fcaf78",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "auction", "63b97641f66fc6be65fcaf78"]
+              "path": [
+                "api",
+                "auction",
+                "63b97641f66fc6be65fcaf78"
+              ]
             }
           },
           "response": []
@@ -1008,9 +1435,16 @@
             "url": {
               "raw": "http://localhost:5000/api/auction/update/63b97641f66fc6be65fcaf78",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "auction", "update", "63b97641f66fc6be65fcaf78"]
+              "path": [
+                "api",
+                "auction",
+                "update",
+                "63b97641f66fc6be65fcaf78"
+              ]
             }
           },
           "response": []
@@ -1023,9 +1457,20 @@
             "url": {
               "raw": "http://localhost:5000/api/auction/auctions/manager/:index/:status/:search/:sellerName",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "auction", "auctions", "manager", ":index", ":status", ":search", ":sellerName"],
+              "path": [
+                "api",
+                "auction",
+                "auctions",
+                "manager",
+                ":index",
+                ":status",
+                ":search",
+                ":sellerName"
+              ],
               "variable": [
                 {
                   "key": "index",
@@ -1056,9 +1501,19 @@
             "url": {
               "raw": "http://localhost:5000/api/auction/auctions/bidder/:index/:status/:search",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "auction", "auctions", "bidder", ":index", ":status", ":search"],
+              "path": [
+                "api",
+                "auction",
+                "auctions",
+                "bidder",
+                ":index",
+                ":status",
+                ":search"
+              ],
               "variable": [
                 {
                   "key": "index",
@@ -1095,9 +1550,19 @@
             "url": {
               "raw": "http://localhost:5000/api/auction/auctions/seller/:index/:status/:search",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "auction", "auctions", "seller", ":index", ":status", ":search"],
+              "path": [
+                "api",
+                "auction",
+                "auctions",
+                "seller",
+                ":index",
+                ":status",
+                ":search"
+              ],
               "variable": [
                 {
                   "key": "index",
@@ -1127,7 +1592,9 @@
             {
               "listen": "test",
               "script": {
-                "exec": [""],
+                "exec": [
+                  ""
+                ],
                 "type": "text/javascript"
               }
             }
@@ -1147,9 +1614,15 @@
             "url": {
               "raw": "http://localhost:5000/api/news/create",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "news", "create"]
+              "path": [
+                "api",
+                "news",
+                "create"
+              ]
             }
           },
           "response": []
@@ -1171,9 +1644,16 @@
             "url": {
               "raw": "http://localhost:5000/api/news/update/63bd9037d0c788679b548e36",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "news", "update", "63bd9037d0c788679b548e36"]
+              "path": [
+                "api",
+                "news",
+                "update",
+                "63bd9037d0c788679b548e36"
+              ]
             }
           },
           "response": []
@@ -1186,9 +1666,15 @@
             "url": {
               "raw": "http://localhost:5000/api/news/:id",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "news", ":id"],
+              "path": [
+                "api",
+                "news",
+                ":id"
+              ],
               "variable": [
                 {
                   "key": "id",
@@ -1217,9 +1703,18 @@
             "url": {
               "raw": "http://localhost:5000/api/news/news/:index/:status/:search",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "news", "news", ":index", ":status", ":search"],
+              "path": [
+                "api",
+                "news",
+                "news",
+                ":index",
+                ":status",
+                ":search"
+              ],
               "variable": [
                 {
                   "key": "index",
@@ -1246,9 +1741,16 @@
             "url": {
               "raw": "http://localhost:5000/api/news/delete/63b7a6885526fb572485a6b6",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "news", "delete", "63b7a6885526fb572485a6b6"]
+              "path": [
+                "api",
+                "news",
+                "delete",
+                "63b7a6885526fb572485a6b6"
+              ]
             }
           },
           "response": []
@@ -1266,9 +1768,15 @@
             "url": {
               "raw": "http://localhost:5000/api/auctionRegistration/auctionRegistrations",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "auctionRegistration", "auctionRegistrations"]
+              "path": [
+                "api",
+                "auctionRegistration",
+                "auctionRegistrations"
+              ]
             }
           },
           "response": []
@@ -1281,9 +1789,15 @@
             "url": {
               "raw": "http://localhost:5000/api/auctionRegistration/63bfc0488059a4222c423e50",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "auctionRegistration", "63bfc0488059a4222c423e50"]
+              "path": [
+                "api",
+                "auctionRegistration",
+                "63bfc0488059a4222c423e50"
+              ]
             }
           },
           "response": []
@@ -1301,9 +1815,15 @@
             "url": {
               "raw": "http://localhost:5000/api/contractInteraction/logs",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "contractInteraction", "logs"]
+              "path": [
+                "api",
+                "contractInteraction",
+                "logs"
+              ]
             }
           },
           "response": []
@@ -1316,9 +1836,16 @@
             "url": {
               "raw": "http://localhost:5000/api/contractInteraction/createdAuction/63bfc0488059a4222c423e99",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "contractInteraction", "createdAuction", "63bfc0488059a4222c423e99"]
+              "path": [
+                "api",
+                "contractInteraction",
+                "createdAuction",
+                "63bfc0488059a4222c423e99"
+              ]
             }
           },
           "response": []
@@ -1331,73 +1858,15 @@
             "url": {
               "raw": "http://localhost:5000/api/contractInteraction/placedBid/63c6529d8add99d244fa30c4",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "5000",
-              "path": ["api", "contractInteraction", "placedBid", "63c6529d8add99d244fa30c4"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Information Operator",
-      "item": [
-        {
-          "name": "get All",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:5000/api/informationOperator/getAll",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "informationOperator", "getAll"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Add manager",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n            \"username\": \"admin\",\r\n            \"password\": \"admin\",\r\n            \"firstName\":\"Ta\",\r\n            \"lastName\":\"Cong\",\r\n            \"phone\":\"0123456789\",\r\n            \"email\":\"congtm20@gmail.com\",\r\n            \"gender\":\"Male\",\r\n            \"address\":\"Ha Noi\",\r\n            \"role\": \"admin\"\r\n\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:5000/api/informationOperator/create",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "informationOperator", "create"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get by Id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:5000/api/informationOperator/:id",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "5000",
-              "path": ["api", "informationOperator", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "63c6bbc217de272e37c251d5"
-                }
+              "path": [
+                "api",
+                "contractInteraction",
+                "placedBid",
+                "63c6529d8add99d244fa30c4"
               ]
             }
           },
@@ -1420,9 +1889,46 @@
         "url": {
           "raw": "http://localhost:5000/api/auction/63c0465033c32463ba0dfc53",
           "protocol": "http",
-          "host": ["localhost"],
+          "host": [
+            "localhost"
+          ],
           "port": "5000",
-          "path": ["api", "auction", "63c0465033c32463ba0dfc53"]
+          "path": [
+            "api",
+            "auction",
+            "63c0465033c32463ba0dfc53"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "change password",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"oldPassword\": \"22d2\",\r\n    \"password\":\"@Bidder1\",\r\n    \"passwordConfirmation\":\"@Bidder1\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/user/changePassword/63c6b8bbd09c01c89255d08a",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "user",
+            "changePassword",
+            "63c6b8bbd09c01c89255d08a"
+          ]
         }
       },
       "response": []

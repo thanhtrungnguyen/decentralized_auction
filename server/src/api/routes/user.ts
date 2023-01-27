@@ -25,7 +25,12 @@ router.patch('/update/:userId', validateResource(UserSchema.updateStatus), updat
 router.patch('/changeStatus/:userId/:status', validateResource(UserSchema.updateStatus), changeStatusUserHandler);
 // router.delete('/delete/:userId', deleteUserHandler);
 router.post('/forgotPassword', validateResource(UserSchema.forgotPassword), forgotPasswordHandler);
-router.post('/changePassword/:userId', validateResource(UserSchema.changePassword), changePasswordHandler);
+router.post(
+  '/changePassword/:userId',
+  requireRole(roles.ADMIN, roles.BIDDER, roles.SELLER, roles.MANAGER),
+  validateResource(UserSchema.changePassword),
+  changePasswordHandler
+);
 router.post('/verify/:userId/:verificationCode', verifyUserHandler);
 router.post('/resetPassword/:userId/:passwordResetCode', validateResource(UserSchema.changePassword), resetPasswordHandler);
 //

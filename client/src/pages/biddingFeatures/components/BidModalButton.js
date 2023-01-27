@@ -17,7 +17,7 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
                     if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                         return ( */}
                 <button
-                    className={styles.btn}
+                    className={styles.btn2}
                     onClick={() => {
                         setOpenModal(true);
                     }}
