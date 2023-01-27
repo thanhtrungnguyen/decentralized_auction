@@ -3,7 +3,7 @@ WORKDIR /app
 COPY ./package.json ./
 RUN rm -rf build
 RUN npm cache clear --force
-RUN npm install
+RUN npm install --force
 COPY . .
 RUN npm run build
 

@@ -12,14 +12,12 @@ import Footer from "../../components/footer/Footer";
 import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import FooterCopy from "../../components/footer/FooterCopy";
-// import ReactDOM from "react-dom/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const eye = <FontAwesomeIcon icon={faEye} />;
-// axios.defaults.withCredentials = true;
 
 const Register = () => {
     const axios = useAxiosPrivate();
