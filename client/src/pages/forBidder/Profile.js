@@ -20,7 +20,7 @@ const Profile = () => {
     const { id, propertyId } = useParams();
     const baseURL = `/individual/getByUserId/${id}`;
     const { data, loading, error } = useFetch(baseURL);
-    console.log(data)
+    console.log(data);
     const navigate = useNavigate();
     const [role, setRole] = useState();
     const handleClick = () => {
@@ -170,18 +170,10 @@ const Profile = () => {
                     <br />
                     <div className={styles.fl}>
                         <div className={styles.l}>
-                            <img
-                                src={data?.individual.frontSideImage}
-                                className={styles.img}
-                                alt='img'
-                            ></img>
+                            <img src={data?.individual.frontSideImage} className={styles.img} alt="img"></img>
                         </div>
                         <div className={styles.r}>
-                            <img
-                                src={data?.individual.backSideImage}
-                                className={styles.img}
-                                alt='img'
-                            ></img>
+                            <img src={data?.individual.backSideImage} className={styles.img} alt="img"></img>
                         </div>
                     </div>
                     <br />
@@ -190,12 +182,20 @@ const Profile = () => {
                     <br />
                     <br />
                     {/* <LogoutButton /> */}
-                    <button className={styles.btn2} onClick={() => {
-                        navigate("/homePage");
-                    }} >
+                    <button
+                        className={styles.btn2}
+                        onClick={() => {
+                            navigate("/homePage");
+                        }}
+                    >
                         Back
                     </button>
-                    <button className={styles.btn2} >
+                    <button
+                        className={styles.btn2}
+                        onClick={() => {
+                            navigate(`/changePassword/${id}`);
+                        }}
+                    >
                         Change Password
                     </button>
                     <button
@@ -206,7 +206,6 @@ const Profile = () => {
                     >
                         Edit
                     </button>
-
                 </div>
                 <Footer />
                 <FooterCopy />

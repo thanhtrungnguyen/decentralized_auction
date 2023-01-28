@@ -22,9 +22,9 @@ const ChangePasswordSeller = () => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
     const { loading: loading2, data: data2, error } = useFetchData("/session");
-    const [oldPassword, setOldPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [rePassword, setRePassword] = useState('');
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [rePassword, setRePassword] = useState("");
     const [passwordShown1, setPasswordShown1] = useState(false);
     const [passwordShown2, setPasswordShown2] = useState(false);
     const [passwordShown3, setPasswordShown3] = useState(false);
@@ -63,7 +63,6 @@ const ChangePasswordSeller = () => {
     };
 
     const handleSubmit = (event) => {
-
         if (!oldPassword.trim()) {
             notify("🦄 oldPassword is empty");
         } else if (!newPassword.trim()) {
@@ -72,6 +71,8 @@ const ChangePasswordSeller = () => {
             notify("🦄 rePassword is empty");
         } else if (rePassword !== newPassword) {
             notify("🦄 rePassword is not same password");
+        } else if (newPassword.trim().length < 8) {
+            notify("🦄 newPassword is must be more than 8 character");
         } else {
             const formData = new FormData();
 
@@ -80,13 +81,9 @@ const ChangePasswordSeller = () => {
             formData.append("passwordConfirmation", rePassword.trim());
 
             axios
-                .post(
-                    `/user/changePassword/${data2.user._id}`,
-                    formData,
-                    {
-                        withCredentials: true,
-                    }
-                )
+                .post(`/user/changePassword/${data2.user._id}`, formData, {
+                    withCredentials: true,
+                })
                 .then((res) => {
                     // console.log(res);
                     // console.log(res.data);
@@ -158,7 +155,7 @@ const ChangePasswordSeller = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="oldPassword"
                                     placeholder="Old Password"
-                                //required
+                                    //required
                                 ></input>
                                 <i onClick={toggleOldPasswordVisibility}>{eye}</i>
                             </div>
@@ -167,7 +164,6 @@ const ChangePasswordSeller = () => {
                             <p className={styles.textBlue}>New Password</p>
 
                             <div>
-
                                 <input
                                     className={styles.inputEP}
                                     type={passwordShown2 ? "text" : "password"}
@@ -175,7 +171,7 @@ const ChangePasswordSeller = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="newPassword"
                                     placeholder="Enter the new password"
-                                //required
+                                    //required
                                 ></input>
                                 <i onClick={toggleNewPasswordVisibility}>{eye}</i>
                             </div>
@@ -184,7 +180,6 @@ const ChangePasswordSeller = () => {
                             <p className={styles.textBlue}>Confirm new Password</p>
 
                             <div>
-
                                 <input
                                     className={styles.inputEP}
                                     type={passwordShown3 ? "text" : "password"}
@@ -192,7 +187,7 @@ const ChangePasswordSeller = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="rePassword"
                                     placeholder="Confirm new Password"
-                                //required
+                                    //required
                                 ></input>
                                 <i onClick={toggleRePasswordVisibility}>{eye}</i>
                             </div>

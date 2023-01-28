@@ -47,6 +47,8 @@ const NewPassword = () => {
             notify("🦄 password is empty");
         } else if (!rePassword.trim()) {
             notify("🦄 rePassword is empty");
+        } else if (password.trim().length < 8) {
+            notify("🦄 newPassword is must be more than 8 character");
         } else {
             await axios
                 .post("/auth/reset-password", { password1: password, password2: rePassword, userId: userId, token: token }, { withCredentials: true })
