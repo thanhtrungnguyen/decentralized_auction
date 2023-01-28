@@ -2,17 +2,17 @@ import styles from "../../../styleCss/stylesComponents/forAdmin/banedUser.module
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
-import { useFetch } from "../../../hooks/useFetch";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 const DeleteProperty = ({ idProperty }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
     const [loading, setLoading] = useState(true);
+    const axios = useAxiosPrivate();
     const handleSubmit = (event) => {
         console.log(idProperty);
         setLoading(true);
         axios
-            .put(`http://localhost:8800/api/user/DeleteProperty/${idProperty}`, idProperty, {
+            .delete(`/property/delete/${idProperty}`, {
                 withCredentials: true,
             })
             .then((res) => {

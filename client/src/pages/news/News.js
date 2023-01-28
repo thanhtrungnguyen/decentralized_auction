@@ -17,9 +17,9 @@ const News = () => {
     const [page, setPage] = useState(1);
     const [title, setTitle] = useState(null);
     const [title2, setTitle2] = useState(null);
-    const [status, setStatus] = useState("Published");
+    const [status, setStatus] = useState("Activate");
     const perPage = 5;
-    var baseURL = `http://localhost:8800/api/news/getAll/${page}/${status}/${title}/${perPage}`;
+    var baseURL = `/news/news/${page}/${status}/${title}`;
     var { data, loading } = useFetchPagination(baseURL, page);
 
     const handleInputChange = (e) => {
@@ -43,19 +43,19 @@ const News = () => {
     function exportData(data) {
         return (
             <>
-                {data.listNews.map((item) => (
+                {data.news.listNews.map((item) => (
                     <div className={styles.content}>
-                        <img className={styles.img} src={`http://localhost:8800/api/auction/images/${item.Avatar__c}`} alt="Img" />
+                        <img className={styles.img} src={item.avatar} alt="Img" />
                         <BsPencil className={(styles.icon, styles.colorPink)} />
-                        <label className={styles.lable}>{item.Id}</label>
+                        <label className={styles.lable}>{item._id}</label>
                         <BsCalendar3 className={(styles.icon, styles.colorYellow)} />
-                        <label className={styles.lable}>{moment(`${item.CreatedDate}`).format("MMM Do YY")} </label>
-                        <div className={styles.title}>{item.Name}</div>
+                        <label className={styles.lable}>{moment(`${item.createdAt}`).format("MMM Do YY")} </label>
+                        <div className={styles.title}>{item.title}</div>
                         {/* <div className={styles.des}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit facilisis quis auctor pretium ipsum, eu rutrum. Condimentum
                             eu malesuada vitae ultrices in in neque, porta dignissim. Adipiscing purus, cursus vulputate id id dictum at.
                         </div> */}
-                        <Link className={styles.link} to={`/viewNews/${item.Id}`}>
+                        <Link className={styles.link} to={`/viewNews/${item._id}`}>
                             Read More
                         </Link>
                     </div>
@@ -83,7 +83,7 @@ const News = () => {
                         <Pagination
                             className={styles.pagi}
                             size="large"
-                            count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                            count={Math.ceil(data.news.count / 8)}
                             page={page}
                             onChange={handleChange}
                         />
@@ -100,7 +100,7 @@ const News = () => {
                                 placeholder="Title"
                                 value={title2}
                                 onChange={(e) => handleInputChange(e)}
-                                //required
+                            //required
                             ></input>
                             {/* <input type="submit" className="btn" value="Search"></input> */}
                             <BsSearch className={styles.icon2} onClick={handleSubmit} />
