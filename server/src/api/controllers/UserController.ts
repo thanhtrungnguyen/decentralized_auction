@@ -101,7 +101,7 @@ export const changeStatusUserHandler = async (req: Request, res: Response, next:
       res.status(500).json({ error });
     });
 };
-export const createSellerHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const createHandler = async (req: Request, res: Response, next: NextFunction) => {
   // const createUserData = req.body;
   // const createOrganizationData = req.body;
   // const createIndividualData = req.body;

@@ -20,14 +20,15 @@ router.get('/:individualId', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLE
 router.get('/getByUserId/:id', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getInformationOperatorByUserIdHandler);
 router.post(
   '/create',
+  requireRole(roles.ADMIN),
   validateResource(InformationOperatorSchema.create),
-  validateResource(UserSchema.createBidder),
+  validateResource(UserSchema.create),
   createInformationOperatorHandler
 );
 router.patch(
   '/update/:id',
   validateResource(InformationOperatorSchema.update),
-  requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER),
+  requireRole(roles.ADMIN, roles.MANAGER),
   // validateResource(UserSchema.createBidder),
   updateInformationOperatorHandler
 );

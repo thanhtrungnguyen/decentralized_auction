@@ -29,7 +29,7 @@ router.post(
       maxCount: 1
     }
   ]),
-  //validateResource(NewsSchema.create),
+  validateResource(NewsSchema.create),
   createNewsHandler
 );
 router.patch(

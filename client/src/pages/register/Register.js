@@ -119,27 +119,31 @@ const Register = () => {
             theme: "light",
         });
     };
-    const [listUsername, setListUsername] = useState([]);
-    const baseURL = `/user/users`;
+    // const [listUsername, setListUsername] = useState([]);
+    // const baseURL = `/user/users`;
 
     const handleSubmit = (event) => {
+        // const fsizeBack = cardBack.size;
+        // setFileBack(Math.round(fsizeBack / 1024));
+        // console.log(fileBack);
+        // const fsizeFront = cardFront.size;
+        // setFileFront(Math.round(fsizeFront / 1024));
+        // console.log(fileFront);
         const fsizeBack = cardBack.size;
-        setFileBack(Math.round(fsizeBack / 1024));
-        console.log(fileBack);
+        const fileBack = Math.round(fsizeBack / 1024);
         const fsizeFront = cardFront.size;
-        setFileFront(Math.round(fsizeFront / 1024));
-        console.log(fileFront);
-        axios.get(baseURL, { withCredentials: true }).then((resp) => {
-            setListUsername(resp.data.users);
-            listUsername.map((item) => {
-                if (item.username === username) {
-                    setIsExit(true);
-                    console.log(item.username);
-                } else {
-                    setIsExit(false);
-                }
-            });
-        });
+        const fileFront = Math.round(fsizeFront / 1024);
+        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
+        //     setListUsername(resp.data.users);
+        //     listUsername.map((item) => {
+        //         if (item.username === username) {
+        //             setIsExit(true);
+        //             console.log(item.username);
+        //         } else {
+        //             setIsExit(false);
+        //         }
+        //     });
+        // });
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
@@ -231,7 +235,7 @@ const Register = () => {
                 .catch((err) => {
                     //if(err.response.data.status === 409)
                     //console.log(err)
-                    notify(`${err.response.data.message}, ${err}`);
+                    notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
 
@@ -242,9 +246,8 @@ const Register = () => {
         <>
             <Header />
             <NavBar />
-
-            <div className={styles.container}>
-                <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
+                <div className={styles.container}>
                     <ToastContainer
                         position="top-right"
                         autoClose={5000}
@@ -466,8 +469,9 @@ const Register = () => {
                     </div>
                     <label style={{ color: "red" }}>{message}</label>
                     <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>
-                </form>
-            </div>
+                </div>
+            </form>
+
             <Footer />
             <FooterCopy />
         </>

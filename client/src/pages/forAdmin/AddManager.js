@@ -226,7 +226,7 @@ const AddManager = () => {
                             onChange={(e) => handleInputChange(e)}
                             required
                             id="phone"
-                            pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
+                            pattern="(0[3|5|7|8|9])+([0-9]{8})\b"
                         ></input>
                         <p className={styles.txt}>Address</p>
                         <input
