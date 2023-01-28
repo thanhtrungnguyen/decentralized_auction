@@ -1,7 +1,7 @@
 FROM node:16
 ADD package.json /tmp/package.json
 # ADD package-lock.json /tmp/package-lock.json
-RUN rm package-lock.json
+# RUN rm package-lock.json
 RUN rm -rf build
 RUN npm config rm proxy
 RUN npm config rm https-proxy
