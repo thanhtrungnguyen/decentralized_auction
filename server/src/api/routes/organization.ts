@@ -50,8 +50,9 @@ router.patch(
       maxCount: 1
     }
   ]),
-  // validateResource(OrganizationSchema.create),
-  // validateResource(IndividualSchema.create),
+  requireRole(roles.ADMIN, roles.BIDDER),
+  validateResource(OrganizationSchema.update),
+  validateResource(IndividualSchema.create),
   updateHandler
 );
 router.patch(
