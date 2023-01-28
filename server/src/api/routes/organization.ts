@@ -1,12 +1,12 @@
 import express from 'express';
 import {
-  createSellerHandler,
+  createHandler,
   getAllHandler,
   getByUserIdHandler,
   getSellerByIdHandler,
   getSellerHandler,
   updateBidderHandler,
-  updateSellerHandler
+  updateHandler
 } from '../controllers/OrganizationController';
 import { validateResource } from '../middleware/validateResource';
 import { IndividualSchema } from '../validations/IndividualSchema';
@@ -30,10 +30,11 @@ router.post(
       maxCount: 1
     }
   ]),
+  requireRole(roles.ADMIN, roles.BIDDER),
   validateResource(OrganizationSchema.create),
   validateResource(IndividualSchema.create),
   validateResource(UserSchema.createBidder),
-  createSellerHandler
+  createHandler
 );
 
 router.use(requireRole(roles.SELLER));
@@ -51,7 +52,7 @@ router.patch(
   ]),
   // validateResource(OrganizationSchema.create),
   // validateResource(IndividualSchema.create),
-  updateSellerHandler
+  updateHandler
 );
 router.patch(
   '/update/bidder/:id',

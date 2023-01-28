@@ -319,7 +319,7 @@ const AddSeller = () => {
                             <input
                                 className={styles.inputT}
                                 type="text"
-                                pattern="^\s*([^\s]\s*){0,100}$"
+                                pattern="\d{10}"
                                 placeholder="Tax code"
                                 value={taxCode}
                                 onChange={(e) => handleInputChange(e)}
