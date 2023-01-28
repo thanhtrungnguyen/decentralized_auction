@@ -4,6 +4,7 @@ COPY ./package.json ./
 RUN rm -rf build
 RUN npm config rm proxy
 RUN npm config rm https-proxy
+RUN npm config set registry http://registry.npmjs.org/
 RUN npm install && npm cache clean --force --loglevel=error
 COPY . .
 RUN npm run build
