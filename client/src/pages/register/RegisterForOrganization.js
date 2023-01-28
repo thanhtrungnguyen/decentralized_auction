@@ -36,7 +36,7 @@ const Register = () => {
     const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null);
     const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null);
     const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null);
-    //const [companyCertifcate, setCompanyCertifcate] = useState(null);
+    //const [companyCertificate, setCompanyCertificate] = useState(null);
     const [firstName, setFirstName] = useState(null);
     const [lastName, setlastName] = useState(null);
     const [gender, setgender] = useState("Male");

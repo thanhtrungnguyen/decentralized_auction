@@ -6,7 +6,7 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/stylesPages/hompage.module.css";
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 import Loading from "../../components/loading/Loading";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";

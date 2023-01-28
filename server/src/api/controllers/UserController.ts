@@ -8,7 +8,8 @@ import {
   getBidderFilter,
   getSellerFilter,
   getManagerFilter,
-  getUser
+  getUser,
+  validatePassword
 } from '../services/UserService';
 import sendEmail from '../utils/mailer';
 import { createIndividual, getIndividual } from '../services/IndividualService';
@@ -228,11 +229,13 @@ export const changePasswordHandler = async (req: Request, res: Response, next: N
   if (!user) {
     return res.status(404).json({ message: "User isn't found" });
   }
-  const a = _.omit(oldPassword);
-  if (user.password === a) {
-    return res.status(409).json({ message: 'Old password is wrong' });
+  if (password === oldPassword) {
+    return res.status(401).json({ message: 'Password is not change' });
   }
-  user.password = password;
+  const isValidPassword = await validatePassword({ username: user.username, password: oldPassword });
+  if (!isValidPassword) {
+    return res.status(401).send({ message: 'Invalid password' });
+  }
   await await updateUser({ _id: user._id }, { password }, { new: true })
     .then((result) => {
       return res.status(201).json({ message: 'Successfully updated password' });

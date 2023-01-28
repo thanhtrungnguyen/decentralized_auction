@@ -90,7 +90,7 @@ const MyAuctions = () => {
                             <AiFillEye
                                 className={styles.iconView}
                                 onClick={() => {
-                                    navigate("/auctionDetailForSeller");
+                                    navigate(`/auctionDetailForSeller/${item._id}`);
                                 }}
                             />
                             {/* <AiOutlineDelete className={styles.iconView} /> */}
