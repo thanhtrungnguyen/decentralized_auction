@@ -17,7 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 const AddCategory = () => {
     const axios = useAxiosPrivate();
     const [role, setRole] = useState();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const [categoryName, setCategoryName] = useState(null);
     const navigate = useNavigate();

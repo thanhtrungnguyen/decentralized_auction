@@ -207,9 +207,14 @@ const EditProfile = () => {
             // formData.append('_method', 'PUT')
             console.log(selectedDistrict);
             axios
-                .patch(`/individual/update/${data.individual._id}`, formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                }, { withCredentials: true })
+                .patch(
+                    `/individual/update/${data.individual._id}`,
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    },
+                    { withCredentials: true }
+                )
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
@@ -423,7 +428,6 @@ const EditProfile = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-
                             />
                             <input
                                 id="cardBack"
@@ -432,11 +436,10 @@ const EditProfile = () => {
                                 //   console.log(e.target.files[0]);
                                 // }}
                                 onChange={(e) => handleInputChange(e)}
-
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
-                                    {cardFront && <img src={(cardFront)} className={styles.img} alt="Thumb" />}
+                                    {cardFront && <img src={cardFront} className={styles.img} alt="Thumb" />}
                                     {/* <img
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
                                         className={styles.img}
@@ -447,7 +450,7 @@ const EditProfile = () => {
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
                                         className={styles.img}
                                     ></img> */}
-                                    {cardBack && <img src={(cardBack)} className={styles.img} alt="Thumb" />}
+                                    {cardBack && <img src={cardBack} className={styles.img} alt="Thumb" />}
                                 </div>
                             </div>
                             <br />
