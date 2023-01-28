@@ -17,6 +17,7 @@ import Loader from "../components/Loader";
 import Decimal from "decimal.js";
 import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
 import io from "socket.io-client";
+import { BASE_URL } from "../../../api/axios";
 function PlaceBid({ auction, property }) {
     const dispatch = useNotification();
     const { account, isWeb3Enabled } = useMoralis();
@@ -25,7 +26,7 @@ function PlaceBid({ auction, property }) {
     const [transactionStatus, setTransactionStatus] = useState();
 
     const [minBidAmount, setMinBidAmount] = useState();
-    const socket = io.connect("http://localhost:5000");
+    const socket = io.connect(BASE_URL);
     const {
         runContractFunction: getBidInformationByAuctionId,
         data: bidInformationData,

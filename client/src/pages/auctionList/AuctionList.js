@@ -19,6 +19,7 @@ import "./styles.css";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/vi";
+import { BASE_URL } from "../../api/axios";
 const AuctionList = () => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ const AuctionList = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(false);
-    const socket = io.connect("http://localhost:5000");
+    const socket = io.connect(BASE_URL);
     //const baseURL = "http://localhost:8800/api/auction/";
 
     const [price, setPrice] = useState(null);

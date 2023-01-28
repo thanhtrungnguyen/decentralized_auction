@@ -2,24 +2,27 @@ version: "3.7"
 services:
   nginx:
     depends_on:
-      - server
+      - api
       - client
     restart: always
     build:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
-      - "3050:80"
-  server:
+      - "80:80"
+  api:
     container_name: dap-server
-    restart: unless-stopped
+    restart: always
     environment:
       - NODE_ENV=production
     build:
       dockerfile: Dockerfile
       context: ./server
+    ports:
+      - "5000:5000"
   client:
     container_name: dap-client
+    restart: always
     stdin_open: true
     build:
       dockerfile: Dockerfile
@@ -29,3 +32,5 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+    ports:
+      - "3000:3000"

@@ -1,8 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
-import { getAll, getCreatedAuctionById, getPlacedBidById } from '../services/ContractInteractionService';
+import { getAll, getByAuctionId, getCreatedAuctionById, getPlacedBidById } from '../services/ContractInteractionService';
 
 export const getAllLogsHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAll()
+    .then((logs) => {
+      res.status(200).json({ logs });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+export const getLogsByAuctionIdHandler = async (req: Request, res: Response, next: NextFunction) => {
+  return await getByAuctionId(req.params.auctionId)
     .then((logs) => {
       res.status(200).json({ logs });
     })

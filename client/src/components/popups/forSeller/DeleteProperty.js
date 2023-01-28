@@ -21,6 +21,10 @@ const DeleteProperty = ({ idProperty }) => {
 
                 //navigate("/listBidders");
                 window.location.reload(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                alert(`Failed: ${err}`);
             });
 
         setExpanded(false);
