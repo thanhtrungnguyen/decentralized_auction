@@ -130,7 +130,7 @@ const MyProperty = () => {
                                         }
                                         position="right center"
                                     >
-                                        <DeleteProperty idProperty="" />
+                                        <DeleteProperty idProperty={`${item._id}`} />
                                     </Popup>
                                     <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
                                         <RequestAddProperty idProperty={`${item._id}`} />

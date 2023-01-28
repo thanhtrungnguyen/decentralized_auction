@@ -36,6 +36,7 @@ const AddProperty = () => {
     const [placeViewProperty, setPlaceViewProperty] = useState(null);
     // const [startBid, setStartBid] = useState(null);
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
+    const [disable, setDisable] = useState(false);
 
     const navigate = useNavigate();
     const baseURL = "http://localhost:5000/api/category/categories";
@@ -132,7 +133,13 @@ const AddProperty = () => {
             notify("🦄 Image 3, please select a file less than 2mb");
         } else if (fV > 10240) {
             notify("🦄 Video, please select a file less than 10mb");
+        } else if (startBid * 0.2 < deposit) {
+            notify("🦄 Deposit must less than 20% start bid");
+        } else if (startBid * 0.1 < priceStep) {
+            notify("🦄 Price Step must less than 10% start bid");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
             formData.append("propertyImage1", propertyImage1);
             formData.append("propertyImage2", propertyImage2);
@@ -176,6 +183,7 @@ const AddProperty = () => {
                 .catch((err) => {
                     notify(`${err.response.data.message} , ${err}`);
                 });
+            setDisable(false);
         }
 
         event.preventDefault();
@@ -352,7 +360,7 @@ const AddProperty = () => {
                                 <div className={styles.r}>
                                     <input
                                         id="priceStep"
-                                        type="number"
+                                        type="text"
                                         pattern="^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$"
                                         placeholder="Enter Price Step"
                                         className={styles.inputText}
@@ -418,7 +426,12 @@ const AddProperty = () => {
                     </div>
 
                     <div className={styles.btn}>
-                        <input className={styles.btnSave} type="submit" value="Save"></input>
+                        <input
+                            className={styles.btnSave}
+                            type="submit"
+                            value="Save"
+                            style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                        ></input>
 
                         <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
                     </div>

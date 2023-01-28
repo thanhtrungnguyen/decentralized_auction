@@ -50,7 +50,7 @@ const EditCategory = () => {
         });
     };
     const handleSubmit = (event) => {
-        if (!categoryName) {
+        if (!categoryName.trim()) {
             notify("🦄 categoryName is empty");
         } else {
             axios
@@ -111,7 +111,7 @@ const EditCategory = () => {
                         <input
                             id="categoryName"
                             type="text"
-                            pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){0,10}$"
+                            pattern="^[a-zA-Z\s]{0,10}"
                             placeholder="Enter category name"
                             value={categoryName}
                             onChange={(e) => handleInputChange(e)}
