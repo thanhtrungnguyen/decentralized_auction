@@ -4,7 +4,7 @@ FROM node:16
 RUN rm -rf build
 RUN npm config rm proxy
 RUN npm config rm https-proxy
-# RUN cd /tmp && npm install -g node-pre-gyp --force
+# RUN cd /tmp && npm install && npm cache clean --force --loglevel=error
 RUN npm install -g node-pre-gyp --force
 # ADD ./ /src
 # RUN rm -rf src/node_modules && cp -a /tmp/node_modules /src/

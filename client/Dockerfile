@@ -4,8 +4,7 @@ COPY ./package.json ./
 RUN rm -rf build
 RUN npm config rm proxy
 RUN npm config rm https-proxy
-RUN npm cache clear --force
-RUN npm install --force
+RUN npm install && npm cache clean --force --loglevel=error
 COPY . .
 RUN npm run build
 

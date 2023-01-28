@@ -12,7 +12,7 @@ services:
       - "3050:80"
   server:
     container_name: dap-server
-    restart: unless-stopped
+    restart: always
     environment:
       - NODE_ENV=production
     build:
@@ -20,6 +20,7 @@ services:
       context: ./server
   client:
     container_name: dap-client
+    restart: always
     stdin_open: true
     build:
       dockerfile: Dockerfile
