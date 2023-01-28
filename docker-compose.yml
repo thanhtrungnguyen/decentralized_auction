@@ -2,7 +2,7 @@ version: "3.7"
 services:
   nginx:
     depends_on:
-      - server
+      - api
       - client
     restart: always
     build:
@@ -10,7 +10,7 @@ services:
       context: ./nginx
     ports:
       - "4000:80"
-  server:
+  api:
     container_name: dap-server
     restart: always
     environment:
