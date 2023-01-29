@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "./useAxiosPrivate";
 
-export const usePostRequest = (url, payload) => {
+export const useAxios = (url, payload) => {
     const axios = useAxiosPrivate();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState();

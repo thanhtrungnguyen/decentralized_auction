@@ -174,13 +174,13 @@ const Register = () => {
             notify("🦄 dateRangeCard is empty");
         } else if (!cardGrantedPlace.trim()) {
             notify("🦄 cardGrantedPlace is empty");
-        } else if (!cardFront.trim()) {
+        } else if (!cardFront) {
             notify("🦄 cardFront is empty");
         } else if (fileBack > 2048) {
             notify("🦄 File card back, please select a file less than 2mb");
         } else if (fileFront > 2048) {
             notify("🦄 File card front, please select a file less than 2mb");
-        } else if (!cardBack.trim()) {
+        } else if (!cardBack) {
             notify("🦄 cardBack is empty");
         } else if (!username.trim()) {
             notify("🦄 username is empty");

@@ -1,4 +1,4 @@
-import styles from "../../styleCss/login.module.css";
+import styles from "../../styleCss/stylesPages/forAdmin/sellerDetail.module.css";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ const ViewNewsForAdmin = () => {
     const DOMPurify = createDOMPurify();
 
     const { id } = useParams();
-    const baseURL = `/news/getById/${id}`;
+    const baseURL = `/news/${id}`;
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -32,40 +32,44 @@ const ViewNewsForAdmin = () => {
     const [avatar, setAvatar] = useState(null);
 
     const [role, setRole] = useState();
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         await axios.get(baseURL).then((resp) => {
-    //             setTitle(resp.data.Name);
-    //             setContent(resp.data.Content__c);
-    //             setData(resp.data);
-    //         });
-
-    //         if (getUser() != null) {
-    //             setRole(getUser().role);
-    //         } else {
-    //             setRole("");
-    //         }
-
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    // }, [baseURL]);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURL).then((resp) => {
+                // setTitle(resp.data.news.title);
+                // setContent(resp.data.news.content);
+                setData(resp.data);
+            });
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURL]);
     //const [match, setMatch] = useState(null);
 
-    return !loading ? (
+    return loading ? (
         <Loading />
     ) : (
         <>
-            <SideBarAdmin />
-            <Time />
-            <div className={styles.box}>
-                <h1>HIH</h1>
-                <h1>{data.Name}</h1>
-                <br />
-                <br />
-                <br />
-                {<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.Content__c) }} />}
+            <div className={styles.container}>
+                <SideBarAdmin />
+                <Time />
+                <div className={styles.content}>
+                    <div style={{ marginLeft: '10px' }} className={styles.box}>
+                        <h1 style={{ textAlign: 'center' }}>{data.news.title}</h1>
+                        <br />
+                        <br />
+                        <br />
+                        {<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.news.content) }} />}
+                        <button
+                            className={styles.btn}
+                            onClick={() => {
+                                navigate("/listNews");
+                            }}
+                        >
+                            Back
+                        </button>
+                    </div>
+                </div>
             </div>
         </>
     );

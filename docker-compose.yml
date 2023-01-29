@@ -1,6 +1,7 @@
-version: "3.7"
+version: "3"
 services:
   nginx:
+    container_name: dap-nginx-server
     depends_on:
       - api
       - client
@@ -12,21 +13,21 @@ services:
       - "80:80"
   api:
     container_name: dap-server
-    restart: always
-    environment:
-      - NODE_ENV=production
     build:
       dockerfile: Dockerfile
       context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
   client:
     container_name: dap-client
-    restart: always
     stdin_open: true
     build:
       dockerfile: Dockerfile
       context: ./client
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_BASE_URL= ""
     volumes:
       - /app/node_modules
       - ./client:/app

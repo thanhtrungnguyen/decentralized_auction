@@ -173,6 +173,10 @@ const EditProperty = () => {
             notify("🦄 Image 3, please select a file less than 2mb");
         } else if (fV > 4096) {
             notify("🦄 Video, please select a file less than 4mb");
+        } else if (startBid * 0.2 < deposit) {
+            notify("🦄 Deposit must less than 20% start bid");
+        } else if (startBid * 0.1 < priceStep) {
+            notify("🦄 Price Step must less than 10% start bid");
         } else {
             console.log(propertyImage1);
             const formData = new FormData();
