@@ -89,7 +89,7 @@ const ChangePassword = () => {
                     // console.log(res);
                     // console.log(res.data);
                     alert("Change password successfully!!!");
-                    navigate(`/profileManager/${data2?.user._id}`);
+                    navigate(`/profile/${data2?.user._id}`);
                 })
                 .catch((err) => {
                     //console.error(err.response.data.message);
@@ -134,6 +134,20 @@ const ChangePassword = () => {
             <NavBar />
             <div>
                 <form onSubmit={handleSubmit}>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
+                    {/* Same as */}
+                    <ToastContainer />
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Change Password</p>
