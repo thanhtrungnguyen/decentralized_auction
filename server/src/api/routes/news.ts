@@ -18,10 +18,8 @@ import { roles } from '../../config/roles';
 
 const upload = multer({ dest: 'uploads/' });
 router.get('/news/:index/:status/:search', getAllNewsHandler);
-
-router.use(requireRole(roles.ADMIN));
-
 router.get('/:newsId', getNewsByIdHandler);
+router.use(requireRole(roles.ADMIN));
 router.post(
   '/create',
   upload.fields([
