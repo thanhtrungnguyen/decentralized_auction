@@ -14,7 +14,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig
 import Loader from "../components/Loader";
 import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
 import { getBidderState } from "../../../utils/getBidderState";
-import { usePostRequest } from "../../../hooks/usePost";
+import { usePostRequest } from "../../../hooks/useAxios";
 
 function AuctionRegistration({ auction, property }) {
     const { account, isWeb3Enabled } = useMoralis();
@@ -71,7 +71,9 @@ function AuctionRegistration({ auction, property }) {
         try {
             setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
             // eslint-disable-next-line react-hooks/rules-of-hooks
-            const { loading, data, error } = usePostRequest("/api/auctionRegistration/create", { auction: auction._id, walletAddress: account });
+            // const { loading, data, error } = usePostRequest(`/api/auctionRegistration/${auction.auctionId}/registration`, {
+            //     walletAddress: account,
+            // });
             await tx.wait(1);
             setTransactionStatus({ hash: tx.hash, status: "Completed" });
             updateUI();
@@ -108,6 +110,18 @@ function AuctionRegistration({ auction, property }) {
                             {parseEther(amount)}
                             ETH
                         </p>
+                        {/* <button
+                            disabled={isRegisterToBidFetching || isRegisterToBidLoading}
+                            className={styles.btn}
+                            onClick={async () =>
+                                await registerToBid({
+                                    onSuccess: handleSuccess,
+                                    onError: handleError,
+                                })
+                            }
+                        >
+                            {loading ? <div>Loading...</div> : <div>Register for auction</div>}
+                        </button> */}
                         <button
                             disabled={isRegisterToBidFetching || isRegisterToBidLoading}
                             className={styles.btn}

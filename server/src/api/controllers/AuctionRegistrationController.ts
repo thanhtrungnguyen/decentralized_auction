@@ -29,13 +29,14 @@ export const getAuctionRegistrationByAuctionIdHandler = async (req: Request, res
 };
 
 export const createAuctionRegistrationHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const auctionRegistration = req.body;
+  const { walletAddress } = req.body;
+  const auctionId = req.params.auctionId;
   const userId = res.locals.user._id;
-  const auction = await getAuction({ _id: auctionRegistration.auction });
+  const auction = await getAuction({ _id: auctionId });
   if (!auction) {
-    return res.status(404).json({ message: "Auction is not found" });
+    return res.status(404).json({ message: 'Auction is not found' });
   }
-  return await createAuctionRegistration({...auctionRegistration, user: userId})
+  return await createAuctionRegistration({ walletAddress: walletAddress, auction: auctionId, user: userId })
     .then((auctionRegistration) => {
       res.status(201).json({ auctionRegistration });
     })
@@ -59,5 +60,3 @@ export const updateAuctionRegistrationHandler = async (req: Request, res: Respon
       res.status(500).json({ error });
     });
 };
-
-
