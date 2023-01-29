@@ -80,13 +80,7 @@ const News = () => {
                 <div className={styles.col1}>
                     {exportData(data)}
                     <div className={styles.pagination}>
-                        <Pagination
-                            className={styles.pagi}
-                            size="large"
-                            count={Math.ceil(data.news.count / 8)}
-                            page={page}
-                            onChange={handleChange}
-                        />
+                        <Pagination className={styles.pagi} size="large" count={Math.ceil(data.news.count / 8)} page={page} onChange={handleChange} />
                     </div>
                 </div>
                 <div className={styles.col2}>
@@ -100,7 +94,7 @@ const News = () => {
                                 placeholder="Title"
                                 value={title2}
                                 onChange={(e) => handleInputChange(e)}
-                            //required
+                                //required
                             ></input>
                             {/* <input type="submit" className="btn" value="Search"></input> */}
                             <BsSearch className={styles.icon2} onClick={handleSubmit} />
