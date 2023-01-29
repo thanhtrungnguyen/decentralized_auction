@@ -452,19 +452,19 @@ contract Auction {
     function cancelAuctionResult(string memory auctionId)
         external
         payable
-        isWinnerOfAuction(auctionId)
-        isConfirmationTime(auctionId)
+    // isWinnerOfAuction(auctionId)
+    // isRegisteredBidder(auctionId)
+    // isConfirmationTime(auctionId)
     {
-        if (
-            s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount ==
-            s_bidInformations[auctionId][getIndexOfFirstOfAuction(auctionId)].bidAmount ||
-            s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount ==
-            s_bidInformations[auctionId][getIndexOfSecondOfAuction(auctionId)].bidAmount
-        ) {
-            s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState
-                .CANCEL;
-            s_proceeds += s_auctionInformations[auctionId].depositAmount;
-        }
+        // if (
+        //     s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount ==
+        //     s_bidInformations[auctionId][getIndexOfFirstOfAuction(auctionId)].bidAmount ||
+        //     s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidAmount ==
+        //     s_bidInformations[auctionId][getIndexOfSecondOfAuction(auctionId)].bidAmount
+        // ) {
+        s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState.CANCEL;
+        s_proceeds += s_auctionInformations[auctionId].depositAmount;
+        // }
         emit CanceledAuctionResult(
             auctionId,
             msg.sender,
@@ -494,11 +494,9 @@ contract Auction {
         emit Withdraw(auctionId, msg.sender);
     }
 
-    function payment(string memory auctionId)
-        external
-        payable
-        isWinnerOfAuction(auctionId)
-        isValidPaymentAmount(auctionId)
+    function payment(
+        string memory auctionId // isWinnerOfAuction(auctionId)
+    ) external payable // isValidPaymentAmount(auctionId)
     {
         s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState.PAYMENT;
         s_proceeds += s_auctionInformations[auctionId].depositAmount;

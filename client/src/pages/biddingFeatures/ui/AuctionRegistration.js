@@ -77,7 +77,7 @@ function AuctionRegistration({ auction, property }) {
             // });
 
             axios
-                .post(`/api/auctionRegistration/${auction.auctionId}/registration`, {
+                .post(`/auctionRegistration/${auction.auctionId}/registration`, {
                     walletAddress: account,
                 })
                 .then((res) => console.log(res))
