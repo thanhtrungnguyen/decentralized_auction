@@ -12,23 +12,19 @@ import FooterCopy from "../../components/footer/FooterCopy";
 import HeaderUser from "../../components/header/HeaderUser";
 // import { useFetch } from "../../hooks/useFetch";
 import Loading from "../../components/loading/Loading";
+import { ToastContainer, toast } from "react-toastify";
 // import bcrypt from "bcryptjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { useFetchData } from "../../hooks/useFetch";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const ChangePassword = () => {
     const axios = useAxiosPrivate();
-    const { id } = useParams();
-    // const baseURL = `http://localhost:8800/api/user/${id}`;
-    // const { data, loading, error } = useFetch(baseURL);
     const navigate = useNavigate();
-
-    const [oldPassword, setOldPassword] = useState(null);
-    const [password, setPassword] = useState(null);
-    const [rePassword, setRePassword] = useState(null);
-    const [message, setMessage] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [role, setRole] = useState();
+    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [rePassword, setRePassword] = useState("");
     const [passwordShown1, setPasswordShown1] = useState(false);
     const [passwordShown2, setPasswordShown2] = useState(false);
     const [passwordShown3, setPasswordShown3] = useState(false);
@@ -48,16 +44,60 @@ const ChangePassword = () => {
         if (id === "oldPassword") {
             setOldPassword(value);
         }
-        if (id === "password") {
-            setPassword(value);
+        if (id === "newPassword") {
+            setNewPassword(value);
         }
         if (id === "rePassword") {
             setRePassword(value);
         }
     };
+    const notify = (message) => {
+        toast(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
     const handleSubmit = async (event) => {
-        // const formData = new FormData();
+        if (!oldPassword.trim()) {
+            notify("🦄 oldPassword is empty");
+        } else if (!newPassword.trim()) {
+            notify("🦄 newPassword is empty");
+        } else if (!rePassword.trim()) {
+            notify("🦄 rePassword is empty");
+        } else if (rePassword !== newPassword) {
+            notify("🦄 rePassword is not same password");
+        } else if (newPassword.trim().length < 8) {
+            notify("🦄 newPassword is must be more than 8 character");
+        } else {
+            const formData = new FormData();
 
+            formData.append("oldPassword", oldPassword.trim());
+            formData.append("password", newPassword.trim());
+            formData.append("passwordConfirmation", rePassword.trim());
+
+            axios
+                .post(`/user/changePassword/${data2.user._id}`, formData, {
+                    withCredentials: true,
+                })
+                .then((res) => {
+                    // console.log(res);
+                    // console.log(res.data);
+                    alert("Change password successfully!!!");
+                    navigate(`/profileManager/${data2?.user._id}`);
+                })
+                .catch((err) => {
+                    //console.error(err.response.data.message);
+                    notify(`🦄 Change password Failed: ${err.response.data.message} , ${err}`);
+                });
+        }
+        event.preventDefault();
+        // const formData = new FormData();
         // if (rePassword !== password) {
         //     setMessage("Please enter match the password");
         // } else {
@@ -86,7 +126,7 @@ const ChangePassword = () => {
         // }
     };
 
-    return loading ? (
+    return loading2 ? (
         <Loading />
     ) : (
         <>
@@ -113,11 +153,11 @@ const ChangePassword = () => {
                             </div>
                             <div className={styles.hide}>
                                 <input
-                                    id="password"
+                                    id="newPassword"
                                     type={passwordShown2 ? "text" : "password"}
                                     className={styles.textField}
                                     placeholder="Enter New Password"
-                                    value={password}
+                                    value={newPassword}
                                     onChange={(e) => handleInputChange(e)}
                                     required
                                 ></input>
@@ -140,7 +180,7 @@ const ChangePassword = () => {
                                     {eye}
                                 </i>
                             </div>
-                            <label style={{ color: "red" }}>{message}</label>
+                            {/* <label style={{ color: "red" }}>{message}</label> */}
                             <br />
                             <br />
                             <br />

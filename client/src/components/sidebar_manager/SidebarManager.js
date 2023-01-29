@@ -3,9 +3,10 @@ import styles from "../../styleCss/stylesComponents/sidebar_seller.module.css";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { BiBookHeart, BiDizzy, BiDonateHeart, BiNews } from "react-icons/bi";
 import useAuth from "../../hooks/useAuth";
+import { useFetchData } from "../../hooks/useFetch";
 const SidebarManager = () => {
     const navigate = useNavigate();
-    const { auth } = useAuth();
+    const { loading: loading2, data: data2, error } = useFetchData("/session");
     return (
         <>
             <div className={styles.container}>
@@ -18,10 +19,10 @@ const SidebarManager = () => {
                 <p
                     className={styles.txt2}
                     onClick={() => {
-                        navigate(`/profileManager/${auth.user._id}`);
+                        navigate(`/profileManager/${data2?.user._id}`);
                     }}
                 >
-                    {auth.user.username}
+                    {data2?.user.username}
                 </p>
                 <br />
                 <br />

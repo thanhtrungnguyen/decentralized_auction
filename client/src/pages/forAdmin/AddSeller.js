@@ -43,7 +43,6 @@ const AddSeller = () => {
     const [userName, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
-    const [position, setPosition] = useState(null);
     const role = "seller";
     const userType = "organization";
     const [fileBack, setFileBack] = useState(0);
@@ -53,9 +52,7 @@ const AddSeller = () => {
         if (id === "organizationName") {
             setOrganizationName(value);
         }
-        if (id === "position") {
-            setPosition(value);
-        }
+
         if (id === "taxCode") {
             setTaxCode(value);
         }
@@ -132,24 +129,24 @@ const AddSeller = () => {
             theme: "light",
         });
     };
-    const [listUsername, setListUsername] = useState([]);
-    const baseURL = `http://localhost:5000/api/user/users`;
+    // const [listUsername, setListUsername] = useState([]);
+    // const baseURL = `http://localhost:5000/api/user/users`;
     const handleSubmit = (event) => {
         const fsizeBack = cardBack.size;
         const fileBack = Math.round(fsizeBack / 1024);
         const fsizeFront = cardFront.size;
         const fileFront = Math.round(fsizeFront / 1024);
-        axios.get(baseURL, { withCredentials: true }).then((resp) => {
-            setListUsername(resp.data.users);
-            listUsername.map((item) => {
-                if (item.username === userName) {
-                    setIsExit(true);
-                    console.log(item.username);
-                } else {
-                    setIsExit(false);
-                }
-            });
-        });
+        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
+        //     setListUsername(resp.data.users);
+        //     listUsername.map((item) => {
+        //         if (item.username === userName) {
+        //             setIsExit(true);
+        //             console.log(item.username);
+        //         } else {
+        //             setIsExit(false);
+        //         }
+        //     });
+        // });
         let cityId = selectedCity.value;
         let city = selectedCity.label;
         let districtId = selectedDistrict.value;
@@ -180,8 +177,6 @@ const AddSeller = () => {
             notify("🦄 Email is empty");
         } else if (!phone.trim()) {
             notify("🦄 phone is empty");
-        } else if (!position.trim()) {
-            notify("🦄 position is empty");
         } else if (!cityId) {
             notify("🦄 city is empty");
         } else if (!districtId) {
@@ -229,7 +224,6 @@ const AddSeller = () => {
             formData.append("dateOfBirth", dateOfBirth.trim());
             formData.append("email", email.trim());
             formData.append("phone", phone.trim());
-            formData.append("position", position.trim());
             formData.append("cityId", cityId);
             formData.append("city", selectedCity.label);
             formData.append("districtId", districtId);
@@ -319,7 +313,7 @@ const AddSeller = () => {
                             <input
                                 className={styles.inputT}
                                 type="text"
-                                pattern="^\s*([^\s]\s*){0,100}$"
+                                pattern="\d{10}"
                                 placeholder="Tax code"
                                 value={taxCode}
                                 onChange={(e) => handleInputChange(e)}
@@ -419,18 +413,6 @@ const AddSeller = () => {
                                 onChange={(e) => handleInputChange(e)}
                                 id="phone"
                                 maxLength={10}
-                                required
-                            ></input>
-                            <br />
-                            <br />
-                            <input
-                                className={styles.inputT}
-                                type="text"
-                                pattern="^\s*([^\s]\s*){0,100}$"
-                                placeholder="Position"
-                                value={position}
-                                onChange={(e) => handleInputChange(e)}
-                                id="position"
                                 required
                             ></input>
                             <br />

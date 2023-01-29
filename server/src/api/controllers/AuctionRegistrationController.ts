@@ -3,9 +3,9 @@ import {
   getAllAuctionRegistrations,
   getAuctionRegistration,
   createAuctionRegistration,
-  updateAuctionRegistration,
-  deleteAuctionRegistration
+  updateAuctionRegistration
 } from '../services/AuctionRegistrationService';
+import { getAuction } from '../services/AuctionService';
 
 export const getAllAuctionRegistrationsHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllAuctionRegistrations()
@@ -30,7 +30,12 @@ export const getAuctionRegistrationByAuctionIdHandler = async (req: Request, res
 
 export const createAuctionRegistrationHandler = async (req: Request, res: Response, next: NextFunction) => {
   const auctionRegistration = req.body;
-  return await createAuctionRegistration(auctionRegistration)
+  const userId = res.locals.user._id;
+  const auction = await getAuction({ _id: auctionRegistration.auction });
+  if (!auction) {
+    return res.status(404).json({ message: "Auction is not found" });
+  }
+  return await createAuctionRegistration({...auctionRegistration, user: userId})
     .then((auctionRegistration) => {
       res.status(201).json({ auctionRegistration });
     })
@@ -55,17 +60,4 @@ export const updateAuctionRegistrationHandler = async (req: Request, res: Respon
     });
 };
 
-export const deleteAuctionRegistrationHandler = async (req: Request, res: Response, next: NextFunction) => {
-  const auctionRegistrationId = req.params.auctionRegistrationId;
-  const auctionRegistration = await getAuctionRegistration({ _id: auctionRegistrationId });
-  if (!auctionRegistration) {
-    return res.status(404).json({ message: "AuctionRegistration isn't found" });
-  }
-  return await deleteAuctionRegistration({ _id: auctionRegistrationId })
-    .then((auctionRegistration) => {
-      res.status(201).json({ auctionRegistration, message: 'Deleted auctionRegistration' });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
-};
+

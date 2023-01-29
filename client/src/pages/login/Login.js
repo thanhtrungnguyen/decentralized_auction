@@ -11,7 +11,6 @@ import useAuth from "../../hooks/useAuth";
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 const Login = () => {
-    // debugger;
     const { setAuth } = useAuth();
     const dispatch = useNotification();
     const navigate = useNavigate();

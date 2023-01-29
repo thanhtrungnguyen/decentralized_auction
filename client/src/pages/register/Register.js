@@ -12,14 +12,12 @@ import Footer from "../../components/footer/Footer";
 import { BsFillPersonFill, BsBank2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import FooterCopy from "../../components/footer/FooterCopy";
-// import ReactDOM from "react-dom/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const eye = <FontAwesomeIcon icon={faEye} />;
-// axios.defaults.withCredentials = true;
 
 const Register = () => {
     const axios = useAxiosPrivate();
@@ -121,27 +119,31 @@ const Register = () => {
             theme: "light",
         });
     };
-    const [listUsername, setListUsername] = useState([]);
-    const baseURL = `/user/users`;
+    // const [listUsername, setListUsername] = useState([]);
+    // const baseURL = `/user/users`;
 
     const handleSubmit = (event) => {
+        // const fsizeBack = cardBack.size;
+        // setFileBack(Math.round(fsizeBack / 1024));
+        // console.log(fileBack);
+        // const fsizeFront = cardFront.size;
+        // setFileFront(Math.round(fsizeFront / 1024));
+        // console.log(fileFront);
         const fsizeBack = cardBack.size;
-        setFileBack(Math.round(fsizeBack / 1024));
-        console.log(fileBack);
+        const fileBack = Math.round(fsizeBack / 1024);
         const fsizeFront = cardFront.size;
-        setFileFront(Math.round(fsizeFront / 1024));
-        console.log(fileFront);
-        axios.get(baseURL, { withCredentials: true }).then((resp) => {
-            setListUsername(resp.data.users);
-            listUsername.map((item) => {
-                if (item.username === username) {
-                    setIsExit(true);
-                    console.log(item.username);
-                } else {
-                    setIsExit(false);
-                }
-            });
-        });
+        const fileFront = Math.round(fsizeFront / 1024);
+        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
+        //     setListUsername(resp.data.users);
+        //     listUsername.map((item) => {
+        //         if (item.username === username) {
+        //             setIsExit(true);
+        //             console.log(item.username);
+        //         } else {
+        //             setIsExit(false);
+        //         }
+        //     });
+        // });
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
@@ -172,13 +174,13 @@ const Register = () => {
             notify("🦄 dateRangeCard is empty");
         } else if (!cardGrantedPlace.trim()) {
             notify("🦄 cardGrantedPlace is empty");
-        } else if (!cardFront.trim()) {
+        } else if (!cardFront) {
             notify("🦄 cardFront is empty");
         } else if (fileBack > 2048) {
             notify("🦄 File card back, please select a file less than 2mb");
         } else if (fileFront > 2048) {
             notify("🦄 File card front, please select a file less than 2mb");
-        } else if (!cardBack.trim()) {
+        } else if (!cardBack) {
             notify("🦄 cardBack is empty");
         } else if (!username.trim()) {
             notify("🦄 username is empty");
@@ -233,7 +235,7 @@ const Register = () => {
                 .catch((err) => {
                     //if(err.response.data.status === 409)
                     //console.log(err)
-                    notify(`${err.response.data.message}, ${err}`);
+                    notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
 
@@ -244,9 +246,8 @@ const Register = () => {
         <>
             <Header />
             <NavBar />
-
-            <div className={styles.container}>
-                <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
+                <div className={styles.container}>
                     <ToastContainer
                         position="top-right"
                         autoClose={5000}
@@ -468,8 +469,9 @@ const Register = () => {
                     </div>
                     <label style={{ color: "red" }}>{message}</label>
                     <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>
-                </form>
-            </div>
+                </div>
+            </form>
+
             <Footer />
             <FooterCopy />
         </>

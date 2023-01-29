@@ -130,13 +130,13 @@ const MyProperty = () => {
                                         }
                                         position="right center"
                                     >
-                                        <DeleteProperty idProperty="" />
+                                        <DeleteProperty idProperty={item._id} />
                                     </Popup>
                                     <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
                                         <RequestAddProperty idProperty={`${item._id}`} />
                                     </Popup>
                                 </>
-                            ) : item.status === "Request" || item.status === "Approved" || item.status === "Closed" ? (
+                            ) : item.status === "Request" || item.status === "Approved" || item.status === "Closed" || item.status === "UpcomingForBid" ? (
                                 <>
                                     <AiFillEye
                                         className={styles.iconView}
@@ -159,7 +159,7 @@ const MyProperty = () => {
                                             navigate("/propertyDetail/" + `${item._id}`);
                                         }}
                                     />
-                                    <Popup
+                                    {/* <Popup
                                         trigger={
                                             <label>
                                                 {" "}
@@ -169,7 +169,7 @@ const MyProperty = () => {
                                         position="right center"
                                     >
                                         <DeleteProperty idProperty="" />
-                                    </Popup>
+                                    </Popup> */}
                                 </>
                             )}
                         </td>

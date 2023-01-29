@@ -10,7 +10,7 @@ import {
   updateOrganization
 } from '../services/OrganizationService';
 
-export const createSellerHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const createHandler = async (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body);
   const createData = req.body;
   const files = req.files as { [fieldName: string]: Express.Multer.File[] };
@@ -52,7 +52,7 @@ export const createSellerHandler = async (req: Request, res: Response, next: Nex
     }
   }
 };
-export const updateSellerHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const updateHandler = async (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id;
   const updateData = req.body;
   const files = req.files as { [fieldName: string]: Express.Multer.File[] };

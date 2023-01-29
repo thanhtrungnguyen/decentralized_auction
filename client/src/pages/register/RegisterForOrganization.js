@@ -36,7 +36,7 @@ const Register = () => {
     const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null);
     const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null);
     const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null);
-    //const [companyCertifcate, setCompanyCertifcate] = useState(null);
+    //const [companyCertificate, setCompanyCertificate] = useState(null);
     const [firstName, setFirstName] = useState(null);
     const [lastName, setlastName] = useState(null);
     const [gender, setgender] = useState("Male");
@@ -140,24 +140,24 @@ const Register = () => {
             theme: "light",
         });
     };
-    const [listUsername, setListUsername] = useState([]);
-    const baseURL = `http://localhost:5000/api/user/users`;
+    // const [listUsername, setListUsername] = useState([]);
+    // const baseURL = `http://localhost:5000/api/user/users`;
     const handleSubmit = (event) => {
         const fsizeBack = cardBack.size;
         const fileBack = Math.round(fsizeBack / 1024);
         const fsizeFront = cardFront.size;
         const fileFront = Math.round(fsizeFront / 1024);
-        axios.get(baseURL, { withCredentials: true }).then((resp) => {
-            setListUsername(resp.data.users);
-            listUsername.map((item) => {
-                if (item.username === userName) {
-                    setIsExit(true);
-                    console.log(item.username);
-                } else {
-                    setIsExit(false);
-                }
-            });
-        });
+        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
+        //     setListUsername(resp.data.users);
+        //     listUsername.map((item) => {
+        //         if (item.username === userName) {
+        //             setIsExit(true);
+        //             console.log(item.username);
+        //         } else {
+        //             setIsExit(false);
+        //         }
+        //     });
+        // });
         let cityId = selectedCity.value;
 
         let districtId = selectedDistrict.value;
@@ -201,9 +201,9 @@ const Register = () => {
             notify("🦄 dateRangeCard is empty");
         } else if (!cardGrantedPlace.trim()) {
             notify("🦄 cardGrantedPlace is empty");
-        } else if (!cardFront.trim()) {
+        } else if (!cardFront) {
             notify("🦄 cardFront is empty");
-        } else if (!cardBack.trim()) {
+        } else if (!cardBack) {
             notify("🦄 cardBack is empty");
         } else if (fileBack > 2048) {
             notify("🦄 File card back, please select a file less than 2mb");

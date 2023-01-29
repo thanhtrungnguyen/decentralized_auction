@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import io from "socket.io-client";
 import Time from "../../components/time/Time";
 import Countdown from "react-countdown";
+import { BASE_URL } from "../../api/axios";
 const ViewBiddingForManager = () => {
     const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
@@ -25,7 +26,7 @@ const ViewBiddingForManager = () => {
     const navigate = useNavigate();
     const baseURL = `/contractInteraction/placedBid/${id}`;
     const baseURLAuction = `auction/${id}`;
-    const socket = io.connect("http://localhost:5000");
+    const socket = io.connect(BASE_URL);
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
     const [status, setStatus] = useState(null);

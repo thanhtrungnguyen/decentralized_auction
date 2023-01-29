@@ -17,6 +17,21 @@ const getAll = async () => {
   }
 };
 
+const getByAuctionId = async (auctionId: string) => {
+  try {
+    const logs = await database.collection(COLLECTION_PATH).where('auctionId', '==', auctionId).get();
+
+    let list: FirebaseFirestore.DocumentData[] = [];
+    logs?.forEach((doc) => {
+      list.push(doc.data());
+    });
+
+    return list;
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
 const getCreatedAuctionById = async (auctionId: string) => {
   try {
     const logs = await database.collection(COLLECTION_PATH).where('name', '==', 'CreatedAuction').where('auctionId', '==', auctionId).get();
@@ -91,4 +106,4 @@ const getCountPlacedBidAndRetracted = async () => {
   }
 };
 
-export { getAll, getCreatedAuctionById, getPlacedBidById, getCountPlacedBidAndRetracted, getHighestBidByAuctionId };
+export { getAll, getCreatedAuctionById, getPlacedBidById, getCountPlacedBidAndRetracted, getHighestBidByAuctionId,getByAuctionId };

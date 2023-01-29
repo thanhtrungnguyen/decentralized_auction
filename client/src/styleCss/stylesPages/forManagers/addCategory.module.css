@@ -79,6 +79,18 @@ E0E0E0
     border: 1px solid #e5e7eb;
     border-radius: 8px;
 }
+.dropdown {
+    position: absolute;
+    width: 195px;
+    height: 32px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-top: 120px;
+    margin-left: 250px;
+}
 .btnSave {
     font-family: "Inter";
     font-style: normal;

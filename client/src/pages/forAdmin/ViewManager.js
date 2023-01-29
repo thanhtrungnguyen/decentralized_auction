@@ -56,7 +56,7 @@ const ViewManager = () => {
                             <p className={styles.txt}>{data.result.gender}</p>
 
                             <p className={styles.txt}>Email:</p>
-                            <p className={styles.txt}>{data.result.email}m</p>
+                            <p className={styles.txt}>{data.result.email}</p>
                             <p className={styles.txt}>Phone:</p>
                             <p className={styles.txt}>{data.result.phone}</p>
                             <p className={styles.txt}>Address:</p>

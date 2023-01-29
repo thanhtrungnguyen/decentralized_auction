@@ -18,6 +18,7 @@ import { roles } from '../../config/roles';
 
 const upload = multer({ dest: 'uploads/' });
 router.get('/news/:index/:status/:search', getAllNewsHandler);
+
 router.use(requireRole(roles.ADMIN));
 
 router.get('/:newsId', getNewsByIdHandler);
@@ -29,7 +30,7 @@ router.post(
       maxCount: 1
     }
   ]),
-  //validateResource(NewsSchema.create),
+  validateResource(NewsSchema.create),
   createNewsHandler
 );
 router.patch(

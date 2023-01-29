@@ -25,7 +25,11 @@ const RequestAddProperty = ({ idProperty }) => {
                 console.log(res.data);
 
                 //navigate("/listBidders");
+                alert("Request add successfully!");
                 window.location.reload(false);
+            })
+            .catch((err) => {
+                alert("Request add failed !" + { err });
             });
 
         setExpanded(false);

@@ -1,7 +1,8 @@
 const webpack = require("webpack");
 
+const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 // Override with react-app-rewired
-module.exports = function override(config) {
+module.exports = function override(config, env) {
     const fallback = config.resolve.fallback || {};
     Object.assign(fallback, {
         crypto: require.resolve("crypto-browserify"),
@@ -19,6 +20,9 @@ module.exports = function override(config) {
             Buffer: ["buffer", "Buffer"],
         }),
     ]);
+
+    config.resolve.plugins = config.resolve.plugins.filter((plugin) => !(plugin instanceof ModuleScopePlugin));
+
     // config.resolve.fallback = {
     //     fs: false,
     // };
@@ -34,3 +38,4 @@ module.exports = function override(config) {
 // see it in Vitto's comment
 // https://stackoverflow.com/questions/70591567/module-not-found-error-cant-resolve-fs-in-react
 // see it in Nick the Community Scientist's comment
+// https://stackoverflow.com/questions/44114436/the-create-react-app-imports-restriction-outside-of-src-directory
