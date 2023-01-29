@@ -27,6 +27,7 @@ const getListValidBidAmount = (bidInformation) => {
 export const getBidderRank = (bidInformation, account) => {
     const bidAmount = getBidAmountOfBidder(bidInformation, account);
     const listBidAmount = getListValidBidAmount(bidInformation);
+    if (bidAmount === -1) return -1;
     if (bidAmount == null || listBidAmount.length === 0) return -2;
     let rank = 1;
     for (let i = 0; i < listBidAmount.length; i++) {

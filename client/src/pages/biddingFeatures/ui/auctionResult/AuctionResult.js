@@ -82,6 +82,8 @@ const AuctionResult = ({ auction, property }) => {
                 return `${place} st`;
             case 2:
                 return `${place} nd`;
+            case -1:
+                return `---`;
             case -2:
                 return `--`;
             default:
