@@ -34,9 +34,9 @@ const MyProperty = () => {
     const [listProperty, setListProperty] = useState([]);
     const [loading, setLoading] = useState(true);
     // const navigate = useNavigate();
-    const baseURLCategory = "http://localhost:8800/api/category/";
+    //const baseURLCategory = "http://localhost:8800/api/category/";
     const baseURLProperty = `/property/myProperty/${page}/${status}/${search}`;
-    const requestAuction = "http://localhost:8800/api/auction/request/";
+    // const requestAuction = "http://localhost:8800/api/auction/request/";
     const [role, setRole] = useState();
 
     useEffect(() => {
@@ -58,18 +58,18 @@ const MyProperty = () => {
         fetchData();
     }, [baseURLProperty]);
 
-    const RequestAuction = (propertyId) => {
-        setLoading(true);
-        axios.post(requestAuction + propertyId, { withCredentials: true }).then((resp) => {
-            console.log(resp.data);
-            console.log("axios get");
-            setListProperty(resp.data);
-        });
+    // const RequestAuction = (propertyId) => {
+    //     setLoading(true);
+    //     axios.post(requestAuction + propertyId, { withCredentials: true }).then((resp) => {
+    //         console.log(resp.data);
+    //         console.log("axios get");
+    //         setListProperty(resp.data);
+    //     });
 
-        setLoading(false);
-        window.location.reload(false);
-        alert("Request add successful");
-    };
+    //     setLoading(false);
+    //     window.location.reload(false);
+    //     alert("Request add successful");
+    // };
 
     const handleChange = (event, value) => {
         setPage(value);
@@ -88,8 +88,10 @@ const MyProperty = () => {
         }
     };
     const handleSubmit = (event) => {
-        search2 === "" ? setSearch(null) : setSearch(search2);
-        //setCategory(category2);
+        if (search2.trim() === "") {
+            setSearch2("");
+            setSearch(null);
+        } else setSearch(search2.trim());
         setPage(1);
         event.preventDefault();
     };
