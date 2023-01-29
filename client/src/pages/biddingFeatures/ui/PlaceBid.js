@@ -229,7 +229,7 @@ function PlaceBid({ auction, property }) {
                         <p className={styles.txtT}>Your bid must be at least {minBidAmount} ETH</p>
                         <input
                             className={styles.input}
-                            type="text"
+                            type="number"
                             value={inputBidAmount}
                             // validation={{
                             //     max: "",

@@ -75,6 +75,20 @@ const AuctionResult = ({ auction, property }) => {
         }
     };
 
+    const renderBidderPlace = () => {
+        const place = getBidderRank(bidInformation, account);
+        switch (place) {
+            case 1:
+                return `${place} st`;
+            case 2:
+                return `${place} nd`;
+            case -2:
+                return `--`;
+            default:
+                return `${place} th`;
+        }
+    };
+
     return (
         <div>
             <div>
@@ -87,7 +101,7 @@ const AuctionResult = ({ auction, property }) => {
                     <p className={styles.txtM}>Your bid:</p>
                     <p className={styles.txtNormal}>{getBidAmountOfBidder(bidInformation, account)} ETH</p>
                     <p className={styles.txtM}>Your place:</p>
-                    <p className={styles.txtNormal}>{getBidderRank(bidInformation, account)} st nd th</p>
+                    <p className={styles.txtNormal}>{renderBidderPlace()}</p>
                 </div>
             </div>
             <div className={styles.detail}>{renderBidderState()}</div>

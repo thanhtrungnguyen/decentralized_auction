@@ -10,6 +10,7 @@ import deserializeUser from './api/middleware/deserializeUser';
 import { connectSocket } from './socketio';
 import { config } from './config/custom-environment-variables';
 import { corsOptions } from './config/cors-options';
+
 const app = express();
 
 connectMongo()
