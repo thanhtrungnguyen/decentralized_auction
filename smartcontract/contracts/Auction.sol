@@ -249,7 +249,7 @@ contract Auction {
         ) {
             uint256 dueConfirmationTime = s_auctionInformations[auctionId].endAuctionTime +
                 CONFIRMATION_TIME;
-            if (dueConfirmationTime > block.timestamp) {
+            if (dueConfirmationTime < block.timestamp) {
                 revert Auction__ConfirmationTimeout();
             }
         }
@@ -262,7 +262,7 @@ contract Auction {
             uint256 dueConfirmationTime = s_auctionInformations[auctionId].endAuctionTime +
                 CONFIRMATION_TIME *
                 2;
-            if (dueConfirmationTime > block.timestamp) {
+            if (dueConfirmationTime < block.timestamp) {
                 revert Auction__ConfirmationTimeout();
             }
         }
@@ -286,7 +286,7 @@ contract Auction {
     modifier isValidPaymentAmount(string memory auctionId) {
         uint256 requirePaymentAmount = s_bidInformations[auctionId][getIndexOfBidder(auctionId)]
             .bidAmount - s_auctionInformations[auctionId].depositAmount;
-        if (msg.value != requirePaymentAmount) {
+        if (msg.value < requirePaymentAmount) {
             revert Auction__RequireAmountToPaymentNotMet(auctionId, requirePaymentAmount);
         }
         _;

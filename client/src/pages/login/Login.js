@@ -33,7 +33,7 @@ const Login = () => {
     }, []);
 
     useEffect(() => {
-        setErrorMassage("");
+        setErrorMassage("  ");
     }, [username, password]);
 
     const handleSubmit = async (event) => {
