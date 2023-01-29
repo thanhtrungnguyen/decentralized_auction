@@ -54,7 +54,11 @@ const ListNews = () => {
     };
 
     const handleSubmit = (event) => {
-        title2 === "" ? setTitle(null) : setTitle(title2);
+        if (title2.trim() === "") {
+            //alert("Please enter email")
+            setTitle2("");
+            setTitle(null);
+        } else setTitle(title2.trim());
         setPage(1);
         event.preventDefault();
     };
