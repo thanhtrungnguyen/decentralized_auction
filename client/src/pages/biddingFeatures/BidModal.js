@@ -84,25 +84,27 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
     };
     // console.log("checkUserRegistered()", checkUserRegistered());
     return (
-        <div className={styles.container}>
-            <HeaderBid setOpenModal={setOpenModal} />
-            <div>
-                {hasMetamask ? (
-                    isWeb3Enabled ? (
-                        SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
-                            <div>{renderCurrentState()}</div>
+        <div className={styles.root}>
+            <div className={styles.container}>
+                <HeaderBid setOpenModal={setOpenModal} />
+                <div>
+                    {hasMetamask ? (
+                        isWeb3Enabled ? (
+                            SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
+                                <div>{renderCurrentState()}</div>
+                            ) : (
+                                <div>
+                                    <h1>Unsupported Chain ID</h1>
+                                    <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
+                                </div>
+                            )
                         ) : (
-                            <div>
-                                <h1>Unsupported Chain ID</h1>
-                                <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
-                            </div>
+                            <p>Please connect to a Wallet</p>
                         )
                     ) : (
-                        <p>Please connect to a Wallet</p>
-                    )
-                ) : (
-                    <p>Please install Metamask</p>
-                )}
+                        <p>Please install Metamask</p>
+                    )}
+                </div>
             </div>
         </div>
     );
