@@ -187,7 +187,9 @@ const MyProperty = () => {
                 <SideBarSeller />
                 <Time />
                 <div className={styles.r}>
+                    {/* <h1 style={{ margin: '20px 405px' }}>My Property</h1> */}
                     <div className={styles.con}>
+
                         <div className={styles.btns}>
                             <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
                                 All
@@ -219,15 +221,11 @@ const MyProperty = () => {
                                 <button className={styles.btn} type="submit">
                                     Search
                                 </button>
+                                <button className={styles.btn2} onClick={() => { navigate("/addProperty"); }}>
+                                    + New Property
+                                </button>
                             </form>
-                            <button
-                                className={styles.btn2}
-                                onClick={() => {
-                                    navigate("/addProperty");
-                                }}
-                            >
-                                + New Property
-                            </button>
+
                         </div>
                         <table className={styles.table}>
                             <tr>
