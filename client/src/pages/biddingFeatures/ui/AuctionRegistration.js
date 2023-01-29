@@ -14,7 +14,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig
 import Loader from "../components/Loader";
 import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
 import { getBidderState } from "../../../utils/getBidderState";
-import { usePostRequest } from "../../../hooks/useAxios";
+import { useAxios } from "../../../hooks/useAxios";
 
 function AuctionRegistration({ auction, property }) {
     const { account, isWeb3Enabled } = useMoralis();
