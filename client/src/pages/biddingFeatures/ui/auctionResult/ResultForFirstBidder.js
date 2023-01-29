@@ -117,7 +117,7 @@ const ResultForFirstBidder = ({ auction, amount }) => {
             {goPayment ? (
                 <Payment auction={auction} amount={amount} />
             ) : (
-                <Countdown date={auction.endAuctionTime * 1000 + 360000} renderer={renderer} />
+                <Countdown date={auction.endAuctionTime * 1000 + 300000} renderer={renderer} />
             )}
         </>
     );

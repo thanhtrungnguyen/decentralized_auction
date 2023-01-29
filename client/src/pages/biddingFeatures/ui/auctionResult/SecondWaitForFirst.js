@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import styles from "../../../../styleCss/stylesComponents/placeABid.module.css";
 import Countdown from "react-countdown";
-import ResultForSecondBidder from "./ResultForSecondBidder";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../config/blockchainConfig";
 import { useWeb3Contract } from "react-moralis";
-import ResultForOtherBidders from "./ResultForOtherBidders";
 import CheckOpportunity from "./CheckOpportunity";
 
 const SecondWaitForFirst = ({ auction, amount }) => {
@@ -49,7 +47,7 @@ const SecondWaitForFirst = ({ auction, amount }) => {
             );
         }
     };
-    return <Countdown date={Date.now() + 10000 / 2} renderer={renderer} />;
+    return <Countdown date={auction.endAuctionTime * 1000 + 300000} renderer={renderer} />;
 };
 
 export default SecondWaitForFirst;
