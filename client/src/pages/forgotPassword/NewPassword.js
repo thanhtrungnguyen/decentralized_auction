@@ -91,7 +91,7 @@ const NewPassword = () => {
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Forgot Password</p>
                             <p className={styles.text}>Please enter code chagne password we send your email </p>
-                            <div>
+                            <div className={styles.hide}>
                                 <input
                                     type={passwordShown1 ? "text" : "password"}
                                     className={styles.textField}
@@ -102,7 +102,7 @@ const NewPassword = () => {
                                 ></input>
                                 <i onClick={togglePasswordVisibility}>{eye}</i>
                             </div>
-                            <div>
+                            <div className={styles.hide}>
                                 <input
                                     type={passwordShown2 ? "text" : "password"}
                                     className={styles.textField}
