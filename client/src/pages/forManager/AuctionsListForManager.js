@@ -79,7 +79,6 @@ const AuctionsListForManager = () => {
     };
     const handleSubmit = (event) => {
         if (auctionName2.trim() === "") {
-            //alert("Please enter email")
             setAuctionName2("");
             setAuctionName(null);
         } else setAuctionName(auctionName2.trim());

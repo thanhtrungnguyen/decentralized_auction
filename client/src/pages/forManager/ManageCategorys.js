@@ -52,7 +52,10 @@ const ManagerCategory = () => {
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
-        categoryName2 === "" ? setCategory(null) : setCategory(categoryName2);
+        if (categoryName2.trim() === "") {
+            setCategory2("");
+            setCategory(null);
+        } else setCategory(categoryName2.trim());
         setPage(1);
         event.preventDefault();
     };
