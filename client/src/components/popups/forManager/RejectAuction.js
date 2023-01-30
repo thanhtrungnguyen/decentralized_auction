@@ -6,6 +6,7 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const RejectAuction = ({ auctionId, propertyId }) => {
     const axios = useAxiosPrivate();
+    const [disable, setDisable] = useState(false);
 
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(true);
@@ -33,6 +34,8 @@ const RejectAuction = ({ auctionId, propertyId }) => {
             notify("🦄 comment is empty");
         } else {
             console.log(propertyId);
+            setDisable(true);
+
             axios
                 .patch(
                     `/auction/reject/${auctionId}`,
@@ -49,11 +52,15 @@ const RejectAuction = ({ auctionId, propertyId }) => {
                     console.log(res);
                     console.log(res.data);
                     //navigate("/listBidders");
+                    setDisable(false);
+                    console.log(disable);
                     navigate("/auctionListForManager");
                     setExpanded(false);
                 })
                 .catch((err) => {
                     notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
+                    setDisable(false);
+                    console.log(disable);
                 });
         }
         event.preventDefault();
@@ -64,30 +71,45 @@ const RejectAuction = ({ auctionId, propertyId }) => {
     return (
         <>
             {expanded ? (
-                <div className={styles.container}>
-                    <form onSubmit={handleSubmit}>
-                        <ToastContainer
-                            position="top-right"
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover
-                            theme="light"
-                        />
-                        {/* Same as */}
-                        <ToastContainer />
-                        <p className={styles.title}>Reject Auction</p>
-                        <p className={styles.txt}>Comment</p>
-                        <textarea id="comment" className={styles.textarea} onChange={(e) => handleInputChange(e)} value={comment} required></textarea>
-                        <br />
-                        <input type="submit" value="OK" className={styles.btnOK}></input>
-                        <input type="button" value="Cancel" className={styles.btnCancel} onClick={handCancel}></input>
-                    </form>
-                </div>
+                <>
+                    <div className={styles.root}></div>
+                    <div className={styles.container}>
+                        <form onSubmit={handleSubmit}>
+                            <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                                theme="light"
+                            />
+                            {/* Same as */}
+                            <ToastContainer />
+                            <p className={styles.title}>Reject Auction</p>
+                            <p className={styles.txt}>Comment</p>
+                            <textarea
+                                id="comment"
+                                className={styles.textarea}
+                                onChange={(e) => handleInputChange(e)}
+                                value={comment}
+                                required
+                            ></textarea>
+                            <br />
+                            <input
+                                type="submit"
+                                value="OK"
+                                className={styles.btnOK}
+                                disabled={disable}
+                                style={disable ? { backgroundColor: "red" } : {}}
+                            ></input>
+                            <input type="button" value="Cancel" className={styles.btnCancel} onClick={handCancel} disabled={disable}></input>
+                        </form>
+                    </div>
+                </>
             ) : null}
         </>
     );
