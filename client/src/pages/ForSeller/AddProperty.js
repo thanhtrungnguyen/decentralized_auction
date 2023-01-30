@@ -137,6 +137,12 @@ const AddProperty = () => {
             notify("🦄 Deposit must less than 20% start bid");
         } else if (startBid * 0.1 < priceStep) {
             notify("🦄 Price Step must less than 10% start bid");
+        } else if (startBid <= 0) {
+            notify("🦄 Start Bid must more than 0 ");
+        } else if (deposit <= 0) {
+            notify("🦄 Deposit must more than 0 ");
+        } else if (priceStep <= 0) {
+            notify("🦄 Price Step must more than 0 ");
         } else {
             setDisable(true);
             console.log(disable);

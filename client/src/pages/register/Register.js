@@ -56,6 +56,7 @@ const Register = () => {
     const [isExist, setIsExit] = useState(false);
     const [fileBack, setFileBack] = useState(0);
     const [fileFront, setFileFront] = useState(0);
+    const [disable, setDisable] = useState(false);
 
     //const [usertype] = useState("CONTACT");
 
@@ -123,30 +124,28 @@ const Register = () => {
     // const baseURL = `/user/users`;
 
     const handleSubmit = (event) => {
-        // const fsizeBack = cardBack.size;
-        // setFileBack(Math.round(fsizeBack / 1024));
-        // console.log(fileBack);
-        // const fsizeFront = cardFront.size;
-        // setFileFront(Math.round(fsizeFront / 1024));
-        // console.log(fileFront);
         const fsizeBack = cardBack.size;
         const fileBack = Math.round(fsizeBack / 1024);
         const fsizeFront = cardFront.size;
         const fileFront = Math.round(fsizeFront / 1024);
-        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
-        //     setListUsername(resp.data.users);
-        //     listUsername.map((item) => {
-        //         if (item.username === username) {
-        //             setIsExit(true);
-        //             console.log(item.username);
-        //         } else {
-        //             setIsExit(false);
-        //         }
-        //     });
-        // });
+
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const today2 = new Date(dateOfBirth);
+        const yyyy2 = today2.getFullYear();
+        console.log(today);
+        console.log(yyyy);
+        console.log("===================");
+        console.log(today2);
+        console.log(yyyy2);
+        console.log("===================");
+        console.log(yyyy - yyyy2);
+        console.log("===================");
+        const today3 = new Date(dateRangeCard);
+        console.log(today3 - today);
 
         if (!firstName) {
             notify("🦄 FirstName is empty");
@@ -154,7 +153,7 @@ const Register = () => {
             notify("🦄 LastName is empty");
         } else if (!gender) {
             notify("🦄 Gender is empty");
-        } else if (!dateOfBirth.trim()) {
+        } else if (!dateOfBirth) {
             notify("🦄 Date Of Birth is empty");
         } else if (!email.trim()) {
             notify("🦄 Email is empty");
@@ -192,7 +191,13 @@ const Register = () => {
             notify("🦄 Username is exist");
         } else if (rePassword != password) {
             notify("🦄 rePassword is not same password");
+        } else if (yyyy - yyyy2 < 18) {
+            notify("🦄 Date of birth must be more 18 year old");
+        } else if (today3 - today > 0) {
+            notify("🦄 Date Range Card  must after now");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
             formData.append("firstName", firstName.trim());
             formData.append("lastName", lastName.trim());
@@ -229,12 +234,16 @@ const Register = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Register successfully!!!");
                     navigate("/login");
                 })
                 .catch((err) => {
                     //if(err.response.data.status === 409)
                     //console.log(err)
+                    setDisable(false);
+
                     notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
@@ -468,7 +477,13 @@ const Register = () => {
                         </i>
                     </div>
                     <label style={{ color: "red" }}>{message}</label>
-                    <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>
+                    <input
+                        type="submit"
+                        className={styles.ipsubmit}
+                        value="SIGN UP"
+                        style={disable ? { backgroundColor: "red" } : {}}
+                        disabled={disable}
+                    ></input>
                 </div>
             </form>
 

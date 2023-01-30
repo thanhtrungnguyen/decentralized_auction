@@ -60,6 +60,8 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
             notify("🦄 End Auction Time must after Start Auction Time");
         } else if (endAuctionTime >= duePaymentTime) {
             notify("🦄 Due Payment Time must after End Auction Time");
+        } else if (registrationFee <= 0) {
+            notify("🦄 Registration Fee must more than 0 ");
         } else {
             setDisable(true);
 

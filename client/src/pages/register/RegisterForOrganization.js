@@ -21,6 +21,7 @@ const Register = () => {
     const [message, setMessage] = useState(null);
     const [passwordShown1, setPasswordShown1] = useState(false);
     const [passwordShown2, setPasswordShown2] = useState(false);
+    const [disable, setDisable] = useState(false);
 
     const togglePasswordVisibility = () => {
         setPasswordShown1(passwordShown1 ? false : true);
@@ -140,29 +141,36 @@ const Register = () => {
             theme: "light",
         });
     };
-    // const [listUsername, setListUsername] = useState([]);
-    // const baseURL = `/user/users`;
+
     const handleSubmit = (event) => {
         const fsizeBack = cardBack.size;
         const fileBack = Math.round(fsizeBack / 1024);
         const fsizeFront = cardFront.size;
         const fileFront = Math.round(fsizeFront / 1024);
-        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
-        //     setListUsername(resp.data.users);
-        //     listUsername.map((item) => {
-        //         if (item.username === userName) {
-        //             setIsExit(true);
-        //             console.log(item.username);
-        //         } else {
-        //             setIsExit(false);
-        //         }
-        //     });
-        // });
+
         let cityId = selectedCity.value;
 
         let districtId = selectedDistrict.value;
 
         let wardId = selectedWard.value;
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const today2 = new Date(dateOfBirth);
+        const yyyy2 = today2.getFullYear();
+        console.log(today);
+        console.log(yyyy);
+        console.log("===================");
+        console.log(today2);
+        console.log(yyyy2);
+        console.log("===================");
+        console.log(yyyy - yyyy2);
+        console.log("===================");
+        const today3 = new Date(dateRangeCard);
+        console.log(today3 - today);
+        console.log("===================");
+        const today4 = new Date(taxCodeGrantedDate);
+        console.log(today4 - today);
+        console.log(taxCode.trim().length);
         if (!organizationName.trim()) {
             notify("🦄 organizationName is empty");
         } else if (!taxCode.trim()) {
@@ -219,7 +227,17 @@ const Register = () => {
             notify("🦄 Username is exist");
         } else if (rePassword != password) {
             notify("🦄 rePassword is not same password");
+        } else if (yyyy - yyyy2 < 18) {
+            notify("🦄 Date of birth must be more 18 year old");
+        } else if (today3 - today > 0) {
+            notify("🦄 Date Range Card  must after now");
+        } else if (today4 - today > 0) {
+            notify("🦄 Tax Code Granted Date  must after now");
+        } else if (taxCode.trim().length !== 10 && taxCode.trim().length !== 13) {
+            notify("🦄 Tax Code must 10 or 13 character");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
 
             formData.append("name", organizationName.trim());
@@ -264,10 +282,14 @@ const Register = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Register successfully!!!");
                     navigate("/login");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     notify(`🦄 Register Failed: ${err.response.data.message}, ${err}`);
                 });
         }
@@ -337,6 +359,7 @@ const Register = () => {
                     <input
                         type="date"
                         className={styles.ipdate}
+                        pattern="^([0-9]{10})(|)(-[0-9]{3}|)$"
                         value={taxCodeGrantedDate}
                         onChange={(e) => handleInputChange(e)}
                         id="taxCodeGrantedDate"
@@ -545,7 +568,13 @@ const Register = () => {
                         <i onClick={toggleRePasswordVisibility}>{eye}</i>
                     </div>
                     <label style={{ color: "red" }}>{message}</label>
-                    <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>
+                    <input
+                        type="submit"
+                        className={styles.ipsubmit}
+                        value="SIGN UP"
+                        style={disable ? { backgroundColor: "red" } : {}}
+                        disabled={disable}
+                    ></input>
                 </form>
             </div>
             <Footer />
