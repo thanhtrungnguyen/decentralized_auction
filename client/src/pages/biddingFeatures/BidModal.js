@@ -84,7 +84,8 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
     };
     // console.log("checkUserRegistered()", checkUserRegistered());
     return (
-        <div className={styles.root}>
+        <>
+            <div className={styles.root}></div>
             <div className={styles.container}>
                 <HeaderBid setOpenModal={setOpenModal} />
                 <div>
@@ -106,7 +107,7 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
                     )}
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
