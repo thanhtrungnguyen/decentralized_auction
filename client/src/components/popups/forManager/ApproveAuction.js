@@ -60,7 +60,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
             notify("🦄 Due Payment Time must after End Auction Time");
         } else {
             axios
-                .patch(`http://localhost:5000/api/auction/approve/${auctionId}`, {
+                .patch(`/auction/approve/${auctionId}`, {
                     name: name.trim(),
                     startRegistrationTime: new Date(startRegistrationTime),
                     endRegistrationTime: new Date(endRegistrationTime),

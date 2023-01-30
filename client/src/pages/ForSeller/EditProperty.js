@@ -42,7 +42,7 @@ const EditProperty = () => {
     const { id } = useParams();
 
     const navigate = useNavigate();
-    const baseURLCategory = "http://localhost:5000/api/category/categories";
+    const baseURLCategory = "/category/categories";
     const [role, setRole] = useState();
     const [error, setError] = useState(false);
 
@@ -73,7 +73,7 @@ const EditProperty = () => {
         fetchData();
     }, []);
 
-    const baseURLProperty = `http://localhost:5000/api/property/${id}`;
+    const baseURLProperty = `/property/${id}`;
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -198,7 +198,7 @@ const EditProperty = () => {
             // formData.append("biddingPreiod", biddingPreiod);
             axios
                 .patch(
-                    `http://localhost:5000/api/property/update/${id}`,
+                    `/property/update/${id}`,
                     formData,
                     {
                         headers: { "Content-Type": "multipart/form-data" },

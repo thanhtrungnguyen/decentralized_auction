@@ -24,7 +24,7 @@ const AuctionDetailForManager = () => {
     const { id } = useParams();
     // const [show, setShow] = useState(false);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:5000/api/auction/${id}`;
+    const baseURL = `/auction/${id}`;
     const [registrationFee, setRegistrationFee] = useState(null);
     const [name, setName] = useState(null);
     const [timeRegistration, setTimeRegistration] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);

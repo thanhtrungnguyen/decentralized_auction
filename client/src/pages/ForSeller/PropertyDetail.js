@@ -27,7 +27,7 @@ const PropertyDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const baseURL = `http://localhost:5000/api/property/${id}`;
+    const baseURL = `/property/${id}`;
 
     const [role, setRole] = useState();
     const Cancel = () => {
