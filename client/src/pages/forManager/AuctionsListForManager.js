@@ -74,10 +74,14 @@ const AuctionsListForManager = () => {
     const handleSelectChange = (event) => {
         //setSellerName2(event.value);
         setSellerName(event.value);
+        setPage(1);
         console.log(sellerName);
     };
     const handleSubmit = (event) => {
-        auctionName2 === "" ? setAuctionName(null) : setAuctionName(auctionName2);
+        if (auctionName2.trim() === "") {
+            setAuctionName2("");
+            setAuctionName(null);
+        } else setAuctionName(auctionName2.trim());
         setPage(1);
         event.preventDefault();
     };

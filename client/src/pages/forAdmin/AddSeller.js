@@ -130,7 +130,7 @@ const AddSeller = () => {
         });
     };
     // const [listUsername, setListUsername] = useState([]);
-    // const baseURL = `http://localhost:5000/api/user/users`;
+    // const baseURL = `/user/users`;
     const handleSubmit = (event) => {
         const fsizeBack = cardBack.size;
         const fileBack = Math.round(fsizeBack / 1024);

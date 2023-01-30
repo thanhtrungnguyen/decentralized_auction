@@ -35,7 +35,7 @@ const RejectAuction = ({ auctionId, propertyId }) => {
             console.log(propertyId);
             axios
                 .patch(
-                    `http://localhost:5000/api/auction/reject/${auctionId}`,
+                    `/auction/reject/${auctionId}`,
                     {
                         message: comment,
                         status: "Rejected",

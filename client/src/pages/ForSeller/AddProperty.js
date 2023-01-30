@@ -39,7 +39,7 @@ const AddProperty = () => {
     const [disable, setDisable] = useState(false);
 
     const navigate = useNavigate();
-    const baseURL = "http://localhost:5000/api/category/categories";
+    const baseURL = "/category/categories";
     const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
 

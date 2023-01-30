@@ -43,8 +43,8 @@ const ResultForOtherBidders = ({ auction }) => {
         }
     };
     const handleError = async (tx) => {
-        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
-        setTransactionStatus({ status: tx.data.message });
+        const message = tx?.code === 4001 ? "User denied transaction signature." : "Failed";
+        setTransactionStatus({ status: message });
         dispatch({
             type: "error",
             title: "Withdraw Error",
