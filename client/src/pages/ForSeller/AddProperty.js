@@ -139,7 +139,7 @@ const AddProperty = () => {
             notify("🦄 Price Step must less than 10% start bid");
         } else {
             setDisable(true);
-
+            console.log(disable);
             const formData = new FormData();
             formData.append("propertyImage1", propertyImage1);
             formData.append("propertyImage2", propertyImage2);
@@ -179,11 +179,14 @@ const AddProperty = () => {
                     } else {
                         alert(res.data.message);
                     }
+                    setDisable(false);
+                    console.log(disable);
                 })
                 .catch((err) => {
                     notify(`${err.response.data.message} , ${err}`);
+                    setDisable(false);
+                    console.log(disable);
                 });
-            setDisable(false);
         }
 
         event.preventDefault();
@@ -430,7 +433,8 @@ const AddProperty = () => {
                             className={styles.btnSave}
                             type="submit"
                             value="Save"
-                            style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                            style={disable ? { backgroundColor: "red" } : {}}
+                            disabled={disable}
                         ></input>
 
                         <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>

@@ -21,6 +21,8 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
     const [startAuctionTime, setStartAuctionTime] = useState(new Date());
     const [endAuctionTime, setEndAuctionTime] = useState(new Date());
     const [duePaymentTime, setDuePaymentTime] = useState(new Date());
+    const [disable, setDisable] = useState(false);
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "registrationFee") {
@@ -59,6 +61,8 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
         } else if (endAuctionTime >= duePaymentTime) {
             notify("🦄 Due Payment Time must after End Auction Time");
         } else {
+            setDisable(true);
+
             axios
                 .patch(`/auction/approve/${auctionId}`, {
                     name: name.trim(),
@@ -75,11 +79,18 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                     console.log(res);
                     console.log(res.data);
                     // window.location.reload(false);
+                    setDisable(false);
+                    console.log(disable);
                     setExpanded(false);
+
                     navigate("/auctionListForManager");
+                    setDisable(false);
+                    console.log(disable);
                 })
                 .catch((err) => {
                     notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
+                    setDisable(false);
+                    console.log(disable);
                 });
         }
         event.preventDefault();
@@ -90,93 +101,109 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
     return (
         <>
             {expanded ? (
-                <div className={styles.container}>
-                    <form onSubmit={handleSubmit}>
-                        <ToastContainer
-                            position="top-right"
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover
-                            theme="light"
-                        />
-                        {/* Same as */}
-                        <ToastContainer />
-                        <p className={styles.title}>Approve Auction</p>
-                        <p className={styles.txt}>Auction Name</p>
-                        <input className={styles.input} id="name" type="text" value={name} onChange={(e) => handleInputChange(e)} required></input>
-                        <p className={styles.txt}>Registration Fee</p>
-                        <input
-                            className={styles.input}
-                            id="registrationFee"
-                            type="number"
-                            value={registrationFee}
-                            onChange={(e) => handleInputChange(e)}
-                            required
-                        ></input>
-                        <p className={styles.txt}>Time Registration</p>
-                        <div className={styles.fl}>
-                            <label className={styles.lb}>From:</label>
-                            <DatePicker
-                                id="startRegistrationTime"
-                                onChange={setStartRegistrationTime}
-                                value={startRegistrationTime}
-                                format="MM/DD/YYYY HH:mm:ss"
-                                plugins={[<TimePicker position="right" />]}
-                                required
+                <>
+                    <div className={styles.root}></div>
+                    <div className={styles.container}>
+                        <form onSubmit={handleSubmit}>
+                            <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                                theme="light"
                             />
-                            <label className={styles.lb}>To:</label>
-                            <DatePicker
-                                id="endRegistrationTime"
-                                onChange={setEndRegistrationTime}
-                                value={endRegistrationTime}
-                                format="MM/DD/YYYY HH:mm:ss"
-                                plugins={[<TimePicker position="right" />]}
+                            {/* Same as */}
+                            <ToastContainer />
+                            <p className={styles.title}>Approve Auction</p>
+                            <p className={styles.txt}>Auction Name</p>
+                            <input
+                                className={styles.input}
+                                id="name"
+                                type="text"
+                                value={name}
+                                onChange={(e) => handleInputChange(e)}
                                 required
-                            />
-                        </div>
-                        <p className={styles.txt}>Auction Time</p>
-                        <div className={styles.fl}>
-                            <label className={styles.lb}>From:</label>
-                            <DatePicker
-                                id="startAuctionTime"
-                                onChange={setStartAuctionTime}
-                                value={startAuctionTime}
-                                format="MM/DD/YYYY HH:mm:ss"
+                            ></input>
+                            <p className={styles.txt}>Registration Fee</p>
+                            <input
+                                className={styles.input}
+                                id="registrationFee"
+                                type="number"
+                                value={registrationFee}
+                                onChange={(e) => handleInputChange(e)}
                                 required
-                                plugins={[<TimePicker position="right" />]}
-                            />
-                            <label className={styles.lb}>To:</label>
-                            <DatePicker
-                                id="endAuctionTime"
-                                onChange={setEndAuctionTime}
-                                value={endAuctionTime}
-                                format="MM/DD/YYYY HH:mm:ss"
-                                plugins={[<TimePicker position="right" />]}
-                                required
-                            />
-                        </div>
-                        <p className={styles.txt}>Due payment time</p>
-                        <div className={styles.fl}>
-                            <label className={styles.lb}>Time:</label>
-                            <DatePicker
-                                id="duePaymentTime"
-                                onChange={setDuePaymentTime}
-                                value={duePaymentTime}
-                                format="MM/DD/YYYY HH:mm:ss"
-                                plugins={[<TimePicker position="right" />]}
-                                required
-                            />
-                        </div>
-                        <br />
-                        <input type="submit" value="OK" className={styles.btnOK}></input>
-                        <input type="button" value="Cancel" className={styles.btnCancel} onClick={handCancel}></input>
-                    </form>
-                </div>
+                            ></input>
+                            <p className={styles.txt}>Time Registration</p>
+                            <div className={styles.fl}>
+                                <label className={styles.lb}>From:</label>
+                                <DatePicker
+                                    id="startRegistrationTime"
+                                    onChange={setStartRegistrationTime}
+                                    value={startRegistrationTime}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker position="right" />]}
+                                    required
+                                />
+                                <label className={styles.lb}>To:</label>
+                                <DatePicker
+                                    id="endRegistrationTime"
+                                    onChange={setEndRegistrationTime}
+                                    value={endRegistrationTime}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker position="right" />]}
+                                    required
+                                />
+                            </div>
+                            <p className={styles.txt}>Auction Time</p>
+                            <div className={styles.fl}>
+                                <label className={styles.lb}>From:</label>
+                                <DatePicker
+                                    id="startAuctionTime"
+                                    onChange={setStartAuctionTime}
+                                    value={startAuctionTime}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    required
+                                    plugins={[<TimePicker position="right" />]}
+                                />
+                                <label className={styles.lb}>To:</label>
+                                <DatePicker
+                                    id="endAuctionTime"
+                                    onChange={setEndAuctionTime}
+                                    value={endAuctionTime}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker position="right" />]}
+                                    required
+                                />
+                            </div>
+                            <p className={styles.txt}>Due payment time</p>
+                            <div className={styles.fl}>
+                                <label className={styles.lb}>Time:</label>
+                                <DatePicker
+                                    id="duePaymentTime"
+                                    onChange={setDuePaymentTime}
+                                    value={duePaymentTime}
+                                    format="MM/DD/YYYY HH:mm:ss"
+                                    plugins={[<TimePicker position="right" />]}
+                                    required
+                                />
+                            </div>
+                            <br />
+                            <input
+                                type="submit"
+                                value="OK"
+                                className={styles.btnOK}
+                                style={disable ? { backgroundColor: "red" } : {}}
+                                disabled={disable}
+                            ></input>
+                            <input type="button" value="Cancel" className={styles.btnCancel} onClick={handCancel} disabled={disable}></input>
+                        </form>
+                    </div>
+                </>
             ) : null}
         </>
     );
