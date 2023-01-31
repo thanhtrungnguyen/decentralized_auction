@@ -30,9 +30,11 @@ const News = () => {
     };
 
     const handleSubmit = (event) => {
-        title2 === "" ? setTitle(null) : setTitle(title2);
+        if (title2.trim() === "") {
+            setTitle2("");
+            setTitle(null);
+        } else setTitle(title2.trim());
         setPage(1);
-        console.log(title2);
         event.preventDefault();
     };
 
@@ -94,7 +96,7 @@ const News = () => {
                                 placeholder="Title"
                                 value={title2}
                                 onChange={(e) => handleInputChange(e)}
-                                //required
+                            //required
                             ></input>
                             {/* <input type="submit" className="btn" value="Search"></input> */}
                             <BsSearch className={styles.icon2} onClick={handleSubmit} />
