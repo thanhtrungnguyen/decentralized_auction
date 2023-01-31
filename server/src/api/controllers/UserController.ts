@@ -23,7 +23,7 @@ export const getAllUsersHandler = async (req: Request, res: Response, next: Next
       res.status(500).json({ error });
     });
 };
-export const getUserByRoleHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const getUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   const role = req.params.role;
   const index = req.params.index;
   const status = req.params.status;

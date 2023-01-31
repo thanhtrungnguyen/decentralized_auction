@@ -9,7 +9,7 @@ import {
   forgotPasswordHandler,
   changePasswordHandler,
   resetPasswordHandler,
-  getUserByRoleHandler,
+  getUserHandler,
   changeStatusUserHandler
 } from '../controllers/UserController';
 import { UserSchema } from '../validations/UserSchema';
@@ -34,6 +34,6 @@ router.post(
 router.post('/verify/:userId/:verificationCode', verifyUserHandler);
 router.post('/resetPassword/:userId/:passwordResetCode', validateResource(UserSchema.changePassword), resetPasswordHandler);
 //
-router.get('/users/:role/:index/:status/:search', requireRole(roles.ADMIN), getUserByRoleHandler);
+router.get('/users/:role/:index/:status/:search', requireRole(roles.ADMIN), getUserHandler);
 
 export default router;
