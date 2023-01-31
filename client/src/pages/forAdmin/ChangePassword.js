@@ -23,7 +23,7 @@ const eye = <FontAwesomeIcon icon={faEye} />;
 const ChangePasswordAdmin = () => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
-    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    const { loading: loading2, data: data2, error } = useFetchSession("/session");
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
@@ -156,7 +156,7 @@ const ChangePasswordAdmin = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="oldPassword"
                                     placeholder="Old Password"
-                                    //required
+                                //required
                                 ></input>
                                 <i onClick={toggleOldPasswordVisibility}>{eye}</i>
                             </div>
@@ -172,7 +172,7 @@ const ChangePasswordAdmin = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="newPassword"
                                     placeholder="Enter the new password"
-                                    //required
+                                //required
                                 ></input>
                                 <i onClick={toggleNewPasswordVisibility}>{eye}</i>
                             </div>
@@ -187,7 +187,7 @@ const ChangePasswordAdmin = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="rePassword"
                                     placeholder="Confirm new Password"
-                                    //required
+                                //required
                                 ></input>
                                 <i onClick={toggleRePasswordVisibility}>{eye}</i>
                             </div>

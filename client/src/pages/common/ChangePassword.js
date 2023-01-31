@@ -21,7 +21,7 @@ const eye = <FontAwesomeIcon icon={faEye} />;
 const ChangePassword = () => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
-    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    const { loading: loading2, data: data2, error } = useFetchSession("/session");
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [rePassword, setRePassword] = useState("");

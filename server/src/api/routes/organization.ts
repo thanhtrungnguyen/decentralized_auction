@@ -37,7 +37,7 @@ router.post(
   createHandler
 );
 
-router.use(requireRole(roles.SELLER));
+// router.use(requireRole(roles.SELLER));
 router.patch(
   '/update/:id',
   upload.fields([

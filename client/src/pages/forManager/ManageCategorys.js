@@ -37,8 +37,6 @@ const ManagerCategory = () => {
                 // console.log("axios get");
                 setData(resp.data.categories);
             });
-
-
             setLoading(false);
         };
         fetchData();
