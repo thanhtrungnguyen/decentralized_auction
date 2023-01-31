@@ -189,7 +189,7 @@ const MyProperty = () => {
                 <SideBarSeller />
                 <Time />
                 <div className={styles.r}>
-                    {/* <h1 style={{ margin: '20px 405px' }}>My Property</h1> */}
+                    <h1 style={{ margin: '20px 405px' }}>My Property</h1>
                     <div className={styles.con}>
 
                         <div className={styles.btns}>

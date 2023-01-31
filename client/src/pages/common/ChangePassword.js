@@ -16,7 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 // import bcrypt from "bcryptjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { useFetchData } from "../../hooks/useFetch";
+import { useFetchData, useFetchSession } from "../../hooks/useFetch";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const ChangePassword = () => {
     const axios = useAxiosPrivate();
