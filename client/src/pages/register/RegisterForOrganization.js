@@ -171,6 +171,10 @@ const Register = () => {
         const today4 = new Date(taxCodeGrantedDate);
         console.log(today4 - today);
         console.log(taxCode.trim().length);
+        var idxDot = cardFront.name.lastIndexOf(".") + 1;
+        var extFile = cardFront.name.substring(idxDot, cardFront.length).toLowerCase();
+        var idxDot2 = cardBack.name.lastIndexOf(".") + 1;
+        var extFile2 = cardBack.name.substring(idxDot2, cardBack.length).toLowerCase();
         if (!organizationName.trim()) {
             notify("🦄 organizationName is empty");
         } else if (!taxCode.trim()) {
@@ -235,6 +239,10 @@ const Register = () => {
             notify("🦄 Tax Code Granted Date  must after now");
         } else if (taxCode.trim().length !== 10 && taxCode.trim().length !== 13) {
             notify("🦄 Tax Code must 10 or 13 character");
+        } else if (extFile !== "jpg" && extFile !== "jpeg" && extFile !== "png") {
+            notify("🦄 Card Front Only jpg/jpeg and png files are allowed");
+        } else if (extFile2 !== "jpg" && extFile2 !== "jpeg" && extFile2 !== "png") {
+            notify("🦄 Card Back Only jpg/jpeg and png files are allowed");
         } else {
             setDisable(true);
 
@@ -572,7 +580,7 @@ const Register = () => {
                         type="submit"
                         className={styles.ipsubmit}
                         value="SIGN UP"
-                        style={disable ? { backgroundColor: "red" } : {}}
+                        style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
                         disabled={disable}
                     ></input>
                 </form>

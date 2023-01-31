@@ -104,7 +104,7 @@ const RejectAuction = ({ auctionId, propertyId }) => {
                                 value="OK"
                                 className={styles.btnOK}
                                 disabled={disable}
-                                style={disable ? { backgroundColor: "red" } : {}}
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
                             ></input>
                             <input type="button" value="Cancel" className={styles.btnCancel} onClick={handCancel} disabled={disable}></input>
                         </form>

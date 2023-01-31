@@ -136,17 +136,16 @@ const Register = () => {
         const yyyy = today.getFullYear();
         const today2 = new Date(dateOfBirth);
         const yyyy2 = today2.getFullYear();
-        console.log(today);
-        console.log(yyyy);
-        console.log("===================");
-        console.log(today2);
-        console.log(yyyy2);
-        console.log("===================");
-        console.log(yyyy - yyyy2);
-        console.log("===================");
-        const today3 = new Date(dateRangeCard);
-        console.log(today3 - today);
 
+        const today3 = new Date(dateRangeCard);
+        console.log("===================");
+        console.log(cardFront.name.lastIndexOf("."));
+
+        var idxDot = cardFront.name.lastIndexOf(".") + 1;
+        var extFile = cardFront.name.substring(idxDot, cardFront.length).toLowerCase();
+        var idxDot2 = cardBack.name.lastIndexOf(".") + 1;
+        var extFile2 = cardBack.name.substring(idxDot2, cardBack.length).toLowerCase();
+        console.log(extFile);
         if (!firstName) {
             notify("🦄 FirstName is empty");
         } else if (!lastName.trim()) {
@@ -195,6 +194,10 @@ const Register = () => {
             notify("🦄 Date of birth must be more 18 year old");
         } else if (today3 - today > 0) {
             notify("🦄 Date Range Card  must after now");
+        } else if (extFile !== "jpg" && extFile !== "jpeg" && extFile !== "png") {
+            notify("🦄 Card Front Only jpg/jpeg and png files are allowed");
+        } else if (extFile2 !== "jpg" && extFile2 !== "jpeg" && extFile2 !== "png") {
+            notify("🦄 Card Back Only jpg/jpeg and png files are allowed");
         } else {
             setDisable(true);
 
@@ -235,7 +238,6 @@ const Register = () => {
                     console.log(res);
                     console.log(res.data);
                     setDisable(false);
-
                     alert("Register successfully!!!");
                     navigate("/login");
                 })
@@ -243,7 +245,6 @@ const Register = () => {
                     //if(err.response.data.status === 409)
                     //console.log(err)
                     setDisable(false);
-
                     notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
@@ -418,7 +419,7 @@ const Register = () => {
                         className={styles.imgCard}
                         id="cardFront"
                         type="file"
-                        accept="image/*"
+                        accept=".png, .jpg, .jpeg"
                         // onChange={(e) => {
                         //   console.log(e.target.files[0]);
                         // }}
@@ -428,7 +429,7 @@ const Register = () => {
                     <input
                         id="cardBack"
                         type="file"
-                        accept="image/*"
+                        accept=".png, .jpg, .jpeg"
                         // onChange={(e) => {
                         //   console.log(e.target.files[0]);
                         // }}
@@ -481,7 +482,7 @@ const Register = () => {
                         type="submit"
                         className={styles.ipsubmit}
                         value="SIGN UP"
-                        style={disable ? { backgroundColor: "red" } : {}}
+                        style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
                         disabled={disable}
                     ></input>
                 </div>

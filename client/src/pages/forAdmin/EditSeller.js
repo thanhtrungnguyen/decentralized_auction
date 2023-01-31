@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-
 import Select from "react-select";
 import useLocationForm from "../register/useLocationForm";
 import Loading from "../../components/loading/Loading";
@@ -44,6 +43,8 @@ const EditSeller = () => {
     const userType = "organization";
     const [fileBack, setFileBack] = useState(0);
     const [fileFront, setFileFront] = useState(0);
+    const [cB, setCB] = useState(null);
+    const [cF, setCF] = useState(null);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {
@@ -94,12 +95,14 @@ const EditSeller = () => {
         }
         if (id === "cardFront") {
             setCardFront(e.target.files[0]);
+            setCF(e.target.files[0]);
             // const fsizeFront = cardFront.size;
             // setFileFront(Math.round(fsizeFront / 1024));
         }
         if (id === "cardBack") {
             setCardBack(e.target.files[0]);
-            const fsizeBack = cardBack.size;
+            setCB(e.target.files[0]);
+            // const fsizeBack = cardBack.size;
             // setFileBack(Math.round(fsizeBack / 1024));
             // console.log(fileBack);
         }
@@ -541,7 +544,7 @@ const EditSeller = () => {
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
-                                    {cardFront && <img src={cardFront} className={styles.img} alt="Thumb" />}
+                                    {cardFront && <img src={cF ? URL.createObjectURL(cardFront) : cardFront} className={styles.img} alt="Thumb" />}
                                     {/* <img
                                         src={cardFront}
                                         className={styles.img}
@@ -554,7 +557,7 @@ const EditSeller = () => {
                                         className={styles.img}
                                         alt='Thumb'
                                     ></img> */}
-                                    {cardBack && <img src={cardBack} className={styles.img} alt="Thumb" />}
+                                    {cardBack && <img src={cB ? URL.createObjectURL(cardBack) : cardBack} className={styles.img} alt="Thumb" />}
                                 </div>
                             </div>
                             {/* <p className={styles.textBlue}>Account Information</p>

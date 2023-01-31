@@ -52,12 +52,17 @@ const AddNews = () => {
         }
     };
     const handleSubmit = (event) => {
+        var idxDot = avatar.name.lastIndexOf(".") + 1;
+        var extFile = avatar.name.substring(idxDot, avatar.length).toLowerCase();
+
         if (!title.trim()) {
             notify("🦄 title is empty");
         } else if (!content.trim()) {
             notify("🦄 content is empty");
         } else if (!avatar) {
             notify("🦄 avatar is empty");
+        } else if (extFile !== "jpg" && extFile !== "jpeg" && extFile !== "png") {
+            notify("🦄 Avatar Only jpg/jpeg and png files are allowed");
         } else {
             const formData = new FormData();
 

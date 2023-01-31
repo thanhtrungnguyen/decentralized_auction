@@ -155,6 +155,10 @@ const AddSeller = () => {
         let ward = selectedWard.label;
         let cardfront = cardFront.name;
         let cardback = cardBack.name;
+        var idxDot = cardFront.name.lastIndexOf(".") + 1;
+        var extFile = cardFront.name.substring(idxDot, cardFront.length).toLowerCase();
+        var idxDot2 = cardBack.name.lastIndexOf(".") + 1;
+        var extFile2 = cardBack.name.substring(idxDot2, cardBack.length).toLowerCase();
         if (!organizationName.trim()) {
             notify("🦄 organizationName is empty");
         } else if (!taxCode.trim()) {
@@ -209,6 +213,10 @@ const AddSeller = () => {
             notify("🦄 Username is exist");
         } else if (rePassword != password) {
             notify("🦄 rePassword is not same password");
+        } else if (extFile !== "jpg" && extFile !== "jpeg" && extFile !== "png") {
+            notify("🦄 Card Front Only jpg/jpeg and png files are allowed");
+        } else if (extFile2 !== "jpg" && extFile2 !== "jpeg" && extFile2 !== "png") {
+            notify("🦄 Card Back Only jpg/jpeg and png files are allowed");
         } else {
             const formData = new FormData();
 
