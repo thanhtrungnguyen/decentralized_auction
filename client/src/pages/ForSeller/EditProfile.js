@@ -37,6 +37,7 @@ const EditProfile = () => {
     const toggleRePasswordVisibility = () => {
         setPasswordShown3(passwordShown3 ? false : true);
     };
+    const [disable, setDisable] = useState(false);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -75,6 +76,8 @@ const EditProfile = () => {
         } else if (newPassword.trim().length < 8) {
             notify("🦄 newPassword is must be more than 8 character");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
 
             formData.append("oldPassword", oldPassword.trim());
@@ -86,10 +89,14 @@ const EditProfile = () => {
                     withCredentials: true,
                 })
                 .then((res) => {
+                    setDisable(false);
+
                     alert("Change password successfully!!!");
                     navigate(`/profileSeller/${data2?.user._id}`);
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     console.error(err.response.data.message);
                     notify(`🦄 Change password Failed: ${err.response.data.message} , ${err}`);
                 });
@@ -192,12 +199,19 @@ const EditProfile = () => {
                             </div>
                             <br />
                             <br />
-                            <input className={styles.btnAdd} type="submit" value="Save"></input>
+                            <input
+                                className={styles.btnAdd}
+                                type="submit"
+                                value="Save"
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                                disabled={disable}
+                            ></input>
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
                                     navigate("/auctionListForManager");
                                 }}
+                                disabled={disable}
                             >
                                 Cancel
                             </button>

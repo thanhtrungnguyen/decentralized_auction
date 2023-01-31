@@ -32,6 +32,8 @@ const EditProfileAdmin = () => {
     const { adminId } = useParams();
     const [data, setData] = useState([]);
     const [error, setError] = useState(false);
+    const [disable, setDisable] = useState(false);
+
     const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
@@ -140,6 +142,8 @@ const EditProfileAdmin = () => {
             // } else if (rePassword !== password) {
             //     notify("🦄 rePassword is not same password");
         } else {
+            setDisable(true);
+
             axios
                 .patch(
                     `/informationOperator/update/${data._id}`,
@@ -159,10 +163,14 @@ const EditProfileAdmin = () => {
                 .then((res) => {
                     // console.log(res);
                     // console.log(res.data);
+                    setDisable(false);
+
                     alert("Edit successfully!!!");
                     navigate("/listManagers");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     console.log(err);
                     notify(`🦄 Edit Failed: ${err.response.data.message}`);
                 });
@@ -269,12 +277,19 @@ const EditProfileAdmin = () => {
                         <br />
                         <br />
                         <br />
-                        <input className={styles.btnAdd} type="submit" value="Save"></input>
+                        <input
+                            className={styles.btnAdd}
+                            type="submit"
+                            value="Save"
+                            style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                            disabled={disable}
+                        ></input>
                         <button
                             className={styles.btnCancel}
                             onClick={() => {
                                 navigate("/listManagers");
                             }}
+                            disabled={disable}
                         >
                             Cancel
                         </button>

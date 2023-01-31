@@ -42,6 +42,7 @@ const EditProfile = () => {
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
+    const [disable, setDisable] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -186,6 +187,8 @@ const EditProfile = () => {
         } else if (fileFront > 2048) {
             notify("🦄 File card front, please select a file less than 2mb");
         } else {
+            setDisable(true);
+
             formData.append("firstName", firstName.trim());
             formData.append("lastName", lastName.trim());
             formData.append("gender", gender);
@@ -221,10 +224,14 @@ const EditProfile = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Update Successful");
                     navigate(`/profile/${id}`);
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
                 });
             console.log(formData);
@@ -460,12 +467,19 @@ const EditProfile = () => {
                             <br />
                             <br />
                             <br />
-                            <input className={styles.btnAdd} type="submit" value="Save"></input>
+                            <input
+                                className={styles.btnAdd}
+                                type="submit"
+                                value="Save"
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                                disabled={disable}
+                            ></input>
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
                                     navigate(`/profile/${id}`);
                                 }}
+                                disabled={disable}
                             >
                                 Cancel
                             </button>

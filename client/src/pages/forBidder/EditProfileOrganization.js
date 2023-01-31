@@ -48,6 +48,7 @@ const EditProfileOrganization = () => {
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
+    const [disable, setDisable] = useState(false);
 
     const baseURL = `/organization/getByUserId/${id}`;
     useEffect(() => {
@@ -198,6 +199,8 @@ const EditProfileOrganization = () => {
         } else if (fileFront > 2048) {
             notify("🦄 File card front, please select a file less than 2mb");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
             formData.append("name", organizationName.trim());
             formData.append("taxCode", taxCode.trim());
@@ -236,10 +239,14 @@ const EditProfileOrganization = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Edit profile successfully!!!");
                     navigate(`/profileOrganization/${id}`);
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
                 });
         }
@@ -516,12 +523,19 @@ const EditProfileOrganization = () => {
                             <br />
                             <br />
                             <br />
-                            <input className={styles.btnAdd} type="submit" value="Save"></input>
+                            <input
+                                className={styles.btnAdd}
+                                type="submit"
+                                value="Save"
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                                disabled={disable}
+                            ></input>
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
                                     navigate(`/profileOrganization/${id}`);
                                 }}
+                                disabled={disable}
                             >
                                 Cancel
                             </button>

@@ -25,6 +25,7 @@ const AddNews = () => {
     const [avatar, setAvatar] = useState(null);
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(false);
+    const [disable, setDisable] = useState(false);
 
     const navigate = useNavigate();
     const notify = (message) => {
@@ -64,6 +65,8 @@ const AddNews = () => {
         } else if (extFile !== "jpg" && extFile !== "jpeg" && extFile !== "png") {
             notify("🦄 Avatar Only jpg/jpeg and png files are allowed");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
 
             formData.append("title", title.trim());
@@ -82,10 +85,14 @@ const AddNews = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Add new successfully!!!");
                     navigate("/listNews");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
                 });
         }
@@ -162,8 +169,14 @@ const AddNews = () => {
                                 }}
                             />
                         </div>
-                        <input type="button" value="Cancel" className={styles.btnCancel} onClick={cancel}></input>
-                        <input type="submit" value="Add News" className={styles.btnSubmit}></input>
+                        <input type="button" value="Cancel" className={styles.btnCancel} disabled={disable} onClick={cancel}></input>
+                        <input
+                            type="submit"
+                            value="Add News"
+                            className={styles.btnSubmit}
+                            style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                            disabled={disable}
+                        ></input>
                     </div>
                 </div>
             </form>
