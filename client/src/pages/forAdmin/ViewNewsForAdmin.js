@@ -54,8 +54,8 @@ const ViewNewsForAdmin = () => {
                 <SideBarAdmin />
                 <Time />
                 <div className={styles.content}>
-                    <div style={{ marginLeft: '10px' }} className={styles.box}>
-                        <h1 style={{ textAlign: 'center' }}>{data.news.title}</h1>
+                    <div style={{ marginLeft: "10px" }} className={styles.box}>
+                        <h1 style={{ textAlign: "center" }}>{data.news.title}</h1>
                         <br />
                         <br />
                         <br />
