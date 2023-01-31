@@ -42,6 +42,7 @@ const AddProperty = () => {
     const baseURL = "/category/categories";
     const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
+    const [isVideo, setIsVideo] = useState(false);
 
     const notify = (message) => {
         toast(message, {
@@ -102,6 +103,22 @@ const AddProperty = () => {
     };
 
     const handleSubmit = (event) => {
+        const videoEl = document.createElement("video");
+        videoEl.src = window.URL.createObjectURL(propertyVideo);
+        console.log(window.URL.createObjectURL(propertyVideo));
+        videoEl.onloadedmetadata = (event) => {
+            setIsVideo(true);
+            window.URL.revokeObjectURL(videoEl.src);
+            const { name, type } = propertyVideo;
+            const { videoWidth, videoHeight } = videoEl;
+
+            console.log(`Filename: ${name} - Type: ${type} - Size: ${videoWidth}px x ${videoHeight}px`);
+        };
+
+        videoEl.onerror = () => {
+            setIsVideo(false);
+            console.log("Please upload a video file.");
+        };
         const fpropertyImage1 = propertyImage1.size;
         const fI1 = Math.round(fpropertyImage1 / 1024);
         const fpropertyImage2 = propertyImage2.size;
@@ -110,7 +127,12 @@ const AddProperty = () => {
         const fI3 = Math.round(fpropertyImage3 / 1024);
         const fpropertyVideo = propertyVideo.size;
         const fV = Math.round(fpropertyVideo / 1024);
-
+        var idxDot1 = propertyImage1.name.lastIndexOf(".") + 1;
+        var extFile1 = propertyImage1.name.substring(idxDot1, propertyImage1.length).toLowerCase();
+        var idxDot2 = propertyImage2.name.lastIndexOf(".") + 1;
+        var extFile2 = propertyImage2.name.substring(idxDot2, propertyImage2.length).toLowerCase();
+        var idxDot3 = propertyImage3.name.lastIndexOf(".") + 1;
+        var extFile3 = propertyImage3.name.substring(idxDot3, propertyImage3.length).toLowerCase();
         if (category === "null") {
             notify("🦄 Please select category");
         } else if (!propertyName.trim()) {
@@ -137,6 +159,20 @@ const AddProperty = () => {
             notify("🦄 Deposit must less than 20% start bid");
         } else if (startBid * 0.1 < priceStep) {
             notify("🦄 Price Step must less than 10% start bid");
+        } else if (startBid <= 0) {
+            notify("🦄 Start Bid must more than 0 ");
+        } else if (deposit <= 0) {
+            notify("🦄 Deposit must more than 0 ");
+        } else if (priceStep <= 0) {
+            notify("🦄 Price Step must more than 0 ");
+        } else if (extFile1 !== "jpg" && extFile1 !== "jpeg" && extFile1 !== "png") {
+            notify("🦄 Image 1 Only jpg/jpeg and png files are allowed");
+        } else if (extFile2 !== "jpg" && extFile2 !== "jpeg" && extFile2 !== "png") {
+            notify("🦄 Image 2 Only jpg/jpeg and png files are allowed");
+        } else if (extFile3 !== "jpg" && extFile3 !== "jpeg" && extFile3 !== "png") {
+            notify("🦄 Image 3 Only jpg/jpeg and png files are allowed");
+        } else if (!isVideo) {
+            notify("🦄 Video Only video files are allowed. Please select again");
         } else {
             setDisable(true);
             console.log(disable);
@@ -236,12 +272,14 @@ const AddProperty = () => {
                                         id="propertyImage1"
                                         onChange={(e) => handleInputChange(e)}
                                         type="file"
+                                        accept=".png, .jpg, .jpeg"
                                         required
                                     ></input>
                                     <input
                                         className={styles.inputImg}
                                         id="propertyImage2"
                                         onChange={(e) => handleInputChange(e)}
+                                        accept=".png, .jpg, .jpeg"
                                         type="file"
                                         required
                                     ></input>
@@ -249,6 +287,7 @@ const AddProperty = () => {
                                         className={styles.inputImg}
                                         id="propertyImage3"
                                         onChange={(e) => handleInputChange(e)}
+                                        accept=".png, .jpg, .jpeg"
                                         type="file"
                                         required
                                     ></input>

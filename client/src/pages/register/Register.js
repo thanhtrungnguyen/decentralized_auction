@@ -56,6 +56,7 @@ const Register = () => {
     const [isExist, setIsExit] = useState(false);
     const [fileBack, setFileBack] = useState(0);
     const [fileFront, setFileFront] = useState(0);
+    const [disable, setDisable] = useState(false);
 
     //const [usertype] = useState("CONTACT");
 
@@ -123,38 +124,35 @@ const Register = () => {
     // const baseURL = `/user/users`;
 
     const handleSubmit = (event) => {
-        // const fsizeBack = cardBack.size;
-        // setFileBack(Math.round(fsizeBack / 1024));
-        // console.log(fileBack);
-        // const fsizeFront = cardFront.size;
-        // setFileFront(Math.round(fsizeFront / 1024));
-        // console.log(fileFront);
         const fsizeBack = cardBack.size;
         const fileBack = Math.round(fsizeBack / 1024);
         const fsizeFront = cardFront.size;
         const fileFront = Math.round(fsizeFront / 1024);
-        // axios.get(baseURL, { withCredentials: true }).then((resp) => {
-        //     setListUsername(resp.data.users);
-        //     listUsername.map((item) => {
-        //         if (item.username === username) {
-        //             setIsExit(true);
-        //             console.log(item.username);
-        //         } else {
-        //             setIsExit(false);
-        //         }
-        //     });
-        // });
+
         let cityId = selectedCity.value;
         let districtId = selectedDistrict.value;
         let wardId = selectedWard.value;
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const today2 = new Date(dateOfBirth);
+        const yyyy2 = today2.getFullYear();
 
+        const today3 = new Date(dateRangeCard);
+        console.log("===================");
+        console.log(cardFront.name.lastIndexOf("."));
+
+        var idxDot = cardFront.name.lastIndexOf(".") + 1;
+        var extFile = cardFront.name.substring(idxDot, cardFront.length).toLowerCase();
+        var idxDot2 = cardBack.name.lastIndexOf(".") + 1;
+        var extFile2 = cardBack.name.substring(idxDot2, cardBack.length).toLowerCase();
+        console.log(extFile);
         if (!firstName) {
             notify("🦄 FirstName is empty");
         } else if (!lastName.trim()) {
             notify("🦄 LastName is empty");
         } else if (!gender) {
             notify("🦄 Gender is empty");
-        } else if (!dateOfBirth.trim()) {
+        } else if (!dateOfBirth) {
             notify("🦄 Date Of Birth is empty");
         } else if (!email.trim()) {
             notify("🦄 Email is empty");
@@ -192,7 +190,17 @@ const Register = () => {
             notify("🦄 Username is exist");
         } else if (rePassword != password) {
             notify("🦄 rePassword is not same password");
+        } else if (yyyy - yyyy2 < 18) {
+            notify("🦄 Date of birth must be more 18 year old");
+        } else if (today3 - today > 0) {
+            notify("🦄 Date Range Card  must after now");
+        } else if (extFile !== "jpg" && extFile !== "jpeg" && extFile !== "png") {
+            notify("🦄 Card Front Only jpg/jpeg and png files are allowed");
+        } else if (extFile2 !== "jpg" && extFile2 !== "jpeg" && extFile2 !== "png") {
+            notify("🦄 Card Back Only jpg/jpeg and png files are allowed");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
             formData.append("firstName", firstName.trim());
             formData.append("lastName", lastName.trim());
@@ -229,12 +237,14 @@ const Register = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
                     alert("Register successfully!!!");
                     navigate("/login");
                 })
                 .catch((err) => {
                     //if(err.response.data.status === 409)
                     //console.log(err)
+                    setDisable(false);
                     notify(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
@@ -409,7 +419,7 @@ const Register = () => {
                         className={styles.imgCard}
                         id="cardFront"
                         type="file"
-                        accept="image/*"
+                        accept=".png, .jpg, .jpeg"
                         // onChange={(e) => {
                         //   console.log(e.target.files[0]);
                         // }}
@@ -419,7 +429,7 @@ const Register = () => {
                     <input
                         id="cardBack"
                         type="file"
-                        accept="image/*"
+                        accept=".png, .jpg, .jpeg"
                         // onChange={(e) => {
                         //   console.log(e.target.files[0]);
                         // }}
@@ -468,7 +478,13 @@ const Register = () => {
                         </i>
                     </div>
                     <label style={{ color: "red" }}>{message}</label>
-                    <input type="submit" className={styles.ipsubmit} value="SIGN UP"></input>
+                    <input
+                        type="submit"
+                        className={styles.ipsubmit}
+                        value="SIGN UP"
+                        style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                        disabled={disable}
+                    ></input>
                 </div>
             </form>
 

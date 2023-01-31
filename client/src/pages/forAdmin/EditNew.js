@@ -84,10 +84,14 @@ const EditNew = () => {
         });
     };
     const handleSubmit = (event) => {
+        var idxDot = avatar.name.lastIndexOf(".") + 1;
+        var extFile = avatar.name.substring(idxDot, avatar.length).toLowerCase();
         if (!title.trim()) {
             notify("🦄 title is empty");
         } else if (!content.trim()) {
             notify("🦄 content is empty");
+        } else if (extFile !== "jpg" && extFile !== "jpeg" && extFile !== "png") {
+            notify("🦄 Card Front Only jpg/jpeg and png files are allowed");
         } else {
             const formData = new FormData();
 
@@ -97,12 +101,15 @@ const EditNew = () => {
                 formData.append("avatar", avatar);
             }
 
-
-
             axios
-                .patch(`/news/update/${id}`, formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                }, { withCredentials: true })
+                .patch(
+                    `/news/update/${id}`,
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    },
+                    { withCredentials: true }
+                )
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);

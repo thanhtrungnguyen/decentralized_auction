@@ -60,6 +60,8 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
             notify("🦄 End Auction Time must after Start Auction Time");
         } else if (endAuctionTime >= duePaymentTime) {
             notify("🦄 Due Payment Time must after End Auction Time");
+        } else if (registrationFee <= 0) {
+            notify("🦄 Registration Fee must more than 0 ");
         } else {
             setDisable(true);
 
@@ -197,7 +199,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                                 type="submit"
                                 value="OK"
                                 className={styles.btnOK}
-                                style={disable ? { backgroundColor: "red" } : {}}
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
                                 disabled={disable}
                             ></input>
                             <input type="button" value="Cancel" className={styles.btnCancel} onClick={handCancel} disabled={disable}></input>
