@@ -42,7 +42,7 @@ const AuctionList = () => {
     const [page, setPage] = useState(1);
     const [status, setStatus] = useState("all");
     const [search, setSearch] = useState("");
-    const [sort, setSort] = useState(1);
+    const [sort, setSort] = useState(0);
     const [categories, setCategories] = useState([]);
     const [filterCategories, setFilterCategories] = useState([]);
     const [minValue, set_minValue] = useState(0);
@@ -115,7 +115,7 @@ const AuctionList = () => {
             setFilterCategories(state);
         }
     };
-    const handleApplyFilter = () => {};
+    const handleApplyFilter = () => { };
 
     const handleSort = (e) => {
         setSort(e.target.value);
