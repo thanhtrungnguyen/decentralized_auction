@@ -44,11 +44,156 @@ const Comments = ({ auctionId, propertyId }) => {
                 />
                 {/* Same as */}
                 <ToastContainer />
-                <p className={styles.txt}>Comment</p>
+                <p className={styles.txt}>Reject History</p>
                 <div className={styles.content}>
                     <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
                         <Content />
                     </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
+                    <br />
+                    <hr />
+                    <label className={styles.lb}>
+                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
+                        braces, the styling in the example above is written inside two sets of curly braces
+                    </label>
+                </div>{" "}
+                <div className={styles.content}>
+                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                        <Content />
+                    </Popup>
+                    <label>19:19, 02/06/2000</label>
                     <br />
                     <hr />
                     <label className={styles.lb}>
