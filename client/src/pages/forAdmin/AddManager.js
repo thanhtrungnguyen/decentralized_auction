@@ -31,6 +31,7 @@ const AddManager = () => {
     const [loading, setLoading] = useState(false);
     const type = "operator";
     const navigate = useNavigate();
+    const [disable, setDisable] = useState(false);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -130,6 +131,8 @@ const AddManager = () => {
         } else if (rePassword != password) {
             notify("🦄 rePassword is not same password");
         } else {
+            setDisable(true);
+
             axios
                 .post(
                     "/informationOperator/create",
@@ -150,10 +153,14 @@ const AddManager = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Add manager successfully!!!");
                     navigate("/listManagers");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     notify(`🦄 Create Failed: ${err.response.data.message}, ${err}`);
                 });
         }
@@ -263,12 +270,19 @@ const AddManager = () => {
                         <br />
                         <br />
                         <br />
-                        <input className={styles.btnAdd} type="submit" value="Add"></input>
+                        <input
+                            className={styles.btnAdd}
+                            type="submit"
+                            value="Add"
+                            style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                            disabled={disable}
+                        ></input>
                         <button
                             className={styles.btnCancel}
                             onClick={() => {
                                 navigate("/listManagers");
                             }}
+                            disabled={disable}
                         >
                             Cancel
                         </button>

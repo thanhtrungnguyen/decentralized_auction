@@ -14,14 +14,14 @@ import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-import { useFetchData } from "../../hooks/useFetch";
+import { useFetchSession } from "../../hooks/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const ChangePasswordSeller = () => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
-    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    const { loading: loading2, data: data2, error } = useFetchSession("/session");
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
@@ -155,7 +155,7 @@ const ChangePasswordSeller = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="oldPassword"
                                     placeholder="Old Password"
-                                    //required
+                                //required
                                 ></input>
                                 <i onClick={toggleOldPasswordVisibility}>{eye}</i>
                             </div>
@@ -171,7 +171,7 @@ const ChangePasswordSeller = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="newPassword"
                                     placeholder="Enter the new password"
-                                    //required
+                                //required
                                 ></input>
                                 <i onClick={toggleNewPasswordVisibility}>{eye}</i>
                             </div>
@@ -187,7 +187,7 @@ const ChangePasswordSeller = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="rePassword"
                                     placeholder="Confirm new Password"
-                                    //required
+                                //required
                                 ></input>
                                 <i onClick={toggleRePasswordVisibility}>{eye}</i>
                             </div>

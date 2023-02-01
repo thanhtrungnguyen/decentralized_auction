@@ -99,7 +99,9 @@ function App() {
             <Route path="propertyDetail/:id" element={<PropertyDetail />} />
             <Route path="enterEmail" element={<EnterEmail />} />
             <Route path="confirmCode/:email" element={<ConfirmCode />} />
+            <Route path="confirmCode" element={<ConfirmCode />} />
             <Route path="newPassword/:userId/:token" element={<NewPassword />} />
+            <Route path="newPassword" element={<NewPassword />} />
             <Route path="myAuctions" element={<MyAuctions />} />
             <Route path="editAuction/:id" element={<EditAuction />} />
             <Route path="editAuction" element={<EditAuction />} />

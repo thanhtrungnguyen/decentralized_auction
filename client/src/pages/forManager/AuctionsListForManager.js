@@ -39,7 +39,7 @@ const AuctionsListForManager = () => {
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState();
     const navigate = useNavigate();
-    const baseURLAuction = `/auction/auctions/manager/${page}/${status}/${auctionName}/${sellerName}`;
+    var baseURLAuction = `/auction/auctions/manager/${page}/${status}/${auctionName}/${sellerName}`;
     const baseURLSeller = `/organization/seller`;
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const AuctionsListForManager = () => {
                 // console.log("axios get");
                 setListSellers(resp.data.listSeller);
             });
-            await axios.get(baseURLAuction).then((resp) => {
+            await axios.get(baseURLAuction, { withCredentials: true }).then((resp) => {
                 // console.log(resp.data);
                 // console.log("axios get");
                 setListAuction(resp.data.auctions);
@@ -74,10 +74,14 @@ const AuctionsListForManager = () => {
     const handleSelectChange = (event) => {
         //setSellerName2(event.value);
         setSellerName(event.value);
+        setPage(1);
         console.log(sellerName);
     };
     const handleSubmit = (event) => {
-        auctionName2 === "" ? setAuctionName(null) : setAuctionName(auctionName2);
+        if (auctionName2.trim() === "") {
+            setAuctionName2("");
+            setAuctionName(null);
+        } else setAuctionName(auctionName2.trim());
         setPage(1);
         event.preventDefault();
     };
@@ -92,8 +96,8 @@ const AuctionsListForManager = () => {
     function exportData(auctions, sellers) {
         return (
             <>
-                {auctions.listAuction.map((auction) =>
-                    sellers.map((seller) =>
+                {auctions?.listAuction.map((auction) =>
+                    sellers?.map((seller) =>
                         auction.property.user._id === seller.individual.user._id ? (
                             <tr>
                                 <td>{seller.name}</td>
@@ -178,34 +182,40 @@ const AuctionsListForManager = () => {
     ) : (
         <>
             {/* <Confetti width="1900px" height="960px" /> */}
-            <form onSubmit={handleSubmit}>
-                <div className={styles.container}>
-                    <SideBarSeller />
-                    <Time />
-                    <div className={styles.r}>
-                        <div className={styles.con}>
-                            <div className={styles.btns}>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
-                                    All
-                                </button>
-                                {/* <button className={styles.btn}>Created</button> */}
-                                {/* <button className={styles.btn}>Modified</button> */}
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">
-                                    Request Add
-                                </button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">
-                                    Approved
-                                </button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Upcoming">
-                                    Upcoming
-                                </button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Bidding">
-                                    Bidding
-                                </button>
-                                <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Closed">
-                                    Closed
-                                </button>
-                                {/* <Select
+
+            <div className={styles.container}>
+                <SideBarSeller />
+                <Time />
+                <div className={styles.r}>
+                    <div className={styles.con}>
+                        <div className={styles.btns}>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="null">
+                                All
+                            </button>
+                            {/* <button className={styles.btn}>Created</button> */}
+                            {/* <button className={styles.btn}>Modified</button> */}
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Request">
+                                Request Add
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">
+                                Approved
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Rejected">
+                                Rejected
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="RegistrationTime">
+                                Registration
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="UpcomingForBid">
+                                Upcoming
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Bidding">
+                                Bidding
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Closed">
+                                Closed
+                            </button>
+                            {/* <Select
                                     className={styles.select}
                                     //id="sellerName"
                                     options={statusAuction}
@@ -214,51 +224,54 @@ const AuctionsListForManager = () => {
 
                                     placeholder="Select Status Auction" >
                                 </Select> */}
-                                <Select
-                                    className={styles.select}
-                                    id="sellerName"
-                                    options={exportSeller(listSellers)}
-                                    onChange={(e) => handleSelectChange(e)}
-                                    //defaultInputValue={'All'}
-                                    //selectOption={sellerName2}
-                                    placeholder="Select Seller"
-                                ></Select>
+                            <Select
+                                className={styles.select}
+                                id="sellerName"
+                                options={exportSeller(listSellers)}
+                                onChange={(e) => handleSelectChange(e)}
+                                //defaultInputValue={'All'}
+                                //selectOption={sellerName2}
+                                placeholder="Select Seller"
+                            ></Select>
+                            <form onSubmit={handleSubmit}>
                                 <input
-                                    className={styles.ip}
+                                    className={styles.ip4}
                                     type="text"
                                     placeholder="Enter Name"
                                     id="auctionName"
                                     value={auctionName2}
                                     onChange={(e) => handleInputChange(e)}
                                 ></input>
-                                <button className={styles.btn} type="submit">
+                                <button className={styles.btn4} type="submit">
                                     Search
                                 </button>
-                            </div>
-                            <table className={styles.table}>
-                                <tr>
-                                    <th className={styles.th}>Seller Name</th>
-                                    <th className={styles.th}>Auction Name</th>
-                                    <th className={styles.th}>Registration time</th>
-                                    <th className={styles.th}>Auction time</th>
-                                    <th className={styles.th}>Status</th>
-                                    <th className={styles.th}>Action</th>
-                                </tr>
-                                {exportData(listAuction, listSellers)}
-                            </table>
-                            <hr />
-                            <div>
-                                <Pagination
-                                    className={styles.Pagination}
-                                    count={Math.ceil(listAuction.count / 8)}
-                                    page={page}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                            </form>
+                        </div>
+                        <table className={styles.table}>
+                            <tr>
+                                <th className={styles.th}>Seller Name</th>
+                                <th className={styles.th}>Auction Name</th>
+                                <th className={styles.th}>Registration time</th>
+                                <th className={styles.th}>Auction time</th>
+                                <th className={styles.th}>Status</th>
+                                <th className={styles.th}>Action</th>
+                            </tr>
+                            {exportData(listAuction, listSellers)}
+                        </table>
+                        <hr />
+                        <div>
+                            <Pagination
+                                className={styles.Pagination}
+                                count={Math.ceil(listAuction.count / 8)}
+                                page={page}
+                                hidden={listAuction.count === 0 ? true : false}
+                                onChange={handleChange}
+                            />
                         </div>
                     </div>
                 </div>
-                {/* <div className={styles.container}>
+            </div>
+            {/* <div className={styles.container}>
                     <SideBarSeller />
                     <Time />
 
@@ -457,7 +470,6 @@ const AuctionsListForManager = () => {
                         </div>
                     </div>
                 </div> */}
-            </form>
         </>
     );
 };

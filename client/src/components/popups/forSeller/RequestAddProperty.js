@@ -14,7 +14,7 @@ const RequestAddProperty = ({ idProperty }) => {
         setLoading(true);
         axios
             .post(
-                `http://localhost:5000/api/auction/create`,
+                `/auction/create`,
                 { propertyid: idProperty },
                 {
                     withCredentials: true,

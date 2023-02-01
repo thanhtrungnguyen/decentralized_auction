@@ -14,14 +14,14 @@ import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-import { useFetchData } from "../../hooks/useFetch";
+import { useFetchData, useFetchSession } from "../../hooks/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const EditProfile = () => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
-    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    const { loading: loading2, data: data2, error } = useFetchSession("/session");
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
@@ -37,6 +37,7 @@ const EditProfile = () => {
     const toggleRePasswordVisibility = () => {
         setPasswordShown3(passwordShown3 ? false : true);
     };
+    const [disable, setDisable] = useState(false);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -75,6 +76,8 @@ const EditProfile = () => {
         } else if (newPassword.trim().length < 8) {
             notify("🦄 newPassword is must be more than 8 character");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
 
             formData.append("oldPassword", oldPassword.trim());
@@ -86,10 +89,14 @@ const EditProfile = () => {
                     withCredentials: true,
                 })
                 .then((res) => {
+                    setDisable(false);
+
                     alert("Change password successfully!!!");
                     navigate(`/profileSeller/${data2?.user._id}`);
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     console.error(err.response.data.message);
                     notify(`🦄 Change password Failed: ${err.response.data.message} , ${err}`);
                 });
@@ -154,7 +161,7 @@ const EditProfile = () => {
                                     onChange={(e) => handleInputChange(e)}
                                     id="oldPassword"
                                     placeholder="Old Password"
-                                    //required
+                                //required
                                 ></input>
                                 <i onClick={toggleOldPasswordVisibility}>{eye}</i>
                             </div>
@@ -192,12 +199,19 @@ const EditProfile = () => {
                             </div>
                             <br />
                             <br />
-                            <input className={styles.btnAdd} type="submit" value="Save"></input>
+                            <input
+                                className={styles.btnAdd}
+                                type="submit"
+                                value="Save"
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                                disabled={disable}
+                            ></input>
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
-                                    navigate("/auctionListForManager");
+                                    navigate("/myProperty");
                                 }}
+                                disabled={disable}
                             >
                                 Cancel
                             </button>

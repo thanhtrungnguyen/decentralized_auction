@@ -18,6 +18,7 @@ const AddCategory = () => {
     const axios = useAxiosPrivate();
     const [role, setRole] = useState();
     const [loading, setLoading] = useState(false);
+    const [disable, setDisable] = useState(false);
 
     const [categoryName, setCategoryName] = useState(null);
     const navigate = useNavigate();
@@ -44,6 +45,8 @@ const AddCategory = () => {
         if (!categoryName.trim()) {
             notify("🦄 categoryName is empty");
         } else {
+            setDisable(true);
+
             axios
                 .post(
                     `/category/create`,
@@ -55,12 +58,16 @@ const AddCategory = () => {
                 .then((res) => {
                     // console.log(res);
                     // console.log(res.data);
+                    setDisable(false);
+                    console.log(disable);
                     alert("Add Category Successful");
                     navigate("/managerCategories");
                 })
                 .catch((err) => {
                     // console.log(err.response.data.mess);
-                    alert(`${err.response.data.mess}, ${err} `);
+                    alert(`Failed: ${err.response.data.mess}, ${err} `);
+                    setDisable(false);
+                    console.log(disable);
                 });
         }
         event.preventDefault();
@@ -94,7 +101,7 @@ const AddCategory = () => {
                         <input
                             id="categoryName"
                             type="text"
-                            pattern="^[a-zA-Z]{1,}(?: [a-zA-Z]+){0,10}$"
+                            pattern="^[a-zA-Z\s]{1,}(?: [a-zA-Z\s]+){0,10}$"
                             placeholder="Enter category name"
                             value={categoryName}
                             onChange={(e) => handleInputChange(e)}
@@ -108,10 +115,17 @@ const AddCategory = () => {
                             onClick={() => {
                                 navigate("/managerCategories");
                             }}
+                            disabled={disable}
                         >
                             Cancel
                         </button>{" "}
-                        <input type="submit" value="Save" className={styles.btnSave} disabled={categoryName === null ? true : false}></input>
+                        <input
+                            type="submit"
+                            value="Save"
+                            className={styles.btnSave}
+                            disabled={disable}
+                            style={disable ? { backgroundColor: "red" } : {}}
+                        ></input>
                     </div>
                 </div>
             </form>

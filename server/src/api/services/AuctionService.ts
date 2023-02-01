@@ -24,10 +24,12 @@ const getListAuctions = async (index: any, status: any, search: any, sellerName:
     ? (filter = { status: status })
     : (filter = { status: status, name: { $regex: search, $options: 'i' } });
   sellerName != 'null' ? (filterUser = { _id: sellerName }) : (filterUser = {});
+  const start = (parseInt(index) - 1) * page_size;
+  const end = parseInt(index) * page_size;
   try {
     var skip = parseInt(index);
     skip = skip == 1 ? 0 : (skip - 1) * page_size;
-    await Auction.find(filter)
+    arr = await Auction.find(filter)
       .populate({
         path: 'property',
         populate: {
@@ -35,10 +37,11 @@ const getListAuctions = async (index: any, status: any, search: any, sellerName:
           match: filterUser
         }
       })
-      .sort({ createdAt: -1 })
-      .then((result) => {
-        arr = result.filter((item) => item.property.user != null).slice((index - 1) * page_size, index * page_size);
-      });
+      .sort({ createdAt: -1 });
+    // .then((result) => {
+    //   arr = result.filter((item) => item.property.user != null).slice((index - 1) * page_size, index * page_size);
+    // });
+    arr = arr.filter((item) => item.property.user != null).slice(start, end);
     var count = await Auction.find(filter)
       .populate({
         path: 'property',

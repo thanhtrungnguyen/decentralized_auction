@@ -20,9 +20,6 @@ const AuctionDetailForSeller = () => {
     const { data, loading } = useFetch(baseURL);
     const [role, setRole] = useState();
 
-    console.log(data);
-    console.log(loading);
-
     const Cancel = () => {
         navigate("/myAuctions");
     };
@@ -78,8 +75,8 @@ const AuctionDetailForSeller = () => {
                             </div>
                         </div>
                         <div className={styles.col2}>
-                            <p className={styles.title}>Property Name</p>
-                            {/* <p className={styles.title}>{data.auction.propertyName}</p> */}
+                            {/* <p className={styles.title}>Property Name</p> */}
+                            <p className={styles.title}>{data.auction.property.name}</p>
                             <br />
                             <br />
                             <p className={styles.txtBlue}>Start bid : {data.auction.property.startBid} ETH</p>

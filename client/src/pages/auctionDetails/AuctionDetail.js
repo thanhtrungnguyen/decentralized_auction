@@ -15,7 +15,7 @@ import "moment/locale/vi";
 const AuctionDetail = () => {
     // const [auction, setAuction] = useState(null);
     const { id } = useParams();
-    const baseURL = `http://localhost:5000/api/auction/${id}`;
+    const baseURL = `/auction/${id}`;
     const { data, loading, error } = useFetch(baseURL);
     const [role, setRole] = useState();
     let img1 = "https://unboxph3a1e0.zapwp.com/q:intelligent/r:0/wp:1/w:1/u:https://unbox.ph/wp-content/uploads/2011/09/Nike-Air-Mag-3-1200x742.jpeg";

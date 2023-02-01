@@ -42,9 +42,10 @@ const EditProperty = () => {
     const { id } = useParams();
 
     const navigate = useNavigate();
-    const baseURLCategory = "http://localhost:5000/api/category/categories";
+    const baseURLCategory = "/category/categories";
     const [role, setRole] = useState();
     const [error, setError] = useState(false);
+    const [disable, setDisable] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -73,7 +74,7 @@ const EditProperty = () => {
         fetchData();
     }, []);
 
-    const baseURLProperty = `http://localhost:5000/api/property/${id}`;
+    const baseURLProperty = `/property/${id}`;
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -178,6 +179,8 @@ const EditProperty = () => {
         } else if (startBid * 0.1 < priceStep) {
             notify("🦄 Price Step must less than 10% start bid");
         } else {
+            setDisable(true);
+
             console.log(propertyImage1);
             const formData = new FormData();
             formData.append("propertyImage1", propertyImage1);
@@ -198,7 +201,7 @@ const EditProperty = () => {
             // formData.append("biddingPreiod", biddingPreiod);
             axios
                 .patch(
-                    `http://localhost:5000/api/property/update/${id}`,
+                    `/property/update/${id}`,
                     formData,
                     {
                         headers: { "Content-Type": "multipart/form-data" },
@@ -210,10 +213,14 @@ const EditProperty = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Edit property successfully!!!");
                     navigate("/myProperty");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     alert(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
@@ -449,9 +456,15 @@ const EditProperty = () => {
                     </div>
 
                     <div className={styles.btn}>
-                        <input className={styles.btnSave} type="submit" value="Save"></input>
+                        <input
+                            className={styles.btnSave}
+                            type="submit"
+                            value="Save"
+                            style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                            disabled={disable}
+                        ></input>
 
-                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
+                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel} disabled={disable}></input>
                     </div>
                 </div>
                 {/* <div className={styles.root}>

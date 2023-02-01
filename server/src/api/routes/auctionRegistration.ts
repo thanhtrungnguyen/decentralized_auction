@@ -13,6 +13,6 @@ const router = express.Router();
 
 router.get('/auctionRegistrations', getAllAuctionRegistrationsHandler);
 router.get('/:auctionId', getAuctionRegistrationByAuctionIdHandler);
-router.post('/create', requireRole(roles.BIDDER), validateResource(AuctionRegistrationSchema.create), createAuctionRegistrationHandler);
+router.post('/:auctionId/registration', requireRole(roles.BIDDER), validateResource(AuctionRegistrationSchema.create), createAuctionRegistrationHandler);
 
 export default router;

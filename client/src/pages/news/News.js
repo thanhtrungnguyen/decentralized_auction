@@ -30,9 +30,11 @@ const News = () => {
     };
 
     const handleSubmit = (event) => {
-        title2 === "" ? setTitle(null) : setTitle(title2);
+        if (title2.trim() === "") {
+            setTitle2("");
+            setTitle(null);
+        } else setTitle(title2.trim());
         setPage(1);
-        console.log(title2);
         event.preventDefault();
     };
 
@@ -80,13 +82,7 @@ const News = () => {
                 <div className={styles.col1}>
                     {exportData(data)}
                     <div className={styles.pagination}>
-                        <Pagination
-                            className={styles.pagi}
-                            size="large"
-                            count={Math.ceil(data.news.count / 8)}
-                            page={page}
-                            onChange={handleChange}
-                        />
+                        <Pagination className={styles.pagi} size="large" count={Math.ceil(data.news.count / 8)} page={page} onChange={handleChange} />
                     </div>
                 </div>
                 <div className={styles.col2}>

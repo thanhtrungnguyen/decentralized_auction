@@ -22,6 +22,7 @@ const AddSeller = () => {
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
     const [isExist, setIsExit] = useState(false);
+    const [disable, setDisable] = useState(false);
 
     const [organizationName, setOrganizationName] = useState(null);
     const [taxCode, setTaxCode] = useState(null);
@@ -130,7 +131,7 @@ const AddSeller = () => {
         });
     };
     // const [listUsername, setListUsername] = useState([]);
-    // const baseURL = `http://localhost:5000/api/user/users`;
+    // const baseURL = `/user/users`;
     const handleSubmit = (event) => {
         const fsizeBack = cardBack.size;
         const fileBack = Math.round(fsizeBack / 1024);
@@ -155,6 +156,10 @@ const AddSeller = () => {
         let ward = selectedWard.label;
         let cardfront = cardFront.name;
         let cardback = cardBack.name;
+        var idxDot = cardFront.name.lastIndexOf(".") + 1;
+        var extFile = cardFront.name.substring(idxDot, cardFront.length).toLowerCase();
+        var idxDot2 = cardBack.name.lastIndexOf(".") + 1;
+        var extFile2 = cardBack.name.substring(idxDot2, cardBack.length).toLowerCase();
         if (!organizationName.trim()) {
             notify("🦄 organizationName is empty");
         } else if (!taxCode.trim()) {
@@ -209,7 +214,13 @@ const AddSeller = () => {
             notify("🦄 Username is exist");
         } else if (rePassword != password) {
             notify("🦄 rePassword is not same password");
+        } else if (extFile !== "jpg" && extFile !== "jpeg" && extFile !== "png") {
+            notify("🦄 Card Front Only jpg/jpeg and png files are allowed");
+        } else if (extFile2 !== "jpg" && extFile2 !== "jpeg" && extFile2 !== "png") {
+            notify("🦄 Card Back Only jpg/jpeg and png files are allowed");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
 
             formData.append("name", organizationName.trim());
@@ -254,10 +265,14 @@ const AddSeller = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Add seller successfully!!!");
                     navigate("/listSellers");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     console.error(err.response.data.message);
                     notify(`🦄 Add Failed: ${err.response.data.message} , ${err}`);
                 });
@@ -565,12 +580,19 @@ const AddSeller = () => {
                             ></input>
                             <br />
                             <br />
-                            <input className={styles.btnAdd} type="submit" value="Add"></input>
+                            <input
+                                className={styles.btnAdd}
+                                type="submit"
+                                value="Add"
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                                disabled={disable}
+                            ></input>
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
                                     navigate("/listSellers");
                                 }}
+                                disabled={disable}
                             >
                                 Cancel
                             </button>

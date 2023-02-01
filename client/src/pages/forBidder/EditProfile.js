@@ -24,7 +24,8 @@ const EditProfile = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-
+    const [cB, setCB] = useState(null);
+    const [cF, setCF] = useState(null);
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const [role, setRole] = useState();
 
@@ -41,6 +42,7 @@ const EditProfile = () => {
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
+    const [disable, setDisable] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -120,9 +122,11 @@ const EditProfile = () => {
             setCardGrantedPlace(value);
         }
         if (id === "cardFront") {
+            setCF(e.target.files[0]);
             setCardFront(e.target.files[0]);
         }
         if (id === "cardBack") {
+            setCB(e.target.files[0]);
             setCardBack(e.target.files[0]);
         }
     };
@@ -183,6 +187,8 @@ const EditProfile = () => {
         } else if (fileFront > 2048) {
             notify("🦄 File card front, please select a file less than 2mb");
         } else {
+            setDisable(true);
+
             formData.append("firstName", firstName.trim());
             formData.append("lastName", lastName.trim());
             formData.append("gender", gender);
@@ -218,10 +224,14 @@ const EditProfile = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Update Successful");
                     navigate(`/profile/${id}`);
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
                 });
             console.log(formData);
@@ -439,7 +449,7 @@ const EditProfile = () => {
                             />
                             <div className={styles.fl}>
                                 <div className={styles.l}>
-                                    {cardFront && <img src={cardFront} className={styles.img} alt="Thumb" />}
+                                    {cardFront && <img src={cF ? URL.createObjectURL(cardFront) : cardFront} className={styles.img} alt="Thumb" />}
                                     {/* <img
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
                                         className={styles.img}
@@ -450,19 +460,26 @@ const EditProfile = () => {
                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg/640px-C%C4%83n_c%C6%B0%E1%BB%9Bc_c%C3%B4ng_d%C3%A2n_g%E1%BA%AFn_ch%C3%ADp_m%E1%BA%B7t_tr%C6%B0%E1%BB%9Bc.jpg"
                                         className={styles.img}
                                     ></img> */}
-                                    {cardBack && <img src={cardBack} className={styles.img} alt="Thumb" />}
+                                    {cardBack && <img src={cB ? URL.createObjectURL(cardBack) : cardBack} className={styles.img} alt="Thumb" />}
                                 </div>
                             </div>
                             <br />
                             <br />
                             <br />
                             <br />
-                            <input className={styles.btnAdd} type="submit" value="Save"></input>
+                            <input
+                                className={styles.btnAdd}
+                                type="submit"
+                                value="Save"
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                                disabled={disable}
+                            ></input>
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
                                     navigate(`/profile/${id}`);
                                 }}
+                                disabled={disable}
                             >
                                 Cancel
                             </button>

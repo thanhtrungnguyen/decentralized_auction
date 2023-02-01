@@ -16,12 +16,12 @@ import { ToastContainer, toast } from "react-toastify";
 // import bcrypt from "bcryptjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { useFetchData } from "../../hooks/useFetch";
+import { useFetchData, useFetchSession } from "../../hooks/useFetch";
 const eye = <FontAwesomeIcon icon={faEye} />;
 const ChangePassword = () => {
     const axios = useAxiosPrivate();
     const navigate = useNavigate();
-    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    const { loading: loading2, data: data2, error } = useFetchSession("/session");
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
@@ -89,7 +89,7 @@ const ChangePassword = () => {
                     // console.log(res);
                     // console.log(res.data);
                     alert("Change password successfully!!!");
-                    navigate(`/profileManager/${data2?.user._id}`);
+                    navigate(`/profile/${data2?.user._id}`);
                 })
                 .catch((err) => {
                     //console.error(err.response.data.message);
@@ -134,6 +134,20 @@ const ChangePassword = () => {
             <NavBar />
             <div>
                 <form onSubmit={handleSubmit}>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
+                    {/* Same as */}
+                    <ToastContainer />
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Change Password</p>

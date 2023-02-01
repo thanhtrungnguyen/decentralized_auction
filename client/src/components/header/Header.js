@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 
 import { LogoutButton } from "../buttons/LogoutButton";
 import useAuth from "../../hooks/useAuth";
-import { useFetchData } from "../../hooks/useFetch";
+import { useFetchSession } from "../../hooks/useFetch";
 const Header = () => {
     //const [type, setType] = useState("CONTACT");
     const [id, setId] = useState();
 
     const navigate = useNavigate();
-    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    const { loading: loading2, data: data2, error } = useFetchSession("/session");
     return (
         <>
             <div className={styles.header}>

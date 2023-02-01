@@ -18,7 +18,7 @@ const Payment = ({ auction, amount }) => {
     const [transactionStatus, setTransactionStatus] = useState();
     const [bidAmount, setBidAmount] = useState(0);
     const paymentAmount = auction.depositAmount != null && amount != "0" ? new Decimal(amount).minus(auction.depositAmount).toString() : "0";
-    console.log(amount);
+    console.log(paymentAmount);
     const {
         runContractFunction: payment,
         data,
@@ -32,6 +32,7 @@ const Payment = ({ auction, amount }) => {
         msgValue: parseWei(paymentAmount),
         params: { auctionId: auction.auctionId },
     });
+
     if (error) console.log(error);
     console.log();
     async function updateData() {}
@@ -83,12 +84,8 @@ const Payment = ({ auction, amount }) => {
                         {/* <form> */}
                         <p className={styles.title}>Payment:</p>
                         <p className={styles.txtT}>Deposit Paid: {auction.depositAmount} ETH</p>
-                        <p className={styles.txtT}>Your Bid: {bidAmount} ETH</p>
-                        <p className={styles.txtT}>
-                            Total amount you must to pay:
-                            {amount}
-                            ETH
-                        </p>
+                        <p className={styles.txtT}>Your Bid: {amount} ETH</p>
+                        <p className={styles.txtT}>Total amount you must to pay: {paymentAmount}ETH</p>
                         {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
                         {/* <label className={styles.mess}>message</label> */}
                         <button

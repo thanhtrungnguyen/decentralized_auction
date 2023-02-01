@@ -21,7 +21,7 @@ const ViewNews = () => {
     const DOMPurify = createDOMPurify();
 
     const { id } = useParams();
-    const baseURL = `/news/getById/${id}`;
+    const baseURL = `/news/${id}`;
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -34,14 +34,9 @@ const ViewNews = () => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
-                setTitle(resp.data.Name);
-                setContent(resp.data.Content__c);
-                setData(resp.data);
-                // console.log(resp.data);
-                // console.log("axios get");
-                // onCitySelect(sCity);
-                // onDistrictSelect(sDistrict);
-                // onWardSelect(sWard);
+                setTitle(resp.data.news.title);
+                setContent(resp.data.news.content);
+                setData(resp.data.news);
             });
 
             setLoading(false);
@@ -57,11 +52,19 @@ const ViewNews = () => {
             <Header />
             <NavBar />
             <div className={styles.box}>
-                <h1>{data.Name}</h1>
+                <h1>{data.title}</h1>
                 <br />
                 <br />
                 <br />
-                {<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.Content__c) }} />}
+                {<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.content) }} />}
+                <button
+                    className={styles.btnCancel}
+                    onClick={() => {
+                        navigate("/news");
+                    }}
+                >
+                    Back
+                </button>
             </div>
 
             <Footer />

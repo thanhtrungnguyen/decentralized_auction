@@ -1,12 +1,12 @@
 import styles from "../../styleCss/stylesComponents/sidebar_seller.module.css";
 import { BiBookHeart, BiDizzy, BiDonateHeart, BiNews } from "react-icons/bi";
 
-import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useFetchData } from "../../hooks/useFetch";
+import { Link, useNavigate } from "react-router-dom";
+import { useFetchSession } from "../../hooks/useFetch";
 
 const SidebarSeller = () => {
     const navigate = useNavigate();
-    const { loading: loading2, data: data2, error } = useFetchData("/session");
+    const { loading: loading2, data: data2, error } = useFetchSession("/session");
     return (
         <>
             <div className={styles.container}>

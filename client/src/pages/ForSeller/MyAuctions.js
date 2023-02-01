@@ -66,7 +66,10 @@ const MyAuctions = () => {
         fetchData();
     }, [baseURLAuction]);
     const handleSubmit = (event) => {
-        propertyName2 === "" ? setAuctionName(null) : setAuctionName(propertyName2);
+        if (propertyName2.trim() === "") {
+            setAuctionName2("");
+            setAuctionName(null);
+        } else setAuctionName(propertyName2.trim());
         setCategory(category2);
         setPage(1);
         event.preventDefault();
