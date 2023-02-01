@@ -30,6 +30,7 @@ const EditNew = () => {
     const [content, setContent] = useState(null);
     const [title, setTitle] = useState(null);
     const [avatar, setAvatar] = useState(null);
+    const [av, setAv] = useState(null);
     const [disable, setDisable] = useState(false);
 
     useEffect(() => {
@@ -39,7 +40,7 @@ const EditNew = () => {
                 setTitle(resp.data.news.title);
                 setContent(resp.data.news.content);
                 setData(resp.data.news);
-                //setAvatar(resp.data.news.avatar);
+                setAvatar(resp.data.news.avatar);
             });
 
             setLoading(false);
@@ -69,6 +70,7 @@ const EditNew = () => {
         }
         if (id === "avatar") {
             setAvatar(e.target.files[0]);
+            setAv(e.target.files[0]);
         }
     };
 
@@ -85,8 +87,12 @@ const EditNew = () => {
         });
     };
     const handleSubmit = (event) => {
-        var idxDot = avatar.name.lastIndexOf(".") + 1;
-        var extFile = avatar.name.substring(idxDot, avatar.length).toLowerCase();
+        var extFile = "jpg";
+        if (av !== null) {
+            var idxDot = avatar.name.lastIndexOf(".") + 1;
+            extFile = avatar.name.substring(idxDot, avatar.length).toLowerCase();
+        }
+
         if (!title.trim()) {
             notify("🦄 title is empty");
         } else if (!content.trim()) {
@@ -99,9 +105,9 @@ const EditNew = () => {
             const formData = new FormData();
 
             formData.append("title", title.trim());
-            formData.append("content", content.trim());
-            if (avatar !== null) {
-                formData.append("avatar", avatar);
+            formData.append("content", content);
+            if (av !== null) {
+                formData.append("avatar", av);
             }
 
             axios
@@ -124,7 +130,7 @@ const EditNew = () => {
                 .catch((err) => {
                     setDisable(false);
 
-                    alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
+                    notify(`🦄 Failed: ${err.response.data.message} , ${err}`);
                 });
         }
         event.preventDefault();
@@ -165,9 +171,9 @@ const EditNew = () => {
                         <br />
                         <label className={styles.label}>Avatar</label>
                         <input className={styles.file} id="avatar" type="file" accept="image/*" onChange={(e) => handleInputChange(e)} />
-                        {avatar != null && <img src={URL.createObjectURL(avatar)} className={styles.image} alt="Thumb" />}
+                        {avatar && <img src={av ? URL.createObjectURL(avatar) : avatar} className={styles.image} alt="Thumb" />}
 
-                        {avatar == null && <img src={`${data.avatar}`} className={styles.image} alt="Thumb" />}
+                        {/* {avatar == null && <img src={`${data.avatar}`} className={styles.image} alt="Thumb" />} */}
 
                         <br />
                         <br />
