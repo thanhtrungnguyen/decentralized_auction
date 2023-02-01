@@ -98,7 +98,7 @@ const EditProfile = () => {
                     setDisable(false);
 
                     console.error(err.response.data.message);
-                    notify(`🦄 Change password Failed: ${err.response.data.message} , ${err}`);
+                    notify(`🦄 Change password Failed: ${err.response.data.message}`);
                 });
         }
         event.preventDefault();

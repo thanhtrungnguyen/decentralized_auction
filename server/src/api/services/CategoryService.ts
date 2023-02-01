@@ -4,7 +4,7 @@ import logger from '../utils/logger';
 
 const getAllCategories = async () => {
   try {
-    return await Category.find({});
+    return await Category.find({ status: true });
   } catch (error) {
     logger.error(error);
   }
