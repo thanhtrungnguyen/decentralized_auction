@@ -1,6 +1,6 @@
 .container {
     width: 280px;
-    height: 200px;
+    height: 700px;
     float: right;
     border: 1px solid black;
     margin-top: 50px;
@@ -9,6 +9,7 @@
     background-color: white;
     border-radius: 5px;
     background-color: aliceblue;
+    overflow: scroll;
 }
 .container2 {
     width: 800px;
@@ -67,6 +68,7 @@
     line-height: 30px;
     font-size: 18px;
     font-weight: 500;
+    margin-right: 20px;
 }
 .lb {
     color: red;
