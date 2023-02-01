@@ -200,7 +200,13 @@ const AuctionsListForManager = () => {
                             <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Approved">
                                 Approved
                             </button>
-                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Upcoming">
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Rejected">
+                                Rejected
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="RegistrationTime">
+                                Registration
+                            </button>
+                            <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="UpcomingForBid">
                                 Upcoming
                             </button>
                             <button className={styles.btn} onClick={(e) => handleChangeStatus(e)} value="Bidding">
@@ -259,6 +265,7 @@ const AuctionsListForManager = () => {
                                 className={styles.Pagination}
                                 count={Math.ceil(listAuction.count / 8)}
                                 page={page}
+                                hidden={listAuction.count === 0 ? true : false}
                                 onChange={handleChange}
                             />
                         </div>
