@@ -18,6 +18,7 @@
     "@types/nodemailer": "^6.4.7",
     "aws-sdk": "^2.1290.0",
     "bcrypt": "^5.1.0",
+    "brace-expansion": "^2.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
