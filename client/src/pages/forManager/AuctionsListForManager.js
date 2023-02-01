@@ -235,18 +235,17 @@ const AuctionsListForManager = () => {
                             ></Select>
                             <form onSubmit={handleSubmit}>
                                 <input
-                                    className={styles.ip}
+                                    className={styles.ip4}
                                     type="text"
                                     placeholder="Enter Name"
                                     id="auctionName"
                                     value={auctionName2}
                                     onChange={(e) => handleInputChange(e)}
                                 ></input>
-                                <button className={styles.btn} type="submit">
+                                <button className={styles.btn4} type="submit">
                                     Search
                                 </button>
                             </form>
-
                         </div>
                         <table className={styles.table}>
                             <tr>

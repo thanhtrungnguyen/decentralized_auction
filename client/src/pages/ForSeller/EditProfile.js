@@ -209,7 +209,7 @@ const EditProfile = () => {
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
-                                    navigate("/auctionListForManager");
+                                    navigate("/myProperty");
                                 }}
                                 disabled={disable}
                             >

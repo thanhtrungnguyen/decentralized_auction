@@ -95,7 +95,19 @@ th {
 .btn:hover {
     background-color: aqua;
 }
+.btn4 {
+    width: 80px;
+    height: 40px;
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-left: 10px;
+    border: 1px solid darkgrey;
+}
 
+.btn4:hover {
+    background-color: aqua;
+}
 .btn2 {
     height: 40px;
     margin-top: 15px;
@@ -117,7 +129,14 @@ th {
     height: 40px;
     margin-left: 80px;
 }
-
+.ip4 {
+    margin-top: 13px;
+    border-radius: 15px;
+    border: 1px solid darkgrey;
+    width: 200px;
+    height: 40px;
+    margin-left: 20px;
+}
 .ip2 {
     margin-top: 13px;
     border-radius: 15px;
