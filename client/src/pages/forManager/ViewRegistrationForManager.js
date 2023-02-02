@@ -21,7 +21,7 @@ const ViewRegistrationForManager = () => {
     const { id } = useParams();
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const baseURL = `http://localhost:8800/api/auction/getAllBidding/${id}`;
+    const baseURL = `/auctionRegistration/${id}`;
     const [role, setRole] = useState();
 
     const [loading, setLoading] = useState(true);
@@ -91,6 +91,7 @@ const ViewRegistrationForManager = () => {
                         </div>
                         <p className={styles.lb}>Registration Time End in 1d 4h 32m 32s</p>
                         <p className={styles.lb}>Total Registered Bidders: 10</p>
+
                         <table className={styles.table}>
                             <tr>
                                 <th className={styles.th}>Username</th>
@@ -98,31 +99,16 @@ const ViewRegistrationForManager = () => {
                                 <th className={styles.th}>Registration Hash</th>
                                 <th className={styles.th}>Registered at</th>
                             </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>dd/MM/yyyy - HH:mm:ss</td>
-                            </tr>
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>dd/MM/yyyy - HH:mm:ss</td>
-                            </tr>{" "}
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>dd/MM/yyyy - HH:mm:ss</td>
-                            </tr>{" "}
-                            <tr>
-                                <td>Classic Bathrobe</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>0xdfdf...fdfd</td>
-                                <td>dd/MM/yyyy - HH:mm:ss</td>
-                            </tr>
+                            {data.auctionRegistration?.map((auction) => (
+                                <tr>
+                                    <td>{auction.user.username}</td>
+                                    <td>{auction.walletAddress}</td>
+                                    <td>0xdfdf...fdfd</td>
+                                    <td>{new Date(auction.createdAt).toLocaleString()}</td>
+                                </tr>
+                            ))}
                         </table>
+
                         <hr />
                         <div>
                             <Pagination
