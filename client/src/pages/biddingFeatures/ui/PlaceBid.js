@@ -125,7 +125,7 @@ function PlaceBid({ auction, property }) {
             updateUI();
             // updateCurrentAuction();
         }
-    }, [isWeb3Enabled, account, bidInformationData?.length]);
+    }, [isWeb3Enabled, account, bidInformationData?.length, highestBid]);
 
     //============================================================================================
     const placeBidHandleSuccess = async (tx) => {
