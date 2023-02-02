@@ -11,7 +11,8 @@ import {
   getListAuctionsHandler,
   getListAuctionsByBidderHandler,
   getListAuctionsBySellerHandler,
-  rejectAuctionHandler
+  rejectAuctionHandler,
+  getListMessageRejectedHandler
 } from '../controllers/AuctionController';
 import { requireRole } from '../middleware/requireRole';
 import { validateResource } from '../middleware/validateResource';
@@ -30,5 +31,6 @@ router.patch('/update/:auctionId', requireRole(roles.MANAGER), validateResource(
 router.patch('/approve/:auctionId', requireRole(roles.MANAGER), validateResource(AuctionSchema.approve), approveAuctionHandler);
 router.patch('/reject/:auctionId', requireRole(roles.MANAGER), validateResource(AuctionSchema.reject), rejectAuctionHandler);
 router.delete('/delete/:auctionId', deleteAuctionHandler);
+router.get('/rejectmessage/:propertyId', getListMessageRejectedHandler);
 //validateResource(AuctionSchema.create),
 export default router;

@@ -7,7 +7,8 @@ import {
   deleteAuction,
   getListAuctions,
   getListAuctionsForBidder,
-  getListAuctionsForSeller
+  getListAuctionsForSeller,
+  getListRejectMessage
 } from '../services/AuctionService';
 import { getProperty, updateProperty, updatePropertyStatus } from '../services/PropertyService';
 import { createAuctionOnContract } from '../utils/runContractFunction';
@@ -200,6 +201,17 @@ export const deleteAuctionHandler = async (req: Request, res: Response, next: Ne
   return await deleteAuction({ _id: auctionId })
     .then((auction) => {
       res.status(201).json({ auction, message: 'Deleted auction' });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+export const getListMessageRejectedHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const propertyId = req.params.propertyId;
+
+  return await getListRejectMessage({ property: propertyId, status: 'Rejected' })
+    .then((auction) => {
+      res.status(201).json({ auction });
     })
     .catch((error) => {
       res.status(500).json({ error });
