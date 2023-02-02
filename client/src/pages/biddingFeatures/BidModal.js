@@ -22,7 +22,7 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             setHasMetamask(true);
         }
     }, [isWeb3Enabled, account]);
-    const { loading, data, error } = useFetchData(`/auctionRegistration/user/${auction?.auctionId}`);
+
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
         if (!auction) return "AuctionNotFound";
@@ -36,52 +36,51 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
     };
 
     const renderCurrentState = () => {
-        try {
-            if (!data)
+        if (auctionRegistration == null)
+            return (
+                <div className={styles.notification}>
+                    <Loader />
+                </div>
+            );
+        if (auctionRegistration != null && auctionRegistration?.auctionRegistration?.length !== 0) {
+            if (auctionRegistration?.length !== 0 && auctionRegistration[0]?.walletAddress !== account) {
                 return (
                     <div className={styles.notification}>
-                        <Loader />
-                    </div>
-                );
-            if (data?.auctionRegistration?.length !== 0 && data?.auctionRegistration[0]?.walletAddress !== account) {
-                return (
-                    <div className={styles.notification}>
-                        <p>You have used account {data?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
+                        <p>You have used account {auctionRegistration[0]?.walletAddress} for register the auction.</p>
                         <p>Please switch to that wallet account to continue.</p>
                     </div>
                 );
             }
-            switch (auctionState()) {
-                case "Loading":
-                    return <Loading />;
-                case "NotYetRegistrationTime":
-                    return <NotYetRegistrationTime auction={auction} property={property} />;
-                case "RegistrationTime":
-                    // return <AuctionRegistration auction={auction} property={property} />;
-                    return <AuctionRegistration auction={auction} property={property} />;
-                case "WaitingAuctionTime":
-                    return <WaitingForAuctionTime auction={auction} property={property} />;
-                case "AuctionTime":
-                    return <PlaceBid auction={auction} property={property} />;
-                case "PaymentTime":
-                    // return <h2>PaymentTime</h2>;
-                    return <AuctionResult auction={auction} property={property} />;
-                case "AuctionEnded":
-                    return <h2>Auction Ended</h2>;
-                case "NotRegistered":
-                    return (
-                        <>
-                            <h1>Bidders only</h1>
-                            <p>Registration Time has ended</p>
-                        </>
-                    );
-                case "AuctionNotFound":
-                    return "Auction Not Found";
-                default:
-                    return "???????";
-            }
-        } catch (error) {
-            console.log(error);
+        }
+
+        switch (auctionState()) {
+            case "Loading":
+                return <Loading />;
+            case "NotYetRegistrationTime":
+                return <NotYetRegistrationTime auction={auction} property={property} />;
+            case "RegistrationTime":
+                // return <AuctionRegistration auction={auction} property={property} />;
+                return <AuctionRegistration auction={auction} property={property} />;
+            case "WaitingAuctionTime":
+                return <WaitingForAuctionTime auction={auction} property={property} />;
+            case "AuctionTime":
+                return <PlaceBid auction={auction} property={property} />;
+            case "PaymentTime":
+                // return <h2>PaymentTime</h2>;
+                return <AuctionResult auction={auction} property={property} />;
+            case "AuctionEnded":
+                return <h2>Auction Ended</h2>;
+            case "NotRegistered":
+                return (
+                    <>
+                        <h1>Bidders only</h1>
+                        <p>Registration Time has ended</p>
+                    </>
+                );
+            case "AuctionNotFound":
+                return "Auction Not Found";
+            default:
+                return "???????";
         }
     };
     // console.log("checkUserRegistered()", checkUserRegistered());
@@ -90,32 +89,28 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             <div className={styles.root}></div>
             <div className={styles.container}>
                 <HeaderBid setOpenModal={setOpenModal} />
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <div>
-                        {hasMetamask ? (
-                            isWeb3Enabled ? (
-                                SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
-                                    <div>{renderCurrentState()}</div>
-                                ) : (
-                                    <div className={styles.notification}>
-                                        <h1>Unsupported Chain ID</h1>
-                                        <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
-                                    </div>
-                                )
+                <div>
+                    {hasMetamask ? (
+                        isWeb3Enabled ? (
+                            SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
+                                <div>{renderCurrentState()}</div>
                             ) : (
                                 <div className={styles.notification}>
-                                    <p>Please connect to a Wallet</p>
+                                    <h1>Unsupported Chain ID</h1>
+                                    <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
                                 </div>
                             )
                         ) : (
                             <div className={styles.notification}>
-                                <p>Please install Metamask</p>
+                                <p>Please connect to a Wallet</p>
                             </div>
-                        )}
-                    </div>
-                )}
+                        )
+                    ) : (
+                        <div className={styles.notification}>
+                            <p>Please install Metamask</p>
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );

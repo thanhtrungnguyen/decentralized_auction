@@ -8,16 +8,18 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
     const [isOpenModal, setOpenModal] = useState(() => {
         return false;
     });
-    const [role, setRole] = useState();
     const { loading: auctionLoading, data: auctionData, error: auctionError } = useFetchData(`/contractInteraction/createdAuction/${auctionId}`);
-    const { loading: registrationLoading, data: registrationData, error: registrationError } = useFetchData(`/auctionRegistration/${auctionId}`);
+
+    const { loading: registrationLoading, data: registrationData, error: registrationError } = useFetchData(`/auctionRegistration/user/${auctionId}`);
+
+    console.log(auctionData, registrationData);
     return (
         <>
             <div>
                 {/* {(() => {
                     if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                         return ( */}
-                {auctionLoading || registrationLoading ? (
+                {auctionLoading || registrationLoading || auctionData == null || registrationData == null ? (
                     <Loader />
                 ) : (
                     <button
