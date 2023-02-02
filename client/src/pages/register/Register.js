@@ -287,7 +287,7 @@ const Register = () => {
                             <p className={styles.textFor}>For organization</p>
                         </Link>
                     </div>
-                    <p className={styles.textBlue}>Personal Infomation</p>
+                    <p className={styles.textBlue}>Personal Information</p>
                     <p className={styles.textRed}>Basic information</p>
                     <input
                         className={styles.inputT}
