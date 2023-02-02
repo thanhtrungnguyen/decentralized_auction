@@ -168,6 +168,13 @@ const getAuction = async (filter: FilterQuery<IAuctionDocument>, options: QueryO
     logger.error(error);
   }
 };
+const getListRejectMessage = async (filter: FilterQuery<IAuctionDocument>, options: QueryOptions = { lean: true }) => {
+  try {
+    return await Auction.find(filter, {}, options).sort({ created_at: 1 });
+  } catch (error) {
+    logger.error(error);
+  }
+};
 
 const createAuction = async (auction: Object) => {
   try {
@@ -201,5 +208,6 @@ export {
   deleteAuction,
   getListAuctions,
   getListAuctionsForBidder,
-  getListAuctionsForSeller
+  getListAuctionsForSeller,
+  getListRejectMessage
 };

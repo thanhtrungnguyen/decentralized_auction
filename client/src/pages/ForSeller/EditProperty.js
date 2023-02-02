@@ -172,7 +172,7 @@ const EditProperty = () => {
             notify("🦄 Image 2, please select a file less than 2mb");
         } else if (fI3 > 2048) {
             notify("🦄 Image 3, please select a file less than 2mb");
-        } else if (fV > 4096) {
+        } else if (fV > 10240) {
             notify("🦄 Video, please select a file less than 4mb");
         } else if (startBid * 0.2 < deposit) {
             notify("🦄 Deposit must less than 20% start bid");
@@ -196,7 +196,7 @@ const EditProperty = () => {
             formData.append("depositAmount", deposit.trim());
             formData.append("priceStep", priceStep.trim());
             formData.append("placeViewProperty", placeViewProperty.trim());
-
+            formData.append("status", "Modified");
             // formData.append("startBid", startBid);
             // formData.append("biddingPreiod", biddingPreiod);
             axios

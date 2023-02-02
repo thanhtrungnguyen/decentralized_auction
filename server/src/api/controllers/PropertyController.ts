@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { boolean } from 'joi';
 import { getCategory } from '../services/CategoryService';
 import { getAllProperties, getProperty, createProperty, updateProperty, deleteProperty, getPropertiesByUser } from '../services/PropertyService';
 import { getUser } from '../services/UserService';
@@ -64,6 +65,30 @@ export const updatePropertyHandler = async (req: Request, res: Response, next: N
 
   if (!property) {
     return res.status(404).json({ message: "Property isn't found" });
+  }
+  var checkUpdate = false;
+  if (
+    update.category == property.category._id &&
+    update.name == property.name &&
+    update.description == property.description &&
+    update.depositAmount == property.depositAmount &&
+    update.priceStep == property.priceStep &&
+    update.startBid == property.startBid &&
+    update.placeViewProperty == property.placeViewProperty
+  ) {
+    var dateST = new Date(update.startViewPropertyTime);
+    var dateCheckST = new Date(property.startViewPropertyTime);
+    var dateEN = new Date(update.endViewPropertyTime);
+    var dateCheckEN = new Date(property.endViewPropertyTime);
+    if (dateST.getTime() === dateCheckST.getTime() && dateEN.getTime() === dateCheckEN.getTime()) {
+      const file1 = files['propertyImage1'];
+      const file2 = files['propertyImage2'];
+      const file3 = files['propertyImage3'];
+      const file4 = files['propertyVideo'];
+      if (file1 == undefined && file2 == undefined && file3 == undefined && file4 == undefined) {
+        return res.status(409).json({ message: 'Property remains unchanged, you need to modify it' });
+      }
+    }
   }
   return await updateProperty({ _id: propertyId }, update, { new: true }, files)
     .then((property) => {
