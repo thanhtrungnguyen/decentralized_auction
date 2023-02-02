@@ -39,6 +39,7 @@ const EditProperty = () => {
     const [loading, setLoading] = useState(true);
     const [property, setProperty] = useState([]);
     const [status, setStatus] = useState(null);
+    const [listRejected, setListRejected] = useState([]);
     const { id } = useParams();
 
     const navigate = useNavigate();
@@ -46,6 +47,8 @@ const EditProperty = () => {
     const [role, setRole] = useState();
     const [error, setError] = useState(false);
     const [disable, setDisable] = useState(false);
+    const baseURLListRejected = `/auction/rejectmessage/${id}`;
+    const baseURLProperty = `/property/${id}`;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,6 +56,10 @@ const EditProperty = () => {
             await axios.get(baseURLCategory).then((resp) => {
                 console.log(resp.data);
                 setlistCategory(resp.data);
+            });
+            await axios.get(baseURLListRejected).then((resp) => {
+                console.log(resp.data);
+                setListRejected(resp.data.auction);
             });
             await axios.get(baseURLProperty).then((resp) => {
                 console.log(resp.data);
@@ -73,8 +80,6 @@ const EditProperty = () => {
         };
         fetchData();
     }, []);
-
-    const baseURLProperty = `/property/${id}`;
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -249,7 +254,7 @@ const EditProperty = () => {
                     />
                     {/* Same as */}
                     <ToastContainer />
-                    <Comments propertyId={id} />
+                    <Comments listRejected={listRejected} />
                     <div className={styles.info}>
                         <div>
                             <p className={styles.title}>Basic Information</p>

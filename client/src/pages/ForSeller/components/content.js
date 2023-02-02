@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-const Content = ({ auctionId, propertyId }) => {
+const Content = ({ content }) => {
     const axios = useAxiosPrivate();
     const [expanded, setExpanded] = useState(true);
 
@@ -47,17 +47,7 @@ const Content = ({ auctionId, propertyId }) => {
                     <p className={styles.txt2}>Content</p>
 
                     <div className={styles.content2}>
-                        <p className={styles.txt3}>
-                            Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
-                            braces, the styling in the example above is written inside two sets of curly braces Content Note: In JSX, JavaScript
-                            expressions are written inside curly braces, and since JavaScript objects also use curly braces, the styling in the
-                            example above is written inside two sets of curly braces Content Note: In JSX, JavaScript expressions are written inside
-                            curly braces, and since JavaScript objects also use curly braces, the styling in the example above is written inside two
-                            sets of curly braces Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript
-                            objects also use curly braces, the styling in the example above is written inside two sets of curly braces Content Note:
-                            In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly braces, the
-                            styling in the example above is written inside two sets of curly braces
-                        </p>
+                        <p className={styles.txt3}>{content}</p>
                     </div>
 
                     <input type="button" value="Cancel" className={styles.btnCancel} onClick={handCancel}></input>

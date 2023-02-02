@@ -170,7 +170,7 @@ const getAuction = async (filter: FilterQuery<IAuctionDocument>, options: QueryO
 };
 const getListRejectMessage = async (filter: FilterQuery<IAuctionDocument>, options: QueryOptions = { lean: true }) => {
   try {
-    return await Auction.find(filter, {}, options).sort({ created_at: 1 });
+    return await Auction.find(filter, {}, options).sort({ createdAt: -1 });
   } catch (error) {
     logger.error(error);
   }
