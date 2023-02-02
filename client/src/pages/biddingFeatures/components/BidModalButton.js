@@ -12,14 +12,20 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
 
     const { loading: registrationLoading, data: registrationData, error: registrationError } = useFetchData(`/auctionRegistration/user/${auctionId}`);
 
-    console.log(auctionData, registrationData);
+    const { loading: propertyLoading, data: propertyData, error: propertyError } = useFetchData(`/property/${propertyId}`);
+    // console.log(auctionData, propertyData);
     return (
         <>
             <div>
                 {/* {(() => {
                     if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
                         return ( */}
-                {auctionLoading || registrationLoading || auctionData == null || registrationData == null ? (
+                {auctionLoading ||
+                registrationLoading ||
+                propertyLoading ||
+                auctionData == null ||
+                registrationData == null ||
+                propertyData == null ? (
                     <Loader />
                 ) : (
                     <button
@@ -43,8 +49,7 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
                         setOpenModal={setOpenModal}
                         auction={auctionData?.createdAuction}
                         auctionRegistration={registrationData?.auctionRegistration}
-                        propertyId={propertyId}
-                        propertyObject={propertyObject}
+                        property={propertyData?.property}
                     />
                 )}
             </div>

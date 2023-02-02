@@ -46,11 +46,11 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
                     <Loader />
                 </div>
             );
-        if (registrationData?.auctionRegistration != null && auctionRegistration?.auctionRegistration?.length !== 0) {
-            if (auctionRegistration?.length !== 0 && auctionRegistration[0]?.walletAddress !== account) {
+        if (auctionRegistration?.auctionRegistration?.length !== 0) {
+            if (registrationData?.auctionRegistration[0]?.walletAddress !== account) {
                 return (
                     <div className={styles.notification}>
-                        <p>You have used account {auctionRegistration[0]?.walletAddress} for register the auction.</p>
+                        <p>You have used account {registrationData?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
                         <p>Please switch to that wallet account to continue.</p>
                     </div>
                 );
@@ -73,14 +73,12 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             case "NotYetRegistrationTime":
                 return <NotYetRegistrationTime auction={auction} property={property} />;
             case "RegistrationTime":
-                // return <AuctionRegistration auction={auction} property={property} />;
                 return <AuctionRegistration auction={auction} property={property} />;
             case "WaitingAuctionTime":
                 return <WaitingForAuctionTime auction={auction} property={property} />;
             case "AuctionTime":
                 return <PlaceBid auction={auction} property={property} />;
             case "PaymentTime":
-                // return <h2>PaymentTime</h2>;
                 return <AuctionResult auction={auction} property={property} />;
             case "AuctionEnded":
                 return <h2>Auction Ended</h2>;
