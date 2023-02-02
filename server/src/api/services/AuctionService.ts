@@ -99,15 +99,15 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any, so
 
       .then((result) => {
         arr = result.filter((item) => item.property !== null && item.property.category !== null);
-        arr = arr
-          // .sort(function(a, b) {
-          //   if (sort === -1) {
-          //     return a.property.startBid - b.property.startBid;
-          //   } else if (sort === 1) {
-          //     return b.property.startBid - a.property.startBid;
-          //   }
-          // })
-          .slice(start, end);
+        if (sort === 1 || sort === -1) {
+          arr = arr
+            .sort((a, b) => {
+              return sort === 1 ? a.property.startBid - b.property.startBid : b.property.startBid - a.property.startBid;
+            })
+            .slice(start, end);
+        } else {
+          arr = arr.slice(start, end);
+        }
       });
     await Auction.find({ name: { $regex: search, $options: 'i' }, status: { $ne: 'Request' } })
       .where('status')

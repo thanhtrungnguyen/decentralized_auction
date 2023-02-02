@@ -269,6 +269,9 @@ const AuctionList = () => {
                                 handleInput(e);
                             }}
                         /> */}
+                        <button className={styles.btn} onClick={handleApplyFilter}>
+                            Apply
+                        </button>
                         <br />
                     </div>
                     <div className={styles.category}>
@@ -303,11 +306,7 @@ const AuctionList = () => {
                         <br />
                         <br /> */}
                     </div>
-                    <div className={styles.category}>
-                        <button className={styles.btn} onClick={handleApplyFilter}>
-                            Apply
-                        </button>
-                    </div>
+
                 </div>
                 <div className={styles.content}>
                     <div className={styles.info}>
