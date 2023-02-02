@@ -226,7 +226,7 @@ const EditProperty = () => {
                 .catch((err) => {
                     setDisable(false);
 
-                    alert(`🦄 Failed: ${err.response.data.message}, ${err}`);
+                    notify(`🦄 Failed: ${err.response.data.message}`);
                 });
         }
         event.preventDefault();

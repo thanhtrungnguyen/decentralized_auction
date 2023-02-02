@@ -9,11 +9,11 @@ export const IndividualSchema = {
     phone: Joi.string()
       .trim()
       .required()
-      .pattern(/[0]\d{9}/),
+      .pattern(/^[0]\d{9}$/),
     email: Joi.string()
       .trim()
       .required()
-      .pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/),
+      .pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/),
     dateOfBirth: Joi.date().required(),
     gender: Joi.string().trim().required(),
     city: Joi.string().trim().required(),
