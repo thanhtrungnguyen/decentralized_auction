@@ -40,7 +40,6 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
         error: registrationError,
     } = useFetchData(`/auctionRegistration/user/${auction.auctionId}`);
     const renderCurrentState = () => {
-        console.log(registrationData);
         if (registrationData == null || registrationLoading)
             return (
                 <div className={styles.notification}>

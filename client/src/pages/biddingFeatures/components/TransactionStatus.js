@@ -3,17 +3,18 @@ import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 
 function TransactionStatus({ transactionStatus: tx }) {
     const prefix = "https://goerli.etherscan.io/tx/";
-    if (tx) {
-        console.log(tx);
-    }
+    // if (tx) {
+    //     console.log(tx);
+    // }
     const hashString = tx?.transactionHash
         ? `Tx: ${tx?.transactionHash?.slice(0, 6)}...${tx?.transactionHash?.slice(tx?.transactionHash?.length - 4)}`
         : tx?.hash
         ? `Tx: ${tx?.hash?.slice(0, 6)}...${tx?.hash?.slice(tx?.hash?.length - 4)}`
         : ``;
-    const link = `${prefix}${tx?.transactionHash}`;
+    const link = `${prefix}${tx?.transactionHash ? tx?.transactionHash : tx?.hash ? tx?.hash : ""}`;
 
     const transactionStatusType = () => {
+        if (tx === "null") return "null";
         if (tx?.code === 4001) {
             return "Reject";
         }
@@ -39,6 +40,8 @@ function TransactionStatus({ transactionStatus: tx }) {
             }
             case "Success":
                 return <p>Transaction Successfully!</p>;
+            case "null":
+                return <></>;
             default:
                 return <div></div>;
         }
