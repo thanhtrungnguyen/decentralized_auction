@@ -103,8 +103,15 @@ const AuctionResult = ({ auction, property }) => {
                     <BiddingProperty property={property} />
                     <p className={styles.txtM}>Highest bid:</p>
                     <p className={styles.txtNormal}>{getHighestBid(bidInformation)} ETH</p>
-                    <p className={styles.txtM}>Your bid:</p>
-                    <p className={styles.txtNormal}>{getBidAmountOfBidder(bidInformation, account)} ETH</p>
+                    {getBidAmountOfBidder(bidInformation, account) !== -1 ? (
+                        <>
+                            <p className={styles.txtM}>Your bid:</p>
+                            <p className={styles.txtNormal}>{getBidAmountOfBidder(bidInformation, account)} ETH</p>
+                        </>
+                    ) : (
+                        <></>
+                    )}
+
                     <p className={styles.txtM}>Your place:</p>
                     <p className={styles.txtNormal}>{renderBidderPlace()}</p>
                     {(getBidderRank(bidInformation, account) === 1 || getBidderRank(bidInformation, account) === 2) && (

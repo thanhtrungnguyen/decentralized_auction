@@ -22,40 +22,51 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             setHasMetamask(true);
         }
     }, [isWeb3Enabled, account]);
-    const { loading, data, error } = useFetchData(`/auctionRegistration/user/${auction.auctionId}`);
+
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
-        // const registeredWallet = checkUserRegistered();
-        // console.log(checkUserRegistered());
-        // debugger;
         if (!auction) return "AuctionNotFound";
         if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
-        // if (registeredWallet != null && registeredWallet != account) {
-        //     return "RegisteredWithOtherWallet";
-        // }
         if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
-        if (auction.endRegistrationTime < currentTimestamp) {
-            // if (registeredWallet == account) {
-            if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
-            if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
-            if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
-            if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
-            // }
-            return "NotRegistered";
-        }
+        if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
+        if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
+        if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
+        if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
         return null;
     };
-
+    const {
+        loading: registrationLoading,
+        data: registrationData,
+        error: registrationError,
+    } = useFetchData(`/auctionRegistration/user/${auction.auctionId}`);
     const renderCurrentState = () => {
-        console.log(data?.auctionRegistration[0]);
-        if (data?.auctionRegistration[0]?.walletAddress !== account) {
+        if (registrationData == null || registrationLoading)
             return (
                 <div className={styles.notification}>
-                    <p>You have used account {data?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
-                    <p>Please switch to that wallet account to continue.</p>
+                    <Loader />
                 </div>
             );
+        if (registrationData?.auctionRegistration != null && auctionRegistration?.auctionRegistration?.length !== 0) {
+            if (auctionRegistration?.length !== 0 && auctionRegistration[0]?.walletAddress !== account) {
+                return (
+                    <div className={styles.notification}>
+                        <p>You have used account {auctionRegistration[0]?.walletAddress} for register the auction.</p>
+                        <p>Please switch to that wallet account to continue.</p>
+                    </div>
+                );
+            }
         }
+        // if (auctionRegistration != null && auctionRegistration?.auctionRegistration?.length !== 0) {
+        //     if (auctionRegistration?.length !== 0 && auctionRegistration[0]?.walletAddress !== account) {
+        //         return (
+        //             <div className={styles.notification}>
+        //                 <p>You have used account {auctionRegistration[0]?.walletAddress} for register the auction.</p>
+        //                 <p>Please switch to that wallet account to continue.</p>
+        //             </div>
+        //         );
+        //     }
+        // }
+
         switch (auctionState()) {
             case "Loading":
                 return <Loading />;
@@ -92,32 +103,28 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             <div className={styles.root}></div>
             <div className={styles.container}>
                 <HeaderBid setOpenModal={setOpenModal} />
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <div>
-                        {hasMetamask ? (
-                            isWeb3Enabled ? (
-                                SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
-                                    <div>{renderCurrentState()}</div>
-                                ) : (
-                                    <div className={styles.notification}>
-                                        <h1>Unsupported Chain ID</h1>
-                                        <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
-                                    </div>
-                                )
+                <div>
+                    {hasMetamask ? (
+                        isWeb3Enabled ? (
+                            SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
+                                <div>{renderCurrentState()}</div>
                             ) : (
                                 <div className={styles.notification}>
-                                    <p>Please connect to a Wallet</p>
+                                    <h1>Unsupported Chain ID</h1>
+                                    <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
                                 </div>
                             )
                         ) : (
                             <div className={styles.notification}>
-                                <p>Please install Metamask</p>
+                                <p>Please connect to a Wallet</p>
                             </div>
-                        )}
-                    </div>
-                )}
+                        )
+                    ) : (
+                        <div className={styles.notification}>
+                            <p>Please install Metamask</p>
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );

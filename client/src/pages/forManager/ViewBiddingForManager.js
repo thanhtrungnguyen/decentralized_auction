@@ -148,7 +148,7 @@ const ViewBiddingForManager = () => {
                                 {data.map((bid) => (
                                     <>
                                         <tr>
-                                            <td>Classic Bathrobe</td>
+                                            <td>{bid.user.username}</td>
                                             <td>{bid.bidder}</td>
                                             <td>{bid.transactionHash}</td>
                                             <td>{bid.bidAmount}</td>
