@@ -16,6 +16,7 @@ import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
 import { getBidderState } from "../../../utils/getBidderState";
 import { useAxios } from "../../../hooks/useAxios";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useFetchData } from "../../../hooks/useFetch";
 
 function AuctionRegistration({ auction, property }) {
     const { account, isWeb3Enabled } = useMoralis();
@@ -150,8 +151,24 @@ function AuctionRegistration({ auction, property }) {
         }
     };
 
+    const { loading, data, error } = useFetchData(`/auctionRegistration/user/${auction.auctionId}`);
+
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
+            if (loading) return <Loader />;
+            if (error)
+                return (
+                    <div className={styles.notification}>
+                        <p>You have not registered the auction.</p>
+                    </div>
+                );
+            if (data?.auctionRegistration?.length === 0)
+                return (
+                    <div className={styles.notification}>
+                        <p>You have not registered the auction.</p>
+                    </div>
+                );
+
             return <WaitingForAuctionTime auction={auction} property={property} />;
         } else {
             return (
