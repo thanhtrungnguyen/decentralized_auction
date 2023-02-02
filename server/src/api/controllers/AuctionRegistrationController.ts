@@ -28,6 +28,18 @@ export const getAuctionRegistrationByAuctionIdHandler = async (req: Request, res
     });
 };
 
+export const getAuctionRegistrationByAuctionIdAndUserHandler = async (req: Request, res: Response, next: NextFunction) => {
+  const auctionId = req.params.auctionId;
+  const userId = res.locals.user._id;
+  return await getAuctionRegistration({ auction: auctionId, user: userId })
+    .then((auctionRegistration) => {
+      res.status(200).json({ auctionRegistration });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 export const createAuctionRegistrationHandler = async (req: Request, res: Response, next: NextFunction) => {
   const { walletAddress } = req.body;
   const auctionId = req.params.auctionId;

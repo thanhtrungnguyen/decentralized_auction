@@ -9,6 +9,7 @@ import Loader from "../../components/Loader";
 import ResultForFirstBidder from "./ResultForFirstBidder";
 import SecondWaitForFirst from "./SecondWaitForFirst";
 import ResultForOtherBidders from "./ResultForOtherBidders";
+import Countdown from "react-countdown";
 
 const AuctionResult = ({ auction, property }) => {
     const { account, isWeb3Enabled } = useMoralis();
@@ -83,9 +84,11 @@ const AuctionResult = ({ auction, property }) => {
             case 2:
                 return `${place} nd`;
             case -1:
-                return `---`;
+                return `-`;
             case -2:
                 return `--`;
+            case -3:
+                return `---`;
             default:
                 return `${place} th`;
         }
@@ -98,12 +101,20 @@ const AuctionResult = ({ auction, property }) => {
                 <p className={styles.txt}>Your Auction has ended:</p>
                 <div className={styles.info}>
                     <BiddingProperty property={property} />
-                    <p className={styles.txtM}>Current bid:</p>
+                    <p className={styles.txtM}>Highest bid:</p>
                     <p className={styles.txtNormal}>{getHighestBid(bidInformation)} ETH</p>
                     <p className={styles.txtM}>Your bid:</p>
                     <p className={styles.txtNormal}>{getBidAmountOfBidder(bidInformation, account)} ETH</p>
                     <p className={styles.txtM}>Your place:</p>
                     <p className={styles.txtNormal}>{renderBidderPlace()}</p>
+                    {(getBidderRank(bidInformation, account) === 1 || getBidderRank(bidInformation, account) === 2) && (
+                        <>
+                            <p className={styles.txtM}>Payment time remain:</p>
+                            <p className={styles.txtNormal}>
+                                <Countdown date={auction.duePaymentTime * 1000} />
+                            </p>
+                        </>
+                    )}
                 </div>
             </div>
             <div className={styles.detail}>{renderBidderState()}</div>

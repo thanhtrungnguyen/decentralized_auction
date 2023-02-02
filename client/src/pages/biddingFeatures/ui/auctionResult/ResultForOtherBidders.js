@@ -27,9 +27,9 @@ const ResultForOtherBidders = ({ auction }) => {
 
     const handleSuccess = async (tx) => {
         try {
-            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
-            await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            setTransactionStatus(tx);
+            const result = await tx.wait(1);
+            setTransactionStatus(result);
             setShowButton(false);
             dispatch({
                 type: "success",
@@ -43,12 +43,11 @@ const ResultForOtherBidders = ({ auction }) => {
         }
     };
     const handleError = async (tx) => {
-        const message = tx?.code === 4001 ? "User denied transaction signature." : "Failed";
-        setTransactionStatus({ status: message });
+        setTransactionStatus(tx);
         dispatch({
             type: "error",
             title: "Withdraw Error",
-            message: message,
+            message: "Withdraw Error",
             position: "topR",
             icon: <AiOutlineClose />,
         });

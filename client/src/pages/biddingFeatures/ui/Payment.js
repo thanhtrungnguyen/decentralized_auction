@@ -17,6 +17,7 @@ const Payment = ({ auction, amount }) => {
     const { account, isWeb3Enabled } = useMoralis();
     const [transactionStatus, setTransactionStatus] = useState();
     const [bidAmount, setBidAmount] = useState(0);
+    const [isCompleted, setCompleted] = useState();
     const paymentAmount = auction.depositAmount != null && amount != "0" ? new Decimal(amount).minus(auction.depositAmount).toString() : "0";
     console.log(paymentAmount);
     const {
@@ -44,11 +45,14 @@ const Payment = ({ auction, amount }) => {
 
     const handleSuccess = async (tx) => {
         try {
-            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
-            await tx.wait(1);
+            setTransactionStatus(tx);
+            const result = await tx.wait(1);
+            console.log(result);
 
-            // updateUIValues();
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            if (result?.events) {
+                setCompleted(true);
+            }
+            setTransactionStatus(result);
             handleSuccessNotification(tx);
         } catch (error) {
             console.log(error);
@@ -64,7 +68,7 @@ const Payment = ({ auction, amount }) => {
         });
     };
     const handleErrorNotification = () => {
-        setTransactionStatus({ status: "Failed" });
+        setTransactionStatus();
         dispatch({
             type: "error",
             title: "Payment Error",
@@ -88,17 +92,22 @@ const Payment = ({ auction, amount }) => {
                         <p className={styles.txtT}>Total amount you must to pay: {paymentAmount}ETH</p>
                         {/* <p className={styles.txtNormal}>{sendAuction.CurrentBid}</p> */}
                         {/* <label className={styles.mess}>message</label> */}
-                        <button
-                            className={styles.btn}
-                            onClick={async () =>
-                                await payment({
-                                    onSuccess: handleSuccess,
-                                    onError: handleErrorNotification,
-                                })
-                            }
-                        >
-                            {isLoading || isFetching ? <div>Loading...</div> : <div>Send Payment</div>}
-                        </button>
+                        {isCompleted ? (
+                            <p className={styles.txtT}>You have Payment Successfully</p>
+                        ) : (
+                            <button
+                                className={styles.btn}
+                                onClick={async () =>
+                                    await payment({
+                                        onSuccess: handleSuccess,
+                                        onError: handleErrorNotification,
+                                    })
+                                }
+                            >
+                                {isLoading || isFetching ? <div>Loading...</div> : <div>Send Payment</div>}
+                            </button>
+                        )}
+
                         <TransactionStatus transactionStatus={transactionStatus} />
                     </div>
                 </>

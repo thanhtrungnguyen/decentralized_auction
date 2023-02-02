@@ -69,36 +69,30 @@ function AuctionRegistration({ auction, property }) {
     }, [isWeb3Enabled, account, bidInformationData?.length]);
     const axios = useAxiosPrivate();
     const handleSuccess = async (tx) => {
-        try {
-            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            // const { loading, data, error } = usePostRequest(`/api/auctionRegistration/${auction.auctionId}/registration`, {
-            //     walletAddress: account,
-            // });
+        console.log(tx);
+        setTransactionStatus(tx);
 
-            axios
-                .post(`/auctionRegistration/${auction.auctionId}/registration`, {
-                    walletAddress: account,
-                })
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err));
-            await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
-            updateUI();
-            dispatch({
-                type: "success",
-                title: "Registration Notification",
-                message: "Registration Completed!",
-                position: "topR",
-                icon: <BsCheckLg />,
-            });
-        } catch (error) {
-            console.log(error);
-        }
+        axios
+            .post(`/auctionRegistration/${auction.auctionId}/registration`, {
+                walletAddress: account,
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+        const result = await tx.wait(1);
+        console.log(result);
+        setTransactionStatus(result);
+        updateUI();
+        dispatch({
+            type: "success",
+            title: "Registration Notification",
+            message: "Registration Completed!",
+            position: "topR",
+            icon: <BsCheckLg />,
+        });
     };
 
     const handleError = () => {
-        setTransactionStatus({ status: "Failed" });
+        setTransactionStatus();
         dispatch({
             type: "error",
             title: "Registration Error",
@@ -145,7 +139,12 @@ function AuctionRegistration({ auction, property }) {
                     </>
                 );
             case "BIDDING":
-                return <p className={styles.title}>You have Registered The Auction</p>;
+                return (
+                    <>
+                        <TransactionStatus transactionStatus={transactionStatus} />
+                        <p className={styles.title}>You have Registered The Auction</p>
+                    </>
+                );
             default:
                 return <Loader />;
         }

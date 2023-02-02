@@ -29,10 +29,9 @@ const ResultForSecondBidder = ({ auction, amount }) => {
     });
     const handleSuccess = async (tx) => {
         try {
-            console.log("handleSuccess " + tx.hash);
-            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
-            await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            setTransactionStatus(tx);
+            const result = await tx.wait(1);
+            setTransactionStatus(result);
 
             dispatch({
                 type: "success",
@@ -47,12 +46,11 @@ const ResultForSecondBidder = ({ auction, amount }) => {
     };
     const handleError = async (tx) => {
         console.log(tx);
-        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
-        setTransactionStatus({ status: tx.data.message });
+        setTransactionStatus(tx);
         dispatch({
             type: "error",
             title: "Cancel Error",
-            message: tx.data.message,
+            message: "Cancel Error",
             position: "topR",
             icon: <AiOutlineClose />,
         });
