@@ -137,6 +137,7 @@ function AuctionRegistration({ auction, property }) {
                         >
                             {isRegisterToBidFetching || isRegisterToBidLoading ? <div>Loading...</div> : <div>Register for auction</div>}
                         </button>
+                        <TransactionStatus transactionStatus={transactionStatus} />
                     </>
                 );
             case "BIDDING":
@@ -177,7 +178,6 @@ function AuctionRegistration({ auction, property }) {
                                 <p className={styles.txtT}>Registration Fee: {auction.registrationFee} ETH</p>
                                 <p className={styles.txtT}>Deposit Amount: {auction.depositAmount} ETH</p>
                                 {renderCurrentBidderState()}
-                                <TransactionStatus transactionStatus={transactionStatus} />
                             </div>
                         </div>
                     </div>
