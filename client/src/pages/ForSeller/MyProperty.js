@@ -138,7 +138,7 @@ const MyProperty = () => {
                                         <RequestAddProperty idProperty={`${item._id}`} />
                                     </Popup>
                                 </>
-                            ) : item.status === "Request" || item.status === "Approved" || item.status === "Closed" || item.status === "UpcomingForBid" ? (
+                            ) : item.status === "Request" || item.status === "Approved" || item.status === "Bidding" || item.status === "Closed" || item.status === "UpcomingForBid" || item.status === "RegistrationTime" ? (
                                 <>
                                     <AiFillEye
                                         className={styles.iconView}
@@ -189,7 +189,7 @@ const MyProperty = () => {
                 <SideBarSeller />
                 <Time />
                 <div className={styles.r}>
-                    {/* <h1 style={{ margin: '20px 405px' }}>My Property</h1> */}
+                    <h1 style={{ margin: '20px 405px' }}>My Property</h1>
                     <div className={styles.con}>
 
                         <div className={styles.btns}>

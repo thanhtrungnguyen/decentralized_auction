@@ -39,12 +39,16 @@ const EditProperty = () => {
     const [loading, setLoading] = useState(true);
     const [property, setProperty] = useState([]);
     const [status, setStatus] = useState(null);
+    const [listRejected, setListRejected] = useState([]);
     const { id } = useParams();
 
     const navigate = useNavigate();
     const baseURLCategory = "/category/categories";
     const [role, setRole] = useState();
     const [error, setError] = useState(false);
+    const [disable, setDisable] = useState(false);
+    const baseURLListRejected = `/auction/rejectmessage/${id}`;
+    const baseURLProperty = `/property/${id}`;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,6 +56,10 @@ const EditProperty = () => {
             await axios.get(baseURLCategory).then((resp) => {
                 console.log(resp.data);
                 setlistCategory(resp.data);
+            });
+            await axios.get(baseURLListRejected).then((resp) => {
+                console.log(resp.data);
+                setListRejected(resp.data.auction);
             });
             await axios.get(baseURLProperty).then((resp) => {
                 console.log(resp.data);
@@ -72,8 +80,6 @@ const EditProperty = () => {
         };
         fetchData();
     }, []);
-
-    const baseURLProperty = `/property/${id}`;
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -171,13 +177,15 @@ const EditProperty = () => {
             notify("🦄 Image 2, please select a file less than 2mb");
         } else if (fI3 > 2048) {
             notify("🦄 Image 3, please select a file less than 2mb");
-        } else if (fV > 4096) {
+        } else if (fV > 10240) {
             notify("🦄 Video, please select a file less than 4mb");
         } else if (startBid * 0.2 < deposit) {
             notify("🦄 Deposit must less than 20% start bid");
         } else if (startBid * 0.1 < priceStep) {
             notify("🦄 Price Step must less than 10% start bid");
         } else {
+            setDisable(true);
+
             console.log(propertyImage1);
             const formData = new FormData();
             formData.append("propertyImage1", propertyImage1);
@@ -193,7 +201,7 @@ const EditProperty = () => {
             formData.append("depositAmount", deposit.trim());
             formData.append("priceStep", priceStep.trim());
             formData.append("placeViewProperty", placeViewProperty.trim());
-
+            formData.append("status", "Modified");
             // formData.append("startBid", startBid);
             // formData.append("biddingPreiod", biddingPreiod);
             axios
@@ -210,10 +218,14 @@ const EditProperty = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Edit property successfully!!!");
                     navigate("/myProperty");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     alert(`🦄 Failed: ${err.response.data.message}, ${err}`);
                 });
         }
@@ -242,7 +254,7 @@ const EditProperty = () => {
                     />
                     {/* Same as */}
                     <ToastContainer />
-                    <Comments />
+                    <Comments listRejected={listRejected} />
                     <div className={styles.info}>
                         <div>
                             <p className={styles.title}>Basic Information</p>
@@ -449,9 +461,15 @@ const EditProperty = () => {
                     </div>
 
                     <div className={styles.btn}>
-                        <input className={styles.btnSave} type="submit" value="Save"></input>
+                        <input
+                            className={styles.btnSave}
+                            type="submit"
+                            value="Save"
+                            style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                            disabled={disable}
+                        ></input>
 
-                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
+                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel} disabled={disable}></input>
                     </div>
                 </div>
                 {/* <div className={styles.root}>

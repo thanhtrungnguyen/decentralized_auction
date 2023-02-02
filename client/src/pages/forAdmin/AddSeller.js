@@ -22,6 +22,7 @@ const AddSeller = () => {
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
     const [isExist, setIsExit] = useState(false);
+    const [disable, setDisable] = useState(false);
 
     const [organizationName, setOrganizationName] = useState(null);
     const [taxCode, setTaxCode] = useState(null);
@@ -218,6 +219,8 @@ const AddSeller = () => {
         } else if (extFile2 !== "jpg" && extFile2 !== "jpeg" && extFile2 !== "png") {
             notify("🦄 Card Back Only jpg/jpeg and png files are allowed");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
 
             formData.append("name", organizationName.trim());
@@ -262,10 +265,14 @@ const AddSeller = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Add seller successfully!!!");
                     navigate("/listSellers");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     console.error(err.response.data.message);
                     notify(`🦄 Add Failed: ${err.response.data.message} , ${err}`);
                 });
@@ -573,12 +580,19 @@ const AddSeller = () => {
                             ></input>
                             <br />
                             <br />
-                            <input className={styles.btnAdd} type="submit" value="Add"></input>
+                            <input
+                                className={styles.btnAdd}
+                                type="submit"
+                                value="Add"
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                                disabled={disable}
+                            ></input>
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
                                     navigate("/listSellers");
                                 }}
+                                disabled={disable}
                             >
                                 Cancel
                             </button>

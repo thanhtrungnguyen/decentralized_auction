@@ -129,7 +129,8 @@ const AuctionList = () => {
                         <img className={styles.img} src={`${item.property.mediaUrl[0]}`} alt="img" />
                         <p className={styles.name}>{item.name}</p>
                         <p className={styles.price}>{item.property.startBid} ETH</p>
-                        <p className={styles.status}>Status: {item.status} </p>
+                        <p className={styles.status}>Status: {item.status === 'Closed' ? 'Past Auction'
+                            : item.status === 'Bidding' ? 'Current Auction' : item.status === 'Approved' ? 'Upcoming' : item.status} </p>
                         <p className={styles.time}>
                             <AiOutlineFieldTime className={styles.i} />
                             <label className={styles.l}>

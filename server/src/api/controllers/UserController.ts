@@ -234,7 +234,7 @@ export const changePasswordHandler = async (req: Request, res: Response, next: N
   }
   const isValidPassword = await validatePassword({ username: user.username, password: oldPassword });
   if (!isValidPassword) {
-    return res.status(401).send({ message: 'Invalid password' });
+    return res.status(401).send({ message: 'Old password is not correct' });
   }
   await await updateUser({ _id: user._id }, { password }, { new: true })
     .then((result) => {

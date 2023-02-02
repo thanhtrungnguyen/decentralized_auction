@@ -241,7 +241,14 @@ const ProfileOrganization = () => {
                     >
                         Back
                     </button>
-                    <button className={styles.btn2}>Change Password</button>
+                    <button
+                        className={styles.btn2}
+                        onClick={() => {
+                            navigate(`/changePassword/${id}`);
+                        }}
+                    >
+                        Change Password
+                    </button>
                     <button
                         className={styles.btn2}
                         onClick={() => {

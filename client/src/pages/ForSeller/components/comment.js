@@ -5,7 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import Popup from "reactjs-popup";
 import Content from "./content";
-const Comments = ({ auctionId, propertyId }) => {
+
+const Comments = ({ listRejected }) => {
     const axios = useAxiosPrivate();
     const [show, setShow] = useState(false);
 
@@ -44,18 +45,20 @@ const Comments = ({ auctionId, propertyId }) => {
                 />
                 {/* Same as */}
                 <ToastContainer />
-                <p className={styles.txt}>Comment</p>
-                <div className={styles.content}>
-                    <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
-                        <Content />
-                    </Popup>
-                    <br />
-                    <hr />
-                    <label className={styles.lb}>
-                        Content Note: In JSX, JavaScript expressions are written inside curly braces, and since JavaScript objects also use curly
-                        braces, the styling in the example above is written inside two sets of curly braces
-                    </label>
-                </div>
+                <p className={styles.txt}>Reject History</p>
+                <>
+                    {listRejected?.map((auction) => (
+                        <div className={styles.content}>
+                            <Popup trigger={<label className={styles.btnDetail}> Detail</label>} position="right center">
+                                <Content content={auction.message} />
+                            </Popup>
+                            <label>{new Date(auction.updatedAt).toLocaleString()}</label>
+                            <br />
+                            <hr />
+                            <label className={styles.lb}>{auction.message}</label>
+                        </div>
+                    ))}
+                </>
             </div>
         </>
     );

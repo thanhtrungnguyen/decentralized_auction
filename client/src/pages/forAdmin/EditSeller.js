@@ -45,6 +45,8 @@ const EditSeller = () => {
     const [fileFront, setFileFront] = useState(0);
     const [cB, setCB] = useState(null);
     const [cF, setCF] = useState(null);
+    const [disable, setDisable] = useState(false);
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {
@@ -236,6 +238,8 @@ const EditSeller = () => {
             // } else if (rePassword != password) {
             //     notify("🦄 rePassword is not same password");
         } else {
+            setDisable(true);
+
             const formData = new FormData();
 
             formData.append("name", organizationName.trim());
@@ -279,10 +283,14 @@ const EditSeller = () => {
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
+                    setDisable(false);
+
                     alert("Edit seller successfully!!!");
                     navigate("/listSellers");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     console.error(err.response.data.message);
                     notify(`🦄 Register Failed: ${err.response.data.message} , ${err}`);
                 });
@@ -573,12 +581,19 @@ const EditSeller = () => {
                             ></input> */}
                             <br />
                             <br />
-                            <input className={styles.btnAdd} type="submit" value="Save"></input>
+                            <input
+                                className={styles.btnAdd}
+                                type="submit"
+                                value="Save"
+                                style={disable ? { backgroundColor: "red" } : { backgroundColor: "violet" }}
+                                disabled={disable}
+                            ></input>
                             <button
                                 className={styles.btnCancel}
                                 onClick={() => {
                                     navigate("/listSellers");
                                 }}
+                                disabled={disable}
                             >
                                 Cancel
                             </button>

@@ -11,7 +11,8 @@ import {
   getListAuctionsHandler,
   getListAuctionsByBidderHandler,
   getListAuctionsBySellerHandler,
-  rejectAuctionHandler
+  rejectAuctionHandler,
+  getListMessageRejectedHandler
 } from '../controllers/AuctionController';
 import { requireRole } from '../middleware/requireRole';
 import { validateResource } from '../middleware/validateResource';
@@ -23,12 +24,13 @@ router.get('/auctions', getAllAuctionsHandler);
 router.get('/auctions/manager/:index/:status/:search/:sellerName', requireRole(roles.MANAGER), getListAuctionsHandler);
 router.get('/auctions/bidder', getListAuctionsByBidderHandler);
 router.get('/auctions/seller/:index/:status/:search', requireRole(roles.SELLER), getListAuctionsBySellerHandler);
-router.get('/:auctionId', requireRole(roles.MANAGER), getAuctionByIdHandler);
+router.get('/:auctionId', requireRole(roles.MANAGER, roles.SELLER, roles.BIDDER), getAuctionByIdHandler);
 
 router.post('/create', requireRole(roles.SELLER), createAuctionHandler);
 router.patch('/update/:auctionId', requireRole(roles.MANAGER), validateResource(AuctionSchema.update), updateAuctionHandler);
 router.patch('/approve/:auctionId', requireRole(roles.MANAGER), validateResource(AuctionSchema.approve), approveAuctionHandler);
 router.patch('/reject/:auctionId', requireRole(roles.MANAGER), validateResource(AuctionSchema.reject), rejectAuctionHandler);
 router.delete('/delete/:auctionId', deleteAuctionHandler);
+router.get('/rejectmessage/:propertyId', getListMessageRejectedHandler);
 //validateResource(AuctionSchema.create),
 export default router;
