@@ -21,7 +21,7 @@ const WithdrawForManager = () => {
     const { id } = useParams();
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const baseURL = `/auctionRegistration/${id}`;
+    const baseURL = `/contractInteraction/withdraw/${id}`;
     const [role, setRole] = useState();
 
     const [loading, setLoading] = useState(true);
@@ -110,7 +110,7 @@ const WithdrawForManager = () => {
                                 <th className={styles.th}>Tx Hash</th>
                                 <th className={styles.th}>Withdraw at</th>
                             </tr>
-                            {data.auctionRegistration?.map((auction) => (
+                            {data.withdraw?.map((auction) => (
                                 <tr>
                                     <td>{auction.user.username}</td>
                                     <td>{auction.walletAddress}</td>

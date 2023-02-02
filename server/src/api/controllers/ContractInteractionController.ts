@@ -3,6 +3,7 @@ import {
   getAll,
   getAuctionPayment,
   getAuctionRegister,
+  getAuctionWithdraw,
   getByAuctionId,
   getCreatedAuctionById,
   getPlacedBidById
@@ -60,6 +61,15 @@ export const getAuctionPaymentHandler = async (req: Request, res: Response, next
   return await getAuctionPayment(req.params.auctionId)
     .then((payment) => {
       res.status(200).json({ payment });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+export const getAuctionWithDrawHandler = async (req: Request, res: Response, next: NextFunction) => {
+  return await getAuctionWithdraw(req.params.auctionId)
+    .then((withdraw) => {
+      res.status(200).json({ withdraw });
     })
     .catch((error) => {
       res.status(500).json({ error });

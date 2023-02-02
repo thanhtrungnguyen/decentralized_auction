@@ -6,6 +6,7 @@ import {
   getAuctionCreatedHandler,
   getAuctionPaymentHandler,
   getAuctionRegisterHandler,
+  getAuctionWithDrawHandler,
   getLogsByAuctionIdHandler,
   getPlacedBidHandler
 } from '../controllers/ContractInteractionController';
@@ -20,4 +21,5 @@ router.get('/createdAuction/:auctionId', getAuctionCreatedHandler);
 router.get('/placedBid/:auctionId', getPlacedBidHandler);
 router.get('/register/:auctionId', getAuctionRegisterHandler);
 router.get('/payment/:auctionId', getAuctionPaymentHandler);
+router.get('/withdraw/:auctionId', getAuctionWithDrawHandler);
 export default router;

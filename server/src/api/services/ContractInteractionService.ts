@@ -136,6 +136,33 @@ const getAuctionPayment = async (auctionId: string) => {
     logger.error(error);
   }
 };
+const getAuctionWithdraw = async (auctionId: string) => {
+  const condition = ['Withdraw'];
+  try {
+    const logs = await database.collection(COLLECTION_PATH).where('name', 'in', condition).where('auctionId', '==', auctionId).get();
+
+    let list: FirebaseFirestore.DocumentData[] = [];
+    logs?.forEach((doc) => {
+      list.push(doc.data());
+    });
+    const auctionRegistration = await getAuctionRegistration({ auction: auctionId });
+
+    let listLogs: any[] = [];
+    list?.forEach((log) => {
+      const logAny = log as any;
+      auctionRegistration?.forEach((regis) => {
+        const regisAny = regis as any;
+        if (logAny?.bidder === regisAny.walletAddress) {
+          const bigLog = { ...logAny, ...regisAny };
+          listLogs.push(bigLog);
+        }
+      });
+    });
+    return listLogs;
+  } catch (error) {
+    logger.error(error);
+  }
+};
 const getAuctionRegister = async (auctionId: string) => {
   const condition = ['RegisteredToBid'];
   try {
@@ -206,5 +233,6 @@ export {
   getHighestBidByAuctionId,
   getByAuctionId,
   getAuctionRegister,
-  getAuctionPayment
+  getAuctionPayment,
+  getAuctionWithdraw
 };
