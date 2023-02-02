@@ -275,14 +275,14 @@ const EditProperty = () => {
                                             <img src={URL.createObjectURL(propertyImage1)} className={styles.image} alt="Thumb" />
                                         )}{" "}
                                         {propertyImage2 == null ? (
-                                            <img src={data.property.mediaUrl[1]} className={styles.image} alt="Thumb" />
+                                            <img src={data.property.mediaUrl[1]} className={styles.image2} alt="Thumb" />
                                         ) : (
-                                            <img src={URL.createObjectURL(propertyImage2)} className={styles.image} alt="Thumb" />
+                                            <img src={URL.createObjectURL(propertyImage2)} className={styles.image2} alt="Thumb" />
                                         )}{" "}
                                         {propertyImage3 == null ? (
-                                            <img src={data.property.mediaUrl[2]} className={styles.image} alt="Thumb" />
+                                            <img src={data.property.mediaUrl[2]} className={styles.image3} alt="Thumb" />
                                         ) : (
-                                            <img src={URL.createObjectURL(propertyImage3)} className={styles.image} alt="Thumb" />
+                                            <img src={URL.createObjectURL(propertyImage3)} className={styles.image3} alt="Thumb" />
                                         )}
                                     </div>
                                 </div>

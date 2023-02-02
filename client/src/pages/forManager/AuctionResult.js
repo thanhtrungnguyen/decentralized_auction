@@ -49,6 +49,9 @@ const AuctionResult = () => {
     const Registration = () => {
         navigate(`/viewRegistrationForManager/${id}`);
     };
+    const withdraw = () => {
+        navigate(`/withdrawForManager/${id}`);
+    };
     // const handleChange = (event, value) => {
     //     setPage(value);
     // };
@@ -87,6 +90,14 @@ const AuctionResult = () => {
                                 }}
                             >
                                 Auction Result
+                            </button>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    withdraw();
+                                }}
+                            >
+                                Withdraw
                             </button>
                             <input className={styles.ip} type="text" placeholder="Enter Name"></input>
                             <button className={styles.btn}>Search</button>
