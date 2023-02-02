@@ -296,8 +296,8 @@ const AddProperty = () => {
                                         {propertyImage1 && (
                                             <img src={URL.createObjectURL(propertyImage1)} className={styles.image} alt="Thumb" />
                                         )}{" "}
-                                        {propertyImage2 && <img src={URL.createObjectURL(propertyImage2)} className={styles.image} alt="Thumb" />}{" "}
-                                        {propertyImage3 && <img src={URL.createObjectURL(propertyImage3)} className={styles.image} alt="Thumb" />}
+                                        {propertyImage2 && <img src={URL.createObjectURL(propertyImage2)} className={styles.image2} alt="Thumb" />}{" "}
+                                        {propertyImage3 && <img src={URL.createObjectURL(propertyImage3)} className={styles.image3} alt="Thumb" />}
                                     </div>
                                 </div>
                             </div>

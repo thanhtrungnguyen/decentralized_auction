@@ -14,6 +14,7 @@ const ResultForFirstBidder = ({ auction, amount }) => {
     const [transactionStatus, setTransactionStatus] = useState();
     const [goPayment, setGoPayment] = useState();
     const [showConfirmation, setShowConfirmation] = useState(true);
+    const [isCanceled, setCanceled] = useState();
 
     const {
         runContractFunction: cancelAuctionResult,
@@ -31,9 +32,12 @@ const ResultForFirstBidder = ({ auction, amount }) => {
     const handleSuccess = async (tx) => {
         try {
             console.log("handleSuccess " + tx.hash);
-            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
-            await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            setTransactionStatus(tx);
+            const result = await tx.wait(1);
+            if (result?.events) {
+                setCanceled(true);
+            }
+            setTransactionStatus(result);
 
             dispatch({
                 type: "success",
@@ -48,8 +52,7 @@ const ResultForFirstBidder = ({ auction, amount }) => {
     };
     const handleError = async (tx) => {
         console.log(tx);
-        const message = tx.code == 4001 ? "User denied transaction signature." : "Failed";
-        setTransactionStatus({ status: tx.data.message });
+        setTransactionStatus(tx);
         dispatch({
             type: "error",
             title: "Cancel Error",
@@ -74,26 +77,33 @@ const ResultForFirstBidder = ({ auction, amount }) => {
                                         {days}d {hours}h {minutes}m {seconds}s
                                     </span>
                                 </p>
-                                <button
-                                    className={styles.btn}
-                                    onClick={() => {
-                                        setGoPayment(true);
-                                    }}
-                                >
-                                    Accept
-                                </button>
-                                <button
-                                    disabled={isLoading || isFetching}
-                                    className={styles.btn}
-                                    onClick={async () => {
-                                        cancelAuctionResult({
-                                            onError: handleError,
-                                            onSuccess: handleSuccess,
-                                        });
-                                    }}
-                                >
-                                    {isLoading || isFetching ? "Loading..." : "Cancel"}
-                                </button>
+                                {isCanceled ? (
+                                    <>You have Canceled Successfully</>
+                                ) : (
+                                    <>
+                                        <button
+                                            className={styles.btn}
+                                            onClick={() => {
+                                                setGoPayment(true);
+                                            }}
+                                        >
+                                            Accept
+                                        </button>
+                                        <button
+                                            disabled={isLoading || isFetching}
+                                            className={styles.btn}
+                                            onClick={async () => {
+                                                cancelAuctionResult({
+                                                    onError: handleError,
+                                                    onSuccess: handleSuccess,
+                                                });
+                                            }}
+                                        >
+                                            {isLoading || isFetching ? "Loading..." : "Cancel"}
+                                        </button>
+                                    </>
+                                )}
+
                                 <TransactionStatus transactionStatus={transactionStatus} />
                             </>
                         ) : (

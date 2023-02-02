@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "../../styleCss/stylesComponents/placeABid.module.css";
 import HeaderBid from "./components/HeaderBid";
 import { useMoralis } from "react-moralis";
 import { useState, useEffect } from "react";
@@ -11,6 +10,9 @@ import WaitingForAuctionTime from "./ui/WaitingForAuctionTime";
 import Loading from "./components/Loader";
 import { SUPPORT_CHAINS } from "../../config/blockchainConfig";
 import AuctionResult from "./ui/auctionResult/AuctionResult";
+import { useFetchData } from "../../hooks/useFetch";
+import Loader from "./components/Loader";
+import styles from "../../styleCss/stylesComponents/placeABid.module.css";
 
 const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
     const { chainId, isWeb3Enabled, account } = useMoralis();
@@ -20,6 +22,7 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             setHasMetamask(true);
         }
     }, [isWeb3Enabled, account]);
+    const { loading, data, error } = useFetchData(`/auctionRegistration/user/${auction.auctionId}`);
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
         // const registeredWallet = checkUserRegistered();
@@ -44,7 +47,15 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
     };
 
     const renderCurrentState = () => {
-        // console.log("State: " + auctionState());
+        console.log(data?.auctionRegistration[0]);
+        if (data?.auctionRegistration[0]?.walletAddress !== account) {
+            return (
+                <div className={styles.notification}>
+                    <p>You have used account {data?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
+                    <p>Please switch to that wallet account to continue.</p>
+                </div>
+            );
+        }
         switch (auctionState()) {
             case "Loading":
                 return <Loading />;
@@ -69,13 +80,6 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
                         <p>Registration Time has ended</p>
                     </>
                 );
-            case "RegisteredWithOtherWallet":
-                return (
-                    <div>
-                        <h1>You have registered the auction with other account</h1>
-                        {/* <strong>{checkUserRegistered()}</strong> */}
-                    </div>
-                );
             case "AuctionNotFound":
                 return "Auction Not Found";
             default:
@@ -88,24 +92,32 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             <div className={styles.root}></div>
             <div className={styles.container}>
                 <HeaderBid setOpenModal={setOpenModal} />
-                <div>
-                    {hasMetamask ? (
-                        isWeb3Enabled ? (
-                            SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
-                                <div>{renderCurrentState()}</div>
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <div>
+                        {hasMetamask ? (
+                            isWeb3Enabled ? (
+                                SUPPORT_CHAINS.includes(parseInt(chainId).toString()) ? (
+                                    <div>{renderCurrentState()}</div>
+                                ) : (
+                                    <div className={styles.notification}>
+                                        <h1>Unsupported Chain ID</h1>
+                                        <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
+                                    </div>
+                                )
                             ) : (
-                                <div>
-                                    <h1>Unsupported Chain ID</h1>
-                                    <p>Please switch to Supported Chains that is Goerli (Ethereum Testnet)</p>
+                                <div className={styles.notification}>
+                                    <p>Please connect to a Wallet</p>
                                 </div>
                             )
                         ) : (
-                            <p>Please connect to a Wallet</p>
-                        )
-                    ) : (
-                        <p>Please install Metamask</p>
-                    )}
-                </div>
+                            <div className={styles.notification}>
+                                <p>Please install Metamask</p>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </>
     );

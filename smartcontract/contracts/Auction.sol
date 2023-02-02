@@ -485,7 +485,8 @@ contract Auction {
         require(success, "Transfer failed");
     }
 
-    function withdrawDeposit(string memory auctionId) external isWithdrawDeposit(auctionId) {
+    function withdrawDeposit(string memory auctionId) external // isWithdrawDeposit(auctionId)
+    {
         uint256 value = s_auctionInformations[auctionId].depositAmount;
         s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState
             .WITHDRAW;
@@ -495,9 +496,8 @@ contract Auction {
     }
 
     function payment(
-        string memory auctionId // isWinnerOfAuction(auctionId)
-    ) external payable // isValidPaymentAmount(auctionId)
-    {
+        string memory auctionId // isWinnerOfAuction(auctionId) // isValidPaymentAmount(auctionId)
+    ) external payable {
         s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState.PAYMENT;
         s_proceeds += s_auctionInformations[auctionId].depositAmount;
         s_proceeds += msg.value;
@@ -520,12 +520,13 @@ contract Auction {
 
     //get index of bidder who is sender
     function getIndexOfBidder(string memory auctionId) internal view returns (uint256) {
+        uint256 index = 9999;
         for (uint256 i = 0; i < s_bidInformations[auctionId].length; i++) {
             if (s_bidInformations[auctionId][i].bidder == msg.sender) {
-                return i;
+                index = i;
             }
         }
-        return 9999;
+        return index;
     }
 
     function getIndexOfSecondOfAuction(string memory auctionId) private returns (uint256) {
@@ -547,17 +548,17 @@ contract Auction {
     }
 
     function getIndexOfFirstOfAuction(string memory auctionId) private view returns (uint256) {
-        uint256 highestIndex;
+        uint256 index = 0;
         for (uint256 i = 0; i < s_bidInformations[auctionId].length; i++) {
             if (
-                highestIndex < s_bidInformations[auctionId][i].bidAmount &&
+                index < s_bidInformations[auctionId][i].bidAmount &&
                 s_bidInformations[auctionId][i].bidderState != BidderState.CANCEL &&
                 s_bidInformations[auctionId][i].bidderState != BidderState.RETRACT
             ) {
-                highestIndex = i;
+                index = i;
             }
         }
-        return highestIndex;
+        return index;
     }
 
     function getListAuctionId() external view returns (string[] memory) {

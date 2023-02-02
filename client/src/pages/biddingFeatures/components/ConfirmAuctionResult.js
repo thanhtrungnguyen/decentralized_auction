@@ -7,7 +7,7 @@ import TransactionStatus from "./TransactionStatus";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
-export const ConfirmAuctionResult = ({ auction, rank, showConfirmation}) => {
+export const ConfirmAuctionResult = ({ auction, rank, showConfirmation }) => {
     const dispatch = useNotification();
     const [transactionStatus, setTransactionStatus] = useState();
     const [setGoPayment] = useState(false);
@@ -28,9 +28,9 @@ export const ConfirmAuctionResult = ({ auction, rank, showConfirmation}) => {
     const handleSuccess = async (tx) => {
         try {
             console.log("handleSuccess " + tx.hash);
-            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
-            await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            setTransactionStatus(tx);
+            const result = await tx.wait(1);
+            setTransactionStatus(result);
 
             dispatch({
                 type: "success",
@@ -48,8 +48,7 @@ export const ConfirmAuctionResult = ({ auction, rank, showConfirmation}) => {
     };
     const handleError = async (tx) => {
         console.log(tx);
-        const message = tx.code === 4001 ? "User denied transaction signature." : "Failed";
-        setTransactionStatus({ status: tx.data.message });
+        setTransactionStatus(tx);
         dispatch({
             type: "error",
             title: "Cancel Error",

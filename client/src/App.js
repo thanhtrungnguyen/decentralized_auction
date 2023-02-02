@@ -64,118 +64,123 @@ import EditProfileAdmin from "./pages/forAdmin/EditProfileAdmin";
 import RequireAuth from "./pages/common/RequireAuth";
 import { roles } from "./config/rolesConfig";
 import Unauthorized from "./pages/error/Unauthorized";
+import Layout from "./pages/common/Layout";
+import WithdrawForManager from "./pages/forManager/WithdrawForManager";
 function App() {
     return (
         <Routes>
-            <Route index element={<Homepage />} />
-            <Route path="login" element={<Login />} />
-            <Route path="homePage/:username" element={<Homepage />} />
-            <Route path="homePage" element={<Homepage />} />
-            <Route path="register" element={<Register />} />
-            <Route path="registerForO" element={<RegisterForO />} />
-            <Route path="unauthorized" element={<Unauthorized />} />
+            <Route path="/" element={<Layout />}>
+                <Route index element={<Homepage />} />
+                <Route path="login" element={<Login />} />
+                <Route path="homePage/:username" element={<Homepage />} />
+                <Route path="homePage" element={<Homepage />} />
+                <Route path="register" element={<Register />} />
+                <Route path="registerForO" element={<RegisterForO />} />
+                <Route path="unauthorized" element={<Unauthorized />} />
 
-            <Route element={<RequireAuth allowedRoles={[roles.ADMIN]} />}>
-                <Route path="addNew" element={<AddNew />} />
+                <Route element={<RequireAuth allowedRoles={[roles.ADMIN]} />}>
+                    <Route path="addNew" element={<AddNew />} />
+                    <Route path="listNews/:index" element={<ListNews />} />
+                    <Route path="listNews" element={<ListNews />} />
+                </Route>
+                <Route element={<RequireAuth allowedRoles={[roles.MANAGER]} />}></Route>
+                <Route element={<RequireAuth allowedRoles={[roles.SELLER]} />}></Route>
+                <Route element={<RequireAuth allowedRoles={[roles.BIDDER]} />}></Route>
+
+                <Route path="auctionDetail/:id" element={<AuctionDetail />} />
+                <Route path="auctionDetail" element={<AuctionDetail />} />
+                <Route path="auctionList" element={<AuctionList />} />
+                <Route path="*" element={<ErrorPage />} />
+                <Route path="placeABid" element={<PlaceABid />} />
+                {/* <Route path="confirmPayment" element={<ConfirmPayment />} /> */}
+                <Route path="paymentResult" element={<PaymentResult />} />
+                <Route path="news" element={<News />} />
+                <Route path="sellerCenter" element={<SellerCenter />} />
+                <Route path="myProperty" element={<MyProperty />} />
+                <Route path="addProperty" element={<AddProperty />} />
+                <Route path="editProperty/:id" element={<EditProperty />} />
+                <Route path="editProperty" element={<EditProperty />} />
+                <Route path="propertyDetail" element={<PropertyDetail />} />
+                <Route path="propertyDetail/:id" element={<PropertyDetail />} />
+                <Route path="enterEmail" element={<EnterEmail />} />
+                <Route path="confirmCode/:email" element={<ConfirmCode />} />
+                <Route path="confirmCode" element={<ConfirmCode />} />
+                <Route path="newPassword/:userId/:token" element={<NewPassword />} />
+                <Route path="newPassword" element={<NewPassword />} />
+                <Route path="myAuctions" element={<MyAuctions />} />
+                <Route path="editAuction/:id" element={<EditAuction />} />
+                <Route path="editAuction" element={<EditAuction />} />
+                <Route path="auctionDetailForSeller/:id" element={<AuctionDetailForSeller />} />
+                <Route path="auctionDetailForSeller" element={<AuctionDetailForSeller />} />
+                <Route path="auctionListForManager" element={<AuctionsListForManager />} />
+                <Route path="auctionDetailForManager" element={<AuctionDetailForManager />} />
+                <Route path="auctionDetailForManager/:id" element={<AuctionDetailForManager />} />
+                <Route path="approveAuction/:id" element={<ApproveAuction />} />
+                <Route path="approveAuction" element={<ApproveAuction />} />
+                <Route path="managerCategories" element={<ManagerCategories />} />
+                <Route path="addCategory" element={<AddCategory />} />
+                <Route path="editCategory/:id" element={<EditCategory />} />
+                <Route path="editCategory" element={<EditCategory />} />
+                <Route path="listManagers" element={<ListManagers />} />
+                <Route path="addManager" element={<AddManager />} />
+                <Route path="listSellers" element={<ListSellers />} />
+                <Route path="addSeller" element={<AddSeller />} />
+                <Route path="listBidders" element={<ListBidders />} />
+                <Route path="bidderDetail" element={<BidderDetail />} />
+                <Route path="bidderDetail/:id" element={<BidderDetail />} />
+                <Route path="editNews/:id" element={<EditNew />} />
+                <Route path="editNews" element={<EditNew />} />
+
+                <Route path="viewManager" element={<ViewManager />} />
+                <Route path="viewManager/:id" element={<ViewManager />} />
+                <Route path="viewSeller" element={<ViewSeller />} />
+                <Route path="viewSeller/:id" element={<ViewSeller />} />
+                <Route path="profile/:id" element={<Profile />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="editProfile" element={<EditProfile />} />
+                <Route path="editProfile/:id" element={<EditProfile />} />
+                <Route path="profileOrganization" element={<ProfileOrganization />} />
+                <Route path="profileOrganization/:id" element={<ProfileOrganization />} />
+                <Route path="editProfileOrganization/:id" element={<EditProfileOrganization />} />
+                <Route path="editProfileOrganization" element={<EditProfileOrganization />} />
+                <Route path="aboutUs" element={<AboutUs />} />
+                {/* <Route path="payment/:id" element={<ConfirmPayment />} /> */}
+                {/* <Route path="payment/:id" element={<ConfirmPayment />} /> */}
+                <Route path="changePassword/:id" element={<ChangePassword />} />
+                <Route path="changePassword" element={<ChangePassword />} />
+                <Route path="viewBiddingForManager/:id" element={<ViewBiddingForManager />} />
+                <Route path="viewRegistrationForManager/:id" element={<ViewRegistrationForManager />} />
+                <Route path="viewAuctionResultForManager/:id" element={<AuctionResult />} />
+                <Route path="withdrawForManager/:id" element={<WithdrawForManager />} />
+                <Route path="viewBiddingForManager" element={<ViewBiddingForManager />} />
+                <Route path="viewRegistrationForManager" element={<ViewRegistrationForManager />} />
+                <Route path="viewAuctionResultForManager" element={<AuctionResult />} />
+                <Route path="viewNews/:id" element={<ViewNews />} />
+                <Route path="viewNews" element={<ViewNews />} />
+                <Route path="viewNewsForAdmin/:id" element={<ViewNewsForAdmin />} />
+                <Route path="viewNewsForAdmin" element={<ViewNewsForAdmin />} />
+                <Route path="bidderOrganizationDetail/:id" element={<BidderOrganizationDetail />} />
+                <Route path="bidderOrganizationDetail" element={<BidderOrganizationDetail />} />
+                {/* <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} /> */}
+                <Route path="profileSeller/:sellerId" element={<ProfileSeller />} />
+                <Route path="changePasswordForSeller/:sellerId" element={<ChangePasswordSeller />} />
+                <Route path="profileSeller" element={<ProfileSeller />} />
+                <Route path="changePasswordForSeller" element={<ChangePasswordSeller />} />
+                <Route path="profileManager/:managerId" element={<ProfileManager />} />
+                <Route path="changePasswordManager/:managerId" element={<ChangePasswordManager />} />
+                <Route path="profileManager" element={<ProfileManager />} />
+                <Route path="changePasswordManager" element={<ChangePasswordManager />} />
+                <Route path="editManager" element={<EditManager />} />
+                <Route path="editManager/:managerId" element={<EditManager />} />
+                <Route path="editSeller" element={<EditSeller />} />
+                <Route path="editSeller/:id" element={<EditSeller />} />
+                <Route path="changePasswordAdmin" element={<ChangePasswordAdmin />} />
+                <Route path="changePasswordAdmin/:adminId" element={<ChangePasswordAdmin />} />
+                <Route path="profileAdmin" element={<ProfileAdmin />} />
+                <Route path="profileAdmin/:adminId" element={<ProfileAdmin />} />
+                <Route path="editProfileAdmin/:adminId" element={<EditProfileAdmin />} />
+                <Route path="editProfileAdmin" element={<EditProfileAdmin />} />
             </Route>
-            <Route element={<RequireAuth allowedRoles={[roles.MANAGER]} />}></Route>
-            <Route element={<RequireAuth allowedRoles={[roles.SELLER]} />}></Route>
-            <Route element={<RequireAuth allowedRoles={[roles.BIDDER]} />}></Route>
-
-            <Route path="auctionDetail/:id" element={<AuctionDetail />} />
-            <Route path="auctionDetail" element={<AuctionDetail />} />
-            <Route path="auctionList" element={<AuctionList />} />
-            <Route path="*" element={<ErrorPage />} />
-            <Route path="placeABid" element={<PlaceABid />} />
-            {/* <Route path="confirmPayment" element={<ConfirmPayment />} /> */}
-            <Route path="paymentResult" element={<PaymentResult />} />
-            <Route path="news" element={<News />} />
-            <Route path="sellerCenter" element={<SellerCenter />} />
-            <Route path="myProperty" element={<MyProperty />} />
-            <Route path="addProperty" element={<AddProperty />} />
-            <Route path="editProperty/:id" element={<EditProperty />} />
-            <Route path="editProperty" element={<EditProperty />} />
-            <Route path="propertyDetail" element={<PropertyDetail />} />
-            <Route path="propertyDetail/:id" element={<PropertyDetail />} />
-            <Route path="enterEmail" element={<EnterEmail />} />
-            <Route path="confirmCode/:email" element={<ConfirmCode />} />
-            <Route path="confirmCode" element={<ConfirmCode />} />
-            <Route path="newPassword/:userId/:token" element={<NewPassword />} />
-            <Route path="newPassword" element={<NewPassword />} />
-            <Route path="myAuctions" element={<MyAuctions />} />
-            <Route path="editAuction/:id" element={<EditAuction />} />
-            <Route path="editAuction" element={<EditAuction />} />
-            <Route path="auctionDetailForSeller/:id" element={<AuctionDetailForSeller />} />
-            <Route path="auctionDetailForSeller" element={<AuctionDetailForSeller />} />
-            <Route path="auctionListForManager" element={<AuctionsListForManager />} />
-            <Route path="auctionDetailForManager" element={<AuctionDetailForManager />} />
-            <Route path="auctionDetailForManager/:id" element={<AuctionDetailForManager />} />
-            <Route path="approveAuction/:id" element={<ApproveAuction />} />
-            <Route path="approveAuction" element={<ApproveAuction />} />
-            <Route path="managerCategories" element={<ManagerCategories />} />
-            <Route path="addCategory" element={<AddCategory />} />
-            <Route path="editCategory/:id" element={<EditCategory />} />
-            <Route path="editCategory" element={<EditCategory />} />
-            <Route path="listManagers" element={<ListManagers />} />
-            <Route path="addManager" element={<AddManager />} />
-            <Route path="listSellers" element={<ListSellers />} />
-            <Route path="addSeller" element={<AddSeller />} />
-            <Route path="listBidders" element={<ListBidders />} />
-            <Route path="bidderDetail" element={<BidderDetail />} />
-            <Route path="bidderDetail/:id" element={<BidderDetail />} />
-            <Route path="editNews/:id" element={<EditNew />} />
-            <Route path="editNews" element={<EditNew />} />
-
-            <Route path="listNews/:index" element={<ListNews />} />
-            <Route path="listNews" element={<ListNews />} />
-            <Route path="viewManager" element={<ViewManager />} />
-            <Route path="viewManager/:id" element={<ViewManager />} />
-            <Route path="viewSeller" element={<ViewSeller />} />
-            <Route path="viewSeller/:id" element={<ViewSeller />} />
-            <Route path="profile/:id" element={<Profile />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="editProfile" element={<EditProfile />} />
-            <Route path="editProfile/:id" element={<EditProfile />} />
-            <Route path="profileOrganization" element={<ProfileOrganization />} />
-            <Route path="profileOrganization/:id" element={<ProfileOrganization />} />
-            <Route path="editProfileOrganization/:id" element={<EditProfileOrganization />} />
-            <Route path="editProfileOrganization" element={<EditProfileOrganization />} />
-            <Route path="aboutUs" element={<AboutUs />} />
-            {/* <Route path="payment/:id" element={<ConfirmPayment />} /> */}
-            {/* <Route path="payment/:id" element={<ConfirmPayment />} /> */}
-            <Route path="changePassword/:id" element={<ChangePassword />} />
-            <Route path="changePassword" element={<ChangePassword />} />
-            <Route path="viewBiddingForManager/:id" element={<ViewBiddingForManager />} />
-            <Route path="viewRegistrationForManager/:id" element={<ViewRegistrationForManager />} />
-            <Route path="viewAuctionResultForManager/:id" element={<AuctionResult />} />
-            <Route path="viewBiddingForManager" element={<ViewBiddingForManager />} />
-            <Route path="viewRegistrationForManager" element={<ViewRegistrationForManager />} />
-            <Route path="viewAuctionResultForManager" element={<AuctionResult />} />
-            <Route path="viewNews/:id" element={<ViewNews />} />
-            <Route path="viewNews" element={<ViewNews />} />
-            <Route path="viewNewsForAdmin/:id" element={<ViewNewsForAdmin />} />
-            <Route path="viewNewsForAdmin" element={<ViewNewsForAdmin />} />
-            <Route path="bidderOrganizationDetail/:id" element={<BidderOrganizationDetail />} />
-            <Route path="bidderOrganizationDetail" element={<BidderOrganizationDetail />} />
-            {/* <Route path="fakeAuctionDetail/:auctionId" element={<FakeAuctionDetail />} /> */}
-            <Route path="profileSeller/:sellerId" element={<ProfileSeller />} />
-            <Route path="changePasswordForSeller/:sellerId" element={<ChangePasswordSeller />} />
-            <Route path="profileSeller" element={<ProfileSeller />} />
-            <Route path="changePasswordForSeller" element={<ChangePasswordSeller />} />
-            <Route path="profileManager/:managerId" element={<ProfileManager />} />
-            <Route path="changePasswordManager/:managerId" element={<ChangePasswordManager />} />
-            <Route path="profileManager" element={<ProfileManager />} />
-            <Route path="changePasswordManager" element={<ChangePasswordManager />} />
-            <Route path="editManager" element={<EditManager />} />
-            <Route path="editManager/:managerId" element={<EditManager />} />
-            <Route path="editSeller" element={<EditSeller />} />
-            <Route path="editSeller/:id" element={<EditSeller />} />
-            <Route path="changePasswordAdmin" element={<ChangePasswordAdmin />} />
-            <Route path="changePasswordAdmin/:adminId" element={<ChangePasswordAdmin />} />
-            <Route path="profileAdmin" element={<ProfileAdmin />} />
-            <Route path="profileAdmin/:adminId" element={<ProfileAdmin />} />
-            <Route path="editProfileAdmin/:adminId" element={<EditProfileAdmin />} />
-            <Route path="editProfileAdmin" element={<EditProfileAdmin />} />
         </Routes>
     );
 }
