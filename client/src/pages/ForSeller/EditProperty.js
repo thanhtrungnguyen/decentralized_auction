@@ -249,7 +249,7 @@ const EditProperty = () => {
                     />
                     {/* Same as */}
                     <ToastContainer />
-                    <Comments />
+                    <Comments propertyId={id} />
                     <div className={styles.info}>
                         <div>
                             <p className={styles.title}>Basic Information</p>
