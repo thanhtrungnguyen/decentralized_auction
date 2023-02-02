@@ -64,6 +64,9 @@ const ViewBiddingForManager = () => {
     const Registration = () => {
         navigate(`/viewRegistrationForManager/${id}`);
     };
+    const withdraw = () => {
+        navigate(`/withdrawForManager/${id}`);
+    };
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -117,6 +120,14 @@ const ViewBiddingForManager = () => {
                                 }}
                             >
                                 Auction Result
+                            </button>
+                            <button
+                                className={styles.btn}
+                                onClick={() => {
+                                    withdraw();
+                                }}
+                            >
+                                Withdraw
                             </button>
                             <input className={styles.ip} type="text" placeholder="Enter Name"></input>
                             <button className={styles.btn}>Search</button>

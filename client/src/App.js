@@ -65,6 +65,7 @@ import RequireAuth from "./pages/common/RequireAuth";
 import { roles } from "./config/rolesConfig";
 import Unauthorized from "./pages/error/Unauthorized";
 import Layout from "./pages/common/Layout";
+import WithdrawForManager from "./pages/forManager/WithdrawForManager";
 function App() {
     return (
         <Routes>
@@ -150,6 +151,7 @@ function App() {
                 <Route path="viewBiddingForManager/:id" element={<ViewBiddingForManager />} />
                 <Route path="viewRegistrationForManager/:id" element={<ViewRegistrationForManager />} />
                 <Route path="viewAuctionResultForManager/:id" element={<AuctionResult />} />
+                <Route path="withdrawForManager/:id" element={<WithdrawForManager />} />
                 <Route path="viewBiddingForManager" element={<ViewBiddingForManager />} />
                 <Route path="viewRegistrationForManager" element={<ViewRegistrationForManager />} />
                 <Route path="viewAuctionResultForManager" element={<AuctionResult />} />
