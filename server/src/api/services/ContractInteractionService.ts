@@ -1,6 +1,7 @@
 import { database } from '../utils/connectFirebase';
 import logger from '../utils/logger';
 import { parseEther } from '../utils/ethereumUnitConverter';
+import { getAuctionRegistration } from './AuctionRegistrationService';
 
 const COLLECTION_PATH = '/moralis/events/Auction';
 
@@ -17,16 +18,29 @@ const getAll = async () => {
   }
 };
 
+// Here is the service that you need
 const getByAuctionId = async (auctionId: string) => {
   try {
     const logs = await database.collection(COLLECTION_PATH).where('auctionId', '==', auctionId).get();
-
     let list: FirebaseFirestore.DocumentData[] = [];
     logs?.forEach((doc) => {
       list.push(doc.data());
     });
 
-    return list;
+    const auctionRegistration = await getAuctionRegistration({ auction: auctionId });
+
+    let listLogs: any[] = [];
+    list?.forEach((log) => {
+      const logAny = log as any;
+      auctionRegistration?.forEach((regis) => {
+        const regisAny = regis as any;
+        if (logAny?.bidder === regisAny.walletAddress) {
+          const bigLog = { ...logAny, ...regisAny };
+          listLogs.push(bigLog);
+        }
+      });
+    });
+    return listLogs;
   } catch (error) {
     logger.error(error);
   }
@@ -106,4 +120,4 @@ const getCountPlacedBidAndRetracted = async () => {
   }
 };
 
-export { getAll, getCreatedAuctionById, getPlacedBidById, getCountPlacedBidAndRetracted, getHighestBidByAuctionId,getByAuctionId };
+export { getAll, getCreatedAuctionById, getPlacedBidById, getCountPlacedBidAndRetracted, getHighestBidByAuctionId, getByAuctionId };
