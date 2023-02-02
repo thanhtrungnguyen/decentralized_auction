@@ -3,22 +3,19 @@ import styles from "../../styleCss/stylesComponents/forAdmin/sidebar_admin.modul
 import { Link, useNavigate } from "react-router-dom";
 import { BiBookHeart, BiDizzy, BiDonateHeart, BiNews } from "react-icons/bi";
 
-import { useFetchSession } from "../../hooks/useFetch";
+import { useFetchData, useFetchSession } from "../../hooks/useFetch";
+import useAuth from "../../hooks/useAuth";
 
 const SidebarAdmin = () => {
     const navigate = useNavigate();
-    //const { auth } = useAuth();
+    const { auth } = useAuth();
+    console.log(auth);
     // const [loading, data, error] = useFetchData('/session')
-    const { loading: loading2, data: data2, error } = useFetchSession("/session");
-    console.log(data2)
+    const { loading: loading2, data: data2, error } = useFetchData("/session");
     return (
         <>
             <div className={styles.container}>
-                <img
-                    className={styles.avt}
-                    src="https://img.freepik.com/free-icon/user_318-875902.jpg"
-                    alt="img"
-                />
+                <img className={styles.avt} src="https://img.freepik.com/free-icon/user_318-875902.jpg" alt="img" />
                 <p className={styles.txt2}>Admin</p>
                 <p
                     className={styles.txt2}
