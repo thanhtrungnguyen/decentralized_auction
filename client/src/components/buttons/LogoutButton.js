@@ -22,13 +22,13 @@ export const LogoutButton = () => {
     };
 
     return (
-        <button
+        <label
             className={styles.label2}
             onClick={() => {
                 handleLogout();
             }}
         >
             Log out
-        </button>
+        </label>
     );
 };
