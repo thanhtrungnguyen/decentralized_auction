@@ -11,15 +11,15 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <MoralisProvider initializeOnMount={false}>
-            <AuthProvider>
-                <NotificationProvider>
-                    <BrowserRouter>
+            <NotificationProvider>
+                <BrowserRouter>
+                    <AuthProvider>
                         <Routes>
                             <Route path="/*" element={<App />} />
                         </Routes>
-                    </BrowserRouter>
-                </NotificationProvider>
-            </AuthProvider>
+                    </AuthProvider>
+                </BrowserRouter>
+            </NotificationProvider>
         </MoralisProvider>
     </React.StrictMode>
 );

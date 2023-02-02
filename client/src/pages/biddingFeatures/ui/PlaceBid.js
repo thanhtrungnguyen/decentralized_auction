@@ -130,9 +130,10 @@ function PlaceBid({ auction, property }) {
     //============================================================================================
     const placeBidHandleSuccess = async (tx) => {
         try {
-            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
-            await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            setTransactionStatus(tx);
+            const result = await tx.wait(1);
+
+            setTransactionStatus(result);
             socket.emit("send_message", { message: "message", auctionId: auction.auctionId });
             dispatch({
                 type: "success",
@@ -148,7 +149,7 @@ function PlaceBid({ auction, property }) {
 
     const placeBidHandleError = async (tx) => {
         const message = tx.data.message;
-        setTransactionStatus({ status: message });
+        setTransactionStatus(tx);
         dispatch({
             type: "error",
             title: "Place Bid Error",
@@ -160,9 +161,10 @@ function PlaceBid({ auction, property }) {
 
     const retractBidHandleSuccess = async (tx) => {
         try {
-            setTransactionStatus({ hash: tx.hash, status: "Waiting For Confirmation..." });
-            await tx.wait(1);
-            setTransactionStatus({ hash: tx.hash, status: "Completed" });
+            setTransactionStatus(tx);
+            const result = await tx.wait(1);
+
+            setTransactionStatus(result);
             // setBidderState("RETRACT");
             updateUI();
             dispatch({
@@ -178,12 +180,11 @@ function PlaceBid({ auction, property }) {
     };
 
     const retractBidHandleError = async (tx) => {
-        const message = tx.data.message;
-        setTransactionStatus({ status: message });
+        setTransactionStatus(tx);
         dispatch({
             type: "error",
             title: "Place Bid Error",
-            message: message,
+            message: tx.data.message,
             position: "topR",
             icon: <AiOutlineClose />,
         });

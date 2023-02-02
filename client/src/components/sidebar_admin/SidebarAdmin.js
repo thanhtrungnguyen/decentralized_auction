@@ -7,18 +7,14 @@ import { useFetchData } from "../../hooks/useFetch";
 import Loading from "../loading/Loading";
 const SidebarAdmin = () => {
     const navigate = useNavigate();
-    //const { auth } = useAuth();
+    const { auth } = useAuth();
+    console.log(auth);
     // const [loading, data, error] = useFetchData('/session')
     const { loading: loading2, data: data2, error } = useFetchData("/session");
-    console.log(data2)
     return (
         <>
             <div className={styles.container}>
-                <img
-                    className={styles.avt}
-                    src="https://img.freepik.com/free-icon/user_318-875902.jpg"
-                    alt="img"
-                />
+                <img className={styles.avt} src="https://img.freepik.com/free-icon/user_318-875902.jpg" alt="img" />
                 <p className={styles.txt2}>Admin</p>
                 <p
                     className={styles.txt2}

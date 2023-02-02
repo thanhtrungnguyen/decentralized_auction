@@ -8,6 +8,7 @@
     left: 0;
     opacity: 80%;
 }
+
 .container {
     position: fixed;
     width: 1000px;
@@ -22,6 +23,7 @@
     border-radius: 20px;
     z-index: 1001;
 }
+
 .txtBlack {
     font-family: "Josefin Sans";
     font-style: normal;
@@ -32,9 +34,11 @@
     margin-left: 30px;
     color: #000000;
 }
+
 .con {
     display: flex;
 }
+
 .txt {
     font-family: "B612";
     font-style: normal;
@@ -46,6 +50,7 @@
 
     color: #000000;
 }
+
 .info {
     width: 350px;
     height: 350px;
@@ -56,12 +61,14 @@
     margin-left: 50px;
     float: left;
 }
+
 .wait {
     width: 100%;
     height: 100%;
     text-align: center;
     padding-top: 100px;
 }
+
 .detail {
     width: 439px;
     height: 280px;
@@ -72,6 +79,7 @@
     float: right;
     margin-right: 50px;
 }
+
 .img {
     width: 140px;
     height: 140px;
@@ -82,6 +90,7 @@
     float: left;
     margin-right: 20px;
 }
+
 .title {
     font-family: "B612";
     font-style: normal;
@@ -106,6 +115,7 @@
     margin-left: 15px;
     margin-top: 20px;
 }
+
 .txtNormal {
     font-family: "B612";
     font-style: normal;
@@ -117,6 +127,7 @@
     color: #000000;
     margin-left: 15px;
 }
+
 .txtT {
     font-family: "Inter";
     font-style: normal;
@@ -137,6 +148,7 @@
     flex-grow: 0;
     margin-left: 15px;
 }
+
 .input {
     width: 382px;
     height: 30px;
@@ -152,6 +164,7 @@
 
     color: #757575;
 }
+
 .mess {
     font-family: "Inter";
     font-style: normal;
@@ -165,6 +178,7 @@
 
     color: #a92525;
 }
+
 .btn {
     width: 382px;
     height: 36px;
@@ -187,6 +201,7 @@
     order: 0;
     flex-grow: 0;
 }
+
 .btn2 {
     font-family: "Poppins";
     font-style: normal;
@@ -204,6 +219,7 @@
     border-radius: 15px;
     background: #d1e3f3;
 }
+
 .btnClose {
     width: 82px;
     height: 36px;
@@ -226,6 +242,7 @@
     order: 0;
     flex-grow: 0;
 }
+
 .transactions {
     width: 439px;
     height: 200px;
@@ -239,24 +256,29 @@
     overflow: scroll;
     /* display: none; */
 }
+
 .left {
     float: left;
     margin-left: 10px;
 }
+
 .right {
     float: right;
     margin-right: 10px;
 }
+
 .col1 {
     width: 80%;
     /* height: 100%; */
     float: left;
 }
+
 .col2 {
     width: 20%;
     /* height: 100%; */
     float: right;
 }
+
 .tran {
     width: 100%;
     font-family: "Inter";
@@ -269,7 +291,13 @@
     color: #000000;
     margin-left: 10px;
 }
+
 .connect {
     float: right;
     display: flex;
+}
+
+.notification {
+    margin-top: 120px;
+    margin-left: 40px;
 }
