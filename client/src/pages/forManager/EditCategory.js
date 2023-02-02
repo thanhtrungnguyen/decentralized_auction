@@ -49,10 +49,14 @@ const EditCategory = () => {
             theme: "light",
         });
     };
+    const [disable, setDisable] = useState(false);
+
     const handleSubmit = (event) => {
         if (!categoryName.trim()) {
             notify("🦄 categoryName is empty");
         } else {
+            setDisable(true);
+
             axios
                 .patch(
                     `/category/update/${id}`,
@@ -63,11 +67,14 @@ const EditCategory = () => {
                 )
                 .then((res) => {
                     console.log(res);
+                    setDisable(false);
                     console.log(res.data);
-                    notify("Update Successful");
+                    alert("Update Successful");
                     navigate("/managerCategories");
                 })
                 .catch((err) => {
+                    setDisable(false);
+
                     notify(`🦄 Failed: ${err.response.data.message} , ${err}`);
                 });
         }
@@ -116,6 +123,7 @@ const EditCategory = () => {
                             value={categoryName}
                             onChange={(e) => handleInputChange(e)}
                             className={styles.input}
+                            onKeyPress={(e) => e.key === "Enter" && handleSubmit()}
                             required
                         ></input>
                         <select id="status" className={styles.dropdown} onChange={(e) => handleInputChange(e)} placeholder="Gender" value={status}>
@@ -129,10 +137,17 @@ const EditCategory = () => {
                             onClick={() => {
                                 navigate("/managerCategories");
                             }}
+                            disabled={disable}
                         >
                             Cancel
-                        </button>{" "}
-                        <input type="submit" value="Save" className={styles.btnSave} disabled={categoryName === null ? true : false}></input>
+                        </button>
+                        <input
+                            type="submit"
+                            value="Save"
+                            className={styles.btnSave}
+                            disabled={disable}
+                            style={disable ? { backgroundColor: "red" } : {}}
+                        ></input>
                     </div>
                 </div>
             </form>

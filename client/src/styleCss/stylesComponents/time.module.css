@@ -14,12 +14,13 @@
     position: absolute;
     color: #ffffff;
     border: 1px solid black;
-    margin-top: 5px;
+    /* margin-top: 5px; */
     width: 100px;
     height: 32px;
-    line-height: 100%;
+    /* line-height: 100%; */
     text-align: center;
     background-color: white;
     color: black;
     border-radius: 5px;
+    padding-top: 5px;
 }
