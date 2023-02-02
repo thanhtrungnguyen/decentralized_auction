@@ -71,6 +71,7 @@ const EditProfileOrganization = () => {
                 setDateRangeCard(resp.data.result.individual.cardGrantedDate);
                 setCardFront(resp.data.result.individual.frontSideImage);
                 setCardBack(resp.data.result.individual.backSideImage);
+                setData(resp.data.result)
             });
 
             setLoading(false);
@@ -411,7 +412,7 @@ const EditProfileOrganization = () => {
                                 options={cityOptions}
                                 onChange={(option) => onCitySelect(option)}
                                 placeholder="Tỉnh/Thành"
-                                defaultValue={selectedCity}
+                                defaultValue={{ value: data.individual.cityId, label: data.individual.city }}
                             />
                             <br />
                             <br />
@@ -423,7 +424,7 @@ const EditProfileOrganization = () => {
                                 options={districtOptions}
                                 onChange={(option) => onDistrictSelect(option)}
                                 placeholder="Quận/Huyện"
-                                defaultValue={selectedDistrict}
+                                defaultValue={{ value: data.individual.districtId, label: data.individual.district }}
                             />
                             <br />
                             <br />
@@ -435,7 +436,7 @@ const EditProfileOrganization = () => {
                                 options={wardOptions}
                                 placeholder="Phường/Xã"
                                 onChange={(option) => onWardSelect(option)}
-                                defaultValue={selectedWard}
+                                defaultValue={{ value: data.individual.wardsId, label: data.individual.wards }}
                             />
                             <br />
                             <br />
