@@ -22,68 +22,66 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             setHasMetamask(true);
         }
     }, [isWeb3Enabled, account]);
-    const { loading, data, error } = useFetchData(`/auctionRegistration/user/${auction.auctionId}`);
+    const { loading, data, error } = useFetchData(`/auctionRegistration/user/${auction?.auctionId}`);
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
-        // const registeredWallet = checkUserRegistered();
-        // console.log(checkUserRegistered());
-        // debugger;
         if (!auction) return "AuctionNotFound";
         if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
-        // if (registeredWallet != null && registeredWallet != account) {
-        //     return "RegisteredWithOtherWallet";
-        // }
         if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
-        if (auction.endRegistrationTime < currentTimestamp) {
-            // if (registeredWallet == account) {
-            if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
-            if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
-            if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
-            if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
-            // }
-            return "NotRegistered";
-        }
+        if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
+        if (auction.startAuctionTime < currentTimestamp && currentTimestamp < auction.endAuctionTime) return "AuctionTime";
+        if (auction.endAuctionTime < currentTimestamp && currentTimestamp < auction.duePaymentTime) return "PaymentTime";
+        if (auction.duePaymentTime < currentTimestamp) return "AuctionEnded";
         return null;
     };
 
     const renderCurrentState = () => {
-        console.log(data?.auctionRegistration[0]);
-        if (data?.auctionRegistration[0]?.walletAddress !== account) {
-            return (
-                <div className={styles.notification}>
-                    <p>You have used account {data?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
-                    <p>Please switch to that wallet account to continue.</p>
-                </div>
-            );
-        }
-        switch (auctionState()) {
-            case "Loading":
-                return <Loading />;
-            case "NotYetRegistrationTime":
-                return <NotYetRegistrationTime auction={auction} property={property} />;
-            case "RegistrationTime":
-                // return <AuctionRegistration auction={auction} property={property} />;
-                return <AuctionRegistration auction={auction} property={property} />;
-            case "WaitingAuctionTime":
-                return <WaitingForAuctionTime auction={auction} property={property} />;
-            case "AuctionTime":
-                return <PlaceBid auction={auction} property={property} />;
-            case "PaymentTime":
-                // return <h2>PaymentTime</h2>;
-                return <AuctionResult auction={auction} property={property} />;
-            case "AuctionEnded":
-                return <h2>Auction Ended</h2>;
-            case "NotRegistered":
+        try {
+            if (!data)
                 return (
-                    <>
-                        <h1>Bidders only</h1>
-                        <p>Registration Time has ended</p>
-                    </>
+                    <div className={styles.notification}>
+                        <Loader />
+                    </div>
                 );
-            case "AuctionNotFound":
-                return "Auction Not Found";
-            default:
-                return "???????";
+            if (data?.auctionRegistration?.length !== 0 && data?.auctionRegistration[0]?.walletAddress !== account) {
+                return (
+                    <div className={styles.notification}>
+                        <p>You have used account {data?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
+                        <p>Please switch to that wallet account to continue.</p>
+                    </div>
+                );
+            }
+            switch (auctionState()) {
+                case "Loading":
+                    return <Loading />;
+                case "NotYetRegistrationTime":
+                    return <NotYetRegistrationTime auction={auction} property={property} />;
+                case "RegistrationTime":
+                    // return <AuctionRegistration auction={auction} property={property} />;
+                    return <AuctionRegistration auction={auction} property={property} />;
+                case "WaitingAuctionTime":
+                    return <WaitingForAuctionTime auction={auction} property={property} />;
+                case "AuctionTime":
+                    return <PlaceBid auction={auction} property={property} />;
+                case "PaymentTime":
+                    // return <h2>PaymentTime</h2>;
+                    return <AuctionResult auction={auction} property={property} />;
+                case "AuctionEnded":
+                    return <h2>Auction Ended</h2>;
+                case "NotRegistered":
+                    return (
+                        <>
+                            <h1>Bidders only</h1>
+                            <p>Registration Time has ended</p>
+                        </>
+                    );
+                case "AuctionNotFound":
+                    return "Auction Not Found";
+                default:
+                    return "???????";
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
     // console.log("checkUserRegistered()", checkUserRegistered());
