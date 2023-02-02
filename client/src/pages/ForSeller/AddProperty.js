@@ -115,10 +115,10 @@ const AddProperty = () => {
             console.log(`Filename: ${name} - Type: ${type} - Size: ${videoWidth}px x ${videoHeight}px`);
         };
 
-        videoEl.onerror = () => {
-            setIsVideo(false);
-            console.log("Please upload a video file.");
-        };
+        // videoEl.onerror = () => {
+        //     setIsVideo(false);
+        //     console.log("Please upload a video file.");
+        // };
         const fpropertyImage1 = propertyImage1.size;
         const fI1 = Math.round(fpropertyImage1 / 1024);
         const fpropertyImage2 = propertyImage2.size;
