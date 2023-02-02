@@ -4,6 +4,8 @@ import { roles } from '../../config/roles';
 import {
   getAllLogsHandler,
   getAuctionCreatedHandler,
+  getAuctionPaymentHandler,
+  getAuctionRegisterHandler,
   getLogsByAuctionIdHandler,
   getPlacedBidHandler
 } from '../controllers/ContractInteractionController';
@@ -16,5 +18,6 @@ router.get('/logs', getAllLogsHandler);
 router.get('/:auctionId', getLogsByAuctionIdHandler);
 router.get('/createdAuction/:auctionId', getAuctionCreatedHandler);
 router.get('/placedBid/:auctionId', getPlacedBidHandler);
-
+router.get('/register/:auctionId', getAuctionRegisterHandler);
+router.get('/payment/:auctionId', getAuctionPaymentHandler);
 export default router;

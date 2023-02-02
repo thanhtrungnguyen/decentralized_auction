@@ -21,7 +21,7 @@ const ViewRegistrationForManager = () => {
     const { id } = useParams();
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const baseURL = `/auctionRegistration/${id}`;
+    const baseURL = `/contractInteraction/register/${id}`;
     const [role, setRole] = useState();
 
     const [loading, setLoading] = useState(true);
@@ -110,11 +110,11 @@ const ViewRegistrationForManager = () => {
                                 <th className={styles.th}>Registration Hash</th>
                                 <th className={styles.th}>Registered at</th>
                             </tr>
-                            {data.auctionRegistration?.map((auction) => (
+                            {data.registers?.map((auction) => (
                                 <tr>
                                     <td>{auction.user.username}</td>
                                     <td>{auction.walletAddress}</td>
-                                    <td>0xdfdf...fdfd</td>
+                                    <td>{auction.transactionHash}</td>
                                     <td>{new Date(auction.createdAt).toLocaleString()}</td>
                                 </tr>
                             ))}
