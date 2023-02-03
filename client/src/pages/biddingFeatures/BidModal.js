@@ -82,13 +82,6 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
                 return <AuctionResult auction={auction} property={property} />;
             case "AuctionEnded":
                 return <h2>Auction Ended</h2>;
-            case "NotRegistered":
-                return (
-                    <>
-                        <h1>Bidders only</h1>
-                        <p>Registration Time has ended</p>
-                    </>
-                );
             case "AuctionNotFound":
                 return "Auction Not Found";
             default:
