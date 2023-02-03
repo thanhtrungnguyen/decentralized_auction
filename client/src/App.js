@@ -16,7 +16,7 @@ import AddProperty from "./pages/ForSeller/AddProperty";
 import AuctionDetailForSeller from "./pages/ForSeller/AuctionDetailForSeller";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ConfirmCode from "./pages/forgotPassword/ConfirmCode";
-import NewPassword from "./pages/forgotPassword/NewPassword";
+import ResetPassword from "./pages/forgotPassword/ResetPassword";
 import MyAuctions from "./pages/ForSeller/MyAuctions";
 import EditAuction from "./pages/ForSeller/EditAuction";
 import EditProperty from "./pages/ForSeller/EditProperty";
@@ -105,8 +105,8 @@ function App() {
             <Route path="forgotPassword" element={<ForgotPassword />} />
             <Route path="confirmCode/:email" element={<ConfirmCode />} />
             <Route path="confirmCode" element={<ConfirmCode />} />
-            <Route path="newPassword/:userId/:token" element={<NewPassword />} />
-            <Route path="newPassword" element={<NewPassword />} />
+            <Route path="resetPassword/:userId/:passwordResetCode" element={<ResetPassword />} />
+            <Route path="newPassword" element={<ResetPassword />} />
             <Route path="myAuctions" element={<MyAuctions />} />
             <Route path="editAuction/:id" element={<EditAuction />} />
             <Route path="editAuction" element={<EditAuction />} />

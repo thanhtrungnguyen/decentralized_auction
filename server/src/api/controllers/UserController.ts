@@ -216,7 +216,7 @@ export const forgotPasswordHandler = async (req: Request, res: Response, next: N
     to: email,
     from: 'test@example.com',
     subject: 'DAP - Reset your password',
-    text: `http://localhost:5000/api/user/resetPassword/${user._id}/${passwordResetCode}\nhttp://20.85.218.221/api/user/resetPassword/${user._id}/${passwordResetCode}`
+    text: `http://localhost:5000/api/user/resetPassword/${user._id}/${passwordResetCode}\nhttp://20.85.218.221/api/user/resetPassword/${user._id}/${passwordResetCode}\nhttp://localhost:3000/resetPassword/${user._id}/${passwordResetCode}\nhttp://20.85.218.221/resetPassword/${user._id}/${passwordResetCode}\n`
   });
   return res.status(201).json({ message: 'Check your mail to reset your password' });
 };
@@ -225,9 +225,8 @@ export const resetPasswordHandler = async (req: Request, res: Response, next: Ne
   const { userId, passwordResetCode } = req.params;
   const { password } = req.body;
   const user = await getUser({ _id: userId });
-  console.log(user?.passwordResetCode);
   if (!user || user?.passwordResetCode === null || user?.passwordResetCode !== passwordResetCode) {
-    return res.status(400).send({ message: 'Could not reset user password' });
+    return res.status(401).send({ message: 'Could not reset user password' });
   }
   await updateUser({ _id: user._id }, { password, passwordResetCode: null }, { new: true })
     .then((result) => {
