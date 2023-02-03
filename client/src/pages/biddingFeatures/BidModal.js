@@ -46,8 +46,9 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
                     <Loader />
                 </div>
             );
-        console.log(registrationData);
-        if (registrationData && Object.keys(registrationData).length !== 0) {
+        console.log(registrationData?.auctionRegistration?.length !== 0);
+        console.log();
+        if (registrationData?.auctionRegistration?.length !== 0) {
             if (registrationData?.auctionRegistration[0]?.walletAddress !== account) {
                 return (
                     <div className={styles.notification}>
