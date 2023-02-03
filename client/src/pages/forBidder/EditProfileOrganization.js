@@ -21,7 +21,7 @@ const EditProfileOrganization = () => {
     const axios = useAxiosPrivate();
     const { id } = useParams();
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const [role, setRole] = useState();
@@ -57,6 +57,7 @@ const EditProfileOrganization = () => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
+                console.log(resp);
                 setOrganizationName(resp.data.result.name);
                 setTaxCode(resp.data.result.taxCode);
                 setTaxCodeGrantedDate(resp.data.result.taxCodeGrantedDate);
@@ -81,6 +82,7 @@ const EditProfileOrganization = () => {
         };
         fetchData();
     }, []);
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {

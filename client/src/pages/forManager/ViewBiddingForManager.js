@@ -19,6 +19,8 @@ import Time from "../../components/time/Time";
 import Countdown from "react-countdown";
 import { BASE_URL } from "../../api/axios";
 import { parseEther } from "../../utils/ethereumUnitConverter";
+import { useFetchData } from "../../hooks/useFetch";
+import Loader from "../biddingFeatures/components/Loader";
 const ViewBiddingForManager = () => {
     const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
@@ -32,6 +34,7 @@ const ViewBiddingForManager = () => {
     const [role, setRole] = useState();
     const [status, setStatus] = useState(null);
     const [auction, setAuction] = useState(null);
+    const { loading: auctionLoading, data: auctionData, error: auctionError } = useFetchData(`/contractInteraction/createdAuction/${id}`);
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -75,17 +78,6 @@ const ViewBiddingForManager = () => {
     const getDate = (dates) => {
         var date = new Date(new Date(0).setUTCSeconds(dates));
         return date.toLocaleString();
-    };
-    const renderer = ({ days, hours, minutes, seconds, completed }) => {
-        if (completed) {
-            return <p className={styles.lb}>Auction End</p>;
-        } else {
-            return (
-                <p className={styles.lb}>
-                    Auction Time End in {days}d {hours}h {minutes}m {seconds}s
-                </p>
-            );
-        }
     };
     return loading ? (
         <Loading />
@@ -135,6 +127,13 @@ const ViewBiddingForManager = () => {
                         </div>
                         {/* <Countdown date={auction.endAuctionTime * 1000} renderer={renderer} /> */}
                         <p className={styles.lb}>Place Bids Log</p>
+                        {auctionLoading ? (
+                            <Loader />
+                        ) : (
+                            <p className={styles.lb}>
+                                Registration Time End in <Countdown date={auctionData?.createdAuction?.endAuctionTime * 1000} />
+                            </p>
+                        )}
                         <>
                             <table className={styles.table}>
                                 <tr>

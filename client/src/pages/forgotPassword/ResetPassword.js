@@ -54,6 +54,7 @@ const ResetPassword = () => {
                 .then((response) => {
                     if (response.status === 201) {
                         setMessage(response?.data?.message);
+                        navigate("/resetPasswordDone");
                     }
                 })
                 .catch((error) => {

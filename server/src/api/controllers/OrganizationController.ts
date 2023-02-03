@@ -57,6 +57,35 @@ export const updateHandler = async (req: Request, res: Response, next: NextFunct
   const updateData = req.body;
   const files = req.files as { [fieldName: string]: Express.Multer.File[] };
   const sellerInformation = await getOrganization({ individual: id });
+  if (!sellerInformation) {
+    return res.status(404).json({ message: "Seller isn't found" });
+  }
+  if (
+    sellerInformation.name === updateData.name &&
+    sellerInformation.taxCode === updateData.taxCode &&
+    sellerInformation.taxCodeGrantedDate === updateData.taxCodeGrantedDate &&
+    sellerInformation.taxCodeGrantedPlace === updateData.taxCodeGrantedPlace &&
+    sellerInformation.addressOrganization === updateData.addressOrganization &&
+    sellerInformation.individual.firstName === updateData.firstName &&
+    sellerInformation.individual.lastName === updateData.lastName &&
+    sellerInformation.individual.gender === updateData.gender &&
+    sellerInformation.individual.dateOfBirth === updateData.dateOfBirth &&
+    sellerInformation.individual.email === updateData.email &&
+    sellerInformation.individual.phone === updateData.phone &&
+    sellerInformation.individual.city === updateData.city &&
+    sellerInformation.individual.cityId === updateData.cityId &&
+    sellerInformation.individual.wards === updateData.wards &&
+    sellerInformation.individual.wardsId === updateData.wardsId &&
+    sellerInformation.individual.district === updateData.district &&
+    sellerInformation.individual.districtId === updateData.districtId &&
+    sellerInformation.individual.address === updateData.address &&
+    sellerInformation.individual.cardNumber === updateData.cardNumber &&
+    sellerInformation.individual.cardGrantedPlace === updateData.cardGrantedPlace &&
+    sellerInformation.individual.cardGrantedDate === updateData.cardGrantedDate &&
+    Object.keys(files).length === 0
+  ) {
+    return res.status(409).json({ message: 'Your profile is unchanged, please edit information before save !!!' });
+  }
   if (sellerInformation?.name != updateData.name) {
     const existOrganizationName = await getOrganization({ name: req.body.name });
     if (existOrganizationName) {

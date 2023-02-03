@@ -41,9 +41,9 @@ const Register = () => {
     const [gender, setgender] = useState("Male");
     const [dateOfBirth, setdateOfBirth] = useState(null);
     const [email, setEmail] = useState(null);
-    const [phone, setPhone] = useState(null);
+    const [phone, setPhone] = useState('');
     const [specificAddress, setSpecificAddress] = useState(null);
-    const [cardNumber, setcardNumber] = useState(null);
+    const [cardNumber, setcardNumber] = useState('');
     const [dateRangeCard, setdateRangeCard] = useState(null);
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
@@ -61,6 +61,7 @@ const Register = () => {
     //const [usertype] = useState("CONTACT");
 
     const handleInputChange = (e) => {
+        const regexNumber = /^[0-9\b]+$/;
         const { id, value } = e.target;
         if (id === "firstName") {
             setFirstName(value);
@@ -78,13 +79,13 @@ const Register = () => {
             setEmail(value);
         }
         if (id === "phone") {
-            setPhone(value);
+            if (value === '' || regexNumber.test(value)) setPhone(value);
         }
         if (id === "specificAddress") {
             setSpecificAddress(value);
         }
         if (id === "cardNumber") {
-            setcardNumber(value);
+            if (value === '' || regexNumber.test(value)) setcardNumber(value);
         }
         if (id === "dateRangeCard") {
             setdateRangeCard(value);
