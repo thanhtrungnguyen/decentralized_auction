@@ -40,7 +40,6 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
         error: registrationError,
     } = useFetchData(`/auctionRegistration/user/${auction.auctionId}`);
     const renderCurrentState = () => {
-        debugger;
         if (registrationData == null || registrationLoading)
             return (
                 <div className={styles.notification}>
@@ -82,9 +81,17 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
             case "PaymentTime":
                 return <AuctionResult auction={auction} property={property} />;
             case "AuctionEnded":
-                return <h2>Auction Ended</h2>;
+                return (
+                    <div className={styles.notification}>
+                        <h3>The Auction has ended</h3>
+                    </div>
+                );
             case "AuctionNotFound":
-                return "Auction Not Found";
+                return (
+                    <div className={styles.notification}>
+                        <h3>Auction Not Found</h3>
+                    </div>
+                );
             default:
                 return "???????";
         }

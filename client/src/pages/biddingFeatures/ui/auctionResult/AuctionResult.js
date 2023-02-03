@@ -58,19 +58,19 @@ const AuctionResult = ({ auction, property }) => {
     const renderBidderState = () => {
         switch (getBidderState(bidInformation, account)) {
             case "NOT_REGISTERED":
-                return <>NOT_REGISTERED</>;
+                return <div className={styles.notification}>You have not registered</div>;
             case "BIDDING":
                 return <>{renderBidderRank()}</>;
             case "RETRACT":
-                return <>RETRACT</>;
+                return <div className={styles.notification}>You have reacted the auction</div>;
             case "CANCEL":
-                return <>CANCEL</>;
+                return <div className={styles.notification}>You have canceled the auction</div>;
             case "WITHDRAW":
-                return <>WITHDRAW</>;
+                return <div className={styles.notification}>You have withdraw the auction</div>;
             case "PAYMENT":
-                return <>PAYMENT</>;
+                return <div className={styles.notification}>You have paid the auction</div>;
             case "NoBidder":
-                return <>NoBidder </>;
+                return <div className={styles.notification}> ??? </div>;
             default:
                 return <Loader />;
         }

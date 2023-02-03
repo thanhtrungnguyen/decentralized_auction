@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import { useNotification } from "web3uikit";
@@ -8,21 +9,19 @@ import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import BiddingProperty from "../components/BiddingProperty";
 import { useEffect, useState } from "react";
-import WaitingForAuctionTime from "./WaitingForAuctionTime";
 import TransactionStatus from "../components/TransactionStatus";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
 import Loader from "../components/Loader";
 import { parseEther, parseWei } from "../../../utils/ethereumUnitConverter";
 import { getBidderState } from "../../../utils/getBidderState";
-import { useAxios } from "../../../hooks/useAxios";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { useFetchData } from "../../../hooks/useFetch";
 import CheckRegistration from "./CheckRegistration";
 
 function AuctionRegistration({ auction, property }) {
     const { account, isWeb3Enabled } = useMoralis();
     const [transactionStatus, setTransactionStatus] = useState();
     const [bidderState, setBidderState] = useState(false);
+    const [isWaiting, setWaiting] = useState();
     const dispatch = useNotification();
 
     const updateUI = async () => {
@@ -65,6 +64,7 @@ function AuctionRegistration({ auction, property }) {
 
     useEffect(() => {
         if (isWeb3Enabled) {
+            setTransactionStatus("null");
             updateUI();
         }
     }, [isWeb3Enabled, account, bidInformationData?.length]);
@@ -73,6 +73,7 @@ function AuctionRegistration({ auction, property }) {
 
     const handleSuccess = async (tx) => {
         console.log(tx);
+        setWaiting(true);
         setTransactionStatus(tx);
 
         axios
@@ -92,10 +93,11 @@ function AuctionRegistration({ auction, property }) {
             position: "topR",
             icon: <BsCheckLg />,
         });
+        setWaiting(false);
     };
 
     const handleError = () => {
-        setTransactionStatus();
+        setTransactionStatus("null");
         dispatch({
             type: "error",
             title: "Registration Error",
@@ -128,7 +130,7 @@ function AuctionRegistration({ auction, property }) {
                             {loading ? <div>Loading...</div> : <div>Register for auction</div>}
                         </button> */}
                         <button
-                            disabled={isRegisterToBidFetching || isRegisterToBidLoading}
+                            disabled={isRegisterToBidFetching || isRegisterToBidLoading | isWaiting}
                             className={styles.btn}
                             onClick={async () =>
                                 await registerToBid({
@@ -137,7 +139,11 @@ function AuctionRegistration({ auction, property }) {
                                 })
                             }
                         >
-                            {isRegisterToBidFetching || isRegisterToBidLoading ? <div>Loading...</div> : <div>Register for auction</div>}
+                            {isRegisterToBidFetching || isRegisterToBidLoading ? (
+                                <div>Waiting for Confirmation...</div>
+                            ) : (
+                                <div>Register for auction</div>
+                            )}
                         </button>
                         <TransactionStatus transactionStatus={transactionStatus} />
                     </>

@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
-import axios from "axios";
-
-import { useMoralis } from "react-moralis";
 
 const TransactionHistory = ({ auction }) => {
     const baseURL = `http://localhost:8800/api/auctionInformation/${auction.auctionId}/placedBid`;
-
 
     return (
         <div id="trans" className={styles.transactions}>

@@ -2,22 +2,20 @@ import React, { useEffect, useState } from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import { useNotification } from "web3uikit";
 import { useMoralis, useWeb3Contract } from "react-moralis";
-import { ethers } from "ethers";
 import Countdown from "react-countdown";
 import Decimal from "decimal.js";
 import { BsCheckLg } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
-import BiddingProperty from "../components/BiddingProperty";
 import TransactionStatus from "../components/TransactionStatus";
 import ClosedAuction from "./ClosedAuction";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../config/blockchainConfig";
-import { parseWei, parseEther } from "../../../utils/ethereumUnitConverter";
+import { parseWei } from "../../../utils/ethereumUnitConverter";
 const Payment = ({ auction, amount }) => {
     const dispatch = useNotification();
     const { account, isWeb3Enabled } = useMoralis();
     const [transactionStatus, setTransactionStatus] = useState();
-    const [bidAmount, setBidAmount] = useState(0);
     const [isCompleted, setCompleted] = useState();
+    const [isWaiting, setWaiting] = useState();
     const paymentAmount = auction.depositAmount != null && amount != "0" ? new Decimal(amount).minus(auction.depositAmount).toString() : "0";
     console.log(paymentAmount);
     const {
@@ -41,10 +39,11 @@ const Payment = ({ auction, amount }) => {
         if (isWeb3Enabled) {
             updateData();
         }
-    }, [isWeb3Enabled, account, bidAmount]);
+    }, [isWeb3Enabled, account]);
 
     const handleSuccess = async (tx) => {
         try {
+            setWaiting(true);
             setTransactionStatus(tx);
             const result = await tx.wait(1);
             console.log(result);
@@ -68,7 +67,7 @@ const Payment = ({ auction, amount }) => {
         });
     };
     const handleErrorNotification = () => {
-        setTransactionStatus();
+        setTransactionStatus("null");
         dispatch({
             type: "error",
             title: "Payment Error",
@@ -104,7 +103,7 @@ const Payment = ({ auction, amount }) => {
                                     })
                                 }
                             >
-                                {isLoading || isFetching ? <div>Loading...</div> : <div>Send Payment</div>}
+                                {isLoading || isFetching || isWaiting ? <div>Loading...</div> : <div>Send Payment</div>}
                             </button>
                         )}
 
