@@ -10,6 +10,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../config/blockchainCon
 const ResultForOtherBidders = ({ auction }) => {
     const [transactionStatus, setTransactionStatus] = useState();
     const [showButton, setShowButton] = useState(true);
+    const [isWaiting, setWaiting] = useState();
     const dispatch = useNotification();
     const {
         runContractFunction: withdrawDeposit,
@@ -27,6 +28,7 @@ const ResultForOtherBidders = ({ auction }) => {
 
     const handleSuccess = async (tx) => {
         try {
+            setWaiting(true);
             setTransactionStatus(tx);
             const result = await tx.wait(1);
             setTransactionStatus(result);
@@ -58,7 +60,7 @@ const ResultForOtherBidders = ({ auction }) => {
             <p className={styles.title}>Withdraw Deposit:</p>
             {showButton ? (
                 <button
-                    disabled={isLoading || isFetching}
+                    disabled={isLoading || isFetching || isWaiting}
                     className={styles.btn}
                     onClick={async () => {
                         withdrawDeposit({
@@ -67,7 +69,7 @@ const ResultForOtherBidders = ({ auction }) => {
                         });
                     }}
                 >
-                    {isLoading || isFetching ? "Loading..." : "Withdraw Deposit"}
+                    {isLoading || isFetching || isWaiting ? "Loading..." : "Withdraw Deposit"}
                 </button>
             ) : (
                 <p>Withdraw Completed</p>

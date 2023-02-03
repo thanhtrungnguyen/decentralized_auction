@@ -36,5 +36,13 @@ export const UserSchema = {
       .required()
       .label('Confirm password')
       .messages({ 'any.only': '{{#label}} does not match' })
+  }),
+  resetPassword: Joi.object<object>({
+    password: Joi.string().min(3).max(15).required().label('Password'),
+    passwordConfirmation: Joi.any()
+      .equal(Joi.ref('password'))
+      .required()
+      .label('Confirm password')
+      .messages({ 'any.only': '{{#label}} does not match' })
   })
 };

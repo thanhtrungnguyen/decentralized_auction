@@ -25,7 +25,7 @@ const userSchema: Schema = new Schema(
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     verificationCode: { type: String, default: crypto.randomUUID() },
-    passwordResetCode: { type: String || null },
+    passwordResetCode: { type: String || null, default: null },
     verified: { type: Boolean, default: false },
     status: { type: Boolean, required: true, default: true },
     type: { type: String, required: true, enum: ['individual', 'organization', 'operator'] },
