@@ -24,7 +24,8 @@ export const UserSchema = {
     username: Joi.string().trim().required(),
     password: Joi.string().trim().required()
   }),
-  forgotPassword: Joi.object<IUser>({
+
+  forgotPassword: Joi.object<object>({
     username: Joi.string().trim().required()
   }),
   changePassword: Joi.object<object>({
