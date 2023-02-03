@@ -15,6 +15,9 @@ import Loading from "../../components/loading/Loading";
 import Time from "../../components/time/Time";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon icon={faEye} />;
 const AddManager = () => {
     const axios = useAxiosPrivate();
     const [username, setUsername] = useState("");
@@ -32,7 +35,15 @@ const AddManager = () => {
     const type = "operator";
     const navigate = useNavigate();
     const [disable, setDisable] = useState(false);
+    const [passwordShown1, setPasswordShown1] = useState(false);
+    const [passwordShown2, setPasswordShown2] = useState(false);
 
+    const togglePasswordVisibility = () => {
+        setPasswordShown1(passwordShown1 ? false : true);
+    };
+    const toggleRePasswordVisibility = () => {
+        setPasswordShown2(passwordShown2 ? false : true);
+    };
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "username") {
@@ -139,6 +150,7 @@ const AddManager = () => {
                     {
                         username: username.trim(),
                         password: password.trim(),
+                        passwordConfirmation: rePassword.trim(),
                         firstName: firstName.trim(),
                         lastName: lastName.trim(),
                         phone: phone.trim(),
@@ -257,14 +269,29 @@ const AddManager = () => {
                         <p className={styles.txt}>Password</p>
                         <input
                             className={styles.ip}
-                            type="password"
+                            type={passwordShown1 ? "text" : "password"}
+                            value={password}
                             onChange={(e) => handleInputChange(e)}
                             id="password"
                             required
                             pattern="^\s*(?:\S\s*){8,}$"
                         ></input>
+                        <i className={styles.i} onClick={togglePasswordVisibility}>
+                            {eye}
+                        </i>
                         <p className={styles.txt}>Re-Password</p>
-                        <input className={styles.ip} type="password" required onChange={(e) => handleInputChange(e)} id="rePassword"></input>
+                        <input
+                            className={styles.ip}
+                            type={passwordShown2 ? "text" : "password"}
+                            value={rePassword}
+                            required
+                            onChange={(e) => handleInputChange(e)}
+                            id="rePassword"
+                            pattern="^\s*(?:\S\s*){8,}$"
+                        ></input>
+                        <i className={styles.i} onClick={toggleRePasswordVisibility}>
+                            {eye}
+                        </i>
                         <label style={{ color: "red" }}>{message}</label>
                         <br />
                         <br />
