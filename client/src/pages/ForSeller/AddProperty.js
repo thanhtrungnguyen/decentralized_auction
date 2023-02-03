@@ -57,7 +57,7 @@ const AddProperty = () => {
         });
     };
     const handleInputChange = (e) => {
-        const re = /^[0-9]*\.?[0-9]*$/;
+        const regexNumber = /^[0-9]*\.?[0-9]*$/;
         const { id, value } = e.target;
         if (id === "propertyImage1") {
             setPropertyImage1(e.target.files[0]);
@@ -81,13 +81,13 @@ const AddProperty = () => {
             setPropertyDescription(value);
         }
         if (id === "startBid") {
-            if (value === '' || re.test(value)) setStartBid(value);
+            if (value === '' || regexNumber.test(value)) setStartBid(value);
         }
         if (id === "deposit") {
-            if (value === '' || re.test(value)) setDeposit(value);
+            if (value === '' || regexNumber.test(value)) setDeposit(value);
         }
         if (id === "priceStep") {
-            if (value === '' || re.test(value)) setPriceStep(value);
+            if (value === '' || regexNumber.test(value)) setPriceStep(value);
         }
         if (id === "placeViewProperty") {
             setPlaceViewProperty(value);
