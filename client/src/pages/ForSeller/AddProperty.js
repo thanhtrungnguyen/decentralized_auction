@@ -30,9 +30,9 @@ const AddProperty = () => {
     const [propertyName, setPropertyName] = useState(null);
     const [category, setCategory] = useState("null");
     const [propertyDescription, setPropertyDescription] = useState(null);
-    const [startBid, setStartBid] = useState(null);
-    const [deposit, setDeposit] = useState(null);
-    const [priceStep, setPriceStep] = useState(null);
+    const [startBid, setStartBid] = useState('');
+    const [deposit, setDeposit] = useState('');
+    const [priceStep, setPriceStep] = useState('');
     const [placeViewProperty, setPlaceViewProperty] = useState(null);
     // const [startBid, setStartBid] = useState(null);
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
@@ -57,6 +57,7 @@ const AddProperty = () => {
         });
     };
     const handleInputChange = (e) => {
+        const re = /^[0-9]*\.?[0-9]*$/;
         const { id, value } = e.target;
         if (id === "propertyImage1") {
             setPropertyImage1(e.target.files[0]);
@@ -80,13 +81,13 @@ const AddProperty = () => {
             setPropertyDescription(value);
         }
         if (id === "startBid") {
-            setStartBid(value);
+            if (value === '' || re.test(value)) setStartBid(value);
         }
         if (id === "deposit") {
-            setDeposit(value);
+            if (value === '' || re.test(value)) setDeposit(value);
         }
         if (id === "priceStep") {
-            setPriceStep(value);
+            if (value === '' || re.test(value)) setPriceStep(value);
         }
         if (id === "placeViewProperty") {
             setPlaceViewProperty(value);
