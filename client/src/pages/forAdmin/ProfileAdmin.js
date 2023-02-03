@@ -40,7 +40,7 @@ const ProfileAdmin = () => {
                         <div className={styles.add}>
                             <br />
                             <br />
-                            <label className={styles.title}>Admin Account Information</label>
+                            <label className={styles.title}>Admin Information</label>
                             <br />
                             <br />
 
