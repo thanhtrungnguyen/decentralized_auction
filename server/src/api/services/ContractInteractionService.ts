@@ -66,7 +66,7 @@ const getCreatedAuctionById = async (auctionId: string) => {
       registrationFee: parseEther(list[0].registrationFee),
       depositAmount: parseEther(list[0].depositAmount),
       startBid: parseEther(list[0].startBid),
-      priceStep: parseEther(list[0].startBid)
+      priceStep: parseEther(list[0].priceStep)
     };
   } catch (error) {
     logger.error(error);
