@@ -152,8 +152,8 @@ const ViewBiddingForManager = () => {
                                             <td>{bid?.user?.username}</td>
                                             <td>{bid?.bidder}</td>
                                             <td>{bid?.transactionHash}</td>
-                                            <td>{bid?.bidAmount == undefined && <p></p>} </td>
-                                            <td>{bid?.bidAmount != undefined && parseEther(bid?.bidAmount)}</td>
+
+                                            <td>{bid?.bidAmount != undefined ? parseEther(bid?.bidAmount) : <p></p>}</td>
                                             <td>{getDate(bid?.blockTimestamp)}</td>
                                             <td>
                                                 {bid.name === "PlacedBid" && "Bidding"}
