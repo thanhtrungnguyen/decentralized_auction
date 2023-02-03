@@ -120,7 +120,7 @@ function AuctionRegistration({ auction, property }) {
                             ETH
                         </p>
                         <button
-                            disabled={isRegisterToBidFetching || isRegisterToBidLoading | isWaiting}
+                            disabled={isRegisterToBidFetching || isRegisterToBidLoading || isWaiting}
                             className={styles.btn}
                             onClick={async () => {
                                 await registerToBid({
@@ -129,7 +129,7 @@ function AuctionRegistration({ auction, property }) {
                                 });
                             }}
                         >
-                            {isRegisterToBidFetching || isRegisterToBidLoading ? (
+                            {isRegisterToBidFetching || isRegisterToBidLoading || isWaiting ? (
                                 <div>Waiting for Confirmation...</div>
                             ) : (
                                 <div>Register for auction</div>
@@ -158,7 +158,7 @@ function AuctionRegistration({ auction, property }) {
                 <div>
                     <div>
                         <p className={styles.txtBlack}>Auction Registration </p>
-                        <p className={styles.txt}>You have selected:</p>\
+                        <p className={styles.txt}>You have selected:</p>
                         <div>
                             <div className={styles.info}>
                                 <BiddingProperty property={property} />

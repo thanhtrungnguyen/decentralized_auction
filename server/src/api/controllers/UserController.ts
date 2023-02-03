@@ -205,8 +205,7 @@ export const forgotPasswordHandler = async (req: Request, res: Response, next: N
     }
     email = operator.email;
   }
-  console.log(email);
-  if (email) {
+  if (!email) {
     return res.status(404).json({ message: 'Email is not found' });
   }
   const passwordResetCode = crypto.randomUUID();
@@ -226,12 +225,11 @@ export const resetPasswordHandler = async (req: Request, res: Response, next: Ne
   const { userId, passwordResetCode } = req.params;
   const { password } = req.body;
   const user = await getUser({ _id: userId });
-  if (!user || !user.passwordResetCode || user.passwordResetCode !== passwordResetCode) {
-    return res.status(400).send('Could not reset user password');
+  console.log(user?.passwordResetCode);
+  if (!user || user?.passwordResetCode === null || user?.passwordResetCode !== passwordResetCode) {
+    return res.status(400).send({ message: 'Could not reset user password' });
   }
-  user.passwordResetCode = null;
-  user.password = password;
-  await updateUser({ _id: user._id }, { password }, { new: true })
+  await updateUser({ _id: user._id }, { password, passwordResetCode: null }, { new: true })
     .then((result) => {
       return res.status(201).json({ message: 'Successfully updated password' });
     })
