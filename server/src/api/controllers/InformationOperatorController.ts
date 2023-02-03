@@ -73,7 +73,20 @@ export const updateInformationOperatorHandler = async (req: Request, res: Respon
   // if (existUser) {
   //   return res.status(409).json({ message: 'User name has been exist!' });
   // }
-  var user = await getInformationOperator({ _id: idOperator });
+  const user = await getInformationOperator({ _id: idOperator });
+  if (!user) {
+    return res.status(404).json({ message: "Operator isn't found" });
+  }
+  if (
+    user.firstName === updateData.firstName &&
+    user.lastName === updateData.lastName &&
+    user.gender === updateData.gender &&
+    user.email === updateData.email &&
+    user.phone === updateData.phone &&
+    user.address === updateData.address
+  ) {
+    return res.status(409).json({ message: 'Your profile is unchanged, please edit information before save !!!' });
+  }
   if (updateData.email != user?.email) {
     const existEmail = await getInformationOperator({ email: updateData.email });
     if (existEmail) {
