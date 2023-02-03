@@ -117,18 +117,6 @@ function AuctionRegistration({ auction, property }) {
                             {parseEther(amount)}
                             ETH
                         </p>
-                        {/* <button
-                            disabled={isRegisterToBidFetching || isRegisterToBidLoading}
-                            className={styles.btn}
-                            onClick={async () =>
-                                await registerToBid({
-                                    onSuccess: handleSuccess,
-                                    onError: handleError,
-                                })
-                            }
-                        >
-                            {loading ? <div>Loading...</div> : <div>Register for auction</div>}
-                        </button> */}
                         <button
                             disabled={isRegisterToBidFetching || isRegisterToBidLoading | isWaiting}
                             className={styles.btn}
