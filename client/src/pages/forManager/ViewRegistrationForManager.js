@@ -15,6 +15,9 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
 import Time from "../../components/time/Time";
+import Countdown from "react-countdown";
+import { useFetchData } from "../../hooks/useFetch";
+import Loader from "../biddingFeatures/components/Loader";
 const ViewRegistrationForManager = () => {
     const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
@@ -26,12 +29,12 @@ const ViewRegistrationForManager = () => {
 
     const [loading, setLoading] = useState(true);
 
+    const { loading: auctionLoading, data: auctionData, error: auctionError } = useFetchData(`/contractInteraction/createdAuction/${id}`);
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             axios.get(baseURL).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
                 setData(resp.data);
             });
             setLoading(false);
@@ -100,7 +103,13 @@ const ViewRegistrationForManager = () => {
                             <input className={styles.ip} type="text" placeholder="Enter Name"></input>
                             <button className={styles.btn}>Search</button>
                         </div>
-                        <p className={styles.lb}>Registration Time End in 1d 4h 32m 32s</p>
+                        {auctionLoading ? (
+                            <Loader />
+                        ) : (
+                            <p className={styles.lb}>
+                                Registration Time End in <Countdown date={auctionData?.createdAuction?.endRegistrationTime * 1000} />
+                            </p>
+                        )}
                         <p className={styles.lb}>Total Registered Bidders: 10</p>
 
                         <table className={styles.table}>

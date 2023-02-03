@@ -450,7 +450,7 @@ contract Auction {
         external
         payable
         isRegisteredBidder(auctionId)
-        isConfirmationTime(auctionId)
+    // isConfirmationTime(auctionId)
     {
         s_bidInformations[auctionId][getIndexOfBidder(auctionId)].bidderState = BidderState.CANCEL;
         s_proceeds += s_auctionInformations[auctionId].depositAmount;
