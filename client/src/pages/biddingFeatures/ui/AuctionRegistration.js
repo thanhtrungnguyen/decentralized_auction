@@ -70,18 +70,20 @@ function AuctionRegistration({ auction, property }) {
     }, [isWeb3Enabled, account, bidInformationData?.length]);
 
     const axios = useAxiosPrivate();
-
-    const handleSuccess = async (tx) => {
-        console.log(tx);
-        setWaiting(true);
-        setTransactionStatus(tx);
-
-        axios
+    const postAuctionRegistration = async () => {
+        await axios
             .post(`/auctionRegistration/${auction.auctionId}/registration`, {
                 walletAddress: account,
             })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
+            .then((res) => console.log("res", res))
+            .catch((err) => console.log("err", err));
+    };
+
+    const handleSuccess = async (tx) => {
+        setWaiting(true);
+        setTransactionStatus(tx);
+        postAuctionRegistration();
+
         const result = await tx.wait(1);
         console.log(result);
         setTransactionStatus(result);
@@ -120,12 +122,12 @@ function AuctionRegistration({ auction, property }) {
                         <button
                             disabled={isRegisterToBidFetching || isRegisterToBidLoading | isWaiting}
                             className={styles.btn}
-                            onClick={async () =>
+                            onClick={async () => {
                                 await registerToBid({
                                     onSuccess: handleSuccess,
                                     onError: handleError,
-                                })
-                            }
+                                });
+                            }}
                         >
                             {isRegisterToBidFetching || isRegisterToBidLoading ? (
                                 <div>Waiting for Confirmation...</div>
