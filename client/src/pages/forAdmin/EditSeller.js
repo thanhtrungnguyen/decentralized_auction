@@ -14,7 +14,7 @@ const EditSeller = () => {
     const axios = useAxiosPrivate();
     const { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true);
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
     const [isExist, setIsExit] = useState(false);
@@ -46,7 +46,10 @@ const EditSeller = () => {
     const [cB, setCB] = useState(null);
     const [cF, setCF] = useState(null);
     const [disable, setDisable] = useState(false);
-
+    const [checkCity, setCheckCity] = useState(true);
+    const [checkDistrict, setCheckDistrict] = useState(true);
+    const [checkWard, setCheckWard] = useState(true);
+    const [data, setData] = useState([]);
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "organizationName") {
@@ -137,6 +140,7 @@ const EditSeller = () => {
         const fetchData = async () => {
             setLoading(true);
             await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
                 setOrganizationName(resp.data.result.name);
                 setTaxCode(resp.data.result.taxCode);
                 setTaxCodeGrantedDate(resp.data.result.taxCodeGrantedDate);
@@ -154,6 +158,8 @@ const EditSeller = () => {
                 setdateRangeCard(resp.data.result.individual.cardGrantedDate);
                 setCardFront(resp.data.result.individual.frontSideImage);
                 setCardBack(resp.data.result.individual.backSideImage);
+
+                setData(resp.data.result);
             });
             setLoading(false);
         };
@@ -463,9 +469,14 @@ const EditSeller = () => {
                                 key={`cityId_${selectedCity?.value}`}
                                 isDisabled={cityOptions.length === 0}
                                 options={cityOptions}
-                                onChange={(option) => onCitySelect(option)}
+                                onChange={(option) => {
+                                    onCitySelect(option);
+                                    setCheckCity(false);
+                                    setCheckDistrict(false);
+                                    setCheckWard(false);
+                                }}
                                 placeholder="Tỉnh/Thành"
-                                defaultValue={selectedCity}
+                                defaultValue={checkCity == true ? { value: data.individual.cityId, label: data.individual.city } : selectedCity}
                             />
                             <br />
                             <br />
@@ -477,7 +488,9 @@ const EditSeller = () => {
                                 options={districtOptions}
                                 onChange={(option) => onDistrictSelect(option)}
                                 placeholder="Quận/Huyện"
-                                defaultValue={selectedDistrict}
+                                defaultValue={
+                                    checkDistrict == true ? { value: data.individual.districtId, label: data.individual.district } : selectedDistrict
+                                }
                             />
                             <br />
                             <br />
@@ -489,7 +502,7 @@ const EditSeller = () => {
                                 options={wardOptions}
                                 placeholder="Phường/Xã"
                                 onChange={(option) => onWardSelect(option)}
-                                defaultValue={selectedWard}
+                                defaultValue={checkWard == true ? { value: data.individual.wardsId, label: data.individual.wards } : selectedWard}
                             />
                             <br />
                             <br />
