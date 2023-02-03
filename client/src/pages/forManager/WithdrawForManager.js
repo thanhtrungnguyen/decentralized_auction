@@ -112,10 +112,10 @@ const WithdrawForManager = () => {
                             </tr>
                             {data.withdraw?.map((auction) => (
                                 <tr>
-                                    <td>{auction.user.username}</td>
-                                    <td>{auction.walletAddress}</td>
-                                    <td>0xdfdf...fdfd</td>
-                                    <td>{new Date(auction.createdAt).toLocaleString()}</td>
+                                    <td>{auction?.user?.username}</td>
+                                    <td>{auction?.bidder}</td>
+                                    <td>{auction?.transactionHash}</td>
+                                    <td>{new Date(auction?.blockTimestamp * 1000).toLocaleString()}</td>
                                 </tr>
                             ))}
                         </table>
