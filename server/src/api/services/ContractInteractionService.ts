@@ -114,7 +114,7 @@ const bubbleSort = (array: FirebaseFirestore.DocumentData[]) => {
   return array;
 };
 const getAuctionPayment = async (auctionId: string) => {
-  const condition = ['ClosedAuctionSuccessful'];
+  const condition = ['PaymentCompeleted'];
   try {
     const logs = await database.collection(COLLECTION_PATH).where('name', 'in', condition).where('auctionId', '==', auctionId).get();
 
