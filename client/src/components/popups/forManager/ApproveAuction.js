@@ -62,6 +62,8 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
             notify("🦄 Due Payment Time must after End Auction Time");
         } else if (registrationFee <= 0) {
             notify("🦄 Registration Fee must more than 0 ");
+        } else if (duePaymentTime.dayOfYear - endAuctionTime.dayOfYear < 7) {
+            notify("🦄 Due Payment Time must after End Auction Time more than 7 days ");
         } else {
             setDisable(true);
 

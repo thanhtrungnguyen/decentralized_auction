@@ -30,9 +30,9 @@ const AddProperty = () => {
     const [propertyName, setPropertyName] = useState(null);
     const [category, setCategory] = useState("null");
     const [propertyDescription, setPropertyDescription] = useState(null);
-    const [startBid, setStartBid] = useState('');
-    const [deposit, setDeposit] = useState('');
-    const [priceStep, setPriceStep] = useState('');
+    const [startBid, setStartBid] = useState("");
+    const [deposit, setDeposit] = useState("");
+    const [priceStep, setPriceStep] = useState("");
     const [placeViewProperty, setPlaceViewProperty] = useState(null);
     // const [startBid, setStartBid] = useState(null);
     const [viewPropertyTime, setViewPropertyTime] = useState([new DateObject().setDay(15), new DateObject().add(1, "month").setDay(15)]);
@@ -81,13 +81,13 @@ const AddProperty = () => {
             setPropertyDescription(value);
         }
         if (id === "startBid") {
-            if (value === '' || regexNumber.test(value)) setStartBid(value);
+            if (value === "" || regexNumber.test(value)) setStartBid(value);
         }
         if (id === "deposit") {
-            if (value === '' || regexNumber.test(value)) setDeposit(value);
+            if (value === "" || regexNumber.test(value)) setDeposit(value);
         }
         if (id === "priceStep") {
-            if (value === '' || regexNumber.test(value)) setPriceStep(value);
+            if (value === "" || regexNumber.test(value)) setPriceStep(value);
         }
         if (id === "placeViewProperty") {
             setPlaceViewProperty(value);
@@ -107,7 +107,12 @@ const AddProperty = () => {
         const videoEl = document.createElement("video");
         videoEl.src = window.URL.createObjectURL(propertyVideo);
         console.log(window.URL.createObjectURL(propertyVideo));
-        videoEl.onloadedmetadata = (event) => {
+
+        videoEl.onerror = () => {
+            setIsVideo(false);
+            console.log("Please upload a video file.");
+        };
+        videoEl.onloadedmetadata = () => {
             setIsVideo(true);
             window.URL.revokeObjectURL(videoEl.src);
             const { name, type } = propertyVideo;
@@ -116,10 +121,6 @@ const AddProperty = () => {
             console.log(`Filename: ${name} - Type: ${type} - Size: ${videoWidth}px x ${videoHeight}px`);
         };
 
-        // videoEl.onerror = () => {
-        //     setIsVideo(false);
-        //     console.log("Please upload a video file.");
-        // };
         const fpropertyImage1 = propertyImage1.size;
         const fI1 = Math.round(fpropertyImage1 / 1024);
         const fpropertyImage2 = propertyImage2.size;
@@ -172,9 +173,11 @@ const AddProperty = () => {
             notify("🦄 Image 2 Only jpg/jpeg and png files are allowed");
         } else if (extFile3 !== "jpg" && extFile3 !== "jpeg" && extFile3 !== "png") {
             notify("🦄 Image 3 Only jpg/jpeg and png files are allowed");
-        } else if (!isVideo) {
-            notify("🦄 Video Only video files are allowed. Please select again");
-        } else {
+        }
+        //  else if (!isVideo) {
+        //     notify("🦄 Video Only video files are allowed. Please select again");
+        // }
+        else {
             setDisable(true);
             console.log(disable);
             const formData = new FormData();
@@ -477,7 +480,7 @@ const AddProperty = () => {
                             disabled={disable}
                         ></input>
 
-                        <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
+                        <input className={styles.btnCancel} type="button" disabled={disable} value="Cancel" onClick={Cancel}></input>
                     </div>
                 </div>
             </form>
