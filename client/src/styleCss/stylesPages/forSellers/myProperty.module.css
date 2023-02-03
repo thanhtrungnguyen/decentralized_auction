@@ -45,6 +45,19 @@
     position: absolute;
     margin-bottom: 100px;
 }
+.con2 {
+    width: 1500px;
+    height: 711px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-top: 50px;
+    margin-left: 340px;
+    position: absolute;
+    margin-bottom: 100px;
+}
 
 .table {
     border-collapse: collapse;
