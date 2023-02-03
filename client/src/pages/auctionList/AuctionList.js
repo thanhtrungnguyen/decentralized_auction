@@ -135,16 +135,20 @@ const AuctionList = () => {
         }
     };
     const handleApplyFilter = () => {
-        if (minValue === '' || minValue < 0) {
+        if (minValue > maxValue) {
+            alert('From value must be less than To value ')
             set_minValue(0)
             set_minValue2(0)
-        } else {
-            set_minValue2(minValue)
-        }
-        if (maxValue === '' || maxValue < 0) {
+            set_maxValue(100)
+            set_maxValue2(100)
+        } else if (minValue === '' || minValue < 0) {
+            set_minValue(0)
+            set_minValue2(0)
+        } else if (maxValue === '' || maxValue < 0) {
             set_maxValue(100)
             set_maxValue2(100)
         } else {
+            set_minValue2(minValue)
             set_maxValue2(maxValue)
         }
     };
@@ -156,13 +160,17 @@ const AuctionList = () => {
     function exportData(data) {
         return (
             <>
-                {data.listAuction.map((item) => (
+                {data?.listAuction.map((item) => (
                     <div className={styles.auction}>
                         <img className={styles.img} src={`${item.property.mediaUrl[0]}`} alt="img" />
                         <p className={styles.name}>{item.name}</p>
                         <p className={styles.price}>{item.property.startBid} ETH</p>
                         <p className={styles.status}>Status: {item.status === 'Closed' ? 'Past Auction'
-                            : item.status === 'Bidding' ? 'Current Auction' : item.status === 'Approved' ? 'Upcoming' : item.status} </p>
+                            : item.status === 'Bidding' ? 'Bidding'
+                                : item.status === 'Approved' ? 'Upcoming For Registration'
+                                    : item.status === 'RegistrationTime' ? 'Registration'
+                                        : item.status === 'UpcomingForBid' ? 'Upcoming For Bidding'
+                                            : item.status} </p>
                         <p className={styles.time}>
                             <AiOutlineFieldTime className={styles.i} />
                             <label className={styles.l}>
@@ -310,7 +318,7 @@ const AuctionList = () => {
                 </div>
                 <div className={styles.content}>
                     <div className={styles.info}>
-                        <label className={styles.label2}>13 Items</label>
+                        <label className={styles.label2}>{auctions.count} Items</label>
                         <label className={styles.label3}>Sort By</label>
                         <select className={styles.select} onChange={(e) => handleSort(e)}>
                             <option value="0" selected={sort === "0"}>
@@ -337,7 +345,7 @@ const AuctionList = () => {
                     <Pagination
                         className={styles.pagi}
                         hidden={auctions.count === 0 ? true : false}
-                        count={Math.ceil(auctions.count / 5)}
+                        count={Math.ceil(auctions.count / 4)}
                         page={page}
                         onChange={handleChange}
                     />

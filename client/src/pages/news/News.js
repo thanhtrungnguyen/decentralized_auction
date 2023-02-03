@@ -82,7 +82,7 @@ const News = () => {
                 <div className={styles.col1}>
                     {exportData(data)}
                     <div className={styles.pagination}>
-                        <Pagination className={styles.pagi} size="large" count={Math.ceil(data.news.count / 8)} page={page} onChange={handleChange} />
+                        <Pagination className={styles.pagi} size="large" count={Math.ceil(data.news.count / 4)} page={page} onChange={handleChange} />
                     </div>
                 </div>
                 <div className={styles.col2}>

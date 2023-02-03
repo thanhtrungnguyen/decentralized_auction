@@ -62,7 +62,7 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any, so
   try {
     var arr, count;
     let categoryOptions = [];
-    const page_size = 5;
+    const page_size = 4;
     search == 'null' ? (search = '') : (search = search);
     const allStatus = ['Closed', 'Bidding', 'RegistrationTime', 'UpcomingForBid', 'Approved'];
     status === '' ? (status = [...allStatus]) : (status = status.split(','));
@@ -112,14 +112,15 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any, so
     await Auction.find({ name: { $regex: search, $options: 'i' }, status: { $ne: 'Request' } })
       .where('status')
       .in([...status])
+      .sort({ createdAt: -1 })
       .populate({
         path: 'property',
         match: {
-          startBid: { $gte: parseInt(minPrice), $lt: parseInt(maxPrice) }
+          startBid: { $gte: parseFloat(minPrice), $lt: parseFloat(maxPrice) }
         },
-        // options: {
-        //   sort: sort === 0 ? {} : { startBid: sort }
-        // },
+        options: {
+          sort: { startBid: 1 }
+        },
         populate: {
           path: 'category',
           match: {
@@ -127,7 +128,6 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any, so
           }
         }
       })
-      .sort()
       .then((result) => {
         count = result.filter((item) => item.property !== null && item.property.category !== null).length;
       });

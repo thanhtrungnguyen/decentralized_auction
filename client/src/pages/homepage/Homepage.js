@@ -6,79 +6,66 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/stylesPages/hompage.module.css";
 
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 
 import Loading from "../../components/loading/Loading";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import FooterCopy from "../../components/footer/FooterCopy";
 const HomePage = () => {
     const axios = useAxiosPrivate();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
-    const [status, setStatus] = useState(5);
+    const [status, setStatus] = useState([]);
     const [price, setPrice] = useState(null);
-    const [sort, setSort] = useState(1);
+    const [sort, setSort] = useState(0);
     const [role, setRole] = useState();
     const [name, setName] = useState(null);
     const [dataAuction, setDataAuction] = useState([]);
     const [dataNews, setDataNews] = useState([]);
+    const [minValue2, set_minValue2] = useState(0);
+    const [maxValue2, set_maxValue2] = useState(100);
+    const [search, setSearch] = useState(null);
+    const [filterCategories, setFilterCategories] = useState([]);
     const perPage = 4;
     var statusNews = "Published";
     var title = null;
-    var baseURL = `/news/getAll/${page}/${statusNews}/${title}/${perPage}`;
-    const baseURLAuction = `/auction/filter/${page}/${status}/${price}/${sort}/${name}`;
+    var baseURL = `/news/news/${page}/Activate/null`;
+    const baseURLAuction = `/auction/auctions/bidder?page=${page}&status=${status}&search=${search}&sort=${sort}&category=${filterCategories}&minValue=${minValue2}&maxValue=${maxValue2}`
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         await axios.get(baseURLAuction).then((resp) => {
-    //             // console.log(resp.data);
-    //             // console.log("axios get");
-    //             setDataAuction(resp.data);
-    //         });
-    //         await axios.get(baseURL).then((resp) => {
-    //             // console.log(resp.data);
-    //             // console.log("axios get");
-    //             setDataNews(resp.data);
-    //         });
-    //         if (getUser() != null) {
-    //             setRole(getUser().role);
-    //         } else {
-    //             setRole("");
-    //         }
-    //         setLoading(false);
-    //     };
-    //     fetchData();
-    // }, [baseURLAuction]);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURLAuction).then((resp) => {
+                //console.log(resp.data);
+                // console.log("axios get");
+                setDataAuction(resp.data.auctions.listAuction);
+            });
+            await axios.get(baseURL).then((resp) => {
+                console.log(resp.data);
+                // console.log("axios get");
+                setDataNews(resp.data.news);
+            });
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURLAuction]);
+    console.log(dataNews)
     function exportAuction(data) {
         return (
             <>
-                {data.auctionlist.map((auction) => (
-                    <div className={styles.col}>
-                        <img
-                            className={styles.img2}
-                            src={`http://localhost:8800/api/auction/images/${auction.Properties_Media__r.records[0].Name}`}
-                            alt="images"
-                        />
-                        <p className={styles.txtImg}>{auction.Auctions1__r.records[0].Name}</p>
-                        <p className={styles.txtImgS}>Starting price : ${auction.Start_Bid__c}</p>
-                        <Link className={styles.btnF} to={`/auctiondetail/${auction.Auctions1__r.records[0].Id}/${auction.Id}`}>
-                            Auction Now
-                        </Link>
-                    </div>
-                ))}
+
             </>
         );
     }
     function exportNews(data) {
         return (
             <>
-                {data.listNews.map((item) => (
+                {data?.listNews.map((item) => (
                     <div className={styles.col}>
-                        <img className={styles.img2} src={`http://localhost:8800/api/auction/images/${item.Avatar__c}`} alt="images" />
-                        <p className={styles.txtImg}>{item.Name}</p>
+                        <img className={styles.img2} src={item.avatar} alt="images" />
+                        <p className={styles.txtImg}>{item.title}</p>
                         {/* <p className={styles.txtImgS}>More off this less hello samlande lied much over tightly circa horse taped mightly</p> */}
-                        <Link className={styles.Link} to={`/viewNews/${item.Id}`}>
+                        <Link className={styles.Link} to={`/viewNews/${item._id}`}>
                             Read more
                         </Link>
                     </div>
@@ -122,7 +109,22 @@ const HomePage = () => {
                 <div className={styles.featured}>
                     <p className={styles.titleBule}>Featured Auctions</p>
                     <div className={styles.RelatedAuctions}>
-                        <div className={styles.tb}>{/* {exportAuction(dataAuction)} */}</div>
+
+                        {/* {exportAuction(dataAuction)} */}
+                        {dataAuction?.map((auction) => (
+                            <div className={styles.col}>
+                                <img
+                                    className={styles.img2}
+                                    src={auction?.property.mediaUrl[0]}
+                                    alt="images"
+                                />
+                                <p className={styles.txtImg}>{auction?.name}</p>
+                                <p className={styles.txtImgS}>Starting price : ${auction?.property.startBid}</p>
+                                <Link className={styles.btnF} to={`/auctionDetail/${auction?._id}`}>
+                                    Auction Now
+                                </Link>
+                            </div>
+                        ))}
                     </div>
                 </div>
                 <div className={styles.banner2}>
@@ -146,7 +148,7 @@ const HomePage = () => {
                 <div className={styles.LeatestNew}>
                     <p className={styles.titleBule}>Leatest News</p>
                     <div className={styles.RelatedAuctions}>
-                        <div className={styles.tb}>{/* {exportNews(dataNews)} */}</div>
+                        <div className={styles.tb}>{exportNews(dataNews)}</div>
                     </div>
                 </div>
             </div>
