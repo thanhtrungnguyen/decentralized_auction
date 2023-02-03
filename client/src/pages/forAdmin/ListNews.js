@@ -178,7 +178,7 @@ const ListNews = () => {
                         </table>
                         <hr />
                         <div>
-                            <Pagination className={styles.Pagination} count={Math.ceil(data.count / 8)} page={page} onChange={handleChange} />
+                            <Pagination className={styles.Pagination} hidden={data.count === 0 ? true : false} count={Math.ceil(data.count / 8)} page={page} onChange={handleChange} />
                         </div>
                     </div>
                 </div>

@@ -32,14 +32,16 @@ const getByAuctionId = async (auctionId: string) => {
 
     let listLogs: any[] = [];
     list?.forEach((log) => {
+      let bigLog;
       const logAny = log as any;
       auctionRegistration?.forEach((regis) => {
         const regisAny = regis as any;
         if (logAny?.bidder === regisAny.walletAddress) {
-          const bigLog = { ...logAny, ...regisAny };
-          listLogs.push(bigLog);
+          bigLog = { ...logAny, ...regisAny };
         }
       });
+      if (bigLog == null) bigLog = { ...logAny };
+      listLogs.push(bigLog);
     });
     return listLogs;
   } catch (error) {
@@ -85,14 +87,16 @@ const getPlacedBidById = async (auctionId: string) => {
 
     let listLogs: any[] = [];
     listsort?.forEach((log) => {
+      let bigLog;
       const logAny = log as any;
       auctionRegistration?.forEach((regis) => {
         const regisAny = regis as any;
         if (logAny?.bidder === regisAny.walletAddress) {
-          const bigLog = { ...logAny, ...regisAny };
-          listLogs.push(bigLog);
+          bigLog = { ...logAny, ...regisAny };
         }
       });
+      if (bigLog == null) bigLog = { ...logAny };
+      listLogs.push(bigLog);
     });
     return listLogs;
   } catch (error) {
@@ -122,14 +126,16 @@ const getAuctionPayment = async (auctionId: string) => {
 
     let listLogs: any[] = [];
     list?.forEach((log) => {
+      let bigLog;
       const logAny = log as any;
       auctionRegistration?.forEach((regis) => {
         const regisAny = regis as any;
         if (logAny?.bidder === regisAny.walletAddress) {
-          const bigLog = { ...logAny, ...regisAny };
-          listLogs.push(bigLog);
+          bigLog = { ...logAny, ...regisAny };
         }
       });
+      if (bigLog == null) bigLog = { ...logAny };
+      listLogs.push(bigLog);
     });
     return listLogs[0];
   } catch (error) {
@@ -149,14 +155,16 @@ const getAuctionWithdraw = async (auctionId: string) => {
 
     let listLogs: any[] = [];
     list?.forEach((log) => {
+      let bigLog;
       const logAny = log as any;
       auctionRegistration?.forEach((regis) => {
         const regisAny = regis as any;
         if (logAny?.bidder === regisAny.walletAddress) {
-          const bigLog = { ...logAny, ...regisAny };
-          listLogs.push(bigLog);
+          bigLog = { ...logAny, ...regisAny };
         }
       });
+      if (bigLog == null) bigLog = { ...logAny };
+      listLogs.push(bigLog);
     });
     return listLogs;
   } catch (error) {
@@ -176,14 +184,16 @@ const getAuctionRegister = async (auctionId: string) => {
 
     let listLogs: any[] = [];
     list?.forEach((log) => {
+      let bigLog;
       const logAny = log as any;
       auctionRegistration?.forEach((regis) => {
         const regisAny = regis as any;
         if (logAny?.bidder === regisAny.walletAddress) {
-          const bigLog = { ...logAny, ...regisAny };
-          listLogs.push(bigLog);
+          bigLog = { ...logAny, ...regisAny };
         }
       });
+      if (bigLog == null) bigLog = { ...logAny };
+      listLogs.push(bigLog);
     });
     return listLogs;
   } catch (error) {

@@ -24,11 +24,20 @@ export const UserSchema = {
     username: Joi.string().trim().required(),
     password: Joi.string().trim().required()
   }),
-  forgotPassword: Joi.object<IUser>({
+
+  forgotPassword: Joi.object<object>({
     username: Joi.string().trim().required()
   }),
   changePassword: Joi.object<object>({
     oldPassword: Joi.string().min(3).max(15).required(),
+    password: Joi.string().min(3).max(15).required().label('Password'),
+    passwordConfirmation: Joi.any()
+      .equal(Joi.ref('password'))
+      .required()
+      .label('Confirm password')
+      .messages({ 'any.only': '{{#label}} does not match' })
+  }),
+  resetPassword: Joi.object<object>({
     password: Joi.string().min(3).max(15).required().label('Password'),
     passwordConfirmation: Joi.any()
       .equal(Joi.ref('password'))

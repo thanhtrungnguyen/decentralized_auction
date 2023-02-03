@@ -73,6 +73,27 @@ export const updateIndividualHandler = async (req: Request, res: Response, next:
   if (!individual) {
     return res.status(404).json({ message: "Individual isn't found" });
   }
+  if (
+    individual.firstName === update.firstName &&
+    individual.lastName === update.lastName &&
+    individual.gender === update.gender &&
+    individual.dateOfBirth === update.dateOfBirth &&
+    individual.email === update.email &&
+    individual.phone === update.phone &&
+    individual.city === update.city &&
+    individual.cityId === update.cityId &&
+    individual.wards === update.wards &&
+    individual.wardsId === update.wardsId &&
+    individual.district === update.district &&
+    individual.districtId === update.districtId &&
+    individual.address === update.address &&
+    individual.cardNumber === update.cardNumber &&
+    individual.cardGrantedPlace === update.cardGrantedPlace &&
+    individual.cardGrantedDate === update.cardGrantedDate &&
+    Object.keys(files).length === 0
+  ) {
+    return res.status(409).json({ message: 'Your profile is unchanged, please edit information before save !!!' });
+  }
   return await updateIndividual({ _id: individualId }, update, { new: true }, files)
     .then((individual) => {
       res.status(201).json({ individual });

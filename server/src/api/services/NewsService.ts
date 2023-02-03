@@ -1,10 +1,10 @@
 import { FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
-import { uploadFile } from '../../s3';
+import { uploadFile } from '../utils/s3';
 import News, { INews, INewsDocument } from '../models/News';
 import logger from '../utils/logger';
 
 const getAllNews = async (index: any, status: any, search: any) => {
-  const pase_size = 8;
+  const pase_size = 4;
   try {
     var filter;
     var skip = parseInt(index);

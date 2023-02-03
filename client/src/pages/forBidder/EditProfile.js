@@ -362,7 +362,7 @@ const EditProfile = () => {
                                 options={cityOptions}
                                 onChange={(option) => onCitySelect(option)}
                                 placeholder="Tỉnh/Thành"
-                                defaultValue={selectedCity}
+                                defaultValue={{ value: data.individual.cityId, label: data.individual.city }}
                             />
                             <br />
                             <br />
@@ -374,7 +374,7 @@ const EditProfile = () => {
                                 options={districtOptions}
                                 onChange={(option) => onDistrictSelect(option)}
                                 placeholder="Quận/Huyện"
-                                defaultValue={selectedDistrict}
+                                defaultValue={{ value: data.individual.districtId, label: data.individual.district }}
                             />
                             <br />
                             <br />
@@ -386,7 +386,7 @@ const EditProfile = () => {
                                 options={wardOptions}
                                 placeholder="Phường/Xã"
                                 onChange={(option) => onWardSelect(option)}
-                                defaultValue={selectedWard}
+                                defaultValue={{ value: data.individual.wardsId, label: data.individual.wards }}
                             />
                             <br />
                             <br />

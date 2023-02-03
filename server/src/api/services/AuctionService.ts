@@ -62,9 +62,10 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any, so
   try {
     var arr, count;
     let categoryOptions = [];
-    const page_size = 5;
+    const page_size = 4;
+    search == 'null' ? (search = '') : (search = search);
     const allStatus = ['Closed', 'Bidding', 'RegistrationTime', 'UpcomingForBid', 'Approved'];
-    status === 'all' ? (status = [...allStatus]) : (status = status.split(','));
+    status === '' ? (status = [...allStatus]) : (status = status.split(','));
     if (category === '') {
       var b = await Category.find({});
       b.forEach((element) => {
@@ -79,13 +80,14 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any, so
     await Auction.find({ name: { $regex: search, $options: 'i' }, status: { $ne: 'Request' } })
       .where('status')
       .in([...status])
+      .sort({ createdAt: -1 })
       .populate({
         path: 'property',
         match: {
-          startBid: { $gte: parseInt(minPrice), $lt: parseInt(maxPrice) }
+          startBid: { $gte: parseFloat(minPrice), $lt: parseFloat(maxPrice) }
         },
         options: {
-          sort: sort === 0 ? {} : { startBid: sort }
+          sort: { startBid: 1 }
         },
         populate: {
           path: 'category',
@@ -94,20 +96,30 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any, so
           }
         }
       })
-      .sort(sort === 0 ? { createdAt: -1 } : {})
+
       .then((result) => {
-        arr = result.filter((item) => item.property !== null && item.property.category !== null).slice(start, end);
+        arr = result.filter((item) => item.property !== null && item.property.category !== null);
+        if (sort === 1 || sort === -1) {
+          arr = arr
+            .sort((a, b) => {
+              return sort === 1 ? a.property.startBid - b.property.startBid : b.property.startBid - a.property.startBid;
+            })
+            .slice(start, end);
+        } else {
+          arr = arr.slice(start, end);
+        }
       });
     await Auction.find({ name: { $regex: search, $options: 'i' }, status: { $ne: 'Request' } })
       .where('status')
       .in([...status])
+      .sort({ createdAt: -1 })
       .populate({
         path: 'property',
         match: {
-          startBid: { $gte: parseInt(minPrice), $lt: parseInt(maxPrice) }
+          startBid: { $gte: parseFloat(minPrice), $lt: parseFloat(maxPrice) }
         },
         options: {
-          sort: sort === 0 ? {} : { startBid: sort }
+          sort: { startBid: 1 }
         },
         populate: {
           path: 'category',
@@ -116,7 +128,6 @@ const getListAuctionsForBidder = async (index: any, status: any, search: any, so
           }
         }
       })
-      .sort(sort === 0 ? { createdAt: -1 } : {})
       .then((result) => {
         count = result.filter((item) => item.property !== null && item.property.category !== null).length;
       });

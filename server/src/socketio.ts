@@ -18,9 +18,9 @@ export const connectSocket = (app: any) => {
   io.on('connection', (socket) => {
     socket.on('send_message', async (data) => {
       var highest: any;
-      highest = await getHighestBidByAuctionId(data.auctionId);
-      auctionIdgetBid = data.auctionId;
-      socket.emit('receive_message', { auction: data.auctionId, highest: highest });
+      highest = await getHighestBidByAuctionId(data?.auctionId);
+      auctionIdgetBid = data?.auctionId;
+      socket.emit('receive_message', { auction: data?.auctionId, highest: highest });
     });
   });
   const taskUpdateHighestBid = cron.schedule('*/3 * * * * *', async () => {

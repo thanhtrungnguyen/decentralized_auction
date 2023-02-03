@@ -102,8 +102,9 @@ export const updateBidderHandler = async (req: Request, res: Response, next: Nex
   const id = req.params.id;
   const updateData = req.body;
   const files = req.files as { [fieldName: string]: Express.Multer.File[] };
-  const idIndividual = await getIndividual({ user: id });
-  const sellerInformation = await getOrganization({ individual: idIndividual });
+  const individual = await getIndividual({ user: id });
+  const sellerInformation = await getOrganization({ individual: individual });
+
   if (sellerInformation?.name != updateData.name) {
     const existOrganizationName = await getOrganization({ name: req.body.name });
     if (existOrganizationName) {
@@ -135,7 +136,7 @@ export const updateBidderHandler = async (req: Request, res: Response, next: Nex
       return res.status(409).json({ message: 'Card Number has been exist!' });
     }
   }
-  await updateIndividual({ _id: idIndividual }, updateData, { new: true }, files);
+  await updateIndividual({ _id: individual }, updateData, { new: true }, files);
 
   return await updateOrganization({ _id: sellerInformation?._id }, updateData, { new: true })
     .then((seller: any) => {

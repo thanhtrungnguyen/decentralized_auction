@@ -67,8 +67,9 @@ router.patch(
       maxCount: 1
     }
   ]),
-  // validateResource(OrganizationSchema.create),
-  // validateResource(IndividualSchema.create),
+  requireRole(roles.BIDDER),
+  validateResource(OrganizationSchema.update),
+  validateResource(IndividualSchema.create),
   updateBidderHandler
 );
 router.get('/seller', requireRole(roles.ADMIN, roles.MANAGER, roles.SELLER, roles.BIDDER), getSellerHandler);

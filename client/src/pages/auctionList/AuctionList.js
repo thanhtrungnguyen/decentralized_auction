@@ -40,13 +40,16 @@ const AuctionList = () => {
     const [auctions, setAuctions] = useState([]);
 
     const [page, setPage] = useState(1);
-    const [status, setStatus] = useState("all");
-    const [search, setSearch] = useState("");
+    const [status, setStatus] = useState([]);
+    const [search, setSearch] = useState(null);
+    const [search2, setSearch2] = useState(null);
     const [sort, setSort] = useState(0);
     const [categories, setCategories] = useState([]);
     const [filterCategories, setFilterCategories] = useState([]);
     const [minValue, set_minValue] = useState(0);
     const [maxValue, set_maxValue] = useState(100);
+    const [minValue2, set_minValue2] = useState(0);
+    const [maxValue2, set_maxValue2] = useState(100);
 
     useEffect(() => {
         axios.get("category/categories").then((resp) => {
@@ -54,16 +57,8 @@ const AuctionList = () => {
         });
     }, []);
 
-    const baseURLAuction = `/auction/auctions/bidder?page=${page}&status=${status}&search=${search}&sort=${sort}&category=${filterCategories}&minValue=${minValue}&maxValue=${maxValue}`;
-    const handleInput = (e) => {
-        const { id, value } = e.target;
-        if (id === "minValue") {
-            set_minValue(value);
-        }
-        if (id === "maxValue") {
-            set_maxValue(value);
-        }
-    };
+    const baseURLAuction = `/auction/auctions/bidder?page=${page}&status=${status}&search=${search}&sort=${sort}&category=${filterCategories}&minValue=${minValue2}&maxValue=${maxValue2}`;
+
 
     const [role, setRole] = useState();
 
@@ -98,15 +93,30 @@ const AuctionList = () => {
             setChange(item);
         }
     });
+    const handleInput = (e) => {
+        const { id, value } = e.target;
+        if (id === "minValue") {
+            set_minValue(value);
+        }
+        if (id === "maxValue") {
+            set_maxValue(value);
+        }
+        if (id === "auctionName") {
+            setSearch2(value);
+        }
+    };
     const handleSubmit = (event) => {
-        name2 === "" ? setName(null) : setName(name2);
+        if (search2.trim() === "") {
+            setSearch2("");
+            setSearch(null);
+        } else setSearch(search2.trim());
         setPage(1);
         event.preventDefault();
     };
     const handleChange = (event, value) => {
         setPage(value);
     };
-    const handleChangeStatus = (event) => {
+    const handleChangeCategory = (event) => {
         if (event.target.checked) {
             const state = [...filterCategories, event.target.value];
             setFilterCategories(state);
@@ -115,7 +125,33 @@ const AuctionList = () => {
             setFilterCategories(state);
         }
     };
-    const handleApplyFilter = () => { };
+    const handleChangeStatus = (event) => {
+        if (event.target.checked) {
+            const state = [...status, event.target.value];
+            setStatus(state);
+        } else {
+            const state = status.filter((item) => item !== event.target.value);
+            setStatus(state);
+        }
+    };
+    const handleApplyFilter = () => {
+        if (minValue > maxValue) {
+            alert('From value must be less than To value ')
+            set_minValue(0)
+            set_minValue2(0)
+            set_maxValue(100)
+            set_maxValue2(100)
+        } else if (minValue === '' || minValue < 0) {
+            set_minValue(0)
+            set_minValue2(0)
+        } else if (maxValue === '' || maxValue < 0) {
+            set_maxValue(100)
+            set_maxValue2(100)
+        } else {
+            set_minValue2(minValue)
+            set_maxValue2(maxValue)
+        }
+    };
 
     const handleSort = (e) => {
         setSort(e.target.value);
@@ -124,13 +160,17 @@ const AuctionList = () => {
     function exportData(data) {
         return (
             <>
-                {data.listAuction.map((item) => (
+                {data?.listAuction.map((item) => (
                     <div className={styles.auction}>
                         <img className={styles.img} src={`${item.property.mediaUrl[0]}`} alt="img" />
                         <p className={styles.name}>{item.name}</p>
                         <p className={styles.price}>{item.property.startBid} ETH</p>
                         <p className={styles.status}>Status: {item.status === 'Closed' ? 'Past Auction'
-                            : item.status === 'Bidding' ? 'Current Auction' : item.status === 'Approved' ? 'Upcoming' : item.status} </p>
+                            : item.status === 'Bidding' ? 'Bidding'
+                                : item.status === 'Approved' ? 'Upcoming For Registration'
+                                    : item.status === 'RegistrationTime' ? 'Registration'
+                                        : item.status === 'UpcomingForBid' ? 'Upcoming For Bidding'
+                                            : item.status} </p>
                         <p className={styles.time}>
                             <AiOutlineFieldTime className={styles.i} />
                             <label className={styles.l}>
@@ -174,8 +214,18 @@ const AuctionList = () => {
             <div className={styles.container}>
                 <div className={styles.nav}>
                     <div className={styles.conSearch}>
-                        <input className={styles.ip} type="text" placeholder="Enter keyword" value={search}></input>
-                        <AiOutlineSearch className={styles.icon} />
+                        <input
+                            id="auctionName"
+                            className={styles.ip}
+                            type="text"
+                            placeholder="Title"
+                            value={search2}
+                            onChange={(e) => {
+                                handleInput(e);
+                            }}
+                        //required
+                        ></input>
+                        <AiOutlineSearch className={styles.icon} onClick={e => handleSubmit(e)} />
                     </div>
                     <div className={styles.category}>
                         <p className={styles.title}>Category</p>
@@ -183,8 +233,8 @@ const AuctionList = () => {
                             return (
                                 <>
                                     <label className={styles.label}>{item.name}</label>
-                                    <input type="checkbox" className={styles.checkbox} value={item.name} onChange={handleChangeStatus} />
-                                    {/* <label className={styles.num}>{categories.categories.length}</label> */}
+                                    <input type="checkbox" className={styles.checkbox} value={item.name} onChange={handleChangeCategory} />
+
                                     <br />
                                     <br />
                                 </>
@@ -227,40 +277,48 @@ const AuctionList = () => {
                                 handleInput(e);
                             }}
                         /> */}
+                        <button className={styles.btn} onClick={handleApplyFilter}>
+                            Apply
+                        </button>
                         <br />
                     </div>
                     <div className={styles.category}>
                         <p className={styles.title}>Status</p>
-                        <label className={styles.label}>Upcoming </label>
-                        <input type="checkbox" className={styles.checkbox} value="" />
+                        <label className={styles.label}>Upcoming For Registration </label>
+                        <input type="checkbox" className={styles.checkbox} value="Approved" onChange={handleChangeStatus} />
                         {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
-                        <label className={styles.label}>Current Auction</label>
-                        <input type="checkbox" className={styles.checkbox} value="" />
+                        <label className={styles.label}>Registration </label>
+                        <input type="checkbox" className={styles.checkbox} value="RegistrationTime" onChange={handleChangeStatus} />
+                        <br />
+                        <br />
+                        <label className={styles.label}>Upcoming For Bidding</label>
+                        <input type="checkbox" className={styles.checkbox} value="UpcomingForBid" onChange={handleChangeStatus} />
+                        {/* <label className={styles.num}>2</label> */}
+                        <br />
+                        <br />
+                        <label className={styles.label}>Bidding</label>
+                        <input type="checkbox" className={styles.checkbox} value="Bidding" onChange={handleChangeStatus} />
                         {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
                         <label className={styles.label}>Past Auction</label>
-                        <input type="checkbox" className={styles.checkbox} value="" />
+                        <input type="checkbox" className={styles.checkbox} value="Closed" onChange={handleChangeStatus} />
                         {/* <label className={styles.num}>2</label> */}
                         <br />
                         <br />
-                        <label className={styles.label}>All</label>
-                        <input type="checkbox" className={styles.checkbox} value="" />
-                        {/* <label className={styles.num}>2</label> */}
+                        {/* <label className={styles.label}>All</label>
+                        <input type="checkbox" className={styles.checkbox} value="" onChange={handleChangeStatus} />
+
                         <br />
-                        <br />
+                        <br /> */}
                     </div>
-                    <div className={styles.category}>
-                        <button className={styles.btn} onClick={handleApplyFilter}>
-                            Apply
-                        </button>
-                    </div>
+
                 </div>
                 <div className={styles.content}>
                     <div className={styles.info}>
-                        <label className={styles.label2}>13 Items</label>
+                        <label className={styles.label2}>{auctions.count} Items</label>
                         <label className={styles.label3}>Sort By</label>
                         <select className={styles.select} onChange={(e) => handleSort(e)}>
                             <option value="0" selected={sort === "0"}>
@@ -269,7 +327,7 @@ const AuctionList = () => {
                             <option value="1" selected={sort === "1"}>
                                 Start Bid Ascending
                             </option>
-                            <option value="2" selected={sort === "2"}>
+                            <option value="-1" selected={sort === "-1"}>
                                 Start Bid Descending
                             </option>
                             {/* <option value="3" selected={sort === "4"}>
@@ -287,7 +345,7 @@ const AuctionList = () => {
                     <Pagination
                         className={styles.pagi}
                         hidden={auctions.count === 0 ? true : false}
-                        count={Math.ceil(auctions.count / 5)}
+                        count={Math.ceil(auctions.count / 4)}
                         page={page}
                         onChange={handleChange}
                     />

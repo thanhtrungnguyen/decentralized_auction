@@ -13,6 +13,7 @@ import {
 } from '../services/UserService';
 import sendEmail from '../utils/mailer';
 import { createIndividual, getIndividual } from '../services/IndividualService';
+import { getInformationOperator } from '../services/InformationOperatorService';
 const _ = require('lodash');
 export const getAllUsersHandler = async (req: Request, res: Response, next: NextFunction) => {
   return await getAllUsers()
@@ -184,36 +185,50 @@ export const updateUserHandler = async (req: Request, res: Response, next: NextF
 };
 
 export const forgotPasswordHandler = async (req: Request, res: Response, next: NextFunction) => {
-  // const { email } = req.body;
-  // const user = await getUser({ email: email });
-  // if (!user) {
-  //   return res.status(404).json({ message: 'User is not found' });
-  // }
-  // if (!user.verified) {
-  //   return res.status(409).json({ message: 'User was not verified' });
-  // }
-  // const passwordResetCode = crypto.randomUUID();
-  // user.passwordResetCode = passwordResetCode;
-  // await updateUser({ _id: user._id }, { passwordResetCode }, { new: true });
-  // await sendEmail({
-  //   to: user.email,
-  //   from: 'test@example.com',
-  //   subject: 'Reset your password',
-  //   text: `Id ${user._id}\nPassword reset code: ${passwordResetCode}`
-  // });
-  // return res.status(201).json({ message: 'Check your mail to reset your password' });
+  const { username } = req.body;
+  let email;
+
+  const user = await getUser({ username: username });
+  if (!user) {
+    return res.status(404).json({ message: 'User is not found' });
+  }
+  if (user.role === 'bidder' || user.role === 'seller') {
+    const individual = await getIndividual({ user: user._id });
+    if (!individual) {
+      return res.status(404).json({ message: 'Individual is not found' });
+    }
+    email = individual.email;
+  } else {
+    const operator = await getInformationOperator({ user: user._id });
+    if (!operator) {
+      return res.status(404).json({ message: 'Operator is not found' });
+    }
+    email = operator.email;
+  }
+  if (!email) {
+    return res.status(404).json({ message: 'Email is not found' });
+  }
+  const passwordResetCode = crypto.randomUUID();
+  user.passwordResetCode = passwordResetCode;
+  await updateUser({ _id: user._id }, { passwordResetCode }, { new: true });
+
+  await sendEmail({
+    to: email,
+    from: 'test@example.com',
+    subject: 'DAP - Reset your password',
+    text: `http://localhost:5000/api/user/resetPassword/${user._id}/${passwordResetCode}\nhttp://20.85.218.221/api/user/resetPassword/${user._id}/${passwordResetCode}\nhttp://localhost:3000/resetPassword/${user._id}/${passwordResetCode}\nhttp://20.85.218.221/resetPassword/${user._id}/${passwordResetCode}\n`
+  });
+  return res.status(201).json({ message: 'Check your mail to reset your password' });
 };
 
 export const resetPasswordHandler = async (req: Request, res: Response, next: NextFunction) => {
   const { userId, passwordResetCode } = req.params;
   const { password } = req.body;
   const user = await getUser({ _id: userId });
-  if (!user || !user.passwordResetCode || user.passwordResetCode !== passwordResetCode) {
-    return res.status(400).send('Could not reset user password');
+  if (!user || user?.passwordResetCode === null || user?.passwordResetCode !== passwordResetCode) {
+    return res.status(401).send({ message: 'Could not reset user password' });
   }
-  user.passwordResetCode = null;
-  user.password = password;
-  await updateUser({ _id: user._id }, { password }, { new: true })
+  await updateUser({ _id: user._id }, { password, passwordResetCode: null }, { new: true })
     .then((result) => {
       return res.status(201).json({ message: 'Successfully updated password' });
     })
