@@ -68,7 +68,9 @@ function AuctionRegistration({ auction, property }) {
             updateUI();
         }
     }, [isWeb3Enabled, account, bidInformationData?.length]);
+
     const axios = useAxiosPrivate();
+
     const handleSuccess = async (tx) => {
         console.log(tx);
         setTransactionStatus(tx);
