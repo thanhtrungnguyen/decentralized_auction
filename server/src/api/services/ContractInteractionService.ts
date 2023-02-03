@@ -66,7 +66,7 @@ const getCreatedAuctionById = async (auctionId: string) => {
       registrationFee: parseEther(list[0].registrationFee),
       depositAmount: parseEther(list[0].depositAmount),
       startBid: parseEther(list[0].startBid),
-      priceStep: parseEther(list[0].startBid)
+      priceStep: parseEther(list[0].priceStep)
     };
   } catch (error) {
     logger.error(error);
@@ -114,7 +114,7 @@ const bubbleSort = (array: FirebaseFirestore.DocumentData[]) => {
   return array;
 };
 const getAuctionPayment = async (auctionId: string) => {
-  const condition = ['PaymentCompeleted'];
+  const condition = ['PaymentCompleted', 'CanceledAuctionResult'];
   try {
     const logs = await database.collection(COLLECTION_PATH).where('name', 'in', condition).where('auctionId', '==', auctionId).get();
 
@@ -137,7 +137,7 @@ const getAuctionPayment = async (auctionId: string) => {
       if (bigLog == null) bigLog = { ...logAny };
       listLogs.push(bigLog);
     });
-    return listLogs[0];
+    return listLogs;
   } catch (error) {
     logger.error(error);
   }

@@ -15,31 +15,15 @@ import HeaderUser from "../../components/header/HeaderUser";
 import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
 import Time from "../../components/time/Time";
+import { useFetchData } from "../../hooks/useFetch";
+import Countdown from "react-countdown";
+import Loader from "../biddingFeatures/components/Loader";
 const AuctionResult = () => {
-    const axios = useAxiosPrivate();
-    const [page] = React.useState(1);
     const { id } = useParams();
-    const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const baseURL = `/auction/${page}/${id}`;
 
-    const [loading, setLoading] = useState(true);
-    const [role, setRole] = useState();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-
-            axios.get(baseURL).then((resp) => {
-                console.log(resp.data);
-                console.log("axios get");
-                setData(resp.data);
-            });
-
-            setLoading(false);
-        };
-        fetchData();
-    }, [baseURL]);
+    const { loading: auctionLoading, data: auctionData, error: auctionError } = useFetchData(`/contractInteraction/createdAuction/${id}`);
+    const { loading: paymentLoading, data: paymentData, error: paymentError } = useFetchData(`/contractInteraction/payment/${id}`);
     const onClick = () => {
         navigate(`/viewBiddingForManager/${id}`);
     };
@@ -55,8 +39,8 @@ const AuctionResult = () => {
     // const handleChange = (event, value) => {
     //     setPage(value);
     // };
-
-    return loading ? (
+    console.log(paymentData?.payment);
+    return auctionLoading || paymentLoading ? (
         <Loading />
     ) : (
         <>
@@ -104,7 +88,13 @@ const AuctionResult = () => {
                         </div>
                         <hr />
                         <p className={styles.title}>Auction Result</p>
-                        <p className={styles.lb}>Payment Time End in 5d 5h 34m 32s</p>
+                        {auctionLoading ? (
+                            <Loader />
+                        ) : (
+                            <p className={styles.lb}>
+                                Registration Time End in <Countdown date={auctionData?.createdAuction?.duePaymentTime * 1000} />
+                            </p>
+                        )}
                         <div className={styles.fl}>
                             <div className={styles.l}>
                                 <p className={styles.label}>Start Bid</p>
@@ -140,83 +130,6 @@ const AuctionResult = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className={styles.container}>
-                <SideBarSeller />
-                <Time />
-                <div className={styles.content}>
-                    <div className={styles.search}>
-                        <label
-                            className={styles.link}
-                            onClick={(e) => {
-                                Registration(e);
-                            }}
-                        >
-                            Registration Information
-                        </label>
-                        <label
-                            className={styles.link}
-                            onClick={(e) => {
-                                onClick(e);
-                            }}
-                        >
-                            Place Bids Log
-                        </label>
-                        <label
-                            className={styles.bold}
-                            onClick={(e) => {
-                                result(e);
-                            }}
-                        >
-                            Auction Result
-                        </label>
-                        <hr />
-                        <p className={styles.b}>Place Bids Log</p>
-                        <p className={styles.txtBold}>Payment Time End in: {data.PaymentTime}</p>
-                        <br />
-                        <div>
-                            <div className={styles.left}>
-                                <label className={styles.labelL}>Winner</label>
-                            </div>
-                            <div className={styles.right}>
-                                <label className={styles.lablelR}>{data.userName}</label>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-
-                        <div>
-                            <div className={styles.left}>
-                                <label className={styles.labelL}>Bid Amount</label>
-                            </div>
-                            <div className={styles.right}>
-                                <label className={styles.lablelR}>{data.BidAmount}</label>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-
-                        <div>
-                            <div className={styles.left}>
-                                <label className={styles.labelL}>Status</label>
-                            </div>
-                            <div className={styles.right}>
-                                <label className={styles.lablelR}>{data.Status}</label>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-
-                        <div>
-                            <div className={styles.left}>
-                                <label className={styles.labelL}>Payment</label>
-                            </div>
-                            <div className={styles.right}>
-                                <label className={styles.lablelR}>{data.Payment}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
         </>
     );
 };

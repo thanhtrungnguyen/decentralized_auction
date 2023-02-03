@@ -154,6 +154,7 @@ function PlaceBid({ auction, property }) {
                 icon: <BsCheckLg />,
             });
         } catch (error) {
+            setTransactionStatus("Fail");
             console.log(error);
         }
     };
