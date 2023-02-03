@@ -66,6 +66,7 @@ import { roles } from "./config/rolesConfig";
 import Unauthorized from "./pages/error/Unauthorized";
 import Layout from "./pages/common/Layout";
 import WithdrawForManager from "./pages/forManager/WithdrawForManager";
+import ResetPasswordDone from "./pages/forgotPassword/ResetPasswordDone";
 function App() {
     return (
         <Routes>
@@ -105,6 +106,7 @@ function App() {
             <Route path="forgotPassword" element={<ForgotPassword />} />
             <Route path="confirmCode/:email" element={<ConfirmCode />} />
             <Route path="confirmCode" element={<ConfirmCode />} />
+            <Route path="resetPasswordDone" element={<ResetPasswordDone />} />
             <Route path="resetPassword/:userId/:passwordResetCode" element={<ResetPassword />} />
             <Route path="newPassword" element={<ResetPassword />} />
             <Route path="myAuctions" element={<MyAuctions />} />
