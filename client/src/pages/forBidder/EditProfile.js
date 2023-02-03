@@ -43,7 +43,9 @@ const EditProfile = () => {
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
     const [disable, setDisable] = useState(false);
-
+    const [checkCity, setCheckCity] = useState(true);
+    const [checkDistrict, setCheckDistrict] = useState(true);
+    const [checkWard, setCheckWard] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -63,14 +65,12 @@ const EditProfile = () => {
                 setCardBack(resp.data.individual.backSideImage);
 
                 setData(resp.data);
-
-                // onCitySelect(sCity);
-                // onDistrictSelect(sDistrict);
-                // onWardSelect(sWard);
             });
+
             setLoading(false);
         };
         fetchData();
+        console.log(selectedCity);
     }, [baseURL]);
 
     console.log(data);
@@ -360,9 +360,14 @@ const EditProfile = () => {
                                 key={`cityId_${selectedCity?.value}`}
                                 isDisabled={cityOptions.length === 0}
                                 options={cityOptions}
-                                onChange={(option) => onCitySelect(option)}
+                                onChange={(option) => {
+                                    onCitySelect(option);
+                                    setCheckCity(false);
+                                    setCheckDistrict(false);
+                                    setCheckWard(false);
+                                }}
                                 placeholder="Tỉnh/Thành"
-                                defaultValue={{ value: data.individual.cityId, label: data.individual.city }}
+                                defaultValue={checkCity == true ? { value: data.individual.cityId, label: data.individual.city } : selectedCity}
                             />
                             <br />
                             <br />
@@ -374,7 +379,9 @@ const EditProfile = () => {
                                 options={districtOptions}
                                 onChange={(option) => onDistrictSelect(option)}
                                 placeholder="Quận/Huyện"
-                                defaultValue={{ value: data.individual.districtId, label: data.individual.district }}
+                                defaultValue={
+                                    checkDistrict == true ? { value: data.individual.districtId, label: data.individual.district } : selectedDistrict
+                                }
                             />
                             <br />
                             <br />
@@ -386,7 +393,7 @@ const EditProfile = () => {
                                 options={wardOptions}
                                 placeholder="Phường/Xã"
                                 onChange={(option) => onWardSelect(option)}
-                                defaultValue={{ value: data.individual.wardsId, label: data.individual.wards }}
+                                defaultValue={checkWard == true ? { value: data.individual.wardsId, label: data.individual.wards } : selectedWard}
                             />
                             <br />
                             <br />
