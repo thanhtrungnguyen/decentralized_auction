@@ -1,6 +1,6 @@
 import { string } from 'joi';
 import { FilterQuery, ObjectId, QueryOptions, UpdateQuery } from 'mongoose';
-import { uploadFile } from '../../s3';
+import { uploadFile } from '../utils/s3';
 import Property, { IProperty, IPropertyDocument } from '../models/Property';
 import logger from '../utils/logger';
 

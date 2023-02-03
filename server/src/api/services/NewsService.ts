@@ -1,5 +1,5 @@
 import { FilterQuery, QueryOptions, UpdateQuery } from 'mongoose';
-import { uploadFile } from '../../s3';
+import { uploadFile } from '../utils/s3';
 import News, { INews, INewsDocument } from '../models/News';
 import logger from '../utils/logger';
 
