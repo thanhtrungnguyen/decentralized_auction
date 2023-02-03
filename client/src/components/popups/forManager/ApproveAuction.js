@@ -24,9 +24,10 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
     const [disable, setDisable] = useState(false);
 
     const handleInputChange = (e) => {
+        const regexNumber = /^[0-9]*\.?[0-9]*$/;
         const { id, value } = e.target;
         if (id === "registrationFee") {
-            setRegistrationFee(value);
+            if (value === '' || regexNumber.test(value)) setRegistrationFee(value);
         }
         if (id === "name") {
             setName(value);
@@ -135,7 +136,7 @@ const ApproveAuction = ({ auctionId, propertyId }) => {
                             <input
                                 className={styles.input}
                                 id="registrationFee"
-                                type="number"
+                                type="text"
                                 value={registrationFee}
                                 onChange={(e) => handleInputChange(e)}
                                 required
