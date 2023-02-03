@@ -18,6 +18,7 @@ import io from "socket.io-client";
 import Time from "../../components/time/Time";
 import Countdown from "react-countdown";
 import { BASE_URL } from "../../api/axios";
+import { parseEther } from "../../utils/ethereumUnitConverter";
 const ViewBiddingForManager = () => {
     const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
@@ -94,7 +95,7 @@ const ViewBiddingForManager = () => {
                 <SideBarSeller />
                 <Time />
                 <div className={styles.r}>
-                    <div className={styles.con}>
+                    <div className={styles.con2}>
                         <div className={styles.btns}>
                             <button
                                 className={styles.btn}
@@ -145,14 +146,15 @@ const ViewBiddingForManager = () => {
                                     <th className={styles.th}>Status</th>
                                 </tr>
 
-                                {data.map((bid) => (
+                                {data?.map((bid) => (
                                     <>
                                         <tr>
-                                            <td>{bid.user.username}</td>
-                                            <td>{bid.bidder}</td>
-                                            <td>{bid.transactionHash}</td>
-                                            <td>{bid.bidAmount}</td>
-                                            <td>{getDate(bid.blockTimestamp)}</td>
+                                            <td>{bid?.user?.username}</td>
+                                            <td>{bid?.bidder}</td>
+                                            <td>{bid?.transactionHash}</td>
+                                            <td>{bid?.bidAmount == undefined && <p></p>} </td>
+                                            <td>{bid?.bidAmount != undefined && parseEther(bid?.bidAmount)}</td>
+                                            <td>{getDate(bid?.blockTimestamp)}</td>
                                             <td>
                                                 {bid.name === "PlacedBid" && "Bidding"}
                                                 {bid.name === "RetractedBid" && "RetractedBid"}

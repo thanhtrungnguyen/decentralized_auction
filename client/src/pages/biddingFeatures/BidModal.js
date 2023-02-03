@@ -47,13 +47,15 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
                 </div>
             );
         if (registrationData?.auctionRegistration?.length !== 0) {
-            if (registrationData?.auctionRegistration[0]?.walletAddress !== account) {
-                return (
-                    <div className={styles.notification}>
-                        <p>You have used account {registrationData?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
-                        <p>Please switch to that wallet account to continue.</p>
-                    </div>
-                );
+            if (registrationData?.auctionRegistration[0]?.walletAddress.length !== 0) {
+                if (registrationData?.auctionRegistration[0]?.walletAddress !== account) {
+                    return (
+                        <div className={styles.notification}>
+                            <p>You have used account {registrationData?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
+                            <p>Please switch to that wallet account to continue.</p>
+                        </div>
+                    );
+                }
             }
         }
         // if (auctionRegistration != null && auctionRegistration?.auctionRegistration?.length !== 0) {

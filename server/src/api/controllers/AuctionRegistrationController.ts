@@ -49,8 +49,8 @@ export const createAuctionRegistrationHandler = async (req: Request, res: Respon
     return res.status(404).json({ message: 'Auction is not found' });
   }
   const record = await getAuctionRegistration({ auction: auctionId, user: userId });
-  if (record) {
-    return res.status(409).json({ message: 'Auction is not found' });
+  if (record?.length !== 0) {
+    return res.status(409).json({ record, message: 'User have registered the auction' });
   }
   return await createAuctionRegistration({ walletAddress: walletAddress, auction: auctionId, user: userId })
     .then((auctionRegistration) => {
