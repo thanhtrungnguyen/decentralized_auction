@@ -94,7 +94,7 @@ const ViewBiddingForManager = () => {
                 <SideBarSeller />
                 <Time />
                 <div className={styles.r}>
-                    <div className={styles.con}>
+                    <div className={styles.con2}>
                         <div className={styles.btns}>
                             <button
                                 className={styles.btn}
