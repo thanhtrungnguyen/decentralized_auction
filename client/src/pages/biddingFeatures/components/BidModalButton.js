@@ -4,30 +4,23 @@ import BidModal from "../BidModal";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 import { useFetchData } from "../../../hooks/useFetch";
 import Loader from "./Loader";
-const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
+const BidModalButton = ({ auctionId, propertyId }) => {
     const [isOpenModal, setOpenModal] = useState(() => {
         return false;
     });
     const { loading: auctionLoading, data: auctionData, error: auctionError } = useFetchData(`/contractInteraction/createdAuction/${auctionId}`);
 
-    const { loading: registrationLoading, data: registrationData, error: registrationError } = useFetchData(`/auctionRegistration/user/${auctionId}`);
-
     const { loading: propertyLoading, data: propertyData, error: propertyError } = useFetchData(`/property/${propertyId}`);
-    // console.log(auctionData, propertyData);
+
+    const { loading: userLoading, data: userData, error: userError } = useFetchData(`/session`);
+    console.log(userData?.user?.role);
+
     return (
         <>
             <div>
-                {/* {(() => {
-                    if (role == "BIDDER" || role == "SELLER" || role == "MANAGER" || role == "ADMIN") {
-                        return ( */}
-                {auctionLoading ||
-                registrationLoading ||
-                propertyLoading ||
-                auctionData == null ||
-                registrationData == null ||
-                propertyData == null ? (
+                {auctionLoading || propertyLoading || userLoading ? (
                     <Loader />
-                ) : (
+                ) : userData?.user?.role === "bidder" ? (
                     <button
                         className={styles.btn2}
                         onClick={() => {
@@ -36,22 +29,10 @@ const BidModalButton = ({ auctionId, propertyId, propertyObject }) => {
                     >
                         Go to Auction
                     </button>
+                ) : (
+                    <p>Sign in to continue</p>
                 )}
-
-                {/* );
-                    } else {
-                        return <p>Please login</p>;
-                    }
-                })()} */}
-
-                {isOpenModal && (
-                    <BidModal
-                        setOpenModal={setOpenModal}
-                        auction={auctionData?.createdAuction}
-                        auctionRegistration={registrationData?.auctionRegistration}
-                        property={propertyData?.property}
-                    />
-                )}
+                {isOpenModal && <BidModal setOpenModal={setOpenModal} auction={auctionData?.createdAuction} property={propertyData?.property} />}
             </div>
         </>
     );

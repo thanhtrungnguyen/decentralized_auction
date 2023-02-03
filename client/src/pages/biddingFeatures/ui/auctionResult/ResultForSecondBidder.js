@@ -14,6 +14,7 @@ const ResultForSecondBidder = ({ auction, amount }) => {
     const [transactionStatus, setTransactionStatus] = useState();
     const [goPayment, setGoPayment] = useState();
     const [showConfirmation, setShowConfirmation] = useState(true);
+    const [isWaiting, setWaiting] = useState();
     const {
         runContractFunction: cancelAuctionResult,
         data,
@@ -29,6 +30,7 @@ const ResultForSecondBidder = ({ auction, amount }) => {
     });
     const handleSuccess = async (tx) => {
         try {
+            setWaiting(true);
             setTransactionStatus(tx);
             const result = await tx.wait(1);
             setTransactionStatus(result);
@@ -74,7 +76,8 @@ const ResultForSecondBidder = ({ auction, amount }) => {
                                     </span>
                                 </p>
                                 <button
-                                    className={styles.btn}
+                                    disabled={isLoading || isFetching || isWaiting}
+                                    className={styles.btnClose}
                                     onClick={() => {
                                         setGoPayment(true);
                                     }}
@@ -82,8 +85,8 @@ const ResultForSecondBidder = ({ auction, amount }) => {
                                     Accept
                                 </button>
                                 <button
-                                    disabled={isLoading || isFetching}
-                                    className={styles.btn}
+                                    disabled={isLoading || isFetching || isWaiting}
+                                    className={styles.btnClose}
                                     onClick={async () => {
                                         cancelAuctionResult({
                                             onError: handleError,
@@ -91,7 +94,7 @@ const ResultForSecondBidder = ({ auction, amount }) => {
                                         });
                                     }}
                                 >
-                                    {isLoading || isFetching ? "Loading..." : "Cancel"}
+                                    {isLoading || isFetching || isWaiting ? "Loading..." : "Cancel"}
                                 </button>
                                 <TransactionStatus transactionStatus={transactionStatus} />
                             </>
