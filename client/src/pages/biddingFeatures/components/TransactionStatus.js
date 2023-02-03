@@ -2,19 +2,24 @@ import React from "react";
 import styles from "../../../styleCss/stylesComponents/placeABid.module.css";
 
 function TransactionStatus({ transactionStatus: tx }) {
-    console.log(tx);
     const prefix = "https://goerli.etherscan.io/tx/";
+    // if (tx) {
+    //     console.log(tx);
+    // }
     const hashString = tx?.transactionHash
         ? `Tx: ${tx?.transactionHash?.slice(0, 6)}...${tx?.transactionHash?.slice(tx?.transactionHash?.length - 4)}`
-        : null;
-    const link = `${prefix}${tx?.transactionHash}`;
+        : tx?.hash
+        ? `Tx: ${tx?.hash?.slice(0, 6)}...${tx?.hash?.slice(tx?.hash?.length - 4)}`
+        : ``;
+    const link = `${prefix}${tx?.transactionHash ? tx?.transactionHash : tx?.hash ? tx?.hash : ""}`;
 
     const transactionStatusType = () => {
+        if (tx === "null") return "null";
         if (tx?.code === 4001) {
             return "Reject";
         }
         if (tx?.confirmations === 0) return "Pending";
-        if (tx?.confirmations === 1) {
+        if (tx?.confirmations !== 0) {
             if (tx?.events) return "Success";
             return "Fail";
         }
@@ -28,13 +33,15 @@ function TransactionStatus({ transactionStatus: tx }) {
             case "Fail":
                 return <div>Transaction Failed</div>;
             case "Pending": {
-                return <>Transaction Pending</>;
+                return <>Transaction Submitted</>;
             }
             case "Reject": {
                 return <>Transaction Rejected</>;
             }
             case "Success":
                 return <p>Transaction Successfully!</p>;
+            case "null":
+                return <></>;
             default:
                 return <div></div>;
         }
@@ -51,7 +58,7 @@ function TransactionStatus({ transactionStatus: tx }) {
                     <br />
                 </div>
             )}
-            {renderTransactionStatus()}
+            <p className={styles.txt}>{renderTransactionStatus()}</p>
         </div>
     );
 }

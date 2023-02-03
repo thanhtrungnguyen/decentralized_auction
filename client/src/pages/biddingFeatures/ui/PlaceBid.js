@@ -24,8 +24,9 @@ function PlaceBid({ auction, property }) {
     const [highestBid, setHighestBid] = useState("0");
     const [inputBidAmount, setInputBidAmount] = useState("0");
     const [transactionStatus, setTransactionStatus] = useState();
-
     const [minBidAmount, setMinBidAmount] = useState();
+    const [errorMessage, setErrorMessage] = useState();
+
     const socket = io.connect(BASE_URL);
     const {
         runContractFunction: getBidInformationByAuctionId,
@@ -66,7 +67,7 @@ function PlaceBid({ auction, property }) {
         msgValue: "0",
         params: {
             auctionId: auction.auctionId,
-            bidAmount: ethers.utils.parseEther(inputBidAmount.toString() || "0").toString(),
+            bidAmount: parseWei(inputBidAmount ? inputBidAmount : "0"),
         },
     });
 
@@ -96,7 +97,7 @@ function PlaceBid({ auction, property }) {
     });
 
     const updateUI = async () => {
-        setTransactionStatus();
+        setTransactionStatus("null");
         await getBidInformationByAuctionId();
         // await getHighestBidOfAuction();
         // setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
@@ -120,6 +121,16 @@ function PlaceBid({ auction, property }) {
     //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
     //     );
     // };
+    useEffect(() => {
+        try {
+            if (new Decimal(inputBidAmount).comparedTo(new Decimal(minBidAmount)) === 1) {
+                console.log(new Decimal(inputBidAmount), new Decimal(minBidAmount));
+                setErrorMessage("Invalid bid amount");
+            }
+        } catch (error) {
+            setErrorMessage("Invalid bid amount");
+        }
+    }, [inputBidAmount]);
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUI();
@@ -148,12 +159,11 @@ function PlaceBid({ auction, property }) {
     };
 
     const placeBidHandleError = async (tx) => {
-        const message = tx.data.message;
         setTransactionStatus(tx);
         dispatch({
             type: "error",
             title: "Place Bid Error",
-            message: message,
+            message: "Place Bid Error",
             position: "topR",
             icon: <AiOutlineClose />,
         });
@@ -232,15 +242,14 @@ function PlaceBid({ auction, property }) {
                             className={styles.input}
                             type="number"
                             value={inputBidAmount}
-                            // validation={{
-                            //     max: "",
-                            //     min: 1,
-                            // }}
+                            validation={{
+                                min: 1,
+                            }}
                             onChange={(event) => {
                                 setInputBidAmount(event.target.value);
                             }}
                         ></input>
-                        {/* <label className={styles.mess}>Error message</label> */}
+                        <label className={styles.mess}>{errorMessage}</label>
                         <br />
                         <button
                             className={styles.btnClose}

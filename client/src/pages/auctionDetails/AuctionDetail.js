@@ -102,7 +102,7 @@ const AuctionDetail = () => {
                             <hr className={styles.hr} />
                             <br />
                             <br />
-                            <BidModalButton auctionId={data.auction._id} propertyId={data.auction.property} />
+                            <BidModalButton auctionId={data.auction._id} propertyId={data.auction.property._id} />
                             {/* <button className={styles.btn}>Place Bid</button> */}
                         </div>
                     </div>

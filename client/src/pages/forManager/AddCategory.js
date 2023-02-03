@@ -110,7 +110,7 @@ const AddCategory = () => {
                         ></input>
                     </div>
                     <div className={styles.btn}>
-                        <button
+                        <label
                             className={styles.btnCancel}
                             onClick={() => {
                                 navigate("/managerCategories");
@@ -118,7 +118,7 @@ const AddCategory = () => {
                             disabled={disable}
                         >
                             Cancel
-                        </button>{" "}
+                        </label>{" "}
                         <input
                             type="submit"
                             value="Save"

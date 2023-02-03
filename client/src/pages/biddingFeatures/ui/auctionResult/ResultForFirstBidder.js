@@ -15,6 +15,7 @@ const ResultForFirstBidder = ({ auction, amount }) => {
     const [goPayment, setGoPayment] = useState();
     const [showConfirmation, setShowConfirmation] = useState(true);
     const [isCanceled, setCanceled] = useState();
+    const [isWaiting, setWaiting] = useState();
 
     const {
         runContractFunction: cancelAuctionResult,
@@ -31,12 +32,16 @@ const ResultForFirstBidder = ({ auction, amount }) => {
     });
     const handleSuccess = async (tx) => {
         try {
+            setWaiting(true);
             console.log("handleSuccess " + tx.hash);
             setTransactionStatus(tx);
             const result = await tx.wait(1);
             if (result?.events) {
                 setCanceled(true);
+            } else {
+                setWaiting(false);
             }
+
             setTransactionStatus(result);
 
             dispatch({
@@ -64,6 +69,9 @@ const ResultForFirstBidder = ({ auction, amount }) => {
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
             setShowConfirmation(false);
+            if (isCanceled) {
+                return <>You have Canceled Successfully</>;
+            }
             return <Payment auction={auction} amount={amount} />;
         } else {
             return (
@@ -71,26 +79,27 @@ const ResultForFirstBidder = ({ auction, amount }) => {
                     <div>
                         {showConfirmation ? (
                             <>
-                                <p className={styles.txtT}>Do you agree with this result?</p>
-                                <p className={styles.txtNormal}>
-                                    <span>
-                                        {days}d {hours}h {minutes}m {seconds}s
-                                    </span>
-                                </p>
                                 {isCanceled ? (
                                     <>You have Canceled Successfully</>
                                 ) : (
                                     <>
+                                        <p className={styles.txtT}>Do you agree with this result?</p>
+                                        <p className={styles.txtNormal}>
+                                            <span>
+                                                {days}d {hours}h {minutes}m {seconds}s
+                                            </span>
+                                        </p>
                                         <button
                                             className={styles.btn}
+                                            disabled={isLoading || isFetching || isWaiting}
                                             onClick={() => {
                                                 setGoPayment(true);
                                             }}
                                         >
-                                            Accept
+                                            {isLoading || isFetching | isWaiting ? "Loading..." : "Accept"}
                                         </button>
                                         <button
-                                            disabled={isLoading || isFetching}
+                                            disabled={isLoading || isFetching || isWaiting}
                                             className={styles.btn}
                                             onClick={async () => {
                                                 cancelAuctionResult({
@@ -99,7 +108,7 @@ const ResultForFirstBidder = ({ auction, amount }) => {
                                                 });
                                             }}
                                         >
-                                            {isLoading || isFetching ? "Loading..." : "Cancel"}
+                                            {isLoading || isFetching | isWaiting ? "Loading..." : "Cancel"}
                                         </button>
                                     </>
                                 )}

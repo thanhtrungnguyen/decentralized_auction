@@ -14,14 +14,23 @@ export const connectSocket = (app: any) => {
   const io = new Server(server, {
     cors: corsOptions
   });
+  var auctionIdgetBid = '';
   io.on('connection', (socket) => {
     socket.on('send_message', async (data) => {
       var highest: any;
       highest = await getHighestBidByAuctionId(data.auctionId);
-
+      auctionIdgetBid = data.auctionId;
       socket.emit('receive_message', { auction: data.auctionId, highest: highest });
     });
   });
+  const taskUpdateHighestBid = cron.schedule('*/3 * * * * *', async () => {
+    if (auctionIdgetBid != '') {
+      var highest: any;
+      highest = await getHighestBidByAuctionId(auctionIdgetBid);
+      io.emit('receive_message', { auction: auctionIdgetBid, highest: highest });
+    }
+  });
+  taskUpdateHighestBid.start();
   io.on('error', (err) => {
     console.log('Caught flash policy server socket error: ');
     console.log(err.stack);

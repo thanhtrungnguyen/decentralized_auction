@@ -21,7 +21,8 @@ const getAll = async () => {
 // Here is the service that you need
 const getByAuctionId = async (auctionId: string) => {
   try {
-    const logs = await database.collection(COLLECTION_PATH).where('auctionId', '==', auctionId).get();
+    const condition = ['PlacedBid', 'RetractedBid'];
+    const logs = await database.collection(COLLECTION_PATH).where('name', 'in', condition).where('auctionId', '==', auctionId).get();
     let list: FirebaseFirestore.DocumentData[] = [];
     logs?.forEach((doc) => {
       list.push(doc.data());
@@ -79,8 +80,112 @@ const getPlacedBidById = async (auctionId: string) => {
     logs?.forEach((doc) => {
       list.push(doc.data());
     });
+    const listsort = bubbleSort(list);
+    const auctionRegistration = await getAuctionRegistration({ auction: auctionId });
 
-    return list;
+    let listLogs: any[] = [];
+    listsort?.forEach((log) => {
+      const logAny = log as any;
+      auctionRegistration?.forEach((regis) => {
+        const regisAny = regis as any;
+        if (logAny?.bidder === regisAny.walletAddress) {
+          const bigLog = { ...logAny, ...regisAny };
+          listLogs.push(bigLog);
+        }
+      });
+    });
+    return listLogs;
+  } catch (error) {
+    logger.error(error);
+  }
+};
+const bubbleSort = (array: FirebaseFirestore.DocumentData[]) => {
+  for (let i = 0; i < array.length; i++) {
+    for (let x = 0; x < array.length - 1 - i; x++) {
+      if (array[x].blockTimestamp < array[x + 1].blockTimestamp) {
+        [array[x], array[x + 1]] = [array[x + 1], array[x]];
+      }
+    }
+  }
+  return array;
+};
+const getAuctionPayment = async (auctionId: string) => {
+  const condition = ['ClosedAuctionSuccessful'];
+  try {
+    const logs = await database.collection(COLLECTION_PATH).where('name', 'in', condition).where('auctionId', '==', auctionId).get();
+
+    let list: FirebaseFirestore.DocumentData[] = [];
+    logs?.forEach((doc) => {
+      list.push(doc.data());
+    });
+    const auctionRegistration = await getAuctionRegistration({ auction: auctionId });
+
+    let listLogs: any[] = [];
+    list?.forEach((log) => {
+      const logAny = log as any;
+      auctionRegistration?.forEach((regis) => {
+        const regisAny = regis as any;
+        if (logAny?.bidder === regisAny.walletAddress) {
+          const bigLog = { ...logAny, ...regisAny };
+          listLogs.push(bigLog);
+        }
+      });
+    });
+    return listLogs[0];
+  } catch (error) {
+    logger.error(error);
+  }
+};
+const getAuctionWithdraw = async (auctionId: string) => {
+  const condition = ['Withdraw'];
+  try {
+    const logs = await database.collection(COLLECTION_PATH).where('name', 'in', condition).where('auctionId', '==', auctionId).get();
+
+    let list: FirebaseFirestore.DocumentData[] = [];
+    logs?.forEach((doc) => {
+      list.push(doc.data());
+    });
+    const auctionRegistration = await getAuctionRegistration({ auction: auctionId });
+
+    let listLogs: any[] = [];
+    list?.forEach((log) => {
+      const logAny = log as any;
+      auctionRegistration?.forEach((regis) => {
+        const regisAny = regis as any;
+        if (logAny?.bidder === regisAny.walletAddress) {
+          const bigLog = { ...logAny, ...regisAny };
+          listLogs.push(bigLog);
+        }
+      });
+    });
+    return listLogs;
+  } catch (error) {
+    logger.error(error);
+  }
+};
+const getAuctionRegister = async (auctionId: string) => {
+  const condition = ['RegisteredToBid'];
+  try {
+    const logs = await database.collection(COLLECTION_PATH).where('name', 'in', condition).where('auctionId', '==', auctionId).get();
+
+    let list: FirebaseFirestore.DocumentData[] = [];
+    logs?.forEach((doc) => {
+      list.push(doc.data());
+    });
+    const auctionRegistration = await getAuctionRegistration({ auction: auctionId });
+
+    let listLogs: any[] = [];
+    list?.forEach((log) => {
+      const logAny = log as any;
+      auctionRegistration?.forEach((regis) => {
+        const regisAny = regis as any;
+        if (logAny?.bidder === regisAny.walletAddress) {
+          const bigLog = { ...logAny, ...regisAny };
+          listLogs.push(bigLog);
+        }
+      });
+    });
+    return listLogs;
   } catch (error) {
     logger.error(error);
   }
@@ -120,4 +225,14 @@ const getCountPlacedBidAndRetracted = async () => {
   }
 };
 
-export { getAll, getCreatedAuctionById, getPlacedBidById, getCountPlacedBidAndRetracted, getHighestBidByAuctionId, getByAuctionId };
+export {
+  getAll,
+  getCreatedAuctionById,
+  getPlacedBidById,
+  getCountPlacedBidAndRetracted,
+  getHighestBidByAuctionId,
+  getByAuctionId,
+  getAuctionRegister,
+  getAuctionPayment,
+  getAuctionWithdraw
+};
