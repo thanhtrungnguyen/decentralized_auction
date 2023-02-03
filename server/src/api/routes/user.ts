@@ -32,7 +32,7 @@ router.post(
   changePasswordHandler
 );
 router.post('/verify/:userId/:verificationCode', verifyUserHandler);
-router.post('/resetPassword/:userId/:passwordResetCode', validateResource(UserSchema.changePassword), resetPasswordHandler);
+router.post('/resetPassword/:userId/:passwordResetCode', validateResource(UserSchema.resetPassword), resetPasswordHandler);
 //
 router.get('/users/:role/:index/:status/:search', requireRole(roles.ADMIN), getUserHandler);
 
