@@ -91,6 +91,10 @@ i:hover {
     color: #000000;
 }
 
+.resetDone {
+    margin-top: 1px;
+}
+
 .col {
     width: 100%;
     height: 100%;

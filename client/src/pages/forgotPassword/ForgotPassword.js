@@ -1,5 +1,5 @@
 import styles from "../../styleCss/login.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
@@ -7,41 +7,42 @@ import NavBar from "../../components/navbar/NavBar";
 import { ToastContainer, toast } from "react-toastify";
 
 import Footer from "../../components/footer/Footer";
-const EnterEmail = () => {
+const ForgotPassword = () => {
     const axios = useAxiosPrivate();
-    const navigate = useNavigate();
 
-    const [userName, setUserName] = useState("");
-    const notify = (message) => {
-        toast(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    };
+    const [username, setUsername] = useState("");
+    const [message, setMessage] = useState();
+    const [errorMessage, setErrorMessage] = useState();
     const handleSubmit = async (event) => {
-        if (!userName.trim()) {
-            notify("🦄 userName is empty");
+        if (!username.trim()) {
+            setErrorMessage("Username is require");
         } else {
             axios
-                .post("/auth/forgotPassword", { userName }, { withCredentials: true })
-                .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                    navigate("/homePage");
+                .post("/user/forgotPassword", { username })
+                .then((response) => {
+                    if (response.status === 201) {
+                        setMessage(response?.data?.message);
+                    }
                 })
-                .catch((err) => {
-                    alert(`🦄 Failed: ${err.response.data.message} , ${err}`);
+                .catch((error) => {
+                    console.log(error?.response);
+                    if (!error?.response) {
+                        setErrorMessage("No server response");
+                    } else if (error.response?.status === 422) {
+                        setErrorMessage("Unprocessable Entity");
+                    } else if (error.response?.status === 401 || 403 || 404) {
+                        setErrorMessage(error.response?.data?.message);
+                    } else {
+                        setErrorMessage("Reset password failed");
+                    }
                 });
-            // alert("Please check your email !!!");
         }
         event.preventDefault();
     };
+
+    useEffect(() => {
+        setErrorMessage("");
+    }, [username]);
 
     return (
         <>
@@ -66,15 +67,17 @@ const EnterEmail = () => {
                     <div className={styles.group3}>
                         <div className={styles.group2}>
                             <p className={styles.txtLogin}>Forgot Password</p>
-                            <p className={styles.text}>Please enter your email to reset password </p>
+                            <p className={styles.text}>Please enter your Username to reset password </p>
                             <input
-                                type="email"
+                                type="text"
                                 className={styles.textField}
-                                placeholder="Email Address"
-                                value={userName}
-                                onChange={(e) => setUserName(e.target.value)}
+                                placeholder="Username "
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 required
                             ></input>
+                            <p className={errorMessage ? styles.errorMessage : styles.offscreen}>{errorMessage}</p>
+                            <p className={styles.txtLogin}>{message}</p>
                             <br />
                             <br />
                             <br />
@@ -89,4 +92,4 @@ const EnterEmail = () => {
     );
 };
 
-export default EnterEmail;
+export default ForgotPassword;

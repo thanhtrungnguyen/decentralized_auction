@@ -21,7 +21,7 @@ const Login = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMassage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -33,7 +33,7 @@ const Login = () => {
     }, []);
 
     useEffect(() => {
-        setErrorMassage("  ");
+        setErrorMessage("  ");
     }, [username, password]);
 
     const handleSubmit = async (event) => {
@@ -71,13 +71,13 @@ const Login = () => {
             })
             .catch((error) => {
                 if (!error?.response) {
-                    setErrorMassage("No server response");
+                    setErrorMessage("No server response");
                 } else if (error.response?.status === 422) {
-                    setErrorMassage("Unprocessable Entity");
+                    setErrorMessage("Unprocessable Entity");
                 } else if (error.response?.status === 401 || 403) {
-                    setErrorMassage(error.response?.data?.message);
+                    setErrorMessage(error.response?.data?.message);
                 } else {
-                    setErrorMassage("Login Failed");
+                    setErrorMessage("Login Failed");
                 }
                 errorRef.current.focus();
                 console.log(errorMessage);
@@ -128,7 +128,7 @@ const Login = () => {
                         </p>
                         <input className={styles.btn} type="submit" value="Sign in" />
                         <p>
-                            <Link className={styles.forget} to="/enterEmail">
+                            <Link className={styles.forget} to="/forgotPassword">
                                 Forget password?
                             </Link>
                         </p>
