@@ -83,7 +83,7 @@ const Payment = ({ auction, amount }) => {
         } else {
             return (
                 <>
-                    <div className={styles.detail}>
+                    <div className={styles.detail2}>
                         {/* <form> */}
                         <p className={styles.title}>Payment:</p>
                         <p className={styles.txtT}>Deposit Paid: {auction.depositAmount} ETH</p>
