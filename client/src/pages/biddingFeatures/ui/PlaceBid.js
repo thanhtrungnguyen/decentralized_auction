@@ -22,11 +22,17 @@ function PlaceBid({ auction, property }) {
     const dispatch = useNotification();
     const { account, isWeb3Enabled } = useMoralis();
     const [highestBid, setHighestBid] = useState("0");
-    const [inputBidAmount, setInputBidAmount] = useState("0");
+    const [inputBidAmount, setInputBidAmount] = useState("");
     const [transactionStatus, setTransactionStatus] = useState();
     const [minBidAmount, setMinBidAmount] = useState();
     const [errorMessage, setErrorMessage] = useState();
-
+    const handleInputChange = (e) => {
+        const regexNumber = /^[0-9]*\.?[0-9]*$/;
+        const { id, value } = e.target;
+        if (id === "bidAmount") {
+            if (value === "" || regexNumber.test(value)) setInputBidAmount(value);
+        }
+    };
     const socket = io.connect(BASE_URL);
     const {
         runContractFunction: getBidInformationByAuctionId,
@@ -38,19 +44,6 @@ function PlaceBid({ auction, property }) {
         abi: CONTRACT_ABI,
         contractAddress: CONTRACT_ADDRESS,
         functionName: "getBidInformationByAuctionId",
-        params: { auctionId: auction.auctionId },
-    });
-
-    const {
-        runContractFunction: getHighestBidOfAuction,
-        data: highestBidOfAuctionData,
-        error: highestBidOfAuctionError,
-        isFetching: isHighestBidOfAuctionFetching,
-        isLoading: isHighestBidOfAuctionLoading,
-    } = useWeb3Contract({
-        abi: CONTRACT_ABI,
-        contractAddress: CONTRACT_ADDRESS,
-        functionName: "getHighestBidOfAuction",
         params: { auctionId: auction.auctionId },
     });
 
@@ -89,6 +82,7 @@ function PlaceBid({ auction, property }) {
     socket.on("receive_message", (data) => {
         if (auction.auctionId == data.auction) {
             if (data.highest > parseFloat(highestBid)) {
+                console.log(data);
                 setHighestBid(data.highest + "");
             }
         }
@@ -102,33 +96,31 @@ function PlaceBid({ auction, property }) {
         // await getHighestBidOfAuction();
         // setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
         socket.emit("send_message", { message: "message", auctionId: auction.auctionId });
-        setMinBidAmount(
-            highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
-        );
+
+        if (highestBid !== "0") {
+            setMinBidAmount(
+                highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
+            );
+        } else {
+            setMinBidAmount(auction.startBid);
+        }
     };
-    // const updateCurrentAuction = async () => {
-    //     await getHighestBidOfAuction();
-    //     setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
-    //     setMinBidAmount(
-    //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
-    //     );
-    //     console.log(
-    //         "highestBid",
-    //         highestBid,
-    //         "priceStep",
-    //         auction.priceStep,
-    //         "minBidAmount",
-    //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
-    //     );
-    // };
     useEffect(() => {
-        try {
-            if (new Decimal(inputBidAmount).comparedTo(new Decimal(minBidAmount)) === 1) {
-                console.log(new Decimal(inputBidAmount), new Decimal(minBidAmount));
+        if (inputBidAmount !== "") {
+            try {
+                if (inputBidAmount !== "0") {
+                    if (new Decimal(inputBidAmount).comparedTo(new Decimal(minBidAmount)) === -1) {
+                        console.log(new Decimal(inputBidAmount), new Decimal(minBidAmount));
+                        setErrorMessage("Invalid bid amount");
+                    } else {
+                        setErrorMessage("  ");
+                    }
+                } else {
+                    setErrorMessage("Invalid bid amount");
+                }
+            } catch (error) {
                 setErrorMessage("Invalid bid amount");
             }
-        } catch (error) {
-            setErrorMessage("Invalid bid amount");
         }
     }, [inputBidAmount]);
     useEffect(() => {
@@ -240,21 +232,20 @@ function PlaceBid({ auction, property }) {
                         <p className={styles.title}>Place bid details:</p>
                         <p className={styles.txtT}>Your bid must be at least {minBidAmount} ETH</p>
                         <input
+                            id="bidAmount"
                             className={styles.input}
-                            type="number"
+                            type="text"
                             value={inputBidAmount}
                             validation={{
                                 min: 1,
                             }}
-                            onChange={(event) => {
-                                setInputBidAmount(event.target.value);
-                            }}
+                            onChange={(e) => handleInputChange(e)}
                         ></input>
                         <label className={styles.mess}>{errorMessage}</label>
                         <br />
                         <button
                             className={styles.btnClose}
-                            disabled={isLoadingPlaceBid || isFetchingPlaceBid}
+                            disabled={isLoadingPlaceBid || isFetchingPlaceBid || errorMessage === "Invalid bid amount"}
                             onClick={async () => {
                                 placeBid({
                                     onError: placeBidHandleError,
