@@ -244,7 +244,7 @@ function PlaceBid({ auction, property }) {
                         <label className={styles.mess}>{errorMessage}</label>
                         <br />
                         <button
-                            className={styles.btnClose}
+                            className={styles.btnClose2}
                             disabled={isLoadingPlaceBid || isFetchingPlaceBid || errorMessage === "Invalid bid amount"}
                             onClick={async () => {
                                 placeBid({
@@ -256,7 +256,7 @@ function PlaceBid({ auction, property }) {
                             {isLoadingPlaceBid || isFetchingPlaceBid ? "Loading..." : "Place Bid"}
                         </button>
                         <button
-                            className={styles.btnClose}
+                            className={styles.btnClose2}
                             disabled={isLoadingRetractBid || isFetchingRetractBid}
                             onClick={async () => {
                                 retractBid({

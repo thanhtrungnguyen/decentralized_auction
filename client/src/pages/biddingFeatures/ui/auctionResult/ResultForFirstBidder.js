@@ -90,7 +90,7 @@ const ResultForFirstBidder = ({ auction, amount }) => {
                                             </span>
                                         </p>
                                         <button
-                                            className={styles.btnClose}
+                                            className={styles.btnClose2}
                                             disabled={isLoading || isFetching || isWaiting}
                                             onClick={() => {
                                                 setGoPayment(true);
@@ -100,7 +100,7 @@ const ResultForFirstBidder = ({ auction, amount }) => {
                                         </button>
                                         <button
                                             disabled={isLoading || isFetching || isWaiting}
-                                            className={styles.btnClose}
+                                            className={styles.btnClose2}
                                             onClick={async () => {
                                                 cancelAuctionResult({
                                                     onError: handleError,
