@@ -71,7 +71,7 @@
 
 .detail {
     width: 439px;
-    height: 280px;
+    height: 310px;
     background: #ffffff;
     border: 1px solid #9da0ae;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -79,10 +79,19 @@
     float: right;
     margin-right: 50px;
 }
-
+.detail2 {
+    width: 439px;
+    height: 310px;
+    background: #ffffff;
+    border: 1px solid #9da0ae;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 9px;
+    float: right;
+    /* margin-right: 50px; */
+}
 .img {
     width: 140px;
-    height: 140px;
+    height: 14s0px;
     border: 1px solid #000000;
     border-radius: 3px;
     margin-left: 10px;

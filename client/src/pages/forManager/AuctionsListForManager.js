@@ -138,19 +138,29 @@ const AuctionsListForManager = () => {
                                                 Approve/Reject
                                             </Link>
                                         </div>
-                                    ) : (
-                                        <div className={styles.fl2}>
-                                            <AiFillEye
-                                                className={styles.iconView}
-                                                onClick={() => {
-                                                    navigate(`/auctionDetailForManager/${auction._id}`);
-                                                }}
-                                            />
-                                            <Link className={styles.link2} to={`/viewRegistrationForManager/${auction._id}`}>
-                                                Process
-                                            </Link>
-                                        </div>
-                                    )}
+                                    ) : auction.status === "Rejected" ?
+                                        <>
+                                            <div className={styles.fl2}>
+                                                <AiFillEye
+                                                    className={styles.iconView}
+                                                    onClick={() => {
+                                                        navigate(`/auctionDetailForManager/${auction._id}`);
+                                                    }}
+                                                />
+                                            </div>
+                                        </> : (
+                                            <div className={styles.fl2}>
+                                                <AiFillEye
+                                                    className={styles.iconView}
+                                                    onClick={() => {
+                                                        navigate(`/auctionDetailForManager/${auction._id}`);
+                                                    }}
+                                                />
+                                                <Link className={styles.link2} to={`/viewRegistrationForManager/${auction._id}`}>
+                                                    Process
+                                                </Link>
+                                            </div>
+                                        )}
 
                                     {/* <AiOutlineDelete className={styles.iconView} /> */}
                                 </td>
