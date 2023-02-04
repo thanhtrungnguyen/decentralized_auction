@@ -30,7 +30,7 @@ function PlaceBid({ auction, property }) {
         const regexNumber = /^[0-9]*\.?[0-9]*$/;
         const { id, value } = e.target;
         if (id === "bidAmount") {
-            if (value === '' || regexNumber.test(value)) setInputBidAmount(value);
+            if (value === "" || regexNumber.test(value)) setInputBidAmount(value);
         }
     };
     const socket = io.connect(BASE_URL);
@@ -106,15 +106,21 @@ function PlaceBid({ auction, property }) {
         }
     };
     useEffect(() => {
-        try {
-            if (new Decimal(inputBidAmount).comparedTo(new Decimal(minBidAmount)) === -1) {
-                console.log(new Decimal(inputBidAmount), new Decimal(minBidAmount));
+        if (inputBidAmount !== "") {
+            try {
+                if (inputBidAmount !== "0") {
+                    if (new Decimal(inputBidAmount).comparedTo(new Decimal(minBidAmount)) === -1) {
+                        console.log(new Decimal(inputBidAmount), new Decimal(minBidAmount));
+                        setErrorMessage("Invalid bid amount");
+                    } else {
+                        setErrorMessage("  ");
+                    }
+                } else {
+                    setErrorMessage("Invalid bid amount");
+                }
+            } catch (error) {
                 setErrorMessage("Invalid bid amount");
-            } else {
-                setErrorMessage("  ");
             }
-        } catch (error) {
-            setErrorMessage("Invalid bid amount");
         }
     }, [inputBidAmount]);
     useEffect(() => {
@@ -234,13 +240,12 @@ function PlaceBid({ auction, property }) {
                                 min: 1,
                             }}
                             onChange={(e) => handleInputChange(e)}
-
                         ></input>
                         <label className={styles.mess}>{errorMessage}</label>
                         <br />
                         <button
                             className={styles.btnClose}
-                            disabled={isLoadingPlaceBid || isFetchingPlaceBid}
+                            disabled={isLoadingPlaceBid || isFetchingPlaceBid || errorMessage === "Invalid bid amount"}
                             onClick={async () => {
                                 placeBid({
                                     onError: placeBidHandleError,
