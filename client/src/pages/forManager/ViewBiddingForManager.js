@@ -163,14 +163,10 @@ const ViewBiddingForManager = () => {
                                         <tr>
                                             <td>{bid?.user?.username}</td>
                                             <td>
-                                                <a className={styles.txt} href={getLinkAddress(bid?.bidder)}>
-                                                    {getString(bid?.bidder)}
-                                                </a>
+                                                <a href={getLinkAddress(bid?.bidder)}>{getString(bid?.bidder)}</a>
                                             </td>
                                             <td>
-                                                <a className={styles.txt} href={getLink(bid?.transactionHash)}>
-                                                    {getString(bid?.transactionHash)}
-                                                </a>
+                                                <a href={getLink(bid?.transactionHash)}>{getString(bid?.transactionHash)}</a>
                                             </td>
 
                                             <td>{bid?.bidAmount != undefined ? parseEther(bid?.bidAmount) : <p></p>}</td>

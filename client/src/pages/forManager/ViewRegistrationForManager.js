@@ -137,14 +137,10 @@ const ViewRegistrationForManager = () => {
                                 <tr>
                                     <td>{auction?.user?.username}</td>
                                     <td>
-                                        <a className={styles.txt} href={getLinkAddress(auction?.bidder)}>
-                                            {getString(auction?.bidder)}
-                                        </a>
+                                        <a href={getLinkAddress(auction?.bidder)}>{getString(auction?.bidder)}</a>
                                     </td>
                                     <td>
-                                        <a className={styles.txt} href={getLink(auction?.transactionHash)}>
-                                            {getString(auction?.transactionHash)}
-                                        </a>
+                                        <a href={getLink(auction?.transactionHash)}>{getString(auction?.transactionHash)}</a>
                                     </td>
                                     <td>{new Date(auction?.blockTimestamp * 1000).toLocaleString()}</td>
                                 </tr>
