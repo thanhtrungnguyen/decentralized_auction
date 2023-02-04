@@ -129,9 +129,11 @@ function PlaceBid({ auction, property }) {
     // };
     useEffect(() => {
         try {
-            if (new Decimal(inputBidAmount).comparedTo(new Decimal(minBidAmount)) === 1) {
+            if (new Decimal(inputBidAmount).comparedTo(new Decimal(minBidAmount)) === -1) {
                 console.log(new Decimal(inputBidAmount), new Decimal(minBidAmount));
                 setErrorMessage("Invalid bid amount");
+            } else {
+                setErrorMessage("  ");
             }
         } catch (error) {
             setErrorMessage("Invalid bid amount");
