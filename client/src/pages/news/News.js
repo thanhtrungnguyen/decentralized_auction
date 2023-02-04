@@ -11,6 +11,7 @@ import Loading from "../../components/loading/Loading";
 
 import { useFetchPagination } from "../../hooks/useFetch";
 import moment from "moment";
+import "moment/locale/vi";
 import { Pagination } from "@mui/material";
 const News = () => {
     const [role] = useState();
@@ -51,7 +52,7 @@ const News = () => {
                         {/* <BsPencil className={(styles.icon, styles.colorPink)} />
                         <label className={styles.lable}>{item._id}</label> */}
                         <BsCalendar3 className={(styles.icon, styles.colorYellow)} />
-                        <label className={styles.lable}>{moment(`${item.createdAt}`).format("MMM Do YY")} </label>
+                        <label className={styles.lable}>{moment(`${item.createdAt}`).format("LTS")} </label>
                         <div className={styles.title}>{item.title}</div>
                         {/* <div className={styles.des}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit facilisis quis auctor pretium ipsum, eu rutrum. Condimentum

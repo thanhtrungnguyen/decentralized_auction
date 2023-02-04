@@ -422,7 +422,7 @@ const AddSeller = () => {
                             <br />
                             <input
                                 className={styles.inputEP}
-                                type="number"
+                                type="text"
                                 pattern="[0]\d{9}"
                                 placeholder="Phone number"
                                 value={phone}
