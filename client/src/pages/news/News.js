@@ -48,8 +48,8 @@ const News = () => {
                 {data.news.listNews.map((item) => (
                     <div className={styles.content}>
                         <img className={styles.img} src={item.avatar} alt="Img" />
-                        <BsPencil className={(styles.icon, styles.colorPink)} />
-                        <label className={styles.lable}>{item._id}</label>
+                        {/* <BsPencil className={(styles.icon, styles.colorPink)} />
+                        <label className={styles.lable}>{item._id}</label> */}
                         <BsCalendar3 className={(styles.icon, styles.colorYellow)} />
                         <label className={styles.lable}>{moment(`${item.createdAt}`).format("MMM Do YY")} </label>
                         <div className={styles.title}>{item.title}</div>
@@ -96,7 +96,7 @@ const News = () => {
                                 placeholder="Title"
                                 value={title2}
                                 onChange={(e) => handleInputChange(e)}
-                            //required
+                                //required
                             ></input>
                             {/* <input type="submit" className="btn" value="Search"></input> */}
                             <BsSearch className={styles.icon2} onClick={handleSubmit} />
