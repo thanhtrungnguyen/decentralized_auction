@@ -22,11 +22,17 @@ function PlaceBid({ auction, property }) {
     const dispatch = useNotification();
     const { account, isWeb3Enabled } = useMoralis();
     const [highestBid, setHighestBid] = useState("0");
-    const [inputBidAmount, setInputBidAmount] = useState("0");
+    const [inputBidAmount, setInputBidAmount] = useState("");
     const [transactionStatus, setTransactionStatus] = useState();
     const [minBidAmount, setMinBidAmount] = useState();
     const [errorMessage, setErrorMessage] = useState();
-
+    const handleInputChange = (e) => {
+        const regexNumber = /^[0-9]*\.?[0-9]*$/;
+        const { id, value } = e.target;
+        if (id === "bidAmount") {
+            if (value === '' || regexNumber.test(value)) setInputBidAmount(value);
+        }
+    };
     const socket = io.connect(BASE_URL);
     const {
         runContractFunction: getBidInformationByAuctionId,
@@ -240,15 +246,15 @@ function PlaceBid({ auction, property }) {
                         <p className={styles.title}>Place bid details:</p>
                         <p className={styles.txtT}>Your bid must be at least {minBidAmount} ETH</p>
                         <input
+                            id="bidAmount"
                             className={styles.input}
-                            type="number"
+                            type="text"
                             value={inputBidAmount}
                             validation={{
                                 min: 1,
                             }}
-                            onChange={(event) => {
-                                setInputBidAmount(event.target.value);
-                            }}
+                            onChange={(e) => handleInputChange(e)}
+
                         ></input>
                         <label className={styles.mess}>{errorMessage}</label>
                         <br />

@@ -107,7 +107,7 @@ const MyProperty = () => {
                         <td>{item.startBid}</td>
                         <td>{item.status}</td>
                         <td>
-                            {item.status === "Created" || item.status === "Modified" ? (
+                            {item.status === "Created" ? (
                                 <>
                                     <AiTwotoneEdit
                                         className={styles.iconView}
@@ -147,7 +147,7 @@ const MyProperty = () => {
                                         }}
                                     />
                                 </>
-                            ) : (
+                            ) : item.status === "Modified" ? (
                                 <>
                                     <AiTwotoneEdit
                                         className={styles.iconView}
@@ -161,6 +161,9 @@ const MyProperty = () => {
                                             navigate("/propertyDetail/" + `${item._id}`);
                                         }}
                                     />
+                                    <Popup trigger={<label className={styles.link}>Request Add</label>} position="right center">
+                                        <RequestAddProperty idProperty={`${item._id}`} />
+                                    </Popup>
                                     {/* <Popup
                                         trigger={
                                             <label>
@@ -173,7 +176,31 @@ const MyProperty = () => {
                                         <DeleteProperty idProperty="" />
                                     </Popup> */}
                                 </>
-                            )}
+                            ) : <>
+                                <AiTwotoneEdit
+                                    className={styles.iconView}
+                                    onClick={() => {
+                                        navigate("/editProperty/" + `${item._id}`);
+                                    }}
+                                />
+                                <AiFillEye
+                                    className={styles.iconView}
+                                    onClick={() => {
+                                        navigate("/propertyDetail/" + `${item._id}`);
+                                    }}
+                                />
+                                {/* <Popup
+                                        trigger={
+                                            <label>
+                                                {" "}
+                                                <AiOutlineDelete className={styles.iconView} />
+                                            </label>
+                                        }
+                                        position="right center"
+                                    >
+                                        <DeleteProperty idProperty="" />
+                                    </Popup> */}
+                            </>}
                         </td>
                     </tr>
                 ))}

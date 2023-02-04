@@ -3,8 +3,9 @@ import NavBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import styles from "../../styleCss/auctionDetail.module.css";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
+import { useNavigate } from "react-router-dom";
 
 import Loading from "../../components/loading/Loading";
 import BidModalButton from "../biddingFeatures/components/BidModalButton";
@@ -12,11 +13,15 @@ import PageName from "../../components/header/PageName";
 import FooterCopy from "../../components/footer/FooterCopy";
 import moment from "moment";
 import "moment/locale/vi";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const AuctionDetail = () => {
+    const axios = useAxiosPrivate();
     // const [auction, setAuction] = useState(null);
     const { id } = useParams();
+    const [loading, setLoading] = useState(true);
     const baseURL = `/auction/${id}`;
-    const { data, loading, error } = useFetch(baseURL);
+    const { data } = useFetch(baseURL);
+    const [dataAuction, setDataAuction] = useState([]);
     const [role, setRole] = useState();
     let img1 = "https://unboxph3a1e0.zapwp.com/q:intelligent/r:0/wp:1/w:1/u:https://unbox.ph/wp-content/uploads/2011/09/Nike-Air-Mag-3-1200x742.jpeg";
     let img2 = "https://footwearnews.com/wp-content/uploads/2017/10/nike-mag-heritage-auctions7.jpg?w=700&h=437&crop=1";
@@ -28,12 +33,25 @@ const AuctionDetail = () => {
         if (id === "img2") setImg(src);
         if (id === "img3") setImg(src);
     };
-    useEffect(() => {}, []);
 
     // const [openModal, setOpenModal] = useState(() => {
     //     return false;
     // });
+    const baseURLAuction = `/auction/auctions/bidder?page=${1}&status=&search=null&sort=0&category=&minValue=0&maxValue=100`
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            await axios.get(baseURLAuction).then((resp) => {
+                //console.log(resp.data);
+                // console.log("axios get");
+                setDataAuction(resp.data.auctions.listAuction);
+            });
+            setLoading(false);
+        };
+        fetchData();
+    }, [baseURLAuction]);
     return loading ? (
         <Loading />
     ) : (
@@ -128,21 +146,26 @@ const AuctionDetail = () => {
                     <p className={styles.text}>{data.auction.property.description}</p>
                 </div>
 
-                <p className={styles.related}>RELATED AUCTIONS</p>
+                <p className={styles.related}>RECOMMEND AUCTIONS</p>
                 <div className={styles.auctions}>
-                    <div className={styles.auction}>
-                        <img id="img1" src={img1} alt="thumb" className={styles.image} onClick={(e) => setShow(e)}></img>
-                        <p className={styles.t}>Nike Air Max 270 React</p>
-                        <p className={styles.price2}>299,43 ETH</p>
-                        <button className={styles.btn2}>Place Bid</button>
-                    </div>
-                    <div className={styles.auction}>
-                        <img id="img1" src={img2} alt="thumb" className={styles.image} onClick={(e) => setShow(e)}></img>
-                        <p className={styles.t}>Nike Air Max 270 React</p>
-                        <p className={styles.price2}>299,43 ETH</p>
-                        <button className={styles.btn2}>Place Bid</button>
-                    </div>
-                    <div className={styles.auction}>
+                    {dataAuction?.map((auction) => (
+                        <div className={styles.auction}>
+                            <img id="img1" alt="thumb" className={styles.image} src={auction?.property.mediaUrl[0]} ></img>
+                            <p className={styles.t}>{auction?.name}</p>
+                            <p className={styles.price2}> Starting price : {auction?.property.startBid} ETH</p>
+                            <button className={styles.btn2} onClick={() => {
+                                navigate(`/auctionDetail/${auction?._id}`)
+                                window.location.reload()
+                            }}>Place Bid</button>
+                            {/* <Link className={styles.btn2} to={`/auctionDetail/${auction?._id}`}>
+                                Place Bid
+                            </Link> */}
+                        </div>
+
+                    ))}
+
+
+                    {/* <div className={styles.auction}>
                         <img id="img1" src={img3} alt="thumb" className={styles.image} onClick={(e) => setShow(e)}></img>
                         <p className={styles.t}>Nike Air Max 270 React</p>
                         <p className={styles.price2}>299,43 ETH</p>
@@ -153,7 +176,7 @@ const AuctionDetail = () => {
                         <p className={styles.t}>Nike Air Max 270 React</p>
                         <p className={styles.price2}>299,43 ETH</p>
                         <button className={styles.btn2}>Place Bid</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <Footer />
