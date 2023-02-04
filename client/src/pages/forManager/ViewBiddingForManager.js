@@ -22,6 +22,8 @@ import { parseEther } from "../../utils/ethereumUnitConverter";
 import { useFetchData } from "../../hooks/useFetch";
 import Loader from "../biddingFeatures/components/Loader";
 const ViewBiddingForManager = () => {
+    const prefix = "https://goerli.etherscan.io/tx/";
+    const prefixAddress = "https://goerli.etherscan.io/address/";
     const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const { id } = useParams();
@@ -74,7 +76,18 @@ const ViewBiddingForManager = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-
+    const getLink = (transactionHash) => {
+        var link = `${prefix}${transactionHash}`;
+        return link;
+    };
+    const getString = (transactionHash) => {
+        var hashString = `${transactionHash?.slice(0, 6)}...${transactionHash?.slice(transactionHash?.length - 4)}`;
+        return hashString;
+    };
+    const getLinkAddress = (address) => {
+        var link = `${prefixAddress}${address}`;
+        return link;
+    };
     const getDate = (dates) => {
         var date = new Date(new Date(0).setUTCSeconds(dates));
         return date.toLocaleString();
@@ -149,8 +162,16 @@ const ViewBiddingForManager = () => {
                                     <>
                                         <tr>
                                             <td>{bid?.user?.username}</td>
-                                            <td>{bid?.bidder}</td>
-                                            <td>{bid?.transactionHash}</td>
+                                            <td>
+                                                <a className={styles.txt} href={getLinkAddress(bid?.bidder)}>
+                                                    {getString(bid?.bidder)}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a className={styles.txt} href={getLink(bid?.transactionHash)}>
+                                                    {getString(bid?.transactionHash)}
+                                                </a>
+                                            </td>
 
                                             <td>{bid?.bidAmount != undefined ? parseEther(bid?.bidAmount) : <p></p>}</td>
                                             <td>{getDate(bid?.blockTimestamp)}</td>

@@ -16,6 +16,8 @@ import Loading from "../../components/loading/Loading";
 import { useParams } from "react-router-dom";
 import Time from "../../components/time/Time";
 const WithdrawForManager = () => {
+    const prefix = "https://goerli.etherscan.io/tx/";
+    const prefixAddress = "https://goerli.etherscan.io/address/";
     const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const { id } = useParams();
@@ -52,6 +54,18 @@ const WithdrawForManager = () => {
     };
     const handleChange = (event, value) => {
         setPage(value);
+    };
+    const getLink = (transactionHash) => {
+        var link = `${prefix}${transactionHash}`;
+        return link;
+    };
+    const getString = (transactionHash) => {
+        var hashString = `${transactionHash?.slice(0, 6)}...${transactionHash?.slice(transactionHash?.length - 4)}`;
+        return hashString;
+    };
+    const getLinkAddress = (address) => {
+        var link = `${prefixAddress}${address}`;
+        return link;
     };
 
     return loading ? (
@@ -113,8 +127,16 @@ const WithdrawForManager = () => {
                             {data.withdraw?.map((auction) => (
                                 <tr>
                                     <td>{auction?.user?.username}</td>
-                                    <td>{auction?.bidder}</td>
-                                    <td>{auction?.transactionHash}</td>
+                                    <td>
+                                        <a className={styles.txt} href={getLinkAddress(auction?.bidder)}>
+                                            {getString(auction?.bidder)}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a className={styles.txt} href={getLink(auction?.transactionHash)}>
+                                            {getString(auction?.transactionHash)}
+                                        </a>
+                                    </td>
                                     <td>{new Date(auction?.blockTimestamp * 1000).toLocaleString()}</td>
                                 </tr>
                             ))}

@@ -21,9 +21,11 @@ import Loader from "../biddingFeatures/components/Loader";
 const AuctionResult = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-
+    const prefix = "https://goerli.etherscan.io/tx/";
+    const prefixAddress = "https://goerli.etherscan.io/address/";
     const { loading: auctionLoading, data: auctionData, error: auctionError } = useFetchData(`/contractInteraction/createdAuction/${id}`);
     const { loading: paymentLoading, data: paymentData, error: paymentError } = useFetchData(`/contractInteraction/payment/${id}`);
+
     const onClick = () => {
         navigate(`/viewBiddingForManager/${id}`);
     };
@@ -35,6 +37,22 @@ const AuctionResult = () => {
     };
     const withdraw = () => {
         navigate(`/withdrawForManager/${id}`);
+    };
+    const getLink = (transactionHash) => {
+        var link = `${prefix}${transactionHash}`;
+        return link;
+    };
+    const getString = (transactionHash) => {
+        var hashString = `${transactionHash?.slice(0, 6)}...${transactionHash?.slice(transactionHash?.length - 4)}`;
+        return hashString;
+    };
+    const getLinkAddress = (address) => {
+        var link = `${prefixAddress}${address}`;
+        return link;
+    };
+    const getDate = (dates) => {
+        var date = new Date(new Date(0).setUTCSeconds(dates));
+        return date.toLocaleString();
     };
     // const handleChange = (event, value) => {
     //     setPage(value);
@@ -95,38 +113,41 @@ const AuctionResult = () => {
                                 Registration Time End in <Countdown date={auctionData?.createdAuction?.duePaymentTime * 1000} />
                             </p>
                         )}
-                        <div className={styles.fl}>
-                            <div className={styles.l}>
-                                <p className={styles.label}>Start Bid</p>
-                            </div>
-                            <div className={styles.r}>
-                                <p className={styles.txt}>ABC XYZ</p>
-                            </div>
-                        </div>
-                        <div className={styles.fl}>
-                            <div className={styles.l}>
-                                <p className={styles.label}>Bid Amount</p>
-                            </div>
-                            <div className={styles.r}>
-                                <p className={styles.txt}>44 ETH</p>
-                            </div>
-                        </div>{" "}
-                        <div className={styles.fl}>
-                            <div className={styles.l}>
-                                <p className={styles.label}>Status</p>
-                            </div>
-                            <div className={styles.r}>
-                                <p className={styles.txt}>Accept Auction result</p>
-                            </div>
-                        </div>{" "}
-                        <div className={styles.fl}>
-                            <div className={styles.l}>
-                                <p className={styles.label}>Payment</p>
-                            </div>
-                            <div className={styles.r}>
-                                <p className={styles.txt}>Not Yet</p>
-                            </div>
-                        </div>
+                        <>
+                            <table className={styles.table}>
+                                <tr>
+                                    <th className={styles.th}>Username</th>
+                                    <th className={styles.th}>Wallet</th>
+                                    <th className={styles.th}>Tx Hash</th>
+                                    <th className={styles.th}>Time</th>
+                                    <th className={styles.th}>Status</th>
+                                </tr>
+
+                                {paymentData?.payment.map((bid) => (
+                                    <>
+                                        <tr>
+                                            <td>{bid?.user?.username}</td>
+                                            <td>
+                                                <a className={styles.txt} href={getLinkAddress(bid?.bidder)}>
+                                                    {getString(bid?.bidder)}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a className={styles.txt} href={getLink(bid?.transactionHash)}>
+                                                    {getString(bid?.transactionHash)}
+                                                </a>
+                                            </td>
+
+                                            <td>{getDate(bid?.blockTimestamp)}</td>
+                                            <td>
+                                                {bid.name === "PaymentCompleted" && "Payment Completed"}
+                                                {bid.name === "CanceledAuctionResult" && "Canceled Auction Result"}
+                                            </td>
+                                        </tr>
+                                    </>
+                                ))}
+                            </table>
+                        </>
                     </div>
                 </div>
             </div>
