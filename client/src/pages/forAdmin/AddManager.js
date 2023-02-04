@@ -27,7 +27,7 @@ const AddManager = () => {
     const [lastName, setLastName] = useState("");
     const [gender, setGender] = useState("Male");
     const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
+    const [phone, setPhone] = useState('');
     const [specificAddress, setSpecificAddress] = useState("");
     const [message, setMessage] = useState("");
     const [role, setRole] = useState();
@@ -45,6 +45,7 @@ const AddManager = () => {
         setPasswordShown2(passwordShown2 ? false : true);
     };
     const handleInputChange = (e) => {
+        const regexNumber = /^[0-9\b]+$/;
         const { id, value } = e.target;
         if (id === "username") {
             setUsername(value);
@@ -68,7 +69,7 @@ const AddManager = () => {
             setEmail(value);
         }
         if (id === "phone") {
-            setPhone(value);
+            if (value === '' || regexNumber.test(value)) setPhone(value);
         }
         if (id === "specificAddress") {
             setSpecificAddress(value);
@@ -244,6 +245,7 @@ const AddManager = () => {
                             type="text"
                             onChange={(e) => handleInputChange(e)}
                             required
+                            value={phone}
                             id="phone"
                             pattern="(0[3|5|7|8|9])+([0-9]{8})\b"
                         ></input>

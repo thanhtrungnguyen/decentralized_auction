@@ -25,7 +25,7 @@ const AddSeller = () => {
     const [disable, setDisable] = useState(false);
 
     const [organizationName, setOrganizationName] = useState(null);
-    const [taxCode, setTaxCode] = useState(null);
+    const [taxCode, setTaxCode] = useState('');
     const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null);
     const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null);
     const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null);
@@ -34,9 +34,9 @@ const AddSeller = () => {
     const [gender, setGender] = useState("Male");
     const [dateOfBirth, setdateOfBirth] = useState(null);
     const [email, setEmail] = useState(null);
-    const [phone, setPhone] = useState(null);
+    const [phone, setPhone] = useState('');
     const [specificAddress, setSpecificAddress] = useState(null);
-    const [cardNumber, setCardNumber] = useState(null);
+    const [cardNumber, setCardNumber] = useState('');
     const [dateRangeCard, setdateRangeCard] = useState(null);
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
@@ -49,13 +49,14 @@ const AddSeller = () => {
     const [fileBack, setFileBack] = useState(0);
     const [fileFront, setFileFront] = useState(0);
     const handleInputChange = (e) => {
+        const regexNumber = /^[0-9\b]+$/;
         const { id, value } = e.target;
         if (id === "organizationName") {
             setOrganizationName(value);
         }
 
         if (id === "taxCode") {
-            setTaxCode(value);
+            if (value === '' || regexNumber.test(value)) setTaxCode(value);
         }
         if (id === "taxCodeGrantedDate") {
             setTaxCodeGrantedDate(value);
@@ -83,13 +84,13 @@ const AddSeller = () => {
             setEmail(value);
         }
         if (id === "phone") {
-            setPhone(value);
+            if (value === '' || regexNumber.test(value)) setPhone(value);
         }
         if (id === "specificAddress") {
             setSpecificAddress(value);
         }
         if (id === "cardNumber") {
-            setCardNumber(value);
+            if (value === '' || regexNumber.test(value)) setCardNumber(value);
         }
         if (id === "dateRangeCard") {
             setdateRangeCard(value);

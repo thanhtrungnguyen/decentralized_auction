@@ -34,7 +34,7 @@
 
 .con {
     width: 1400px;
-    height: 711px;
+    height: 741px;
 
     background: #ffffff;
 
@@ -263,6 +263,13 @@ th {
 
 .txt {
     margin-left: 40px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
+.txt2 {
     font-family: "Inter";
     font-style: normal;
     font-weight: 400;

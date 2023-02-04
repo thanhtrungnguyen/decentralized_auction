@@ -19,6 +19,8 @@ import Countdown from "react-countdown";
 import { useFetchData } from "../../hooks/useFetch";
 import Loader from "../biddingFeatures/components/Loader";
 const ViewRegistrationForManager = () => {
+    const prefix = "https://goerli.etherscan.io/tx/";
+    const prefixAddress = "https://goerli.etherscan.io/address/";
     const axios = useAxiosPrivate();
     const [page, setPage] = React.useState(1);
     const { id } = useParams();
@@ -55,6 +57,18 @@ const ViewRegistrationForManager = () => {
     };
     const handleChange = (event, value) => {
         setPage(value);
+    };
+    const getLink = (transactionHash) => {
+        var link = `${prefix}${transactionHash}`;
+        return link;
+    };
+    const getString = (transactionHash) => {
+        var hashString = `${transactionHash?.slice(0, 6)}...${transactionHash?.slice(transactionHash?.length - 4)}`;
+        return hashString;
+    };
+    const getLinkAddress = (address) => {
+        var link = `${prefixAddress}${address}`;
+        return link;
     };
 
     return loading ? (
@@ -122,8 +136,12 @@ const ViewRegistrationForManager = () => {
                             {data.registers?.map((auction) => (
                                 <tr>
                                     <td>{auction?.user?.username}</td>
-                                    <td>{auction?.bidder}</td>
-                                    <td>{auction?.transactionHash}</td>
+                                    <td>
+                                        <a href={getLinkAddress(auction?.bidder)}>{getString(auction?.bidder)}</a>
+                                    </td>
+                                    <td>
+                                        <a href={getLink(auction?.transactionHash)}>{getString(auction?.transactionHash)}</a>
+                                    </td>
                                     <td>{new Date(auction?.blockTimestamp * 1000).toLocaleString()}</td>
                                 </tr>
                             ))}

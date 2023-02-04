@@ -43,7 +43,9 @@ const EditProfile = () => {
     const [cardFront, setCardFront] = useState(null);
     const [cardBack, setCardBack] = useState(null);
     const [disable, setDisable] = useState(false);
-
+    const [checkCity, setCheckCity] = useState(true);
+    const [checkDistrict, setCheckDistrict] = useState(true);
+    const [checkWard, setCheckWard] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -63,14 +65,12 @@ const EditProfile = () => {
                 setCardBack(resp.data.individual.backSideImage);
 
                 setData(resp.data);
-
-                // onCitySelect(sCity);
-                // onDistrictSelect(sDistrict);
-                // onWardSelect(sWard);
             });
+
             setLoading(false);
         };
         fetchData();
+        console.log(selectedCity);
     }, [baseURL]);
 
     console.log(data);
@@ -195,12 +195,27 @@ const EditProfile = () => {
             formData.append("dateOfBirth", dateOfBirth.trim());
             formData.append("email", email.trim());
             formData.append("phone", phone.trim());
-            formData.append("cityId", cityId);
-            formData.append("city", selectedCity.label);
-            formData.append("districtId", districtId);
-            formData.append("district", selectedDistrict.label);
-            formData.append("wardsId", wardId);
-            formData.append("wards", selectedWard.label);
+            if (!checkCity) {
+                formData.append("cityId", cityId);
+                formData.append("city", selectedCity.label);
+            } else {
+                formData.append("cityId", data.individual.cityId);
+                formData.append("city", data.individual.city);
+            }
+            if (!checkDistrict) {
+                formData.append("districtId", districtId);
+                formData.append("district", selectedDistrict.label);
+            } else {
+                formData.append("districtId", data.individual.districtId);
+                formData.append("district", data.individual.district);
+            }
+            if (!checkWard) {
+                formData.append("wardsId", wardId);
+                formData.append("wards", selectedWard.label);
+            } else {
+                formData.append("wardsId", data.individual.wardsId);
+                formData.append("wards", data.individual.wards);
+            }
             formData.append("address", specificAddress.trim());
             formData.append("cardNumber", cardNumber.trim());
             formData.append("cardGrantedDate", dateRangeCard.trim());
@@ -360,9 +375,14 @@ const EditProfile = () => {
                                 key={`cityId_${selectedCity?.value}`}
                                 isDisabled={cityOptions.length === 0}
                                 options={cityOptions}
-                                onChange={(option) => onCitySelect(option)}
+                                onChange={(option) => {
+                                    onCitySelect(option);
+                                    setCheckCity(false);
+                                    setCheckDistrict(false);
+                                    setCheckWard(false);
+                                }}
                                 placeholder="Tỉnh/Thành"
-                                defaultValue={{ value: data.individual.cityId, label: data.individual.city }}
+                                defaultValue={checkCity == true ? { value: data.individual.cityId, label: data.individual.city } : selectedCity}
                             />
                             <br />
                             <br />
@@ -372,9 +392,15 @@ const EditProfile = () => {
                                 key={`districtId_${selectedDistrict?.value}`}
                                 isDisabled={districtOptions.length === 0}
                                 options={districtOptions}
-                                onChange={(option) => onDistrictSelect(option)}
+                                onChange={(option) => {
+                                    onDistrictSelect(option);
+                                    setCheckDistrict(false);
+                                    setCheckWard(false);
+                                }}
                                 placeholder="Quận/Huyện"
-                                defaultValue={{ value: data.individual.districtId, label: data.individual.district }}
+                                defaultValue={
+                                    checkDistrict == true ? { value: data.individual.districtId, label: data.individual.district } : selectedDistrict
+                                }
                             />
                             <br />
                             <br />
@@ -385,8 +411,11 @@ const EditProfile = () => {
                                 isDisabled={wardOptions.length === 0}
                                 options={wardOptions}
                                 placeholder="Phường/Xã"
-                                onChange={(option) => onWardSelect(option)}
-                                defaultValue={{ value: data.individual.wardsId, label: data.individual.wards }}
+                                onChange={(option) => {
+                                    onWardSelect(option);
+                                    setCheckWard(false);
+                                }}
+                                defaultValue={checkWard == true ? { value: data.individual.wardsId, label: data.individual.wards } : selectedWard}
                             />
                             <br />
                             <br />
