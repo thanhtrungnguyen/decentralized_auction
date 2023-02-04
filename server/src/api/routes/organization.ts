@@ -30,7 +30,6 @@ router.post(
       maxCount: 1
     }
   ]),
-  requireRole(roles.ADMIN, roles.BIDDER),
   validateResource(OrganizationSchema.create),
   validateResource(IndividualSchema.create),
   validateResource(UserSchema.createBidder),
