@@ -42,19 +42,6 @@ function PlaceBid({ auction, property }) {
     });
 
     const {
-        runContractFunction: getHighestBidOfAuction,
-        data: highestBidOfAuctionData,
-        error: highestBidOfAuctionError,
-        isFetching: isHighestBidOfAuctionFetching,
-        isLoading: isHighestBidOfAuctionLoading,
-    } = useWeb3Contract({
-        abi: CONTRACT_ABI,
-        contractAddress: CONTRACT_ADDRESS,
-        functionName: "getHighestBidOfAuction",
-        params: { auctionId: auction.auctionId },
-    });
-
-    const {
         runContractFunction: placeBid,
         data: dataPlaceBid,
         error: errorPlaceBid,
@@ -89,6 +76,7 @@ function PlaceBid({ auction, property }) {
     socket.on("receive_message", (data) => {
         if (auction.auctionId == data.auction) {
             if (data.highest > parseFloat(highestBid)) {
+                console.log(data);
                 setHighestBid(data.highest + "");
             }
         }
@@ -102,25 +90,15 @@ function PlaceBid({ auction, property }) {
         // await getHighestBidOfAuction();
         // setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
         socket.emit("send_message", { message: "message", auctionId: auction.auctionId });
-        setMinBidAmount(
-            highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
-        );
+
+        if (highestBid !== "0") {
+            setMinBidAmount(
+                highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
+            );
+        } else {
+            setMinBidAmount(auction.startBid);
+        }
     };
-    // const updateCurrentAuction = async () => {
-    //     await getHighestBidOfAuction();
-    //     setHighestBid(highestBidOfAuctionData != null ? parseEther(highestBidOfAuctionData) : "0");
-    //     setMinBidAmount(
-    //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
-    //     );
-    //     console.log(
-    //         "highestBid",
-    //         highestBid,
-    //         "priceStep",
-    //         auction.priceStep,
-    //         "minBidAmount",
-    //         highestBid != null && auction.priceStep != null ? new Decimal(highestBid).plus(new Decimal(auction.priceStep)).toString() : "0"
-    //     );
-    // };
     useEffect(() => {
         try {
             if (new Decimal(inputBidAmount).comparedTo(new Decimal(minBidAmount)) === -1) {
