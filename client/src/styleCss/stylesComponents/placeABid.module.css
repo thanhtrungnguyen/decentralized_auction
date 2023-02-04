@@ -79,6 +79,7 @@
     float: right;
     margin-right: 50px;
 }
+
 .detail2 {
     width: 439px;
     height: 310px;
@@ -89,6 +90,7 @@
     float: right;
     /* margin-right: 50px; */
 }
+
 .img {
     width: 140px;
     height: 14s0px;
@@ -237,6 +239,29 @@
 
     margin-left: 15px;
 
+    background: #FF5B5A;
+    border-radius: 4px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #ffffff;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.btnClose2 {
+    width: 82px;
+    height: 36px;
+    left: 1025px;
+    top: 900px;
+
+    margin-left: 15px;
+    margin-top: 15px;
     background: #4c34c2;
     border-radius: 4px;
     font-family: "Inter";
