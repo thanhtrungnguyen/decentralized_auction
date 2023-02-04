@@ -94,6 +94,24 @@ export const updateIndividualHandler = async (req: Request, res: Response, next:
   ) {
     return res.status(409).json({ message: 'Your profile is unchanged, please edit information before save !!!' });
   }
+  if (individual.email != update.email) {
+    const existEmailIndividual = await getIndividual({ email: req.body.email });
+    if (existEmailIndividual) {
+      return res.status(409).json({ message: 'Email has been exist!' });
+    }
+  }
+  if (individual.phone != update.phone) {
+    const existPhoneIndividual = await getIndividual({ phone: req.body.phone });
+    if (existPhoneIndividual) {
+      return res.status(409).json({ message: 'Phone has been exist!' });
+    }
+  }
+  if (individual.cardNumber != update.cardNumber) {
+    const existCardNumberIndividual = await getIndividual({ cardNumber: req.body.cardNumber });
+    if (existCardNumberIndividual) {
+      return res.status(409).json({ message: 'Card Number has been exist!' });
+    }
+  }
   return await updateIndividual({ _id: individualId }, update, { new: true }, files)
     .then((individual) => {
       res.status(201).json({ individual });

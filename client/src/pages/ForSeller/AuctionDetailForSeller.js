@@ -60,9 +60,9 @@ const AuctionDetailForSeller = () => {
                                 </div>
                             </div>
                             <div className={styles.col4}>
-                                <ReactPlayer
+                                <video
                                     className={styles.video}
-                                    url={data.auction.property.mediaUrl[3]}
+                                    src={data.auction.property.mediaUrl[3]}
                                     playing={true}
                                     controls={true}
                                     loop={true}
@@ -83,15 +83,21 @@ const AuctionDetailForSeller = () => {
                             {/* <p className={styles.txtBlue}>
                 Start bid : ${data.auction.startBid}
               </p> */}
-                            <p className={styles.txtBlue}>Current bid : {data.auction.property.startBid} ETH</p>
+                            {/* <p className={styles.txtBlue}>Current bid : {data.auction.property.startBid} ETH</p> */}
                             {/* <p className={styles.txtBlue}>
                 Cureent bid : ${data.auction.currentBid}
               </p> */}
-                            <p className={styles.txt}>Auction Start Time : {moment(data.auction.property.startAuctionTime).format("L")}, {moment(data.auction.property.startAuctionTime).format("LTS")}</p>
+                            <p className={styles.txt}>
+                                Auction Start Time : {moment(data.auction.property.startAuctionTime).format("L")},{" "}
+                                {moment(data.auction.property.startAuctionTime).format("LTS")}
+                            </p>
                             {/* <p className={styles.txt}>
                 Auction Start Time : ${data.auction.startTime}
               </p> */}
-                            <p className={styles.txt}>Auction End Time : {moment(data.auction.property.endAuctionTime).format("L")}, {moment(data.auction.property.endAuctionTime).format("LTS")}</p>
+                            <p className={styles.txt}>
+                                Auction End Time : {moment(data.auction.property.endAuctionTime).format("L")},{" "}
+                                {moment(data.auction.property.endAuctionTime).format("LTS")}
+                            </p>
                             {/* <p className={styles.txt}>
                 Auction End Time : ${data.auction.endTime}
               </p> */}
@@ -140,39 +146,16 @@ const AuctionDetailForSeller = () => {
                         </table>
                         <Pagination
                             className={styles.Pagination}
-                        // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
-                        // page={page}
-                        // onChange={handleChange}
+                            // count={data.total % 10 > 0 ? Math.floor(data.total / 10) + 1 : data.total / 10}
+                            // page={page}
+                            // onChange={handleChange}
                         />
                     </div>
                     <div className={styles.des}>
                         <div className={styles.con}>
                             <p className={styles.titleDes}>Description </p>
                             {/* <label className={styles.label}>{data.auction.description}</label> */}
-                            <p className={styles.label}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit
-                                amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                                in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-                                in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                                deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-                                id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </p>
+                            <p className={styles.label}>{data.auction.property.description}</p>
                         </div>
                         <input className={styles.btnCancel} type="button" value="Cancel" onClick={Cancel}></input>
                     </div>

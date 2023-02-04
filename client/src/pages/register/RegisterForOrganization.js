@@ -33,7 +33,7 @@ const Register = () => {
     const { cityOptions, districtOptions, wardOptions, selectedCity, selectedDistrict, selectedWard } = state;
 
     const [organizationName, setOrganizationName] = useState(null);
-    const [taxCode, setTaxCode] = useState(null);
+    const [taxCode, setTaxCode] = useState('');
     const [taxCodeGrantedDate, setTaxCodeGrantedDate] = useState(null);
     const [taxCodeGrantedPlace, setTaxCodeGrantedPlace] = useState(null);
     const [specificAddressOrganization, setSpecificAddressOrganization] = useState(null);
@@ -43,9 +43,9 @@ const Register = () => {
     const [gender, setgender] = useState("Male");
     const [dateOfBirth, setdateOfBirth] = useState(null);
     const [email, setEmail] = useState(null);
-    const [phone, setPhone] = useState(null);
+    const [phone, setPhone] = useState('');
     const [specificAddress, setSpecificAddress] = useState(null);
-    const [cardNumber, setcardNumber] = useState(null);
+    const [cardNumber, setcardNumber] = useState('');
     const [dateRangeCard, setdateRangeCard] = useState(null);
     const [cardGrantedPlace, setCardGrantedPlace] = useState(null);
     const [cardFront, setCardFront] = useState(null);
@@ -53,22 +53,21 @@ const Register = () => {
     const [userName, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [rePassword, setRePassword] = useState(null);
-    const [position, setPosition] = useState(null);
+    //const [position, setPosition] = useState(null);
     const role = "bidder";
     const userType = "organization";
     const [isExist, setIsExit] = useState(false);
     const [fileBack, setFileBack] = useState(null);
     const [fileFront, setFileFront] = useState(null);
     const handleInputChange = (e) => {
+        const regexNumber = /^[0-9\b]+$/;
         const { id, value } = e.target;
         if (id === "organizationName") {
             setOrganizationName(value);
         }
-        if (id === "position") {
-            setPosition(value);
-        }
+
         if (id === "taxCode") {
-            setTaxCode(value);
+            if (value === '' || regexNumber.test(value)) setTaxCode(value);
         }
         if (id === "taxCodeGrantedDate") {
             setTaxCodeGrantedDate(value);
@@ -95,13 +94,13 @@ const Register = () => {
             setEmail(value);
         }
         if (id === "phone") {
-            setPhone(value);
+            if (value === '' || regexNumber.test(value)) setPhone(value);
         }
         if (id === "specificAddress") {
             setSpecificAddress(value);
         }
         if (id === "cardNumber") {
-            setcardNumber(value);
+            if (value === '' || regexNumber.test(value)) setcardNumber(value);
         }
         if (id === "dateRangeCard") {
             setdateRangeCard(value);
@@ -197,8 +196,6 @@ const Register = () => {
             notify("🦄 Email is empty");
         } else if (!phone.trim()) {
             notify("🦄 phone is empty");
-        } else if (!position.trim()) {
-            notify("🦄 position is empty");
         } else if (!cityId) {
             notify("🦄 city is empty");
         } else if (!districtId) {
@@ -260,7 +257,7 @@ const Register = () => {
             formData.append("dateOfBirth", dateOfBirth.trim());
             formData.append("email", email.trim());
             formData.append("phone", phone.trim());
-            formData.append("position", position.trim());
+            //formData.append("position", position.trim());
             formData.append("cityId", cityId);
             formData.append("city", selectedCity.label);
             formData.append("districtId", districtId);
@@ -447,7 +444,7 @@ const Register = () => {
                         id="phone"
                         required
                     ></input>
-                    <input
+                    {/* <input
                         className={styles.inputT}
                         type="text"
                         pattern="^\s*([^\s]\s*){0,100}$"
@@ -456,7 +453,7 @@ const Register = () => {
                         onChange={(e) => handleInputChange(e)}
                         id="position"
                         required
-                    ></input>
+                    ></input> */}
                     <p className={styles.textRed}>Address</p>
                     <Select
                         className={styles.select}

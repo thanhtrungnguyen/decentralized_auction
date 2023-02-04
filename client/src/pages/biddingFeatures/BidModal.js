@@ -25,7 +25,7 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
 
     const auctionState = () => {
         const currentTimestamp = Math.floor(Date.now() / 1000);
-        if (!auction) return "AuctionNotFound";
+        if (!auction?.auctionId) return "AuctionNotFound";
         if (currentTimestamp < auction.startRegistrationTime) return "NotYetRegistrationTime";
         if (auction.startRegistrationTime < currentTimestamp && currentTimestamp < auction.endRegistrationTime) return "RegistrationTime";
         if (auction.endRegistrationTime < currentTimestamp && currentTimestamp < auction.startAuctionTime) return "WaitingAuctionTime";
@@ -38,7 +38,7 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
         loading: registrationLoading,
         data: registrationData,
         error: registrationError,
-    } = useFetchData(`/auctionRegistration/user/${auction.auctionId}`);
+    } = useFetchData(`/auctionRegistration/user/${auction?.auctionId}`);
     const renderCurrentState = () => {
         if (registrationData == null || registrationLoading)
             return (
@@ -46,16 +46,16 @@ const BidModal = ({ setOpenModal, auction, auctionRegistration, property }) => {
                     <Loader />
                 </div>
             );
+        console.log(registrationData?.auctionRegistration?.length !== 0);
+        console.log();
         if (registrationData?.auctionRegistration?.length !== 0) {
-            if (registrationData?.auctionRegistration[0]?.walletAddress.length !== 0) {
-                if (registrationData?.auctionRegistration[0]?.walletAddress !== account) {
-                    return (
-                        <div className={styles.notification}>
-                            <p>You have used account {registrationData?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
-                            <p>Please switch to that wallet account to continue.</p>
-                        </div>
-                    );
-                }
+            if (registrationData?.auctionRegistration[0]?.walletAddress !== account) {
+                return (
+                    <div className={styles.notification}>
+                        <p>You have used account {registrationData?.auctionRegistration[0]?.walletAddress} for register the auction.</p>
+                        <p>Please switch to that wallet account to continue.</p>
+                    </div>
+                );
             }
         }
         // if (auctionRegistration != null && auctionRegistration?.auctionRegistration?.length !== 0) {

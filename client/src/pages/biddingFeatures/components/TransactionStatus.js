@@ -15,10 +15,12 @@ function TransactionStatus({ transactionStatus: tx }) {
 
     const transactionStatusType = () => {
         if (tx === "null") return "null";
+        if (tx === "Fail") return "Fail";
         if (tx?.code === 4001) {
             return "Reject";
         }
         if (tx?.confirmations === 0) return "Pending";
+
         if (tx?.confirmations !== 0) {
             if (tx?.events) return "Success";
             return "Fail";
